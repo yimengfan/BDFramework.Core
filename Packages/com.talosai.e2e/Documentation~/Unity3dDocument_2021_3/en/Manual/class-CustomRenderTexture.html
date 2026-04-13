@@ -1,0 +1,778 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Custom Render Textures</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-CustomRenderTexture.html">English</a></li>
+<li><a href="/cn/current/Manual/class-CustomRenderTexture.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-CustomRenderTexture.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-CustomRenderTexture.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-CustomRenderTexture.html">English</a></li>
+<li><a href="/cn/current/Manual/class-CustomRenderTexture.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-CustomRenderTexture.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-CustomRenderTexture.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Textures.html">Textures</a></li>
+<li>Custom Render Textures</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-RenderTexture.html"></a></span><div class="tip">Render Texture</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-MovieTexture.html"></a></span><div class="tip">Movie Textures</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Custom Render Textures</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/CustomRenderTexture.html' title='Go to CustomRenderTexture page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Custom Render Textures</strong> are a special type of texture that allow you to update a texture with a <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>. They are an extension to <span class="tooltip"><a href="class-RenderTexture.html">Render Textures</a><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a href="class-RenderTexture.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>. They are an extension to <span class="tooltip"><a href="class-RenderTexture.html">Render Textures</a><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span>. You can use Custom Render Textures to create complex simulations like caustics, ripple simulation for rain effects, and liquid splatters.</p>
+
+<p>The Custom Render Textures feature provides a scripting and Shader framework to help with complicated configuration like varying update frequency, partial or multi-pass updates.</p>
+
+<p>To use this framework you need to assign a Material to the Custom Render Texture asset. Custom Render Textures require a compatible Material. For more information, see <a href="#writing-a-shader-for-a-custom-render-texture">Writing a shader for a Custom Render Texture</a>.</p>
+
+<p>To assign a compatible material to a Custom Render Texture asset:</p>
+
+<ol>
+<li>Create a new Custom Render Texture asset.</li>
+<li>Assign a compatible Material to it in the <strong>Material</strong> property in the <strong>Custom Render Texture</strong> asset.</li>
+</ol>
+
+<p>This Material updates the content of a texture according to its parameters.</p>
+
+<p>This page contains the following information:</p>
+
+<ul>
+<li><p><a href="#render-pipeline-compatibility">Render Pipeline Compatibility</a></p></li>
+<li>
+<p><a href="#properties">Properties</a></p>
+
+<ul>
+<li><a href="#render-texture">Render Texture</a></li>
+<li><a href="#custom-render-texture">Custom Render Texture</a></li>
+</ul>
+</li>
+<li><p><a href="#exporting-custom-render-texture-to-a-file">Exporting Custom Render Texture to a file</a></p></li>
+<li><p><a href="#update-zones">Update Zones</a></p></li>
+<li><p><a href="#controlling-custom-render-texture-from-script">Controlling Custom Render Texture from Script</a></p></li>
+<li><p><a href="#double-buffered-custom-render-textures">Double Buffered Custom Render Textures</a></p></li>
+<li><p><a href="#chaining-custom-render-textures">Chaining Custom Render Textures</a></p></li>
+<li><p><a href="#writing-a-shader-for-a-custom-render-texture">Writing a shader for a Custom Render Texture</a></p></li>
+</ul>
+
+<p><a name="render-pipeline-compatibility" aria-hidden="true"></a></p>
+
+<h2>Render Pipeline Compatibility</h2>
+
+<p>The following table describes the compatibility between the <strong>Custom Render Textures</strong> feature and each <span class="tooltip"><strong>render pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Feature</th>
+	<th style="text-align:left;">Built-in Render Pipeline</th>
+	<th style="text-align:left;">Universal Render Pipeline (URP)</th>
+	<th style="text-align:left;">High Definition Render Pipeline (HDRP)</th>
+	<th style="text-align:left;">Custom Scriptable Render Pipeline (SRP)</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Custom Render Textures</td>
+	<td style="text-align:left;">Yes (1)</td>
+	<td style="text-align:left;">Yes (1)</td>
+	<td style="text-align:left;">Yes (1)</td>
+	<td style="text-align:left;">Yes (1)</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Note:</strong></p>
+
+<ol>
+<li>Currently, you can’t create Materials that update and initialize <strong>Custom Render Textures</strong> in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.shadergraph@latest">Shader Graph</a>. You can only create shaders that operate on Custom Render Textures by writing <span class="tooltip"><a href="SL-Shader.html">ShaderLab</a><span class="tooltiptext">Unity’s language for defining the structure of Shader objects. <a href="SL-Shader.html" href="https://docs.unity3d.com/Packages/com.unity.shadergraph@latest">Shader Graph</a>. You can only create shaders that operate on Custom Render Textures by writing <span class="tooltip"><a href="SL-Shader.html">ShaderLab</a><span class="tooltiptext">Unity’s language for defining the structure of Shader objects. <a href="SL-Shader.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span> code.</li>
+</ol>
+
+<p><a name="properties" aria-hidden="true"></a></p>
+
+<h2>Properties</h2>
+
+<figure>
+<img src="../uploads/Main/CustomRenderTextures-0.png" alt="">
+</figure>
+
+<p>The <strong>Custom Render Textures</strong> <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window displays many of the same properties as the Render Texture Inspector, and some properties specific to <strong>Custom Render Textures</strong>.</p>
+
+<p><a name="render-texture" aria-hidden="true"></a></p>
+
+<h3>Render Texture:</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property:</th>
+	<th style="text-align:left;">Function:</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Dimension</strong></td>
+	<td style="text-align:left;">Dimension of the Render Texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     2D</td>
+	<td style="text-align:left;">Makes the Render Texture two-dimensional.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     Cube</td>
+	<td style="text-align:left;">Makes the Render Texture a cube map.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     3D</td>
+	<td style="text-align:left;">Makes the Render Texture three-dimensional.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Size</strong></td>
+	<td style="text-align:left;">The size of the Render Texture in <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color Format</strong></td>
+	<td style="text-align:left;">The format of the Render Texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>sRGB (Color Render Texture)</strong></td>
+	<td style="text-align:left;">Enable to allow the Render Texture to use sRGB read/write conversions (Read Only).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Enable Mip Maps</strong></td>
+	<td style="text-align:left;">Enable this property to allow the Render Texture to use mipmaps.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Auto generate Mip Maps</strong></td>
+	<td style="text-align:left;">Enable this property to automatically generate mipmaps.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Wrap Mode</strong></td>
+	<td style="text-align:left;">Defines how the Texture behaves when tiled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     Repeat</td>
+	<td style="text-align:left;">The Texture repeats itself as a tile.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     Clamp</td>
+	<td style="text-align:left;">Unity stretches the edges of the Texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Filter Mode</strong></td>
+	<td style="text-align:left;">Defines how Unity filters the Texture when it is stretched by 3D transformations.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     Point</td>
+	<td style="text-align:left;">The Texture becomes blocky up close.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     Bilinear</td>
+	<td style="text-align:left;">The Texture becomes blurry up close.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     Trilinear</td>
+	<td style="text-align:left;">Like Bilinear, but the Texture also blurs between different mipmap levels.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Aniso Level</strong><span class="tooltiptext">The anisotropic filtering (AF) level of a texture. Allows you to increase texture quality when viewing a texture at a steep angle. Good for floor and ground textures. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about TextureTypes.html" href="TextureTypes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnisoLevel" aria-label="Go to glossary anchor for AnisoLevel">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Increases Texture quality when viewing the texture at a steep angle. Good for floor and ground textures.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="custom-render-texture" aria-hidden="true"></a></p>
+
+<h3>Custom Texture:</h3>
+
+<p>These properties are exclusive to Custom Render Textures. Custom Texture parameters are separated into three categories:</p>
+
+<ul>
+<li><p>
+<strong>Material</strong>: Defines what shader is used to update the texture.</p></li>
+<li><p>
+<strong>Initialization</strong>: Controls how the texture is initialized before the shader performs any updates.</p></li>
+<li><p>
+<strong>Update</strong>: Controls how the shader updates the texture.</p></li>
+</ul>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property:</th>
+	<th style="text-align:left;">Function:</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Material</strong><span class="tooltiptext">An asset that defines how a surface should be rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Material.html" href="class-Material.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">The Material that Unity uses to update the Custom Render Texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     Shader Pass</td>
+	<td style="text-align:left;">The Shader Pass that Unity uses to update the Custom Render Texture. The drop-down shows all passes available in your Material.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Initialization Mode</strong></td>
+	<td style="text-align:left;">The rate at which Unity initializes the texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     OnLoad</td>
+	<td style="text-align:left;">Unity initializes the texture once upon creation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     Realtime</td>
+	<td style="text-align:left;">Unity initializes the texture every frame.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     OnDemand</td>
+	<td style="text-align:left;">Unity initializes the texture on demand from the script.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Source</strong></td>
+	<td style="text-align:left;">How Unity texture initializes the texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     Texture and Color</td>
+	<td style="text-align:left;">Unity uses a texture multiplied by a color to initialize the texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">         Initialization Color</td>
+	<td style="text-align:left;">Defines the color that Unity uses to initialize the Custom Render Texture. If you also provide an <strong>Initialization Texture</strong>, Unity uses the multiplication of the color and the texture to initialize the Custom Render Texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">         Initialization Texture</td>
+	<td style="text-align:left;">Defines the texture that Unity uses to initialize the Custom Render Texture. If you also provide an <strong>Initialization Color</strong>, Unity uses the multiplication of the color and the texture to initialize the Custom Render Texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     Material</td>
+	<td style="text-align:left;">Unity uses a Material to initialize the texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">         Initialization Material</td>
+	<td style="text-align:left;">Defines the Material that Unity uses to initialize the Custom Render Texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Update Mode</strong></td>
+	<td style="text-align:left;">The rate at which the shader updates the Custom Render Texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     OnLoad</td>
+	<td style="text-align:left;">The shader updates the texture once upon creation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     Realtime</td>
+	<td style="text-align:left;">The shader updates the texture every frame.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     OnDemand</td>
+	<td style="text-align:left;">The shader updates the texture on demand from script.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Period</strong></td>
+	<td style="text-align:left;">The amount of time in seconds over which Unity updates a real-time texture. A value of 0.0 updates every frame. This property is only available when the <strong>Update Mode</strong> to property is set to Realtime.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Double Buffered</strong></td>
+	<td style="text-align:left;">Double-buffers the texture. Each update swaps the two buffers. This allows you to read the result of the preceding update in the shader.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Wrap Update Zones</strong></td>
+	<td style="text-align:left;">Enable to allow partial update zones to wrap around the border of the texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Cubemap Faces</strong></td>
+	<td style="text-align:left;">(Cubemap only) Series of toggle allowing user to enable/disable update on each of the cube map faces.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Update Zone Space</strong></td>
+	<td style="text-align:left;">The coordinate system where Unity defines the update zones.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     Normalized</td>
+	<td style="text-align:left;">All coordinates and sizes are between 0 and 1 with the top-left corner starting at (0, 0).</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     Pixel</td>
+	<td style="text-align:left;">All coordinates and sizes are expressed in pixels limited by the width and height of the texture. Top-left corner starting at (0, 0).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Update Zone List</strong></td>
+	<td style="text-align:left;">List of update zones for the texture. For more information, see <a href="#update-zones">Update Zones</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="exporting-custom-render-texture-to-a-file" aria-hidden="true"></a></p>
+
+<h2>Exporting Custom Render Texture to a file:</h2>
+
+<p>You can export Custom Render Textures to a PNG or EXR file (depending on the texture format) in the <strong>Export</strong> menu.</p>
+
+<p><a name="update-zones" aria-hidden="true"></a></p>
+
+<h2>Update Zones:</h2>
+
+<p>When Unity updates a Custom Render Texture, it uses the Material to update the whole texture at once by default. The Custom Render Texture allows you to define zones of partial update. You can use this to define as many zones as you want and the order in which the zones are processed.</p>
+
+<p>You can use update zones for various purposes. For example, you could have multiple small zones to splat water drops on the texture and then do a full pass to simulate the ripples. This can also be used as an optimization when you know that you don’t need to update the full texture.</p>
+
+<figure>
+<img src="../uploads/Main/CustomRenderTextures-1.png" alt="">
+</figure>
+
+<p>Update zones have their own set of properties. The <strong>Update Zone Space</strong> is visible in the display. Coordinates depend on the <strong>Dimension</strong> of the texture: 2D for 2D and Cube textures, or 3D for 3D textures.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property:</th>
+	<th style="text-align:left;">Function:</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Center</td>
+	<td style="text-align:left;">The coordinates of the center of the update zone..</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Size</td>
+	<td style="text-align:left;">The size of the update zone.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Rotation</td>
+	<td style="text-align:left;">The orientation of the update zone in degrees (unavailable for 3D textures).</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Shader Pass</td>
+	<td style="text-align:left;">Defines the Shader Pass to use for this update zone. If you set this property as default, this update zone uses the Shader Pass that you defined in the main part of the inspector. Otherwise it will use the Shader Pass you provide.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Swap (Double Buffer)</td>
+	<td style="text-align:left;">(Only for Double Buffered textures) When you enable this property, Unity swaps the buffers before processing this update zone.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="controlling-custom-render-texture-from-script" aria-hidden="true"></a></p>
+
+<h2>Controlling Custom Render Texture from Script</h2>
+
+<p>You can access most of the Custom Render Texture functionalities in the Scripting API. You can also change Material parameters, update frequency, update zones, request an update, and more using a script.</p>
+
+<p>When Unity updates or initializes a Custom Render Texture, it uses the current properties to render the next frame. This guarantees that any Material that uses this texture has an up-to-date result. For example, in the following script Unity performs two updates using the second <a href="#update-zones">Update Zone</a> array:</p>
+
+<p><code>customRenderTexture.updateZones = updateZones1;</code></p>
+
+<p><code>customRenderTexture.Update();</code></p>
+
+<p><code>customRenderTexture.updateZones = updateZones2;</code></p>
+
+<p><code>customRenderTexture.Update();</code></p>
+
+<p>
+<strong>Note:</strong> Unity does not update or initialize a Custom Render Texture at the same time you call <code>Update()</code> or <code>Initialize()</code>. This is because Unity always updates and initializes a Custom Render Texture at the start of the next frame.</p>
+
+<p><a name="double-buffered-custom-render-textures" aria-hidden="true"></a></p>
+
+<h2>Double Buffered Custom Textures</h2>
+
+<p>You can double-buffer Custom Render Textures. To do this, enable <strong>Double Buffered</strong> in the <a href="#properties">Custom Render Textures component</a>, or use <a href="https://docs.unity3d.com/ScriptReference/CustomRenderTexture-doubleBuffered.html"><code>CustomRenderTexture.doubleBuffered</code></a>.</p>
+
+<p>Double-buffering means that inside one Custom Render Texture there are two textures which Unity can swap after each update. This allows you to read the result of the last update while writing a new result in the Custom Render Texture.</p>
+
+<p>Double-buffering is particularly useful if the shader needs to use the content the Unity has already written in the texture but can’t mix the values with classic blend modes. This is also required if the shaders have to sample different pixels from the preceding result.</p>
+
+<p>
+<strong>Performance warning</strong>: Double-buffering currently involves a copy of the texture at each swap which can lead to a drop in performance depending on the frequency at which it is done and the resolution of the texture.</p>
+
+<p><a name="chaining-custom-render-textures" aria-hidden="true"></a></p>
+
+<h2>Chaining Custom Render Textures</h2>
+
+<p>You can chain Custom Render Textures together. To do this, use a Custom Render Texture as the input for a material that you have assigned to the <strong>Material</strong> or <strong>Initialization Mode &gt; Texture</strong> in another Custom Render Texture.</p>
+
+<p>You can use chained Custom Render Textures to generate a simulation with multiple steps.</p>
+
+<p>Chained Custom Render Textures are dependent on each other. Unity calculates this dependency automatically so that each update happens in the right order. It does this by looking at the materials assigned to the <strong>Material</strong> and <strong>Initialization Mode &gt; Texture</strong> properties in the <strong>Custom Render Textures</strong> inspector window.</p>
+
+<p><a name="writing-a-shader-for-a-custom-render-texture" aria-hidden="true"></a></p>
+
+<h2>Writing a shader for a Custom Render Texture</h2>
+
+<p>To update a Custom Render Texture manually, you can write a specialized Custom Render Texture shader.</p>
+
+<p>To help you write your Custom Render Texture shaders, here are two example frameworks that contain utility functions and built-in helper variables.</p>
+
+<p>The following shader example fills the texture with a color multiplied by a color. When you write a shader for a Custom Render Texture, you must do the following:</p>
+
+<ul>
+<li>
+<code>#include &quot;UnityCustomRenderTexture.cginc&quot;</code>.</li>
+<li>Use the provided <span class="tooltip"><strong>Vertex Shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-ShaderPrograms.html" href="SL-ShaderPrograms.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span> <code>CustomRenderTextureVertexShader</code>.</li>
+<li>Use the provided input structure <code>v2f_customrendertexture</code> for the pixel shader.</li>
+</ul>
+
+<pre><code>Shader &quot;CustomRenderTexture/Simple&quot;
+{
+    Properties
+    {
+        _Color (&quot;Color&quot;, Color) = (1,1,1,1)
+        _Tex(&quot;InputTex&quot;, 2D) = &quot;white&quot; {}
+     }
+
+     SubShader
+     {
+        Lighting Off
+        Blend One Zero
+
+        Pass
+        {
+            HLSLPROGRAM
+            #include &quot;UnityCustomRenderTexture.cginc&quot;
+            #pragma vertex CustomRenderTextureVertexShader
+            #pragma fragment frag
+            #pragma target 3.0
+
+            float4      _Color;
+            sampler2D   _Tex;
+
+            float4 frag(v2f_customrendertexture IN) : COLOR
+            {
+                return _Color * tex2D(_Tex, IN.localTexcoord.xy);
+            }
+            ENDHLSL
+            }
+    }
+}
+</code></pre>
+
+<p>The following example is a shader for a material you can use to initialize a Custom Render Texture. When you write a shader for an initialization Material, the following steps are mandatory:</p>
+
+<ul>
+<li><p><code>#include &quot;UnityCustomRenderTexture.cginc&quot;</code></p></li>
+<li><p>Use the provided Vertex Shader <code>CustomRenderTextureVertexShader</code>
+</p></li>
+<li><p>Use the provided input structure <code>v2f_customrendertexture</code> for the pixel shader.</p></li>
+</ul>
+
+<pre><code>Shader &quot;CustomRenderTexture/CustomTextureInit&quot;
+{
+    Properties
+    {
+        _Color (&quot;Color&quot;, Color) = (1,1,1,1)
+        _Tex(&quot;InputTex&quot;, 2D) = &quot;white&quot; {}
+    }
+
+    SubShader
+    {
+        Lighting Off
+        Blend One Zero
+
+        Pass
+        {
+            HLSLPROGRAM
+            #include &quot;UnityCustomRenderTexture.cginc&quot;
+
+            #pragma vertex InitCustomRenderTextureVertexShader
+            #pragma fragment frag
+            #pragma target 3.0
+
+            float4      _Color;
+            sampler2D   _Tex;
+
+            float4 frag(v2f_init_customrendertexture IN) : COLOR
+            {
+                return _Color * tex2D(_Tex, IN.texcoord.xy);
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+
+<p>
+<code>#include &quot;UnityCustomRenderTexture.cginc&quot;</code> gives you access to a set of built-in values. This includes Global values, values from the <code>v2f_customrendertexture</code> structure and values from the <code>v2f_init_customrendertexture</code> structure.</p>
+
+<p>The <code>v2f_customrendertexture</code> structure accepts the following inputs:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Name</th>
+	<th style="text-align:left;">Type</th>
+	<th style="text-align:left;">Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>localTexcoord</code></td>
+	<td style="text-align:left;"><code>float3</code></td>
+	<td style="text-align:left;">Texture coordinates relative to the update zone being currently processed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>globalTexcoord</code></td>
+	<td style="text-align:left;"><code>float3</code></td>
+	<td style="text-align:left;">Texture coordinates relative to the Custom Render Texture itself</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>primitiveID</code></td>
+	<td style="text-align:left;"><code>uint</code></td>
+	<td style="text-align:left;">Index of the update zone being currently processed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>direction</code></td>
+	<td style="text-align:left;"><code>float3</code></td>
+	<td style="text-align:left;">For Cube Custom Render Texture, direction of the current pixel inside the <span class="tooltip"><strong>cubemap</strong><span class="tooltiptext">A collection of six square textures that can represent the reflections in an environment or the skybox drawn behind your geometry. The six squares form the faces of an imaginary cube that surrounds an object; each face represents the view along the directions of the world axes (up, down, left, right, forward and back). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Cubemap.html" href="class-Cubemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Cubemap" aria-label="Go to glossary anchor for Cubemap">Glossary</a></span></span></span>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>The <code>v2f_init_customrendertexture</code> structure accepts the following inputs:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Name</th>
+	<th style="text-align:left;">Type</th>
+	<th style="text-align:left;">Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>texcoord</code></td>
+	<td style="text-align:left;">float3</td>
+	<td style="text-align:left;">Texture coordinates relative to the Custom Render Texture itself.</td>
+</tr>
+</tbody>
+</table>
+
+<p>The following structures are Global values:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Name</th>
+	<th style="text-align:left;">Type</th>
+	<th style="text-align:left;">Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>_CustomRenderTextureWidth</code></td>
+	<td style="text-align:left;"><code>float</code></td>
+	<td style="text-align:left;">Width of the Custom Texture in pixels</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>_CustomRenderTextureHeight</code></td>
+	<td style="text-align:left;"><code>float</code></td>
+	<td style="text-align:left;">Height of the Custom Texture in pixels</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>_CustomRenderTextureDepth</code></td>
+	<td style="text-align:left;"><code>float</code></td>
+	<td style="text-align:left;">Depth of the Custom Texture in pixels (only for 3D textures, otherwise will always be equal to 1).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>_CustomRenderTextureCubeFace</code></td>
+	<td style="text-align:left;"><code>float</code></td>
+	<td style="text-align:left;">The index of the current cubemap face that Unity processes (-X, +X, -Y, +Y, -Z, +Z). This only applies to cube maps.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>_CustomRenderTexture3DSlice</code></td>
+	<td style="text-align:left;"><code>float</code></td>
+	<td style="text-align:left;">Index of the current 3D slice being processed. This only applies to 3D textures.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>_SelfTexture2D</code></td>
+	<td style="text-align:left;"><code>Sampler2D</code></td>
+	<td style="text-align:left;">For double buffered textures: Texture containing the result of the last update before the last swap.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>_SelfTextureCube</code></td>
+	<td style="text-align:left;"><code>SamplerCUBE</code></td>
+	<td style="text-align:left;">For double buffered textures: Texture containing the result of the last update before the last swap.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>_SelfTexture3D</code></td>
+	<td style="text-align:left;"><code>Sampler3D</code></td>
+	<td style="text-align:left;">For double buffered textures: Texture containing the result of the last update before the last swap.</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<ul>
+<li><p><span class="page-edit"> 2017–05–18 Page published
+</span></p></li>
+<li><p><span class="page-history">New feature in Unity <a href="../Manual/30_search.html?q=newin20171">2017.1</a> <span class="search-words">NewIn20171</span></span></p></li>
+</ul>
+<!-- area:graphics -->
+
+<p><span class="search-words">CustomRenderTexture</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-RenderTexture.html"></a></span><div class="tip">Render Texture</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-MovieTexture.html"></a></span><div class="tip">Movie Textures</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

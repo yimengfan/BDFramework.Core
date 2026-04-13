@@ -1,0 +1,636 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Assembly definitions</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ScriptCompilationAssemblyDefinitionFiles.html">English</a></li>
+<li><a href="/cn/current/Manual/ScriptCompilationAssemblyDefinitionFiles.html">中文</a></li>
+<li><a href="/ja/current/Manual/ScriptCompilationAssemblyDefinitionFiles.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ScriptCompilationAssemblyDefinitionFiles.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ScriptCompilationAssemblyDefinitionFiles.html">English</a></li>
+<li><a href="/cn/current/Manual/ScriptCompilationAssemblyDefinitionFiles.html">中文</a></li>
+<li><a href="/ja/current/Manual/ScriptCompilationAssemblyDefinitionFiles.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ScriptCompilationAssemblyDefinitionFiles.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="unity-architecture.html">Unity architecture</a></li>
+<li><a href="script-compilation.html">Script compilation</a></li>
+<li>Assembly definitions</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="CustomScriptingSymbols.html"></a></span><div class="tip">Custom scripting symbols</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-AssemblyDefinitionImporter.html"></a></span><div class="tip">Assembly Definition properties</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Assembly definitions</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Assembly Definitions and Assembly References are assets that you can create to organize your <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> into assemblies.</p>
+
+<p>An assembly is a C# code library that contains the compiled classes and structs that are defined by your scripts and which also define references to other assemblies. See <a href="https://docs.microsoft.com/en-us/dotnet/standard/assembly/">Assemblies in .NET</a> for general information about assemblies in C#.</p>
+
+<p>By default, Unity compiles almost all of your game scripts into the <em>predefined</em> assembly, <em>Assembly-CSharp.dll</em>. (Unity also creates a <a href="ScriptCompileOrderFolders.html">few smaller, specialized predefined assemblies</a>.)</p>
+
+<p>This arrangement works acceptably for small projects, but has some drawbacks as you add more code to your project:</p>
+
+<ul>
+<li>Every time you change one script, Unity has to recompile all the other scripts, increasing overall compilation time for iterative code changes.</li>
+<li>Any script can directly access types defined in any other script, which can make it more difficult to refactor and improve your code.</li>
+<li>All scripts are compiled for all platforms.</li>
+</ul>
+
+<p>By defining assemblies, you can organize your code to promote modularity and reusability. Scripts in the assemblies you define for your project are no longer added to the default assemblies and can only access scripts in those other assemblies that you designate.</p>
+
+<figure>
+<img src="../uploads/Main/ScriptCompilation.png" alt="">
+</figure>
+
+<p>The above diagram illustrates how you might split up the code in your project into multiple assemblies. Because <em>Main</em> references <em>Stuff</em> and not the other way around, you know that any changes to the code in <em>Main</em> cannot affect the code in <em>Stuff</em>. Similarly, because <em>Library</em> doesn’t depend on any other assemblies, you can more easily reuse the code in <em>Library</em> in another project. </p>
+
+<p>This section discusses how to create and set up Assembly Definition and Assembly Reference assets to define assemblies for your project:</p>
+
+<ul>
+<li><a href="#defining-assemblies">Defining assemblies</a></li>
+<li><a href="#reference-and-assemblies">References and dependencies</a></li>
+<li><a href="#create-asmdef">Creating an Assembly Definition asset</a></li>
+<li><a href="#create-asmref">Creating an Assembly Definition Reference asset</a></li>
+<li><a href="#create-platform-specific">Creating a platform-specific assembly</a></li>
+<li><a href="#create-editor-assembly">Creating an assembly for Editor code</a></li>
+<li><a href="#create-test-assembly">Creating a test assembly</a></li>
+<li><a href="#reference-another-assembly">Referencing another assembly</a></li>
+<li><a href="#reference-precompiled-assembly">Referencing a precompiled, plugin assembly</a></li>
+<li><a href="#conditional-assembly">Conditionally building an assembly</a></li>
+<li><a href="#define-symbols">Defining symbols based on project packages</a></li>
+<li><a href="#find-assembly">Finding which assembly a script belongs to</a></li>
+<li><a href="#special-folders">Special folders</a></li>
+<li><a href="#get-assembly-info">Getting assembly information in build scripts</a></li>
+</ul>
+
+<p>See also:</p>
+
+<ul>
+<li><a href="class-AssemblyDefinitionImporter.html">Assembly Definition properties</a></li>
+<li><a href="class-AssemblyDefinitionImporter.html#assembly-definition-reference-properties">Assembly Definition Reference properties</a></li>
+<li><a href="AssemblyDefinitionFileFormat.html">Assembly Definition File Format</a></li>
+</ul>
+
+<p><a name="defining-assemblies" aria-hidden="true"></a></p>
+
+<h2>Defining assemblies</h2>
+
+<p>To organize your project code into assemblies, create a folder for each desired assembly and move the scripts that should belong to each assembly into the relevant folder. Then <a href="#create-asmdef">create Assembly Definition assets</a> to specify the assembly properties.</p>
+
+<p>Unity takes all of the scripts in a folder that contains an Assembly Definition asset and compiles them into an assembly, using the name and other settings defined by the asset. Unity also includes scripts in any child folders in the same assembly, unless the child folder has its own Assembly Definition or Assembly Reference asset. </p>
+
+<p>To include scripts from a non-child folder in an existing assembly, create an Assembly Reference asset in the non-child folder and set it to reference the Assembly Definition asset that defines the target assembly. For example, you can combine the scripts from all the Editor folders in your project in their own assembly, no matter where those folders are located.</p>
+
+<p>Unity compiles assemblies in an order determined by their dependencies; you cannot specify the order in which compilation takes place.</p>
+
+<p><a name="reference-and-assemblies" aria-hidden="true"></a></p>
+
+<h2>References and dependencies</h2>
+
+<p>When one type (such as a class or struct) uses another type, the first type is <em>dependent</em> on the second. When Unity compiles a script, it must also have access to any types or other code the script depends upon. Likewise, when the compiled code runs, it must have access to the compiled versions of its dependencies. If two types are in different assemblies, an assembly containing a dependent type must declare a <em>reference</em> to the assembly containing the type upon which it depends.</p>
+
+<p>You can control the references between assemblies used in your project using the options of an Assembly Definition. The Assembly Definition settings include:</p>
+
+<ul>
+<li>
+<a href="class-AssemblyDefinitionImporter.html#general">Auto Referenced</a> – Whether the predefined assemblies reference the assembly</li>
+<li>
+<a href="class-AssemblyDefinitionReferenceImporter.html">Assembly Definition References</a> – References to other project assemblies created with Assembly Definitions</li>
+<li>
+<a href="class-AssemblyDefinitionImporter.html#general">Override References</a> + <a href="#reference-another-assembly">Assembly References</a> – References to precompiled (plugin) assemblies</li>
+<li>
+<a href="class-AssemblyDefinitionImporter.html#general">No Engine References</a> – References to UnityEngine assemblies</li>
+</ul>
+
+<p>
+<strong>Note:</strong> Classes in assemblies created with an Assembly Definition cannot use types defined in the predefined assemblies.</p>
+
+<p><a name="default-references" aria-hidden="true"></a></p>
+
+<h3>Default references</h3>
+
+<p>By default, the predefined assemblies reference all other assemblies, including those created with Assembly Definitions (1) and precompiled assemblies added to the project as plugins (2). In addition, assemblies you create with an Assembly Definition asset automatically reference all precompiled assemblies (3):</p>
+
+<figure>
+<img src="../uploads/Main/AssemblyDependencies.png" alt="">
+</figure>
+
+<p>In the default setup, classes in the predefined assemblies can use all types defined by any other assemblies in the project. Likewise, assemblies you create with an Assembly Definition asset can use all types defined in any precompiled (plug-in) assemblies.</p>
+
+<p>You can prevent an assembly from being referenced by the predefined assemblies by turning off the <a href="class-AssemblyDefinitionImporter.html#general">Auto Referenced option</a> in the Inspector for an Assembly Definition asset. Turning off auto-referenced means that the predefined assemblies are not recompiled when you change code in the assembly, but also means that the predefined assemblies cannot use code in this assembly directly. See <a href="class-AssemblyDefinitionImporter.html">Assembly Definition properties</a>.</p>
+
+<p>Likewise, you can prevent a plugin assembly from being automatically referenced by turning off the <a href="PluginInspector.html">Auto Referenced property</a> in the <a href="PluginInspector.html">Plugin Inspector</a> for a plugin asset. This affects both predefined assemblies and those you create with an Assembly Definition. For more information, see <a href="PluginInspector.html">Plugin Inspector</a>.</p>
+
+<p>When you turn off <strong>Auto Referenced</strong> for a <span class="tooltip"><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Plugins.html" href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span>, you can explicitly reference it in the Inspector for an Assembly Definition asset. Enable the asset’s <a href="class-AssemblyDefinitionImporter.html#general">Override References</a> option and add a reference to the <strong>plug-in</strong>. See <a href="class-AssemblyDefinitionImporter.html">Assembly Definition properties</a>.</p>
+
+<p>
+<strong>Note:</strong> You cannot declare explicit references for the precompiled assemblies. The predefined assemblies can only use code in auto-referenced assemblies.</p>
+
+<p><a name="cyclical-references" aria-hidden="true"></a></p>
+
+<h3>Cyclical references</h3>
+
+<p>A cyclical assembly reference exists when one assembly references a second assembly that, in turn, references the first assembly. Such cyclical references between assemblies are not allowed and are reported as an error with the message, “Assembly with cyclic references detected.”</p>
+
+<p>Typically, such cyclical references between assemblies occur because of cyclical references within the classes defined in the assemblies. While there is nothing technically invalid about cyclical references between classes in the same assembly, cyclical references between classes in different assemblies are not allowed. If you encounter a cyclical reference error, you must refactor your code to remove the cyclical reference or to put the mutually referencing classes in the same assembly. </p>
+
+<p>
+<a name="create-asmdef" aria-hidden="true"></a> </p>
+
+<h2>Creating an Assembly Definition asset</h2>
+
+<p>To create an Assembly Definition asset:</p>
+
+<ol>
+<li>In the <span class="tooltip"><strong>Project</strong><span class="tooltiptext">In Unity, you use a project to design and develop a game. A project stores all of the files that are related to a game, such as the asset and Scene files. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about 2Dor3D.html" href="2Dor3D.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Project" aria-label="Go to glossary anchor for Project">Glossary</a></span></span></span> window, locate the folder containing the scripts you want to include in the assembly.</li>
+<li>Create an Assembly Definition asset in the folder (menu: <span class="tooltip"><strong>Assets</strong><span class="tooltiptext">Any media or data that can be used in your game or project. An asset may come from a file created outside of Unity, such as a 3D Model, an audio file or an image. You can also create some asset types in Unity, such as an Animator Controller, an Audio Mixer or a Render Texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetWorkflow.html" href="AssetWorkflow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Asset" aria-label="Go to glossary anchor for Asset">Glossary</a></span></span></span> &gt; <strong>Create</strong> &gt; <strong>Assembly Definition</strong>).</li>
+<li>Assign a name to the asset. By default, the assembly file uses the name you assign to the asset, but you can change the name in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window.</li>
+</ol>
+
+<p>Unity recompiles the scripts in the project to create the new assembly. Once it has finished, you can change the settings for the new Assembly Definition.</p>
+
+<p>The scripts in the folder containing the Assembly Definition, including scripts in any child folders (unless those folders contain their own Assembly Definition or Reference assets), are compiled into the new assembly and removed from their previous assembly.</p>
+
+<p>
+<a name="create-asmref" aria-hidden="true"></a> </p>
+
+<h2>Creating an Assembly Definition Reference asset</h2>
+
+<p>To create an Assembly Definition Reference asset:</p>
+
+<ol>
+<li><p>In the <strong>Project</strong> window, locate the folder containing the scripts you want to include in the referenced assembly.</p></li>
+<li><p>Create an Assembly Reference asset in the folder (menu: <strong>Assets</strong> &gt; <strong>Create</strong> &gt; <strong>Assembly Definition Reference</strong>).</p></li>
+<li>
+<p>Assign a name to the asset.</p>
+
+<p>Unity recompiles the scripts in the project to create the new assembly. Once it has finished, you can change the settings for the new Assembly Definition Reference.</p>
+</li>
+<li>
+<p>Select the new Assembly Definition Reference asset to view its properties in the <strong>Inspector</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/asmdef-2.png" alt="">
+</figure>
+</li>
+<li><p>Set the Assembly Definition property to reference the target Assembly Definition asset.</p></li>
+<li><p>Click <strong>Apply</strong>.</p></li>
+</ol>
+
+<p>The scripts in the folder containing the Assembly Definition Reference asset, including scripts in any child folders (unless those folders contain their own Assembly Definition or Reference assets) are compiled into the referenced assembly and removed from their previous assembly.</p>
+
+<p><a name="create-platform-specific" aria-hidden="true"></a></p>
+
+<h2>Creating a platform-specific assembly</h2>
+
+<p>To create an assembly for a specific platform:</p>
+
+<ol>
+<li><p>
+<a href="#create-asmdef">Create an Assembly Definition asset</a>.</p></li>
+<li>
+<p>Select the new Assembly Definition Reference asset to view its properties in the <strong>Inspector</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/asmdef-3.png" alt="">
+</figure>
+</li>
+<li><p>Check the <strong>Any Platform</strong> option and choose specific platforms to exclude. Alternately, you can uncheck Any Platform and choose specific platforms to include.</p></li>
+<li><p>Click <strong>Apply</strong>.</p></li>
+</ol>
+
+<p>The assembly will be included (or excluded) according to the selected platforms when you build your project for a platform.</p>
+
+<p><a name="create-editor-assembly" aria-hidden="true"></a></p>
+
+<h2>Creating an assembly for Editor code</h2>
+
+<p>Editor assemblies allow you to put your Editor scripts anywhere in the project, not just in top-level folders named, <em>Editor</em>.</p>
+
+<p>To create an assembly that contains the Editor code in your project:</p>
+
+<ol>
+<li>
+<a href="#create-platform-specific">Create a platform-specific assembly</a> in a folder containing your Editor scripts.</li>
+<li>Include ONLY the Editor platform.</li>
+<li>If you have additional folders containing Editor scripts, <a href="#create-asmref">create Assembly Definition Reference assets</a> in those folders and set them to reference this Assembly Definition.</li>
+</ol>
+
+<p><a name="create-test-assembly" aria-hidden="true"></a></p>
+
+<h2>Creating a test assembly</h2>
+
+<p>Test assemblies allow you to write tests and run them with the Unity TestRunner, while also keeping your test code separate from the code you ship with your application. Unity provides the TestRunner as part of the <a href="https://docs.unity3d.com/Manual/com.unity.test-framework.html">Test Framework package</a>. See the <a href="https://docs.unity3d.com/Packages/com.unity.test-framework@latest?subfolder=/manual/workflow-create-test-assembly.html">Test Framework documentation</a> for instructions on installing the Test Framework package and creating test assemblies. </p>
+
+<p><a name="reference-another-assembly" aria-hidden="true"></a></p>
+
+<h2>Referencing another assembly</h2>
+
+<p>To use the C# types and functions that are part of another assembly, you must create a reference to that assembly in the Assembly Definition asset.</p>
+
+<p>To create an assembly reference:</p>
+
+<ol>
+<li><p>Select the Assembly Definition for the assembly that requires the reference to view its properties in the <strong>Inspector</strong>.</p></li>
+<li>
+<p>In the <strong>Assembly Definition References</strong> section, click the <strong>+</strong> button to add a new reference.</p>
+
+<figure>
+<img src="../uploads/Main/asmdef-4.png" alt="">
+</figure>
+</li>
+<li><p>Assign the Assembly Definition asset to the newly created slot in the list of references.</p></li>
+</ol>
+
+<p>Enabling the <strong>Use GUIDs</strong> option allows you to change the filename of the referenced Assembly Definition asset without updating references in other Assembly Definitions to reflect the new name. (Note that GUIDs must be reset if the metadata files for the asset files are deleted or you move the files outside the Unity Editor without also moving the metadata files along with them.)</p>
+
+<p><a name="reference-precompiled-assembly" aria-hidden="true"></a></p>
+
+<h2>Referencing a precompiled, plugin assembly</h2>
+
+<p>By default, all assemblies in your project created with Assembly Definitions automatically reference all precompiled assemblies. These automatic references mean that Unity must recompile all your assemblies when you update any one of the precompiled assemblies, even if the code in the assembly is not used. To avoid this extra overhead, you can override the automatic references and specify references to only those precompiled libraries the assembly actually uses:</p>
+
+<ol>
+<li><p>Select the Assembly Definition for the assembly that requires the reference to view its properties in the <strong>Inspector</strong>.</p></li>
+<li>
+<p>In the <strong>General</strong> section, enable the <strong>Override References</strong> option.</p>
+
+<figure>
+<img src="../uploads/Main/asmdef-5.png" alt="">
+</figure>
+
+<p>The <strong>Assembly References</strong> section of the <strong>Inspector</strong> becomes available when <strong>Override References</strong> is checked.</p>
+</li>
+<li><p>In the <strong>Assembly References</strong> section, click the <strong>+</strong> button to add a new reference.</p></li>
+<li>
+<p>Use the drop-down list in the empty slot to assign a reference to a precompiled assembly. The list shows all the precompiled assemblies in the project for the platform currently set in the project <a href="BuildSettings.html">Build Settings</a>. (Set the platform compatibility for a precompiled assembly in the <a href="PluginInspector.html">Plugin Inspector</a>.)</p>
+
+<figure>
+<img src="../uploads/Main/asmdef-6.png" alt="">
+</figure>
+</li>
+<li><p>Click <strong>Apply</strong>.</p></li>
+<li><p>Repeat for each platform for which you build your project.</p></li>
+</ol>
+
+<p><a name="conditional-assembly" aria-hidden="true"></a></p>
+
+<h2>Conditionally including an assembly</h2>
+
+<p>You can use preprocessor symbols to control whether an assembly is compiled and included in builds of your game or application (including play mode in the Editor). You can specify which symbols must be defined for an assembly to be used with the <strong>Define Constraints</strong> list in the Assembly Definition options:</p>
+
+<ol>
+<li><p>Select the Assembly Definition for the assembly to view its properties in the <strong>Inspector</strong>.</p></li>
+<li>
+<p>In the <strong>Define Constraints</strong> section, click the <strong>+</strong> button to add a new symbol to the list of constraints.</p>
+
+<figure>
+<img src="../uploads/Main/asmdef-7.png" alt="">
+</figure>
+</li>
+<li>
+<p>Enter the symbol name.</p>
+
+<p>You can “negate” the symbol by putting an exclamation point in front of the name. For example, the constraint, <code>!UNITY_WEBGL</code> would include the assembly when UNITY_WEBGL was NOT defined.</p>
+</li>
+<li><p>Click <strong>Apply</strong>.</p></li>
+</ol>
+
+<p>You can use the following symbols as constraints:</p>
+
+<ul>
+<li>Symbols defined in the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettingsStandalone.html#Configuration">Scripting Define Symbols</a> setting, which you can find in the <strong>Player</strong> section of your <span class="tooltip"><strong>Project Settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a href="comp-ManagerGroup.html" href="class-PlayerSettingsStandalone.html#Configuration">Scripting Define Symbols</a> setting, which you can find in the <strong>Player</strong> section of your <span class="tooltip"><strong>Project Settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span>. Note that the <strong>Scripting Define Symbols</strong> apply to the platform currently set in your project <a href="BuildSettings.html">Build Settings</a>. To define a symbol for multiple platforms, you must switch to each platform and modify the <strong>Scripting Define Symbols</strong> field individually.</li>
+<li>Symbols defined by Unity. See <a href="PlatformDependentCompilation.html">Platform dependent compilation</a>.</li>
+<li>Symbols defined using the <a href="#define-symbols">Version Defines</a> section of the Assembly Definition asset.</li>
+</ul>
+
+<p>Symbols defined in scripts are not considered when determining if a constraint has been satisfied.</p>
+
+<p>See <a href="#define-constraints">Define Constraints</a> for additional information.</p>
+
+<p><a name="define-symbols" aria-hidden="true"></a></p>
+
+<h2>Defining symbols based on Unity and project package versions</h2>
+
+<p>If you need to compile different code in an assembly according to whether a project uses specific versions of Unity or of a package, you can add entries to the <strong>Version Defines</strong> list. This list specifies rules for when a symbol should be defined. For version numbers, you can specify a logical expression that evaluates to a specific version or a range of versions.</p>
+
+<p>To conditionally define a symbol:</p>
+
+<ol>
+<li><p>Select the Assembly Definition asset for the assembly to view its properties in the <strong>Inspector</strong>.</p></li>
+<li><p>In the <strong>Version Defines</strong> section, click the <strong>+</strong> button to add an entry to the list.</p></li>
+<li>
+<p>Set the properties:</p>
+
+<ul>
+<li>
+<strong>Resource</strong>: choose <strong>Unity</strong> or the package or module that must be installed in order for this symbol to be defined</li>
+<li>
+<strong>Define</strong>: the symbol name</li>
+<li>
+<strong>Expression</strong>: an expression that evaluates to a specific version or a range of versions. See <a href="#version-define-expressions">Version Define Expressions</a> for the rules.</li>
+</ul>
+
+<p>The <strong>Expression outcome</strong> shows which versions the expression evaluates to. If the outcome displays, <strong>Invalid</strong>, then expression syntax is incorrect.</p>
+
+<p>The following example defines the symbol, USE_TIMELINE_1_3, if the project uses Timeline 1.3 and defines, USE_NEW_APIS, if the project is opened in Unity 2021.2.0a7, or later:</p>
+
+<figure>
+<img src="../uploads/Main/asmdef-8.png" alt="">
+</figure>
+</li>
+<li><p>Click <strong>Apply</strong>.</p></li>
+</ol>
+
+<p>Symbols defined in the Assembly Definition are only in scope for the scripts in the assembly created for that definition.</p>
+
+<p>Note that you can use the symbols defined using the <strong>Version Defines</strong> list as <strong>Define Constraints</strong>. Thus you could specify that an assembly should only be used when specific versions of a given package are also installed in the project.</p>
+
+<p><a name="version-define-expressions" aria-hidden="true"></a></p>
+
+<h3>Version Define expressions</h3>
+
+<p>You can use expressions to specify an exact version or a range of versions. A <strong>Version Define</strong> expression uses mathematical range notation. </p>
+
+<p>A square bracket, “[]” designates that the range includes the endpoint:</p>
+
+<blockquote>
+<p>
+<code>[1.3,3.4.1]</code> evaluates to <code>1.3.0 &lt;= x &lt;= 3.4.1</code>
+</p>
+</blockquote>
+
+<p>A parenthesis “()” designates that the range excludes the endpoint: </p>
+
+<blockquote>
+<p>
+<code>(1.3.0,3.4)</code> evaluates to <code>1.3.0 &lt; x &lt; 3.4.0</code>
+</p>
+</blockquote>
+
+<p>You can mix both range types in a single expression:</p>
+
+<blockquote>
+<p>
+<code>[1.1,3.4)</code> evaluates to <code>1.1.0 &lt;= x &lt; 3.4.0</code>
+</p>
+
+<p>
+<code>(0.2.4,5.6.2-preview.2]</code> evaluates to <code>0.2.4 &lt; x &lt;= 5.6.2.-preview.2</code>
+</p>
+</blockquote>
+
+<p>You can use a single version designator in square brackets to designate an exact version:</p>
+
+<blockquote>
+<p>
+<code>[2.4.5]</code> evaluates to <code>x = 2.4.5</code>
+</p>
+</blockquote>
+
+<p>As a shortcut, you can enter a single version without range brackets to indicate that the expression includes that version or later:</p>
+
+<blockquote>
+<p>
+<code>2.1.0-preview.7</code> evaluates to <code>x &gt;= 2.1.0-preview.7</code>
+</p>
+</blockquote>
+
+<p>
+<strong>Note:</strong> No spaces are allowed in an expression. No wildcard characters are supported.</p>
+
+<h3>Unity version numbers</h3>
+
+<p>Current versions of Unity (and all versions that support Assembly Definitions) use a version designator with three parts: MAJOR.MINOR.REVISION, for example, <code>2017.4.25f1</code>, <code>2018.4.29f1</code>, and <code>2019.4.7f1</code>.</p>
+
+<ul>
+<li>The MAJOR version is the target release year, such as 2017 or 2021.</li>
+<li>The MINOR version is the target release quarter, such as 1, 2, 3, or 4.</li>
+<li>The REVISION designator has three parts of its own, with the format: RRzNN, where:
+
+<ul>
+<li>RR is a one or two digit revision number</li>
+<li>z is a letter designating the release type:
+
+<ul>
+<li>a = alpha release</li>
+<li>b = beta release</li>
+<li>f = a normal public release</li>
+<li>c = China release version (equivalent to f)</li>
+<li>p = patch release</li>
+<li>x = experimental release</li>
+</ul>
+</li>
+<li>NN is one or two digit incremental number</li>
+</ul>
+</li>
+</ul>
+
+<p>Release type designators are compared as follows: </p>
+
+<blockquote>
+<p><code>a &lt; b &lt; f = c &lt; p &lt; x</code></p>
+</blockquote>
+
+<p>In other words, an alpha release is considered earlier than a beta, which is earlier than a normal (f) or China (c) release. A patch release is always later than a normal or China release with the same revision number and an experimental release is later than any other release type. Note that experimental releases do not use an incremental number at the end.</p>
+
+<p>Unity version numbers are allowed to have a suffix after the REVISION component, such as <code>2019.3.0f11-Sunflower</code>. Any suffixes are ignored for the purpose of comparing versions.</p>
+
+<p>As an example, the following expression includes any 2017 or 2018 version of Unity, but not any version in 2019 or later:</p>
+
+<pre><code>[2017,2019)
+</code></pre>
+
+<h3>Package and module version numbers</h3>
+
+<p>Package and module version designators have four parts, following the <a href="https://semver.org/">Semantic Versioning</a> format: MAJOR.MINOR.PATCH-LABEL. The first three parts are always numbers, but the label is a string. Unity packages in preview use the string, <code>preview</code> or <code>preview.n</code>, where <code>n &gt; 0</code>.
+See <a href="upm-semver.html">Package Versioning</a> for more information about package version numbers.</p>
+
+<p>For example, the following expression includes all versions of a package with MAJOR.MINOR versions between 3.2 and 6.1 (inclusive):</p>
+
+<pre><code>[3.2,6.1]
+</code></pre>
+
+<p><a name="find-assembly" aria-hidden="true"></a></p>
+
+<h2>Finding which assembly a script belongs to</h2>
+
+<p>To identify which assembly one of your C# scripts is compiled into:</p>
+
+<ol>
+<li><p>Select the C# script file in the Unity <strong>Project</strong> window to view its properties in the <strong>Inspector</strong> window. </p></li>
+<li>
+<p>The assembly filename and the Assembly Definition, if one exists, are shown in the <strong>Assembly Information</strong> section of the <strong>Inspector</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/asmdef-9.png" alt="">
+</figure>
+</li>
+</ol>
+
+<p>In this example, the selected script is compiled into the library file, Unity.Timeline.Editor.dll, which is defined by the Unity.Timeline.Editor Assembly Definition asset.</p>
+
+<p><a name="special-folders" aria-hidden="true"></a></p>
+
+<h2>Special folders</h2>
+
+<p>Unity treats scripts in folders with certain, special names differently than scripts in other folders. However, one of these folders loses its special treatment when you create an Assembly Definition asset inside it or in a folder above it. You might notice this change when you use Editor folders, which might be scattered throughout your Project (depending on how you organize your code and on the <a href="AssetStorePackages.html">Asset Store packages</a> you use).</p>
+
+<p>Unity normally compiles any scripts in folders named Editor into the predefined Assembly-CSharp-Editor assembly no matter where those scripts are located. However, if you create an Assembly Definition asset in a folder that has an Editor folder underneath it, Unity no longer puts those Editor scripts into the predefined Editor assembly. Instead, they go into the new assembly created by your Assembly Definition — where they might not belong. To manage Editor folders, you can create Assembly Definition or Reference assets in each Editor folder to place those scripts in one or more Editor assemblies. See <a href="#create-editor-assembly">Creating an assembly for Editor code</a>.</p>
+
+<p><a name="set-assembly-attributes" aria-hidden="true"></a></p>
+
+<h2>Setting assembly attributes</h2>
+
+<p>You can use assembly attributes to set metadata properties for your assemblies. By convention, assembly attribute statements are typically put in a file named AssemblyInfo.cs.</p>
+
+<p>For example, the following assembly attributes specify a few <a href="https://docs.microsoft.com/en-us/dotnet/standard/assembly/set-attributes">.NET assembly metadata values</a>, an <a href="https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.internalsvisibletoattribute?view=netcore-2.0">InternalsVisibleTo</a> attribute, which can be useful for testing, and the Unity-defined <a href="ManagedCodeStripping.html#PreserveAttribute">Preserve attribute</a> that affects how unused code is removed from an assembly when you build your project:</p>
+
+<pre><code class="csharp">[assembly: System.Reflection.AssemblyCompany(&quot;Bee Corp.&quot;)]
+[assembly: System.Reflection.AssemblyTitle(&quot;Bee's Assembly&quot;)]
+[assembly: System.Reflection.AssemblyCopyright(&quot;Copyright 2020.&quot;)]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo(&quot;UnitTestAssembly&quot;)]
+[assembly: UnityEngine.Scripting.Preserve]
+</code></pre>
+
+<p><a name="get-assembly-info" aria-hidden="true"></a></p>
+
+<h2>Getting assembly information in build scripts</h2>
+
+<p>Use the CompilationPipeline class, in the UnityEditor.Compilation namespace, to retrieve information about all assemblies built by Unity for a project, including those created based on Assembly Definition assets.</p>
+
+<p>For example, the following script uses the CompilationPipeline class to list all the current Player assemblies in a project:</p>
+
+<pre><code class="csharp">using UnityEditor;
+using UnityEditor.Compilation;
+public static class AssemblyLister
+{
+    [MenuItem(&quot;Tools/List Player Assemblies in Console&quot;)]
+    public static void PrintAssemblyNames()
+    {
+        UnityEngine.Debug.Log(&quot;== Player Assemblies ==&quot;);
+        Assembly[] playerAssemblies =
+            CompilationPipeline.GetAssemblies(AssembliesType.Player);
+
+        foreach (var assembly in playerAssemblies)
+        {
+            UnityEngine.Debug.Log(assembly.name);
+        }
+    }
+}
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="CustomScriptingSymbols.html"></a></span><div class="tip">Custom scripting symbols</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-AssemblyDefinitionImporter.html"></a></span><div class="tip">Assembly Definition properties</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

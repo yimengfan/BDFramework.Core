@@ -1,0 +1,1124 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Shape module</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PartSysShapeModule.html">English</a></li>
+<li><a href="/cn/current/Manual/PartSysShapeModule.html">中文</a></li>
+<li><a href="/ja/current/Manual/PartSysShapeModule.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PartSysShapeModule.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PartSysShapeModule.html">English</a></li>
+<li><a href="/cn/current/Manual/PartSysShapeModule.html">中文</a></li>
+<li><a href="/ja/current/Manual/PartSysShapeModule.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PartSysShapeModule.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="visual-effects.html">Visual effects</a></li>
+<li><a href="ParticleSystems.html">Particle systems</a></li>
+<li><a href="Built-inParticleSystem.html">Built-in Particle System</a></li>
+<li><a href="PartSysReference.html">Components and Modules</a></li>
+<li><a href="ParticleSystemModules.html">Particle System modules</a></li>
+<li>Shape module</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="PartSysEmissionModule.html"></a></span><div class="tip">Emission module</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="PartSysVelOverLifeModule.html"></a></span><div class="tip">Velocity over Lifetime module</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Shape module</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This module defines the the volume or surface from which <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ParticleSystem.html">particles</a><span class="tooltiptext">A small, simple image or mesh that is emitted by a particle system. A particle system can display and move particles in great numbers to represent a fluid or amorphous entity. The effect of all the particles together creates the impression of the complete entity, such as smoke. <a href="class-ParticleSystem.html" href="class-ParticleSystem.html">particles</a><span class="tooltiptext">A small, simple image or mesh that is emitted by a particle system. A particle system can display and move particles in great numbers to represent a fluid or amorphous entity. The effect of all the particles together creates the impression of the complete entity, such as smoke. <a href="class-ParticleSystem.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#particle" aria-label="Go to glossary anchor for particle">Glossary</a></span></span></span> can be emitted, and the direction of the start velocity. The <strong>Shape</strong> property defines the shape of the emission volume, and the rest of the module properties vary depending on the Shape you choose.</p>
+
+<p>All shapes (except <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Mesh.html">Mesh</a>) have properties that define their dimensions, such as the <strong>Radius</strong> property. To edit these, drag the handles on the wireframe emitter shape in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="class-Mesh.html">Mesh</a>) have properties that define their dimensions, such as the <strong>Radius</strong> property. To edit these, drag the handles on the wireframe emitter shape in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view. The choice of shape affects the region from which particles can be launched, but also the initial direction of the particles. For example, a <strong>Sphere</strong> emits particles outward in all directions, a <strong>Cone</strong> emits a diverging stream of particles, and a <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view. The choice of shape affects the region from which particles can be launched, but also the initial direction of the particles. For example, a <strong>Sphere</strong> emits particles outward in all directions, a <strong>Cone</strong> emits a diverging stream of particles, and a <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> emits particles in directions that are normal to the surface.</p>
+
+<h2>Using the Shape module</h2>
+
+<p>This module is part of the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ParticleSystem.html">Particle System</a><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a href="class-ParticleSystem.html" href="class-ParticleSystem.html">Particle System</a><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a href="class-ParticleSystem.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#particlesystem" aria-label="Go to glossary anchor for particlesystem">Glossary</a></span></span></span> component. When you create a new Particle System <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#particlesystem" aria-label="Go to glossary anchor for particlesystem">Glossary</a></span></span></span> component. When you create a new Particle System <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, or add a Particle System component to an exiting GameObject, Unity adds the Shape module to the Particle System. By default, Unity enables this module. To create a new Particle System and enable this module:</p>
+
+<ol>
+<li>Click <strong>GameObject</strong> &gt; <strong>Effects</strong> &gt; <strong>Particle System</strong>.</li>
+<li>In the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, find the Particle System component.</li>
+<li>In the Particle System component, find the Shape module fold-out.</li>
+<li>To the left of the fold-out header, enable the checkbox.</li>
+</ol>
+
+<h3>API</h3>
+
+<p>Since this module is part of the Particle System component, you access it through the <a href="../ScriptReference/ParticleSystem.html">ParticleSystem</a> class. For information on how to access it and change values at runtime, see the <a href="../ScriptReference/ParticleSystem-shape.html">Shape module API documentation</a>.</p>
+
+<h2>Shapes in the Shape module</h2>
+
+<p>This section details the properties for each <strong>Shape</strong>.</p>
+
+<p>For some properties in this section, you can use different modes to set their value. For information on the modes you can use, see <a href="PartSysUsage.html#VaryOverTime">Varying properties over time</a>.</p>
+
+<h3>Sphere, Hemisphere</h3>
+
+<figure>
+<img src="../uploads/Main/ShapeModule.png" alt="The shape module when set to Sphere mode">
+<figcaption>The shape module when set to Sphere mode</figcaption>
+</figure>
+
+<p>
+<strong>Note</strong>: Sphere and Hemisphere have the same properties.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Shape</strong></td>
+	<td style="text-align:left;">The shape of the emission volume.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Sphere</strong></td>
+	<td style="text-align:left;">Uniform particle emission in all directions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Hemisphere</strong></td>
+	<td style="text-align:left;">Uniform particle emission in all directions on one side of a plane.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Radius</strong></td>
+	<td style="text-align:left;">The radius of the circular aspect of the shape.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Radius Thickness</strong></td>
+	<td style="text-align:left;">The proportion of the volume that emits particles. A value of 0 emits particles from the outer surface of the shape. A value of 1 emits particles from the entire volume. Values in between will use a proportion of the volume.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Texture</strong><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html" href="class-TextureImporter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#texture" aria-label="Go to glossary anchor for texture">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">A texture to use for tinting and discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Channel</strong></td>
+	<td style="text-align:left;">A channel from the texture to use for discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Threshold</strong></td>
+	<td style="text-align:left;">When mapping particles to positions on the texture, discard any whose <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> color falls below this threshold.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle colors by the texture color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle alphas by the texture alpha.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bilinear Filtering</strong></td>
+	<td style="text-align:left;">When reading the texture, combine 4 neighboring samples for smoother changes in particle color, regardless of the texture dimensions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Position</strong></td>
+	<td style="text-align:left;">Apply an offset to the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rotation</strong></td>
+	<td style="text-align:left;">Rotate the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale</strong></td>
+	<td style="text-align:left;">Change the size of the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Align to Direction</strong></td>
+	<td style="text-align:left;">Orient particles based on their initial direction of travel. This can be useful if you want to simulate, for example, chunks of car paint flying off a car’s bodywork during a <span class="tooltip"><strong>collision</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span>. If the orientation is not satisfactory, you can also override it by applying a <strong>Start Rotation</strong> value in the <strong>Main</strong> module.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a random direction. When set to 0, this setting has no effect. When set to 1, the particle direction is completely random.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spherize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a spherical direction, where they travel outwards from the center of their <a href="http://mdeditor.infra.hq.unity3d.com/#class-Transform">Transform</a>. When set to 0, this setting has no effect. When set to 1, the particle direction points outwards from the center (behaving identically to when the Shape is set to Sphere).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Position</strong></td>
+	<td style="text-align:left;">Move particles by a random amount, up to the specified value. When this is set to 0, this setting has no effect. Any other value will apply some randomness to the spawning positions of the particles.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Cone</h3>
+
+<figure>
+<img src="../uploads/Main/ShapeModule1.png" alt="The shape module when set to Cone mode">
+<figcaption>The shape module when set to Cone mode</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Shape</strong></td>
+	<td style="text-align:left;">The shape of the emission volume.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Cone</strong></td>
+	<td style="text-align:left;">Emit particles from the base or body of a cone. The particles diverge in proportion to their distance from the cone’s center line.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Angle</strong></td>
+	<td style="text-align:left;">The angle of the cone at its point. An angle of 0 produces a cylinder while an angle of 90 gives a flat disc.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Radius</strong></td>
+	<td style="text-align:left;">The radius of the circular aspect of the shape.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Radius Thickness</strong></td>
+	<td style="text-align:left;">The proportion of the volume that emits particles.A value of 0 emits particles from the outer surface of the shape. A value of 1 emits particles from the entire volume. Values in between will use a proportion of the volume.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Arc</strong></td>
+	<td style="text-align:left;">The angular portion of a full circle that forms the emitter’s shape.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Mode</strong></td>
+	<td style="text-align:left;">Define how Unity generates particles around the arc of the shape. When set to <strong>Random</strong>, Unity generates particles randomly around the arc. If using <strong>Loop</strong>, Unity generates particles sequentially around the arc of the shape, and loops back to the start at the end of each cycle. <strong>Ping-Pong</strong> is the same as <strong>Loop</strong>, except each consecutive loop happens in the opposite direction to the last. Finally, <strong>Burst Spread</strong> mode distributes particle generation evenly around the shape. This can give you an even spread of particles, compared to the default randomized behavior, where particles may clump together unevenly. <strong>Burst Spread</strong> is best used with burst emissions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spread</strong></td>
+	<td style="text-align:left;">The discrete intervals around the arc where particles may be generated. For example, a value of 0 allows particles to spawn anywhere around the arc, and a value of 0.1 only spawns particles at 10% intervals around the shape.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Speed</strong></td>
+	<td style="text-align:left;">The speed the emission position moves around the arc. Using the small black drop-down menu next to the value field, set this to <strong>Constant</strong> for the value to always remain the same, or <strong>Curve</strong> for the value to change over time. This option is only available if <strong>Mode</strong> is set to something other than <strong>Random</strong>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Length</strong></td>
+	<td style="text-align:left;">The length of the cone. This only applies when the <strong>Emit from:</strong> property is set to <strong>Volume</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Emit from:</strong></td>
+	<td style="text-align:left;">The part of the cone to emit particles from: <strong>Base</strong> or <strong>Volume</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Texture</strong></td>
+	<td style="text-align:left;">A texture to be used for tinting and discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Channel</strong></td>
+	<td style="text-align:left;">A channel from the texture to be used for discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Threshold</strong></td>
+	<td style="text-align:left;">When mapping particles to positions on the texture, discard any whose pixel color falls below this threshold.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle colors by the texture color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle alphas by the texture alpha.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bilinear Filtering</strong></td>
+	<td style="text-align:left;">When reading the texture, combine 4 neighboring samples for smoother changes in particle color, regardless of the texture dimensions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Position</strong></td>
+	<td style="text-align:left;">Apply an offset to the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rotation</strong></td>
+	<td style="text-align:left;">Rotate the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale</strong></td>
+	<td style="text-align:left;">Change the size of the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Align to Direction</strong></td>
+	<td style="text-align:left;">Orient particles based on their initial direction of travel. This can be useful if you want to simulate, for example, chunks of car paint flying off a car’s bodywork during a collision. If the orientation is not satisfactory, you can also override it by applying a Start Rotation value in the Main module.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a random direction. When set to 0, this setting has no effect. When set to 1, the particle direction is completely random.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spherize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a spherical direction, where they travel outwards from the center of their Transform. When set to 0, this setting has no effect. When set to 1, the particle direction points outwards from the center (behaving identically to when the Shape is set to Sphere).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Position</strong></td>
+	<td style="text-align:left;">Move particles by a random amount, up to the specified value. When this is set to 0, this setting has no effect. Any other value will apply some randomness to the spawning positions of the particles. The amount of randomization is multiplied by the Scale property.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Box</h3>
+
+<figure>
+<img src="../uploads/Main/ShapeModule2.png" alt="The shape module when set to Box mode">
+<figcaption>The shape module when set to Box mode</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Shape</strong></td>
+	<td style="text-align:left;">The shape of the emission volume.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Box</strong></td>
+	<td style="text-align:left;">Emit particles from the edge, surface, or body of a box shape. The particles move in the emitter object’s forward (Z) direction.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Emit from:</strong></td>
+	<td style="text-align:left;">Select the part of the box to emit from: <strong>Edge</strong>, <strong>Shell</strong>, or <strong>Volume</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Texture</strong></td>
+	<td style="text-align:left;">A texture to be used for tinting and discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Channel</strong></td>
+	<td style="text-align:left;">A channel from the texture to be used for discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Threshold</strong></td>
+	<td style="text-align:left;">When mapping particles to positions on the texture, discard any whose pixel color falls below this threshold.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle colors by the texture color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle alphas by the texture alpha.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bilinear Filtering</strong></td>
+	<td style="text-align:left;">When reading the texture, combine 4 neighboring samples for smoother changes in particle color, regardless of the texture dimensions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Position</strong></td>
+	<td style="text-align:left;">Apply an offset to the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rotation</strong></td>
+	<td style="text-align:left;">Rotate the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale</strong></td>
+	<td style="text-align:left;">Change the size of the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Align to Direction</strong></td>
+	<td style="text-align:left;">Orient particles based on their initial direction of travel. This can be useful if you want to simulate, for example, chunks of car paint flying off a car’s bodywork during a collision. If the orientation is not satisfactory, you can also override it by applying a Start Rotation value in the Main module.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a random direction. When set to 0, this setting has no effect. When set to 1, the particle direction is completely random.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spherize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a spherical direction, where they travel outwards from the center of their Transform. When set to 0, this setting has no effect. When set to 1, the particle direction points outwards from the center (behaving identically to when the Shape is set to Sphere).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Position</strong></td>
+	<td style="text-align:left;">Move particles by a random amount, up to the specified value. When this is set to 0, this setting has no effect. Any other value will apply some randomness to the spawning positions of the particles.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Mesh, MeshRenderer, SkinnedMeshRenderer</h3>
+
+<figure>
+<img src="../uploads/Main/ShapeModule3.png" alt="The shape module when set to Mesh mode">
+<figcaption>The shape module when set to Mesh mode</figcaption>
+</figure>
+
+<p>Mesh, MeshRenderer and SkinnedMeshRenderer have the same properties.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Shape</strong></td>
+	<td style="text-align:left;">The shape of the emission volume.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Mesh</strong></td>
+	<td style="text-align:left;">Emits particles from any arbitrary Mesh shape supplied via the Inspector.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MeshRenderer</strong></td>
+	<td style="text-align:left;">Emits particles from a reference to a GameObject’s <span class="tooltip"><strong>Mesh Renderer</strong><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshRenderer.html" href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SkinnedMeshRenderer</strong></td>
+	<td style="text-align:left;">Emits particles from a reference to a GameObject’s Skinned Mesh Renderer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Type</strong></td>
+	<td style="text-align:left;">Where particles are emitted from. Select <strong>Vertex</strong> for the particles to emit from the vertices, <strong>Edge</strong> for the particles to emit from the edges, or <strong>Triangle</strong> for the particles to emit from the triangles. This is set to <strong>Vertex</strong> by default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Mode</strong></td>
+	<td style="text-align:left;">How the position on the mesh is chosen for each new particle. Select <strong>Random</strong> for the particles to choose a random position <strong>Loop</strong> for each new particle to be emitted from the next vertex in the mesh, or <strong>Ping-Pong</strong> to behave similarly to Loop mode, but to alternate the direction along the mesh vertices after each cycle. This is set to <strong>Random</strong> by default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Mesh</strong></td>
+	<td style="text-align:left;">The Mesh that provides the emitter’s shape.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Single Material</strong></td>
+	<td style="text-align:left;">Specify whether to emit particles from a particular sub-Mesh (identified by the material index number). If enabled, a numeric field appears, which allows you to specify the material index number.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Use Mesh Colors</strong></td>
+	<td style="text-align:left;">Modulate particle color with Mesh vertex colors, or, if they don’t exist, use the <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> color property “<em>Color“ or ”</em>TintColor” from the material.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Normal Offset</strong></td>
+	<td style="text-align:left;">Distance away from the surface of the Mesh to emit particles (in the direction of the surface normal)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Texture</strong></td>
+	<td style="text-align:left;">A texture to be used for tinting and discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Channel</strong></td>
+	<td style="text-align:left;">A channel from the texture to be used for discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Threshold</strong></td>
+	<td style="text-align:left;">When mapping particles to positions on the texture, discard any whose pixel color falls below this threshold.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color Affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle colors by the texture color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha Affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle alphas by the texture alpha.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bilinear Filtering</strong></td>
+	<td style="text-align:left;">When reading the texture, combine 4 neighboring samples for smoother changes in particle color, regardless of the texture dimensions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UV Channel</strong></td>
+	<td style="text-align:left;">Choose which UV channel on the source mesh to use for sampling the texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Position</strong></td>
+	<td style="text-align:left;">Apply an offset to the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rotation</strong></td>
+	<td style="text-align:left;">Rotate the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale</strong></td>
+	<td style="text-align:left;">Change the size of the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Align to Direction</strong></td>
+	<td style="text-align:left;">Orient particles based on their initial direction of travel. This can be useful if you want to simulate, for example, chunks of car paint flying off a car’s bodywork during a collision. If the orientation is not satisfactory, you can also override it by applying a Start Rotation value in the Main module.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a random direction. When set to 0, this setting has no effect. When set to 1, the particle direction is completely random.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spherize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a spherical direction, where they travel outwards from the center of their Transform. When set to 0, this setting has no effect. When set to 1, the particle direction points outwards from the center (behaving identically to when the Shape is set to Sphere).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Position</strong></td>
+	<td style="text-align:left;">Move particles by a random amount, up to the specified value. When this is set to 0, this setting has no effect. Any other value will apply some randomness to the spawning positions of the particles.</td>
+</tr>
+</tbody>
+</table>
+
+<h4>Mesh details</h4>
+
+<p>You can choose to only emit particles from a particular material (sub-Mesh) by checking the <strong>Single Material</strong> property and you can offset the emission position along the Mesh’s normals by checking the <strong>Normal Offset</strong> property. </p>
+
+<p>To ignore the color of the Mesh, check the <strong>Use Mesh Colors</strong> property. To read the texture colors from a mesh, assign the Texture you wish to read to the <strong>Texture</strong> property.</p>
+
+<p>Meshes must be read/write enabled to work on the Particle System. If you assign them in the Editor, Unity handles this for you. But if you want to assign different meshes at run time, you need to check the <strong>Read/Write Enabled</strong> setting in the <a href="FBXImporter-Model.html">Import Settings</a>.</p>
+
+<p>The <strong>Mode</strong> property allows the Particle System to emit particles in a predictable order on the surface of a Mesh. When emitting from Vertices, this property allows you to emit each new particle from the next vertex in the array of vertices in the Mesh. When emitting from Edges, the Particle System can emit particles smoothly along the edges of the Mesh’s triangles/lines. </p>
+
+<h3>Sprite and Sprite Renderer</h3>
+
+<figure>
+<img src="../uploads/Main/ShapeModuleSprite.png" alt="The shape module when set to Sprite mode">
+<figcaption>The shape module when set to Sprite mode</figcaption>
+</figure>
+
+<p>Sprite and SpriteRenderer have the same properties.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Shape</strong></td>
+	<td style="text-align:left;">The shape of the emission volume.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Emits particles from a Sprite shape supplied via the Inspector.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SpriteRenderer</strong></td>
+	<td style="text-align:left;">Emits particles from a reference to a GameObject’s <span class="tooltip"><strong>Sprite Renderer</strong><span class="tooltiptext">A component that lets you display images as Sprites for use in both 2D and 3D scenes. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-SpriteRenderer.html" href="class-SpriteRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SpriteRenderer" aria-label="Go to glossary anchor for SpriteRenderer">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Type</strong></td>
+	<td style="text-align:left;">Where particles are emitted from. Select <strong>Vertex</strong> to emit particles from the vertices, <strong>Edge</strong> to emit particles from the edges, or <strong>Triangle</strong> to emit particles from the triangles. This is set to <strong>Vertex</strong> by default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Sprite</strong></td>
+	<td style="text-align:left;">The Sprite that defines the particle emitter’s shape.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Normal Offset</strong></td>
+	<td style="text-align:left;">Distance away from the surface of the Sprite to emit particles (in the direction of the surface normal)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Texture</strong></td>
+	<td style="text-align:left;">A texture to be used for tinting and discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Channel</strong></td>
+	<td style="text-align:left;">A channel from the texture to be used for discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Threshold</strong></td>
+	<td style="text-align:left;">When mapping particles to positions on the texture, discard any whose pixel color falls below this threshold.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color Affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle colors by the texture color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha Affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle alphas by the texture alpha.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bilinear Filtering</strong></td>
+	<td style="text-align:left;">When reading the texture, combine 4 neighboring samples for smoother changes in particle color, regardless of the texture dimensions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Position</strong></td>
+	<td style="text-align:left;">Apply an offset to the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rotation</strong></td>
+	<td style="text-align:left;">Rotate the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale</strong></td>
+	<td style="text-align:left;">Change the size of the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Align to Direction</strong></td>
+	<td style="text-align:left;">Orient particles based on their initial direction of travel. This can be useful if you want to simulate, for example, chunks of car paint flying off a car’s bodywork during a collision. If the orientation is not satisfactory, you can also override it by applying a Start Rotation value in the Main module.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a random direction. When set to 0, this setting has no effect. When set to 1, the particle direction is completely random.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spherize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a spherical direction, where they travel outwards from the center of their Transform. When set to 0, this setting has no effect. When set to 1, the particle direction points outwards from the center (behaving identically to when the Shape is set to Sphere).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Position</strong></td>
+	<td style="text-align:left;">Move particles by a random amount, up to the specified value. When this is set to 0, this setting has no effect. Any other value will apply some randomness to the spawning positions of the particles.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Circle</h3>
+
+<figure>
+<img src="../uploads/Main/ShapeModule4.png" alt="The shape module when set to Circle mode">
+<figcaption>The shape module when set to Circle mode</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Shape</strong></td>
+	<td style="text-align:left;">The shape of the emission volume.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Circle</strong></td>
+	<td style="text-align:left;">Uniform particle emission from the center or edge of a circle. The particles move only in the plane of the circle.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Radius</strong></td>
+	<td style="text-align:left;">The radius of the circular aspect of the shape.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Radius Thickness</strong></td>
+	<td style="text-align:left;">The proportion of the volume that emits particles. A value of 0 emits particles from the outer edge of the circle. A value of 1 emits particles from the entire area. Values in between will use a proportion of the area.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Arc</strong></td>
+	<td style="text-align:left;">The angular portion of a full circle that forms the emitter’s shape.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Mode</strong></td>
+	<td style="text-align:left;">Define how Unity generates particles around the arc of the shape. When set to <strong>Random</strong>, Unity generates particles randomly around the arc. If using <strong>Loop</strong>, Unity generates particles sequentially around the arc of the shape, and loops back to the start at the end of each cycle. <strong>Ping-Pong</strong> is the same as <strong>Loop</strong>, except each consecutive loop happens in the opposite direction to the last. Finally, <strong>Burst Spread</strong> mode distributes particle generation evenly around the shape. This can be used to give you an even spread of particles, compared to the default randomized behavior, where particles may clump together unevenly. Burst Spread is best used with burst emissions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spread</strong></td>
+	<td style="text-align:left;">Control the discrete intervals around the arc where particles may be generated. For example, a value of 0 will allow particles to spawn anywhere around the arc, and a value of 0.1 will only spawn particles at 10% intervals around the shape.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Speed</strong></td>
+	<td style="text-align:left;">Set a value for the speed the emission position moves around the arc. Using the small black drop-down next to the value field, set this to <strong>Constant</strong> for the value to always remain the same, or <strong>Curve</strong> for the value to change over time.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Texture</strong></td>
+	<td style="text-align:left;">Choose a texture to be used for tinting and discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Channel</strong></td>
+	<td style="text-align:left;">Select a channel from the texture to be used for discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Threshold</strong></td>
+	<td style="text-align:left;">When mapping particles to positions on the texture, discard any whose pixel color falls below this threshold.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color Affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle colors by the texture color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha Affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle alphas by the texture alpha.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bilinear Filtering</strong></td>
+	<td style="text-align:left;">When reading the texture, combine 4 neighboring samples, for smoother changes in particle color, regardless of the texture dimensions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Position</strong></td>
+	<td style="text-align:left;">Apply an offset to the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rotation</strong></td>
+	<td style="text-align:left;">Rotate the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale</strong></td>
+	<td style="text-align:left;">Change the size of the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Align to Direction</strong></td>
+	<td style="text-align:left;">Use this checkbox to orient particles based on their initial direction of travel. This can be useful if you want to simulate, for example, chunks of car paint flying off a car’s bodywork during a collision. If the orientation is not satisfactory, you can also override it by applying a Start Rotation value in the Main module.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a random direction. When set to 0, this setting has no effect. When set to 1, the particle direction is completely random.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spherize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a spherical direction, where they travel outwards from the center of their Transform. When set to 0, this setting has no effect. When set to 1, the particle direction points outwards from the center (behaving identically to when the Shape is set to Sphere).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Position</strong></td>
+	<td style="text-align:left;">Move particles by a random amount, up to the specified value. When this is set to 0, this setting has no effect. Any other value will apply some randomness to the spawning positions of the particles.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Edge</h3>
+
+<figure>
+<img src="../uploads/Main/ShapeModule5.png" alt="The shape module when set to Edge mode">
+<figcaption>The shape module when set to Edge mode</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Shape</strong></td>
+	<td style="text-align:left;">The shape of the emission volume.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Edge</strong></td>
+	<td style="text-align:left;">Emit particles from a line segment. The particles move in the emitter object’s upward (Y) direction.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Radius</strong></td>
+	<td style="text-align:left;">The radius property is used to define the length of the edge.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Mode</strong></td>
+	<td style="text-align:left;">Define how Unity generates particles along the radius of the shape. When set to <strong>Random</strong>, Unity generates particles randomly along the radius. If using <strong>Loop</strong>, Unity generates particles sequentially along the radius of the shape, and loops back to the start at the end of each cycle. <strong>Ping-Pong</strong> is the same as <strong>Loop</strong>, except each consecutive loop happens in the opposite direction to the last. Finally, <strong>Burst Spread</strong> mode distributes particle generation evenly along the radius. This can be used to give you an even spread of particles, compared to the default randomized behavior, where particles may clump together unevenly. Burst Spread is best used with burst emissions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spread</strong></td>
+	<td style="text-align:left;">T the discrete intervals along the radius where particles may be generated. For example, a value of 0 will allow particles to spawn anywhere along the radius, and a value of 0.1 will only spawn particles at 10% intervals along the radius.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Speed</strong></td>
+	<td style="text-align:left;">The speed the emission position moves along the radius. Using the small black drop-down next to the value field, set this to <strong>Constant</strong> for the value to always remain the same, or <strong>Curve</strong> for the value to change over time.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Texture</strong></td>
+	<td style="text-align:left;">A texture to be used for tinting and discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Channel</strong></td>
+	<td style="text-align:left;">A channel from the texture to be used for discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Threshold</strong></td>
+	<td style="text-align:left;">When mapping particles to positions on the texture, discard any whose pixel color falls below this threshold.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color Affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle colors by the texture color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha Affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle alphas by the texture alpha.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bilinear Filtering</strong></td>
+	<td style="text-align:left;">When reading the texture, combine 4 neighboring samples for smoother changes in particle color, regardless of the texture dimensions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Position</strong></td>
+	<td style="text-align:left;">Apply an offset to the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rotation</strong></td>
+	<td style="text-align:left;">Rotate the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale</strong></td>
+	<td style="text-align:left;">Change the size of the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Align to Direction</strong></td>
+	<td style="text-align:left;">Orient particles based on their initial direction of travel. This can be useful if you want to simulate, for example, chunks of car paint flying off a car’s bodywork during a collision. If the orientation is not satisfactory, you can also override it by applying a <strong>Start Rotation</strong> value in the Main module.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a random direction. When set to 0, this setting has no effect. When set to 1, the particle direction is completely random.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spherize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a spherical direction, where they travel outwards from the center of their Transform. When set to 0, this setting has no effect. When set to 1, the particle direction points outwards from the center (behaving identically to when the Shape is set to Sphere).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Position</strong></td>
+	<td style="text-align:left;">Move particles by a random amount, up to the specified value. When this is set to 0, this setting has no effect. Any other value will apply some randomness to the spawning positions of the particles.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Donut</h3>
+
+<figure>
+<img src="../uploads/Main/ShapeModule6.png" alt="The shape module when set to Donut mode">
+<figcaption>The shape module when set to Donut mode</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Shape</strong></td>
+	<td style="text-align:left;">The shape of the emission volume.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Donut</strong></td>
+	<td style="text-align:left;">Emit particles from a torus. The particles move outwards from the ring of the Torus.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Radius</strong></td>
+	<td style="text-align:left;">The radius of the main donut ring.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Donus Radius</strong></td>
+	<td style="text-align:left;">The thickness of the outer donut ring.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Radius Thickness</strong></td>
+	<td style="text-align:left;">The proportion of the volume that emits particles. A value of 0 emits particles from the outer edge of the circle. A value of 1 emits particles from the entire area. Values in between will use a proportion of the area.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Arc</strong></td>
+	<td style="text-align:left;">The angular portion of a full circle that forms the emitter’s shape.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Mode</td>
+	<td style="text-align:left;">Define how Unity generates particles around the arc of the shape. When set to <strong>Random</strong>, Unity generates particles randomly around the arc. If using <strong>Loop</strong>, Unity generates particles sequentially around the arc of the shape, and loops back to the start at the end of each cycle. <strong>Ping-Pong</strong> is the same as <strong>Loop</strong>, except each consecutive loop happens in the opposite direction to the last. Finally, <strong>Burst Spread</strong> mode distributes particle generation evenly around the shape. This can be used to give you an even spread of particles, compared to the default randomized behavior, where particles may clump together unevenly. Burst Spread is best used with burst emissions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Spread</td>
+	<td style="text-align:left;">The discrete intervals around the arc where particles may be generated. For example, a value of 0 will allow particles to spawn anywhere around the arc, and a value of 0.1 will only spawn particles at 10% intervals around the shape.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Speed</td>
+	<td style="text-align:left;">The speed the emission position moves around the arc. Using the small black drop-down next to the value field, set this to <strong>Constant</strong> for the value to always remain the same, or <strong>Curve</strong> for the value to change over time.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Texture</strong></td>
+	<td style="text-align:left;">A texture to be used for tinting and discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Channel</strong></td>
+	<td style="text-align:left;">A channel from the texture to be used for discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Threshold</strong></td>
+	<td style="text-align:left;">When mapping particles to positions on the texture, discard any whose pixel color falls below this threshold.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color Affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle colors by the texture color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha Affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle alphas by the texture alpha.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bilinear Filtering</strong></td>
+	<td style="text-align:left;">When reading the texture, combine 4 neighboring samples for smoother changes in particle color, regardless of the texture dimensions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Position</strong></td>
+	<td style="text-align:left;">Apply an offset to the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rotation</strong></td>
+	<td style="text-align:left;">Rotate the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale</strong></td>
+	<td style="text-align:left;">Change the size of the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Align To Direction</strong></td>
+	<td style="text-align:left;">Orient particles based on their initial direction of travel. This can be useful if you want to simulate, for example, chunks of car paint flying off a car’s bodywork during a collision. If the orientation is not satisfactory, you can also override it by applying a <strong>Start Rotation</strong> value in the Main module.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a random direction. When set to 0, this setting has no effect. When set to 1, the particle direction is completely random.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spherize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a spherical direction, where they travel outwards from the center of their Transform. When set to 0, this setting has no effect. When set to 1, the particle direction points outwards from the center (behaving identically to when the Shape is set to Sphere).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Position</strong></td>
+	<td style="text-align:left;">Move particles by a random amount, up to the specified value. When this is set to 0, this setting has no effect. Any other value will apply some randomness to the spawning positions of the particles.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Rectangle</h3>
+
+<figure>
+<img src="../uploads/Main/ShapeModule7.png" alt="The shape module when set to Rectangle mode">
+<figcaption>The shape module when set to Rectangle mode</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Shape</strong></td>
+	<td style="text-align:left;">The shape of the emission volume.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rectangle</strong></td>
+	<td style="text-align:left;">Emits particles from a rectangle. The particles move up from the rectangle.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Texture</strong></td>
+	<td style="text-align:left;">A texture to be used for tinting and discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Channel</strong></td>
+	<td style="text-align:left;">A channel from the texture to be used for discarding particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clip Threshold</strong></td>
+	<td style="text-align:left;">When mapping particles to positions on the texture, discard any whose pixel color falls below this threshold.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color Affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle colors by the texture color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha Affects Particles</strong></td>
+	<td style="text-align:left;">Multiply particle alphas by the texture alpha.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bilinear Filtering</strong></td>
+	<td style="text-align:left;">When reading the texture, combine 4 neighboring samples for smoother changes in particle color, regardless of the texture dimensions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Position</strong></td>
+	<td style="text-align:left;">Apply an offset to the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rotation</strong></td>
+	<td style="text-align:left;">Rotate the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale</strong></td>
+	<td style="text-align:left;">Change the size of the emitter shape used for spawning particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Align To Direction</strong></td>
+	<td style="text-align:left;">Orient particles based on their initial direction of travel. This can be useful if you want to simulate, for example, chunks of car paint flying off a car’s bodywork during a collision. If the orientation is not satisfactory, you can also override it by applying a <strong>Start Rotation</strong> value in the Main module.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a random direction. When set to 0, this setting has no effect. When set to 1, the particle direction is completely random.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spherize Direction</strong></td>
+	<td style="text-align:left;">Blend particle directions towards a spherical direction, where they travel outwards from the center of their Transform. When set to 0, this setting has no effect. When set to 1, the particle direction points outwards from the center (behaving identically to when the Shape is set to Sphere).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Randomize Position</strong></td>
+	<td style="text-align:left;">Move particles by a random amount, up to the specified value. When this is set to 0, this setting has no effect. Any other value will apply some randomness to the spawning positions of the particles.</td>
+</tr>
+</tbody>
+</table>
+
+<p><br></p>
+
+<ul>
+<li><p><span class="page-edit">2018–11–02 Page amended
+</span></p></li>
+<li><p><span class="page-history">Functionality of Shape Module updated in Unity <a href="../Manual/30_search.html?q=newin20171">2017.1</a> <span class="search-words">NewIn20171</span></span></p></li>
+<li><p><span class="page-history">Texture tinting and selective discarding features (Clip Channel, Clip Threshold, Color affects particles, Alpha affects particles, Bilinear filtering) added to Shape Module in <a href="https://docs.unity3d.com/2018.1/Documentation/Manual/30_search.html?q=newin20181">2018.1</a> <span class="search-words">NewIn20181</span></span></p></li>
+<li><p><span class="page-history">Rectangle emission shape added to Shape Module in <a href="https://docs.unity3d.com/2018.1/Documentation/Manual/30_search.html?q=newin20181">2018.1</a> <span class="search-words">NewIn20181</span></span></p></li>
+<li><p><span class="page-history">Sprite and Sprite Renderer emission shape added to Particle System Shape Module in <a href="https://docs.unity3d.com/2018.3/Documentation/Manual/30_search.html?q=newin20183">2018.3</a> <span class="search-words">NewIn20183</span></span></p></li>
+</ul>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="PartSysEmissionModule.html"></a></span><div class="tip">Emission module</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="PartSysVelOverLifeModule.html"></a></span><div class="tip">Velocity over Lifetime module</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

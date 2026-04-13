@@ -1,0 +1,321 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Import Activity window</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ImportActivityWindow.html">English</a></li>
+<li><a href="/cn/current/Manual/ImportActivityWindow.html">中文</a></li>
+<li><a href="/ja/current/Manual/ImportActivityWindow.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ImportActivityWindow.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ImportActivityWindow.html">English</a></li>
+<li><a href="/cn/current/Manual/ImportActivityWindow.html">中文</a></li>
+<li><a href="/ja/current/Manual/ImportActivityWindow.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ImportActivityWindow.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AssetWorkflow.html">Asset Workflow</a></li>
+<li>Import Activity window</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SpecialFolders.html"></a></span><div class="tip">Special folder names</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Presets.html"></a></span><div class="tip">Presets</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Import Activity window</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>Overview</h2>
+
+<p>The Import Activity window provides you with information about what happens when Unity imports your assets. You can use this information to identify which assets in your project were imported recently, how long each asset took to import, and why it was imported (or re-imported).</p>
+
+<p>This information allows you to analyse your project’s import activity, and make decisions about how to improve the time Unity takes to import your assets, or how to avoid unnecessary imports altogether. The Import Activity window therefore acts like a <span class="tooltip"><strong>profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> for the import process.</p>
+
+<h2>Accessing the Import Activity window</h2>
+
+<p>To open the Import Activity window, go to <strong>Window &gt; Analysis &gt; Import Activity Window</strong>. </p>
+
+<p>You can also open the Import Activity window directly from an asset, which causes the window to immediately display the import details for the selected asset. This is useful if you already know which asset’s import data you want to analyse. There are two ways to do this:</p>
+
+<ul>
+<li><p>Right-click an asset in the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span> and, from the context menu, select <strong>View in Import Activity Window</strong>.</p></li>
+<li><p>View an asset in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, right-click the Inspector’s tab, and, from the context menu, select <strong>Open in Import Activity Window</strong>.</p></li>
+</ul>
+
+<h2>Layout</h2>
+
+<p>The Import Activity window has three sections: the <strong><span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> </strong>at the top, the <strong>asset list</strong> on the left, and the <strong>information </strong>section on the right.</p>
+
+<figure>
+<img src="../uploads/Main/ImportActivityLayout.png" alt="The layout of the import activity window">
+<figcaption>The layout of the import activity window</figcaption>
+</figure>
+
+<h2>Toolbar</h2>
+
+<figure>
+<img src="../uploads/Main/ImportActivityToolbar.png" alt="">
+</figure>
+
+<p>The toolbar at the top of the window has the following three features:</p>
+
+<ol>
+<li>
+<strong>Show overview</strong> button</li>
+<li>
+<strong>Options</strong> menu</li>
+<li>Search field</li>
+</ol>
+
+<h3>Show Overview button</h3>
+
+<p>When you click the <strong>Show Overview</strong> button, the information section on the right displays overview information, which includes general information about your asset imports. See Overview information, below.</p>
+
+<h3>Options menu</h3>
+
+<p>The <strong>Options</strong> dropdown allows you to adjust the information shown in the asset list. The following options are available:</p>
+
+<h4>Use relative timestamps</h4>
+
+<p>Controls whether the last import time is shown in relative format (eg. “a few seconds ago”), or absolute format, in the form: <strong>Day-Month-Year Hour:Minute:Second</strong>
+</p>
+
+<h4>Show previous imports</h4>
+
+<p>Controls whether previous imports are shown, or only the most recent import. Showing previous imports allows you to see how many revisions of an asset are currently being kept in the Library folder. This list is generally cleared when Artifact Garbage Collection runs, when you restart the Editor.</p>
+
+<p>When you enable this option, a second vertical list view appears alongside the asset list, showing all the currently stored import results for the selected asset.</p>
+
+<figure>
+<img src="../uploads/Main/ImportActivityPreviousImports.png" alt="The previous imports list, showing three import results for the selected asset.">
+<figcaption>The <strong>previous imports</strong> list, showing three import results for the selected asset.</figcaption>
+</figure>
+
+<p>If you want to keep import results from previous Editor sessions to aid with debugging or analysis, you can turn off Artifact Garbage Collection by going to <strong>Project Settings &gt; Editor &gt; Remove unused Artifacts on Restart</strong>. You can also control this setting via script by using <a href="../ScriptReference/EditorUserSettings.artifactGarbageCollection.html">EditorUserSettings.artifactGarbageCollection</a>.</p>
+
+<h4>Include PreviewImporter</h4>
+
+<p>Controls whether to include artifacts generated by the preview window. These are hidden by default, because they are not usually useful when examining your asset imports.</p>
+
+<h3>Search field</h3>
+
+<p>The search field on the right side of the toolbar allows you to quickly filter the <strong>asset list</strong> by name to find the specific assets you are interested in.</p>
+
+<h2>Asset list</h2>
+
+<p>The left-hand section of the window shows the list of all assets in your project. The columns are:</p>
+
+<ul>
+<li><p>
+<strong>Asset</strong>: The asset name </p></li>
+<li><p>
+<strong>Last Import</strong>: When the asset was last imported </p></li>
+<li><p>
+<strong>Duration</strong>: The amount of time the Last Import took, in milliseconds. </p></li>
+</ul>
+
+<p>To change the sort order of the list, click on the column headings.</p>
+
+<figure>
+<img src="../uploads/Main/ImportActivityAssetList.png" alt="image alt text">
+<figcaption>image alt text</figcaption>
+</figure>
+
+<p><em>The asset list, with results shown sorted by longest duration first.</em></p>
+
+<h2>Information panel</h2>
+
+<p>The right-hand section of the window is the information panel, and has two modes:</p>
+
+<ul>
+<li><p>Overview information appears when there is no asset selected. </p></li>
+<li><p>Asset information appears when you select an asset from the list on the left, or if you open the window directly via an asset as described above.</p></li>
+</ul>
+
+<h3>Overview information</h3>
+
+<p>The Overview information displays a list of the assets with the most dependencies, and assets with the longest import duration. It is useful for quickly identifying which assets may be most significantly slowing down your import process. Assets with more dependencies are more likely to be regularly re-imported, because an asset is re-imported whenever any of its dependencies are modified.</p>
+
+<p>When you open the Import Activity window from the main menu, it displays the Overview information by default. If you are viewing asset information and you want to return to the Overview information, select the <strong>Show overview</strong> button in the toolbar .</p>
+
+<figure>
+<img src="../uploads/Main/ImportActivityOverview.png" alt="The Import Activity window displaying the Overview on the right side, and the Show Overview button in the top-left of the window.">
+<figcaption>The Import Activity window displaying the Overview on the right side, and the <strong><em>Show Overview</em></strong> button in the top-left of the window.</figcaption>
+</figure>
+
+<h3>Asset information</h3>
+
+<figure>
+<img src="../uploads/Main/ImportActivityAssetInfo.png" alt="The asset information panel showing the information relating to a texture asset.">
+<figcaption>The asset information panel showing the information relating to a texture asset.</figcaption>
+</figure>
+
+<p>When you select an asset from the asset list, the information panel displays the asset information. This includes the following details about the asset and its most recent import. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Title</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Asset</strong></td>
+	<td style="text-align:left;">The name of the currently selected asset. You can click this field to locate the asset in the Project window.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GUID</strong></td>
+	<td style="text-align:left;">The unique GUID assigned to the asset. You can use this to track its references across your project.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Asset Size</strong></td>
+	<td style="text-align:left;">The size of the source file of the asset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Path</strong></td>
+	<td style="text-align:left;">The file path of the asset, relative to the project’s root folder.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Editor Revision</strong></td>
+	<td style="text-align:left;">The version of the Editor that created this artifact.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Timestamp</strong></td>
+	<td style="text-align:left;">The time at which the Artifact file was created. This matches the timestamp value of the file in the <code>Library</code> folder.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Duration</strong></td>
+	<td style="text-align:left;">The time Unity took to import this asset in the most recent import, in milliseconds.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Reason for Import</strong></td>
+	<td style="text-align:left;">A description of the change (or changes) in your project which caused this asset’s most recent import, and details about the associated dependency type.<br><br>The Reason for Import field has its own search bar, which allows you to search its text. This is useful in situations where an asset has many reasons for import (for example, a compute shader can have many dependencies that are modified when you switch platforms).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Produced Files / Artifacts</strong></td>
+	<td style="text-align:left;">The list of files present in the <code>Library</code> folder that Unity produced when it last imported this asset. Usually there is just one artifact per asset, although sometimes there can be multiple. For example, when Unity generates a preview of an asset.<br><br>During a typical usage of the Editor, Unity might generate many versions of an asset’s import result (an artifact). For this reason, each artifact has an artifact ID for reference. This is different to the asset’s GUID.<br><br>The currently selected revision is referred to as the current revision, which is selected by default when an asset in the Asset List is selected.<br><br>Generally revisions are in chronological order with the current revision as the newest. However, if you undo an operation in Unity which changes an asset’s artifact, the current revision reverts back to a previously cached artifact and therefore would not be the most recently listed artifact.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Dependencies</strong></td>
+	<td style="text-align:left;">A list of Editor and project-specific variables which control the state of an asset, which, if changed, trigger the re-import of the asset.<br><br>Dependencies are how the asset database tracks the state of an asset. This means that if an asset dependency changes, the import result will be different and a new revision of an artifact will be generated.<br><br>Understanding your asset’s dependency types and what can cause them to change can help you get the most out of Unity’s asset database system, speed up your workflow, and avoid unnecessary import time.<br><br>This field has its own search bar, which allows you to search the text contained in the Dependencies field.</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SpecialFolders.html"></a></span><div class="tip">Special folder names</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Presets.html"></a></span><div class="tip">Presets</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Android thread configuration</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/android-thread-configuration.html">English</a></li>
+<li><a href="/cn/current/Manual/android-thread-configuration.html">中文</a></li>
+<li><a href="/ja/current/Manual/android-thread-configuration.html">日本語</a></li>
+<li><a href="/kr/current/Manual/android-thread-configuration.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/android-thread-configuration.html">English</a></li>
+<li><a href="/cn/current/Manual/android-thread-configuration.html">中文</a></li>
+<li><a href="/ja/current/Manual/android-thread-configuration.html">日本語</a></li>
+<li><a href="/kr/current/Manual/android-thread-configuration.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="android.html">Android</a></li>
+<li><a href="android-developing.html">Developing for Android</a></li>
+<li>Android thread configuration</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="deep-linking-android.html"></a></span><div class="tip">Deep linking on Android</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="android-device-features-and-permissions.html"></a></span><div class="tip">Device features and permissions</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Android thread configuration</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity configures <a href="#thread-affinity">thread affinity</a> and <a href="#thread-priority">thread priority</a> based on the CPU topology of the device. Unity’s default thread configuration works well for most projects, but in some situations, you might want to change the thread configuration (for example, if you want to optimize for specific devices, or if your application aims for low power consumption and doesn’t require high frame rates).</p>
+
+<p>
+<strong>Important</strong>: Use Unity’s default settings when possible. If you change the thread configuration to optimize for specific devices, any changes you make can have a negative performance impact on other devices or even the same devices in future operating system versions.</p>
+
+<p><a name="thread-affinity" aria-hidden="true"></a></p>
+
+<h2>Thread affinity</h2>
+
+<p>The affinity of a thread controls which CPU cores the thread should run on. For Android devices, cores usually fit into two categories:</p>
+
+<ul>
+<li>Big: Powerful cores that are battery power-intensive.</li>
+<li>Little: Slower cores that are less battery power-intensive than big cores.</li>
+</ul>
+
+<p>
+<strong>Important</strong>: For typical applications that target a variety of Android devices, don’t bind threads to specific cores.</p>
+
+<h3>Identifying CPU cores</h3>
+
+<p>Unity usually receives the capacity and big/little assignment for every CPU core from the device’s operating system. For older operating system versions, this information isn’t always available. In this case, Unity calculates the capacity of the CPU cores and uses that information to assign each core as either big or little. To assign a core, Unity compares the CPU capacity of each core to a threshold. By default, a core is big if it has at least double the CPU capacity of the slowest core, and is little otherwise.</p>
+
+<p>For more control over which cores Unity assigns as big or little, you can provide a custom threshold. To provide a custom threshold, use the <code>-platform-android-cpucapacity-threshold [value]</code> command-line argument with a value between 0 and 1024 where 0 represents the lowest capacity core and 1024 represents the highest capacity core. For example, a value of <code>870</code>, which is approximately 85% of 1024, means that a core is big if its CPU capacity is in the top 15% of those on the chip. For information on how to add start-up command-line arguments to Unity on Android devices, see <a href="android-custom-activity-command-line.html">Specify Unity startup arguments from a custom UnityPlayerActivity file</a>.</p>
+
+<p>
+<strong>Note</strong>: Unity always categorizes a core as either big or little. For some complex CPU topologies (for example, those that have medium cores), Unity still categorizes its cores as either big or little.</p>
+
+<h3>Thread affinity aliases</h3>
+
+<p>Unity provides the following aliases that you can use as the thread affinity value:</p>
+
+<ul>
+<li>
+<code>any</code>: Allows the thread to run on any core.</li>
+<li>
+<code>little</code>: Allows the thread to run on any little core.</li>
+<li>
+<code>big</code>: Allows the thread to run on any big core.</li>
+</ul>
+
+<p>You can also use hexadecimal and binary values to specify thread affinity. In binary, the index of the bit references a specific CPU core. Typically, little cores start at index 0 and big cores come directly after them.</p>
+
+<p>For example, if the CPU contains four little cores and four big cores:</p>
+
+<ul>
+<li>The binary value <code>0b11110000</code> and hexadecimal value <code>0xf0</code> allow the thread to run on big cores.</li>
+<li>The binary value <code>0b1111</code> and hexadecimal value <code>0xf</code> allow the thread to run on little cores.</li>
+</ul>
+
+<p><a name="thread-priority" aria-hidden="true"></a></p>
+
+<h2>Thread priority</h2>
+
+<p>The priority of a thread controls how the device’s operating system allocates CPU time to the thread. The operating system allocates more CPU time to threads with a higher priority relative to threads with a lower priority. </p>
+
+<p>The thread priority values you can use in Unity are in the range of –20 to 19, where –20 indicates the highest priority and 19 indicates the lowest priority.</p>
+
+<h2>Configurable Unity threads</h2>
+
+<p>This section contains information about the Unity threads you can configure, and which command-line arguments you use to configure them.</p>
+
+<p>For information on how to add startup command-line arguments to Unity on Android devices, see <a href="android-custom-activity-command-line.html">Specify Unity startup arguments from a custom UnityPlayerActivity file</a>.</p>
+
+<p>
+<strong>Important</strong>: On some devices and Android OS versions, the Android OS might ignore command-line parameters and throw an error. If this occurs, you application still runs normally without issue, but Android doesn’t apply the thread affinity or thread priority settings that you specified.</p>
+
+<h3>Unity main thread</h3>
+
+<p>Unity’s main thread executes all <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> and usually has a high CPU load. The command-line arguments that affect this thread are:</p>
+
+<ul>
+<li>
+<code>-platform-android-unitymain-priority [value]</code> where <code>[value]</code> is the <a href="#thread-priority">priority</a> of the thread.</li>
+<li>
+<code>-platform-android-unitymain-affinity [value]</code> where <code>[value]</code> is the <a href="#thread-affinity">affinity</a> of the thread.</li>
+</ul>
+
+<h3>Unity JobWorker threads</h3>
+
+<p>Unity’s worker threads execute jobs from both the core engine and those your application dispatches via the <a href="JobSystem.html">C# Job System</a>. The command-line arguments that affect these threads are:</p>
+
+<ul>
+<li>
+<code>-platform-android-jobworker-priority [value]</code> where <code>[value]</code> is the <a href="#thread-priority">priority</a> of the threads.</li>
+<li>
+<code>-platform-android-jobworker-affinity [value] [value1 value2 value3]</code> where <code>[value]</code> is the <a href="#thread-affinity">affinity</a> of the thread and <code>[value1 value2 value3]</code> are optional values you can use to specify the affinity of worker threads per thread. If you only set a single value, Unity uses the same value for all worker threads. You can use ’-job-worker-count’ to specify the number of worker threads.</li>
+</ul>
+
+<h3>Unity render thread</h3>
+
+<p>Unity’s render thread interacts with the Graphics API if your project uses <a href="../ScriptReference/Rendering.RenderingThreadingMode.MultiThreaded.html">multithreaded rendering</a>.</p>
+
+<ul>
+<li>
+<code>-platform-android-gfxdeviceworker-priority [value]</code> where <code>[value]</code> is the <a href="#thread-priority">priority</a> of the thread.</li>
+<li>
+<code>-platform-android-gfxdeviceworker-affinity [value]</code> where <code>[value]</code> is the <a href="#thread-affinity">affinity</a> of the thread.</li>
+</ul>
+
+<p>
+<strong>Note</strong>: If you use GraphicsJobs, JobWorker threads also interact with the Graphics API.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="deep-linking-android.html"></a></span><div class="tip">Deep linking on Android</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="android-device-features-and-permissions.html"></a></span><div class="tip">Device features and permissions</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

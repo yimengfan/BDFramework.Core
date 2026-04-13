@@ -1,0 +1,299 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Sprite Renderer</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-SpriteRenderer.html">English</a></li>
+<li><a href="/cn/current/Manual/class-SpriteRenderer.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-SpriteRenderer.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-SpriteRenderer.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-SpriteRenderer.html">English</a></li>
+<li><a href="/cn/current/Manual/class-SpriteRenderer.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-SpriteRenderer.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-SpriteRenderer.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Unity2D.html">2D game development</a></li>
+<li><a href="Sprites.html">Work with sprites</a></li>
+<li>Sprite Renderer</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="sprites-sort.html"></a></span><div class="tip">Sort sprites</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SpriteCreator.html"></a></span><div class="tip">Sprite Creator</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Sprite Renderer</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/SpriteRenderer.html' title='Go to SpriteRenderer page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <strong>Sprite Renderer</strong> component renders the <span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> and controls how it visually appears in a <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> and controls how it visually appears in a <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> for both <a href="https://docs.unity3d.com/Manual/2Dor3D.html">2D and 3D projects</a>.</p>
+
+<p>When you create a Sprite (<strong>GameObject &gt; 2D Object &gt; Sprite</strong>), Unity automatically creates a GameObject with the <strong>Sprite Renderer</strong> component attached. You can also add the component to an existing GameObject via the <span class="tooltip"><strong>Components</strong><span class="tooltiptext">A functional part of a GameObject. A GameObject can contain any number of components. Unity has many built-in components, and you can create your own by writing scripts that inherit from MonoBehaviour. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingComponents.html" href="UsingComponents.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#component" aria-label="Go to glossary anchor for component">Glossary</a></span></span></span> menu (<strong>Component &gt; Rendering &gt; Sprite Renderer</strong>). </p>
+
+<h2>Properties</h2>
+
+<figure>
+<img src="../uploads/Main/2D_SpriteRenderer_1.png" alt="Sprite Renderer Inspector">
+<figcaption>Sprite Renderer Inspector</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Sprite</strong></td>
+	<td style="text-align:left;">Define which Sprite texture the component should render. Click the small dot to the right to open the object picker window, and select from the list of available Sprite Assets.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color</strong></td>
+	<td style="text-align:left;">Define the vertex color of the Sprite, which tints or recolors the Sprite’s image. Use the color picker to set the vertex color of the rendered Sprite texture. See the <a href="#color">Color</a> section below this table for examples.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Flip</strong></td>
+	<td style="text-align:left;">Flips the Sprite texture along the checked axis. This does not flip the Transform position of the <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Material</strong><span class="tooltiptext">An asset that defines how a surface should be rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Material.html" href="class-Material.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Define the <a href="#material">Material</a> used to render the Sprite texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Draw Mode</strong></td>
+	<td style="text-align:left;">Define how the Sprite scales when its dimensions change. Select one of the following options from the drop-down box.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">   Simple</td>
+	<td style="text-align:left;">The entire image scales when its dimensions change. This is the default option.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">   Sliced</td>
+	<td style="text-align:left;">Select this mode if the Sprite is <a href="https://docs.unity3d.com/Manual/9SliceSprites.html">9-sliced</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">       Size          <em>(‘Sliced’ or ‘Tiled’)</em>
+</td>
+	<td style="text-align:left;">Enter the Sprite’s new Width and Height to scale the 9-sliced Sprite correctly. You can also use the <a href="https://docs.unity3d.com/Manual/9SliceSprites.html">Rect Transform Tool</a> to scale the Sprite while applying 9-slicing properties.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">   Tiled</td>
+	<td style="text-align:left;">By default, this mode causes the middle of the 9-Sliced Sprite to tile instead of scale when its dimensions change. Use <strong>Tile Mode</strong> to control the tiling behavior of the Sprite.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">       Continuous</td>
+	<td style="text-align:left;">This is the default <strong>Tile Mode</strong>. In Continuous mode, the midsection tiles evenly when the Sprite dimensions change.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">       Adaptive</td>
+	<td style="text-align:left;">In Adaptive mode, the Sprite texture stretches when its dimensions change, similar to Simple mode. When the scale of the changed dimensions meets the Stretch Value, the midsection begins to tile.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        Stretch Value</td>
+	<td style="text-align:left;">Use the slider to set the value between 0 and 1. The maximum value is 1, which represents double the original Sprite’s scale.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Sorting Layer</strong></td>
+	<td style="text-align:left;">Set the <a href="https://docs.unity3d.com/Manual/class-TagManager.html">Sorting Layer</a> of the Sprite, which controls its priority during rendering. Select an existing Sorting Layer from the drop-down box, or create a new Sorting Layer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Order In Layer</strong></td>
+	<td style="text-align:left;">Set the render priority of the Sprite within its <a href="https://docs.unity3d.com/Manual/class-TagManager.html">Sorting Layer</a>. Lower numbered Sprites are rendered first, with higher numbered Sprites overlapping those below.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Mask Interaction</strong></td>
+	<td style="text-align:left;">Set how the Sprite Renderer behaves when interacting with a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Manual/class-SpriteMask.html">Sprite Mask</a><span class="tooltiptext">A texture which defines which areas of an underlying image to reveal or hide. <a href="class-SpriteMask.html" href="https://docs.unity3d.com/Manual/class-SpriteMask.html">Sprite Mask</a><span class="tooltiptext">A texture which defines which areas of an underlying image to reveal or hide. <a href="class-SpriteMask.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SpriteMask" aria-label="Go to glossary anchor for SpriteMask">Glossary</a></span></span></span>. See examples of the different options in the <a href="#maskinteract">Mask Interaction</a> section below.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">   None</td>
+	<td style="text-align:left;">The Sprite Renderer does not interact with any Sprite Masks in the Scene. This is the default option.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">   Visible Inside Mask</td>
+	<td style="text-align:left;">The Sprite is visible where the Sprite Mask overlays it, but not outside of it.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">   Visible Outside Mask</td>
+	<td style="text-align:left;">The Sprite is visible outside of the Sprite Mask, but not inside it. The Sprite Mask hides the sections of the Sprite it overlays.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Sprite Sort Point</strong></td>
+	<td style="text-align:left;">Choose between the Sprite’s Center or its Pivot Point when calculating the distance between the Sprite and the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>. See the section on <a href="#sortpoint">Sprite Sort Point</a> for further details.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Details</h2>
+
+<h3>Color<a name="color" aria-hidden="true"></a>
+</h3>
+
+<p>The image below demonstrates the effect of changing the RGB values on the <strong>Sprite Renderer’s</strong> Color setting. To change a Sprite’s opacity, change the value of its Color property’s Alpha (A) channel. </p>
+
+<figure>
+<img src="../uploads/Main/2DColor_Example.png" alt="Left: The original Sprite. Right: The Sprite with its RGB colors set to red.">
+<figcaption><strong>Left: </strong>The original Sprite. <strong>Right</strong>: The Sprite with its RGB colors set to red.</figcaption>
+</figure>
+
+<h3>Material<a name="material" aria-hidden="true"></a>
+</h3>
+
+<p>Use a Material’s <a href="https://docs.unity3d.com/Manual/Materials.html">Material and Shader settings</a> to control how Unity renders it. Refer to<a href="https://docs.unity3d.com/Manual/Shaders.html"> Materials, Shaders &amp; Textures</a> for further information on these settings.</p>
+
+<p>The default Material for newly created Sprites is <strong>Sprites - Default</strong>. Scene lighting does not affect this default Sprite. To have the Sprite react to lighting, assign the Material <strong>Default - Diffuse</strong> instead. To do this, click the small circle next to the Material field to bring up the object picker window, and select the <strong>Default-Diffuse</strong> Material.</p>
+
+<h3>Mask Interaction<a name="maskinteract" aria-hidden="true"></a>
+</h3>
+
+<p>Mask Interaction controls how the Sprite Renderer interacts with <a href="https://docs.unity3d.com/Manual/class-SpriteMask.html">Sprite Masks</a>. Select either <strong>Visible Inside Mask</strong> or <strong>Visible Outside Mask</strong> from the drop-down menu. The examples below demonstrate the effect of each option with a square Sprite and a circle Mask:</p>
+
+<p>To interact with a Sprite Mask, select <strong>Visible Inside Mask</strong> or <strong>Visible Outside Mask</strong> from the drop-down menu.</p>
+
+<p>
+<img src="../uploads/Main/2D_SpriteRenderer_8.png" alt="With Visible Inside Mask">
+<img src="../uploads/Main/2D_SpriteRenderer_9.png" alt="With Visible Outside Mask">
+</p>
+
+<h3>Sprite Sort Point<a name="sortpoint" aria-hidden="true"></a>
+</h3>
+
+<p>This property is only available when the Sprite Renderer’s <strong>Draw Mode</strong> is set to <strong>Simple</strong>.</p>
+
+<p>In a 2D project, the Main Camera is set to <a href="https://docs.unity3d.com/Manual/class-Camera.html">Orthographic Projection mode</a> by default. In this mode, Unity renders Sprites in the order of their distance to the camera, along the direction of the Camera’s view.</p>
+
+<figure>
+<img src="../uploads/Main/2DSpriteRenderer_SortPoint.png" alt="Orthographic Camera: Side view (top) and Game view (bottom)">
+<figcaption><strong>Orthographic Camera:</strong> Side view (top) and Game view (bottom)</figcaption>
+</figure>
+
+<p>By default, a Sprite’s <strong>Sort Point</strong> is set to its <strong>Center</strong>, and Unity measures the distance between the camera’s Transform position and the Center of the Sprite to determine their render order. </p>
+
+<p>To set to a different <strong>Sort Point</strong> from the Center, select the <strong>Pivot</strong> option. Edit the Sprite’s Pivot position in the <a href="https://docs.unity3d.com/Manual/SpriteEditor.html">Sprite Editor</a>.</p>
+
+<hr>
+
+<ul>
+<li><span class="page-edit">2018–10–05 Added definition for new functionality.</span></li>
+<li><span class="page-history">Ability to sort Sprite-based renderers using the pivot position added in <a href="https://docs.unity3d.com/2017.3/Documentation/Manual/30_search.html?q=newin20173">2017.3</a> <span class="search-words">New in 2017.3</span></span></li>
+</ul>
+<!-- area:authoring -->
+
+<p><span class="search-words">SpriteRenderer</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="sprites-sort.html"></a></span><div class="tip">Sort sprites</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SpriteCreator.html"></a></span><div class="tip">Sprite Creator</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

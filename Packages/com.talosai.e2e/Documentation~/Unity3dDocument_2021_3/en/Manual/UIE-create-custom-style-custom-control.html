@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create a custom style for a custom control</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-create-custom-style-custom-control.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-create-custom-style-custom-control.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-create-custom-style-custom-control.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-create-custom-style-custom-control.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-create-custom-style-custom-control.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-create-custom-style-custom-control.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-create-custom-style-custom-control.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-create-custom-style-custom-control.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-structure-ui.html">Structure UI</a></li>
+<li><a href="UIE-uxml-examples.html">Structure UI examples</a></li>
+<li>Create a custom style for a custom control</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-create-bindable-custom-control.html"></a></span><div class="tip">Create a bindable custom control</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-USS.html"></a></span><div class="tip">Style UI</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create a custom style for a custom control</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Version</strong>: 2021.2+</p>
+
+<p>This example demonstrates how to use custom USS variables in a custom control.</p>
+
+<h2>Example overview</h2>
+
+<p>This example creates a custom control that reads two colors from USS and uses them to generate a texture.</p>
+
+<figure>
+<img src="../uploads/Main/custom-uss-gradient.png" alt="">
+</figure>
+
+<p>You can find the completed files that this example creates in this <a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/master/create-custom-style-custom-control">GitHub repository</a>.</p>
+
+<h2>Prerequisites</h2>
+
+<p>This guide is for developers familiar with the Unity Editor, <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit, and C# scripting. Before you start, get familiar with the following:</p>
+
+<ul>
+<li><a href="UIBuilder.html">UI Builder</a></li>
+<li><span class="tooltip"><a href="UIE-VisualTree.html">Visual Tree</a><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualtree" aria-label="Go to glossary anchor for Visualtree">Glossary</a></span></span></span></li>
+<li><a href="UIE-UXML.html">UXML</a></li>
+<li><a href="UIE-USS.html">USS</a></li>
+</ul>
+
+<h2>Create the custom control and custom style</h2>
+
+<p>Create a C# script to define the custom control and a USS file to define the custom style.</p>
+
+<ol>
+<li><p>Create a Unity project with any template.</p></li>
+<li><p>Create a folder named <code>create-custom-style-custom-control</code> to store your files.</p></li>
+<li>
+<p>In the <code>ExampleElementCustomStyle</code> folder, create a C# script named <code>ExampleElementCustomStyle.cs</code> and replace its contents with the following:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.UIElements;
+
+namespace UIToolkitExamples
+{
+    public class ExampleElementCustomStyle : VisualElement
+    {
+        // Factory class, required to expose this custom control to UXML
+        public new class UxmlFactory : UxmlFactory&lt;ExampleElementCustomStyle, UxmlTraits&gt; { }
+
+        // Traits class
+        public new class UxmlTraits : VisualElement.UxmlTraits { }
+
+        // Use CustomStyleProperty&lt;T&gt; to fetch custom style properties from USS
+        static readonly CustomStyleProperty&lt;Color&gt; S_GradientFrom = new CustomStyleProperty&lt;Color&gt;(&quot;--gradient-from&quot;);
+        static readonly CustomStyleProperty&lt;Color&gt; S_GradientTo = new CustomStyleProperty&lt;Color&gt;(&quot;--gradient-to&quot;);
+
+        // Image child element and its texture
+        Texture2D m_Texture2D;
+        Image m_Image;
+
+        public ExampleElementCustomStyle()
+        {
+            // Create an Image and a texture for it. Attach Image to self.
+            m_Texture2D = new Texture2D(100, 100);
+            m_Image = new Image();
+            m_Image.image = m_Texture2D;
+            Add(m_Image);
+
+            RegisterCallback&lt;CustomStyleResolvedEvent&gt;(OnStylesResolved);
+        }
+
+        // When custom styles are known for this control, make a gradient from the colors.
+        void OnStylesResolved(CustomStyleResolvedEvent evt)
+        {
+            Color from, to;
+
+            if (evt.customStyle.TryGetValue(S_GradientFrom, out from)
+                &amp;&amp; evt.customStyle.TryGetValue(S_GradientTo, out to))
+            {
+                GenerateGradient(from, to);
+            }
+        }
+
+        public void GenerateGradient(Color from, Color to)
+        {
+            for (int i = 0; i &lt; m_Texture2D.width; ++i)
+            {
+                Color color = Color.Lerp(from, to, i / (float)m_Texture2D.width);
+                for (int j = 0; j &lt; m_Texture2D.height; ++j)
+                {
+                    m_Texture2D.SetPixel(i, j, color);
+                }
+            }
+
+            m_Texture2D.Apply();
+            m_Image.MarkDirtyRepaint();
+        }
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>Create a USS file named <code>ExampleElementCustomStyle.uss</code> and replace its contents with the following:</p>
+
+<pre><code class="lang-css">ExampleElementCustomStyle {
+    --gradient-from: red;
+    --gradient-to: yellow;
+}
+</code></pre>
+</li>
+</ol>
+
+<h2>Use the custom control in UI Document</h2>
+
+<p>Create a UI Document to use the custom control and apply the custom style to the custom control.</p>
+
+<ol>
+<li>In the <code>ExampleElementCustomStyle</code> folder, create a UI Document named <code>ExampleElementCustomStyle.uxml</code>.</li>
+<li>Double-click <code>ExampleElementCustomStyle.uxml</code> to open it in the UI Builder.</li>
+<li>Select <strong>Library</strong> &gt; <strong>Project</strong> &gt; <strong>UIToolkitExamples</strong>, and drag <strong>ExampleElementCustomStyle</strong> to the Hierarchy window. A grey square appears in the Viewport window.</li>
+<li>Add the <code>ExampleElementCustomStyle.uss</code> file as an existing USS. This applies the custom USS variables to the square.</li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-create-custom-controls.html">Create custom controls</a></li>
+<li><a href="http://getbem.com/">BEM standard</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-create-bindable-custom-control.html"></a></span><div class="tip">Create a bindable custom control</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-USS.html"></a></span><div class="tip">Style UI</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

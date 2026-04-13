@@ -1,0 +1,413 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Manipulators</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-manipulators.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-manipulators.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-manipulators.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-manipulators.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-manipulators.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-manipulators.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-manipulators.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-manipulators.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-Events.html">Control behavior with events</a></li>
+<li>Manipulators</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Events-Handling.html"></a></span><div class="tip">Handle events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Events-Synthesizing.html"></a></span><div class="tip">Synthesize and send events</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Manipulators</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To separate your event logic from your <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> code, use a manipulator to handle events. Manipulators are <span class="tooltip"><strong>state machines</strong><span class="tooltiptext">The set of states in an Animator Controller that a character or animated GameObject can be in, along with a set of transitions between those states and a variable to remember the current state. The states available will depend on the type of gameplay, but typical states include things like idling, walking, running and jumping. <a href="StateMachineBasics.html" href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> code, use a manipulator to handle events. Manipulators are <span class="tooltip"><strong>state machines</strong><span class="tooltiptext">The set of states in an Animator Controller that a character or animated GameObject can be in, along with a set of transitions between those states and a variable to remember the current state. The states available will depend on the type of gameplay, but typical states include things like idling, walking, running and jumping. <a href="StateMachineBasics.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#StateMachine" aria-label="Go to glossary anchor for StateMachine">Glossary</a></span></span></span> that handle user interaction with UI elements. They store, register, and unregister event callbacks. A manipulator streamlines setting up that user interaction, so you don’t have to handle each callback one by one. To handle events, use or inherit from one of the manipulators that UI Toolkit supports.</p>
+
+<p>To create and use a manipulator:</p>
+
+<ol>
+<li>Define a dedicated class that inherits from a manipulator class supported by UI Toolkit. This class encapsulates the event-handling logic tailored to the specific user interaction you want to manage.</li>
+<li>Within the class, implement methods to respond to relevant interactions, such as mouse clicks or drags. These methods capture and process the necessary information to execute the desired behavior.</li>
+<li>When you have finished designing the manipulator class, instantiate it and attach it to the target UI element. This attachment lets the manipulator intercept and manage the specified events, orchestrating user interactions while maintaining clear separation from your UI code.</li>
+</ol>
+
+<h2>Supported manipulators</h2>
+
+<p>The following table lists the supported manipulator classes:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Manipulator</strong></th>
+	<th style="text-align:left;"><strong>Inherits from</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Manipulator.html"><strong><code>Manipulator</code></strong></a></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Base class for all provided manipulators.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.KeyboardNavigationManipulator.html"><strong><code>KeyboardNavigationManipulator</code></strong></a></td>
+	<td style="text-align:left;"><code>Manipulator</code></td>
+	<td style="text-align:left;">Handles translation of device-specific input events to higher-level navigation operations with a keyboard.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.MouseManipulator.html"><strong><code>MouseManipulator</code></strong></a></td>
+	<td style="text-align:left;"><code>Manipulator</code></td>
+	<td style="text-align:left;">Handles mouse input. Has a list of activation filters.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ContextualMenuManipulator.html"><strong><code>ContextualMenuManipulator</code></strong></a></td>
+	<td style="text-align:left;"><code>MouseManipulator</code></td>
+	<td style="text-align:left;">Displays a contextual menu when the user clicks the right mouse button or presses the menu key on the keyboard.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.PointerManipulator.html"><strong><code>PointerManipulator</code></strong></a></td>
+	<td style="text-align:left;"><code>MouseManipulator</code></td>
+	<td style="text-align:left;">Handles pointer input. Has a list of activation filters.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Clickable.html"><strong><code>Clickable</code></strong></a></td>
+	<td style="text-align:left;"><code>PointerManipulator</code></td>
+	<td style="text-align:left;">Tracks mouse events on an element, and identifies when a click occurs, which is both a pointer press and release on the same element.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Examples</h2>
+
+<p>The following examples demonstrate how to use manipulators to handle events. They do the following:</p>
+
+<ul>
+<li>Inherit the manipulators from the <a href="../ScriptReference/UIElements.PointerManipulators.html"><code>PointerManipulators</code></a> class, which handles mouse input.</li>
+<li>Use the <a href="../ScriptReference/UIElements.MouseManipulator-activators.html"><code>activators</code></a> list to specify the conditions that activate the manipulator. For example, to activate the manipulator when the user clicks the left mouse button, add
+<a href="../ScriptReference/UIElements.ManipulatorActivationFilter.html"><code>ManipulatorActivationFilter</code></a> to the <code>activators</code> list with the <code>button</code> field set to <code>MouseButton.LeftMouse</code>.</li>
+<li>Use the <a href="../ScriptReference/UIElements.Manipulator-target..html"><code>target</code></a> property to access the element that the manipulator is attached to.</li>
+<li>Override the <a href="../ScriptReference/UIElements.Manipulator.RegisterCallbacksOnTarget.html"><code>RegisterCallbacksOnTarget</code></a> and <a href="../ScriptReference/UIElements.Manipulator.UnregisterCallbacksFromTarget.html"><code>UnregisterCallbacksFromTarget</code></a> methods to register and unregister the event callbacks.</li>
+</ul>
+
+<h3>Create an ExampleDragger manipulator</h3>
+
+<p>The following example creates a manipulator that moves an element when you click and drag it:</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+using UnityEngine.UIElements;
+
+public class ExampleDragger : PointerManipulator
+{
+    private Vector3 m_Start;
+    protected bool m_Active;
+    private int m_PointerId;
+    private Vector2 m_StartSize;
+
+    public ExampleDragger()
+    {
+        m_PointerId = -1;
+        activators.Add(new ManipulatorActivationFilter { button = MouseButton.LeftMouse });
+        m_Active = false;
+    }
+
+    protected override void RegisterCallbacksOnTarget()
+    {
+        target.RegisterCallback&lt;PointerDownEvent&gt;(OnPointerDown);
+        target.RegisterCallback&lt;PointerMoveEvent&gt;(OnPointerMove);
+        target.RegisterCallback&lt;PointerUpEvent&gt;(OnPointerUp);
+    }
+
+    protected override void UnregisterCallbacksFromTarget()
+    {
+        target.UnregisterCallback&lt;PointerDownEvent&gt;(OnPointerDown);
+        target.UnregisterCallback&lt;PointerMoveEvent&gt;(OnPointerMove);
+        target.UnregisterCallback&lt;PointerUpEvent&gt;(OnPointerUp);
+    }
+
+    protected void OnPointerDown(PointerDownEvent e)
+    {
+        if (m_Active)
+        {
+            e.StopImmediatePropagation();
+            return;
+        }
+
+        if (CanStartManipulation(e))
+        {
+            m_Start = e.localPosition;
+            m_PointerId = e.pointerId;
+
+            m_Active = true;
+            target.CapturePointer(m_PointerId);
+            e.StopPropagation();
+        }
+    }
+
+    protected void OnPointerMove(PointerMoveEvent e)
+    {
+        if (!m_Active || !target.HasPointerCapture(m_PointerId))
+            return;
+
+        Vector2 diff = e.localPosition - m_Start;
+
+        target.style.top = target.layout.y + diff.y;
+        target.style.left = target.layout.x + diff.x;
+
+        e.StopPropagation();
+    }
+
+    protected void OnPointerUp(PointerUpEvent e)
+    {
+        if (!m_Active || !target.HasPointerCapture(m_PointerId) || !CanStopManipulation(e))
+            return;
+
+        m_Active = false;
+        target.ReleaseMouse();
+        e.StopPropagation();
+    }
+}
+</code></pre>
+
+<h3>Create an ExampleResizer manipulator</h3>
+
+<p>The following example creates a manipulator that resizes an element when you drag it:</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+using UnityEngine.UIElements;
+
+public class ExampleResizer : PointerManipulator
+{
+    private Vector3 m_Start;
+    protected bool m_Active;
+    private int m_PointerId;
+    private Vector2 m_StartSize;
+    public ExampleResizer()
+    {
+        m_PointerId = -1;
+        activators.Add(new ManipulatorActivationFilter { button = MouseButton.LeftMouse });
+        m_Active = false;
+    }
+
+    protected override void RegisterCallbacksOnTarget()
+    {
+        target.RegisterCallback&lt;PointerDownEvent&gt;(OnPointerDown);
+        target.RegisterCallback&lt;PointerMoveEvent&gt;(OnPointerMove);
+        target.RegisterCallback&lt;PointerUpEvent&gt;(OnPointerUp);
+    }
+
+    protected override void UnregisterCallbacksFromTarget()
+    {
+        target.UnregisterCallback&lt;PointerDownEvent&gt;(OnPointerDown);
+        target.UnregisterCallback&lt;PointerMoveEvent&gt;(OnPointerMove);
+        target.UnregisterCallback&lt;PointerUpEvent&gt;(OnPointerUp);
+    }
+
+    protected void OnPointerDown(PointerDownEvent e)
+    {
+        if (m_Active)
+        {
+            e.StopImmediatePropagation();
+            return;
+        }
+
+        if (CanStartManipulation(e))
+        {
+            m_Start = e.localPosition;
+            m_StartSize = target.layout.size;
+            m_PointerId = e.pointerId;
+            m_Active = true;
+            target.CapturePointer(m_PointerId);
+            e.StopPropagation();
+        }
+    }
+
+    protected void OnPointerMove(PointerMoveEvent e)
+    {
+        if (!m_Active || !target.HasPointerCapture(m_PointerId))
+            return;
+
+        Vector2 diff = e.localPosition - m_Start;
+
+        target.style.height = m_StartSize.y + diff.y;
+        target.style.width = m_StartSize.x + diff.x;
+
+        e.StopPropagation();
+    }
+
+    protected void OnPointerUp(PointerUpEvent e)
+    {
+        if (!m_Active || !target.HasPointerCapture(m_PointerId) || !CanStopManipulation(e))
+            return;
+
+        m_Active = false;
+        target.ReleasePointer(m_PointerId);
+        m_PointerId = -1;
+        e.StopPropagation();
+    }
+}
+</code></pre>
+
+<h3>Add or remove a manipulator</h3>
+
+<p>To add a manipulator to an element, use the <a href="../ScriptReference/UIElements.VisualElementExtensions.AddManipulator.html"><code>AddManipulator</code></a> method. To remove a manipulator from an element, use the <a href="../ScriptReference/UIElements.VisualElementExtensions.AddManipulator.html"><code>RemoveManipulator</code></a> method.</p>
+
+<p>The following example adds and removes the <code>ExampleDragger</code> to a <code>VisualElement</code>:</p>
+
+<pre><code class="lang-csharp">// Create a VisualElement.
+var myElement = new VisualElement();
+
+// Add manipulators to the VisualElement.
+myElement.AddManipulator(new ExampleDragger());
+
+// Remove manipulators from the VisualElement.
+myElement.RemoveManipulator&lt;ExampleDragger&gt;();
+</code></pre>
+
+<p>The following example adds the <code>ExampleResizer</code> to a <code>VisualElement</code>:</p>
+
+<pre><code class="lang-csharp">var box = new VisualElement()
+{
+    style =
+    {
+        left = 100,
+        top = 100,
+        width = 100,
+        height = 100,
+        backgroundColor = Color.red
+    },
+    pickingMode = PickingMode.Position,
+};
+
+box.AddManipulator(new ExampleResizer());
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-Events-Handling.html">Handle events</a></li>
+<li><a href="UIE-create-drag-and-drop-ui.html">Create a drag-and-drop UI inside a custom Editor window</a></li>
+<li><a href="UIE-drag-across-windows.html">Create a drag-and-drop UI to drag between Editor windows</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Events-Handling.html"></a></span><div class="tip">Handle events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Events-Synthesizing.html"></a></span><div class="tip">Synthesize and send events</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

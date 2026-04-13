@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Event Functions</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="core" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/EventFunctions.html">English</a></li>
+<li><a href="/cn/current/Manual/EventFunctions.html">中文</a></li>
+<li><a href="/ja/current/Manual/EventFunctions.html">日本語</a></li>
+<li><a href="/kr/current/Manual/EventFunctions.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/EventFunctions.html">English</a></li>
+<li><a href="/cn/current/Manual/EventFunctions.html">中文</a></li>
+<li><a href="/ja/current/Manual/EventFunctions.html">日本語</a></li>
+<li><a href="/kr/current/Manual/EventFunctions.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="ScriptingConcepts.html">Scripting concepts</a></li>
+<li>Event Functions</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ExecutionOrder.html"></a></span><div class="tip">Order of execution for event functions</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Coroutines.html"></a></span><div class="tip">Coroutines</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Event Functions</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A script in Unity is not like the traditional idea of a program where the code runs continuously in a loop until it completes its task. Instead, Unity passes control to a script intermittently by calling certain functions that are declared within it. Once a function has finished executing, control is passed back to Unity. These functions are known as event functions since they are activated by Unity in response to events that occur during gameplay. Unity uses a naming scheme to identify which function to call for a particular event. For example, you will already have seen the Update function (called before a frame update occurs) and the Start function (called just before the object’s first frame update). Many more event functions are available in Unity; the full list can be found in the script reference page for the <a href="../ScriptReference/MonoBehaviour.html">MonoBehaviour</a> class along with details of their usage. The following are some of the most common and important events.</p>
+
+<h2>Regular Update Events</h2>
+
+<p>A game is rather like an animation where the animation frames are generated on the fly. A key concept in games programming is that of making changes to position, state and behavior of objects in the game just before each frame is rendered. The <a href="../ScriptReference/MonoBehaviour.Update.html">Update</a> function is the main place for this kind of code in Unity. Update is called before the frame is rendered and also before animations are calculated.</p>
+
+<pre><code>void Update() {
+    float distance = speed * Time.deltaTime * Input.GetAxis(&quot;Horizontal&quot;);
+    transform.Translate(Vector3.right * distance);
+}
+
+</code></pre>
+
+<p>The <span class="tooltip"><strong>physics engine</strong><span class="tooltiptext">A system that simulates aspects of physical systems so that objects can accelerate correctly and be affected by collisions, gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PhysicsSection.html" href="PhysicsSection.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PhysicsEngine" aria-label="Go to glossary anchor for PhysicsEngine">Glossary</a></span></span></span> also updates in discrete time steps in a similar way to the frame rendering. A separate event function called <a href="../ScriptReference/MonoBehaviour.FixedUpdate.html">FixedUpdate</a> is called just before each physics update. Since the physics updates and frame updates do not occur with the same frequency, you will get more accurate results from physics code if you place it in the FixedUpdate function rather than Update.</p>
+
+<pre><code>void FixedUpdate() {
+    Vector3 force = transform.forward * driveForce * Input.GetAxis(&quot;Vertical&quot;);
+    rigidbody.AddForce(force);
+}
+
+</code></pre>
+
+<p>It is also useful sometimes to be able to make additional changes at a point after the Update and FixedUpdate functions have been called for all objects in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> and after all animations have been calculated. An example is where a <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> and after all animations have been calculated. An example is where a <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> should remain trained on a target object; the adjustment to the camera’s orientation must be made after the target object has moved. Another example is where the script code should override the effect of an animation (say, to make the character’s head look towards a target object in the scene). The <a href="../ScriptReference/MonoBehaviour.LateUpdate.html">LateUpdate</a> function can be used for these kinds of situations.</p>
+
+<pre><code>void LateUpdate() {
+    Camera.main.transform.LookAt(target.transform);
+}
+
+</code></pre>
+
+<h2>Initialization Events</h2>
+
+<p>It is often useful to be able to call initialization code in advance of any updates that occur during gameplay. The <a href="../ScriptReference/MonoBehaviour.Start.html">Start</a> function is called before the first frame or physics update on an object. The <a href="../ScriptReference/MonoBehaviour.Awake.html">Awake</a> function is called for each object in the scene at the time when the scene loads. Note that although the various objects’ Start and Awake functions are called in arbitrary order, all the Awakes will have finished before the first Start is called. This means that code in a Start function can make use of other initializations previously carried out in the Awake phase.</p>
+
+<h2>GUI events</h2>
+
+<p>Unity has a system for rendering GUI controls over the main action in the scene and responding to clicks on these controls. This code is handled somewhat differently from the normal frame update and so it should be placed in the <a href="../ScriptReference/MonoBehaviour.OnGUI.html">OnGUI</a> function, which will be called periodically.</p>
+
+<pre><code>void OnGUI() {
+    GUI.Label(labelRect, &quot;Game Over&quot;);
+}
+
+</code></pre>
+
+<p>You can also detect mouse events that occur over a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> as it appears in the scene. This can be used for targeting weapons or displaying information about the character currently under the mouse pointer. A set of OnMouseXXX event functions (eg, <a href="../ScriptReference/MonoBehaviour.OnMouseOver.html">OnMouseOver</a>, <a href="../ScriptReference/MonoBehaviour.OnMouseDown.html">OnMouseDown</a>) is available to allow a script to react to user actions with the mouse. For example, if the mouse button is pressed while the pointer is over a particular object then an OnMouseDown function in that object’s script will be called if it exists.</p>
+
+<h2>Physics events</h2>
+
+<p>The physics engine will report <span class="tooltip"><strong>collisions</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span> against an object by calling event functions on that object’s script. The <a href="../ScriptReference/MonoBehaviour.OnCollisionEnter.html">OnCollisionEnter</a>, <a href="../ScriptReference/MonoBehaviour.OnCollisionStay.html">OnCollisionStay</a> and <a href="../ScriptReference/MonoBehaviour.OnCollisionExit.html">OnCollisionExit</a> functions will be called as contact is made, held and broken. The corresponding <a href="../ScriptReference/MonoBehaviour.OnTriggerEnter.html">OnTriggerEnter</a>, <a href="../ScriptReference/MonoBehaviour.OnTriggerStay.html">OnTriggerStay</a> and <a href="../ScriptReference/MonoBehaviour.OnTriggerExit.html">OnTriggerExit</a> functions will be called when the object’s <span class="tooltip"><strong>collider</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a href="CollidersOverview.html" href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span> against an object by calling event functions on that object’s script. The <a href="../ScriptReference/MonoBehaviour.OnCollisionEnter.html">OnCollisionEnter</a>, <a href="../ScriptReference/MonoBehaviour.OnCollisionStay.html">OnCollisionStay</a> and <a href="../ScriptReference/MonoBehaviour.OnCollisionExit.html">OnCollisionExit</a> functions will be called as contact is made, held and broken. The corresponding <a href="../ScriptReference/MonoBehaviour.OnTriggerEnter.html">OnTriggerEnter</a>, <a href="../ScriptReference/MonoBehaviour.OnTriggerStay.html">OnTriggerStay</a> and <a href="../ScriptReference/MonoBehaviour.OnTriggerExit.html">OnTriggerExit</a> functions will be called when the object’s <span class="tooltip"><strong>collider</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> is configured as a Trigger (ie, a collider that simply detects when something enters it rather than reacting physically). These functions may be called several times in succession if more than one contact is detected during the physics update and so a parameter is passed to the function giving details of the collision (position, identity of the incoming object, etc).</p>
+
+<pre><code>void OnCollisionEnter(otherObj: Collision) {
+    if (otherObj.tag == &quot;Arrow&quot;) {
+        ApplyDamage(10);
+    }
+}
+
+</code></pre>
+<!-- area:core -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ExecutionOrder.html"></a></span><div class="tip">Order of execution for event functions</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Coroutines.html"></a></span><div class="tip">Coroutines</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

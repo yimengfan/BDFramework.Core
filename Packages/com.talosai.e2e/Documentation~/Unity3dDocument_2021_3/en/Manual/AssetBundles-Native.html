@@ -1,0 +1,355 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Using AssetBundles Natively</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="cloud" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetBundles-Native.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetBundles-Native.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetBundles-Native.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetBundles-Native.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetBundles-Native.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetBundles-Native.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetBundles-Native.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetBundles-Native.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AssetWorkflow.html">Asset Workflow</a></li>
+<li><a href="AssetBundlesIntro.html">AssetBundles</a></li>
+<li>Using AssetBundles Natively</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetBundles-Dependencies.html"></a></span><div class="tip">AssetBundle Dependencies</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetBundles-Cache.html"></a></span><div class="tip">AssetBundle compression</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Using AssetBundles Natively</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>There are four different APIs that you can use to load AssetBundles. Their behavior varies based on the platform the bundle is being loaded and the <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> method used when the AssetBundles were built (uncompressed, LZMA, LZ4). </p>
+
+<p>The four APIs we have to work with are:</p>
+
+<ul>
+<li><a href="https://docs.unity3d.com/ScriptReference/AssetBundle.LoadFromMemoryAsync.html?_ga=1.226802969.563709772.1479226228">AssetBundle.LoadFromMemoryAsync</a></li>
+<li><a href="https://docs.unity3d.com/ScriptReference/AssetBundle.LoadFromFile.html?_ga=1.259297550.563709772.1479226228">AssetBundle.LoadFromFile</a></li>
+<li><a href="https://docs.unity3d.com/ScriptReference/WWW.LoadFromCacheOrDownload.html?_ga=1.226802969.563709772.1479226228">WWW.LoadfromCacheOrDownload</a></li>
+<li>
+<a href="https://docs.unity3d.com/ScriptReference/Networking.UnityWebRequestAssetBundle.html?_ga=1.259297550.563709772.1479226228">UnityWebRequestAssetBundle</a>’s <a href="https://docs.unity3d.com/ScriptReference/Networking.DownloadHandlerAssetBundle.html?_ga=1.264500235.563709772.1479226228">DownloadHandlerAssetBundle </a>(Unity 5.3 or newer)</li>
+</ul>
+
+<h2>AssetBundle.LoadFromMemoryAsync</h2>
+
+<p>
+<a href="../ScriptReference/AssetBundle.LoadFromMemoryAsync.html">AssetBundle.LoadFromMemoryAsync</a> </p>
+
+<p>This function takes an array of bytes that contains AssetBundle data. Optionally you can also pass in a CRC value if you desire. If the bundle is LZMA compressed it will decompress the AssetBundle while it’s loading. LZ4 compressed bundles are loaded in their compressed state.</p>
+
+<p>Here’s one example of how to use this method:</p>
+
+<pre><code>using UnityEngine;
+using System.Collections;
+using System.IO;
+
+public class Example : MonoBehaviour
+{
+    IEnumerator LoadFromMemoryAsync(string path)
+    {
+        AssetBundleCreateRequest createRequest = AssetBundle.LoadFromMemoryAsync(File.ReadAllBytes(path));
+        yield return createRequest;
+        AssetBundle bundle = createRequest.assetBundle;
+        var prefab = bundle.LoadAsset&lt;GameObject&gt;(&quot;MyObject&quot;);
+        Instantiate(prefab);
+    }
+}
+</code></pre>
+
+<p>However, this is not the only strategy that makes using LoadFromMemoryAsync possible. File.ReadAllBytes(path) could be replaced with any desired procedure of obtaining a byte array.</p>
+
+<h2>AssetBundle.LoadFromFile</h2>
+
+<p><a href="../ScriptReference/AssetBundle.LoadFromFile.html">AssetBundle.LoadFromFile</a></p>
+
+<p>This API is highly-efficient when loading uncompressed bundles from local storage. LoadFromFile will load the bundle directly from disk if the bundle is uncompressed or chunk (LZ4) compressed. Loading a fully compressed (LZMA) bundle with this method will first decompress the bundle before loading it into memory.</p>
+
+<p>One example of how to use <code>LoadFromFile</code>:</p>
+
+<pre><code>using System.IO;
+using UnityEngine;
+
+public class LoadFromFileExample : MonoBehaviour
+{
+    void Start()
+    {
+        var myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, &quot;myassetBundle&quot;));
+
+        if (myLoadedAssetBundle == null)
+        {
+            Debug.Log(&quot;Failed to load AssetBundle!&quot;);
+            return;
+        }
+        var prefab = myLoadedAssetBundle.LoadAsset&lt;GameObject&gt;(&quot;MyObject&quot;);
+        Instantiate(prefab);
+    }
+}
+</code></pre>
+
+<p>Note: On Android devices with Unity 5.3 or older, this API will fail when trying to load AssetBundles from the Streaming Assets path. This is because the contents of that path will reside inside a compressed .jar file. Unity 5.4 and newer can use this API call with Streaming Assets just fine.</p>
+
+<h2>UnityWebRequestAssetBundle</h2>
+
+<p><a href="../ScriptReference/Networking.UnityWebRequestAssetBundle.GetAssetBundle.html">UnityWebRequestAssetBundle</a></p>
+
+<p>The UnityWebRequestAssetBundle has a specific API call to deal with AssetBundles. To begin, you’ll need to create your web request using <code>UnityWebRequestAssetBundle.GetAssetBundle</code>. After returning the request, pass the request object into <code>DownloadHandlerAssetBundle.GetContent(UnityWebRequestAssetBundle)</code>. This <code>GetContent</code> call will return your AssetBundle object.</p>
+
+<p>You can also use the <code>assetBundle</code> property on the <a href="../ScriptReference/Networking.DownloadHandlerAssetBundle.html">DownloadHandlerAssetBundle</a> class after downloading the bundle to load the AssetBundle with the efficiency of <code>AssetBundle.LoadFromFile</code>.</p>
+
+<p>Here’s an example of how to load an AssetBundle that contains two <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> and Instantiate them. To begin this process, we’d just need to call <code>StartCoroutine(InstantiateObject())</code>;</p>
+
+<pre><code>IEnumerator InstantiateObject()
+{
+    string uri = &quot;file:///&quot; + Application.dataPath + &quot;/AssetBundles/&quot; + assetBundleName; 
+    UnityEngine.Networking.UnityWebRequestAssetBundle request 
+        = UnityEngine.Networking.UnityWebRequestAssetBundle.GetAssetBundle(uri, 0);
+    yield return request.SendWebRequest();
+    AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(request);
+    GameObject cube = bundle.LoadAsset&lt;GameObject&gt;(&quot;Cube&quot;);
+    GameObject sprite = bundle.LoadAsset&lt;GameObject&gt;(&quot;Sprite&quot;);
+    Instantiate(cube);
+    Instantiate(sprite);
+}
+</code></pre>
+
+<h4>Loading Assets from AssetBundles</h4>
+
+<p>Now that you’ve successfully downloaded your AssetBundle, it’s time to finally load in some Assets.</p>
+
+<p>Generic code snippet:</p>
+
+<pre><code>T objectFromBundle = bundleObject.LoadAsset&lt;T&gt;(assetName);
+</code></pre>
+
+<p>T is the type of the Asset you’re attempting to load. </p>
+
+<p>There are a couple options when deciding how to load Assets. We have <code>LoadAsset</code>, <code>LoadAllAssets</code>, and their Async counterparts <code>LoadAssetAsync</code> and <code>LoadAllAssetsAsync</code> respectively.</p>
+
+<p>This is how to load an asset from an AssetBundles synchronously:</p>
+
+<p>To load a single GameObject:</p>
+
+<pre><code>GameObject gameObject = loadedAssetBundle.LoadAsset&lt;GameObject&gt;(assetName);
+</code></pre>
+
+<p>To load all Assets:</p>
+
+<pre><code>Unity.Object[] objectArray = loadedAssetBundle.LoadAllAssets();
+</code></pre>
+
+<p>Now, where as the previously shown methods return either the type of object you’re loading or an array of objects, the asynchronous methods return an <a href="../ScriptReference/AssetBundleRequest.html">AssetBundleRequest</a>. You’ll need to wait for this operation to complete before accessing the asset. To load an asset:</p>
+
+<pre><code>AssetBundleRequest request = loadedAssetBundleObject.LoadAssetAsync&lt;GameObject&gt;(assetName);
+yield return request;
+var loadedAsset = request.asset;
+</code></pre>
+
+<p>And</p>
+
+<pre><code>AssetBundleRequest request = loadedAssetBundle.LoadAllAssetsAsync();
+yield return request;
+var loadedAssets = request.allAssets;
+</code></pre>
+
+<p>Once you have loaded your Assets you’re good to go! You’re able to use the loaded objects as you would any Object in Unity.</p>
+
+<h4>Loading AssetBundle Manifests</h4>
+
+<p>Loading AssetBundle manifests can be incredibly useful. Especially when dealing with AssetBundle dependencies.</p>
+
+<p>To get a useable <a href="../ScriptReference/AssetBundleManifest.html">AssetBundleManifest</a> object, you’ll need to load that additional AssetBundle (the one that’s named the same thing as the folder it’s in) and load an object of type AssetBundleManifest from it.</p>
+
+<p>Loading the manifest itself is done exactly the same as any other Asset from an AssetBundle:</p>
+
+<pre><code>AssetBundle assetBundle = AssetBundle.LoadFromFile(manifestFilePath);
+AssetBundleManifest manifest = assetBundle.LoadAsset&lt;AssetBundleManifest&gt;(&quot;AssetBundleManifest&quot;);
+</code></pre>
+
+<p>Now you have access to the <code>AssetBundleManifest</code> API calls through the manifest object from the above example. From here you can use the manifest to get information about the AssetBundles you built. This information includes dependency data, hash data, and variant data for the AssetBundles.</p>
+
+<p>Remember in the earlier section when we discussed AssetBundle Dependencies and how, if a bundle had a dependency on another bundle, those bundles would need to be loaded in before loading any Assets from the original bundle? The manifest object makes dynamically finding a loading dependencies possible. Let’s say we want to load all the dependencies for an AssetBundle named “assetBundle”. </p>
+
+<pre><code>AssetBundle assetBundle = AssetBundle.LoadFromFile(manifestFilePath);
+AssetBundleManifest manifest = assetBundle.LoadAsset&lt;AssetBundleManifest&gt;(&quot;AssetBundleManifest&quot;);
+string[] dependencies = manifest.GetAllDependencies(&quot;assetBundle&quot;); //Pass the name of the bundle you want the dependencies for.
+foreach(string dependency in dependencies)
+{
+    AssetBundle.LoadFromFile(Path.Combine(assetBundlePath, dependency));
+}
+</code></pre>
+
+<p>Now that you’re loading AssetBundles, AssetBundle dependencies, and Assets, it’s time to talk about managing all of these loaded AssetBundles.</p>
+
+<p><a name="managing-loaded-assetbundles" aria-hidden="true"></a></p>
+
+<h2>Managing Loaded AssetBundles</h2>
+
+<p>
+<strong>Note:</strong> The <a href="http://docs.unity3d.com/Packages/com.unity.addressables@latest/index.html">Addressable Assets</a> package provides a ready-made system to manage loading Asset Bundles, dependencies, and Assets. Unity recommends using Addressables rather than managing AssetBundles yourself.</p>
+
+<p>See also: Unity Learn tutorial on <a href="https://unity3d.com/fr/learn/tutorials/topics/best-practices/assetbundle-usage-patterns#Managing_Loaded_Assets">Managing Loaded AssetBundles</a>
+</p>
+
+<p>Unity does not automatically unload Objects when they are removed from the active <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. Asset cleanup is triggered at specific times, and it can also be triggered manually.</p>
+
+<p>It is important to know when to load and unload an AssetBundle. Improperly unloading an AssetBundle can lead to duplicating objects in memory or other undesirable circumstances, such as missing textures.</p>
+
+<p>The biggest things to understand about AssetBundle management is when to call <a href="../ScriptReference/AssetBundle.Unload.html">AssetBundle.Unload(bool)</a> – or <a href="../ScriptReference/AssetBundle.Unload.html">AssetBundle.UnloadAsync(bool)</a> – and if you should pass true or false into the function call. Unload is a non-static function that will unload your AssetBundle. This API unloads the header information of the AssetBundle being called. The argument indicates whether to also unload all Objects instantiated from this AssetBundle.</p>
+
+<p>
+<code>AssetBundle.Unload(true)</code> unloads all GameObjects (and their dependencies) that were loaded from the AssetBundle. This does not include copied GameObjects (such as Instantiated GameObjects), because they no longer belong to the AssetBundle. When this happens, Textures that are loaded from that AssetBundle (and still belong to it) disappear from GameObjects in the Scene, and Unity treats them as missing Textures.</p>
+
+<p>Let’s assume Material M is loaded from AssetBundle AB as shown below and used in <span class="tooltip"><strong>Prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> P.</p>
+
+<p>If AB.Unload(true) is called. Any instance of M in the active scene will also be unload and destroyed. </p>
+
+<p>If you were instead to call AB.Unload(false) it would break the chain of the current instances of M and AB.</p>
+
+<figure>
+<img src="../uploads/Main/AssetBundles-Native-1.png" alt="">
+</figure>
+
+<p>If AB is loaded again later and AB.LoadAsset() is called, Unity will not re-link the existing copies of M to the newly loaded Material. </p>
+
+<figure>
+<img src="../uploads/Main/AssetBundles-Native-2.png" alt="">
+</figure>
+
+<p>If you create another instance of Prefab P, it will not use the existing copy of M. Instead two copies of M are loaded.</p>
+
+<figure>
+<img src="../uploads/Main/AssetBundles-Native-3.png" alt="">
+</figure>
+
+<p>Generally, using <code>AssetBundle.Unload(false)</code> does not lead to an ideal situation. Most projects should use <code>AssetBundle.Unload(true)</code> and adopt a method to ensure that Objects are not duplicated. Two common methods are:</p>
+
+<ul>
+<li><p>Having well-defined points during the application’s lifetime at which transient AssetBundles are unloaded, such as between levels or during a loading screen. </p></li>
+<li><p>Maintaining reference-counts for individual Objects and unload AssetBundles only when all of their constituent Objects are unused. This permits an application to unload &amp; reload individual Objects without duplicating memory.</p></li>
+</ul>
+
+<p>If an application must use <code>AssetBundle.Unload(false)</code>, then individual Objects can only be unloaded in two ways:</p>
+
+<ul>
+<li><p>Eliminate all references to an unwanted Object, both in the scene and in code. After this is done, call <a href="../ScriptReference/Resources.UnloadUnusedAssets.html">Resources.UnloadUnusedAssets</a>.</p></li>
+<li><p>Load a scene non-additively. This will destroy all Objects in the current scene and invoke <a href="../ScriptReference/Resources.UnloadUnusedAssets.html">Resources.UnloadUnusedAssets</a> automatically.</p></li>
+</ul>
+<!-- area:cloud -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetBundles-Dependencies.html"></a></span><div class="tip">AssetBundle Dependencies</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetBundles-Cache.html"></a></span><div class="tip">AssetBundle compression</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

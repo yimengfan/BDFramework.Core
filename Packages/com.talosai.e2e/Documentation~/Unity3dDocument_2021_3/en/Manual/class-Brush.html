@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Brushes</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Brush.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Brush.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Brush.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Brush.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Brush.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Brush.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Brush.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Brush.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="CreatingEnvironments.html">World building</a></li>
+<li><a href="script-Terrain.html">Terrain</a></li>
+<li>Brushes</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-TerrainLayer.html"></a></span><div class="tip">Terrain Layers</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="terrain-Trees.html"></a></span><div class="tip">Trees</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Brushes</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>When you apply a tool such as <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-PaintTexture.html">Paint Texture</a> or <a href="terrain-SmoothHeight.html">Smooth Height</a> to the <span class="tooltip"><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a href="terrain-UsingTerrains.html" href="terrain-PaintTexture.html">Paint Texture</a> or <a href="terrain-SmoothHeight.html">Smooth Height</a> to the <span class="tooltip"><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span>, Unity uses a Brush, which is a <a href="../ScriptReference/ScriptableObject.html">ScriptableObject</a> in the Terrain system. The Brush defines the tool’s shape and strength of influence.</p>
+
+<h2>Built-in Brushes</h2>
+
+<p>Unity comes with a collection of built-in Brushes. They range from simple circles for quickly sketching designs, to more randomized scatter shapes that are good for creating detail and natural-looking features.</p>
+
+<figure>
+<img src="../uploads/Main/1.5-BuiltInBrushes_grey.png" alt="Built-in Brushes in the Terrain Inspector">
+<figcaption>Built-in Brushes in the Terrain Inspector</figcaption>
+</figure>
+
+<h2>Custom Brushes</h2>
+
+<p>You can create your own custom Brushes with unique shapes or specific parameters for your needs. For example, use the <span class="tooltip"><strong>heightmap</strong><span class="tooltiptext">A greyscale Texture that stores height data for an object. Each pixel stores the height difference perpendicular to the face that pixel represents.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Heightmap" aria-label="Go to glossary anchor for Heightmap">Glossary</a></span></span></span> Texture of a specific geological feature to define a Brush, then use the <a href="terrain-StampTerrain.html">Stamp Terrain</a> tool to place that feature on your Terrain.</p>
+
+<p>To create a new Brush, click the <strong>New Brush</strong> button in the Terrain <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window.</p>
+
+<figure>
+<img src="../uploads/Main/1.5-NewBrushButton_grey.png" alt="New Brush button in the Terrain Inspector">
+<figcaption>New Brush button in the Terrain Inspector</figcaption>
+</figure>
+
+<p>After you click <strong>New Brush</strong>, the <strong>Select Texture2D</strong> window appears. Choose a Texture to define the shape of your new Brush, then use the Brush Inspector to adjust the <strong>Falloff</strong> and <strong>Radius Scale</strong> values.</p>
+
+<figure>
+<img src="../uploads/Main/1.5-Select2DTexture_grey.png" alt="Window for selecting Brush Texture">
+<figcaption>Window for selecting Brush Texture</figcaption>
+</figure>
+
+<p>Alternatively, right-click in the <span class="tooltip"><strong>Project</strong><span class="tooltiptext">In Unity, you use a project to design and develop a game. A project stores all of the files that are related to a game, such as the asset and Scene files. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about 2Dor3D.html" href="2Dor3D.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Project" aria-label="Go to glossary anchor for Project">Glossary</a></span></span></span> window, and choose <strong>Create &gt; Brush</strong> to create a new Brush. The default Brush shows a simple circle defined by a white <strong>Mask Texture</strong>, a <strong>Falloff</strong> curve, and a <strong>Radius Scale</strong> of 1. Use the Brush Inspector to change these values, or set a Texture to define the shape of the Brush. You can also use the <strong>Remap</strong> slider and the <strong>Invert Remap Range</strong> option to further modify the grayscale values of the <strong>Brush</strong> Texture.</p>
+
+<figure>
+<img src="../uploads/Main/1.5-BrushInspector_grey.png" alt="Brush Inspector with default settings">
+<figcaption>Brush Inspector with default settings</figcaption>
+</figure>
+
+<h2>Brush settings</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Mask Texture</strong></td>
+	<td style="text-align:left;">Defines the shape and strength of the Brush. Select a Texture in your project, and the system creates a grayscale mask from the Texture. If the selected Texture has multiple color channels, the Brush uses the Red channel as its source.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Remap</strong></td>
+	<td style="text-align:left;">Remaps the grayscale values of the Brush mask, after applying the Falloff curve. The Editor remaps black values in the Brush mask to the value you select using the left side of the slider, and remaps white values in the Brush mask to the value you select using the right side of the slider.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Invert Remap Range</strong></td>
+	<td style="text-align:left;">Inverts the left and right sides of the <strong>Remap</strong> slider, which basically inverts the values of the entire mask.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Falloff</strong></td>
+	<td style="text-align:left;">Defines a curve that affects the strength of the Brush in a circular fashion. Click the Falloff curve to open the Unity <a href="EditingCurves.html">Curve Editor</a>, where you can edit the curve to create effects ranging from smooth fades to sharp edges.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Radius Scale</strong></td>
+	<td style="text-align:left;">Affects the scale of the falloff curve. Use this option to increase or decrease the radius of the curve.</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<ul>
+<li><p><span class="page-edit">2019–10–22 Page amended
+</span></p></li>
+<li><p><span class="page-history">Updated screenshots to match the new UI and added information about new options in the Brush Inspector.</span></p></li>
+</ul>
+<!-- area:graphics -->
+
+<p><span class="search-words">Brush</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-TerrainLayer.html"></a></span><div class="tip">Terrain Layers</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="terrain-Trees.html"></a></span><div class="tip">Trees</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

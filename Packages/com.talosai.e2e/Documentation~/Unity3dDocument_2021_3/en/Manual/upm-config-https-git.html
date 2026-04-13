@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Using private repositories with HTTPS Git URLs</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-config-https-git.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-config-https-git.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-config-https-git.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-config-https-git.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-config-https-git.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-config-https-git.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-config-https-git.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-config-https-git.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li><a href="Packages.html">Unity's Package Manager</a></li>
+<li><a href="upm-config.html">Configuration</a></li>
+<li>Using private repositories with HTTPS Git URLs</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-config-cache.html"></a></span><div class="tip">Customizing the shared cache locations</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-config-ssh-git.html"></a></span><div class="tip">Using passphrase-protected SSH keys with SSH Git URLs</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Using private repositories with HTTPS Git URLs</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>When you use Git in a terminal to access a private repository over HTTPS, Git prompts you to enter a username and password. Then, Git submits these credentials to the server and proceeds with the command if the server accepts those credentials and allows access to the repository.</p>
+
+<p>When the Unity Package Manager fetches packages using Git URLs, there’s no terminal for users to enter credentials. As a result, when the server requests credentials from Git, Git doesn’t issue a prompt. Instead, it reports an error to the Unity Package Manager. To solve this problem, you must configure Git with a Git credential helper, and that helper must already have the required credentials loaded for that repository. If the credentials are valid, Git can successfully run the commands issued by the Unity Package Manager.</p>
+
+<p>
+<strong>Note</strong>: A Git credential helper has no effect when using Git URLs with the SSH protocol, including the SCP-like syntax. For information about accessing a private Git repository over SSH, refer to <a href="upm-config-ssh-git.html">Using passphrase-protected SSH keys with SSH Git URLs</a>.</p>
+
+<h2>Git Credential Manager</h2>
+
+<p>Although Git supports several <a href="https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage" target="_blank" rel="noopener noreferrer">credential helpers to store credentials</a>, the <a href="https://github.com/git-ecosystem/git-credential-manager" target="_blank" rel="noopener noreferrer">Git Credential Manager</a> (GCM) is the recommended credential helper. GCM is flexible, easy to install, and is actively supported. It’s built on .NET, which means it can run on Windows, macOS, and Linux distributions that support .NET.</p>
+
+<p>By default, GCM uses Windows Credential Manager (on Windows) and macOS Keychain (on macOS) as the configured credential store. GCM doesn’t have a default store configured for Linux. Refer to the <a href="https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/credstores.md" target="_blank" rel="noopener noreferrer">GCM credential stores documentation</a> for more information on the different credential store configurations supported by GCM.</p>
+
+<h2>Prerequisites</h2>
+
+<p>Before you can fetch packages from private Git repositories using HTTPS URLs, make sure you install GCM.</p>
+
+<p>The <a href="https://gitforwindows.org/" target="_blank" rel="noopener noreferrer">Git for Windows</a> installer includes a step to install and configure GCM automatically. You can also install GCM separately if you:</p>
+
+<ul>
+<li>Used a different method to install Git on Windows.</li>
+<li>Use macOS or Linux.</li>
+</ul>
+
+<p>Refer to the <a href="https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/install.md" target="_blank" rel="noopener noreferrer">GCM install instructions</a> for more information about installing GCM.</p>
+
+<h2>Procedure</h2>
+
+<p>Follow these steps to access packages in private repositories that use HTTPS Git URLs:</p>
+
+<ol>
+<li>
+<p>Configure Git to use GCM by running the following command in a terminal:</p>
+
+<pre><code class="lang-bash">git config --global credential.helper manager
+</code></pre>
+</li>
+<li>
+<p>Access the repository one time by using a terminal. For example, run the following command:</p>
+
+<pre><code class="lang-bash">git ls-remote --heads https://&lt;url-to-repository&gt; HEAD
+</code></pre>
+</li>
+<li><p>When Git prompts you, enter your credentials. If your user account has access to the remote Git server and the server accepts your credentials, then the Git credential helper will securely store your credentials.</p></li>
+<li><p>Use the Unity Package Manager. It will use your stored credentials, when necessary, to fetch packages from HTTPS-based repositories that you have permissions to access.</p></li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="upm-errors.html#git-not-found">Troubleshooting Git issues</a></li>
+<li><a href="upm-config-ssh-git.html">Using passphrase-protected SSH keys with SSH Git URLs</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-config-cache.html"></a></span><div class="tip">Customizing the shared cache locations</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-config-ssh-git.html"></a></span><div class="tip">Using passphrase-protected SSH keys with SSH Git URLs</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

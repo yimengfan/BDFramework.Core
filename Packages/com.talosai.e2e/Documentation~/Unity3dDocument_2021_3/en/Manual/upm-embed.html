@@ -1,0 +1,199 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Embedded dependencies</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-embed.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-embed.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-embed.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-embed.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-embed.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-embed.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-embed.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-embed.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li><a href="Packages.html">Unity's Package Manager</a></li>
+<li><a href="upm-manifestPrj.html">Project manifest</a></li>
+<li>Embedded dependencies</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-manifestPrj.html"></a></span><div class="tip">Project manifest</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-git.html"></a></span><div class="tip">Git dependencies</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Embedded dependencies</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Any package that appears under your project’s <code>Packages</code> folder is embedded in that project. You can create an <span class="tooltip"><strong>embedded package</strong><span class="tooltiptext"><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Embeddedpackage" aria-label="Go to glossary anchor for Embeddedpackage">Glossary</a></span></span></span> in several ways:</p>
+
+<ul>
+<li>
+<a href="#embed-create">Create a new package</a> directly in your project’s <code>Packages</code> folder.</li>
+<li>
+<a href="#embed-cached">Manually copy a Unity package</a> from the project’s package cache into your project’s <code>Packages</code> folder.</li>
+<li>
+<a href="upm-api.html#Embed">Use a C# script to embed</a> a version of a package that’s already installed.</li>
+</ul>
+
+<p>Embedded packages don’t need to appear in the <span class="tooltip"><strong>project manifest</strong><span class="tooltiptext">Each Unity project has a <em>project manifest</em>, which acts as an entry point for the Package Manager. This file must be available in the <code>&lt;project&gt;/Packages</code> directory. The Package Manager uses it to configure many things, including a list of dependencies for that project, as well as any package repository to query for packages. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-manifestPrj.html" href="upm-manifestPrj.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectmanifest" aria-label="Go to glossary anchor for Projectmanifest">Glossary</a></span></span></span> as a dependency. However, if you embedded a version of an installed package, your project manifest still lists the dependency on the original installed version. In that case, the package on disk takes priority over the version of the package listed as a dependency, so it doesn’t need to be removed from the project manifest. For example, if the project manifest specifies a dependency on version 1.3.1 of the <code>com.unity.example</code> package but the project also has an embedded package with that name, the Package Manager uses the embedded package, regardless of its apparent version, instead of downloading version 1.3.1 from the registry.</p>
+
+<p>Make sure you track the contents of your embedded packages, and any changes you make to it. If your Unity project is under source control, add any packages embedded in that project to the same source control. </p>
+
+<p><a name="embed-create" aria-hidden="true"></a></p>
+
+<h2>Creating a new custom package</h2>
+
+<p>To embed a new package, create your new package content inside a folder under the <code>Packages</code> folder. For more information, follow the <a href="CustomPackages.html">instructions for creating your own custom package</a>. </p>
+
+<p>Typically, your new package remains embedded in your project until you are ready to share it with other users and test it in other projects. Then you can publish it to a <a href="upm-scoped.html">scoped package registry</a>.</p>
+
+<p><a name="embed-cached" aria-hidden="true"></a></p>
+
+<h2>Copying a Unity package from the cache</h2>
+
+<p>A package installed from a registry is <span class="tooltip"><strong>immutable</strong><span class="tooltiptext">You cannot change the contents of an immutable (read-only) package. This is the opposite of <strong>mutable</strong>. Most packages are immutable, including packages downloaded from the package registry or by Git URL.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Immutable" aria-label="Go to glossary anchor for Immutable">Glossary</a></span></span></span>, which means you can’t edit it. If you want to edit a package, you can make it <span class="tooltip"><strong>mutable</strong><span class="tooltiptext">You can change the contents of a mutable package. This is the opposite of <strong>immutable</strong>. Only <strong>Local package</strong><strong>s</strong> and <strong>Embedded package</strong><strong>s</strong> are mutable.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mutable" aria-label="Go to glossary anchor for Mutable">Glossary</a></span></span></span> by copying it to the <code>Packages</code> subfolder in your <code>Projects</code> folder. This package type is called an embedded package, and it overrides what’s in your package cache. Later, you can delete that embedded package’s folder from the <code>Packages</code> subfolder, and the Package Manager will automatically change to the immutable, cached package.</p>
+
+<p>
+<strong>Important</strong>: Unity supports the following procedure for creating an embedded package only. Accessing the package cache folder for any other purpose is discouraged and not supported by Unity. Don’t manipulate the contents of the package cache folder.</p>
+
+<p>To find your package’s folder in the cache, locate the installed version directly in the Unity Editor:</p>
+
+<ol>
+<li><p>Open the Project window by opening the <strong>Window</strong> menu and selecting <strong>General</strong> &gt; <strong>Project</strong>.</p></li>
+<li><p>From the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, find the installed package you want to embed.</p></li>
+<li>
+<p>Right-click the folder of the selected package and select <strong>Show in Explorer</strong> (Windows) or <strong>Reveal in Finder</strong> (macOS). That package’s folder opens directly in a file browser and uses the <code>&lt;package-name&gt;@&lt;package-version&gt;</code> naming convention.</p>
+
+<figure>
+<img src="../uploads/Main/upm-embed.png" alt="File browser opened to the package folder under the projects package cache">
+<figcaption>File browser opened to the package folder under the project’s package cache</figcaption>
+</figure>
+</li>
+<li><p>Copy the package folder and paste it directly into your project’s <code>Packages</code> subfolder, not the <code>Packages</code> root folder. Don’t put it inside the <code>Assets</code> folder, because the Package Manager doesn’t scan that folder for packages.</p></li>
+<li><p>Remove the <code>@&lt;package-version&gt;</code> part of the folder name.</p></li>
+<li><p>Add the newly embedded package to source control if your project is already under source control.</p></li>
+</ol>
+
+<p>
+<strong>Note</strong>: You can also find package folders under the <a href="upm-cache.html">global cache</a>, but the global cache contains packages from all versions of the Unity Editor that have ever been installed on your system, so be careful to pick a version that’s compatible with your project’s Editor version.</p>
+
+<p>If you want to delete the embedded package, use your file browser or command line to locate that package in your <code>Packages</code> folder. Consider backing up the folder for the embedded package, otherwise you’ll lose any changes you made to the package. Then, delete the folder for that package from your <code>Packages</code> folder. The Package Manager will automatically revert to the immutable, cached package.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="upm-api.html#Embed">Use a script to embed a package in your project</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-manifestPrj.html"></a></span><div class="tip">Project manifest</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-git.html"></a></span><div class="tip">Git dependencies</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

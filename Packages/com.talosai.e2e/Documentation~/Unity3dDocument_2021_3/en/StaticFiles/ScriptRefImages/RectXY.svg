@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="246px" height="135px" viewBox="0 0 246 135" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4 (15588) - http://www.bohemiancoding.com/sketch -->
+    <title>RectXY</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <rect id="Rectangle-1" stroke="#000000" sketch:type="MSShapeGroup" x="105" y="38" width="112" height="90"></rect>
+        <g id="Line" sketch:type="MSLayerGroup" transform="translate(104.000000, 15.000000)" stroke-linecap="square" stroke="#FF0000">
+            <path d="M1.5,22.4772727 L1.5,0.522727273" sketch:type="MSShapeGroup"></path>
+        </g>
+        <g id="Line-Copy-2" sketch:type="MSLayerGroup" transform="translate(93.500000, 38.500000) rotate(-270.000000) translate(-93.500000, -38.500000) translate(92.000000, 27.000000)" stroke="#FF0000" stroke-linecap="square">
+            <path d="M1.5,22.4772727 L1.5,0.522727273" id="Line" sketch:type="MSShapeGroup"></path>
+        </g>
+        <path d="M106.5,26.5 L215.5,26.5" id="Line" stroke="#000000" stroke-linecap="square" fill="#000000" sketch:type="MSShapeGroup"></path>
+        <path id="Line-decoration-1" d="M215.5,26.5 L204.7,23.5 L204.7,29.5 L215.5,26.5 Z" stroke="#000000" stroke-linecap="square" fill="#000000"></path>
+        <path d="M93.5,39.5 L93.5,126.5" id="Line-Copy-4" stroke="#000000" stroke-linecap="square" fill="#000000" sketch:type="MSShapeGroup"></path>
+        <path id="Line-Copy-4-decoration-1" d="M93.5,126.5 L96.5,115.7 L90.5,115.7 L93.5,126.5 Z" stroke="#000000" stroke-linecap="square" fill="#000000"></path>
+        <text id="width" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="145" y="22">width</tspan>
+        </text>
+        <text id="height" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="47" y="88">height</tspan>
+        </text>
+        <text id="x" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="102" y="13">x</tspan>
+        </text>
+        <text id="y" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="72" y="40">y</tspan>
+        </text>
+        <text id="xMax" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="201" y="148">xMax</tspan>
+        </text>
+        <text id="xMin" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="91" y="148">xMin</tspan>
+        </text>
+    </g>
+</svg>

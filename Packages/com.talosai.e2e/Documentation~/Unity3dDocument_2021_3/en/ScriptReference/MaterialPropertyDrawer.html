@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: MaterialPropertyDrawer</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">MaterialPropertyDrawer</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEditor</p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Base class to derive custom material property drawers from.</p>
+              </div>
+              <div class="subsection">
+        <p>Use this to create custom UI drawers for your material properties, without having to write custom <a href="MaterialEditor.html">MaterialEditor</a> classes. This is similar to how <a href="PropertyDrawer.html">PropertyDrawer</a> enables custom UI without writing custom inspectors.<br /><br />In shader code, C#-like attribute syntax can be used in front of shader properties to add drawers to them. Unity has several built-in drawers, and you can write your own. Here's a shader code snippet demonstrating the syntax:</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+          <a href="Shader.html">Shader</a> "Custom/Example"
+{
+    Properties
+    {
+        _MainTex("Base (RGB)", 2D) = "white" {}<br /><br />        // <a href="Display.html">Display</a> a popup with None,Add,Multiply choices,
+        // and setup corresponding shader keywords.
+        [KeywordEnum(None, Add, Multiply)] _Overlay("<a href="Overlays.Overlay.html">Overlay</a> mode", Float) = 0<br /><br />        _OverlayTex("<a href="Overlays.Overlay.html">Overlay</a>", 2D) = "black" {}<br /><br />        // <a href="Display.html">Display</a> as a toggle.
+        [<a href="UIElements.Toggle.html">Toggle</a>] _Invert("Invert color?", Float) = 0
+    }<br /><br />    // rest of shader code...
+}</pre>
+      </div>
+              <div class="subsection">
+        <p>When implementing your own drawers, you should override OnGUI function. You can also optionally override GetPropertyHeight and Apply functions. Here's an example of a property drawer that displays a checkbox for a float property, with the value set to 0 or 1 depending on the state:</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using UnityEngine;
+using <a href="UnityEditor.html">UnityEditor</a>;
+using <a href="Rendering.VirtualTexturing.System.html">System</a>;<br /><br />// The property drawer class should be placed in an editor script, inside a folder called <a href="Editor.html">Editor</a>.
+// Use with "[MyToggle]" before a float shader property.<br /><br />public class MyToggleDrawer : <a href="MaterialPropertyDrawer.html">MaterialPropertyDrawer</a>
+{
+    // Draw the property inside the given rect
+    public override void OnGUI (<a href="Rect.html">Rect</a> position, <a href="MaterialProperty.html">MaterialProperty</a> prop, String label, <a href="MaterialEditor.html">MaterialEditor</a> editor)
+    {
+        // Setup
+        bool value = (prop.floatValue != 0.0f);<br /><br />        <a href="EditorGUI.BeginChangeCheck.html">EditorGUI.BeginChangeCheck</a>();
+        <a href="EditorGUI-showMixedValue.html">EditorGUI.showMixedValue</a> = prop.hasMixedValue;<br /><br />        // Show the toggle control
+        value = <a href="EditorGUI.Toggle.html">EditorGUI.Toggle</a>(position, label, value);<br /><br />        <a href="EditorGUI-showMixedValue.html">EditorGUI.showMixedValue</a> = false;
+        if (<a href="EditorGUI.EndChangeCheck.html">EditorGUI.EndChangeCheck</a>())
+        {
+            // Set the new value if it has changed
+            prop.floatValue = value ? 1.0f : 0.0f;
+        }
+    }
+}</pre>
+      </div>
+              <div class="subsection">
+        <p>The built-in MaterialPropertyDrawers are: ToggleDrawer, ToggleOffDrawer, KeywordEnumDrawer, EnumDrawer, PowerSliderDrawer, IntRangeDrawer. In shader code, the "Drawer" suffix of the class name is not written; when Unity searches for the drawer class it adds "Drawer" automatically.<br /><br />
+<strong>Toggle</strong> allows you to enable or disable a single shader keyword. It uses a float to store the state of the shader keyword, and displays it as a toggle. When the toggle is enabled, Unity enables the shader keyword; when the toggle is disabled, Unity disables the shader keyword.<br /><br />If you specify a keyword name, the toggle affects a shader keyword with that name. If you don't specify a shader keyword name, the toggle affects a shader keyword with the name <code class="mono">(uppercase property name)_ON</code>.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+// This version specifies a keyword name.
+// The material property name is not important.
+// When the toggle is enabled, Unity enables a shader keyword with the name "ENABLE_EXAMPLE_FEATURE".
+// When the toggle is disabled, Unity disables a shader keyword with the name "ENABLE_EXAMPLE_FEATURE".
+[<a href="UIElements.Toggle.html">Toggle</a>(ENABLE_EXAMPLE_FEATURE)] _ExampleFeatureEnabled ("Enable example feature", Float) = 0<br /><br />// This version does not specify a keyword name.
+// The material property name determines the shader keyword it affects.
+// When this toggle is enabled, Unity enables a shader keyword with the name "_ANOTHER_FEATURE_ON".
+// When this toggle is disabled, Unity disables a shader keyword with the name "_ANOTHER_FEATURE_ON".
+[<a href="UIElements.Toggle.html">Toggle</a>] _Another_Feature ("Enable another feature", Float) = 0<br /><br />// ...Later, in the HLSL code:
+#pragma multi_compile __ ENABLE_EXAMPLE_FEATURE
+#pragma multi_compile __ _ANOTHER_FEATURE_ON
+</pre>
+      </div>
+              <div class="subsection">
+        <p>
+          <strong>ToggleOff</strong> is similar to <strong>Toggle</strong>, but when the toggle is enabled, Unity disables the shader keyword; when the toggle is disabled, Unity enables the shader keyword. Additionally, the default name when you don't specify a shader keyword name is <code class="mono">(uppercase property name)_OFF</code>.<br /><br /><code class="mono">ToggleOff</code> can be useful for adding functionality and toggles to existing shaders, while maintaining backwards compatibility.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+// This version specifies a keyword name.
+// The material property name is not important.
+// When the toggle is enabled, Unity disables a shader keyword with the name "DISABLE_EXAMPLE_FEATURE".
+// When the toggle is disabled, Unity enables a shader keyword with the name "DISABLE_EXAMPLE_FEATURE".
+[ToggleOff(DISABLE_EXAMPLE_FEATURE)] _ExampleFeatureEnabled ("Enable example feature", Float) = 0<br /><br />// This version does not specify a keyword name.
+// The material property name determines the shader keyword it affects.
+// When this toggle is enabled, Unity disables a shader keyword with the name "_ANOTHER_FEATURE_OFF".
+// When this toggle is disabled, Unity enables a shader keyword with the name "_ANOTHER_FEATURE_OFF".
+[ToggleOff] _Another_Feature ("Enable another feature", Float) = 0<br /><br />// ...Later, in the HLSL code:
+#pragma multi_compile __ DISABLE_EXAMPLE_FEATURE
+#pragma multi_compile __ _ANOTHER_FEATURE_OFF
+</pre>
+      </div>
+              <div class="subsection">
+        <p>
+          <strong>KeywordEnum</strong> allows you to choose which of a set of shader keywords to enable. It displays a float as a popup menu, and the value of the float determines which shader keyword Unity enables. Unity enables a shader keyword with the name <code class="mono">(uppercase property name)_(uppercase enum value name)</code>. Up to 9 names can be provided.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">// <a href="Display.html">Display</a> a popup with None, Add, Multiply choices.
+// Each option will set _OVERLAY_NONE, _OVERLAY_ADD, _OVERLAY_MULTIPLY shader keywords.
+[KeywordEnum(None, Add, Multiply)] _Overlay ("<a href="Overlays.Overlay.html">Overlay</a> mode", Float) = 0<br /><br />// ...Later, in the HLSL code:
+#pragma multi_compile _OVERLAY_NONE _OVERLAY_ADD _OVERLAY_MULTIPLY
+</pre>
+      </div>
+              <div class="subsection">
+        <p>
+          <strong>Enum</strong> displays a popup menu for a float property. You can supply either an enum type name (preferably fully qualified with namespaces, in case there are multiple types), or explicit name/value pairs to display. Up to 7 name/value pairs can be specified.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">// Blend mode values
+[Enum(UnityEngine.Rendering.BlendMode)] _Blend ("Blend mode", Float) = 1<br /><br />// A subset of blend mode values, just "One" (value 1) and "SrcAlpha" (value 5).
+[Enum(One,1,SrcAlpha,5)] _Blend2 ("Blend mode subset", Float) = 1</pre>
+      </div>
+              <div class="subsection">
+        <p>
+          <strong>PowerSlider</strong> displays a slider with a non-linear response for a Range shader property.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">// A slider with 3.0 response curve
+[PowerSlider(3.0)] _Shininess ("Shininess", <a href="SocialPlatforms.Range.html">Range</a> (0.01, 1)) = 0.08</pre>
+      </div>
+              <div class="subsection">
+        <p>
+          <strong>IntRange</strong> displays an integer slider for a Range shader property.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">// An integer slider for specified range (0 to 255)
+[IntRange] _Alpha ("Alpha", <a href="SocialPlatforms.Range.html">Range</a> (0, 255)) = 100</pre>
+      </div>
+              <div class="subsection">
+        <p>When a property drawer class name ends with "Decorator", that is a property decorator, similar to <a href="DecoratorDrawer.html">DecoratorDrawer</a>. They are used to create headings
+and dividers between properties that don't affect the property itself. A single property can have multiple decorators on it. The built-in decorator drawers are: SpaceDecorator, HeaderDecorator.<br /><br /><strong>Space</strong> creates vertical space before the shader property.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">// Default small amount of space.
+[<a href="Space.html">Space</a>] _Prop1 ("Prop1", Float) = 0<br /><br />// Large amount of space.
+[<a href="Space.html">Space</a>(50)] _Prop2 ("Prop2", Float) = 0</pre>
+      </div>
+              <div class="subsection">
+        <p>
+          <strong>Header</strong> creates a header text before the shader property.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">[Header(A group of things)] _Prop1 ("Prop1", Float) = 0</pre>
+      </div>
+              <div class="subsection">
+        <p>Note that for performance reasons, EditorGUILayout functions are not usable with MaterialPropertyDrawers.<br /><br />Additional resources: <a href="MaterialProperty.html">MaterialProperty</a> class.</p>
+      </div>
+              <div class="subsection">
+                <h3>Public Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="MaterialPropertyDrawer.Apply.html">Apply</a></td><td class="desc">Apply extra initial values to the material.</td></tr>
+      <tr><td class="lbl"><a href="MaterialPropertyDrawer.GetPropertyHeight.html">GetPropertyHeight</a></td><td class="desc">Override this method to specify how tall the GUI for this property is in pixels.</td></tr>
+      <tr><td class="lbl"><a href="MaterialPropertyDrawer.OnGUI.html">OnGUI</a></td><td class="desc">Override this method to make your own GUI for the property.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

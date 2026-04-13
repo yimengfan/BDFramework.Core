@@ -1,0 +1,332 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Creating Screen Transitions</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/HOWTO-UIScreenTransition.html">English</a></li>
+<li><a href="/cn/current/Manual/HOWTO-UIScreenTransition.html">中文</a></li>
+<li><a href="/ja/current/Manual/HOWTO-UIScreenTransition.html">日本語</a></li>
+<li><a href="/kr/current/Manual/HOWTO-UIScreenTransition.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/HOWTO-UIScreenTransition.html">English</a></li>
+<li><a href="/cn/current/Manual/HOWTO-UIScreenTransition.html">中文</a></li>
+<li><a href="/ja/current/Manual/HOWTO-UIScreenTransition.html">日本語</a></li>
+<li><a href="/kr/current/Manual/HOWTO-UIScreenTransition.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="com.unity.ugui.html">Unity UI </a></li>
+<li><a href="UIHowTos.html">UI How Tos</a></li>
+<li>Creating Screen Transitions</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="HOWTO-UICreateFromScripting.html"></a></span><div class="tip">Creating UI elements from scripting</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="GUIScriptingGuide.html"></a></span><div class="tip">Immediate Mode GUI (IMGUI)</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Creating Screen Transitions</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The need to transition between multiple <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> screens is fairly common. In this page we will explore a simple way to create and manage those transitions using animation and <span class="tooltip"><strong>State Machines</strong><span class="tooltiptext">The set of states in an Animator Controller that a character or animated GameObject can be in, along with a set of transitions between those states and a variable to remember the current state. The states available will depend on the type of gameplay, but typical states include things like idling, walking, running and jumping. <a href="StateMachineBasics.html" href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> screens is fairly common. In this page we will explore a simple way to create and manage those transitions using animation and <span class="tooltip"><strong>State Machines</strong><span class="tooltiptext">The set of states in an Animator Controller that a character or animated GameObject can be in, along with a set of transitions between those states and a variable to remember the current state. The states available will depend on the type of gameplay, but typical states include things like idling, walking, running and jumping. <a href="StateMachineBasics.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#StateMachine" aria-label="Go to glossary anchor for StateMachine">Glossary</a></span></span></span> to drive and control each screen.</p>
+
+<h2>Overview</h2>
+
+<p>The high-level idea is that each of our screens will have an <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimatorController.html">Animator Controller</a><span class="tooltiptext">Controls animation through Animation Layers with Animation State Machines and Animation Blend Trees, controlled by Animation Parameters. The same Animator Controller can be referenced by multiple models with Animator components. <a href="class-AnimatorController.html" href="class-AnimatorController.html">Animator Controller</a><span class="tooltiptext">Controls animation through Animation Layers with Animation State Machines and Animation Blend Trees, controlled by Animation Parameters. The same Animator Controller can be referenced by multiple models with Animator components. <a href="class-AnimatorController.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorController" aria-label="Go to glossary anchor for AnimatorController">Glossary</a></span></span></span> with two <a href="class-State.html">states</a> (Open and Closed) and a boolean <a href="AnimationParameters.html">Parameter</a> (Open). To transition between screens you will only need to close the currently open Screen and open the desired one. To make this process easier we will create a small Class ScreenManager that will keep track and take care of closing any already open Screen for us. The button that triggers the transition will only have to ask the ScreenManager to open the desired screen.</p>
+
+<h3>Thinking about Navigation</h3>
+
+<p>If you plan to support controller/keyboard navigation of UI elements, then it’s important to have a few things in mind. It’s important to avoid having Selectable elements outside the screen since that would enable players to select offscreen elements, we can do that by deactivating any off-screen hierarchy. We also need to make sure when a new screen is shown we set a element from it as selected, otherwise the player would not be able to navigate to the new screen. We will take care of all that in the ScreenManager class below.</p>
+
+<h2>Setting up the Animator Controller</h2>
+
+<p>Let’s take a look at the most common and minimal setup for the Animation Controller to do a Screen transition. The controller will need a boolean parameter (Open) and two states (Open and Closed), each state should have an animation with only one <span class="tooltip"><strong>keyframe</strong><span class="tooltiptext">A frame that marks the start or end point of a transition in an animation. Frames in between the keyframes are called inbetweens.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#keyframe" aria-label="Go to glossary anchor for keyframe">Glossary</a></span></span></span>, this way we let the State Machine do the transition blending for us.</p>
+
+<figure>
+<img src="../uploads/Main/UI_ScreenTransitionAnimatorOpen.png" alt="The Open state and animation">
+<figcaption>The Open state and animation</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/UI_ScreenTransitionAnimatorClosed.png" alt="The Closed state and animation">
+<figcaption>The Closed state and animation</figcaption>
+</figure>
+
+<p>Now we need to create the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Transition.html">transition</a><span class="tooltiptext">The blend from one state to another in a state machine, such as transitioning a character from a walk to a jog animation. Transitions define how long the blend between states should take, and the conditions that activate the blend. <a href="class-Transition.html" href="class-Transition.html">transition</a><span class="tooltiptext">The blend from one state to another in a state machine, such as transitioning a character from a walk to a jog animation. Transitions define how long the blend between states should take, and the conditions that activate the blend. <a href="class-Transition.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Transition" aria-label="Go to glossary anchor for Transition">Glossary</a></span></span></span> between both states, let’s start with the transition from Open to Closed and let’s set the condition properly, we want to go from Open to Closed when the parameter Open is set to false. Now we create the transition from Closed to Open and set the condition to go from Closed to Open when the parameter Open is true.</p>
+
+<figure>
+<img src="../uploads/Main/UI_ScreenTransitionAnimatorTransitionToOpen.png" alt="The Transition from Closed to Open">
+<figcaption>The Transition from Closed to Open</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/UI_ScreenTransitionAnimatorTransitionToClosed.png" alt="The Transition from Open to Closed">
+<figcaption>The Transition from Open to Closed</figcaption>
+</figure>
+
+<h2>Managing the screens</h2>
+
+<p>With all the above set up, the only thing missing is for us to set the parameter Open to true on the screens Animator we want to transition to and Open to false on the currently open screens Animator. To do that, we will create a small script:</p>
+
+<pre><code>using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Collections;
+using System.Collections.Generic;
+
+public class ScreenManager : MonoBehaviour {
+
+    //Screen to open automatically at the start of the Scene
+    public Animator initiallyOpen;
+
+    //Currently Open Screen
+    private Animator m_Open;
+
+    //Hash of the parameter we use to control the transitions.
+    private int m_OpenParameterId;
+
+    //The GameObject Selected before we opened the current Screen.
+    //Used when closing a Screen, so we can go back to the button that opened it.
+    private GameObject m_PreviouslySelected;
+
+    //Animator State and Transition names we need to check against.
+    const string k_OpenTransitionName = &quot;Open&quot;;
+    const string k_ClosedStateName = &quot;Closed&quot;;
+
+    public void OnEnable()
+    {
+        //We cache the Hash to the &quot;Open&quot; Parameter, so we can feed to Animator.SetBool.
+        m_OpenParameterId = Animator.StringToHash (k_OpenTransitionName);
+
+        //If set, open the initial Screen now.
+        if (initiallyOpen == null)
+            return;
+        OpenPanel(initiallyOpen);
+    }
+
+    //Closes the currently open panel and opens the provided one.
+    //It also takes care of handling the navigation, setting the new Selected element.
+    public void OpenPanel (Animator anim)
+    {
+        if (m_Open == anim)
+            return;
+
+        //Activate the new Screen hierarchy so we can animate it.
+        anim.gameObject.SetActive(true);
+        //Save the currently selected button that was used to open this Screen. (CloseCurrent will modify it)
+        var newPreviouslySelected = EventSystem.current.currentSelectedGameObject;
+        //Move the Screen to front.
+        anim.transform.SetAsLastSibling();
+
+        CloseCurrent();
+
+        m_PreviouslySelected = newPreviouslySelected;
+
+        //Set the new Screen as then open one.
+        m_Open = anim;
+        //Start the open animation
+        m_Open.SetBool(m_OpenParameterId, true);
+
+        //Set an element in the new screen as the new Selected one.
+        GameObject go = FindFirstEnabledSelectable(anim.gameObject);
+        SetSelected(go);
+    }
+
+    //Finds the first Selectable element in the providade hierarchy.
+    static GameObject FindFirstEnabledSelectable (GameObject gameObject)
+    {
+        GameObject go = null;
+        var selectables = gameObject.GetComponentsInChildren&lt;Selectable&gt; (true);
+        foreach (var selectable in selectables) {
+            if (selectable.IsActive () &amp;&amp; selectable.IsInteractable ()) {
+                go = selectable.gameObject;
+                break;
+            }
+        }
+        return go;
+    }
+
+    //Closes the currently open Screen
+    //It also takes care of navigation.
+    //Reverting selection to the Selectable used before opening the current screen.
+    public void CloseCurrent()
+    {
+        if (m_Open == null)
+            return;
+
+        //Start the close animation.
+        m_Open.SetBool(m_OpenParameterId, false);
+
+        //Reverting selection to the Selectable used before opening the current screen.
+        SetSelected(m_PreviouslySelected);
+        //Start Coroutine to disable the hierarchy when closing animation finishes.
+        StartCoroutine(DisablePanelDeleyed(m_Open));
+        //No screen open.
+        m_Open = null;
+    }
+
+    //Coroutine that will detect when the Closing animation is finished and it will deactivate the
+    //hierarchy.
+    IEnumerator DisablePanelDeleyed(Animator anim)
+    {
+        bool closedStateReached = false;
+        bool wantToClose = true;
+        while (!closedStateReached &amp;&amp; wantToClose)
+        {
+            if (!anim.IsInTransition(0))
+                closedStateReached = anim.GetCurrentAnimatorStateInfo(0).IsName(k_ClosedStateName);
+
+            wantToClose = !anim.GetBool(m_OpenParameterId);
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        if (wantToClose)
+            anim.gameObject.SetActive(false);
+    }
+
+    //Make the provided GameObject selected
+    //When using the mouse/touch we actually want to set it as the previously selected and 
+    //set nothing as selected for now.
+    private void SetSelected(GameObject go)
+    {
+        //Select the GameObject.
+        EventSystem.current.SetSelectedGameObject(go);
+
+        //If we are using the keyboard right now, that's all we need to do.
+        var standaloneInputModule = EventSystem.current.currentInputModule as StandaloneInputModule;
+        if (standaloneInputModule != null)
+            return;
+
+        //Since we are using a pointer device, we don't want anything selected. 
+        //But if the user switches to the keyboard, we want to start the navigation from the provided game object.
+        //So here we set the current Selected to null, so the provided gameObject becomes the Last Selected in the EventSystem.
+        EventSystem.current.SetSelectedGameObject(null);
+    }
+}
+</code></pre>
+
+<p>Let’s hook up this script, we do this by creating a new <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, we can rename it “ScreenManager” for instance, and add the component above to it. You can assign an initial screen to it, this screen will be open at the start of your <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, we can rename it “ScreenManager” for instance, and add the component above to it. You can assign an initial screen to it, this screen will be open at the start of your <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<p>Now for the final part, let’s make the <a href="script-Button.html">UI buttons</a> work. Select the button that should trigger the screen transition and add a new action under the <strong>On Click ()</strong> list in the Inspector. Drag the ScreenManager GameObject we just created to the ObjectField, on the dropdown select <strong>ScreenManager-&gt;OpenPanel (Animator)</strong> and drag and drop the panel you want to open when the user clicks the button to the las ObjectField.</p>
+
+<figure>
+<img src="../uploads/Main/UI_ScreenTransitionButtonInspector.png" alt="Button Inspector">
+<figcaption>Button Inspector</figcaption>
+</figure>
+
+<h2>Notes</h2>
+
+<p>This technique only requires each screen to have an AnimatorController with an Open parameter and a Closed state to work - it doesn’t matter how your screen or State Machine are constructed. This technique also works well with nested screens, meaning you only need one ScreenManager for each nested level.</p>
+
+<p>The State Machine we set up above has the default state of Closed, so all of the screens that use this controller start as closed. The ScreenManager provides an initiallyOpen property so you can specify which screen is shown first.</p>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="HOWTO-UICreateFromScripting.html"></a></span><div class="tip">Creating UI elements from scripting</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="GUIScriptingGuide.html"></a></span><div class="tip">Immediate Mode GUI (IMGUI)</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1549 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Android Player settings</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="platforms" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-PlayerSettingsAndroid.html">English</a></li>
+<li><a href="/cn/current/Manual/class-PlayerSettingsAndroid.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-PlayerSettingsAndroid.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-PlayerSettingsAndroid.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-PlayerSettingsAndroid.html">English</a></li>
+<li><a href="/cn/current/Manual/class-PlayerSettingsAndroid.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-PlayerSettingsAndroid.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-PlayerSettingsAndroid.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="android.html">Android</a></li>
+<li><a href="android-getting-started.html">Getting started with Android</a></li>
+<li>Android Player settings</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="android-setup-target-api.html"></a></span><div class="tip">Set up the Android SDK Target API</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="android-keystore.html"></a></span><div class="tip">Android keystores</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Android Player settings</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page details the Player Settings for the Android platform. For a description of the general Player settings, see <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html">Player Settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html" href="class-PlayerSettings.html">Player Settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/class-PlayerSettingsAndroid.png" alt="Player Settings for Android.">
+<figcaption>Player Settings for Android.</figcaption>
+</figure>
+
+<p>Documentation for the properties is grouped according to their respective sections in the Player <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>:</p>
+
+<ul>
+<li><a href="#Icon">Icon</a></li>
+<li><a href="#Resolution">Resolution and Presentation</a></li>
+<li><a href="#Splash">Splash Image</a></li>
+<li><a href="#Other">Other Settings</a></li>
+<li><a href="#Publishing">Publishing Settings</a></li>
+</ul>
+
+<p><a name="Icon" aria-hidden="true"></a></p>
+
+<h2>Icon</h2>
+
+<p>Use the <strong>Icon</strong> section to specify icons to represent your application on the device.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetAndroidIcon.png" alt="Icon settings for Android.">
+<figcaption>Icon settings for Android.</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Adaptive</strong></td>
+	<td style="text-align:left;">Specify textures of various sizes to represent your application on devices running Android 8.0 (API level 26) or higher. For more information, refer to the Android documentation on <a href="https://developer.android.com/develop/ui/views/launch/icon_design_adaptive">Adaptive icons</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Round</strong></td>
+	<td style="text-align:left;">Specify textures of various sizes to represent your application on devices running Android 7.1 (API level 25) or higher.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Legacy</strong></td>
+	<td style="text-align:left;">Specify textures of various sizes to represent your application on devices running versions earlier than Android 7.1 (API level 25).</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Resolution" aria-hidden="true"></a></p>
+
+<h2>Resolution and Presentation</h2>
+
+<p>Use the <strong>Resolution and Presentation</strong> section to customize aspects of the screen’s appearance.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetAndroidResPres.png" alt="Resolution and Presentation settings for Android.">
+<figcaption>Resolution and Presentation settings for Android.</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="fullscreen" aria-hidden="true"></a><strong>Fullscreen Mode</strong>
+</td>
+	<td style="text-align:left;">Specifies how the window appears on the device. This sets the default window mode at startup.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Fullscreen Window</em></td>
+	<td style="text-align:left;">The application window fills the full-screen native resolution of the device. To fill the full-screen window, Unity scales the application contents. To match the <span class="tooltip"><strong>aspect ratio</strong><span class="tooltiptext">The relationship of an image’s proportional dimensions, such as its width and height.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AspectRatio" aria-label="Go to glossary anchor for AspectRatio">Glossary</a></span></span></span> of the output device, Unity might add black bars to the rendered output so the content doesn’t stretch. This process is called <a href="https://en.wikipedia.org/wiki/Letterboxing_(filming)">letterboxing</a>.In this mode, the navigation bar is always hidden.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Windowed</em></td>
+	<td style="text-align:left;">The application uses a standard, non-full-screen, movable window. The size of the window depends on the application’s resolution. In this mode, the window is resizable by default. To disable this, disable <a href="#resizable">Resizable Window</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="resizable" aria-hidden="true"></a><strong>Resizable Window</strong>
+</td>
+	<td style="text-align:left;">Indicates whether the user can resize the application’s window.<br>This setting enables multi-window capabilities in your application on Android phones and tablets. For more information, see <a href="https://developer.android.com/guide/topics/ui/multi-window">Google’s developer documentation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Default Window Width</strong></td>
+	<td style="text-align:left;">The default width of the application window in <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span>. This option is only available if the <strong>Fullscreen Mode</strong> is set to <strong>Windowed</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Default Window Height</strong></td>
+	<td style="text-align:left;">The default height of the application window in pixels. This option is only available if the <strong>Fullscreen Mode</strong> is set to <strong>Windowed</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Minimum Window Width</strong></td>
+	<td style="text-align:left;">The minimum width of the application window in pixels. This option is only available if the <strong>Fullscreen Mode</strong> is set to <strong>Windowed</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Minimum Window Height</strong></td>
+	<td style="text-align:left;">The minimum height of the application window in pixels. This option is only available if the <strong>Fullscreen Mode</strong> is set to <strong>Windowed</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Hide Navigation Bar</strong></td>
+	<td style="text-align:left;">Indicates whether to hide the navigation bar that appears at the top of the window.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Render outside safe area</strong></td>
+	<td style="text-align:left;" colspan="2">Enable this option to allow the application to use all available screen space to render, including areas of the display that are cut out (notched). For more information, refer to Android’s <a href="https://developer.android.com/guide/topics/display-cutout">display cutout support</a> documentation. The behavior of this setting varies depending on the Android version, as outlined in the following table.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Android 15 and newer</strong></td>
+	<td style="text-align:left;">This setting has no effect as the application uses the entire screen space by default. For more information, refer to <a href="https://developer.android.com/reference/android/view/WindowManager.LayoutParams?_gl=1*1x8u5ar*_up*MQ..*_ga*MjQ0MTQ3Nzk4LjE3MjE5OTAzMDE.*_ga_6HH9YJMN9M*MTcyMTk5MDMwMC4xLjAuMTcyMTk5MDMwMC4wLjAuMA..#LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS">Android documentation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Android 11 to 14</strong></td>
+	<td style="text-align:left;">When enabled, the application uses the entire screen space available. When disabled, the application uses the space around the cutout only if it’s within the system bar (top or bottom of the device), otherwise the application displays black bars over the cutout area. For more information on when the application uses the space around the cutout, refer to <a href="https://developer.android.com/reference/android/view/WindowManager.LayoutParams?_gl=1*1x8u5ar*_up*MQ..*_ga*MjQ0MTQ3Nzk4LjE3MjE5OTAzMDE.*_ga_6HH9YJMN9M*MTcyMTk5MDMwMC4xLjAuMTcyMTk5MDMwMC4wLjAuMA..#LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT">Android documentation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Android 10 and older</strong></td>
+	<td style="text-align:left;">When enabled, the application uses the screen space around the cutout on the shorter edge (such as the top or bottom) of the device. However, the application blocks the cutout on the longer edge (such as the sides) of the device with black bars. For more information on how the application uses the space around cutouts on shorter edges, refer to <a href="https://developer.android.com/reference/android/view/WindowManager.LayoutParams?_gl=1*1x8u5ar*_up*MQ..*_ga*MjQ0MTQ3Nzk4LjE3MjE5OTAzMDE.*_ga_6HH9YJMN9M*MTcyMTk5MDMwMC4xLjAuMTcyMTk5MDMwMC4wLjAuMA..#LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES">Android documentation</a>. When disabled, the application uses the space around the cutout only if it’s within the system bar, otherwise the application displays black bars over the cutout area. For more information on when the application uses the space around the cutout, refer to <a href="https://developer.android.com/reference/android/view/WindowManager.LayoutParams?_gl=1*1x8u5ar*_up*MQ..*_ga*MjQ0MTQ3Nzk4LjE3MjE5OTAzMDE.*_ga_6HH9YJMN9M*MTcyMTk5MDMwMC4xLjAuMTcyMTk5MDMwMC4wLjAuMA..#LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT">Android documentation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Optimized Frame Pacing</strong></td>
+	<td style="text-align:left;">Indicates whether Unity should evenly distribute frames for less variance in framerate. Enable this option to create a smoother experience.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Other <strong>Resolution and Presentation</strong> settings are grouped under the following sections:</p>
+
+<ul>
+<li><a href="#Scaling">Resolution Scaling</a></li>
+<li><a href="#Aspect">Supported Aspect Ratio</a></li>
+<li><a href="#Orientation">Orientation</a></li>
+<li><a href="#supportedOris">Allowed Orientations for Auto Rotation</a></li>
+<li><a href="#OtherRes">Other</a></li>
+</ul>
+
+<p><a name="Scaling" aria-hidden="true"></a></p>
+
+<h3>Resolution Scaling</h3>
+
+<p>Use the <strong>Resolution Scaling</strong> section to customize settings relating to screen resolution scaling. Using a resolution lower than the device’s native resolution can improve performance and battery life.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetAndroidResPres-Scaling.png" alt="Resolution Scaling settings for Android.">
+<figcaption>Resolution Scaling settings for Android.</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Resolution Scaling Mode</strong></td>
+	<td style="text-align:left;">Specifies whether and how the application scales its resolution. You can set the scaling to be equal to or lower than the native screen resolution. Using a lower resolution can improve performance and battery life.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Disabled</em></td>
+	<td style="text-align:left;">Doesn’t apply resolution scaling and the application renders to the device’s native screen resolution.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>FixedDPI</em></td>
+	<td style="text-align:left;">Applies resolution scaling using a target DPI. Use this to optimize performance and battery life or target a specific DPI setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Target DPI</strong></td>
+	<td style="text-align:left;">The resolution of the application. If the device’s native screen DPI is higher than this value, Unity downscales the application’s resolution to match this setting. To calculate the scale, Unity uses the following:<br><code>min(Target DPI * Factor / Screen DPI, 1)</code><br>Where <strong>Factor</strong> is the <strong>Resolution Scaling Fixed DPI Factor</strong> from <a href="class-QualitySettings.html">Quality settings</a>.<strong>Note:</strong> This option only appears when you set <strong>Resolution Scaling Mode</strong> to <strong>Fixed DPI</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Reset resolution on window resize</strong></td>
+	<td style="text-align:left;">Indicates whether to set the screen resolution to the new native window size when the native window size changes. If you set <strong>Resolution Scaling Mode</strong> to <strong>Fixed DPI</strong>, Unity recalculates the resolution based on <strong>Fixed DPI</strong> property.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong><span class="tooltip"><strong>Blit</strong><span class="tooltiptext">A shorthand term for “bit block transfer”. A blit operation is the process of transferring blocks of data from one place in memory to another.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#blit" aria-label="Go to glossary anchor for blit">Glossary</a></span></span></span> Type</strong></td>
+	<td style="text-align:left;">Controls whether to use a blit to render the final image to the screen. Using a blit is compatible with most devices but is usually slower than not using a blit.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Always</em></td>
+	<td style="text-align:left;">Unity renders to an offscreen buffer and then uses a blit to copy the contents of the buffer to the device’s framebuffer. This is compatible with most devices but is usually slower than not using blit.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Never</em></td>
+	<td style="text-align:left;">Unity renders to the framebuffer provided by the device’s operating system. If this fails, the application prints a one-time warning to the device log. This is usually faster than using blit, but it isn’t compatible with all devices.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Auto</em></td>
+	<td style="text-align:left;">Unity renders to the framebuffer provided by the device’s operating system if possible. If this fails, Unity prints a warning to the device console and uses a blit to render the final image to the screen.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Aspect" aria-hidden="true"></a></p>
+
+<h3>Supported Aspect Ratio</h3>
+
+<p>Use the <strong>Supported Aspect Ratio</strong> section to customize settings relating to which device aspect ratios to support.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetAndroidResPres-Aspect.png" alt="Resolution Scaling settings for Android.">
+<figcaption>Resolution Scaling settings for Android.</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Aspect Ratio Mode</strong></td>
+	<td style="text-align:left;">Specifies the largest aspect ratio the application supports. If the device’s aspect ratio is greater than this aspect ratio, Unity uses this aspect ratio for the application and adds black bars so the application doesn’t stretch..</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Legacy Wide Screen (1.86)</em></td>
+	<td style="text-align:left;">The application supports aspect ratios up to Android’s legacy wide-screen aspect ratio.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Native Aspect Ratio</em></td>
+	<td style="text-align:left;">The application supports aspect ratios up to Android’s native aspect ratio.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Custom</em></td>
+	<td style="text-align:left;">The application supports aspect ratios up to the aspect ratio you set in <strong>Up To</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">  <strong>Up To</strong>
+</td>
+	<td style="text-align:left;">The custom maximum aspect ratio.<br><br>This setting only appears when you set <strong>Aspect Ratio Mode</strong> to <strong>Custom</strong>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Orientation" aria-hidden="true"></a></p>
+
+<h3>Orientation</h3>
+
+<p>Use the <strong>Orientation</strong> section to customize settings relating to the orientation of the application on the device.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetAndroidResPresOri.png" alt="Orientation settings for Android.">
+<figcaption>Orientation settings for Android.</figcaption>
+</figure>
+
+<p>Choose the game’s screen orientation from the <strong>Default Orientation</strong> drop-down menu: </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Default Orientation</strong></td>
+	<td style="text-align:left;">Specifies the screen orientation the application uses.<br><br><strong>Note</strong>: Unity shares the value you set for this setting between Android and iOS.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Portrait</em></td>
+	<td style="text-align:left;">The application uses portrait screen orientation where the bottom of the application’s window aligns with the bottom of the device’s screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Portrait Upside Down</em></td>
+	<td style="text-align:left;">The application uses portrait screen orientation where the bottom of the application’s window aligns with the top of the device’s screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Landscape Right</em></td>
+	<td style="text-align:left;">The application uses landscape screen orientation where the right side of the application’s window aligns with the top of the device’s screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Landscape Left</em></td>
+	<td style="text-align:left;">The application uses landscape screen orientation where the right side of the application’s window aligns with the bottom of the device’s screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Auto Rotation</em></td>
+	<td style="text-align:left;">The screen can rotate to any of the orientations you specify in the <a href="#supportedOris">Allowed Orientations for Auto Rotation</a> section.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Auto Rotation Behavior</strong></td>
+	<td style="text-align:left;" colspan="2">Specify how the application window adjusts its orientation based on the device’s rotation sensor and orientation settings, when the <strong>Default Orientation</strong> is set to <strong>Auto Rotation</strong>.<br><strong>Note</strong>: This property is visible only when you set the <strong>Default Orientation</strong> to <strong>Auto Rotation</strong>. By default, this property is set to <strong>User</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>User</strong></td>
+	<td style="text-align:left;">The application window adjusts its orientation according to the device’s orientation settings. If the user locks the device’s auto rotate orientation setting, the application window doesn’t follow the preferences set in the <strong>Allowed Orientations for Auto Rotation</strong> section. The application window only rotates as per the set preferences when the user turns off the device’s auto rotate orientation setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Sensor</strong></td>
+	<td style="text-align:left;">The application window adjusts its orientation according to the device’s rotation sensor regardless of the device’s orientation settings. However, the application window only rotates as per the preferences set in the <strong>Allowed Orientations for Auto Rotation</strong> section.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="supportedOris" aria-hidden="true"></a></p>
+
+<h3>Allowed Orientations for Auto Rotation</h3>
+
+<p>Use the <strong>Allowed Orientations for Auto Rotation</strong> section to specify which orientations the application supports when you set <strong>Default Orientation</strong> to <strong>Auto Rotation</strong>. This is useful, for example, to lock the application to landscape orientation but allow the user to switch between landscape left and landscape right.</p>
+
+<p>This section only appears when you set <strong>Default Orientation</strong> to <strong>Auto Rotation</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetiOSResPresOriSupp.png" alt="Allowed Orientations for Auto Rotation settings for Android.">
+<figcaption>Allowed Orientations for Auto Rotation settings for Android.</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Portrait</strong></td>
+	<td style="text-align:left;">Indicates whether the application supports portrait screen orientation where the bottom of the application’s window aligns with the bottom of the device’s screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Portrait Upside Down</strong></td>
+	<td style="text-align:left;">Indicates whether the application supports portrait screen orientation where the bottom of the application’s window aligns with the top of the device’s screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Landscape Right</strong></td>
+	<td style="text-align:left;">Indicates whether the application supports landscape screen orientation where the right side of the application’s window aligns with the top of the device’s screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Landscape Left</strong></td>
+	<td style="text-align:left;">Indicates whether the application supports landscape screen orientation where the right side of the application’s window aligns with the bottom of the device’s screen.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="OtherRes" aria-hidden="true"></a></p>
+
+<h3>Other</h3>
+
+<p>The Resolution and Presentation section also contains the following general settings.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSettingAndroidResPres-Other.png" alt="Other resolution and presentation settings for Android.">
+<figcaption>Other resolution and presentation settings for Android.</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Use 32-bit Display Buffer</strong></td>
+	<td style="text-align:left;">Indicates whether the display buffer holds 32-bit color values instead of 16-bit color values. Enable this setting if you see banding, or need alpha values in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html">post-processing effects</a>. Some <span class="tooltip"><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a href="PostProcessingOverview.html" href="PostProcessingOverview.html">post-processing effects</a>. Some <span class="tooltip"><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a href="PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span> effects require this because they create <span class="tooltip"><a href="class-RenderTexture.html">Render Textures</a><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a href="class-RenderTexture.html" href="Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span> effects require this because they create <span class="tooltip"><a href="class-RenderTexture.html">Render Textures</a><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span> in the same format as the display buffer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Disable Depth and Stencil</strong></td>
+	<td style="text-align:left;">Indicates whether to disable depth and <span class="tooltip"><strong>stencil buffers</strong><span class="tooltiptext">A memory store that holds an 8-bit per-pixel value. In Unity, you can use a stencil buffer to flag pixels, and then only render to pixels that pass the stencil operation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#stencilbuffer" aria-label="Go to glossary anchor for stencilbuffer">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Render Over Native UI</strong></td>
+	<td style="text-align:left;">Indicates whether to render on top of native UI on Android or <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span>. For this setting to take effect, set your <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span>. For this setting to take effect, set your <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>’s <strong>Clear Flags</strong> to use a solid color with an alpha value lower than 1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Show Loading Indicator</strong></td>
+	<td style="text-align:left;">Specifies if and how the loading indicator appears.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Don’t Show</em></td>
+	<td style="text-align:left;">The loading indicator doesn’t appear.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Large</em></td>
+	<td style="text-align:left;">A large loading indicator appears.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Inversed Large</em></td>
+	<td style="text-align:left;">A large loading indicator appears with inversed color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Small</em></td>
+	<td style="text-align:left;">A small loading indicator appears.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Inversed Small</em></td>
+	<td style="text-align:left;">A small loading indicator appears with inversed color.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Splash" aria-hidden="true"></a></p>
+
+<h2>Splash Image</h2>
+
+<p>Use the <strong>Virtual Reality Splash Image</strong> setting to select a custom splash image for <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html">Virtual Reality</a><span class="tooltiptext">Virtual Reality (VR) immerses users in an artificial 3D world of realistic images and sounds, using a headset and motion tracking. <a href="VROverview.html" href="XR.html">Virtual Reality</a><span class="tooltiptext">Virtual Reality (VR) immerses users in an artificial 3D world of realistic images and sounds, using a headset and motion tracking. <a href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VirtualReality" aria-label="Go to glossary anchor for VirtualReality">Glossary</a></span></span></span> displays. For information on common Splash Screen settings, see <a href="class-PlayerSettingsSplashScreen.html">Splash Screen</a>.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetAndroidSplash.png" alt="Splash screen settings for virtual reality.">
+<figcaption>Splash screen settings for virtual reality.</figcaption>
+</figure>
+
+<p>Below the common Splash Screen settings, you can set up an Android-specific <strong>Static Splash Image</strong>. </p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetAndroidSplashStory.png" alt="Splash screen settings for Android.">
+<figcaption>Splash screen settings for Android.</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Image</strong></td>
+	<td style="text-align:left;">Specifies the texture that the application uses for the Android splash screen. The standard size for the splash screen image is 320x480.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Scaling</strong></td>
+	<td style="text-align:left;">Specifies how to scale the splash image to fit the devices screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Center (only scale down)</strong></td>
+	<td style="text-align:left;">Draws the image at its native size unless it’s too large, in which case Unity scales the image down to fit.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Scale to Fit (letter-boxed)</strong></td>
+	<td style="text-align:left;">Scales the image so that the longer dimension fits the screen size exactly. Unity fills in the empty space around the sides in the shorter dimension in black.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Scale to Fill (cropped)</strong></td>
+	<td style="text-align:left;">Scales the image so that the shorter dimension fits the screen size exactly. Unity crops the image in the longer dimension.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Other" aria-hidden="true"></a></p>
+
+<h2>Other Settings</h2>
+
+<p>This section allows you to customize a range of options organized into the following groups:</p>
+
+<ul>
+<li><a href="#Rendering">Rendering</a></li>
+<li><a href="#Vulkan">Vulkan Settings</a></li>
+<li><a href="#Identification">Identification</a></li>
+<li><a href="#Configuration">Configuration</a></li>
+<li><a href="#ShaderVariantLoading">Shader Variant Loading</a></li>
+<li><a href="#Optimization">Optimization</a></li>
+<li><a href="#Logging">Logging</a></li>
+<li><a href="#Legacy">Legacy</a></li>
+</ul>
+
+<p><a name="Rendering" aria-hidden="true"></a></p>
+
+<h3>Rendering</h3>
+
+<p>Use these settings to customize how Unity renders your game for the Android platform.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetAndroidRender.png" alt="Rendering settings for the Android platform">
+<figcaption>Rendering settings for the Android platform</figcaption>
+</figure>
+<table>
+ <thead>
+ <tr>
+ <th><strong>Property</strong></th>
+ <th colspan="2"><strong>Description</strong></th>
+ </tr>
+ </thead>
+ <tbody> <tr>
+<td rowspan="3"><strong>Color Space</strong></td>
+<td colspan="2">Choose which color space Unity uses for rendering: <strong>Gamma</strong> or <strong>Linear</strong>. For more information, see <a href="LinearLighting.html">Linear rendering overview</a>.</td>
+</tr>
+<tr>
+ <td><strong>Gamma</strong></td>
+ <td>Gamma color space is typically used for calculating lighting on older hardware restricted to 8 bits per channel for the frame buffer format. Even though monitors today are digital, they might still take a gamma-encoded signal as input.</td>
+</tr>
+<tr>
+ <td><strong>Linear</strong></td>
+ <td>Linear color space rendering gives more precise results. When you select to work in linear color space, the Editor defaults to using <a href="https://en.wikipedia.org/wiki/SRGB">sRGB</a> sampling. If your <a href="Textures.html">Textures</a> are in linear color space, you need to work in linear color space and disable sRGB sampling for each Texture.</td>
+</tr>
+<tr>
+<td> <strong>Auto Graphics API</strong> </td>
+<td colspan="2">Disable this option to manually pick and reorder the graphics APIs. By default this option is enabled, and Unity tries to use Vulkan. If the device doesn’t support Vulkan, Unity falls back to GLES3.2, GLES3.1 or GLES3.0. There are three additional checkboxes to configure the minimum OpenGL ES 3.x minor version: <strong>Require ES3.1</strong>, <strong>Require ES3.1+AEP</strong> and <strong>Require ES3.2</strong>.<br><strong>Important</strong>: Unity adds the GLES3/GLES3.1/AEP/3.2 requirement to your Android App Manifest only if GLES2 is not in the list of APIs when <em>Auto Graphics API</em> is disabled. In this case only, your application does not appear on unsupported devices in the Google Play Store. </td>
+</tr>
+<tr>
+<td> <strong>Color Gamut</strong>
+</td>
+<td colspan="2"> You can add or remove color gamuts for the Android platform to use for rendering. Click the plus (+) icon to see a list of available gamuts. A color gamut defines a possible range of colors available for a given device (such as a monitor or screen). The sRGB gamut is the default (and required) gamut. When targeting devices with wide color gamut displays, use DisplayP3 to utilize full display capabilities. </td>
+</tr>
+<tr>
+<td> <strong>Multithreaded Rendering</strong> </td>
+<td colspan="2"> Enable this option to move graphics API calls from Unity’s main thread to a separate worker thread. This can help to improve performance in applications that have high CPU usage on the main thread. </td>
+</tr>
+<tr>
+<td>
+<strong>Static Batching</strong> </td>
+<td colspan="2">Use Static batching. For more information, refer to <a href="DrawCallBatching.html">Draw call batching</a>.</td>
+</tr>
+<tr>
+<td>
+<strong>Dynamic Batching</strong> </td>
+<td colspan="2">Use dynamic batching (enabled by default). For more information, refer to <a href="DrawCallBatching.html">Draw call batching</a>.<br><br><strong>Note:</strong> Dynamic batching has no effect when a <a href="ScriptableRenderPipeline.html">Scriptable Render Pipeline</a> is active, so this setting is only visible if the <strong>Scriptable Render Pipeline Asset</strong> <a href="class-GraphicsSettings.html#SRLoop">Graphics</a> setting is blank. </td>
+</tr>
+<tr>
+<td>
+<strong>Compute Skinning</strong> </td>
+<td colspan="2">Enable this option to enable DX11/ES3 GPU compute skinning, freeing up CPU resources.</td>
+</tr>
+<tr>
+<td>
+<strong>Graphics Jobs</strong> </td>
+<td colspan="2">Offloads graphics tasks (render loops) to worker threads running on other CPU cores. This option reduces the time spent in <code>Camera.Render</code> on the main thread, which can be a bottleneck.</td>
+</tr>
+<tr>
+<td> <strong>Texture compression format</strong> </td>
+<td colspan="2"> Choose between ASTC, ETC2 and ETC (ETC1 for RGB, ETC2 for RGBA). See <a href="class-TextureImporterOverride.html#android">texture compression format overview</a> for more information on how to pick the right format.<br>See <a href="android-requirements-and-compatibility.html#texture-compression">Texture compression settings</a> for more details on how this interacts with the texture compression setting in the <a href="android-build-settings.html">Build Settings</a>. </td>
+</tr>
+<tr>
+<td> <strong>Normal Map Encoding</strong> </td>
+<td colspan="2"> Choose XYZ or DXT5nm-style to set the normal map encoding. This affects the encoding scheme and compression format used for normal maps. DXT5nm-style normal maps are of higher quality, but more expensive to decode in shaders. </td>
+</tr>
+<tr>
+<td>
+<strong>Lightmap Encoding</strong> </td>
+<td colspan="2">Defines the encoding scheme and compression format of the lightmaps. <br>You can choose from <strong>Low Quality</strong>, <strong>Normal Quality</strong>, or <strong>High Quality</strong> . For more information, refer to <a href="Lightmaps-TechnicalInformation.html">Lightmaps: Technical information</a>.</td>
+</tr>
+<tr>
+<td>
+<strong>Lightmap Streaming</strong> </td>
+<td colspan="2">Uses <a href="TextureStreaming.html">Mipmap Streaming</a> for lightmaps. Unity applies this setting to all lightmaps when it generates them.<br><br><strong>Note:</strong> To use this setting, you must enable the <a href="class-QualitySettings.html#texStream">Texture Streaming Quality</a> setting.</td>
+</tr>
+<tr>
+<td>
+<strong>Streaming Priority</strong> </td>
+<td colspan="2">Sets the priority for all lightmaps in the <a href="TextureStreaming.html">Mipmap Streaming system</a>. Unity applies this setting to all lightmaps when it generates them.<br>Positive numbers give higher priority. Valid values range from –128 to 127.</td>
+</tr>
+<tr>
+<td><strong>Frame Timing Stats</strong></td>
+<td colspan="2">Allows Unity to gather CPU/GPU frame timing statistics. Use this option with the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DynamicResolution.html">Dynamic Resolution</a><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets, to reduce workload on the GPU. <a href="DynamicResolution.html" href="DynamicResolution.html">Dynamic Resolution</a><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets, to reduce workload on the GPU. <a href="DynamicResolution.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#dynamicresolution" aria-label="Go to glossary anchor for dynamicresolution">Glossary</a></span></span></span> camera setting to determine if your application is CPU or GPU bound.</td>
+</tr>
+<tr>
+<td> <strong>Virtual Texturing</strong> </td>
+<td colspan="2"> Indicates whether to enable <a href="svt-streaming-virtual-texturing.html">Virtual Texturing</a>.<br><strong>Note</strong>: Virtual Texturing isn’t compatible with Android.</td>
+</tr>
+<tr>
+<td rowspan="3"><b>Shader Precision Model</b></td>
+<td colspan="2">Select the default precision shaders use. For more information, refer to <a href="SL-Use16BitPrecisionInShaders.html">Use 16-bit precision in shaders</a>.</td>
+</tr>
+<tr>
+<td><b>Platform default</b></td>
+<td>Use lower precision on mobile platforms, and full precision on other platforms.</td>
+</tr>
+<tr>
+<td><b>Unified</b></td>
+<td>Use lower precision if the platform supports it.</td>
+</tr>
+<tr>
+<td> <strong>360 Stereo Capture</strong> </td>
+<td colspan="2"> Indicates whether Unity can capture stereoscopic 360 images and videos. <br><strong>Note</strong>: 360 stereoscopic capturing isn’t compatible with Android.</td>
+</tr> </tbody>
+</table>
+
+<p><a name="Vulkan" aria-hidden="true"></a></p>
+
+<h3>Vulkan Settings</h3>
+
+<figure>
+<img src="../uploads/Main/player-settings-other-vulkan-settings-android.png" alt="Vulkan Player settings for the Android platform">
+<figcaption>Vulkan Player settings for the Android platform</figcaption>
+</figure>
+<table>
+ <thead>
+ <tr>
+ <th><strong>Property</strong></th>
+ <th><strong>Description</strong></th>
+ </tr>
+ </thead>
+ <tbody> <tr>
+<td colspan="1"><strong>SRGB Write Mode</strong></td>
+<td> Enable this option to allow <code>Graphics.SetSRGBWrite()</code> renderer to toggle the sRGB write mode during runtime. That is, if you want to temporarily turn off Linear-to-sRGB write color conversion, you can use this property to achieve that. Enabling this has a negative impact on performance on mobile tile-based GPUs; therefore, do NOT enable this for mobile.</td>
+</tr> <tr>
+<td colspan="1"><strong>Number of swapchain buffers</strong></td>
+<td> Set this option to 2 for double-buffering, or 3 for triple-buffering to use with Vulkan renderer. This setting may help with latency on some platforms, but in most cases you should not change this from the default value of 3. Double-buffering might have a negative impact on performance. Do not use this setting on Android.</td>
+</tr> <tr>
+<td colspan="1">
+<strong>Acquire swapchain image late as possible</strong> </td>
+<td> If enabled, Vulkan delays acquiring the backbuffer until after it renders the frame to an offscreen image. Vulkan uses a staging image to achieve this. Enabling this setting causes an extra blit when presenting the backbuffer. This setting, in combination with double-buffering, can improve performance. However, it also can cause performance issues because the additional blit takes up bandwidth.</td>
+</tr> <tr>
+<td colspan="1"><strong>Recycle command buffers</strong></td>
+<td>Indicates whether to recycle or free <a href="../ScriptReference/Rendering.CommandBuffer.html">CommandBuffers</a> after Unity executes them.</td>
+</tr> <tr>
+<td colspan="1">
+<strong>Apply display rotation during rendering</strong> </td>
+<td> Enable this to perform all rendering in the native orientation of the display. This has a performance benefit on many devices. For more information, see documentation on <a href="vulkan-swapchain-pre-rotation.html">Vulkan swapchain pre-rotation</a>.</td>
+</tr> </tbody>
+</table>
+
+<p><a name="Identification" aria-hidden="true"></a></p>
+
+<h3>Identification</h3>
+
+<figure>
+<img src="../uploads/Main/PlayerSetAndroidIdentification.png" alt="Identification settings for the Android platform">
+<figcaption>Identification settings for the Android platform</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Override Default Package Name</strong></td>
+	<td style="text-align:left;">Indicates whether to override the default package name for your application.<br><strong>Note:</strong> This setting affects macOS, iOS, tvOS, and Android.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">  <strong>Package Name</strong>
+</td>
+	<td style="text-align:left;">Set the application ID, which uniquely identifies your app on the device and in Google Play Store. The application ID must follow the convention <code>com.YourCompanyName.YourProductName</code> and must contain only alphanumeric and underscore characters. Each segment must start with an alphabetical character. For more information, see <a href="https://developer.android.com/studio/build/configure-app-module#set-application-id">Set the application ID</a>.<br><strong>Important</strong>: Unity automatically removes any invalid characters you type.<br>To set this property, enable <strong>Override Default Package Name</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Version</strong></td>
+	<td style="text-align:left;">Enter the build version number of the bundle, which identifies an iteration (released or unreleased) of the bundle. The version is specified in the common format of a string containing numbers separated by dots (eg, 4.3.2). (Shared between iOS and Android.)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bundle Version Code</strong></td>
+	<td style="text-align:left;">An internal version number. This number is used only to determine whether one version is more recent than another, with higher numbers indicating more recent versions. This is not the version number shown to users; that number is set by the <code>versionName</code> attribute. The value must be set as an integer, such as “100”. You can define it however you want, as long as each successive version has a higher number. <br><br>For example, it could be a build number. Or you could translate a version number in “x.y” format to an integer by encoding the “x” and “y” separately in the lower and upper 16 bits. Or you could simply increase the number by one each time a new version is released. <br><br>Keep this number under 100000 if <strong>Split APKs by target architecture</strong> is enabled. Each APK must have a unique version code so Unity adds 100000 to the number for ARMv7, and 200000 for ARM64.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="minAPIlevel" aria-hidden="true"></a><strong>Minimum API Level</strong>
+</td>
+	<td style="text-align:left;">Minimum Android version (API level) required to run the application.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Target API Level</strong></td>
+	<td style="text-align:left;">Target Android version (API level) against which to compile the application.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Configuration" aria-hidden="true"></a></p>
+
+<h3>Configuration</h3>
+
+<figure>
+<img src="../uploads/Main/PlayerSetAndroidConfiguration.png" alt="Configuration settings for the Android platform">
+<figcaption>Configuration settings for the Android platform</figcaption>
+</figure>
+<table>
+ <thead>
+ <tr>
+ <th colspan="2"><strong>Property</strong></th>
+ <th><strong>Description</strong></th>
+ </tr>
+ </thead>
+<tbody> <tr>
+<td colspan="2">
+<a name="backend" aria-hidden="true"></a><span class="tooltip"><strong>Scripting Backend</strong><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about scripting-backends.html" href="scripting-backends.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScriptingBackend" aria-label="Go to glossary anchor for ScriptingBackend">Glossary</a></span></span></span> </td>
+<td>Choose the scripting backend you want to use. The scripting backend determines how Unity compiles and executes C# code in your Project. </td>
+</tr> <tr>
+<td></td>
+<td><strong>Mono</strong></td>
+<td>Compiles C# code into .NET Common Intermediate Language (CIL) and executes that CIL using a Common Language Runtime. For more information, refer to the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Mono.html">Mono</a><span class="tooltiptext">A scripting backend used in Unity. <a href="IL2CPP.html" href="Mono.html">Mono</a><span class="tooltiptext">A scripting backend used in Unity. <a href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mono" aria-label="Go to glossary anchor for Mono">Glossary</a></span></span></span> page.</td>
+</tr>
+ <tr>
+<td></td>
+<td><strong>IL2CPP</strong></td>
+<td>Compiles C# code into CIL, converts the CIL to C++ and then compiles that C++ into native machine code, which executes directly at runtime. For more information, refer to <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html" href="IL2CPP.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span>. </td>
+</tr> <tr>
+<td>
+<strong>API Compatibility Level</strong> </td>
+<td colspan="2">Choose which .NET APIs you can use in your project. This setting can affect compatibility with third-party libraries. However, it has no effect on Editor-specific code (code in an Editor directory, or within an Editor-specific Assembly Definition).<br><br><strong>Tip:</strong> If you are having problems with a third-party assembly, you can try the suggestion in the <a href="#apiComp">API Compatibility Level</a> section below.</td>
+</tr>
+ <tr>
+<td></td>
+<td><em>.Net 2.0</em></td>
+<td>.Net 2.0 libraries. Maximum .net compatibility, biggest file sizes. Part of the deprecated .NET 3.5 runtime.</td>
+</tr> <tr>
+<td></td>
+<td><em>.Net 2.0 Subset</em></td>
+<td>Subset of full .net compatibility, smaller file sizes. Part of the deprecated .NET 3.5 runtime.</td>
+</tr> <tr>
+<td></td>
+<td><em>.Net Standard 2.0</em></td>
+<td>Compatible with <a href="https://docs.microsoft.com/en-us/dotnet/standard/net-standard">.NET Standard 2.0</a>. Produces smaller builds and has full cross-platform support.</td>
+</tr> <tr>
+<td></td>
+<td><em>.Net 4.x</em></td>
+<td>Compatible with the .NET Framework 4 (which includes everything in the .NET Standard 2.0 profile as well as additional APIs). Choose this option when using libraries that access APIs not included in .NET Standard 2.0. Produces larger builds and any additional APIs available are not necessarily supported on all platforms. See <a href="dotnetProfileAssemblies.html">Referencing additional class library assemblies</a> for more information. </td>
+</tr> <tr>
+<td colspan="2">
+<strong>C++ Compiler Configuration</strong> </td>
+<td>Choose the C++ compiler configuration used when compiling IL2CPP generated code.<br><strong>Note:</strong> This property is disabled unless <strong>Scripting Backend</strong> is set to <em>IL2CPP</em>.</td>
+</tr> <tr>
+<td colspan="2"><strong>Use incremental GC</strong></td>
+<td> Uses the incremental garbage collector, which spreads garbage collection over several frames to reduce garbage collection-related spikes in frame duration. For more information, refer to <a href="performance-managed-memory.html">Automatic Memory Management</a>.</td>
+</tr> <tr>
+<td colspan="2"><strong>Assembly Version Validation</strong></td>
+<td>Indicates whether Mono validates types from a <a href="https://docs.microsoft.com/en-us/dotnet/standard/assembly/strong-named">strongly-named</a> assembly.</td>
+</tr> <tr>
+<td>
+<strong>Mute Other Audio Sources</strong> </td>
+<td colspan="2">Enable this option if you want your Unity application to stop Audio from applications running in the background. Otherwise, Audio from background applications continues to play alongside your Unity application.</td>
+</tr> <tr>
+<td colspan="2">
+<strong>Target Architectures</strong> </td>
+<td>Select which CPUs you want to allow the application to run on (32-bit ARM, 64-bit ARM, 32-bit x86, and 64-bit x86–64). <br><strong>Note</strong>: Running Android apps in a 64-bit environment has performance benefits and 64-bit apps can address more than 4 GB of memory space.</td>
+</tr> <tr>
+<td colspan="2">
+<strong>Split APKs by target architecture (Experimental)</strong> </td>
+<td>Enable this option to create a separate APK for each CPU architecture selected in <strong>Target Architectures</strong>. This makes download size smaller for Google Play Store users. This is primarily a Google Play store feature and may not work in other stores. For more details, refer to <a href="https://developer.android.com/google/play/publishing/multiple-apks.html">Multiple APK Support</a>.</td>
+</tr> <tr>
+<td colspan="2">
+<strong>Target Devices</strong> </td>
+<td>Specifies the target devices on which the APK is allowed to run.</td>
+</tr> <tr>
+<td></td>
+<td>
+<em>All Devices</em> </td>
+<td>The APK is allowed to run on all Android and Chrome OS devices.</td>
+</tr> <tr>
+<td></td>
+<td>
+<em>Phones and Tablets Only</em> </td>
+<td>The APK is allowed to run on Android phones and tablets, but not on Chrome OS devices.</td>
+</tr> <tr>
+<td></td>
+<td>
+<em>Chrome OS Devices Only</em> </td>
+<td>The APK is allowed to run on Chrome OS devices, but not on Android phones or tablets.</td>
+</tr> <tr>
+<td colspan="2">
+<strong>Install Location</strong> </td>
+<td>Specifies application install location on the device (for detailed information, refer to <a href="http://developer.android.com/guide/appendix/install-location.html">Android Developer documentation on install locations</a>.</td>
+</tr> <tr>
+<td></td>
+<td>
+<em>Automatic</em> </td>
+<td>Let the operating system decide. User will be able to move the app back and forth.</td>
+</tr> <tr>
+<td></td>
+<td>
+<em>Prefer External</em> </td>
+<td>Install the application to external storage (SD card) if possible. The operating system doesn’t guarantee it; if not possible, the app will be installed to internal memory.</td>
+</tr> <tr>
+<td></td>
+<td>
+<em>Force Internal</em> </td>
+<td>Force the application to be installed to internal memory. The user will be unable to move the app to external storage.</td>
+</tr> <tr>
+<td colspan="2">
+<strong>Internet Access</strong> </td>
+<td>Choose whether to always add the networking (<code>INTERNET</code>) permission to the <a href="android-manifest.html">Android App Manifest</a>, even if you are not using any networking APIs. Set to <em>Require</em> by default for development builds.</td>
+</tr> <tr>
+<td></td>
+<td><em>Auto</em></td>
+<td>Only add the internet access permission if you are using a networking API. </td>
+</tr> <tr>
+<td></td>
+<td><em>Require</em></td>
+<td>Always add the internet access permission.</td>
+</tr> <tr>
+<td colspan="2">
+<strong>Write Permission</strong> </td>
+<td>Choose whether to enable write access to the external storage (such as the SD card) and add a corresponding permission to the Android App Manifest. Set to <em>External(SDCard)</em> by default for development builds.</td>
+</tr> <tr>
+<td></td>
+<td><em>Internal</em></td>
+<td>Only grant write permission to internal storage. </td>
+</tr> <tr>
+<td></td>
+<td><em>External(SDCard)</em></td>
+<td>Enable write permission to external storage.</td>
+</tr> <tr>
+<td colspan="2"><strong>Filter Touches When Obscured</strong></td>
+<td>Enable this option to discard touches received when another visible window is covering the Unity application. This is to prevent tapjacking. </td>
+</tr> <tr>
+<td colspan="2"><strong>Sustained Performance Mode</strong></td>
+<td>Enable this option to set a predictable and consistent level of device performance over longer periods of time, without thermal throttling. Overall performance might be lower when this setting is enabled. Based on the <a href="https://developer.android.com/about/versions/nougat/android-7.0.html#sustained_performance_api">Android Sustained Performance API</a>. </td>
+</tr> <tr>
+<td colspan="2">
+<strong>Maximum Java Heap Size</strong> </td>
+<td>Set the maximum Java heap size to user for building (in megabytes). Defaults to 4096. </td>
+</tr> <tr>
+<td colspan="2">
+<strong>Low Accuracy Location</strong> </td>
+<td>Enable this option to use low accuracy values with Android location APIs instead. </td>
+</tr> <tr>
+<td colspan="2">
+<strong>Chrome OS Input Emulation</strong> </td>
+<td>Chrome OS’s default behaviour is to convert mouse and touchpad input events into touchscreen input events. Un-check this setting to disable the default behavior. </td>
+</tr> <tr>
+ <td><strong>Predictive Back Gesture Support</strong></td>
+ <td colspan="2">Enable this option to use Android’s <a href="https://developer.android.com/guide/navigation/predictive-back-gesture">OnBackInvokedCallback</a> for handling back events on Android 13 and above.</td>
+</tr>
+ <tr>
+<td colspan="2">
+<strong>Android TV Compatibility</strong> </td>
+<td>Enable this option to mark the application as Android TV compatible.</td>
+</tr> <tr>
+<td colspan="2">  <strong>Android Game</strong>
+</td>
+<td>Enable this option to mark the output package (APK) as a game rather than a regular application.</td>
+</tr> <tr>
+<td colspan="2">  <strong>Android Gamepad Support Level</strong>
+</td>
+<td>Choose the level of support your application offers for a gamepad. The options are <strong>Works with D-Pad</strong>, <strong>Supports Gamepad</strong>, and <strong>Requires Gamepad</strong>.</td>
+</tr> <tr>
+<td colspan="2"><strong>Warn about App Bundle size</strong></td>
+<td>Enable this option to receive a warning when the size of the <a href="https://developer.android.com/platform/technology/app-bundle">Android App Bundle</a> exceeds a certain threshold. This option is selected by default and you can only configure it if you enable the <strong>Build App Bundle (Google Play)</strong> option in the <a href="android-build-settings.html">Build settings</a>.</td>
+</tr> <tr>
+<td colspan="2">  <strong>App Bundle size threshold</strong>
+</td>
+<td>Enter a size in Mb. When your App Bundle exceeds this size, Unity will display a warning.</td>
+</tr>
+ <tr>
+<td></td>
+<td><strong>Input System Package (New)</strong></td>
+<td> Use the newer <a href="../ScriptReference/Input.html">Input</a> system. To try the new Input System, install the <a href="https://github.com/Unity-Technologies/InputSystem">InputSystem package</a>.</td>
+</tr> <tr>
+<td></td>
+<td><strong>Both</strong></td>
+<td> Use both systems side by side. </td>
+</tr>
+<tr>
+ <td rowspan="4"><strong>Active Input Handling</strong></td>
+ <td colspan="2">Choose how to handle input from users.</td>
+</tr>
+<tr>
+ <td><strong>Input Manager (Old)</strong></td>
+ <td>Uses the traditional <a href="class-InputManager.html">Input</a> settings.</td>
+</tr>
+<tr>
+ <td><strong>Input System Package (New)</strong></td>
+ <td>Uses the <a href="../ScriptReference/Input.html">Input</a> system. This option requires you to install the <a href="https://github.com/Unity-Technologies/InputSystem">InputSystem package</a>.</td>
+</tr>
+<tr>
+ <td><strong>Both</strong></td>
+ <td>Use both systems.<br><br><strong>Note</strong>: This option isn’t supported on Android.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="ShaderVariantLoading" aria-hidden="true"></a></p>
+
+<h4>Shader Variant Loading</h4>
+
+<p>Use these settings to control how much memory <span class="tooltip"><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> use at runtime.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Default chunk size (MB)</strong></td>
+	<td style="text-align:left;">Sets the maximum size of compressed shader variant data chunks Unity stores in your built application for all platforms. The default is <code>16</code>. For more information, refer to <a href="shader-loading.html#dynamicloading">Shader loading</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Default chunk count</strong></td>
+	<td style="text-align:left;">Sets the default limit on how many decompressed chunks Unity keeps in memory on all platforms. The default is <code>0</code>, which means there’s no limit.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Override</strong></td>
+	<td style="text-align:left;">Enables overriding <strong>Default chunk size</strong> and <strong>Default chunk count</strong> for this build target.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Chunk size (MB)</strong></td>
+	<td style="text-align:left;">Overrides the value of <strong>Default chunk size (MB)</strong> on this build target.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Chunk count</strong></td>
+	<td style="text-align:left;">Overrides the value of <strong>Default chunk count</strong> on this build target.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="apiComp" aria-hidden="true"></a></p>
+
+<h4>API Compatibility Level</h4>
+
+<p>You can choose your mono API compatibility level for all targets. Sometimes a 3rd-party .NET library uses functionality that’s outside of your .NET compatibility level. To understand what’s going on in such cases, and how to best fix it, try following these suggestions: </p>
+
+<ol>
+<li>Install <a href="https://www.microsoft.com/en-us/p/ilspy/9mxfbkfvsq13?cid=msft_web_chart&amp;activetab=pivot:overviewtab">ILSpy</a> for Windows.</li>
+<li>Drag the .NET assemblies for the API compatibility level that you are having issues with into ILSpy. You can find these under <code>Frameworks/Mono/lib/mono/YOURSUBSET/</code>.</li>
+<li>Drag in your 3rd-party assembly.</li>
+<li>Right-click your 3rd-party assembly and select <strong>Analyze</strong>.</li>
+<li>In the analysis report, inspect the <strong>Depends on</strong> section. The report highlights anything that the 3rd-party assembly depends on, but that is not available in the .NET compatibility level of your choice in red.</li>
+</ol>
+
+<p><a name="ScriptCompilation" aria-hidden="true"></a></p>
+
+<h3>Script Compilation</h3>
+
+<figure>
+<img src="../uploads/Main/ProjectSettingsScriptCompilation.png" alt="Script compilation settings for the Android platform">
+<figcaption>Script compilation settings for the Android platform</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Scripting Define Symbols</strong></td>
+	<td style="text-align:left;">Set custom compilation flags. For more details, see the documentation on <a href="PlatformDependentCompilation.html">Platform dependent compilation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Additional Compiler Arguments</strong></td>
+	<td style="text-align:left;">Add entries to this list to pass additional arguments to the Roslyn compiler. Use one new entry for each additional argument.<br>To create a new entry, press the ‘+’ button. To remove an entry, press the ‘-’ button.<br>When you have added all desired arguments, click the <strong>Apply</strong> button to include your additional arguments in future compilations.The <strong>Revert</strong> button resets this list to the most recent applied state.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Suppress Common Warnings</strong></td>
+	<td style="text-align:left;">Disable this setting to display the C# warnings <a href="https://docs.microsoft.com/en-us/dotnet/csharp/misc/cs0169">CS0169</a> and <a href="https://docs.microsoft.com/en-us/dotnet/csharp/misc/CS0649">CS0649</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Allow ‘unsafe’ Code</strong></td>
+	<td style="text-align:left;">Enable support for compiling <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/unsafe">‘unsafe’ C# code</a> in a pre-defined assembly (for example, <code>Assembly-CSharp.dll</code>). <br>For Assembly Definition Files (<code>.asmdef</code>), click on one of your <code>.asmdef</code> files and enable the option in the Inspector window that appears.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Use Deterministic Compilation</strong></td>
+	<td style="text-align:left;">Disable this setting to prevent compilation with the -deterministic C# flag. With this setting enabled, compiled assemblies are byte-for-byte identical each time they are compiled.<br>For more information, see Microsoft’s <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/deterministic-compiler-option">deterministic compiler option documentation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Enable Roslyn Analyzers</strong></td>
+	<td style="text-align:left;">Disable this setting to compile user-written <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> without Roslyn analyzer DLLs that might be present in your project.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Optimization" aria-hidden="true"></a></p>
+
+<h3>Optimization</h3>
+
+<figure>
+<img src="../uploads/Main/PlayerSetAndroidOptimization.png" alt="Optimization settings for the Android platform">
+<figcaption>Optimization settings for the Android platform</figcaption>
+</figure>
+<table>
+ <thead>
+ <tr>
+ <th colspan="2"><strong>Property</strong></th>
+ <th><strong>Description</strong></th>
+ </tr>
+ </thead>
+ <tbody> <tr>
+<td colspan="2"><strong>Prebake Collision Meshes</strong></td>
+<td>Adds collision data to <a href="class-Mesh.html">Meshes</a> at build time. </td>
+</tr> <tr>
+<td colspan="2"><strong>Keep Loaded Shaders Alive</strong></td>
+<td>Indicates whether to prevent shaders from being unloaded. <br><br>For more information, see <a href="shader-loading.html">Shader Loading</a>. </td>
+</tr> <tr>
+<td colspan="2"><strong>Preloaded Assets</strong></td>
+<td>Sets an array of Assets for the player to load on startup. <br>To add new Assets, increase the value of the <strong>Size</strong> property and then set a reference to the Asset to load in the new <strong>Element</strong> box that appears.</td>
+</tr> <tr>
+<td colspan="2">
+<strong>AOT compilation options</strong> </td>
+<td>Additional options for Ahead of Time (AOT) compilation. This helps <a href="iphone-playerSizeOptimization.html">optimize the size of the built iOS player</a>.</td>
+</tr> <tr>
+<td colspan="2">
+<strong>Strip Engine Code</strong> </td>
+<td>Enable this option if you want the Unity Linker tool to remove code for Unity Engine features that your Project doesn’t use. This setting is only available with the <a href="IL2CPP.html">IL2CPP scripting backend</a>.<br><br>Most apps don’t use every available DLL. This option strips out DLLs that your app doesn’t use to reduce the size of the built Player. If your app is using one or more classes that would normally be stripped out under your current settings, Unity displays a debug message when you try to build the app.</td>
+</tr> <tr>
+<td colspan="2"><strong>Managed Stripping Level</strong></td>
+<td>Chooses how aggressively Unity strips unused managed (C#) code. The options are <strong>Minimal</strong>, <strong>Low</strong>, <strong>Medium</strong>, and <strong>High</strong>. <br>When Unity builds your app, the Unity Linker process can strip unused code from the managed DLLs your Project uses. Stripping code can make the resulting executable significantly smaller, but can sometimes accidentally remove code that’s in use. <br><br>For more information about these options and bytecode stripping with IL2CPP, refer to <a href="../ScriptReference/ManagedStrippingLevel.html">ManagedStrippingLevel</a>.</td>
+</tr>
+ <tr>
+<td colspan="2"><strong>Enable Internal profiler (Deprecated)</strong></td>
+<td>Enable this option to get the profiler data from your device in the Android SDK’s <a href="https://developer.android.com/studio/command-line/logcat.html">adblogcat</a> output while testing your projects. This is only available in development builds.</td>
+</tr> <tr>
+<td colspan="2"><strong>Vertex Compression</strong></td>
+<td>Sets vertex compression per channel. This affects all the meshes in your project. <br>Typically, Vertex Compression is used to reduce the size of mesh data in memory, reduce file size, and improve GPU performance. <br><br>For more information on how to configure vertex compression and limitations of this setting, refe to <a href="mesh-compression.html">Compressing mesh data</a>. </td>
+</tr> <tr>
+<td colspan="2"><strong>Optimize Mesh Data</strong></td>
+<td>Enable this option to strip unused vertex attributes from the mesh used in a build. This option reduces the amount of data in the mesh, which can help reduce build size, loading times, and runtime memory usage. <br><br> <strong>Warning:</strong> If you have this setting enabled, you should remember to not change material or shader settings at runtime. <br><br> For more information, refer to <a href="../ScriptReference/PlayerSettings-stripUnusedMeshComponents.html">PlayerSettings.stripUnusedMeshComponents</a>.</td>
+</tr>
+ <tr>
+<td colspan="2"><strong>Texture MipMap Stripping</strong></td>
+<td>Enables mipmap stripping for all platforms. This strips unused mipmaps from Textures at build time. Unity determines unused mipmaps by comparing the value of the mipmap against the <strong>Quality Settings</strong> for the current platform. If a mipmap value is excluded from every <strong>Quality Setting</strong> for the current platform, then Unity strips those mipmaps from the build at build time. If <a href="../ScriptReference/QualitySettings-masterTextureLimit.html">QualitySettings.masterTextureLimit</a> is set to a mipmap value that has been stripped, Unity will set the value to the closest mipmap value that has not been stripped.</td>
+</tr> </tbody>
+</table>
+
+<p><a name="Logging" aria-hidden="true"></a></p>
+
+<h3>Logging</h3>
+
+<p>Select what type of logging to allow in specific contexts.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetPCOther-Logging.png" alt="Logging settings for Android platform">
+<figcaption>Logging settings for Android platform</figcaption>
+</figure>
+
+<p>Select your preferred stack trace method by enabling the option that corresponds to each Log Type (<strong>Error</strong>, <strong>Assert</strong>, <strong>Warning</strong>, <strong>Log</strong>, and <strong>Exception</strong>) based on the type of logging you require. For more information, refer to <a href="StackTrace.html">stack trace logging</a>. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">No logs are ever recorded.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ScriptOnly</strong></td>
+	<td style="text-align:left;">Logs only when running scripts.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Full</strong></td>
+	<td style="text-align:left;">Logs all the time.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Legacy" aria-hidden="true"></a></p>
+
+<h3>Legacy</h3>
+
+<p>Enable the <strong>Clamp BlendShapes (Deprecated)</strong> option to clamp the range of blend shape weights in <a href="class-SkinnedMeshRenderer.html">SkinnedMeshRenderers</a>.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetPCOther-Legacy.png" alt="Legacy settings for the Android platform">
+<figcaption>Legacy settings for the Android platform</figcaption>
+</figure>
+
+<p><a name="Publishing" aria-hidden="true"></a></p>
+
+<h2>Publishing Settings</h2>
+
+<p>Use the Publishing Settings to configure how Unity builds your Android app.
+To open the Publishing Settings, go to <strong>Edit</strong> &gt; <strong>Project Settings</strong>, select <strong>Player</strong>, select the <strong>Android</strong> icon, and open the <strong>Publishing Settings</strong> panel. </p>
+
+<p>This section describes the different parts of the Publishing Settings panel and what they do. These include: </p>
+
+<ul>
+<li><a href="#projectkeystore">Project Keystore</a></li>
+<li><a href="#projectkey">Project Key</a></li>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #build">Build</a><span class="tooltiptext">The process of compiling your project into a format that is ready to run on a specific platform or platforms. <a href="BuildSettings.html" href="#build">Build</a><span class="tooltiptext">The process of compiling your project into a format that is ready to run on a specific platform or platforms. <a href="BuildSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#build" aria-label="Go to glossary anchor for build">Glossary</a></span></span></span></li>
+<li><a href="#minify">Minify</a></li>
+<li><a href="#splitapplicationbinary">Split Application Binary</a></li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/Android-publishing-page.png" alt="Android publishing panel">
+<figcaption>Android publishing panel</figcaption>
+</figure>
+
+<p>
+<strong>Note</strong>: For security reasons, Unity doesn’t save your <span class="tooltip"><strong>Keystore</strong><span class="tooltiptext">An Android system that lets you store cryptographic key entries for enhanced device security. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettingsAndroid.html#projectkeystore" href="class-PlayerSettingsAndroid.html#projectkeystore">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Keystore" aria-label="Go to glossary anchor for Keystore">Glossary</a></span></span></span> or Project Key passwords.</p>
+
+<p>Use the Keystore Manager window to create, configure and load your keys and keystores.
+You can load existing keystores and keys from either the Keystore Manager or the main Android Publishing panel. If you choose to load these from inside the Keystore Manager, Unity automatically fills the Project Keystore and Project Key fields.<br>
+For further information see documentation on the <a href="android-keystore-manager.html">Keystore Manager</a>.<br>
+<a name="projectkeystore" aria-hidden="true"></a>
+</p>
+
+<h3>Project Keystore</h3>
+
+<p>A keystore is a container that holds signing keys for application security. For details, see Android developer documentation: <a href="https://developer.android.com/training/articles/keystore">Android keystore system.</a>
+</p>
+
+<p>Use the <strong>Project Keystore</strong> settings to choose which keystore to use for the open project. When you load a keystore, Unity loads all of the keys in that keystore.
+To load and use an existing keystore in your open project: </p>
+
+<ol>
+<li>Enable <strong>Custom Keystore</strong>.</li>
+<li>Open the <strong>Select</strong> dropdown, select <strong>Browse</strong>, and choose a keystore from your file system.</li>
+<li>Enter your <strong>Keystore password</strong>.</li>
+</ol>
+
+<p>If you don’t have an existing keystore, leave <strong>Custom Keystore</strong> disabled. </p>
+
+<p>Unity uses a debug keystore to sign your application.
+A debug keystore is a working keystore. It allows you to sign the application and to test it locally. However, the app store will decline apps signed in this way. This is because the app store is unable to verify the validity and ownership of the application using a debug keystore. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Custom Keystore</strong></td>
+	<td style="text-align:left;">Enable <strong>Custom Keystore</strong> to load and use an existing Keystore.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Select</strong></td>
+	<td style="text-align:left;">When <strong>Custom Keystore</strong> is enabled, use this to select the keystore you want to use. The keystores below the partition in the <strong>Select</strong> dropdown are stored in a predefined dedicated location. For more details, see <a href="android-keystore-create.html#choose-the-keystore-location">Choose the keystore location</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Path</strong></td>
+	<td style="text-align:left;">You do not need to enter your keystore path. Unity provides this based on the keystore you choose.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Password</strong></td>
+	<td style="text-align:left;">Enter your keystore password to load your chosen keystore.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="projectkey" aria-hidden="true"></a></p>
+
+<h3>Project Key</h3>
+
+<p>When you load a keystore, Unity loads all of the keys in that keystore. Use the <strong>Project Key</strong> settings to choose one key from that keystore to use as the active key for the open project. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Alias</strong></td>
+	<td style="text-align:left;">Select the key you want to use for the open project.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Password</strong></td>
+	<td style="text-align:left;">Enter your key Password.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="build" aria-hidden="true"></a></p>
+
+<h3>Build</h3>
+
+<p>By default, Unity builds your application with the manifest files, <span class="tooltip"><strong>Gradle</strong><span class="tooltiptext">An Android build system that automates several build processes. This automation means that many common build errors are less likely to occur. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about android-gradle-overview.html" href="android-gradle-overview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Gradle" aria-label="Go to glossary anchor for Gradle">Glossary</a></span></span></span> templates and Proguard files provided with the Unity installation. Use the <strong>Build</strong> section of the Android Publishing Settings to change these.</p>
+
+<p>To use a custom manifest file, Gradle template or Proguard file:</p>
+
+<ol>
+<li>Enable the appropriate checkbox. Unity creates a default file in your project, and the file location appears below the checkbox.</li>
+<li>Open the new file and make your changes.</li>
+<li>Save your changes to this file. Unity automatically uses the changes saved to this file next time it builds the application.</li>
+</ol>
+
+<p>The settings in the Build section only apply to the build process for the current project. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Custom Main Manifest</strong></td>
+	<td style="text-align:left;">Customizable version of the Android <code>LibraryManifest.xml</code> file. This file contains important metadata about your Android application. For more information about the responsibilities of the Main/Unity Library Manifest see <a href="android-library-manifest.html">Unity Library Manifest</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Custom Unity Launcher Manifest</strong></td>
+	<td style="text-align:left;">Customizable version of the Android <code>LauncherManifest.xml</code> file. This file contains important metadata about your Android application’s launcher. For more information about the responsibilities of the Unity Launcher Manifest see <a href="android-launcher-manifest.html">Unity Launcher Manifest</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Custom Main Gradle Template</strong></td>
+	<td style="text-align:left;">Customizable version of the <code>mainTemplate.gradle</code> file. This file contains information on how to build your Android application as a library. For more information see documentation on <a href="android-gradle-overview.html#gradle-project-files">Gradle project files</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Custom Launcher Gradle Template</strong></td>
+	<td style="text-align:left;">Customizable version of the <code>launcherTemplate.gradle_</code> file. This file contains instructions on how to build your Android application. For more information see documentation on <a href="android-gradle-overview.html#gradle-project-files">Gradle project files</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Custom Base Gradle Template</strong></td>
+	<td style="text-align:left;">Customizable version of the <code>baseProjectTemplate.gradle</code> file. This file contains configuration that is shared between all other templates and Gradle projects. For more information see documentation on <a href="android-gradle-overview.html#gradle-project-files">Gradle project files</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Custom Gradle Properties Template</strong></td>
+	<td style="text-align:left;">Customizable version of the <code>gradle.properties</code> file. This file contains configuration settings for the Gradle build environment. This includes: <br>• The JVM (Java Virtual Machine) memory configuration. <br>• A property to allow Gradle to build using multiple JVMs.<br>• A property for choosing the tool to do the minification. <br>• A property to not compress native libs when building an app bundle.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="customproguard" aria-hidden="true"></a><strong>Custom Proguard File</strong>
+</td>
+	<td style="text-align:left;">Customizable version of the proguard.txt file. This file contains configuration settings for the minification process. If minification removes some Java code which should be kept, add a rule to keep that code in this file. For more information, refer to the documentation on <a href="#minify">Minification</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="minify" aria-hidden="true"></a></p>
+
+<h3>Minify</h3>
+
+<p>Minification is a process which shrinks, obfuscates, and optimizes the code in your application. It can reduce the code size and make the code harder to disassemble. However, minification can strip out code that’s actually needed, so ensure to configure this process correctly. By default, Unity uses Proguard for minification. Use the Minify settings to define when and how Unity should apply minification to your build. For information on Proguard, refer to <a href="https://www.guardsquare.com/manual/configuration/usage">Proguard manual</a>.</p>
+
+<p>In most cases, it’s good practice to only apply minification to release builds, and not debug builds. This is because minification takes time, and can make the builds slower. It can also make debugging more complicated due to the optimization that the code undergoes.</p>
+
+<p>
+<strong>Note</strong>: If the Java code is referenced via reflection, the minification process (R8/Proguard) cannot infer that the code is in use and strips that code. You can use <a href="#customproguard">Custom Proguard File</a> to retain the code that you require.</p>
+
+<p>The settings in the Minify section only apply to the build process for the current project. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Use R8</strong></td>
+	<td style="text-align:left;">By default, Unity uses Proguard for minification. Enable this checkbox to use R8 instead.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Release</strong></td>
+	<td style="text-align:left;">Enable this checkbox if you want Unity to minify your application’s code in release builds.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Debug</strong></td>
+	<td style="text-align:left;">Enable this checkbox if you want Unity to minify your application’s code in debug builds.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="splitapplicationbinary" aria-hidden="true"></a></p>
+
+<h3>Split Application Binary</h3>
+
+<p>Enable the <strong>Split Application Binary</strong> option to split your output package into main (APK) and expansion (OBB) packages. The Google Play Store requires this if you want to publish applications larger than 100 MB.</p>
+
+<p><br></p>
+
+<hr>
+
+<ul>
+<li><span class="page-history">Updated features in 5.5</span></li>
+<li><span class="page-history"><strong>Sustained Performance Mode</strong> added in 2017.3</span></li>
+<li><span class="page-history">.NET 4.x runtime added in 2018.1</span></li>
+<li><span class="page-history">Android <strong>Multiple APK</strong> features added in 2018.2</span></li>
+<li><span class="page-history">OpenGL ES 3.2 support for Android added in <a href="https://docs.unity3d.com/2019.1/Documentation/Manual/30_search.html?q=newin20191">2019.1</a> <span class="search-words">NewIn20191</span></span></li>
+<li><span class="page-history">Input System preview added in Unity 2019.1</span></li>
+<li><span class="page-history"><strong>Render outside safe area</strong> added in Unity 2019.1</span></li>
+<li><span class="page-history">Warn about App Bundle size option added in Unity 2019.2</span></li>
+<li><span class="page-history">GPU Skinning renamed to Compute Skinning in Unity 2019.3</span></li>
+<li><span class="page-history">Vuforia removed in Unity <a href="../Manual/30_search.html?q=newin20193">2019.3</a></span></li>
+<li><span class="page-history">Support for built-in XR SDKs deprecated in Unity <a href="../Manual/30_search.html?q=newin20193">2019.3</a>.<span class="search-words">NewIn20193</span></span></li>
+<li><span class="page-history">Updated for Texture compression format</span></li>
+</ul>
+<!-- area:platforms -->
+
+<p><span class="search-words">PlayerSettingsAndroid</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="android-setup-target-api.html"></a></span><div class="tip">Set up the Android SDK Target API</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="android-keystore.html"></a></span><div class="tip">Android keystores</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

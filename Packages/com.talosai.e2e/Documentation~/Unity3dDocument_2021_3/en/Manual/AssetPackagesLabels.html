@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Using labels to organize My Assets</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetPackagesLabels.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetPackagesLabels.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetPackagesLabels.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetPackagesLabels.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetPackagesLabels.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetPackagesLabels.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetPackagesLabels.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetPackagesLabels.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AssetStore.html">Unity's Asset Store</a></li>
+<li><a href="AssetStorePackages.html">Asset Store packages</a></li>
+<li>Using labels to organize My Assets</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetPackagesOrganize.html"></a></span><div class="tip">Finding your Asset Store packages</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetStorePublishing.html"></a></span><div class="tip">Publishing to the Asset Store</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Using labels to organize My Assets</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Labels help you organize your list of packages in the <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span> and in the Package Manager window. Labels are like user-defined categories, or collections that help you find packages easily.</p>
+
+<p>You can only create and use labels on the Asset Store website.</p>
+
+<figure>
+<img src="../uploads/Main/AssetPackage-labels.png" alt="Your list of downloaded or purchased packages from the Asset Store appear on the My Assets page">
+<figcaption>Your list of downloaded or purchased packages from the Asset Store appear on the <strong>My Assets</strong> page</figcaption>
+</figure>
+
+<p>
+<strong>(A)</strong> Click <strong>Manage my labels</strong> to go to edit mode, where you can assign labels to more than one package at a time.</p>
+
+<p>
+<strong>(B)</strong> Labels you have already assigned to this package. If you haven’t assigned any labels to the package yet, <strong>Add label</strong> appears instead.</p>
+
+<p>
+<strong>(C)</strong> Click <strong>Edit label</strong> to display the <strong>Edit Labels</strong> window where you can create and assign labels for this package.</p>
+
+<p>
+<strong>(D)</strong> Click <strong>Add label</strong> to display a window where you can create and assign labels for this package. If you have already assigned a label to the package, the label(s) appear instead.</p>
+
+<p>
+<strong>(E)</strong> Your list of labels appears here. When you select a label from this list, only those packages that have that label assigned appear in the list. You can select multiple labels at once.</p>
+
+<h2>Creating labels</h2>
+
+<p>The <strong>Edit Labels</strong> window lets you create and apply labels at the same time.</p>
+
+<p>To create a new label:</p>
+
+<ol>
+<li><p>Go to the Unity Asset Store and sign into your Unity account.</p></li>
+<li>
+<p>Go to the <a href="https://assetstore.unity.com/account/assets">My Assets</a> page and click the <strong>Add label</strong> link.</p>
+
+<p>The <strong>Edit Labels</strong> window appears.</p>
+
+<figure>
+<img src="../uploads/Main/AssetPackage-editlabel.png" alt="Create, add, and remove labels for your selected package">
+<figcaption>Create, add, and remove labels for your selected package</figcaption>
+</figure>
+</li>
+<li><p>Enter the name for your new label in the text box.</p></li>
+<li>
+<p>Click <strong>Save</strong> to save and apply the label to the selected package or <strong>Cancel</strong> if you don’t want to create the label at all.</p>
+
+<p>The Edit Labels window closes and you can view the <strong>My Assets</strong> list again.</p>
+</li>
+</ol>
+
+<h2>Adding and removing labels</h2>
+
+<p>On the <strong>My Assets</strong> page, if a package already has a label, the <strong>Edit label</strong> link appears under the release note for that package. If it doesn’t have a label, the <strong>Add label</strong> link appears. Either of these links open the <strong>Edit Labels</strong> window, where you can add or remove labels.</p>
+
+<figure>
+<img src="../uploads/Main/AssetPackage-addlabel.png" alt="The links to the Edit Labels window change depending on whether the package already has labels">
+<figcaption>The links to the Edit Labels window change depending on whether the package already has labels</figcaption>
+</figure>
+
+<p>To add (apply) an existing label to a package:</p>
+
+<ol>
+<li>Click either <strong>Add label</strong> or <strong>Edit label</strong> to open the <strong>Edit Labels</strong> window.</li>
+<li>To select a label and add it to the selected package, on the <strong>Edit Labels</strong> window, click in the text box. A drop-down shows any labels not yet assigned to this package. Click on the label you want to apply. The label now appears under the text box.</li>
+<li>Click the <strong>x</strong> on the label underneath the text box to remove any label.</li>
+<li>When you’re finished adding and removing labels for the selected package, click the <strong>Save</strong> button, or click <strong>Cancel</strong> if you don’t want to make any changes.</li>
+</ol>
+
+<h2>Adding labels to more than one package at once</h2>
+
+<ol>
+<li>
+<p>Click <strong>Manage my labels</strong> to display checkboxes next to each package in the list. A set of group links also appear at the top.</p>
+
+<figure>
+<img src="../uploads/Main/AssetPackage-masslabel.png" alt="In edit mode, checkboxes appear beside each package and links that apply to all selected packages">
+<figcaption>In edit mode, checkboxes appear beside each package and links that apply to all selected packages</figcaption>
+</figure>
+</li>
+<li><p>Enable <strong>Select all</strong> to select all packages at once or click the checkbox beside each package you want to include.</p></li>
+<li><p>Click <strong>Edit label</strong> at the top of the page to open the <strong>Edit Labels</strong> window.</p></li>
+<li><p>Click inside the text box to choose a label from the list to add that label to the selected package(s).</p></li>
+<li><p>Click the <strong>x</strong> on any label underneath the text box to remove that label from the selection package(s).</p></li>
+<li><p>When you’re finished adding and removing labels for the selected packages, click the <strong>Save</strong> button, or click <strong>Cancel</strong> if you don’t want to make any changes.</p></li>
+<li><p>To exit the edit mode, click <strong>Done</strong>.</p></li>
+</ol>
+
+<h2>Deleting labels</h2>
+
+<p>Labels only exist when they are in use, so to delete a label from the list of labels, remove that label from all assets that use it:</p>
+
+<ol>
+<li><p>In the Unity Asset Store, go to the <strong>My Assets</strong> page.</p></li>
+<li><p>Click <strong>Manage my labels</strong> to display checkboxes next to each package in the list. A set of group links also appear at the top.</p></li>
+<li><p>Select every package that has the label you want to delete.</p></li>
+<li>
+<p>Click <strong>Edit label</strong> at the top of the list of packages.</p>
+
+<p>The <strong>Edit Labels</strong> window appears.</p>
+</li>
+<li><p>Click the <strong>x</strong> on the label underneath the text box to remove them.</p></li>
+<li><p>Click the <strong>Save</strong> button to close the <strong>Edit Labels</strong> window and return to the <strong>My Assets</strong> list (still in edit mode).</p></li>
+<li>
+<p>Click Done to exit the edit mode.</p>
+
+<p>The label you deleted no longer appears in the <strong>Labels</strong> section of the filter sidebar.</p>
+</li>
+</ol>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetPackagesOrganize.html"></a></span><div class="tip">Finding your Asset Store packages</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetStorePublishing.html"></a></span><div class="tip">Publishing to the Asset Store</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

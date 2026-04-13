@@ -1,0 +1,524 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Mouse events</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Mouse-Events.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Mouse-Events.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Mouse-Events.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Mouse-Events.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Mouse-Events.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Mouse-Events.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Mouse-Events.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Mouse-Events.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-Events.html">Control behavior with events</a></li>
+<li><a href="UIE-Events-Reference.html">Event reference</a></li>
+<li>Mouse events</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Keyboard-Events.html"></a></span><div class="tip">Keyboard events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Navigation-Events.html"></a></span><div class="tip">Navigation events</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Mouse events</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Mouse events occur when you interact with the <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> using a mouse. Touch, pens, or other pointing devices generate other events, not mouse events.
+In the Mouse event APIs and in this documentation, the term “mouse” refers only to a physical mouse or a virtual mouse that emulates a physical mouse.</p>
+
+<p>Mouse events are always preceded by the corresponding <code>PointerEvent</code>.</p>
+
+<p>The base class for all mouse events is <a href="../ScriptReference/UIElements.MouseEventBase_1.html">MouseEventBase</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Event</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Trickles down</strong></th>
+	<th style="text-align:left;"><strong>Bubbles up</strong></th>
+	<th style="text-align:left;"><strong>Cancellable</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.MouseDownEvent.html">MouseDownEvent</a></td>
+	<td style="text-align:left;">Sent when the user presses a mouse button.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.MouseUpEvent.html">MouseUpEvent</a></td>
+	<td style="text-align:left;">Sent when the user releases a mouse button.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.MouseMoveEvent.html">MouseMoveEvent</a></td>
+	<td style="text-align:left;">Sent when the user moves the mouse.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.WheelEvent.html">WheelEvent</a></td>
+	<td style="text-align:left;">Sent when the user activates the mouse wheel.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.MouseEnterWindowEvent.html">MouseEnterWindowEvent</a></td>
+	<td style="text-align:left;">Sent when the mouse enters a window.</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.MouseLeaveWindowEvent.html">MouseLeaveWindowEvent</a></td>
+	<td style="text-align:left;">Sent when the mouse leaves a window.</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.MouseEnterEvent.html">MouseEnterEvent</a></td>
+	<td style="text-align:left;">Sent when the mouse enters an element or one of its descendants.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.MouseLeaveEvent.html">MouseLeaveEvent</a></td>
+	<td style="text-align:left;">Sent when the mouse leaves an element or one of its descendants.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.MouseOverEvent.html">MouseOverEvent</a></td>
+	<td style="text-align:left;">Sent when the mouse enters an element.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.MouseOutEvent.html">MouseOutEvent</a></td>
+	<td style="text-align:left;">Sent when the mouse leaves an element.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.ContextClickEvent.html">ContextClickEvent</a> (obsolete)</td>
+	<td style="text-align:left;">Sent when the user presses and releases the third mouse button. Exists for backwards compatibility with IMGUI.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Unique Properties</h2>
+
+<p>
+<strong><code>button</code></strong>: The <code>button</code> property returns an integer that identifies the mouse button pressed to trigger an event. The following table lists the integer and associated mouse button:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Integer</strong></th>
+	<th style="text-align:left;"><strong>Button</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">0</td>
+	<td style="text-align:left;">Left button</td>
+</tr>
+<tr>
+	<td style="text-align:left;">1</td>
+	<td style="text-align:left;">Right button</td>
+</tr>
+<tr>
+	<td style="text-align:left;">2</td>
+	<td style="text-align:left;">Middle button</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong><code>pressedButtons</code></strong>: The <code>pressedButton</code> property returns an integer that identifies which combination of mouse buttons are currently pressed.</p>
+
+<p>The number is the sum of the individual buttons’ integer value (see table below). For example, holding the right mouse button and the middle mouse button pressed at the same time will result in pressedButton having a value of 6.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Integer</strong></th>
+	<th style="text-align:left;"><strong>Button</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">1</td>
+	<td style="text-align:left;">Left button</td>
+</tr>
+<tr>
+	<td style="text-align:left;">2</td>
+	<td style="text-align:left;">Right button</td>
+</tr>
+<tr>
+	<td style="text-align:left;">4</td>
+	<td style="text-align:left;">Middle button</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong><code>modifiers</code></strong>: The <code>modifiers</code> property returns the modifier key pressed during a keyboard event. Some examples of modifiers are the <code>Shift</code>, <code>Ctrl</code>, or <code>Alt</code> keys.</p>
+
+<p>For more information, see the <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values#modifier_keys">Modifier keys section</a> of the MDN documentation.</p>
+
+<p>
+<strong><code>mousePosition</code></strong>: The <code>mousePosition</code> property returns the mouse position within the panel, also known as the screen coordinate system. For more information on panel coordinates, see the <a href="UIE-VisualTree.html">Visual Tree page</a>.</p>
+
+<p>
+<strong><code>localMousePosition</code></strong>: The <code>localMousePosition</code> property returns the coordinates relative to the target <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span>.</p>
+
+<p>
+<strong><code>mouseDelta</code></strong>: The difference between the pointer’s position during the previous mouse event and its position during the current mouse event.</p>
+
+<h2>Event list</h2>
+
+<p>The following list provides the name, description, and target of each event in the event family. For more information on the event, see the <a href="../ScriptReference/UIElements.MouseEventBase_1.html">UI Toolkit API</a>.</p>
+
+<h3>MouseDownEvent</h3>
+
+<p>A <a href="../ScriptReference/UIElements.MouseDownEvent.html">MouseDownEvent</a> is sent when the mouse button is pressed while the cursor is inside a visual element.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element that receives the mouse capture. Otherwise, it’s the topmost selectable element under the cursor.</p>
+
+<h3>MouseUpEvent</h3>
+
+<p>The <a href="../ScriptReference/UIElements.MouseUpEvent.html">MouseUpEvent</a> triggers when a mouse button releases while the cursor is within a visual element. <code>MouseUpEvent</code> is complimentary to <code>MouseDownEvent</code>.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element that receives the mouse capture. Otherwise, it’s the topmost selectable element under the cursor.</p>
+
+<h3>MouseMoveEvent</h3>
+
+<p>The <a href="../ScriptReference/UIElements.MouseMoveEvent.html">MouseMoveEvent</a> is sent when the cursor hotspot is moved within a visual element.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element that receives the mouse capture. Otherwise, it’s the topmost selectable element under the cursor.</p>
+
+<h3>WheelEvent</h3>
+
+<p>The <a href="../ScriptReference/UIElements.WheelEvent.html">WheelEvent</a> is sent when the mouse wheel is pressed.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element that receives the mouse capture. Otherwise, it’s the topmost selectable element under the cursor.</p>
+
+<h3>MouseEnterWindowEvent</h3>
+
+<p>A <a href="../ScriptReference/UIElements.MouseEnterWindowEvent.html">MouseEnterWindowEvent</a> triggers when the cursor is moved into an Editor window. Runtime panels don’t receive this event when you enter the Game view window.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element that receives the mouse capture. Otherwise, it’s the topmost selectable element under the cursor.</p>
+
+<h3>MouseLeaveWindowEvent</h3>
+
+<p>
+<a href="../ScriptReference/UIElements.MouseLeaveWindowEvent.html">MouseLeaveWindowEvent</a> fires when the cursor exits the space of an Editor window. The <code>MouseLeaveWindowEvent</code> is the counterpoint to <code>MouseEnterWindowEvent</code>.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element that receives the mouse capture. Otherwise it returns null, as the cursor isn’t over an element.</p>
+
+<h3>MouseEnterEvent</h3>
+
+<p>The <a href="../ScriptReference/UIElements.MouseEnterEvent.html">MouseEnterEvent</a> is sent when the cursor is moved into a visual element, or one of its descendants.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element under the mouse cursor, or one of its descendants.</p>
+
+<h3>MouseLeaveEvent</h3>
+
+<p>
+<a href="../ScriptReference/UIElements.MouseLeaveEvent.html">MouseLeaveEvent</a> triggers when the cursor moves outside of a visual element. This event differs from <code>MouseOutEvent</code> as this event is sent to each element the mouse exits. This event doesn’t propagate.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element (or one of its descendants) that the mouse cursor exits.</p>
+
+<h3>MouseOverEvent</h3>
+
+<p>The <a href="../ScriptReference/UIElements.MouseOverEvent.html">MouseOverEvent</a> is sent when the cursor enters an element. This differs from <code>MouseEnterEvent</code>, because this event is only sent to the entered element.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element that’s under the mouse cursor.</p>
+
+<h3>MouseOutEvent</h3>
+
+<p>The <a href="../ScriptReference/UIElements.MouseOutEvent.html">MouseOutEvent</a> triggers when a pointing device moves the cursor outside the boundary of a visual element.</p>
+
+<p>
+<code>MouseOutEvent</code> is different from <code>MouseLeaveEvent</code> in that <code>MouseOutEvent</code> is sent when leaving the visual element to any other element, while <code>MouseLeaveEvent</code> isn’t sent when transitioning from a visual element to descendant elements.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element that the mouse cursor exited.</p>
+
+<h3>ContextualMenuPopulateEvent</h3>
+
+<p>Event sent by the <code>ContextualMenuManager</code> when the contextual menu needs to be populated with menu items.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element for which the contextual menu is being built.</p>
+
+<h3>ContextClickEvent (obsolete)</h3>
+
+<p>Event sent when the user presses and releases the third mouse button. This event only exists for backward compatibility with IMGUI.</p>
+
+<h2>Examples</h2>
+
+<h3>Editor window example</h3>
+
+<p>The following code sample creates an Editor window with three buttons that prints messages to the console when the mouse moves over an element, or buttons are pressed on the mouse.</p>
+
+<p>This code sample highlights the event firing of both <code>MouseDownEvent</code> and <code>MouseEnterEvent</code>, and how to use the event parameters.</p>
+
+<p>To see the example in action, do the following:</p>
+
+<ol>
+<li>Create a new C# script called <code>MouseEventTestWindow.cs</code>.</li>
+<li>Copy the example into the C# script.</li>
+<li>Open the example under <strong>Window &gt; UI Toolkit &gt; Mouse Event Test Window</strong>.</li>
+</ol>
+
+<pre><code class="lang-csharp">using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+// Open this in the Editor via the menu Window &gt; UI ToolKit &gt; Mouse Event Test Window
+public class MouseEventTestWindow : EditorWindow
+{
+    [MenuItem(&quot;Window/UI Toolkit/Mouse Event Test Window&quot;)]
+    public static void ShowExample()
+    {
+        MouseEventTestWindow wnd = GetWindow&lt;MouseEventTestWindow&gt;();
+        wnd.titleContent = new GUIContent(&quot;Mouse Event Test Window&quot;);
+    }
+    public void CreateGUI()
+    {
+        // Add a few buttons
+        for (int i = 0; i &lt; 3; i++)
+        {
+            Button newElement = new Button { name = $&quot;Button {i}&quot;, text = $&quot;Button {i}&quot; };
+            newElement.style.flexGrow = 1;
+            rootVisualElement.Add(newElement);
+        }
+        // Register mouse event callbacks
+        rootVisualElement.RegisterCallback&lt;MouseDownEvent&gt;(OnMouseDown, TrickleDown.TrickleDown);
+        rootVisualElement.RegisterCallback&lt;MouseEnterEvent&gt;(OnMouseEnter, TrickleDown.TrickleDown);
+    }
+
+    private void OnMouseDown(MouseDownEvent evt)
+    {
+        bool leftMouseButtonPressed = 0 != (evt.pressedButtons &amp; (1 &lt;&lt; (int)MouseButton.LeftMouse));
+        bool rightMouseButtonPressed = 0 != (evt.pressedButtons &amp; (1 &lt;&lt; (int)MouseButton.RightMouse));
+        bool middleMouseButtonPressed = 0 != (evt.pressedButtons &amp; (1 &lt;&lt; (int)MouseButton.MiddleMouse));
+        Debug.Log($&quot;Mouse Down event. Triggered by {(MouseButton)evt.button}.&quot;);
+        Debug.Log($&quot;Pressed buttons: Left button: {leftMouseButtonPressed} Right button: {rightMouseButtonPressed} Middle button: {middleMouseButtonPressed}&quot;);
+    }
+
+    private void OnMouseEnter(MouseEnterEvent evt)
+    {
+        VisualElement targetElement = (VisualElement)evt.target;
+        Debug.Log($&quot;Mouse is now over element '{targetElement.name}'&quot;);
+    }
+}
+</code></pre>
+
+<h3>Runtime example</h3>
+
+<p>The following code sample prints messages to the console when any mouse buttons are pressed, showing which button triggered the event, and which buttons are currently pressed.</p>
+
+<p>This code sample highlights registering a callback to the <code>MouseDownEvent</code> and how to use the event parameters.
+To see the example in action, do the following:</p>
+
+<ol>
+<li>Create a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> with a valid UIDocument.</li>
+<li>Under <strong>Assets &gt; Scripts</strong>, create a C# script called MouseEventTestRuntime.</li>
+<li>Copy the example into the C# script.</li>
+<li>Attach the MouseEventTestRuntime script to the GameObject with the UIDocument.</li>
+<li>Enter Play mode.</li>
+<li>Move the mouse over the game view and press or hold buttons on the mouse.</li>
+</ol>
+
+<pre><code class="lang-csharp">
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class MouseEventTestRuntime : MonoBehaviour
+{
+    void Start()
+    {
+        var root = GetComponent&lt;UIDocument&gt;().rootVisualElement;
+        var newLabel = new Label(&quot;Move the mouse or press buttons to see the log output&quot;);
+        newLabel.style.flexGrow = 1;
+        root.Add(newLabel);
+        root.RegisterCallback&lt;MouseDownEvent&gt;(OnMouseDown, TrickleDown.TrickleDown);
+    }
+
+    private void OnMouseDown(MouseDownEvent evt)
+    {
+        bool leftMouseButtonPressed = 0 != (evt.pressedButtons &amp; (1 &lt;&lt; (int)MouseButton.LeftMouse));
+        bool rightMouseButtonPressed = 0 != (evt.pressedButtons &amp; (1 &lt;&lt; (int)MouseButton.RightMouse));
+        bool middleMouseButtonPressed = 0 != (evt.pressedButtons &amp; (1 &lt;&lt; (int)MouseButton.MiddleMouse));
+
+        VisualElement targetElement = (VisualElement)evt.target;
+        Debug.Log($&quot;Mouse Down event. Triggered by {(MouseButton)evt.button} over element '{targetElement.name}'&quot;);
+        Debug.Log($&quot;Pressed buttons: Left button: {leftMouseButtonPressed} Right button: {rightMouseButtonPressed} Middle button: {middleMouseButtonPressed}&quot;);
+    }
+}
+
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Keyboard-Events.html"></a></span><div class="tip">Keyboard events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Navigation-Events.html"></a></span><div class="tip">Navigation events</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Select Tool</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/TilemapPainting-SelectionTool.html">English</a></li>
+<li><a href="/cn/current/Manual/TilemapPainting-SelectionTool.html">中文</a></li>
+<li><a href="/ja/current/Manual/TilemapPainting-SelectionTool.html">日本語</a></li>
+<li><a href="/kr/current/Manual/TilemapPainting-SelectionTool.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/TilemapPainting-SelectionTool.html">English</a></li>
+<li><a href="/cn/current/Manual/TilemapPainting-SelectionTool.html">中文</a></li>
+<li><a href="/ja/current/Manual/TilemapPainting-SelectionTool.html">日本語</a></li>
+<li><a href="/kr/current/Manual/TilemapPainting-SelectionTool.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Unity2D.html">2D game development</a></li>
+<li><a href="Tilemap.html">Tilemaps</a></li>
+<li><a href="Tilemap-workflow.html">Tilemap workflow</a></li>
+<li><a href="Tilemap-Painting.html">Painting on Tilemaps</a></li>
+<li>Select Tool</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Tilemap-Painting.html"></a></span><div class="tip">Painting on Tilemaps</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-TilemapCollider2D.html"></a></span><div class="tip">Tilemap Collider 2D</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Select Tool</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Select Tool <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window has the following two main sections in the <a href="#GridSelect">Grid Selection</a> and <a href="#Modify">Modify Tilemap</a> property settings.</p>
+
+<h2>Grid Selection<a name="GridSelect" aria-hidden="true"></a>
+</h2>
+
+<p>Use the <a href="https://docs.unity3d.com/Manual/Tilemap-Painting.html#Select">Select Tool</a> to select one or more cells. The <strong>Grid Selection</strong> Inspector window displays the contents and properties of the Tiles at the selected location.</p>
+
+<p>
+<img src="../uploads/Main/GridSelect_properties.png" alt=""><br>Grid Selection Inspector window properties</p>
+
+<h2>Grid Selection Properties</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Tile</strong><span class="tooltiptext">A simple class that allows a sprite to be rendered on a Tilemap. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Tilemap-ScriptableTiles-Tile.html" href="Tilemap-ScriptableTiles-Tile.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Tile" aria-label="Go to glossary anchor for Tile">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Displays the Tile currently set at the selected cell location. If you select multiple cells, and they display the same Tile, then that Tile’s name is shown. If you select multiple cells with different Tiles, this property is blank.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Displays the Sprite assigned to the Tile in the <strong>Tile</strong> property above. If you select multiple cells with the same Tile, then this displays the same Sprite. If you select multiple cells with different Tiles, this property is blank. This is grayed out by default, so you cannot edit it.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Color</strong><a name="Color" aria-hidden="true"></a>
+</td>
+	<td style="text-align:left;">The vertex color of the Sprite. This is grayed out if <a href="#LockColor">Lock Color</a> is enabled, so you cannot edit it.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Collider Type</strong></td>
+	<td style="text-align:left;">The <span class="tooltip"><strong>Collider</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> Type of the Tiles at the selected location. This is grayed out by default and cannot be edited.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">-</td>
+	<td style="text-align:left;">
+<strong>Note:</strong> The following <a name="Transforms" aria-hidden="true"></a>Transforms (Position, Rotation, Scale) are grayed out if <a href="#LockTransform">Lock Transform</a> is enabled and cannot be edited.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Position</strong></td>
+	<td style="text-align:left;">Enter the offset (in cells) for each axis to shift the Tile Sprites along the respective axis. The Tiles’ actual cell positions on the <span class="tooltip"><strong>Tilemap</strong><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Tilemap.html" href="class-Tilemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Tilemap" aria-label="Go to glossary anchor for Tilemap">Glossary</a></span></span></span> remain unchanged.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rotation</strong></td>
+	<td style="text-align:left;">This rotates one or more Tile Sprites at the selected location. Enter the rotation (in degrees) for each axis to rotate the Tile Sprites around the respective axis. The Tiles’ actual cell positions on the Tilemap remain unchanged.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale</strong></td>
+	<td style="text-align:left;">Scales the size of one or more Tile Sprites at the selected location. Enter the factor for each axis to scale the Tile Sprite by along the respective axis. The Tiles’ actual cell positions on the Tilemap remain unchanged.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Lock Color</strong><a name="LockColor" aria-hidden="true"></a>
+</td>
+	<td style="text-align:left;">Select this to prevent changes to the <a href="#Color">Color</a> of the Tile, and clear this to enable the Color property. When this property is grayed out, its state remains fixed. See the <a href="https://docs.unity3d.com/ScriptReference/Tilemaps.TileFlags.html">Tilemaps.TileFlags</a> set in the Tile Asset to modify this property.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Lock Transform</strong><a name="LockTransform" aria-hidden="true"></a>
+</td>
+	<td style="text-align:left;">Select this to prevent changes to the <a href="#Transforms">Transforms</a> of the Tile, and clear this to enable the <strong>Transform</strong> properties. When this property is grayed out, its state remains fixed. See the <a href="../ScriptReference/Tilemaps.TileFlags.html">Tilemaps.TileFlags</a> set in the Tile Asset to modify this property.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Delete Selection</strong></td>
+	<td style="text-align:left;">Select this button to delete the currently selected contents in the Tilemap.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Modify Tilemap<a name="Modify" aria-hidden="true"></a>
+</h2>
+
+<p>This section contains various functions and tools you can use to modify the Tilemap and selected contents in it. This consists of a <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> showing the available functions you can use to modify the Tilemap and selected contents in the Tilemaps, and a drop-down menu which provides different options for inserting or removing rows and columns of blank cells into the Tilemap.</p>
+
+<p>
+<img src="../uploads/Main/ModifyTilemap.png" alt=""><br>The available functions in the <strong>Modify Tilemap</strong> section.</p>
+
+<h3>Gizmo toolbar</h3>
+
+<p>Select a function from the toolbar to activate <span class="tooltip"><strong>Gizmos</strong><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GizmosMenu.html#GizmosIcons" href="GizmosMenu.html#GizmosIcons">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Gizmo" aria-label="Go to glossary anchor for Gizmo">Glossary</a></span></span></span> which modifies selected contents in the Tilemap. The following table describes each option, with links to examples showing how they affect the Tilemap. </p>
+
+<p>
+<img src="../uploads/Main/GizmoFunctions.png" alt=""><br>This is the default Tilemap that the Gizmo function examples are based on.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Gizmo</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="#None">None</a></td>
+	<td style="text-align:left;">No Gizmo is active or shown in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#Move">Move</a></td>
+	<td style="text-align:left;">Activates and displays a <strong>Move</strong> Gizmo in the <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>. Use this to change the offset of the selected contents.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#Rotate">Rotate</a></td>
+	<td style="text-align:left;">Activates and displays a <strong>Rotate</strong> Gizmo in the Scene view. Use this to change the rotation of the selected contents.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#Scale">Scale</a></td>
+	<td style="text-align:left;">Activates and displays a <strong>Scale</strong> Gizmo in the Scene view. Use this to change the scale of the selected contents.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#Transform">Transform</a></td>
+	<td style="text-align:left;">Activates and displays a <strong>Transform</strong> Gizmo in the Scene view. Use this to change the offset, rotation and scale of the selected contents all at once.</td>
+</tr>
+</tbody>
+</table>
+
+<h4>Gizmo function examples</h4>
+
+<p>
+<strong>None</strong><a name="None" aria-hidden="true"></a>
+</p>
+
+<p>
+<img src="../uploads/Main/None_ex.png" alt=""><br>Default Tilemap and selected cell location. No Gizmo is activated or visible.</p>
+
+<p>
+<strong>Move</strong><a name="Move" aria-hidden="true"></a>
+</p>
+
+<p>
+<img src="../uploads/Main/Move_ex.png" alt=""><br><strong>Left:</strong> Default Tilemap and selected cell location. <strong>Right:</strong> Offset changed for the selected cell locations.</p>
+
+<p>
+<strong>Rotate</strong><a name="Rotate" aria-hidden="true"></a>
+</p>
+
+<p>
+<img src="../uploads/Main/Rotate_ex.png" alt=""><br><strong>Left:</strong> Default Tilemap and selected cell location. <strong>Right:</strong> Rotation changed for the selected cell locations.</p>
+
+<p>
+<strong>Scale</strong><a name="Scale" aria-hidden="true"></a>
+</p>
+
+<p>
+<img src="../uploads/Main/Scale_ex.png" alt=""><br><strong>Left</strong>: Default Tilemap and selected cell location. <strong>Right</strong>: Scale changed for the selected cell locations.</p>
+
+<p>
+<strong>Transform</strong><a name="Transform" aria-hidden="true"></a>
+</p>
+
+<p>
+<img src="../uploads/Main/Transform_ex.png" alt=""><br><strong>Left:</strong> Default Tilemap and selected cell location. <strong>Right:</strong> Offset, rotation and scale of the selected cell locations are modified.</p>
+
+<h3>Modify Tilemap drop-down expanded options</h3>
+
+<figure>
+<img src="../uploads/Main/ModifyTilemap_Dropdown.png" alt="">
+</figure>
+
+<p>The drop-down menu provides different options for inserting or removing rows and columns of blank cells onto the Tilemap. After selecting one of the drop-down menu options, enter the number of rows or columns to insert or remove into the box and select <strong>Modify</strong>.</p>
+
+<p>The following table describes each option, with links to examples showing how they affect the Tilemap. </p>
+
+<p>
+<img src="../uploads/Main/Default_Tilemap_example.png" alt=""><br>This is the default Tilemap that the following examples are based on. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="#InsertRow">Insert Row</a></td>
+	<td style="text-align:left;">Inserts one or more rows of blank cells at the selected location. Existing cells are displaced upward along the positive y-axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#InsertRowB4">Insert Row Before</a></td>
+	<td style="text-align:left;">Inserts one or more rows of blank cells below the selected location. Existing cells are displaced downward along the negative y-axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#DelRow">Delete Row</a></td>
+	<td style="text-align:left;">Removes one or more rows of cells at the selected location and above. Existing cells above then collapse down to fill the space left by the deleted rows.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#DelRowB4">Delete Row Before</a></td>
+	<td style="text-align:left;">Removes one or more rows of cells below the selected location. Existing cells below then shift upward along the positive y-axis to fill the space left by the deleted rows.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#InsertCol">Insert Column</a></td>
+	<td style="text-align:left;">Inserts one or more columns of blank cells at the selected location. Existing cells are displaced to the right along the positive x-axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#InsertColB4">Insert Column Before</a></td>
+	<td style="text-align:left;">Inserts one or more columns of blank cells to the left of the selected cell. Existing cells are displaced to the left along the negative x-axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#DelCol">Delete Column</a></td>
+	<td style="text-align:left;">Removes one or more columns of cells at the selected location and to its right. Existing cells then shift to the left along the negative x-axis to fill the space left by the deleted columns.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#DelCol">Delete Column Before</a></td>
+	<td style="text-align:left;">Removes one or more columns of cells to the left of the selected cell. Existing cells shifted to the right along the positive x-axis to fill the space left by the deleted columns.</td>
+</tr>
+</tbody>
+</table>
+
+<h4>Examples of different drop-down menu options</h4>
+
+<p>
+<strong>Insert Row</strong><a name="InsertRow" aria-hidden="true"></a>
+</p>
+
+<p>
+<img src="../uploads/Main/InsertRow_ex.png" alt="Insert Row"><br><strong>Left:</strong> <em>Default Tilemap and selected cell location.</em> <strong>Right:</strong> <em>Insert Row.</em>
+</p>
+
+<p>
+<strong>Insert Row Before</strong><a name="InsertRowB4" aria-hidden="true"></a>
+</p>
+
+<p>
+<img src="../uploads/Main/InsertRowB4_ex.png" alt="Insert Row Before"><br><strong>Left:</strong> <em>Default Tilemap and selected cell location.</em> <strong>Right:</strong> <em>Insert Row Before.</em>
+</p>
+
+<p>
+<strong>Delete Row</strong><a name="DelRow" aria-hidden="true"></a>
+</p>
+
+<p>
+<img src="../uploads/Main/DelRow_ex.png" alt="Delete Row"><br><strong>Left:</strong> <em>Default Tilemap and selected cell location.</em> <strong>Right:</strong> <em>Delete Row.</em>
+</p>
+
+<p>
+<strong>Delete Row Before</strong><a name="DelRowB4" aria-hidden="true"></a>
+</p>
+
+<p>
+<img src="../uploads/Main/DelRowB4_ex.png" alt="Delete Row Before"><br><strong>Left:</strong> <em>Default Tilemap and selected cell location.</em> <strong>Right:</strong> <em>Delete Row Before.</em>
+</p>
+
+<p>
+<strong>Insert Column</strong><a name="InsertCol" aria-hidden="true"></a>
+</p>
+
+<p>
+<img src="../uploads/Main/InsCol_ex.png" alt="Insert Column"><br><strong>Left:</strong> <em>Default Tilemap and selected cell location.</em> <strong>Right:</strong> <em>Insert Column.</em>
+</p>
+
+<p>
+<strong>Insert Column Before</strong><a name="InsertColB4" aria-hidden="true"></a>
+</p>
+
+<p>
+<img src="../uploads/Main/InsColB4_ex.png" alt="Insert Column Before"><br><strong>Left:</strong> <em>Default Tilemap and selected cell location.</em> <strong>Right:</strong> <em>Insert Column Before.</em>
+</p>
+
+<p>
+<strong>Delete Column</strong><a name="DelCol" aria-hidden="true"></a>
+</p>
+
+<p>
+<img src="../uploads/Main/DelCol_ex.png" alt="Delete Column"><strong>Left:</strong> <em>Default Tilemap and selected cell location.</em> <strong>Right:</strong> <em>Delete Column.</em>
+</p>
+
+<p>
+<strong>Delete Column Before</strong><a name="DelColB4" aria-hidden="true"></a>
+</p>
+
+<p>
+<img src="../uploads/Main/DelColB4_ex.png" alt="Delete Column Before"><br><strong>Left:</strong> <em>Default Tilemap and selected cell location.</em> <strong>Right:</strong> <em>Delete Column Before.</em>
+</p>
+
+<p><strong>Multiple cell selection</strong></p>
+
+<p>When multiple cells are selected, the lower-leftmost cell is the main point of reference when applying the Modify Tilemap options. See the following examples of selecting multiple cells then modifying the Tilemap.</p>
+
+<p>
+<img src="../uploads/Main/InsertRow_mult_ex.png" alt="Insert Row with multiple selected cells"><br><strong>Left:</strong> <em>Default Tilemap with multiple cells selected.</em> <strong>Right:</strong> <em>Insert Row.</em>
+</p>
+
+<p>
+<img src="../uploads/Main/InsertCol_mult_ex.png" alt="Insert Column with multiple selected cells"><br><strong>Left:</strong> <em>Default Tilemap with multiple cells selected.</em> <strong>Right:</strong> <em>Insert Column.</em>
+</p>
+
+<p>
+<img src="../uploads/Main/DelRow_mult_ex.png" alt="Delete Row with multiple selected cells"><br><strong>Left:</strong> <em>Default Tilemap with multiple cells selected.</em> <strong>Right:</strong> <em>Delete Row.</em>
+</p>
+
+<p>
+<img src="../uploads/Main/DelCol_mult_ex.png" alt="Delete Column with multiple selected cells"><br><strong>Left:</strong> <em>Default Tilemap with multiple cells selected.</em> <strong>Right:</strong> <em>Delete Column.</em>
+</p>
+
+<hr>
+
+<ul>
+<li><span class="page-edit">2020–08–17</span></li>
+<li><span class="page-edit">2020–01–07</span></li>
+<li><span class="page-history">Updated Select Tool functionality in Unity <a href="https://docs.unity3d.com/2020.1/Documentation/Manual/30_search.html?q=newin20201">2020.1</a> <span class="search-words">NewIn20201</span></span></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Tilemap-Painting.html"></a></span><div class="tip">Painting on Tilemaps</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-TilemapCollider2D.html"></a></span><div class="tip">Tilemap Collider 2D</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

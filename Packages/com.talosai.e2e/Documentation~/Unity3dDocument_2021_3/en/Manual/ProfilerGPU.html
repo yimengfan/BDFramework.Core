@@ -1,0 +1,341 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: GPU Usage Profiler module</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="core" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ProfilerGPU.html">English</a></li>
+<li><a href="/cn/current/Manual/ProfilerGPU.html">中文</a></li>
+<li><a href="/ja/current/Manual/ProfilerGPU.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ProfilerGPU.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ProfilerGPU.html">English</a></li>
+<li><a href="/cn/current/Manual/ProfilerGPU.html">中文</a></li>
+<li><a href="/ja/current/Manual/ProfilerGPU.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ProfilerGPU.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="Profiler.html">Profiler overview</a></li>
+<li><a href="ProfilerWindow.html">The Profiler window</a></li>
+<li>GPU Usage Profiler module</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ProfilerGI.html"></a></span><div class="tip">Global Illumination Profiler module</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ProfilerMemory.html"></a></span><div class="tip">Memory Profiler module</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>GPU Usage Profiler module</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The GPU Usage <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> module displays where your application spends time in the GPU. You can only use the GPU Profiler in Playmode, or for builds of your application. You cannot use it to profile the Editor.</p>
+
+<figure>
+<img src="../uploads/Main/gpu-profiler-module.png" alt="The GPU Usage Profiler in the Profiler Window">
+<figcaption>The GPU Usage Profiler in the Profiler Window</figcaption>
+</figure>
+
+<p>
+<strong>Note:</strong> If you have <strong>Graphics Jobs</strong> enabled in the <span class="tooltip"><strong>Player Settings</strong><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html" href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span>, GPU profiling isn’t supported. For more information, see the documentation on <a href="class-PlayerSettings.html">Player Settings</a>. Additionally, on macOS, you can profile the GPU only on Mavericks 10.9 and later.</p>
+
+<h2>GPU profiling support</h2>
+
+<p>The following table lists the platforms that the GPU Usage Profiler module supports:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Platform</strong></th>
+	<th style="text-align:left;"><strong>Graphics API</strong></th>
+	<th style="text-align:left;"><strong>Status</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Windows</strong></td>
+	<td style="text-align:left;">DirectX 11, DirectX 12, OpenGL</td>
+	<td style="text-align:left;">Supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Vulkan</td>
+	<td style="text-align:left;">Not supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>macOS</strong></td>
+	<td style="text-align:left;">OpenGL</td>
+	<td style="text-align:left;">Supported. <strong>Note:</strong> Apple has deprecated support of OpenGL.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Metal</td>
+	<td style="text-align:left;">Not supported. Use XCode’s GPU Frame Debugger <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> instead.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Linux</strong></td>
+	<td style="text-align:left;">OpenGL core</td>
+	<td style="text-align:left;">Supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Vulkan</td>
+	<td style="text-align:left;">Not supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">All WebGL</td>
+	<td style="text-align:left;">Not supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Android</strong></td>
+	<td style="text-align:left;">OpenGL</td>
+	<td style="text-align:left;">Supported on devices running NVIDIA or Intel GPUs.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Vulkan</td>
+	<td style="text-align:left;">Not supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span>, tvOS</strong></td>
+	<td style="text-align:left;">Metal</td>
+	<td style="text-align:left;">Not supported. Use XCode’s GPU Frame Debugger UI instead.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Tizen</strong></td>
+	<td style="text-align:left;">OpenGL</td>
+	<td style="text-align:left;">Not supported.</td>
+</tr>
+</tbody>
+</table>
+
+<p>On Windows, Unity supports Playmode profiling in the Editor with Direct3D 11 and Direct3D 12 APIs only. This is convenient for quick profiling, because it means you don’t need to build the Player; however, the overhead of running the Unity Editor affects the Profiler, which might make the profiling results less accurate.</p>
+
+<h2>Chart categories</h2>
+
+<p>The GPU Usage Profiler module’s chart has several different categories that you can use to investigate GPU timings. To change the order of the categories in the chart, you can drag and drop them in the chart’s legend. You can also click a category’s colored legend to toggle its display.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Chart category</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Opaque</strong></td>
+	<td style="text-align:left;">Built-in rendering pipeline’s time to render opaque objects</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Transparent</strong></td>
+	<td style="text-align:left;">Built-in rendering pipeline’s time to render transparent objects</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Shadows/Depth</strong></td>
+	<td style="text-align:left;">Built-in rendering pipeline’s time to render shadow maps</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Deferred PrePass</strong></td>
+	<td style="text-align:left;">Built-in deferred rendering pipeline’s time to render <span class="tooltip"><strong>depth buffer</strong><span class="tooltiptext">A memory store that holds the z-value depth of each pixel in an image, where the z-value is the depth for each rendered pixel from the projection plane. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#depthbuffer" aria-label="Go to glossary anchor for depthbuffer">Glossary</a></span></span></span> pre pass.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Deferred Lighting</strong></td>
+	<td style="text-align:left;">Built-in deferred rendering pipeline’s time to do lighting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PostProcess</strong></td>
+	<td style="text-align:left;">Built-in rendering pipeline’s time to process post processing effects.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Other</strong></td>
+	<td style="text-align:left;">Rendering time to process other things such as Scriptable Rendering Pipelines</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Module details pane</h2>
+
+<p>When you select the GPU Usage module, the details pane below it displays a breakdown of where the application spent time in the selected frame. You can display the timing data as a hierarchical table. To change the table views, use the top-left dropdown in the details pane (set to Hierarchy by default). The views available are:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>View</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Hierarchy</strong></td>
+	<td style="text-align:left;">Groups the timing data by its internal hierarchical structure. This option displays the elements that your application called in a descending list format, ordered by the time spent by default. You can also order the information by the total amount of GPU time, or the number of calls. To change the column that orders the table, click the table column’s header.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Raw Hierarchy</strong></td>
+	<td style="text-align:left;">Displays the timing data in a hierarchical structure that is similar to the call stacks where the timing occurred. Unity lists each call stack separately in this mode instead of merging them, as it does in Hierarchy view.</td>
+</tr>
+</tbody>
+</table>
+
+<p>When you select the GPU Usage Profiler module, the lower pane of the Profiler displays hierarchical time data for the selected frame. Select an item from the Hierarchy to see a breakdown of contributions in the right-hand panel. See documentation on the <a href="ProfilerWindow.html">Profiler window</a> to learn more about the Profiler window’s functionality.</p>
+
+<p>The table views have the following columns:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Column</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Total</strong></td>
+	<td style="text-align:left;">The total amount of time Unity spent on a particular function, as a percentage.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>DrawCalls</strong></td>
+	<td style="text-align:left;">The number of calls made to this function in this frame.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GPU ms</strong></td>
+	<td style="text-align:left;">The total amount of time Unity spent on a particular function, in milliseconds.</td>
+</tr>
+</tbody>
+</table>
+<!-- area:core -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ProfilerGI.html"></a></span><div class="tip">Global Illumination Profiler module</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ProfilerMemory.html"></a></span><div class="tip">Memory Profiler module</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1470 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: UWP Player settings</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="platforms" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-PlayerSettingsWSA.html">English</a></li>
+<li><a href="/cn/current/Manual/class-PlayerSettingsWSA.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-PlayerSettingsWSA.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-PlayerSettingsWSA.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-PlayerSettingsWSA.html">English</a></li>
+<li><a href="/cn/current/Manual/class-PlayerSettingsWSA.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-PlayerSettingsWSA.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-PlayerSettingsWSA.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="WindowsStore.html">Universal Windows Platform</a></li>
+<li><a href="uwp-getting-started.html">Get started with Universal Windows Platform</a></li>
+<li>UWP Player settings</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="uwp-environment-setup.html"></a></span><div class="tip">Set up your environment for UWP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="uwp-developing.html"></a></span><div class="tip">Develop for Universal Windows Platform</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>UWP Player settings</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To access the Universal Windows Platform (UWP) <strong>Player</strong> settings, go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong> from the main menu in Unity. Use the <strong>Player</strong> settings to determine how Unity builds and displays your final application. For a description of the general <strong>Player</strong> settings, refer to <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html">Player Settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html" href="class-PlayerSettings.html">Player Settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSettingsWSA.png" alt="Player settings">
+<figcaption>Player settings</figcaption>
+</figure>
+
+<p>Documentation for the properties is grouped according to their respective sections in the Player <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>:</p>
+
+<ul>
+<li><a href="#Icon">Icon</a></li>
+<li><a href="#Resolution">Resolution and Presentation</a></li>
+<li><a href="#Splash">Splash Image</a></li>
+<li><a href="#Other">Other Settings</a></li>
+<li><a href="#Publishing">Publishing Settings</a></li>
+</ul>
+
+<p><a name="Icon" aria-hidden="true"></a></p>
+
+<h2>Icon</h2>
+
+<p>Use the <strong>Icon</strong> settings to customize the branding for your app on the Microsoft Store.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSAIcon.png" alt="Icon Settings">
+<figcaption>Icon Settings</figcaption>
+</figure>
+
+<p>The Icon section displays warnings for any images that are required for certification but haven’t been assigned. A UWP application must specify icon and logo images as part of the package before you can submit it to the Microsoft Store. </p>
+
+<p>
+<strong>Note:</strong> You can also choose the image types and their sizing within the API. For more information, refer to <a href="../ScriptReference/PlayerSettings.WSAImageType.html"><code>PlayerSettings.WSAImageType</code></a> and <a href="../ScriptReference/PlayerSettings.WSAImageScale.html"><code>PlayerSettings.WSAImageScale</code></a>.</p>
+
+<p>Expand the <strong>Store Logo</strong> section to specify the image that appears on the Store description page for the application. You can add up to eight different resolutions. </p>
+
+<h3>Tile</h3>
+
+<p>Customize the general appearance of your Microsoft Store tiles with these settings:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;" colspan="2"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Short name</strong></td>
+	<td style="text-align:left;" colspan="2">Sets an abbreviated name for the app.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Show name on</strong></td>
+	<td style="text-align:left;" colspan="2">Indicates each icon image you want the name to appear on: <strong>Medium Tile</strong>, <strong>Large Tile</strong>, or <strong>Wide Tile</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Foreground text</strong></td>
+	<td style="text-align:left;" colspan="2">Chooses whether to use <strong>Light</strong> or <strong>Dark</strong> text on the app’s Tile.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Background color</strong></td>
+	<td style="text-align:left;" colspan="2">Specifies what color to use for the background.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Default Size</strong></td>
+	<td style="text-align:left;" colspan="2">Chooses which size you want to use as the default size for the Tile.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Not Set</strong></td>
+	<td style="text-align:left;">Don’t use a default size.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Medium</strong></td>
+	<td style="text-align:left;">Use a medium size.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Wide</strong></td>
+	<td style="text-align:left;">Use a wide size.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Unity copies these options directly to the <code>Package.appxmanifest</code> file.</p>
+
+<h3>Tiles and Logos</h3>
+
+<p>Specify the images your tiles display on the Microsoft Store with these settings:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Square 44x44 Logo</strong></td>
+	<td style="text-align:left;">Set a 44x44 logo image to use on the app’s tile. You can set up to 10 resolutions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Square 71x71 Logo</strong></td>
+	<td style="text-align:left;">Set a 71x71 logo image to use on the app’s tile. You can set up to 5 resolutions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Square 150x150 Logo</strong></td>
+	<td style="text-align:left;">Set a 150x150 logo image to use on the app’s tile. You can set up to 5 resolutions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Square 310x310 Logo</strong></td>
+	<td style="text-align:left;">Set a 310x310 logo image to use on the app’s tile. You can set up to 5 resolutions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Wide 310x150 Logo</strong></td>
+	<td style="text-align:left;">Set a 310x150 logo image to use on the app’s tile. You can set up to 5 resolutions.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Resolution" aria-hidden="true"></a></p>
+
+<h2>Resolution and Presentation</h2>
+
+<p>Use the <strong>Resolution and Presentation</strong> section to customize aspects of the screen’s appearance.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSARes.png" alt="Resolution and Presentation settings">
+<figcaption>Resolution and Presentation settings</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Default is Full Screen</strong></td>
+	<td style="text-align:left;">Sets the app window to the full-screen native display resolution, covering the whole screen. This mode is also known as borderless full-screen. Unity renders the app content at the resolution set by a script, or the native display resolution if none is set and scales it to fill the window. When scaling, Unity adds black bars to the rendered output to match the display <span class="tooltip"><strong>aspect ratio</strong><span class="tooltiptext">The relationship of an image’s proportional dimensions, such as its width and height.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AspectRatio" aria-label="Go to glossary anchor for AspectRatio">Glossary</a></span></span></span> to prevent content stretching. This process is called <a href="https://en.wikipedia.org/wiki/Letterboxing_(filming)">letterboxing</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Run In Background</strong></td>
+	<td style="text-align:left;">Indicates whether to keep the game running (rather than pausing) if the app loses focus.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Allow Fullscreen Switch</strong></td>
+	<td style="text-align:left;">Indicates whether to allow default OS full-screen key presses to toggle between full-screen and windowed modes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Transparent Swapchain</strong></td>
+	<td style="text-align:left;">Indicates whether to set AlphaMode on the swap chain to DXGI_ALPHA_MODE_PREMULTIPLIED.<br><br>This setting is used only for UWP projects that use the XAML build type. By enabling this setting, you can compose Unity content with other XAML content in your application. <br> <br>For more information, refer to <a href="../ScriptReference/PlayerSettings.WSA-transparentSwapchain.html">PlayerSettings.WSA.transparentSwapchain</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Orientation</h3>
+
+<p>Choose the game’s screen orientation from the <strong>Default Orientation</strong> drop-down menu: </p>
+<table>
+ <thead>
+ <tr>
+ <th style="text-align:left;"><strong>Property</strong></th>
+ <th style="text-align:left;" colspan="2"><strong>Description</strong></th>
+ </tr>
+ </thead>
+ <tbody>
+<tr>
+ <td style="text-align:left;"><strong>Default Orientation</strong></td>
+ <td style="text-align:left;" colspan="2">Specifies the screen orientation the application uses.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"></td>
+ <td style="text-align:left;"><strong>Portrait</strong></td>
+ <td style="text-align:left;">The application uses portrait screen orientation where the bottom of the application’s window aligns with the bottom of the device’s screen.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"></td>
+ <td style="text-align:left;"><strong>Portrait Upside Down</strong></td>
+ <td style="text-align:left;">The application uses portrait screen orientation where the bottom of the application’s window aligns with the top of the device’s screen.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"></td>
+ <td style="text-align:left;"><strong>Landscape Right</strong></td>
+ <td style="text-align:left;">The application uses landscape screen orientation where the right side of the application’s window aligns with the top of the device’s screen.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"></td>
+ <td style="text-align:left;"><strong>Landscape Left</strong></td>
+ <td style="text-align:left;">The application uses landscape screen orientation where the right side of the application’s window aligns with the bottom of the device’s screen.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"></td>
+ <td style="text-align:left;"><strong>Auto Rotation</strong></td>
+ <td style="text-align:left;">The screen can rotate to any of the orientations you specify in the <a href="#allowed-orientations-for-auto-rotation">Allowed Orientations for Auto Rotation</a> section.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="supportedOris" aria-hidden="true"></a></p>
+
+<h3> Allowed Orientations for Auto Rotation</h3>
+
+<p>Use the <strong>Allowed Orientations for Auto Rotation</strong> section to specify which orientations the application supports when you set <strong>Default Orientation</strong> to <strong>Auto Rotation</strong>. This is useful, for example, to lock the application to landscape orientation but allow the user to switch between landscape left and landscape right.</p>
+
+<p>This section is visible only when <strong>Default Orientation</strong> is set to <strong>Auto Rotation</strong>. Enable each orientation by checking its box in this section:</p>
+<table>
+ <thead>
+ <tr>
+ <th style="text-align:left;"><strong>Property</strong></th>
+ <th style="text-align:left;"><strong>Description</strong></th>
+ </tr>
+ </thead>
+ <tbody>
+<tr>
+ <td style="text-align:left;"><strong>Portrait</strong></td>
+ <td style="text-align:left;">Indicates whether the application supports portrait screen orientation where the bottom of the application’s window aligns with the bottom of the device’s screen.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Portrait Upside Down</strong></td>
+ <td style="text-align:left;">Indicates whether the application supports portrait screen orientation where the bottom of the application’s window aligns with the top of the device’s screen. </td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Landscape Right</strong></td>
+ <td style="text-align:left;">Indicates whether the application supports landscape screen orientation where the right side of the application’s window aligns with the top of the device’s screen.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Landscape Left</strong></td>
+ <td style="text-align:left;">Indicates whether the application supports landscape screen orientation where the right side of the application’s window aligns with the bottom of the device’s screen.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Splash" aria-hidden="true"></a></p>
+
+<h2>Splash Image</h2>
+
+<p>Above the <a href="class-PlayerSettingsSplashScreen.html">common Splash Screen</a> settings, the <strong>Player Settings</strong> settings allow you to specify splash images for UWP.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSASplash.png" alt="Splash settings">
+<figcaption>Splash settings</figcaption>
+</figure>
+
+<p>Use the <strong>Virtual Reality Splash Image</strong> property to select a custom splash image to display in <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html">Virtual Reality</a><span class="tooltiptext">Virtual Reality (VR) immerses users in an artificial 3D world of realistic images and sounds, using a headset and motion tracking. <a href="VROverview.html" href="XR.html">Virtual Reality</a><span class="tooltiptext">Virtual Reality (VR) immerses users in an artificial 3D world of realistic images and sounds, using a headset and motion tracking. <a href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VirtualReality" aria-label="Go to glossary anchor for VirtualReality">Glossary</a></span></span></span> displays.</p>
+
+<p>Below the common Splash Screen settings, there are a few additional sections:</p>
+
+<ul>
+<li><a href="#Windows">Windows</a></li>
+<li><a href="#Holographic">Windows Holographic</a></li>
+<li><a href="#Overwrite">Overwrite background color</a></li>
+</ul>
+
+<p><a name="Windows" aria-hidden="true"></a></p>
+
+<h3>Windows</h3>
+
+<p>Set the foreground image to use in your app’s splash screen. You can add up to seven different resolutions.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSASplashWin.png" alt="Windows Splash settings">
+<figcaption>Windows Splash settings</figcaption>
+</figure>
+
+<p><a name="Holographic" aria-hidden="true"></a></p>
+
+<h3>Windows Holographic</h3>
+
+<p>Use these settings to customize the holographic splash image for <span class="tooltip"><strong>Mixed Reality</strong><span class="tooltiptext">Mixed Reality (MR) combines its own virtual environment with the user’s real-world environment and allows them to interact with each other.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MixedReality" aria-label="Go to glossary anchor for MixedReality">Glossary</a></span></span></span> applications.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSASplashHolo.png" alt="Windows Holographic Splash settings">
+<figcaption>Windows Holographic Splash settings</figcaption>
+</figure>
+
+<p>Set a <strong>Holographic Splash Image</strong> to appear during startup. This image appears for five seconds (or until the app finishes loading). </p>
+
+<h4>Tracking Loss</h4>
+
+<p>A Mixed Reality headset needs to build <a href="https://docs.microsoft.com/en-us/windows/mixed-reality/coordinate-systems-in-unity">world-locked coordinate systems</a> from its environment to allow holograms to stay in position. Tracking loss occurs when the headset loses track of where it is (can’t locate itself) in the world. This leads to a breakdown in spatial systems (spatial mapping, spatial anchors, spatial stages). </p>
+
+<p>When this happens, Unity stops rendering holograms, pauses the game, and displays a notification. You can customize the notification image that appears by enabling the <strong>On Tracking Loss Pause and Show Image</strong> property, and then selecting the image to display with the <strong>Tracking Loss Image</strong> property.</p>
+
+<p>For more information, refer to <a href="https://docs.microsoft.com/en-us/windows/mixed-reality/recommended-settings-for-unity">Recommended settings for Unity</a>.</p>
+
+<p><a name="Overwrite" aria-hidden="true"></a></p>
+
+<h3>Overwrite background color</h3>
+
+<p>While your application initializes, UWP shows a Splash screen that appears before the Made with Unity Splash screen. It’s best practice to match the UWP Splash screen background to the Splash screen image because it’s more visually appealing. The default color is black. </p>
+
+<p>To overwrite the UWP specific Splash screen background color:</p>
+
+<ol>
+<li>Go to <strong>Player Settings</strong> &gt; <strong>Splash Screen</strong> and enable <strong>Overwrite Background Color.</strong>
+</li>
+<li>Choose a color from the <strong>Background Color</strong> selector.</li>
+</ol>
+
+<p>If you overwrite the default background color, Unity changes the color value in the application manifest. If you are using the XAML application type, Unity also sets the color value in the initial XAML page. </p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSASplashOver.png" alt="Overwrite background color Splash settings">
+<figcaption>Overwrite background color Splash settings</figcaption>
+</figure>
+
+<p><a name="Other" aria-hidden="true"></a></p>
+
+<h2>Other Settings</h2>
+
+<p>This section allows you to customize a range of options organized into the following groups:</p>
+
+<ul>
+<li><a href="#Rendering">Rendering</a></li>
+<li><a href="#Configuration">Configuration</a></li>
+<li><a href="#ShaderSettings">Shader settings</a></li>
+<li><a href="#ShaderVariantLoading">Shader Variant Loading Settings</a></li>
+<li><a href="#Optimization">Optimization</a></li>
+<li><a href="#Logging">Stack Trace</a></li>
+<li><a href="#Legacy">Legacy</a></li>
+</ul>
+
+<p><a name="Rendering" aria-hidden="true"></a></p>
+
+<h3>Rendering</h3>
+
+<p>Use these settings to customize how Unity renders your game for UWP.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSAOtherRender.png" alt="Rendering settings">
+<figcaption>Rendering settings</figcaption>
+</figure>
+<table>
+ <thead>
+ <tr>
+ <th style="text-align:left;"><strong>Property</strong></th>
+ <th style="text-align:left;" colspan="2"><strong>Description</strong></th>
+ </tr>
+ </thead>
+ <tbody>
+<tr>
+<td rowspan="3"><strong>Color Space</strong></td>
+<td colspan="2">Choose which color space Unity uses for rendering: <strong>Gamma</strong> or <strong>Linear</strong>. For more information, see <a href="LinearLighting.html">Linear rendering overview</a>.</td>
+</tr>
+<tr>
+ <td><strong>Gamma</strong></td>
+ <td>Gamma color space is typically used for calculating lighting on older hardware restricted to 8 bits per channel for the frame buffer format. Even though monitors today are digital, they might still take a gamma-encoded signal as input.</td>
+</tr>
+<tr>
+ <td><strong>Linear</strong></td>
+ <td>Linear color space rendering gives more precise results. When you select to work in linear color space, the Editor defaults to using <a href="https://en.wikipedia.org/wiki/SRGB">sRGB</a> sampling. If your <a href="Textures.html">Textures</a> are in linear color space, you need to work in linear color space and disable sRGB sampling for each Texture.</td>
+</tr>
+<tr>
+ <td rowspan="3"><strong>MSAA Fallback</strong></td>
+ <td colspan="2">Select the multi sample antialiasing fallback strategy to upgrade or downgrade the sample count if the sample count requested by the user isn’t supported by the device.</td>
+</tr>
+<tr>
+ <td><strong>Upgrade</strong></td>
+ <td>The sample count reduces to the nearest supported lower sample count.</td>
+</tr>
+<tr>
+ <td><strong>Downgrade</strong></td>
+ <td>The sample count increases to the next higher sample count. If that sample count is not supported, then it reduces to the nearest supported lower sample count.</td>
+</tr>
+<tr>
+<td>
+<strong>Auto Graphics API</strong> </td>
+<td colspan="2">Indicates whether to manually pick and reorder the graphics APIs. By default this option is enabled, and Unity uses Direct3D11.</td>
+</tr>
+<tr>
+<td>
+<strong>Static Batching</strong> </td>
+<td colspan="2">Use Static batching. For more information, refer to <a href="DrawCallBatching.html">Draw call batching</a>.</td>
+</tr>
+<tr>
+<td>
+<strong>Dynamic Batching</strong> </td>
+<td colspan="2">Use dynamic batching (enabled by default). For more information, refer to <a href="DrawCallBatching.html">Draw call batching</a>.<br><br><strong>Note:</strong> Dynamic batching has no effect when a <a href="ScriptableRenderPipeline.html">Scriptable Render Pipeline</a> is active, so this setting is only visible if the <strong>Scriptable Render Pipeline Asset</strong> <a href="class-GraphicsSettings.html#SRLoop">Graphics</a> setting is blank. </td>
+</tr>
+<tr>
+<td><strong>GPU Compute Skinning</strong></td>
+<td colspan="2">Indicates whether to use DX11/DX12/ES3 GPU skinning.</td>
+</tr>
+<tr>
+<td>
+<strong>Graphics Jobs</strong> </td>
+<td colspan="2">Offloads graphics tasks (render loops) to worker threads running on other CPU cores. This option reduces the time spent in <code>Camera.Render</code> on the main thread, which can be a bottleneck.</td>
+</tr>
+<tr>
+<td>
+<strong>Lightmap Encoding</strong> </td>
+<td colspan="2">Defines the encoding scheme and compression format of the lightmaps. <br>You can choose from <strong>Low Quality</strong>, <strong>Normal Quality</strong>, or <strong>High Quality</strong> . For more information, refer to <a href="Lightmaps-TechnicalInformation.html">Lightmaps: Technical information</a>.</td>
+</tr>
+<tr>
+<td>
+<strong>Lightmap Streaming</strong> </td>
+<td colspan="2">Uses <a href="TextureStreaming.html">Mipmap Streaming</a> for lightmaps. Unity applies this setting to all lightmaps when it generates them.<br><br><strong>Note:</strong> To use this setting, you must enable the <a href="class-QualitySettings.html#texStream">Texture Streaming Quality</a> setting.</td>
+</tr>
+<tr>
+<td>
+<strong>Streaming Priority</strong> </td>
+<td colspan="2">Sets the priority for all lightmaps in the <a href="TextureStreaming.html">Mipmap Streaming system</a>. Unity applies this setting to all lightmaps when it generates them.<br>Positive numbers give higher priority. Valid values range from –128 to 127.</td>
+</tr>
+<tr>
+<td><strong>Frame Timing Stats</strong></td>
+<td colspan="2">Allows Unity to gather CPU/GPU frame timing statistics. Use this option with the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DynamicResolution.html">Dynamic Resolution</a><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets, to reduce workload on the GPU. <a href="DynamicResolution.html" href="DynamicResolution.html">Dynamic Resolution</a><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets, to reduce workload on the GPU. <a href="DynamicResolution.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#dynamicresolution" aria-label="Go to glossary anchor for dynamicresolution">Glossary</a></span></span></span> camera setting to determine if your application is CPU or GPU bound.</td>
+</tr>
+<tr>
+<td><strong>Use Display In HDR Mode (Windows Only)</strong></td>
+<td colspan="2">Allows the game to automatically switch to HDR mode output when it runs. If the display doesn’t support HDR mode, the game runs in standard mode. </td>
+</tr>
+<tr>
+<td><strong>Swap Chain Bit Depth</strong></td>
+<td colspan="2">Selects the number of bits in each color channel for swap chain buffers. You can select <strong>Bit Depth 10</strong> or <strong>Bit Depth 16</strong>. The option to choose bit depth only becomes available when you enable HDR Mode. <br><br>For more information on bit depth, refer to the Scripting API page for <a href="../ScriptReference/D3DHDRDisplayBitDepth.html">D3DHDRDisplayBitDepth</a>.</td>
+</tr>
+<tr>
+<td> <strong>Virtual Texturing (Experimental)</strong> </td>
+<td colspan="2">Enable this option to reduce GPU memory usage and texture loading times if your Scene has many high resolution textures. For more information, refer to <a href="svt-streaming-virtual-texturing.html">Virtual Texturing</a>. <br><br><strong>Note</strong>: The Unity Editor requires a restart for this setting to take effect. </td>
+</tr>
+<tr>
+<td> <strong>360 Stereo Capture</strong> </td>
+<td colspan="2"> Allows Unity to capture stereoscopic 360 images and videos. When enabled, Unity compiles additional shader variants to support 360 capture (only on Windows). When enabled, the <code>enable_360_capture</code> keyword is added during the <a href="../ScriptReference/Camera.RenderToCubemap.html">Stereo RenderCubemap call</a>. This keyword isn’t triggered outside the <code>Stereo RenderCubemap</code> function.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Configuration" aria-hidden="true"></a></p>
+
+<h3>Configuration</h3>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSAOtherConfig.png" alt="Configuration settings">
+<figcaption>Configuration settings</figcaption>
+</figure>
+<table>
+ <thead>
+ <tr>
+ <th style="text-align:left;"><strong>Property</strong></th>
+ <th style="text-align:left;" colspan="2"><strong>Description</strong></th>
+ </tr>
+ </thead>
+ <tbody>
+<tr>
+ <td><strong>Scripting Backend</strong></td>
+ <td colspan="2">The scripting backend determines how Unity compiles and executes C# code in your Project. This setting defaults to IL2CPP for Universal Windows Platform and can’t be changed.</td>
+</tr>
+<tr>
+<td>
+<strong>API Compatibility Level</strong> </td>
+<td colspan="2">Choose which .NET APIs you can use in your project. This setting can affect compatibility with third-party libraries. However, it has no effect on Editor-specific code (code in an Editor directory, or within an Editor-specific Assembly Definition).<br><br><strong>Tip:</strong> If you are having problems with a third-party assembly, you can try the suggestion in the <a href="#apiComp">API Compatibility Level</a> section below.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"></td>
+ <td style="text-align:left;"><strong>.Net Framework</strong></td>
+ <td style="text-align:left;">Produces larger builds and any additional APIs available are not necessarily supported on all platforms. Choose this option when using libraries that access APIs not included in .NET Standard 2.0. Compatible with the .NET Framework 4 (which includes everything in the .NET Standard 2.0 profile as well as additional APIs). <br><br>For more information, see <a href="dotnetProfileAssemblies.html">Referencing additional class library assemblies</a>.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"></td>
+ <td style="text-align:left;"><strong>.Net Standard 2.1</strong></td>
+ <td style="text-align:left;">Produces smaller builds and has full cross-platform support. </td>
+</tr>
+<tr>
+ <td><strong>C++ Compiler Configuration</strong></td>
+ <td colspan="2">Chooses the C++ compiler configuration used when compiling IL2CPP generated code.<br><br><strong>Note:</strong> This property is disabled for the Universal Windows Platform because it’s chosen in the generated Visual Studio project.</td>
+</tr>
+<tr>
+ <td><strong>Use incremental GC</strong></td>
+ <td colspan="2">Uses the incremental garbage collector, which spreads garbage collection over several frames to reduce garbage collection-related spikes in frame duration. <br><br>For more information, see <a href="performance-managed-memory.html">Automatic Memory Management</a>. </td>
+</tr>
+<tr>
+<td colspan="2"><strong>Assembly Version Validation</strong></td>
+<td>Indicates whether Mono validates types from a <a href="https://docs.microsoft.com/en-us/dotnet/standard/assembly/strong-named">strongly-named</a> assembly.</td>
+</tr>
+<tr>
+ <td><strong>Accelerometer Frequency</strong></td>
+ <td colspan="2">Defines how often to sample the accelerometer. If you choose Disabled, then no samples are taken. Otherwise, you can choose from 15Hz, 30Hz, 60Hz and 100Hz frequencies.</td>
+</tr>
+<tr>
+<td><strong>Active Input Handling</strong></td>
+<td colspan="2"> Choose how to handle input from users. </td>
+</tr>
+<tr>
+ <td style="text-align:left;"></td>
+ <td style="text-align:left;"><strong>Input Manager (Old)</strong></td>
+ <td style="text-align:left;">Uses the traditional <a href="class-InputManager.html">Input</a> settings.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"></td>
+ <td style="text-align:left;"><strong>Input System Package (New)</strong></td>
+ <td style="text-align:left;">Uses the <a href="../ScriptReference/Input.html">Input</a> system. This option requires you to install the <a href="https://github.com/Unity-Technologies/InputSystem">InputSystem package</a>. </td>
+</tr>
+<tr>
+ <td style="text-align:left;"></td>
+ <td style="text-align:left;"><strong>Both</strong></td>
+ <td style="text-align:left;">Use both systems side by side. </td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="apiComp" aria-hidden="true"></a></p>
+
+<h4>API Compatibility Level</h4>
+
+<p>You can choose your mono API compatibility level for all targets. Sometimes a third-party .NET library uses functionality that’s outside of your .NET compatibility level. To understand what’s going on in such cases, and how to best fix it, try following these suggestions: </p>
+
+<ol>
+<li>Install <a href="https://www.microsoft.com/en-us/p/ilspy/9mxfbkfvsq13?cid=msft_web_chart&amp;activetab=pivot:overviewtab">ILSpy</a> for Windows.</li>
+<li>Drag the .NET assemblies for the API compatibility level that you are having issues with into ILSpy. You can find these under <code>Data/MonoBleedingEdge/lib/mono/YOURSUBSET/</code>.</li>
+<li>Drag in your third-party assembly.</li>
+<li>Right-click your third-party assembly and select <strong>Analyze</strong>.</li>
+<li>In the analysis report, inspect the <strong>Depends on</strong> section. The report highlights anything that the 3rd-party assembly depends on, but that’s not available in the .NET compatibility level of your choice in red.</li>
+</ol>
+
+<p><a name="ShaderSettings" aria-hidden="true"></a></p>
+
+<h3>Shader Settings</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong><span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> precision model</strong></td>
+	<td style="text-align:left;">Select the default precision of samplers used in shaders. Refer to <a href="https://docs.unity3d.com/2023.1/Documentation/Manual/SL-DataTypesAndPrecision.html#samplertypes">Shader data types and precision</a> for more details.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Keep Loaded Shaders Alive</strong></td>
+	<td style="text-align:left;">Keep all loaded shaders alive and prevent unloading.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="ShaderVariantLoading" aria-hidden="true"></a></p>
+
+<h3>Shader Variant Loading Settings</h3>
+
+<p>Use these settings to control how much memory shaders use at runtime.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Default chunk size (MB)</strong></td>
+	<td style="text-align:left;">Sets the maximum size of compressed shader variant data chunks Unity stores in your built application for all platforms. The default is <code>16</code>. For more information, refer to <a href="shader-loading.html#dynamicloading">Shader loading</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Default chunk count</strong></td>
+	<td style="text-align:left;">Sets the default limit on how many decompressed chunks Unity keeps in memory on all platforms. The default is <code>0</code>, which means there’s no limit.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Override</strong></td>
+	<td style="text-align:left;">Enables overriding <strong>Default chunk size</strong> and <strong>Default chunk count</strong> for this build target.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Chunk size (MB)</strong></td>
+	<td style="text-align:left;">Overrides the value of <strong>Default chunk size (MB)</strong> on this build target.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Chunk count</strong></td>
+	<td style="text-align:left;">Overrides the value of <strong>Default chunk count</strong> on this build target.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="ScriptCompilation" aria-hidden="true"></a></p>
+
+<h3>Script Compilation</h3>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSAScriptCompil.png" alt="Script Compilation settings">
+<figcaption>Script Compilation settings</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Scripting Define Symbols</strong></td>
+	<td style="text-align:left;">Sets custom compilation flags. <br><br> For more details, see <a href="PlatformDependentCompilation.html">Platform dependent compilation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Additional Compiler Arguments</strong></td>
+	<td style="text-align:left;">Adds entries to this list to pass additional arguments to the Roslyn compiler. Use one new entry for each additional argument.<br>To create a new entry, click <strong>Add</strong> (<strong>+</strong>). To remove an entry, click <strong>Remove</strong> (<strong>-</strong>).<br><br>When you have added all desired arguments, click <strong>Apply</strong> to include your additional arguments in future compilations. Click <strong>Revert</strong> to reset this list to the most recent applied state.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Suppress Common Warnings</strong></td>
+	<td style="text-align:left;">Indicates whether to display the C# warnings <a href="https://docs.microsoft.com/en-us/dotnet/csharp/misc/cs0169">CS0169</a> and <a href="https://docs.microsoft.com/en-us/dotnet/csharp/misc/CS0649">CS0649</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Allow ‘unsafe’ Code</strong></td>
+	<td style="text-align:left;">Enables support for compiling <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/unsafe">‘unsafe’ C# code</a> in a pre-defined assembly (for example, <code>Assembly-CSharp.dll</code>). <br>For Assembly Definition Files (<code>.asmdef</code>), click on one of your <code>.asmdef</code> files and enable the option in the Inspector window that appears.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Use Deterministic Compilation</strong></td>
+	<td style="text-align:left;">Indicates whether to prevent compilation with the -deterministic C# flag. With this setting enabled, compiled assemblies are byte-for-byte identical each time they are compiled.<br><br>For more information, see Microsoft’s <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/deterministic-compiler-option">deterministic compiler option</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Enable Roslyn Analyzers</strong></td>
+	<td style="text-align:left;">Indicates whether to compile user-written <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> without Roslyn analyzer DLLs that might be present in your project.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Optimization" aria-hidden="true"></a></p>
+
+<h3>Optimization</h3>
+
+<p>
+<img src="../uploads/Main/PlayerSetWSAOtherOptim.png" alt="Optimization settings"><br>
+</p>
+<table>
+ <thead>
+ <tr>
+ <th style="text-align:left;"><strong>Property</strong></th>
+ <th style="text-align:left;" colspan="2"><strong>Description</strong></th>
+ </tr>
+ </thead>
+ <tbody>
+<tr>
+<td colspan="2"><strong>Prebake Collision Meshes</strong></td>
+<td>Adds collision data to <a href="class-Mesh.html">Meshes</a> at build time. </td>
+</tr>
+<tr>
+<td colspan="2"><strong>Preloaded Assets</strong></td>
+<td>Sets an array of Assets for the player to load on startup. <br>To add new Assets, increase the value of the <strong>Size</strong> property and then set a reference to the Asset to load in the new <strong>Element</strong> box that appears.</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Managed Stripping Level</strong></td>
+<td>Chooses how aggressively Unity strips unused managed (C#) code. The options are <strong>Minimal</strong>, <strong>Low</strong>, <strong>Medium</strong>, and <strong>High</strong>. <br>When Unity builds your app, the Unity Linker process can strip unused code from the managed DLLs your Project uses. Stripping code can make the resulting executable significantly smaller, but can sometimes accidentally remove code that’s in use. <br><br>For more information about these options and bytecode stripping with IL2CPP, refer to <a href="../ScriptReference/ManagedStrippingLevel.html">ManagedStrippingLevel</a>.</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Vertex Compression</strong></td>
+<td>Sets vertex compression per channel. This affects all the meshes in your project. <br>Typically, Vertex Compression is used to reduce the size of mesh data in memory, reduce file size, and improve GPU performance. <br><br>For more information on how to configure vertex compression and limitations of this setting, refe to <a href="mesh-compression.html">Compressing mesh data</a>. </td>
+</tr>
+<tr>
+<td colspan="2"><strong>Optimize Mesh Data</strong></td>
+<td>Enable this option to strip unused vertex attributes from the mesh used in a build. This option reduces the amount of data in the mesh, which can help reduce build size, loading times, and runtime memory usage. <br><br> <strong>Warning:</strong> If you have this setting enabled, you should remember to not change material or shader settings at runtime. <br><br> For more information, refer to <a href="../ScriptReference/PlayerSettings-stripUnusedMeshComponents.html">PlayerSettings.stripUnusedMeshComponents</a>.</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Texture MipMap Stripping</strong></td>
+<td>Enables mipmap stripping for all platforms. This strips unused mipmaps from Textures at build time. Unity determines unused mipmaps by comparing the value of the mipmap against the <strong>Quality Settings</strong> for the current platform. If a mipmap value is excluded from every <strong>Quality Setting</strong> for the current platform, then Unity strips those mipmaps from the build at build time. If <a href="../ScriptReference/QualitySettings-masterTextureLimit.html">QualitySettings.masterTextureLimit</a> is set to a mipmap value that has been stripped, Unity will set the value to the closest mipmap value that has not been stripped.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Logging" aria-hidden="true"></a></p>
+
+<h3>Stack Trace</h3>
+
+<p>Select which type of stack trace logging to allow in specific contexts.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSAOtherLog.png" alt="Stack Trace settings">
+<figcaption>Stack Trace settings</figcaption>
+</figure>
+
+<p>Select your preferred stack trace method by enabling the option that corresponds to each Log Type (<strong>Error</strong>, <strong>Assert</strong>, <strong>Warning</strong>, <strong>Log</strong>, and <strong>Exception</strong>) based on the type of logging you require. For more information, refer to <a href="StackTrace.html">stack trace logging</a>. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">No logs are ever recorded.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ScriptOnly</strong></td>
+	<td style="text-align:left;">Logs only when running scripts.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Full</strong></td>
+	<td style="text-align:left;">Logs all the time.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Legacy" aria-hidden="true"></a></p>
+
+<h3>Legacy</h3>
+
+<p>Enable <strong>Clamp BlendShapes (Deprecated)</strong> to clamp the range of blend shape weights in <a href="class-SkinnedMeshRenderer.html">SkinnedMeshRenderers</a>.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSAOtherLeg.png" alt="Legacy settings">
+<figcaption>Legacy settings</figcaption>
+</figure>
+
+<p><a name="Publishing" aria-hidden="true"></a></p>
+
+<h2>Publishing Settings</h2>
+
+<p>Use these settings to customize building your UWP app. These options are organized into the following groups:</p>
+
+<ul>
+<li><a href="#Packaging">Packaging</a></li>
+<li><a href="#Certificate">Certificate</a></li>
+<li><a href="#AppUI">Application UI</a></li>
+<li><a href="#FileAssoc">File and Protocol Associations</a></li>
+<li><a href="#Misc">Misc</a></li>
+<li><a href="#Capabilities">Capabilities</a></li>
+<li><a href="#Supported">Supported Device Families</a></li>
+</ul>
+
+<p>Unity stores these settings in the <code>Package.appxmanifest</code> file when creating a Visual Studio solution for the first time.</p>
+
+<p>
+<strong>Note:</strong> If you build your project on top of the existing one, Unity doesn’t overwrite the <code>Package.appxmanifest</code> file if it’s already present. That means if you change any of the <strong>Player</strong> settings, you need to check <code>Package.appxmanifest</code>. If you want to regenerate <code>Package.appxmanifest</code>, delete it and rebuild your project from Unity.</p>
+
+<p>For more information, refer to Microsoft’s documentation on <a href="http://msdn.microsoft.com/en-us/library/windows/apps/br211474.aspx">App package manifest</a>.</p>
+
+<p>
+<a href="#supportedOris">Supported orientations</a> from Player Settings are also populated to the manifest (<code>Package.appxmanifest</code> file in Visual Studio solution). On UWP apps, Unity resets the orientation to the one you used in the <strong>Player</strong> settings, regardless of what you specify in the manifest. This is because Windows itself ignores those settings on desktop and tablet computers. </p>
+
+<p>
+<strong>Tip:</strong> You can always change supported orientations using Unity scripting API.</p>
+
+<p><a name="Packaging" aria-hidden="true"></a></p>
+
+<h3>Packaging</h3>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSAPubPackaging.png" alt="Packaging settings">
+<figcaption>Packaging settings</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Package name</strong></td>
+	<td style="text-align:left;">Enter the name to identify the package on the system. The name must be unique.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Package display name</strong></td>
+	<td style="text-align:left;">The <strong>Product Name</strong> value that you set at the <a href="class-PlayerSettings.html#ProductName">top of the Player settings</a> appears here. This is the name of the app as it will appear on the Microsoft Store.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Version</strong></td>
+	<td style="text-align:left;">Enter the version for the package using a string in <span class="tooltip"><strong>quad</strong><span class="tooltiptext">A primitive object that resembles a plane but its edges are only one unit long, it uses only 4 vertices, and the surface is oriented in the XY plane of the local coordinate space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PrimitiveObjects.html" href="PrimitiveObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Quad" aria-label="Go to glossary anchor for Quad">Glossary</a></span></span></span> notation: <strong>Major.Minor.Build.Revision</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Publisher display name</strong></td>
+	<td style="text-align:left;">The <strong>Company Name</strong> value that you set at the <a href="class-PlayerSettings.html#CompanyName">top of the Player settings</a> appears here. This is the user-friendly name of the publisher.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Streaming Install</strong></td>
+	<td style="text-align:left;">Enable this option to create a <code>AppxContentGroupMap.xml</code> manifest file containing streamable Assets for the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. To include Scene Assets by default, use the <strong>Last required scene index</strong> setting. Assets in Scenes with a scene index above the <strong>Last required scene index</strong> are specified as streamable in the manifest file.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Last required scene index</strong></td>
+	<td style="text-align:left;">Enter the index number from the <strong>Scenes In Build</strong> list on the <a href="BuildSettings.html">Build Settings window</a> that corresponds to the last scene in that list that must be present in the game build. For an application to start, Unity requires any scene index at or less than the specified index. To require all files in the list, use the index of the last scene in the list. <br>Scenes with a greater scene index must include shared Assets for Scenes with a lesser index. The order of scenes in the Build Settings dialog may be important to allow the application to locate the required assets.<br><br><strong>Note:</strong> By default, the <strong>Streaming Install</strong> option is disabled, which means that this setting isn’t available. To make this property editable, enable the <strong>Streaming Install</strong> option first.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Certificate" aria-hidden="true"></a></p>
+
+<h3>Certificate</h3>
+
+<p>Every UWP app needs a certificate which identifies a developer. Use these settings to select a certificate file saved on your computer or create one if it isn’t already available.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSAPubCertificate.png" alt="Certificate settings before and after creating a certificate">
+<figcaption>Certificate settings before and after creating a certificate</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;" colspan="2"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Publisher</strong></td>
+	<td style="text-align:left;" colspan="2">Displays the name of the package publisher. For example, <code>DefaultCompany</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Issued by</strong></td>
+	<td style="text-align:left;" colspan="2">Displays the issuer name of the package. This is the same as the publisher name you enter in the <strong>Publisher</strong> setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Expiration date</strong></td>
+	<td style="text-align:left;" colspan="2">Displays the certificate expiry date which is set to one year from the time the certificate is created.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Select</strong></td>
+	<td style="text-align:left;" colspan="2">Allows you to choose your certificate file (<code>.pfx</code>) from your local computer. The name of the file you select appears on <strong>Select</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Create</strong></td>
+	<td style="text-align:left;" colspan="2">Allows you to create a certificate if you don’t have a certificate file already. When you select <strong>Create</strong>, the <strong>Create Test Certificate for Microsoft Store</strong> dialog window appears with the following fields.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Publisher</strong></td>
+	<td style="text-align:left;">Enter the name of the package publisher.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Password</strong></td>
+	<td style="text-align:left;">Enter the password to protect your certificate file. This field is optional and it’s recommended to leave it blank.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Confirm password</strong></td>
+	<td style="text-align:left;">Re-enter the same password that you used to protect your certificate file.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="AppUI" aria-hidden="true"></a></p>
+
+<h3>Application UI</h3>
+
+<p>Use this section to provide the description for your app that will appear in the Microsoft Store. Unity copies these options directly to the <code>Package.appxmanifest</code> file.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSAPublish-appUI.png" alt="Application UI settings">
+<figcaption>Application UI settings</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Display name</strong></td>
+	<td style="text-align:left;">Displays the <strong>Product Name</strong> value that you set at the <a href="class-PlayerSettings.html#ProductName">top of the Player Settings</a> window. This is the full name of the app.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Description</strong></td>
+	<td style="text-align:left;">Enter the text you want to display on the app’s tile on the Microsoft Store. By default, this is set to the <a href="class-PlayerSettings.html#ProductName">Product Name</a> value.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="FileAssoc" aria-hidden="true"></a></p>
+
+<h3>File and Protocol Associations</h3>
+
+<p>The settings under the <strong>File Type Associations</strong>, <strong>File Types</strong>, and <strong>Protocol</strong> sections allow you to set up your Microsoft Store app as the default handler for a certain file type or URI scheme.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSAPubFileAssoc.png" alt="File Type Associations and Protocol section">
+<figcaption>File Type Associations and Protocol section</figcaption>
+</figure>
+
+<h4>File Type Associations setting</h4>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;">Enter the name for a group of file types. These files share the same display name, logo, info tip, and edit flags. Choose a group name that can stay the same across app updates. <br><br><strong>Note</strong>: Use lowercase letters only.</td>
+</tr>
+</tbody>
+</table>
+
+<h4>File Types settings</h4>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;" colspan="2"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Add New</strong></td>
+	<td style="text-align:left;" colspan="2">Allows you to add multiple file types to set up a file association. To interact with this button, you need to specify the name for the file type group first. When you select <strong>Add New</strong>, the following properties are displayed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Content Type</strong></td>
+	<td style="text-align:left;">Enter the MIME content type for a particular file type. For example, <code>image/jpeg</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>File Type</strong></td>
+	<td style="text-align:left;">Enter the file type you want to register, preceded by a period. For example, <code>.jpeg</code>.</td>
+</tr>
+</tbody>
+</table>
+
+<h4>Protocol setting</h4>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;">Enter a protocol name to set up an association with a URI scheme.</td>
+</tr>
+</tbody>
+</table>
+
+<p>For more information, refer to Microsoft documentation on <a href="https://docs.microsoft.com/en-us/previous-versions/windows/apps/hh779673(v%3dwin.10)">Auto-launching with file and URI associations (XAML)</a>.</p>
+
+<p><a name="Misc" aria-hidden="true"></a></p>
+
+<h3>Misc</h3>
+
+<p>Unity receives input by subscribing to events. The <strong>Input Source</strong> setting defines where (which sources) to get input from. Currently this only applies to mouse and touch input, as keyboard input always comes from <strong>CoreWindow</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSAPubMisc.png" alt="Misc settings ">
+<figcaption>Misc settings </figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Default Language (.vcxproj)</strong></td>
+	<td style="text-align:left;" colspan="2">Sets the XML default language in the generated Visual Studio project. If not specified, ‘en-US’ is used. <br><strong>Note:</strong> Changes only apply to the initial file generation, changes don’t affect pre-existing files.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Input Source</strong></td>
+	<td style="text-align:left;" colspan="2">Defines which sources to receive input from. Currently this only applies to mouse and touch input, as keyboard input always comes from <strong>CoreWindow</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>CoreWindow</strong></td>
+	<td style="text-align:left;">Subscribes to CoreWindow events. This is the default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Independent Input Source</strong></td>
+	<td style="text-align:left;">Creates Independent Input Source and receive input from it.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>SwapChainPanel</strong></td>
+	<td style="text-align:left;">Subscribes to SwapChainPanel events.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Capabilities" aria-hidden="true"></a></p>
+
+<h3>Capabilities</h3>
+
+<p>Use the <strong>Capabilities</strong> section to enable APIs or resources you want your app to access. These could be pictures, music, or devices such as the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> or the microphone.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSAPubCaps.png" alt="Capabilities settings">
+<figcaption>Capabilities settings</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>EnterpriseAuthentication</strong></td>
+	<td style="text-align:left;">Windows domain credentials enable a user to log into remote resources using their credentials, and act as if a user provided their username and password.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>InternetClient</strong></td>
+	<td style="text-align:left;">Allows your app to receive incoming data from the Internet. Can’t act as a server. No local network access.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>InternetClientServer</strong></td>
+	<td style="text-align:left;">Same as <strong>InternetClient</strong> but also enables peer-to-peer (P2P) scenarios where the app needs to listen for incoming network connections.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MusicLibrary</strong></td>
+	<td style="text-align:left;">Accesses the user’s Music, allowing the app to enumerate and access all files in the library without user interaction. This capability is typically used in jukebox apps that make use of the entire Music library.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PicturesLibrary</strong></td>
+	<td style="text-align:left;">Accesses the user’s Pictures, allowing the app to enumerate and access all files in the library without user interaction. This capability is typically used in photo apps that make use of the entire Pictures library.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PrivateNetworkClientServer</strong></td>
+	<td style="text-align:left;">Provides inbound and outbound access to home and work networks through the firewall. This capability is typically used for games that communicate across the local area network (LAN), and for apps that share data across a variety of local devices.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RemovableStorage</strong></td>
+	<td style="text-align:left;">Accesses files on removable storage, like USB keys and external hard drives.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SharedUserCertificates</strong></td>
+	<td style="text-align:left;">Allows your app to add and access software and hardware-based certificates in the Shared User store, such as certificates stored on a smart card. This capability is typically used for financial or enterprise apps that require a smart card for authentication.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VideosLibrary</strong></td>
+	<td style="text-align:left;">Accesses the user’s Videos, allowing the app to enumerate and access all files in the library without user interaction. This capability is typically used in movie-playback apps that make use of the entire Videos library.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>WebCam</strong></td>
+	<td style="text-align:left;">Accesses the video feed of a built-in camera or external webcam, which allows the app to capture photos and videos.<br><strong>Note:</strong> This only grants access to the video stream. In order to grant access to the audio stream as well, the <strong>Microphone</strong> capability must be added.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Proximity</strong></td>
+	<td style="text-align:left;">Enables multiple devices in close proximity to communicate with one another. This capability is typically used in casual multi-player games and in apps that exchange information. Devices attempt to use the communication technology that provides the best possible connection, including Bluetooth, Wi-Fi, and the Internet.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Microphone</strong></td>
+	<td style="text-align:left;">Accesses the microphone’s audio feed, which allows the app to record audio from connected microphones.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Location</strong></td>
+	<td style="text-align:left;">Accesses location functionality that retrieved from dedicated hardware like a GPS sensor in the PC or derived from available network info.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>HumanInterfaceDevice</strong></td>
+	<td style="text-align:left;">Enables access to Human Interface Device APIs. For more information, refer to <a href="https://docs.microsoft.com/en-us/uwp/schemas/appxpackage/how-to-specify-device-capabilities-for-hid">How to specify device capabilities for HID</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AllJoyn</strong></td>
+	<td style="text-align:left;">Allows AllJoyn-enabled apps and devices on a network to discover and interact with each other.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BlockedChatMessages</strong></td>
+	<td style="text-align:left;">Allows apps to read SMS and MMS messages that have been blocked by the Spam Filter app.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Chat</strong></td>
+	<td style="text-align:left;">Allows apps to read and write all SMS and MMS messages.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CodeGeneration</strong></td>
+	<td style="text-align:left;">Allows apps to access the following functions which provide JIT capabilities to apps<br><a href="https://msdn.microsoft.com/library/windows/desktop/Mt169846">VirtualProtectFromApp</a><br><a href="https://msdn.microsoft.com/library/windows/desktop/Hh994453">CreateFileMappingFromApp</a><br><a href="https://msdn.microsoft.com/library/windows/desktop/Mt169844">OpenFileMappingFromApp</a><br><a href="https://msdn.microsoft.com/library/windows/desktop/Hh994454">MapViewOfFileFromApp</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Objects3D</strong></td>
+	<td style="text-align:left;">Allows apps to have programmatic access to the <span class="tooltip"><strong>3D object</strong><span class="tooltiptext">A 3D GameObject such as a cube, terrain or ragdoll. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GameObjects.html" href="GameObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#3DObject" aria-label="Go to glossary anchor for 3DObject">Glossary</a></span></span></span> files. This capability is typically used in 3D apps and games that need access to the entire 3D objects library.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PhoneCall</strong></td>
+	<td style="text-align:left;">Allows apps to access all of the phone lines on the device and perform the following functions.<br>Place a call on the phone line and display the system dialer without prompting the user.<br>Access line-related metadata.<br>Access line-related triggers.<br>Allows the user-selected spam filter app to set and check block list and call origin information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UserAccountInformation</strong></td>
+	<td style="text-align:left;">Accesses the user’s name and picture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VoipCall</strong></td>
+	<td style="text-align:left;">Allows apps to access the VOIP calling APIs in the <a href="https://msdn.microsoft.com/library/windows/apps/Dn297266">Windows.ApplicationModel.Calls</a> namespace.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bluetooth</strong></td>
+	<td style="text-align:left;">Allows apps to communicate with already paired bluetooth devices over both Generic Attribute (GATT) or Classic Basic Rate (RFCOMM) protocol.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SpatialPerception</strong></td>
+	<td style="text-align:left;">Provides programmatic access to <span class="tooltip"><strong>spatial mapping</strong><span class="tooltiptext">The process of mapping real-world surfaces into the virtual world.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SpatialMapping" aria-label="Go to glossary anchor for SpatialMapping">Glossary</a></span></span></span> data, giving mixed reality apps information about surfaces in application-specified regions of space near the user. Declare the spatialPerception capability only when your app will explicitly use these surface meshes, as the capability isn’t required for mixed reality apps to perform holographic rendering based on the user’s head pose.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>InputInjectionBrokered</strong></td>
+	<td style="text-align:left;">Allows apps to inject various forms of input such as HID, touch, pen, keyboard or mouse into the system programmatically. This capability is typically used for collaboration apps that can take control of the system.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Appointments</strong></td>
+	<td style="text-align:left;">Accesses the user’s appointment store. This capability allows read access to appointments obtained from the synced network accounts and to other apps that write to the appointment store. With this capability, your app can create new calendars and write appointments to calendars that it creates.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BackgroundMediaPlayback</strong></td>
+	<td style="text-align:left;">Changes the behavior of the media-specific APIs like the <a href="https://msdn.microsoft.com/library/windows/apps/windows.media.playback.mediaplayer.aspx">MediaPlayer</a> and <a href="https://msdn.microsoft.com/library/windows/apps/windows.media.audio.audiograph.aspx">AudioGraph</a> classes to enable media playback while your app is in the background. All active audio streams will no longer mute, but will continue to be audible when an app transitions to the background. Additionally, app lifetime will be extended automatically while playback is occurring.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Contacts</strong></td>
+	<td style="text-align:left;">Accesses the aggregated view of the contacts from various contacts stores. This capability gives the app limited access (network permitting rules apply) to contacts that were synced from various networks and the local contact store.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LowLevelDevices</strong></td>
+	<td style="text-align:left;">Allows apps to access custom devices when a number of additional requirements are met.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>OfflineMapsManagement</strong></td>
+	<td style="text-align:left;">Allows apps to access offline maps.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PhoneCallHistoryPublic</strong></td>
+	<td style="text-align:left;">Allows apps to read cellular and some VOIP call history information on the device. This capability also allows the app to write VOIP call history entries.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PointOfService</strong></td>
+	<td style="text-align:left;">Enables access to APIs in the <a href="https://msdn.microsoft.com/library/windows/apps/Dn298071">Windows.Devices.PointOfService</a> namespace. This namespace lets your app access Point of Service (POS) barcode scanners and magnetic stripe readers. The namespace provides a vendor-neutral interface for accessing POS devices from various manufacturers from a UWP app.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RecordedCallsFolder</strong></td>
+	<td style="text-align:left;">Allows apps to access the recorded calls folder.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RemoteSystem</strong></td>
+	<td style="text-align:left;">Allows apps to have access to a list of devices associated with the user’s Microsoft Account. Access to the device list is necessary to perform any operations that persist across devices.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SystemManagement</strong></td>
+	<td style="text-align:left;">Allows apps to have basic system administration privileges such as shutting down or rebooting, locale, and timezone.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UserDataTasks</strong></td>
+	<td style="text-align:left;">Allows apps to have access to the current state of the tasks setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UserNotificationListener</strong></td>
+	<td style="text-align:left;">Allows apps to have access to the current state of the notifications setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GazeInput</strong></td>
+	<td style="text-align:left;">Allows apps to detect where the user is looking when a compatible eye-tracking device is connected.</td>
+</tr>
+</tbody>
+</table>
+
+<p>For more information, refer to <a href="https://docs.microsoft.com/en-us/windows/uwp/packaging/app-capability-declarations">App capability declarations</a>.</p>
+
+<p>Unity copies these options directly to the <code>Package.appxmanifest</code> file.</p>
+
+<p>
+<strong>Note:</strong> If you build your game on top of a previous package, <code>Package.appxmanifest</code> won’t be overwritten.</p>
+
+<p><a name="Supported" aria-hidden="true"></a></p>
+
+<h3>Supported Device Families</h3>
+
+<p>A device family identifies the APIs, system characteristics, and behaviors across a class of devices. It also determines the set of devices on which your app can be installed from the Store. For more information, refer to Microsoft’s <a href="https://docs.microsoft.com/en-ca/uwp/extension-sdks/device-families-overview">Device families overview</a>.</p>
+
+<p>If no options are enabled, <code>Windows.Universal</code> is used as default, which enables your app to be available on all device families. You can also set this within the API in <a href="../ScriptReference/PlayerSettings.WSATargetFamily.html"><code>PlayerSettings.WSATargetFamily</code></a> instead of in the Editor.</p>
+
+<p>
+<strong>Note:</strong> These settings are used only when generating a new UWP Visual Studio solution. Changing these settings has no effect if you rebuild UWP to an existing folder.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetWSAPubDevFams.png" alt="Supported Device Families settings">
+<figcaption>Supported Device Families settings</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Desktop</strong></td>
+	<td style="text-align:left;">Indicates whether your application supports the Desktop device family.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Mobile</strong></td>
+	<td style="text-align:left;">Indicates whether your application supports the Mobile device family.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Holographic</strong></td>
+	<td style="text-align:left;">Indicates whether your application supports the HoloLens (self-contained, holographic computer) device family. This is used for Mixed Reality apps.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Team</strong></td>
+	<td style="text-align:left;">Indicates whether your application supports the Team device family. This is commonly used for Microsoft Surface Hub devices.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>IoT</strong></td>
+	<td style="text-align:left;">Indicates whether your application supports the IoT device family. <br><br><strong>Note:</strong> Currently, apps targeting IoT aren’t valid in the app store and should be used only for development purposes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>IoTHeadless</strong></td>
+	<td style="text-align:left;">Indicates whether your application supports the IoTHeadless device family. <br><br><strong>Note:</strong> Currently, apps targeting IoTHeadless aren’t valid in the app store and should be used only for development purposes.</td>
+</tr>
+</tbody>
+</table>
+
+<p>For more information, refer to <a href="https://docs.microsoft.com/en-us/windows/uwp/publish/device-family-availability">Device family availability</a>.</p>
+
+<p><br></p>
+<!-- area:platforms -->
+
+<p><span class="search-words">PlayerSettingsWSA</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="uwp-environment-setup.html"></a></span><div class="tip">Set up your environment for UWP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="uwp-developing.html"></a></span><div class="tip">Develop for Universal Windows Platform</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Smart merge</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SmartMerge.html">English</a></li>
+<li><a href="/cn/current/Manual/SmartMerge.html">中文</a></li>
+<li><a href="/ja/current/Manual/SmartMerge.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SmartMerge.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SmartMerge.html">English</a></li>
+<li><a href="/cn/current/Manual/SmartMerge.html">中文</a></li>
+<li><a href="/ja/current/Manual/SmartMerge.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SmartMerge.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="EditorFeatures.html">Editor Features</a></li>
+<li><a href="VersionControl.html">Version Control</a></li>
+<li>Smart merge</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="perForceIntegration.html"></a></span><div class="tip">Perforce Integration</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SafeMode.html"></a></span><div class="tip">Safe Mode</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Smart merge</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use the <strong>UnityYAMLMerge</strong> tool to merge <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> and <span class="tooltip"><strong>prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> and <span class="tooltip"><strong>prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> files in a semantically correct way. The tool can be accessed from the command line and is also available to third-party <span class="tooltip"><strong>version control</strong><span class="tooltiptext">A system for managing file changes. You can use Unity in conjunction with most common version control tools, including Perforce, Git, Mercurial and PlasticSCM. <a href="VersionControl.html" href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> files in a semantically correct way. The tool can be accessed from the command line and is also available to third-party <span class="tooltip"><strong>version control</strong><span class="tooltiptext">A system for managing file changes. You can use Unity in conjunction with most common version control tools, including Perforce, Git, Mercurial and PlasticSCM. <a href="VersionControl.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VersionControl" aria-label="Go to glossary anchor for VersionControl">Glossary</a></span></span></span> software.</p>
+
+<h2>Setting up smart merging in Unity</h2>
+
+<p>In the Version Control project settings (menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Version Control</strong>), when you select a third-party version control tool in the <strong>Mode</strong> field, for example Perforce or PlasticSCM, the <strong>Smart Merge</strong> is displayed. The menu has the following options:</p>
+
+<ul>
+<li>
+<strong>Off</strong>: use only the default merge tool set in the preferences with no smart merging.</li>
+<li>
+<strong>Premerge</strong>: enable smart merging, accept clean merges. Unclean merges will create premerged versions of base, theirs and mine versions of the file. Then, use these with the default merge tool.</li>
+<li>
+<strong>Ask</strong>: enable smart merging but when a conflict occurs, show a dialog to let the user resolve it (this is the default setting).</li>
+</ul>
+
+<h2>Setting up UnityYAMLMerge for use with third-party tools</h2>
+
+<p>The UnityYAMLMerge tool is shipped with the Unity editor; assuming Unity is installed in the standard location, the path to UnityYAMLMerge will be:</p>
+
+<pre><code>C:\Program Files\Unity\Editor\Data\Tools\UnityYAMLMerge.exe
+
+or
+
+C:\Program Files (x86)\Unity\Editor\Data\Tools\UnityYAMLMerge.exe
+</code></pre>
+
+<p>…on Windows and </p>
+
+<pre><code>/Applications/Unity/Unity.app/Contents/Tools/UnityYAMLMerge
+</code></pre>
+
+<p>…on Mac OSX (use the <em>Show Package Contents</em> command from the Finder to access this folder).</p>
+
+<p>UnityYAMLMerge is shipped with a default fallback file (called mergespecfile.txt, also in the Tools folder) that specifies how it should proceed with unresolved conflicts or unknown files. This also allows you to use it as the main merge tool for version control systems (such as git) that don’t automatically select merge tools based on file extensions. The most common tools are already listed by default in mergespecfile.txt but you can edit this file to add new tools or change options.</p>
+
+<p>You can run UnityYAMLMerge as a standalone tool from the command line (you can see full usage instructions by running it without any arguments). Setup instructions for common version control systems are given below.</p>
+
+<h3>P4V</h3>
+
+<ol>
+<li>Go to Preferences &gt; Merge.</li>
+<li>Select <em>Other application</em>.</li>
+<li>Click the <em>Add</em> button.</li>
+<li>In the extension field, type <code>.unity</code>.</li>
+<li>In the Application field, type the path to the UnityYAMLMerge tool (see above).</li>
+<li>In the Arguments field, type <code>merge -p %b %1 %2 %r</code>
+</li>
+<li>Click Save.</li>
+</ol>
+
+<p>Then, follow the same procedure to add the <code>.prefab</code> extension.</p>
+
+<h3>Git</h3>
+
+<p>Add the following text to your <code>.git</code> or <code>.gitconfig</code> file:</p>
+
+<pre><code>    [merge]
+    tool = unityyamlmerge
+
+    [mergetool &quot;unityyamlmerge&quot;]
+    trustExitCode = false
+    cmd = '&lt;path to UnityYAMLMerge&gt;' merge -p &quot;$BASE&quot; &quot;$REMOTE&quot; &quot;$LOCAL&quot; &quot;$MERGED&quot;
+</code></pre>
+
+<h3>Mercurial</h3>
+
+<p>Add the following text to your <code>.hgrc</code> file:</p>
+
+<pre><code>    [merge-patterns]
+    **.unity = unityyamlmerge
+    **.prefab = unityyamlmerge
+
+    [merge-tools]
+    unityyamlmerge.executable = &lt;path to UnityYAMLMerge&gt;
+    unityyamlmerge.args = merge -p --force $base $other $local $output
+    unityyamlmerge.checkprompt = True
+    unityyamlmerge.premerge = False
+    unityyamlmerge.binary = False
+</code></pre>
+
+<h3>SVN</h3>
+
+<p>Add the following to your <code>~/.subversion/config</code> file:</p>
+
+<pre><code>    [helpers]
+    merge-tool-cmd = &lt;path to UnityYAMLMerge&gt;
+</code></pre>
+
+<h3>TortoiseGit</h3>
+
+<ol>
+<li>Go to Preferences &gt; Diff Viewer &gt; Merge Tool and click the <strong>Advanced</strong> button.</li>
+<li>In the popup, type <code>.unity</code> in the extension field.</li>
+<li>In the <strong>External Program</strong> field type:</li>
+</ol>
+
+<pre><code>    &lt;path to UnityYAMLMerge&gt; merge -p %base %theirs %mine %merged
+</code></pre>
+
+<p>Then, follow the same procedure to add the <code>.prefab</code> extension.</p>
+
+<h3>PlasticSCM</h3>
+
+<ol>
+<li>Go to Preferences &gt; Merge Tools and click the <strong>Add</strong> button.</li>
+<li>Select <strong>External</strong> merge tool.</li>
+<li>Select <strong>Use with files that match the following pattern</strong>.</li>
+<li>Add the <code>.unity</code> extension.</li>
+<li>Enter the command:</li>
+</ol>
+
+<pre><code>    &lt;path to UnityYAMLMerge&gt; merge -p &quot;@basefile&quot; &quot;@sourcefile&quot;  &quot;@destinationfile&quot; &quot;@output&quot;
+</code></pre>
+
+<p>Then, follow the same procedure to add the <code>.prefab</code> extension.</p>
+
+<h3>SourceTree</h3>
+
+<ol>
+<li>Go to Tools &gt; Options &gt; Diff.</li>
+<li>Select <strong>Custom</strong> in the Merge Tool dropdown.</li>
+<li>Type the path to UnityYAMLMerge in the <strong>Merge Command</strong> field.</li>
+<li>Type <code>merge -p $BASE $REMOTE $LOCAL $MERGED</code> in the <strong>Arguments</strong> field.</li>
+</ol>
+
+<h2>Configuring mergerules.txt</h2>
+
+<p>To customize how UnityYAMLMerge merges files, configure the mergerules.txt file. This is available in the <code>Editor/Data/Tools</code> folder of your Unity installation.
+The various configuration options are as follows.</p>
+
+<h3>Arrays</h3>
+
+<p>The arrays configuration section tells UnityYAMLMerge to treat the specified path as an array; either as a “set” with a key value, or as a “plain” array without key values. The default for all arrays is to do a hybrid mode and try to match with some known heuristics.</p>
+
+<ul>
+<li>&lt;mode&gt; is one of “set” or “plain”</li>
+</ul>
+
+<h4>Example (as per default mergerules file)</h4>
+
+<pre><code>[arrays]
+set *.GameObject.m_Component *.fileID
+set *.Prefab.m_Modification.m_Modifications target.fileID target.guid propertyPath
+plain *.MeshRenderer.m_Materials
+plain *.Renderer.m_Materials
+</code></pre>
+
+<h3>Exclusions</h3>
+
+<p>The exclusions configuration section indicates which paths to exclude from merging. If both sides have been modified, they are then treated as a conflict and will show up for user input.</p>
+
+<ul>
+<li>&lt;mode&gt; is one of “include”, “exclude”, “includeIfContains”, “excludeIfContains”</li>
+</ul>
+
+<h4>Example (as per default mergerules file)</h4>
+
+<pre><code>[exclusions]
+exclude *.MeshRenderer.m_Materials.*
+exclude *.SpriteRenderer.m_Materials
+exclude *.SpriteRenderer.m_Color
+include *.ParticleSystem.InitialModule
+exclude *.ParticleSystem.*
+exclude *.ParticleSystem.InitialModule.*
+#excludeDepend *.MonoBehaviour m_Script ^m_
+excludeIfContains *.MonoBehaviour.* x y z
+excludeIfContains *.MonoBehaviour.* r g b
+</code></pre>
+
+<h3>Arguments</h3>
+
+<p>The <code>--nomappinginoneline</code> argument is similar to the <code>EditorSettings.serializeInlineMappingsOnOneLine</code> API in Unity. </p>
+
+<p>To disable single-line format, include this argument when you run the merge tool. When the <code>--nomappinginoneline</code> option is active, the tool attempts to split YAML data across multiple lines whenever a line exceeds 80 characters. </p>
+
+<p>This argument helps to maintain consistency between the Unity generated file and the mergetool generated file.</p>
+
+<h3>Comparisons</h3>
+
+<p>The comparisons section takes into account negligible differences between float values to ignore per user settings. When enabled, floating point comparison is done relatively to account for relative error. You can configure comparison in the following ways:</p>
+
+<ul>
+<li>“float” &lt;float value to compare&gt; (This sets epsilon to a default value close to machine epsilon)</li>
+<li>“float” &lt;float value to compare&gt; &lt;relative comparison value and absolute cutoff&gt;</li>
+<li>“float” &lt;float value to compare&gt; &lt;relative comparison value&gt; &lt;absolute comparison cutoff&gt;</li>
+</ul>
+
+<p>The relative comparison value determines epsilon and how comparison will scale with the size of the floats’ relative error. The absolute comparison cutoff determines at which point float comparison switches from absolute to relative from zero (on a graph).</p>
+
+<p>
+<strong>Note</strong>: Comparison values should be between float epsilon (~0.00000011921) and 1.0</p>
+
+<h4>Example</h4>
+
+<pre><code>[comparisons]
+float *.Transform.m_LocalPosition.x 0.0000005
+float *.Transform.m_LocalPosition.y 0.0000005
+float *.Transform.m_LocalPosition.z 0.0000005
+float *.Transform.m_LocalRotation.x 0.00005 0.001
+float *.Transform.m_LocalRotation.y
+float *.Transform.m_LocalRotation.z 0.00005 0.001
+float *.Transform.m_LocalRotation.w
+</code></pre>
+<!-- area:none -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="perForceIntegration.html"></a></span><div class="tip">Perforce Integration</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SafeMode.html"></a></span><div class="tip">Safe Mode</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: ShaderUtil</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">ShaderUtil</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEditor</p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Utility functions to assist with working with shaders from the editor.</p>
+              </div>
+              <div class="subsection">
+                <h3>Static Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="ShaderUtil-allowAsyncCompilation.html">allowAsyncCompilation</a></td><td class="desc">When true, asynchronous Shader compilation is allowed at the current call site.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil-anythingCompiling.html">anythingCompiling</a></td><td class="desc">When true, the Editor is compiling some Shaders asynchronously at the point of query.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil-hardwareSupportsRectRenderTexture.html">hardwareSupportsRectRenderTexture</a></td><td class="desc">Does the current hardware support render textues.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="ShaderUtil.ClearCachedData.html">ClearCachedData</a></td><td class="desc">Clears all internally-cached data that was generated for the given shader, such as errors and compilation info.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.ClearShaderMessages.html">ClearShaderMessages</a></td><td class="desc">Clear compile time messages for the given shader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.CompilePass.html">CompilePass</a></td><td class="desc">Request the Editor to compile the Shader Variant needed for the specific pass of the given Material.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.CreateShaderAsset.html">CreateShaderAsset</a></td><td class="desc">Creates a new Shader object from the provided source code string. You can use this method alongside the ScriptedImporter to create custom shader generation tools in the Editor.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetAllShaderInfo.html">GetAllShaderInfo</a></td><td class="desc">Returns an array of ShaderInfo of all available shaders. That includes built-in shaders.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetCallableShaderCount.html">GetCallableShaderCount</a></td><td class="desc">Returns the number of callable Shaders defined whitin a given RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetCallableShaderName.html">GetCallableShaderName</a></td><td class="desc">Returns the name of a user-defined callable Shader from within a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetCallableShaderParamSize.html">GetCallableShaderParamSize</a></td><td class="desc">Returns the parameter size of a user-defined callable Shader from within a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetComputeShaderMessageCount.html">GetComputeShaderMessageCount</a></td><td class="desc">Returns the number of errors and warnings generated by the Unity Shader Compiler for the given ComputeShader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetComputeShaderMessages.html">GetComputeShaderMessages</a></td><td class="desc">Returns each error and warning generated by the Unity Shader Compiler for the given ComputeShader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetCurrentCustomEditor.html">GetCurrentCustomEditor</a></td><td class="desc">Gets the current custom editor for the shader you pass in.Depending on the render pipeline asset assigned in your Graphics Settings, the custom editor can change if the shader has a different custom editor for one or multiple render pipeline assets.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetCustomEditorForRenderPipeline.html">GetCustomEditorForRenderPipeline</a></td><td class="desc">Gets the shader's custom editor class name for a specific render pipeline asset type.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetMissShaderCount.html">GetMissShaderCount</a></td><td class="desc">Returns the number of miss Shaders defined whitin a given RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetMissShaderName.html">GetMissShaderName</a></td><td class="desc">Returns the name of a user-defined miss Shader from within a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetMissShaderRayPayloadSize.html">GetMissShaderRayPayloadSize</a></td><td class="desc">Returns the ray payload size of a user-defined miss Shader from within a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetPassKeywords.html">GetPassKeywords</a></td><td class="desc">Gets the local shader keywords that are valid for a Pass within a particular shader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetPropertyCount.html">GetPropertyCount</a></td><td class="desc">Get the number of properties in Shader s.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetPropertyDescription.html">GetPropertyDescription</a></td><td class="desc">Get the description of the shader propery at index propertyIdx of Shader s.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetPropertyName.html">GetPropertyName</a></td><td class="desc">Get the name of the shader propery at index propertyIdx of Shader s.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetPropertyType.html">GetPropertyType</a></td><td class="desc">Get the ShaderProperyType of the shader propery at index propertyIdx of Shader s.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetRangeLimits.html">GetRangeLimits</a></td><td class="desc">Get Limits for a range property at index propertyIdx of Shader s.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetRayGenerationShaderCount.html">GetRayGenerationShaderCount</a></td><td class="desc">Returns the number of ray generation Shaders defined whitin a given RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetRayGenerationShaderName.html">GetRayGenerationShaderName</a></td><td class="desc">Returns the name of a user-defined ray generation Shader from within a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetRayTracingShaderMessageCount.html">GetRayTracingShaderMessageCount</a></td><td class="desc">Returns the number of errors and warnings generated by the Shader Compiler for the given RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetRayTracingShaderMessages.html">GetRayTracingShaderMessages</a></td><td class="desc">Returns each error and warning generated by the Shader Compiler for the given RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetShaderData.html">GetShaderData</a></td><td class="desc">Get the shader data for a specific shader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetShaderInfo.html">GetShaderInfo</a></td><td class="desc">Gets ShaderInfo for the given shader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetShaderMessageCount.html">GetShaderMessageCount</a></td><td class="desc">Returns the number of errors and warnings generated by the Unity Shader Compiler for the given Shader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetShaderMessages.html">GetShaderMessages</a></td><td class="desc">Returns each error and warning generated by the Unity Shader Compiler for the given Shader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetShaderPlatformKeywordsForBuildTarget.html">GetShaderPlatformKeywordsForBuildTarget</a></td><td class="desc">Gets the platform keywords for a shader, given a shader compiler platform, build target, and optional graphics tier. These platform keywords are necessary to properly compile a shader for a given target.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.GetTexDim.html">GetTexDim</a></td><td class="desc">Gets texture dimension of a shader property.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.HasProceduralInstancing.html">HasProceduralInstancing</a></td><td class="desc">Determines whether the specified Shader contains a valid Procedural Instancing variant.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.IsPassCompiled.html">IsPassCompiled</a></td><td class="desc">Checks if the Shader variant for the given pass in the Material has already been compiled.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.IsShaderPropertyHidden.html">IsShaderPropertyHidden</a></td><td class="desc">Returns true if the shader propery at index propertyIdx is hidden with the [HideInInspector] attribute in the shader code.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.IsShaderPropertyNonModifiableTexureProperty.html">IsShaderPropertyNonModifiableTexureProperty</a></td><td class="desc">Is the shader propery at index propertyIdx of Shader s a NonModifiableTextureProperty?</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.PassHasKeyword.html">PassHasKeyword</a></td><td class="desc">Checks whether a local shader keyword is valid for a Pass within a particular shader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.RegisterShader.html">RegisterShader</a></td><td class="desc">Register a user created shader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.RestoreAsyncCompilation.html">RestoreAsyncCompilation</a></td><td class="desc">Restores the previous Shader compilation mode in this CommandBuffer scope.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.SetAsyncCompilation.html">SetAsyncCompilation</a></td><td class="desc">Adds shader compilation mode command in the CommandBuffer.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.ShaderHasError.html">ShaderHasError</a></td><td class="desc">Checks if a shader has any compilation errors. Ignores warnings.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.ShaderHasWarnings.html">ShaderHasWarnings</a></td><td class="desc">Checks if a shader has any compilation warnings. Ignores errors.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.UpdateShaderAsset.html">UpdateShaderAsset</a></td><td class="desc">Replaces the existing source code in the specified shader with the source code in the supplied string.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

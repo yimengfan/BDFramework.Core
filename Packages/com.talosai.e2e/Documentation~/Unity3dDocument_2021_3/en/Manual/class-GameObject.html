@@ -1,0 +1,393 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: GameObject</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-GameObject.html">English</a></li>
+<li><a href="/cn/current/Manual/class-GameObject.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-GameObject.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-GameObject.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-GameObject.html">English</a></li>
+<li><a href="/cn/current/Manual/class-GameObject.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-GameObject.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-GameObject.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="ScriptingImportantClasses.html">Important Classes </a></li>
+<li>GameObject</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ScriptingImportantClasses.html"></a></span><div class="tip">Important Classes </div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-MonoBehaviour.html"></a></span><div class="tip">MonoBehaviour</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>GameObject</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/GameObject.html' title='Go to GameObject page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity’s <strong>GameObject</strong> class represents anything which can exist in a <strong><span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span></strong>.</p>
+
+<p>This page relates to <strong>scripting</strong> with Unity’s GameObject class. To learn about using GameObjects in the Scene and Hierarchy in the Unity Editor, see the <a href="GameObjects.html">GameObjects section of the user manual</a>. For an exhaustive reference of every member of the GameObject class, see the <a href="../ScriptReference/GameObject.html">GameObject script reference</a>.</p>
+
+<p>GameObjects are the building blocks for scenes in Unity, and act as a container for functional components which determine how the GameObject looks, and what the GameObject does.</p>
+
+<p>In scripting, the <a href="../ScriptReference/GameObject.html">GameObject class</a> provides a collection of methods which allow you to work with them in your code, including finding, making connections and sending messages between GameObjects, and adding or removing components attached to the GameObject, and setting values relating to their status within the scene.</p>
+
+<h2>Scene Status properties</h2>
+
+<p>You can use <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> to modify many properties related to a GameObject’s status in the scene. These typically correspond to the controls visible near the top of the <span class="tooltip"><strong>inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> to modify many properties related to a GameObject’s status in the scene. These typically correspond to the controls visible near the top of the <span class="tooltip"><strong>inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> when you have a GameObject selected in the Editor.</p>
+
+<p>They don’t relate to any particular component, and are visible in the inspector of a GameObject at the top, above the list of components.</p>
+
+<figure>
+<img src="../uploads/Main/GameObjectSceneStatusProperties.png" alt="A typical GameObject viewed in the Inspector. In this case, a directional light. The Scene status properties are outlined in red.">
+<figcaption>A typical GameObject viewed in the Inspector. In this case, a directional light. The Scene status properties are outlined in red.</figcaption>
+</figure>
+
+<p>All GameObjects share a set of controls at the top of the inspector relating to the GameObject’s status within the scene, and these can be controlled via the GameObject’s scripting API.</p>
+
+<p>If you want a quick list of all the available API for the GameObject class, see the <a href="https://docs.unity3d.com/ScriptReference/GameObject.html">GameObject Script Reference</a>.</p>
+
+<h2>Active Status</h2>
+
+<figure>
+<img src="../uploads/Main/GOInspectorActiveSetting.png" alt="The Active status of a GameObject">
+<figcaption>The Active status of a GameObject</figcaption>
+</figure>
+
+<p>GameObjects are active by default, but can be deactivated, which turns off all components attached to the GameObject. This generally means it will become invisible, and not receive any of the normal callbacks or events such as <a href="../ScriptReference/MonoBehaviour.Update.html"><code>Update</code></a> or <a href="../ScriptReference/MonoBehaviour.FixedUpdate.html"><code>FixedUpdate</code></a>.</p>
+
+<p>The GameObject’s <strong>active</strong> status is represented by the checkbox to the left of the GameObject’s name. You can control this using <a href="../ScriptReference/GameObject.SetActive.html"><code>GameObject.SetActive</code></a>.</p>
+
+<p>You can also use <a href="../ScriptReference/GameObject-activeSelf.html"><code>GameObject.activeSelf</code></a> to read the current active state of a GameObject. Use <a href="../ScriptReference/GameObject-activeInHierarchy.html"><code>GameObject.activeInHierarchy</code></a> to read whether the GameObject is actually active in the scene. <a href="../ScriptReference/GameObject-activeInHierarchy.html"><code>GameObject.activeInHierarchy</code></a> is necessary because whether a GameObject is actually active is determined by its own active state and the active state of all of its parents. If any of its parents aren’t active, then it’s not active despite its own active setting.</p>
+
+<h2>Static Status</h2>
+
+<figure>
+<img src="../uploads/Main/GOInspectorStaticSetting.png" alt="The Static status of a GameObject">
+<figcaption>The Static status of a GameObject</figcaption>
+</figure>
+
+<p>Some of Unity’s systems, such as <span class="tooltip"><strong>Global Illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span>, Occlusion, Batching, Navigation, and <span class="tooltip"><strong>Reflection Probes</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html" href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span>, Occlusion, Batching, Navigation, and <span class="tooltip"><strong>Reflection Probes</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span>, rely on the static status of a GameObject. You can control which of Unity’s systems consider the GameObject to be <strong>static</strong> by using <a href="../ScriptReference/GameObjectUtility.SetStaticEditorFlags.html"><code>GameObjectUtility.SetStaticEditorFlags</code></a>. Read more about <a href="https://docs.unity3d.com/Manual/StaticObjects.html">Static GameObjects here</a>.</p>
+
+<h2>Tags and Layers</h2>
+
+<figure>
+<img src="../uploads/Main/GOInspectorTagsAndLayers.png" alt="The Tag and Layer fields of a GameObject">
+<figcaption>The Tag and Layer fields of a GameObject</figcaption>
+</figure>
+
+<p>
+<strong>Tags</strong> provide a way of marking and identifying types of GameObject in your scene and <strong>Layers</strong> provide a similar but distinct way of including or excluding groups of GameObjects from certain built-in actions, such as <a href="class-MeshRenderer.html">rendering</a> or <a href="CollidersOverview.html">physics collisions</a>.</p>
+
+<p>For more information about how to use Tags and Layers in the editor, see the main user manual pages for <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Tags.html">Tags</a><span class="tooltiptext">A reference word which you can assign to one or more GameObjects to help you identify GameObjects for scripting purposes. For example, you might define and “Edible” Tag for any item the player can eat in your game. <a href="Tags.html" href="Tags.html">Tags</a><span class="tooltiptext">A reference word which you can assign to one or more GameObjects to help you identify GameObjects for scripting purposes. For example, you might define and “Edible” Tag for any item the player can eat in your game. <a href="Tags.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Tag" aria-label="Go to glossary anchor for Tag">Glossary</a></span></span></span> and <span class="tooltip"><a href="Layers.html">Layers</a><span class="tooltiptext">Layers in Unity can be used to selectively opt groups of GameObjects in or out of certain processes or calculations. This includes camera rendering, lighting, physics collisions, or custom calculations in your own code. <a href="Layers.html" href="Glossary.html#Tag" aria-label="Go to glossary anchor for Tag">Glossary</a></span></span></span> and <span class="tooltip"><a href="Layers.html">Layers</a><span class="tooltiptext">Layers in Unity can be used to selectively opt groups of GameObjects in or out of certain processes or calculations. This includes camera rendering, lighting, physics collisions, or custom calculations in your own code. <a href="Layers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Layer" aria-label="Go to glossary anchor for Layer">Glossary</a></span></span></span>.</p>
+
+<p>You can modify tag and layer values via script using the <a href="../ScriptReference/GameObject-tag.html"><code>GameObject.tag</code></a> and <a href="../ScriptReference/GameObject-layer.html"><code>GameObject.layer</code></a> properties. You can also check a GameObject’s tag efficiently by using the <a href="../ScriptReference/GameObject.CompareTag.html"><code>CompareTag</code></a> method, which includes validation of whether the tag exists, and doesn’t cause any memory allocation.</p>
+
+<h2>Adding and Removing components</h2>
+
+<p>You can add or remove components at runtime, which can be useful for procedurally creating GameObjects, or modifying how a GameObject behaves. Note, you can also <a href="../ScriptReference/Behaviour-enabled.html"><code>enable</code> or <code>disable</code></a> script components, and some types of built-in component, via script without destroying them.</p>
+
+<p>The best way to add a component at runtime is to use <a href="../ScriptReference/GameObject.AddComponent.html"><code>AddComponent&lt;Type&gt;</code></a>, specifying the type of component within angle brackets as shown. To remove a component, you must use <a href="../ScriptReference/Object.Destroy.html"><code>Object.Destroy</code></a> method on the component itself.</p>
+
+<p><a name="AccessingComponents" aria-hidden="true"></a></p>
+
+<h2>Accessing components</h2>
+
+<p>The simplest case is where a script on a GameObject needs to access another Component attached to the same GameObject (remember, other scripts attached to a GameObject are also Components themselves). To do this, the first step is to get a reference to the Component instance you want to work with. This is done with the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Component.GetComponent.html">GetComponent</a> method. Typically, you want to assign the Component object to a variable, which is done in using the following code. In this example the script is getting a reference to a <span class="tooltip"><strong>Rigidbody</strong><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a href="class-Rigidbody.html" href="../ScriptReference/Component.GetComponent.html">GetComponent</a> method. Typically, you want to assign the Component object to a variable, which is done in using the following code. In this example the script is getting a reference to a <span class="tooltip"><strong>Rigidbody</strong><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a href="class-Rigidbody.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span> component on the same GameObject:</p>
+
+<pre><code>void Start ()
+{
+    Rigidbody rb = GetComponent&lt;Rigidbody&gt;();
+}
+</code></pre>
+
+<p>Once you have a reference to a Component instance, you can set the values of its properties much as you would in the Inspector:</p>
+
+<pre><code>void Start ()
+{
+    Rigidbody rb = GetComponent&lt;Rigidbody&gt;();
+
+    // Change the mass of the object's Rigidbody.
+    rb.mass = 10f;
+}
+</code></pre>
+
+<p>You can also call methods on the Component reference, for example:</p>
+
+<pre><code>void Start ()
+{
+    Rigidbody rb = GetComponent&lt;Rigidbody&gt;();
+
+    // Add a force to the Rigidbody.
+    rb.AddForce(Vector3.up * 10f);
+}
+</code></pre>
+
+<p>Note: you can have multiple custom scripts attached to the same GameObject. If you need to access one script from another, you can use GetComponent as usual and just use the name of the script class (or the filename) to specify the Component type you want.</p>
+
+<p>If you attempt to retrieve a Component type that hasn’t actually been added to the GameObject then GetComponent will return null; you will get a null reference error at runtime if you try to change any values on a null object.</p>
+
+<p><a name="AccessingOtherGameObjects" aria-hidden="true"></a></p>
+
+<h2>Accessing components on other GameObjects</h2>
+
+<p>Although they sometimes operate in isolation, it’s common for scripts to keep track of other GameObjects, or more commonly, components on other GameObjects. For example, in a cooking game, a chef might need to know the position of the stove. Unity provides a number of different ways to retrieve other objects, each appropriate to certain situations.</p>
+
+<h3>Linking to GameObjects with variables in the inspector</h3>
+
+<p>The most straightforward way to find a related GameObject is to add a public GameObject variable to the script:</p>
+
+<pre><code>public class Chef : MonoBehaviour
+{
+    public GameObject stove;
+
+    // Other variables and functions...
+}
+</code></pre>
+
+<p>This variable will be visible in the Inspector, as a <strong>GameObject field</strong>.</p>
+
+<p>You can now drag an object from the scene or Hierarchy panel onto this variable to assign it.</p>
+
+<figure>
+<img src="../uploads/Main/PrefabDragIntoField.png" alt="Dragging a Prefab from the Project window into a GameObject field in the Inspector window">
+<figcaption>Dragging a Prefab from the Project window into a GameObject field in the Inspector window</figcaption>
+</figure>
+
+<p>The GetComponent function and Component access variables are available for this object as with any other, so you can use code like the following:</p>
+
+<pre><code>public class Chef : MonoBehaviour {
+
+    public GameObject stove;
+
+    void Start() {
+        // Start the chef 2 units in front of the stove.
+        transform.position = stove.transform.position + Vector3.forward * 2f;
+    }
+}
+</code></pre>
+
+<p>Additionally, if you declare a public variable of a Component type in your script, you can drag any GameObject that has that Component attached onto it. This accesses the Component directly rather than the GameObject itself.</p>
+
+<pre><code>public Transform playerTransform;
+</code></pre>
+
+<p>Linking objects together with variables is most useful when you are dealing with individual objects that have permanent connections. You can use an array variable to link several objects of the same type, but the connections must still be made in the Unity editor rather than at runtime. It’s often convenient to locate objects at runtime and Unity provides two basic ways to do this, as described below.</p>
+
+<h3>Finding child GameObjects</h3>
+
+<p>Sometimes, a game Scene makes use of a number of GameObjects of the same type, such as collectibles, waypoints and obstacles. These might need to be tracked by a particular script that supervises or reacts to them (for example, all waypoints might need to be available to a pathfinding script). Using variables to link these GameObjects is a possibility but it makes the design process tedious if each new waypoint has to be dragged to a variable on a script. Likewise, if a waypoint is deleted, then it’s a nuisance to have to remove the variable reference to the missing GameObject. In cases like this, it is often better to manage a set of GameObjects by making them all children of one parent GameObject. The child GameObjects can be retrieved using the parent’s <span class="tooltip"><strong>Transform component</strong><span class="tooltiptext">A Transform component determines the Position, Rotation, and Scale of each object in the scene. Every GameObject has a Transform. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Transform.html" href="class-Transform.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TransformComponent" aria-label="Go to glossary anchor for TransformComponent">Glossary</a></span></span></span> (because all GameObjects implicitly have a Transform):</p>
+
+<pre><code>using UnityEngine;
+
+public class WaypointManager : MonoBehaviour {
+    public Transform[] waypoints;
+
+    void Start()
+    {
+        waypoints = new Transform[transform.childCount];
+        int i = 0;
+
+        foreach (Transform t in transform)
+        {
+            waypoints[i++] = t;
+        }
+    }
+}
+</code></pre>
+
+<p>You can also locate a specific child object by name using the <a href="../ScriptReference/Transform.Find.html">Transform.Find</a> method:
+<code>
+transform.Find(&quot;Frying Pan&quot;);
+</code>
+</p>
+
+<p>This can be useful when a GameObject has a child GameObject that can be added and removed during gameplay. A tool or utensil that can be picked up and put down during gameplay is a good example of this.</p>
+
+<h2>Sending and Broadcasting messages</h2>
+
+<p>While editing your project you can set up references between GameObjects in the Inspector. However, sometimes it’s impossible to set up these in advance (for example, finding the nearest item to a character in your game, or making references to GameObjects that were instantiated after the Scene loaded). In these cases, you can find references and send messages between GameObjects at runtime.</p>
+
+<p>
+<a href="../ScriptReference/GameObject.BroadcastMessage.html"><code>BroadcastMessage</code></a> allows you to send out a call to a named method, without being specific about where that method should be implemented. You can use it to call a named method on every MonoBehaviour on a particular GameObject or any of its children. You can optionally choose to enforce that there must be at least one receiver (or an error is generated).</p>
+
+<p>
+<a href="../ScriptReference/GameObject.SendMessage.html"><code>SendMessage</code></a> is a little more specific, and only sends the call to a named method on the GameObject itself, and not its children.</p>
+
+<p>
+<a href="../ScriptReference/GameObject.SendMessageUpwards.html"><code>SendMessageUpwards</code></a> is similar, but sends out the call to a named method on the GameObject and all its <em>parents</em>.</p>
+
+<h2>Finding GameObjects by Name or Tag</h2>
+
+<p>It’s always possible to locate GameObjects anywhere in the Scene hierarchy as long as you have some information to identify them. Individual objects can be retrieved by name using the <a href="../ScriptReference/GameObject.Find.html">GameObject.Find</a> function:</p>
+
+<pre><code>GameObject player;
+
+void Start()
+{
+    player = GameObject.Find(&quot;MainHeroCharacter&quot;);
+}
+</code></pre>
+
+<p>An object or a collection of objects can also be located by their tag using the <a href="../ScriptReference/GameObject.FindWithTag.html">GameObject.FindWithTag</a> and <a href="../ScriptReference/GameObject.FindGameObjectsWithTag.html">GameObject.FindGameObjectsWithTag</a> methods.</p>
+
+<p>For example, in a cooking game with one chef character, and multiple stoves in the kitchen (each tagged “Stove”):</p>
+
+<pre><code>GameObject chef;
+GameObject[] stoves;
+
+void Start()
+{
+    chef = GameObject.FindWithTag(&quot;Chef&quot;);
+    stoves = GameObject.FindGameObjectsWithTag(&quot;Stove&quot;);
+}
+</code></pre>
+
+<h2>Creating and Destroying GameObjects</h2>
+
+<p>You can create and destroy GameObjects while your project is running. In Unity, a GameObject can be created using the <a href="../ScriptReference/Object.Instantiate.html">Instantiate</a> method which makes a new copy of an existing object.</p>
+
+<p>For a full description and examples of how to instantiate GameObjects, see <a href="InstantiatingPrefabs.html">Instantiating Prefabs at Runtime</a>.</p>
+
+<p>The <a href="../ScriptReference/Object.Destroy.html">Destroy</a> method destroys an object after the frame update has finished or optionally after a short time delay:</p>
+
+<pre><code>void OnCollisionEnter(Collision otherObj) {
+    if (otherObj.gameObject.tag == &quot;Garbage can&quot;) {
+        Destroy(gameObject, 0.5f);
+    }
+}
+
+</code></pre>
+
+<p>Note that the Destroy function can destroy individual components and not affect the GameObject itself. A common mistake is to write <code>this</code> and assume it destroys the GameObject the script is attached to:</p>
+
+<pre><code> Destroy(this);
+</code></pre>
+
+<p>
+<code>this</code> represents the script, and not the GameObject. It will actually just destroy the script component that calls it and leave the GameObject intact but with the script component removed.</p>
+
+<h2>Primitives</h2>
+
+<p>The GameObject class offers script-based alternatives to the options available in Unity’s GameObject menu that allows you to create <a href="PrimitiveObjects.html">primitive objects</a>.</p>
+
+<p>To create instances of Unity’s built-in primitives, use <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/GameObject.CreatePrimitive.html">GameObject.CreatePrimitive</a>, which instantiates a primitive of the type that you specify. The available primitive types are <a href="../ScriptReference/PrimitiveType.Sphere.html">Sphere</a>, <a href="../ScriptReference/PrimitiveType.Capsule.html">Capsule</a>, <a href="../ScriptReference/PrimitiveType.Cylinder.html">Cylinder</a>, <a href="../ScriptReference/PrimitiveType.Cube.html">Cube</a>, <a href="../ScriptReference/PrimitiveType.Plane.html">Plane</a> and <span class="tooltip"><a href="../ScriptReference/PrimitiveType.Quad.html">Quad</a><span class="tooltiptext">A primitive object that resembles a plane but its edges are only one unit long, it uses only 4 vertices, and the surface is oriented in the XY plane of the local coordinate space. <a href="PrimitiveObjects.html" href="../ScriptReference/GameObject.CreatePrimitive.html">GameObject.CreatePrimitive</a>, which instantiates a primitive of the type that you specify. The available primitive types are <a href="../ScriptReference/PrimitiveType.Sphere.html">Sphere</a>, <a href="../ScriptReference/PrimitiveType.Capsule.html">Capsule</a>, <a href="../ScriptReference/PrimitiveType.Cylinder.html">Cylinder</a>, <a href="../ScriptReference/PrimitiveType.Cube.html">Cube</a>, <a href="../ScriptReference/PrimitiveType.Plane.html">Plane</a> and <span class="tooltip"><a href="../ScriptReference/PrimitiveType.Quad.html">Quad</a><span class="tooltiptext">A primitive object that resembles a plane but its edges are only one unit long, it uses only 4 vertices, and the surface is oriented in the XY plane of the local coordinate space. <a href="PrimitiveObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Quad" aria-label="Go to glossary anchor for Quad">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/AllPrimitives.png" alt="The Primitive shapes available in Unitys GameObject menu">
+<figcaption>The Primitive shapes available in Unity’s GameObject menu</figcaption>
+</figure>
+
+<p><span class="search-words">GameObject</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ScriptingImportantClasses.html"></a></span><div class="tip">Important Classes </div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-MonoBehaviour.html"></a></span><div class="tip">MonoBehaviour</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

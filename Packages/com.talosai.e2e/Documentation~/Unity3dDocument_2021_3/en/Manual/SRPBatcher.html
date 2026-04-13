@@ -1,0 +1,368 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Scriptable Render Pipeline Batcher</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SRPBatcher.html">English</a></li>
+<li><a href="/cn/current/Manual/SRPBatcher.html">中文</a></li>
+<li><a href="/ja/current/Manual/SRPBatcher.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SRPBatcher.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SRPBatcher.html">English</a></li>
+<li><a href="/cn/current/Manual/SRPBatcher.html">中文</a></li>
+<li><a href="/ja/current/Manual/SRPBatcher.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SRPBatcher.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="graphics-performance-profiling.html">Graphics performance and profiling</a></li>
+<li><a href="optimizing-draw-calls.html">Optimizing draw calls</a></li>
+<li>Scriptable Render Pipeline Batcher</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="combining-meshes.html"></a></span><div class="tip">Manually combining meshes</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="RenderingStatistics.html"></a></span><div class="tip">The Rendering Statistics window</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Scriptable Render Pipeline Batcher</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Scriptable <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> (SRP) Batcher is a <a href="optimizing-draw-calls.html">draw call optimization</a> that significantly improves performance for applications that use an SRP. The SRP Batcher reduces the CPU time Unity requires to prepare and dispatch draw calls for materials that use the same <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> (SRP) Batcher is a <a href="optimizing-draw-calls.html">draw call optimization</a> that significantly improves performance for applications that use an SRP. The SRP Batcher reduces the CPU time Unity requires to prepare and dispatch draw calls for materials that use the same <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> variant. </p>
+
+<figure>
+<img src="../uploads/Main/SRPBatcher.png" alt="The Scriptable Render Pipeline (SRP) Batcher reduces the CPU time Unity requires to render scenes with many materials that use the same shader variant.">
+<figcaption>The Scriptable Render Pipeline (SRP) Batcher reduces the CPU time Unity requires to render scenes with many materials that use the same shader variant.</figcaption>
+</figure>
+
+<h2>Requirements and compatibility</h2>
+
+<p>This section includes information about the render pipeline compatibility of the SRP Batcher.</p>
+
+<h3>Render pipeline compatibility</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>Universal Render Pipeline (URP)</strong></th>
+	<th style="text-align:left;"><strong>High Definition Render Pipeline (HDRP)</strong></th>
+	<th style="text-align:left;"><strong>Custom Scriptable Render Pipeline (SRP)</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>SRP Batcher</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="gameobject-compatibility" aria-hidden="true"></a></p>
+
+<h3>GameObject compatibility</h3>
+
+<p>In any given <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, some <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, some <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> are compatible with the SRP Batcher, and some aren’t. Compatible GameObjects use the SRP Batcher code path, and non-compatible GameObjects use the standard SRP code path. For more information, see <a href="#how-the-srp-batcher-works">How the SRP Batcher works</a>.</p>
+
+<p>A GameObject must meet the following requirements to be compatible with the SRP Batcher code path:</p>
+
+<ul>
+<li>The GameObject must contain either a <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> or a skinned mesh. It can’t be a particle.</li>
+<li>The GameObject mustn’t use <a href="../ScriptReference/MaterialPropertyBlock.html">MaterialPropertyBlocks</a>.</li>
+<li>The shader that the GameObject uses must be compatible with the SRP Batcher. For more information, see <a href="#shader-compatibility">Shader compatibility</a>.</li>
+</ul>
+
+<p><a name="shader-compatibility" aria-hidden="true"></a></p>
+
+<h3>Shader compatibility</h3>
+
+<p>All lit and unlit shaders in the High Definition Render Pipeline (HDRP) and the Universal Render Pipeline (URP) fit this requirement (except for the particle versions of these shaders).</p>
+
+<p>For a custom shader to be compatible with the SRP Batcher it must meet the following requirements:</p>
+
+<ul>
+<li>The shader must declare all built-in engine properties in a single constant buffer named <code>UnityPerDraw</code>. For example, <code>unity_ObjectToWorld</code>, or <code>unity_SHAr</code>.</li>
+<li>The shader must declare all material properties in a single constant buffer named <code>UnityPerMaterial</code>.</li>
+</ul>
+
+<p>You can check the compatibility status of a shader in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> panel. </p>
+
+<figure>
+<img src="../uploads/Main/SRP_batcher_shader_compatibility.png" alt="You can check the compatibility of your shaders in the Inspector panel for the specific shader.">
+<figcaption>You can check the compatibility of your shaders in the Inspector panel for the specific shader.</figcaption>
+</figure>
+
+<h2>Using the SRP Batcher</h2>
+
+<p>This section contains information on how to use the SRP Batcher in Unity’s pre-built Scriptable Render Pipelines.</p>
+
+<h3>Using the SRP Batcher in URP</h3>
+
+<p>To activate the SRP Batcher in URP: </p>
+
+<ol>
+<li>In the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, select the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.1/manual/universalrp-asset.html">URP Asset</a>.</li>
+<li>In the Inspector for the URP asset, enable <strong>SRP Batcher</strong>. If this option is not visible, follow the instructions below.</li>
+</ol>
+
+<blockquote>
+<p>
+<strong>Note</strong>: If assets or shaders in a project are not optimized for use with the SRP Batcher, low performance devices might be more performant when you disable the SRP Batcher.</p>
+</blockquote>
+
+<h3>How to show Additional Properties for the URP Asset</h3>
+
+<p>Unity doesn’t show certain advanced properties in the URP Asset by default. To see all available properties:</p>
+
+<ul>
+<li>In the URP Asset, in any section, click the vertical ellipsis icon (⋮) and select <strong>Show Additional Properties</strong>.</li>
+</ul>
+
+<p><img src="../uploads/Main/show-additional-properties.png" alt="Show Additional Properties"></p>
+
+<p>Unity shows all available properties in the current section.</p>
+
+<p>To show all additional properties in all sections:</p>
+
+<ol>
+<li>Click the vertical ellipsis icon and select <strong>Show All Additional Properties</strong>. Unity opens the <strong>Core Render Pipeline</strong> section in the <strong>Preferences</strong> window.</li>
+<li>In the property <strong>Additional Properties &gt; Visibility</strong>, select <strong>All Visible</strong>.</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/show-all-additional-properties.png" alt="Additional Properties &gt; Visibility &gt; All Visible">
+<figcaption>Additional Properties &gt; Visibility &gt; All Visible</figcaption>
+</figure>
+
+<h3>Using the SRP Batcher in HDRP</h3>
+
+<p>When you use HDRP, Unity enables the SRP Batcher by default. Disabling the SRP Batcher isn’t recommended. However, you can temporarily disable the SRP Batcher for debugging purposes.</p>
+
+<p>To enable and disable the SRP Batcher at build time using the Editor:</p>
+
+<ol>
+<li>In the Project window, select the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest/index.html?subfolder=/manual/HDRP-Asset.html">HDRP Asset</a>.</li>
+<li>In the Inspector for the asset, enter <a href="InspectorOptions.html">Debug mode</a>. In Debug mode, you can see the properties of the HDRP Asset, including the SRP Batcher property.</li>
+<li>Select <strong>Enable</strong> <strong>SRP Batcher</strong> to enable or disable the SRP Batcher.</li>
+</ol>
+
+<p>To enable or disable the SRP Batcher at runtime, toggle the following global variable in your C# code:</p>
+
+<pre><code>GraphicsSettings.useScriptableRenderPipelineBatching = true;
+</code></pre>
+
+<p><a name="how-the-srp-batcher-works" aria-hidden="true"></a></p>
+
+<h2>How the SRP Batcher works</h2>
+
+<p>The traditional way to optimize draw calls is to reduce the number of them. Instead, the SRP Batcher reduces render-state changes between draw calls. To do this, the SRP Batcher combines a sequence of <code>bind</code> and <code>draw</code> GPU commands. Each sequence of commands is called an SRP batch.</p>
+
+<figure>
+<img src="../uploads/Main/SROShaderPass.png" alt="The batching of bind and draw commands reduces the GPU setup between draw calls.">
+<figcaption>The batching of bind and draw commands reduces the GPU setup between draw calls.</figcaption>
+</figure>
+
+<p>To achieve optimal performance for your rendering, each SRP batch should contain as many <code>bind</code> and <code>draw</code> commands as possible. To achieve this, use as few shader variants as possible. You can still use as many different materials with the same shader as you want.</p>
+
+<p>When Unity detects a new material during the render loop, the CPU collects all properties and binds them to the GPU in constant buffers. The number of GPU buffers depends on how the shader declares its constant buffers. </p>
+
+<p>The SRP Batcher is a low-level render loop that makes material data persist in GPU memory. If the material content doesn’t change, theSRP Batcher doesn’t make any render-state changes. Instead, the SRP Batcher uses a dedicated code path to update the Unity Engine properties in a large GPU buffer, like this:</p>
+
+<figure>
+<img src="../uploads/Main/SRP_Batcher_loop.png" alt="The SRP Batcher rendering workflow. The SRP Batcher uses a dedicated code path to update the Unity Engine properties in a large GPU buffer.">
+<figcaption>The SRP Batcher rendering workflow. The SRP Batcher uses a dedicated code path to update the Unity Engine properties in a large GPU buffer.</figcaption>
+</figure>
+
+<p>Here, the CPU only handles the Unity Engine properties, labeled <strong>Per Object large buffer</strong> in the above diagram. All materials have persistent constant buffers located in GPU memory, which are ready to use. This speeds up rendering because:</p>
+
+<ul>
+<li>All material content now persists in GPU memory.</li>
+<li>Dedicated code manages a large per-object GPU constant buffer for all per-object properties.</li>
+</ul>
+
+<p><a name="intentionally-removing-compatibility" aria-hidden="true"></a></p>
+
+<h3>Intentionally removing SRP Batcher compatibility for GameObjects</h3>
+
+<p>In some rare cases, you might want to intentionally make particular GameObjects incompatible with the SRP Batcher. For example, if you want to use <a href="GPUInstancing.html">GPU instancing</a>, which isn’t compatible with the SRP Batcher. If you want to render many identical meshes with the exact same material, GPU instancing can be more efficient than the SRP Batcher. To use GPU instancing, you must either:</p>
+
+<ul>
+<li>Use <a href="../ScriptReference/Graphics.DrawMeshInstanced.html">Graphics.DrawMeshInstanced</a>.</li>
+<li>Manually remove SRP Batcher compatibility and enable GPU instancing for the material.</li>
+</ul>
+
+<p>There are two ways to remove compatibility with the SRP Batcher from a GameObject:</p>
+
+<ul>
+<li>Make the shader incompatible.</li>
+<li>Make the renderer incompatible.</li>
+</ul>
+
+<p>
+<strong>Tip</strong>: If you use GPU instancing instead of the SRP Batcher, use the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html">Profiler</a><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a href="Profiler.html" href="Profiler.html">Profiler</a><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> to make sure that GPU instancing is more efficient for your application than the SRP Batcher.</p>
+
+<h4>Removing shader compatibility</h4>
+
+<p>You can make both hand-written and Shader Graph shaders incompatible with the SRP Batcher. However, for Shader Graph shaders, if you change and recompile the Shader Graph often, it’s simpler to make the <a href="#removing-renderer-compatibility">renderer incompatible</a> instead. </p>
+
+<p>To make a Unity shader incompatible with the SRP Batcher, you need to make changes to the shader source file:</p>
+
+<ol>
+<li>For hand-written shaders, open the shader source file. For Shader Graph shaders, copy the Shader Graph’s compiled shader source code into a new shader source file. Use the new shader source file in your application instead of the Shader Graph.</li>
+<li>Add a new <a href="SL-Properties.html">material property</a> declaration into the shader’s <code>Properties</code> block. Don’t declare the new material property in the <code>UnityPerMaterial</code> constant buffer.</li>
+</ol>
+
+<p>The material property doesn’t need to do anything; just having a material property that doesn’t exist in the <code>UnityPerMaterial</code> constant buffer makes the shader incompatible with the SRP Batcher.</p>
+
+<p>
+<strong>Warning</strong>: If you use a Shader Graph, be aware that every time you edit and recompile the Shader Graph, you must repeat this process.</p>
+
+<p><a name="removing-renderer-compatibility" aria-hidden="true"></a></p>
+
+<h4>Removing renderer compatibility</h4>
+
+<p>You can make individual renderers incompatible with the SRP Batcher. To do this, add a <code>MaterialPropertyBlock</code> to the renderer.</p>
+
+<h2>Profiling the SRP Batcher in the Unity Frame Debugger</h2>
+
+<p>You can check the status of SRP batches in the <a href="FrameDebugger.html">Frame Debugger</a> window. Each SRP Batch displays how many draw calls Unity used, which keywords Unity attached to the shader, and the reason why Unity didn’t batch that draw call with the previous one.</p>
+
+<p>To check the status of SRP Batcher batches:</p>
+
+<ol>
+<li>In the Editor, open the Frame Debugger (menu: <strong>Window</strong> &gt; <strong>Analysis</strong> &gt; <strong>Frame Debugger</strong>).</li>
+<li>In the Frame Debugger, go to <strong>Render Camera</strong> &gt; <strong>Render Opaques</strong>.</li>
+<li>Expand the <strong>RenderLoopNewBatcher. Draw</strong> list.</li>
+<li>Select on the <strong>SRP Batch</strong> you want to inspect.</li>
+</ol>
+
+<p>In the example below, the reason is: <strong>Nodes have different shaders</strong>. This means that the shader for that SRP batch is different to the one in the previous SRP batch. Because the SRP Batcher used a different shader, the SRP Batcher created a new batch. If several SRP batches have a low number of draw calls, it often means the project uses too many shader variants.</p>
+
+<figure>
+<img src="../uploads/Main/SRP_Batcher_batch_information.png" alt="In the Frame Debugger window, you can find details about individual SRP batches, including why the SRP Batcher created a new SRP batch instead of continuing the existing one.">
+<figcaption>In the Frame Debugger window, you can find details about individual SRP batches, including why the SRP Batcher created a new SRP batch instead of continuing the existing one.</figcaption>
+</figure>
+
+<p>If you write your own Scriptable Render Pipeline, instead of using either the Universal Render Pipeline or the High Definition Render Pipeline, try to write a generic multi-purpose shader with a minimal number of keywords. This is optimal because you can use as many material properties as you want.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="combining-meshes.html"></a></span><div class="tip">Manually combining meshes</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="RenderingStatistics.html"></a></span><div class="tip">The Rendering Statistics window</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

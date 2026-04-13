@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Accessing shader properties in Cg/HLSL</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-PropertiesInPrograms.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-PropertiesInPrograms.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-PropertiesInPrograms.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-PropertiesInPrograms.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-PropertiesInPrograms.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-PropertiesInPrograms.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-PropertiesInPrograms.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-PropertiesInPrograms.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-writing.html">Writing shaders</a></li>
+<li><a href="SL-ShaderPrograms.html">HLSL in Unity</a></li>
+<li>Accessing shader properties in Cg/HLSL</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-ShaderSemantics.html"></a></span><div class="tip">Shader semantics</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-VertexProgramInputs.html"></a></span><div class="tip">Providing vertex data to vertex programs</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Accessing shader properties in Cg/HLSL</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Shader declares Material properties in a <a href="SL-Properties.html">Properties</a> block. If you want to access some of those properties in a <a href="SL-ShaderPrograms.html">shader program</a>, you need to declare a Cg/HLSL variable with the same name and a matching type.</p>
+
+<p>For example these <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> properties:</p>
+
+<pre><code>_MyColor (&quot;Some Color&quot;, Color) = (1,1,1,1) 
+_MyVector (&quot;Some Vector&quot;, Vector) = (0,0,0,0) 
+_MyFloat (&quot;My float&quot;, Float) = 0.5 
+_MyTexture (&quot;Texture&quot;, 2D) = &quot;white&quot; {} 
+_MyCubemap (&quot;Cubemap&quot;, CUBE) = &quot;&quot; {} 
+</code></pre>
+
+<p>would be declared for access in Cg/HLSL code as:</p>
+
+<pre><code>fixed4 _MyColor; // low precision type is usually enough for colors
+float4 _MyVector;
+float _MyFloat; 
+sampler2D _MyTexture;
+samplerCUBE _MyCubemap;
+</code></pre>
+
+<p>Cg/HLSL can also accept <strong>uniform</strong> keyword, but it is not necessary:</p>
+
+<pre><code>uniform float4 _MyColor;
+</code></pre>
+
+<p>Property types in <span class="tooltip"><strong>ShaderLab</strong><span class="tooltiptext">Unity’s language for defining the structure of Shader objects. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-Shader.html" href="SL-Shader.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span> map to Cg/HLSL variable types this way:</p>
+
+<ul>
+<li>Color and Vector properties map to <strong>float4</strong>, <strong>half4</strong> or <strong>fixed4</strong> variables.</li>
+<li>Range and Float properties map to <strong>float</strong>, <strong>half</strong> or <strong>fixed</strong> variables.</li>
+<li>Texture properties map to <strong>sampler2D</strong> variables for regular (2D) textures; <span class="tooltip"><strong>Cubemaps</strong><span class="tooltiptext">A collection of six square textures that can represent the reflections in an environment or the skybox drawn behind your geometry. The six squares form the faces of an imaginary cube that surrounds an object; each face represents the view along the directions of the world axes (up, down, left, right, forward and back). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Cubemap.html" href="class-Cubemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Cubemap" aria-label="Go to glossary anchor for Cubemap">Glossary</a></span></span></span> map to <strong>samplerCUBE</strong>; and 3D textures map to <strong>sampler3D</strong>.</li>
+</ul>
+
+<h2>How property values are provided to shaders</h2>
+
+<p>Shader property values are found and provided to shaders from these places:</p>
+
+<ul>
+<li>Per-Renderer values set in <a href="../ScriptReference/MaterialPropertyBlock.html">MaterialPropertyBlock</a>. This is typically “per-instance” data (e.g. customized tint color for a lot of objects that all share the same material).</li>
+<li>Values set in the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Material.html">Material</a><span class="tooltiptext">An asset that defines how a surface should be rendered. <a href="class-Material.html" href="class-Material.html">Material</a><span class="tooltiptext">An asset that defines how a surface should be rendered. <a href="class-Material.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span> that’s used on the rendered object.</li>
+<li>Global shader properties, set either by Unity rendering code itself (see <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-UnityShaderVariables.html">built-in shader variables</a>), or from your own <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html" href="SL-UnityShaderVariables.html">built-in shader variables</a>), or from your own <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> (e.g. <a href="../ScriptReference/Shader.SetGlobalTexture.html">Shader.SetGlobalTexture</a>).</li>
+</ul>
+
+<p>The order of precedence is like above: per-instance data overrides everything; then Material data is used; and finally if shader property does not exist in these two places then global property value is used. Finally, if there’s no shader property value defined anywhere, then “default” (zero for floats, black for colors, empty white texture for textures) value will be provided.</p>
+
+<h2>Serialized and Runtime Material properties</h2>
+
+<p>
+<a href="class-Material.html">Materials</a> can contain both serialized and runtime-set property values.</p>
+
+<p>Serialized data is all the properties defined in shader’s <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-Properties.html">Properties</a> block. Typically these are values that need to be stored in the material, and are tweakable by the user in Material <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="SL-Properties.html">Properties</a> block. Typically these are values that need to be stored in the material, and are tweakable by the user in Material <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>.</p>
+
+<p>A material can also have some properties that are used by the shader, but not declared in shader’s <a href="SL-Properties.html">Properties</a> block. Typically this is for properties that are set from script code at runtime, e.g. via <a href="../ScriptReference/Material.SetColor.html">Material.SetColor</a>. Note that matrices and arrays can only exist as non-serialized runtime properties (since there’s no way to define them in Properties block).</p>
+
+<h2>Special Texture properties</h2>
+
+<p>For each texture that is setup as a shader/material property, Unity also sets up some extra information in additional vector properties.</p>
+
+<h4>Texture tiling &amp; offset</h4>
+
+<p>
+<a href="class-Material.html">Materials</a> often have Tiling and Offset fields for their texture properties. This information is passed into shaders in a float4 <em>{TextureName}</em><code>_ST</code> property:</p>
+
+<ul>
+<li>
+<code>x</code> contains X tiling value</li>
+<li>
+<code>y</code> contains Y tiling value</li>
+<li>
+<code>z</code> contains X offset value</li>
+<li>
+<code>w</code> contains Y offset value</li>
+</ul>
+
+<p>For example, if a shader contains texture named <code>_MainTex</code>, the tiling information will be in a <code>_MainTex_ST</code> vector.</p>
+
+<h4>Texture size</h4>
+
+<p>
+<em>{TextureName}</em><code>_TexelSize</code> - a float4 property contains texture size information:</p>
+
+<ul>
+<li>
+<code>x</code> contains 1.0/width</li>
+<li>
+<code>y</code> contains 1.0/height</li>
+<li>
+<code>z</code> contains width</li>
+<li>
+<code>w</code> contains height</li>
+</ul>
+
+<h4>Texture HDR parameters</h4>
+
+<p>
+<em>{TextureName}</em><code>_HDR</code> - a float4 property with information on how to decode a potentially <span class="tooltip"><strong>HDR</strong><span class="tooltiptext">high dynamic range<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#HDR" aria-label="Go to glossary anchor for HDR">Glossary</a></span></span></span> (e.g. RGBM-encoded) texture depending on the <a href="LinearLighting.html">color space</a> used. See <code>DecodeHDR</code> function in <a href="SL-BuiltinIncludes.html">UnityCG.cginc</a> shader include file.</p>
+
+<h2>Color spaces and color/vector shader data</h2>
+
+<p>When using <a href="LinearLighting.html">Linear color space</a>, all material color properties are supplied as sRGB colors, but are converted into linear values when passed into shaders.</p>
+
+<p>For example, if your <a href="SL-Properties.html">Properties</a> shader block contains a <code>Color</code> property called “<em>MyColor“, then the corresponding ”</em>MyColor” HLSL variable will get the linear color value.</p>
+
+<p>For properties that are marked as <code>Float</code> or <code>Vector</code> type, no color space conversions are done by default; it is assumed that they contain non-color data. It is possible to add <code>[Gamma]</code> attribute for float/vector properties to indicate that they are specified in sRGB space, just like colors (see <a href="SL-Properties.html">Properties</a>).</p>
+
+<h2>See Also</h2>
+
+<ul>
+<li>
+<a href="SL-Properties.html">ShaderLab Properties block</a>.</li>
+<li>
+<a href="SL-ShaderPrograms.html">Writing Shader Programs</a>.</li>
+</ul>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-ShaderSemantics.html"></a></span><div class="tip">Shader semantics</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-VertexProgramInputs.html"></a></span><div class="tip">Providing vertex data to vertex programs</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

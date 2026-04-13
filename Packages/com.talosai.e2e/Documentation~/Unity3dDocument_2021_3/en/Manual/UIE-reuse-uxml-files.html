@@ -1,0 +1,315 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Reuse UXML files</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-reuse-uxml-files.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-reuse-uxml-files.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-reuse-uxml-files.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-reuse-uxml-files.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-reuse-uxml-files.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-reuse-uxml-files.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-reuse-uxml-files.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-reuse-uxml-files.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-structure-ui.html">Structure UI</a></li>
+<li><a href="UIE-UXML.html">Structure UI with UXML</a></li>
+<li>Reuse UXML files</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-add-style-to-uxml.html"></a></span><div class="tip">Add styles to UXML</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-reference-other-files-from-uxml.html"></a></span><div class="tip">Reference other files from UXML</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Reuse UXML files</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can create a UXML file as a template and reuse it in other UXML files.</p>
+
+<h2>Import a UXML template</h2>
+
+<p>When you design a large user interface, you can create template UXML files that define parts of the UI, and use the <a href="UIE-ElementRef.html#templates"><code>&lt;Template&gt;</code> and <code>&lt;Instance&gt;</code></a> elements to import it into another UXML file. </p>
+
+<p>For example, if you have a portrait <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> element that has an image, a name, and a label, you can create a UXML template file as <code>Assets/Portrait.uxml</code> with the following content:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML ...&gt;
+    &lt;ui:VisualElement class=&quot;portrait&quot;&gt;
+        &lt;ui:Image name=&quot;portaitImage&quot; style=&quot;--unity-image: url(\&quot;a.png\&quot;)&quot;/&gt;
+        &lt;ui:Label name=&quot;nameLabel&quot; text=&quot;Name&quot;/&gt;
+        &lt;ui:Label name=&quot;levelLabel&quot; text=&quot;42&quot;/&gt;
+    &lt;/ui:VisualElement&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+
+<p>You can then reuse the Portrait template like this:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML ...&gt;
+    &lt;ui:Template src=&quot;/Assets/Portrait.uxml&quot; name=&quot;Portrait&quot;/&gt;
+    &lt;ui:VisualElement name=&quot;players&quot;&gt;
+        &lt;ui:Instance template=&quot;Portrait&quot; name=&quot;player1&quot;/&gt;
+        &lt;ui:Instance template=&quot;Portrait&quot; name=&quot;player2&quot;/&gt;
+    &lt;/ui:VisualElement&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+
+<p><a name="attribute-overrides" aria-hidden="true"></a></p>
+
+<h2>Override UXML attributes</h2>
+
+<p>When you create instances of a UXML template, you can override the default attribute values of its elements. Attribute overrides allow you to instantiate the same template many times with different values for each instance.</p>
+
+<h3>Override an attribute</h3>
+
+<p>You can override attributes with the <code>UXML</code> tag. To override an attribute, specify the following:</p>
+
+<ul>
+<li>The <code>element-name</code> attribute of the element whose attributes you want to override</li>
+<li>The name of the attribute to override</li>
+<li>The new attribute value</li>
+</ul>
+
+<p>For example, if you want to display the same set of information for each player in your game, you can create a UXML template, and use attribute overrides to create player-specific instances.</p>
+
+<p>First, create a template, such as <code>MyTemplate.uxml</code>, with the following content:</p>
+
+<pre><code class="lang-xml">&lt;UXML xmlns=&quot;Unityui.UIElements&quot;&gt;
+    &lt;Label name=&quot;player-name-label&quot; text=&quot;default name&quot; /&gt;
+    &lt;Label name=&quot;player-score-label&quot; text=&quot;default score&quot; /&gt;
+&lt;/UXML&gt;
+</code></pre>
+
+<p>Then, instance it from another UXML file and override its attributes to display each player’s name and score:</p>
+
+<pre><code class="lang-xml">&lt;UXML xmlns=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot;&gt;
+    &lt;Template src=&quot;MyTemplate.uxml&quot; name=&quot;MyTemplate&quot; /&gt;
+    &lt;Instance name=&quot;player1&quot; template=&quot;MyTemplate&quot;&gt;
+        &lt;!-- Alice is the new value of the text attribute for the player-name-label --&gt;
+        &lt;AttributeOverrides element-name=&quot;player-name-label&quot; text=&quot;Alice&quot; /&gt; 
+        &lt;!-- 2 is the new value of the text attribute for the player-score-label --&gt;
+        &lt;AttributeOverrides element-name=&quot;player-score-label&quot; text=&quot;2&quot; /&gt;
+    &lt;/Instance&gt;
+    &lt;Instance name=&quot;player2&quot; template=&quot;MyTemplate&quot;&gt;
+        &lt;!-- Bob is the new value of the text attribute for the player-name-label --&gt;
+        &lt;AttributeOverrides element-name=&quot;player-name-label&quot; text=&quot;Bob&quot; /&gt;
+        &lt;!-- 1 is the new value of the text attribute for the player-score-label --&gt;
+        &lt;AttributeOverrides element-name=&quot;player-score-label&quot; text=&quot;1&quot; /&gt;
+    &lt;/Instance&gt;
+&lt;/UXML&gt;
+</code></pre>
+
+<h3>Override multiple attributes</h3>
+
+<p>You can specify more than one attribute per override. For example, the following syntax finds any element in the instance named <code>player-name-label</code>, and</p>
+
+<ul>
+<li>Overrides the default value of its <code>text</code> attribute with the new value, <code>Alice</code>.</li>
+<li>Overrides the default value of its <code>tooltip</code> attribute with the new value, <code>Tooltip 1</code>.</li>
+</ul>
+
+<pre><code class="lang-xml">&lt;AttributeOverrides element-name=&quot;player-name-label&quot; text=&quot;Alice&quot; tooltip=&quot;Tooltip 1&quot; /&gt;
+</code></pre>
+
+<h3>Nest attribute overrides</h3>
+
+<p>Attribute overrides propagate through nested templates in the element hierarchy. For example, if template A instances template B, and template B instances template C, both template A and template B can override attributes in template C.</p>
+
+<p>When you override attributes in nested templates, the shallowest override takes precedence. In the example above, if template A and template B both override the same attribute of template C, the override in template A determines what actually appears in the rendered UI.</p>
+
+<h3>Override template instance styles</h3>
+
+<p>If you’re creating instances of a UXML template, and an element in the template has an inline style defined with the <code>style</code> attribute, you can’t use <code>AttributeOverrides</code> to override that <code>style</code> attribute. However, you can use USS selectors in a USS style sheet to override the styling of your template instances.</p>
+
+<p>For example, if you have the following UXML template called <code>Hotkeys.uxml</code> that defines a <code>#Container</code> with two labels, and the <code>#Container</code> has an inline style that defines the flex row direction:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot; editor-extension-mode=&quot;False&quot;&gt;
+    &lt;ui:VisualElement name=&quot;Container&quot; style=&quot;flex-direction: row;&quot;&gt;
+        &lt;ui:Label text=&quot;E&quot; name=&quot;Hotkeys&quot; /&gt;
+        &lt;ui:Label text=&quot;Talk&quot; name=&quot;Action&quot; /&gt;
+    &lt;/ui:VisualElement&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+
+<p>If you want to create two template instances with the second having a reversed flex row direction, you can’t use <code>AttributeOverides</code> to override the <code>style</code> attribute of the <code>#Container</code> element in your second instance.</p>
+
+<p>To override the style, do the following:</p>
+
+<ul>
+<li>In your UXML instances file, name your two instances, such as <code>HotkeysXML</code> and <code>ReversedHotkeysXML</code>.</li>
+<li>Apply a USS style sheet, such as <code>ContextHotkeys.uss</code>, to your UXML instance file.</li>
+</ul>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot;&gt;
+    &lt;ui:Template name=&quot;HotkeysXML&quot; src=&quot;HotkeysXML.uxml&quot;/&gt;
+    &lt;Style src=&quot;ContextHotKeys.uss&quot;/&gt;
+    &lt;ui:Instance template=&quot;HotkeysXML&quot; name=&quot;HotkeysXML&quot; /&gt;
+    &lt;ui:Instance template=&quot;HotkeysXML&quot; name=&quot;ReversedHotkeysXML&quot; /&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+
+<p>You can then create <code>ContextHotkeys.uss</code> to change the <code>#Container</code> style according to the template instance name:</p>
+
+<pre><code class="lang-css">#ReversedHotkeysXML &gt; #Container {
+    flex-direction: row-reverse;
+}
+ 
+#HotkeysXML &gt; #Container {
+    flex-direction: row;
+}
+</code></pre>
+
+<h3>Limitations</h3>
+
+<p>Attribute overrides have the following limitations:</p>
+
+<ul>
+<li>Attribute overrides find matching attributes according to the element name you specify. You can’t use <a href="UIE-USS-Selectors.html">USS Selectors</a> or <a href="UIE-UQuery.html">UQuery</a> to match elements.</li>
+<li>Although you can override an element’s <code>binding-path</code> attribute, data binding doesn’t work with attribute overrides.</li>
+<li>You can’t override an element’s <code>class</code>, <code>name</code>, or <code>style</code> attributes.</li>
+</ul>
+
+<h2>Specify where to nest child elements in a UXML template</h2>
+
+<p>You can use the <code>content-container</code> attribute of a <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span> to specify where to nest child elements in a UXML template. For example, if you have the following UXML template file as <code>Assets/MyTemplate.uxml</code>:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; ...&gt;
+    &lt;ui:Label text=&quot;Group Title&quot; name=&quot;groupTitle&quot; /&gt;
+    &lt;ui:VisualElement name=&quot;group-container&quot; content-container=&quot;anyValue&quot;&gt;
+         &lt;!--Add child elements here --&gt;
+    &lt;/ui:VisualElement&gt;
+    &lt;ui:VisualElement /&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+
+<p>You can then apply the template with nested child elements as this:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; ...&gt;
+    &lt;ui:Template path=&quot;Assets/MyTemplate.uxml&quot; name=&quot;my-template&quot;/&gt;
+    &lt;ui:Instance template=&quot;my-template&quot;&gt;
+        &lt;ui:Label text=&quot;Test&quot;/&gt; &lt;!--This label element is instantiated inside the `group-container` element--&gt;
+    &lt;/ui:Instance&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+
+<p>
+<strong>Note</strong>: You can provide any value to the <code>content-container</code> attribute.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-ElementRef.html#templates">Templates</a></li>
+<li><a href="UIB-structuring-ui-templates.html">Use UXML instances as templates</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-add-style-to-uxml.html"></a></span><div class="tip">Add styles to UXML</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-reference-other-files-from-uxml.html"></a></span><div class="tip">Reference other files from UXML</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

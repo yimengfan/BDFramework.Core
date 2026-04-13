@@ -1,0 +1,692 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Garbage collection best practices</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-garbage-collection-best-practices.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-garbage-collection-best-practices.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-garbage-collection-best-practices.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-garbage-collection-best-practices.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-garbage-collection-best-practices.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-garbage-collection-best-practices.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-garbage-collection-best-practices.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-garbage-collection-best-practices.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="performance-memory-overview.html">Memory in Unity</a></li>
+<li><a href="performance-managed-memory.html">Managed memory</a></li>
+<li><a href="performance-garbage-collector.html">Garbage collector overview</a></li>
+<li>Garbage collection best practices</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-disabling-garbage-collection.html"></a></span><div class="tip">Disabling garbage collection</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="performance-native-allocators.html"></a></span><div class="tip">Native memory</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Garbage collection best practices</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<a href="performance-garbage-collector.html">Garbage collection</a> is automatic, but the process requires a significant amount of CPU time. </p>
+
+<p>C#’s automatic memory management reduces the risk of memory leaks and other programming errors, in comparison to other programming languages like C++, where you must manually track and free all the memory you allocate. </p>
+
+<p>Automatic memory management allows you to write code quickly and easily, and with few errors. However, this convenience might have performance implications. To optimize your code for performance, you must avoid situations where your application triggers the <a href="performance-garbage-collector.html">garbage collector</a> a lot. This section outlines some common issues and workflows that affect when your application triggers the garbage collector.</p>
+
+<ul>
+<li><a href="#tempalloc">Temporary allocations</a></li>
+<li><a href="#reusablepools">Reusable object pools</a></li>
+<li><a href="#repeatedstring">Repeated string concatenation</a></li>
+<li><a href="#methodarray">Method returning an array value</a></li>
+<li><a href="#collectionreuse">Collection and array reuse</a></li>
+<li><a href="#closures">Closures and anonymous methods</a></li>
+<li><a href="#boxing">Boxing</a></li>
+<li><a href="#arrayapis">Array-valued Unity APIs</a></li>
+<li><a href="#emptyarray">Empty array reuse</a></li>
+</ul>
+
+<p><a name="tempalloc" aria-hidden="true"></a></p>
+
+<h2>Temporary allocations</h2>
+
+<p>It’s common for an application to allocate temporary data to the <a href="performance-managed-memory.html#managed-heap">managed heap</a> in each frame; however, this can affect the performance of the application. For example:</p>
+
+<ul>
+<li>If a program allocates one kilobyte (1KB) of temporary memory each frame, and it runs at 60 <span class="tooltip"><strong>frames per second</strong><span class="tooltiptext">The frequency at which consecutive frames are displayed in a running game. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingStatistics.html" href="RenderingStatistics.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#framespersecond" aria-label="Go to glossary anchor for framespersecond">Glossary</a></span></span></span>, then it must allocate 60 kilobytes of temporary memory per second. Over the course of a minute, this adds up to 3.6 megabytes of memory available to the garbage collector.</li>
+<li>Invoking the garbage collector once per second has a negative effect on performance. If the garbage collector only runs once per minute, it has to clean up 3.6 megabytes spread across thousands of individual allocations, which might result in significant garbage collection times.</li>
+<li>Loading operations have an impact on performance. If your application generates a lot of temporary objects during a heavy asset-loading operation, and Unity references those objects until the operation completes, then the garbage collector can’t release those temporary objects. This means that the managed heap needs to expand, even though Unity releases a lot of the objects that it contains a short time later.</li>
+</ul>
+
+<p>To get around this, you should try to reduce the amount of frequently managed heap allocations as possible: ideally to 0 bytes per frame, or as close to zero as you can get. </p>
+
+<p><a name="reusablepools" aria-hidden="true"></a></p>
+
+<h2>Reusable object pools</h2>
+
+<p>There are a lot of cases where you can reduce the number of times that your application creates and destroys objects, to avoid generating garbage. There are certain types of objects in games, such as projectiles, which might appear over and over again even though only a small number are ever in play at once. In cases like this, you can reuse the objects, rather than destroy old ones and replace them with new ones. </p>
+
+<p>For example, it’s not optimal to instantiate a new projectile object from a <span class="tooltip"><strong>Prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> every time one is fired. Instead, you can calculate the maximum number of projectiles that could ever exist simultaneously during gameplay, and instantiate an array of objects of the correct size when the game first enters the gameplay <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> every time one is fired. Instead, you can calculate the maximum number of projectiles that could ever exist simultaneously during gameplay, and instantiate an array of objects of the correct size when the game first enters the gameplay <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. To do this:</p>
+
+<ul>
+<li>Start with all the projectile <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> set to being inactive.</li>
+<li>When a projectile is fired, search through the array to find the first inactive projectile in the array, move it to the required position and set the GameObject to be active.</li>
+<li>When the projectile is destroyed, set the GameObject to inactive again.</li>
+</ul>
+
+<p>You can use the <a href="../ScriptReference/Pool.ObjectPool_1.html">ObjectPool</a> class, which provides an implementation of this reusable object pool technique. </p>
+
+<p>The code below shows a simple implementation of a stack-based object pool. You might find it useful to refer to if you’re using an older version of Unity which doesn’t contain the ObjectPool API, or if you’d like to see an example of how a custom object pool might be implemented.</p>
+
+<pre><code class="lang-csharp">using System.Collections.Generic;
+using UnityEngine;
+
+public class ExampleObjectPool : MonoBehaviour {
+
+   public GameObject PrefabToPool;
+   public int MaxPoolSize = 10;
+  
+   private Stack&lt;GameObject&gt; inactiveObjects = new Stack&lt;GameObject&gt;();
+  
+   void Start() {
+       if (PrefabToPool != null) {
+           for (int i = 0; i &lt; MaxPoolSize; ++i) {
+               var newObj = Instantiate(PrefabToPool);
+               newObj.SetActive(false);
+               inactiveObjects.Push(newObj);
+           }
+       }
+   }
+
+   public GameObject GetObjectFromPool() {
+       while (inactiveObjects.Count &gt; 0) {
+           var obj = inactiveObjects.Pop();
+          
+           if (obj != null) {
+               obj.SetActive(true);
+               return obj;
+           }
+           else {
+               Debug.LogWarning(&quot;Found a null object in the pool. Has some code outside the pool destroyed it?&quot;);
+           }
+       }
+      
+       Debug.LogError(&quot;All pooled objects are already in use or have been destroyed&quot;);
+       return null;
+   }
+  
+   public void ReturnObjectToPool(GameObject objectToDeactivate) {
+       if (objectToDeactivate != null) {
+           objectToDeactivate.SetActive(false);
+           inactiveObjects.Push(objectToDeactivate);
+       }
+   }
+}
+</code></pre>
+
+<p><a name="repeatedstring" aria-hidden="true"></a></p>
+
+<h2>Repeated string concatenation</h2>
+
+<p>Strings in C# are <span class="tooltip"><strong>immutable</strong><span class="tooltiptext">You cannot change the contents of an immutable (read-only) package. This is the opposite of <strong>mutable</strong>. Most packages are immutable, including packages downloaded from the package registry or by Git URL.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Immutable" aria-label="Go to glossary anchor for Immutable">Glossary</a></span></span></span> reference types. A reference type means that Unity allocates them on the managed heap and are subject to garbage collection. Immutable means that once a string has been created, it can’t be changed; any attempt to modify the string results in an entirely new string. For this reason, you should avoid creating temporary strings wherever possible.</p>
+
+<p>Consider the following example code, which combines an array of strings into a single string. Every time a new string is added inside the loop, the previous contents of the result variable become redundant, and the code allocates a whole new string.</p>
+
+<pre><code class="lang-csharp">// Bad C# script example: repeated string concatenations create lots of
+// temporary strings.
+using UnityEngine;
+
+public class ExampleScript : MonoBehaviour {
+    string ConcatExample(string[] stringArray) {
+        string result = &quot;&quot;;
+
+        for (int i = 0; i &lt; stringArray.Length; i++) {
+            result += stringArray[i];
+        }
+
+        return result;
+    }
+
+}
+</code></pre>
+
+<p>If the input stringArray contains <code>{ “A”, “B”, “C”, “D”, “E” }</code>, this method generates storage on the heap for the following strings:</p>
+
+<ul>
+<li><code>“A”</code></li>
+<li><code>“AB”</code></li>
+<li><code>“ABC”</code></li>
+<li><code>“ABCD”</code></li>
+<li><code>“ABCDE”</code></li>
+</ul>
+
+<p>In this example, you only need the final string, and the others are redundant allocations. The more items that there are in the input array, the more strings this method generates, each longer than the last. </p>
+
+<p>If you need to concatenate a lot of strings together then you should use Mono library’s <a href="http://msdn.microsoft.com/en-gb/library/system.text.stringbuilder.aspx"><code>System.Text.StringBuilder</code></a> class. An improved version of the script above looks like this:</p>
+
+<pre><code class="lang-csharp">// Good C# script example: StringBuilder avoids creating temporary strings,
+// and only allocates heap memory for the final result string.
+using UnityEngine;
+using System.Text;
+
+public class ExampleScript : MonoBehaviour {
+    private StringBuilder _sb = new StringBuilder(16);
+
+    string ConcatExample(string[] stringArray) {
+        _sb.Clear();
+
+        for (int i = 0; i &lt; stringArray.Length; i++) {
+            _sb.Append(stringArray[i]);
+        }
+
+        return _sb.ToString();
+    }
+}
+</code></pre>
+
+<p>A repeated concatenation doesn’t decrease performance too much unless it’s called frequently, like on every frame update. The following example allocates new strings each time Update is called, and generates a continuous stream of objects that garbage collector must handle:</p>
+
+<pre><code class="lang-csharp">// Bad C# script example: Converting the score value to a string every frame
+// and concatenating it with “Score: “ generates strings every frame.
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ExampleScript : MonoBehaviour {
+    public Text scoreBoard;
+    public int score;
+    
+    void Update() {
+        string scoreText = &quot;Score: &quot; + score.ToString();
+        scoreBoard.text = scoreText;
+    }
+}
+</code></pre>
+
+<p>To prevent this continuous requirement for garbage collection, you can configure the code so that the text only updates when the score changes: </p>
+
+<pre><code class="lang-csharp">// Better C# script example: the score conversion is only performed when the
+// score has changed
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ExampleScript : MonoBehaviour {
+    public Text scoreBoard;
+    public string scoreText;
+    public int score;
+    public int oldScore;
+    
+    void Update() {
+        if (score != oldScore) {
+            scoreText = &quot;Score: &quot; + score.ToString();
+            scoreBoard.text = scoreText;
+            oldScore = score;
+        }
+    }
+}
+</code></pre>
+
+<p>To improve this further, you can store the score title (the part that says <code>“Score: ”</code>) and the score display in two different <code>UI.Text</code> objects, which means that there is no need for string concatenation. The code must still convert the score value into a string, but this is an improvement on the previous versions:</p>
+
+<pre><code class="lang-csharp">// Best C# script example: the score conversion is only performed when the
+// score has changed, and the string concatenation has been removed
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ExampleScript : MonoBehaviour {
+   public Text scoreBoardTitle;
+   public Text scoreBoardDisplay;
+   public string scoreText;
+   public int score;
+   public int oldScore;
+
+   void Start() {
+       scoreBoardTitle.text = &quot;Score: &quot;;
+   }
+
+   void Update() {
+       if (score != oldScore) {
+           scoreText = score.ToString();
+           scoreBoardDisplay.text = scoreText;
+           oldScore = score;
+       }
+   }
+}
+</code></pre>
+
+<p><a name="methodarray" aria-hidden="true"></a></p>
+
+<h2>Method returning an array value</h2>
+
+<p>Sometimes it might be convenient to write a method that creates a new array, fills the array with values and then returns it. However, if this method is called repeatedly, then new memory gets allocated each time. </p>
+
+<p>The following example code shows an example of a method which creates an array every time it’s called:</p>
+
+<pre><code class="lang-csharp">// Bad C# script example: Every time the RandomList method is called it
+// allocates a new array
+using UnityEngine;
+using System.Collections;
+
+public class ExampleScript : MonoBehaviour {
+    float[] RandomList(int numElements) {
+        var result = new float[numElements];
+        
+        for (int i = 0; i &lt; numElements; i++) {
+            result[i] = Random.value;
+        }
+        
+        return result;
+    }
+}
+</code></pre>
+
+<p>One way you can avoid allocating memory every time is to make use of the fact that an array is a reference type. You can modify an array that’s passed into a method as a parameter, and the results remain after the method returns. To do this, you can configure the example code as follows:</p>
+
+<pre><code class="lang-csharp">// Good C# script example: This version of method is passed an array to fill
+// with random values. The array can be cached and re-used to avoid repeated
+// temporary allocations
+using UnityEngine;
+using System.Collections;
+
+public class ExampleScript : MonoBehaviour {
+    void RandomList(float[] arrayToFill) {
+        for (int i = 0; i &lt; arrayToFill.Length; i++) {
+            arrayToFill[i] = Random.value;
+        }
+    }
+}
+</code></pre>
+
+<p>This code replaces the existing contents of the array with new values. This workflow requires the calling code to do the initial allocation of the array, but the function doesn’t generate any new garbage when it’s called. The array can then be re-used and re-filled with random numbers the next time this method is called without any new allocations on the managed heap.</p>
+
+<p><a name="collectionreuse" aria-hidden="true"></a></p>
+
+<h2>Collection and array reuse</h2>
+
+<p>When you use arrays or classes from the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic?view=net-6.0"><code>System.Collection</code></a> namespace (for example, Lists or Dictionaries), it’s efficient to reuse or pool the allocated collection or array. Collection classes expose a Clear method, which eliminates a collection’s values but doesn’t release the memory allocated to the collection.</p>
+
+<p>This is useful if you want to allocate temporary “helper” collections for complex computations. The following code example demonstrates this:</p>
+
+<pre><code class="lang-csharp">// Bad C# script example. This Update method allocates a new List every frame.
+void Update() {
+
+    List&lt;float&gt; nearestNeighbors = new List&lt;float&gt;();
+
+    findDistancesToNearestNeighbors(nearestNeighbors);
+
+    nearestNeighbors.Sort();
+
+    // … use the sorted list somehow …
+}
+</code></pre>
+
+<p>This example code allocates the nearestNeighbors List once per frame to collect a set of data points. </p>
+
+<p>You can hoist this List out of the method and into the containing class, so that your code doesn’t need to allocate a new List each frame:</p>
+
+<pre><code class="lang-csharp">// Good C# script example. This method re-uses the same List every frame.
+List&lt;float&gt; m_NearestNeighbors = new List&lt;float&gt;();
+
+void Update() {
+
+    m_NearestNeighbors.Clear();
+
+    findDistancesToNearestNeighbors(NearestNeighbors);
+
+    m_NearestNeighbors.Sort();
+
+    // … use the sorted list somehow …
+}
+</code></pre>
+
+<p>This example code retains and reuses the List’s memory across multiple frames. The code only allocates new memory when the List needs to expand.</p>
+
+<p><a name="closures" aria-hidden="true"></a></p>
+
+<h2>Closures and anonymous methods</h2>
+
+<p>In general, you should avoid closures in C# whenever possible. You should minimize the use of anonymous methods and method references in performance-sensitive code, and especially in code that executes on a per-frame basis.</p>
+
+<p>Method references in C# are reference types, so they’re allocated on the heap. This means that if you pass a method reference as an argument, it’s easy to create temporary allocations. This allocation happens regardless of whether the method you pass is an anonymous method or a predefined one.</p>
+
+<p>Also, when you convert an anonymous method to a closure, the amount of memory required to pass the closure to a method increases a lot.</p>
+
+<p>Here’s a code sample in which a list of randomized numbers need to be sorted in a particular order. This uses an anonymous method to control the sorting order of the list, and the sorting doesn’t create any allocations. </p>
+
+<pre><code class="lang-csharp">// Good C# script example: using an anonymous method to sort a list. 
+// This sorting method doesn’t create garbage
+List&lt;float&gt; listOfNumbers = getListOfRandomNumbers();
+
+
+listOfNumbers.Sort( (x, y) =&gt;
+
+(int)x.CompareTo((int)(y/2)) 
+
+);
+</code></pre>
+
+<p>To make this snippet reusable, you might substitute the constant 2 for a variable in local scope:</p>
+
+<pre><code class="lang-csharp">// Bad C# script example: the anonymous method has become a closure,
+// and now allocates memory to store the value of desiredDivisor
+// every time it is called.
+List&lt;float&gt; listOfNumbers = getListOfRandomNumbers();
+
+
+int desiredDivisor = getDesiredDivisor();
+
+listOfNumbers.Sort( (x, y) =&gt;
+
+(int)x.CompareTo((int)(y/desiredDivisor))
+
+);
+</code></pre>
+
+<p>The anonymous method now needs to access the state of a variable which is outside of its scope, and so the method has become a closure. The <code>desiredDivisor</code> variable must be passed into the closure so that the closure’s code can use it.</p>
+
+<p>To ensure that the correct values are passed in to the closure, C# generates an anonymous class that can retain the externally scoped variables that the closure needs. A copy of this class is instantiated when the closure is passed to the Sort method, and the copy is initialized with the value of the desiredDivisor integer.</p>
+
+<p>Executing the closure requires instantiating a copy of its generated class, and all classes are reference types in C#. For this reason, executing the closure requires allocation of an object on the managed heap.</p>
+
+<p><a name="boxing" aria-hidden="true"></a></p>
+
+<h2>Boxing</h2>
+
+<p>Boxing is one of the most common sources of unintended temporary memory allocations found in Unity projects. It happens when a value-typed variable gets automatically converted to a reference type. This most often happens when passing primitive value-typed variables (such as int and float) to object-typed methods. You should avoid boxing when writing C# code for Unity.</p>
+
+<p>In this example, the integer in x is boxed so that it can be passed to the <code>object.Equals</code> method, because the <code>Equals</code> method on an object requires that an object is passed to it.</p>
+
+<pre><code class="lang-csharp">int x = 1;
+
+object y = new object();
+
+y.Equals(x);
+</code></pre>
+
+<p>C# IDEs and compilers don’t issue warnings about boxing, even though boxing leads to unintended memory allocations. This is because C# assumes that small temporary allocations are efficiently handled by generational garbage collectors and allocation-size-sensitive memory pools.</p>
+
+<p>While Unity’s allocator does use different memory pools for small and large allocations, Unity’s <a href="performance-garbage-collector.md">garbage collector</a> isn’t generational, so it can’t efficiently sweep out the small, frequent temporary allocations that boxing generates.</p>
+
+<h3>Identifying boxing</h3>
+
+<p>Boxing appears in CPU traces as calls to one of a few methods, depending on the scripting back end in use. These take one of the following forms, where <code>&lt;example class&gt;</code> is the name of a class or struct, and <code>…</code> is a number of arguments:</p>
+
+<pre><code class="lang-csharp">&lt;example class&gt;::Box(…)
+Box(…)
+&lt;example class&gt;_Box(…)
+</code></pre>
+
+<p>To find boxing, you can also search the output of a decompiler or IL viewer, such as the <a href="https://www.jetbrains.com/help/resharper/Viewing_Intermediate_Language.html">IL viewer tool built into ReSharper</a> or the <a href="https://www.jetbrains.com/decompiler/">dotPeek decompiler</a>. The IL instruction is <code>box</code>.</p>
+
+<p><a name="arrayapis" aria-hidden="true"></a></p>
+
+<h2>Array-valued Unity APIs</h2>
+
+<p>A subtle cause of unintended allocation array is the repeated accessing of Unity APIs that return arrays. All Unity APIs that return arrays create a new copy of the array each time they’re accessed. If your code accesses an array-valued Unity API more often than necessary, there is likely to be a detrimental impact on performance.</p>
+
+<p>As an example, the following code unnecessarily creates four copies of the vertices array per loop iteration. The allocations happen each time the <code>.vertices</code> property is accessed.</p>
+
+<pre><code class="lang-csharp">// Bad C# script example: this loop create 4 copies of the vertices array per iteration
+void Update() {
+    for(int i = 0; i &lt; mesh.vertices.Length; i++) {
+        float x, y, z;
+
+        x = mesh.vertices[i].x;
+        y = mesh.vertices[i].y;
+        z = mesh.vertices[i].z;
+
+        // ...
+
+        DoSomething(x, y, z);   
+    }
+}
+
+</code></pre>
+
+<p>You can refactor this code into a single array allocation, regardless of the number of loop iterations. To do this, configure your code to capture the vertices array before the loop:</p>
+
+<pre><code class="lang-csharp">// Better C# script example: create one copy of the vertices array
+// and work with that
+void Update() {
+    var vertices = mesh.vertices;
+
+    for(int i = 0; i &lt; vertices.Length; i++) {
+
+        float x, y, z;
+
+        x = vertices[i].x;
+        y = vertices[i].y;
+        z = vertices[i].z;
+
+        // ...
+
+        DoSomething(x, y, z);   
+    }
+}
+</code></pre>
+
+<p>A better way of doing this is to maintain a List of vertices which is cached and re-used between frames, and then use <a href="../ScriptReference/Mesh.GetVertices.html">Mesh.GetVertices</a> to populate it when required.</p>
+
+<pre><code class="lang-csharp">// Best C# script example: create one copy of the vertices array
+// and work with that.
+List&lt;Vector3&gt; m_vertices = new List&lt;Vector3&gt;();
+
+void Update() {
+    mesh.GetVertices(m_vertices);
+
+    for(int i = 0; i &lt; m_vertices.Length; i++) {
+
+        float x, y, z;
+
+        x = m_vertices[i].x;
+        y = m_vertices[i].y;
+        z = m_vertices[i].z;
+
+        // ...
+
+        DoSomething(x, y, z);   
+    }
+}
+</code></pre>
+
+<p>While the CPU performance implications of accessing a property once isn’t high, repeated accesses within tight loops create CPU performance hotspots. Repeated accesses expand the <a href="performance-managed-memory.html#managed-heap">managed heap</a>.</p>
+
+<p>This problem is common on mobile devices, because the <a href="../ScriptReference/Input-touches.html">Input.touches</a> API behaves similarly to the above. It’s also common for projects to contain code similar to the following, where an allocation occurs each time the <code>.touches</code> property is accessed.</p>
+
+<pre><code class="lang-csharp">// Bad C# script example: Input.touches returns an array every time it’s accessed
+for ( int i = 0; i &lt; Input.touches.Length; i++ ) {
+   Touch touch = Input.touches[i];
+
+    // …
+}
+</code></pre>
+
+<p>To improve this, you can configure your code to hoist the array allocation out of the loop condition:</p>
+
+<pre><code class="lang-csharp">// Better C# script example: Input.touches is only accessed once here
+Touch[] touches = Input.touches;
+
+for ( int i = 0; i &lt; touches.Length; i++ ) {
+
+   Touch touch = touches[i];
+
+   // …
+}
+</code></pre>
+
+<p>The following code example converts the previous example to the allocation-free Touch API:</p>
+
+<pre><code class="lang-csharp">// BEST C# script example: Input.touchCount and Input.GetTouch don’t allocate at all.
+int touchCount = Input.touchCount;
+
+for ( int i = 0; i &lt; touchCount; i++ ) {
+   Touch touch = Input.GetTouch(i);
+
+   // …
+}
+</code></pre>
+
+<p>
+<strong>Note:</strong> The property access (<code>Input.touchCount</code>) remains outside the loop condition, to save the CPU impact of invoking the property’s get method.</p>
+
+<h3>Alternative non-allocating APIs</h3>
+
+<p>Some Unity APIs have alternative versions that don’t cause memory allocations. You should use these when possible. The following table shows a small selection of common allocating APIs and their non-allocating alternatives. The list isn’t exhaustive, but should indicate the kind of APIs to watch out for.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Allocating API</strong></th>
+	<th style="text-align:left;"><strong>Non-allocating API alternative</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/Physics.RaycastAll.html">Physics.RaycastAll</a></td>
+	<td style="text-align:left;"><a href="../ScriptReference/Physics.RaycastNonAlloc.html">Physics.RaycastNonAlloc</a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/Animator-parameters.html">Animator.parameters</a></td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/Animator-parameterCount.html">Animator.parameterCount</a> and <a href="../ScriptReference/Animator.GetParameter.html">Animator.GetParameter</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/Renderer-sharedMaterials.html">Renderer.sharedMaterials</a></td>
+	<td style="text-align:left;"><a href="../ScriptReference/Renderer.GetSharedMaterials.html">Renderer.GetSharedMaterials</a></td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="emptyarray" aria-hidden="true"></a></p>
+
+<h2>Empty array reuse</h2>
+
+<p>Some development teams prefer to return empty arrays instead of null when an array-valued method needs to return an empty set. This coding pattern is common in a lot of managed languages, particularly C# and Java.</p>
+
+<p>In general, when returning a zero-length array from a method, it’s more efficient to return a pre-allocated static instance of the zero-length array than to repeatedly create empty arrays. </p>
+
+<h2>Further resources</h2>
+
+<ul>
+<li><a href="performance-garbage-collector.html">Garbage collector overview</a></li>
+<li><a href="performance-managed-memory.html">Managed memory overview</a></li>
+<li><a href="performance-incremental-garbage-collection.html">Incremental garbage collection</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-disabling-garbage-collection.html"></a></span><div class="tip">Disabling garbage collection</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="performance-native-allocators.html"></a></span><div class="tip">Native memory</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

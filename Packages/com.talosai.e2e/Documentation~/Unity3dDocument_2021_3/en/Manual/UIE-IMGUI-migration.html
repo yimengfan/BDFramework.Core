@@ -1,0 +1,917 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Migrate from Immediate Mode GUI (IMGUI) to UI Toolkit</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-IMGUI-migration.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-IMGUI-migration.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-IMGUI-migration.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-IMGUI-migration.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-IMGUI-migration.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-IMGUI-migration.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-IMGUI-migration.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-IMGUI-migration.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-migration-guides.html">Migration guides</a></li>
+<li>Migrate from Immediate Mode GUI (IMGUI) to UI Toolkit</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Transitioning-From-UGUI.html"></a></span><div class="tip">Migrate from Unity UI (uGUI) to UI Toolkit</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="com.unity.ugui.html"></a></span><div class="tip">Unity UI </div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Migrate from Immediate Mode GUI (IMGUI) to UI Toolkit</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This guide is for developers experienced with <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GUIScriptingGuide.html">Immediate Mode GUI (IMGUI)</a> to migrate to <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html" href="GUIScriptingGuide.html">Immediate Mode GUI (IMGUI)</a> to migrate to <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit. This guide focuses on the Editor UI, but its information can also apply to the runtime UI as well.</p>
+
+<h2>Key differences</h2>
+
+<h3>Code-driven versus UI-driven</h3>
+
+<p>IMGUI is code-driven by calls to the <code>OnGUI</code> function in an C# script which implements it. UI Toolkit provides more options for Editor UI creation. With UI Toolkit, you define the behaviors in C# <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>. However, when defining UI elements and styles, in addition to C#, you can visually define UI controls in <a href="UIBuilder.html">UI Builder</a> or write in <a href="UIE-UXML.html">an XML-like text file (called UXML)</a> directly. For more information, see <a href="UIE-simple-ui-toolkit-workflow.html">Simple UI Toolkit workflow</a>.</p>
+
+<h3>Immediate versus retained mode</h3>
+
+<p>With IMGUI, you describe the UI tree when the UI is repainted within the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/EditorWindow.OnGUI.html"><code>OnGUI()</code></a> function. You must call this function when an event enters the UI or when you repaint the UI. There is no persistent information pertaining the UI tree between different events. Whereas, you create <span class="tooltip"><strong>visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="../ScriptReference/EditorWindow.OnGUI.html"><code>OnGUI()</code></a> function. You must call this function when an event enters the UI or when you repaint the UI. There is no persistent information pertaining the UI tree between different events. Whereas, you create <span class="tooltip"><strong>visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span> with UI Toolkit in a tree structure called <span class="tooltip"><a href="UIE-VisualTree.html">Visual Tree</a><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualtree" aria-label="Go to glossary anchor for Visualtree">Glossary</a></span></span></span>. Information in the Visual Trees is retained persistently.</p>
+
+<h3>Constant versus state changes</h3>
+
+<p>IMGUI is based around the <code>OnGUI()</code> function that runs at least once every frame. You define the look and the behaviors of the UI for every possible frame. The body of <code>OnGUI()</code> might contain many conditions and different states.</p>
+
+<p>UI Toolkit operates in an event-driven system. You define the look of the UI in its default state and define the behaviors of the UI in response to events. Any changes you make in UI Toolkit cause persistent changes to the state of your UI.</p>
+
+<p>For example, the declaration of a button in IMGUI looks like the following:</p>
+
+<pre><code class="lang-cs">if (GUILayout.Button(&quot;Click me!&quot;))
+{
+    //Code runs here in frames where the user clicks the button.
+
+    //Code makes changes to the UI for frames where the user has just clicked the button.
+}
+else
+{
+    //Code specifies what happens in all other frames.
+}
+</code></pre>
+
+<p>The example above looks like the following in UI Toolkit:</p>
+
+<pre><code class="lang-cs">UIDocument document = GetComponent&lt;UIDocument&gt;();
+
+//Create button.
+Button button = new Button();
+button.text = &quot;Click me!&quot;;
+
+//Set up event handler.
+button.RegisterCallback&lt;ClickEvent&gt;((ClickEvent evt) =&gt;
+{
+    //Code runs here after button receives ClickEvent.
+});
+
+//Add button to UI.
+document.rootVisualElement.Add(button);
+</code></pre>
+
+<p>For a completed example on how to create a custom Editor window with UI Toolkit, see <a href="UIE-simple-ui-toolkit-workflow.html">Simple UI Toolkit workflow</a>.</p>
+
+<h2>IMGUI support</h2>
+
+<p>Use the <code>IMGUIContainer</code> to place IMGUI code inside of a <code>VisualElement</code>. Everything you can do inside of <code>OnGUI()</code> is supported. </p>
+
+<p>You can arrange multiple <code>IMGUIContainer</code>s and lay them out by mixing <code>GUILayout</code> and UI Toolkit layouts. Note that it’s not possible to add <code>VisualElement</code> instances inside of an <code>IMGUIContainer</code>.</p>
+
+<figure>
+<img src="../uploads/Main/UIElementsIMGUI.png" alt="IMGUIContainer example">
+<figcaption><code>IMGUIContainer</code> example</figcaption>
+</figure>
+
+<h2>From IMGUI to UI Toolkit conversion</h2>
+
+<p>The following table lists the equivalent functions between IMGUI and UI Toolkit:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Action</strong></th>
+	<th style="text-align:left;"><strong>IMGUI</strong></th>
+	<th style="text-align:left;"><strong>UI Toolkit</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Create an <a href="editor-EditorWindows.html">Editor Window</a>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorWindow.OnGUI.html"><code>EditorWindow.OnGUI()</code></a></td>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorWindow.CreateGUI.html"><code>EditorWindow.CreateGUI()</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Create a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about editor-PropertyDrawers.html">Property Drawer</a><span class="tooltiptext">A Unity feature that allows you to customize the look of certain controls in the Inspector window by using attributes on your scripts, or by controlling how a specific Serializable class should look <a href="editor-PropertyDrawers.html" href="editor-PropertyDrawers.html">Property Drawer</a><span class="tooltiptext">A Unity feature that allows you to customize the look of certain controls in the Inspector window by using attributes on your scripts, or by controlling how a specific Serializable class should look <a href="editor-PropertyDrawers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PropertyDrawer" aria-label="Go to glossary anchor for PropertyDrawer">Glossary</a></span></span></span> or a Property Attribute</td>
+	<td style="text-align:left;"><a href="../ScriptReference/PropertyDrawer.OnGUI.html"><code>PropertyDrawer.OnGUI()</code></a></td>
+	<td style="text-align:left;"><a href="../ScriptReference/PropertyDrawer.CreatePropertyGUI.html"><code>PropertyDrawer.CreatePropertyGUI()</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Create a custom Editor for the <strong><span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Editor.OnInspectorGUI.html"><code>Editor.OnInspectorGUI()</code></a></td>
+	<td style="text-align:left;"><a href="../ScriptReference/Editor.CreateInspectorGUI.html"><code>Editor.CreateInspectorGUI()</code></a></td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="imgui-uitk-equivalent-table" aria-hidden="true"></a></p>
+
+<p>The following table lists the equivalent methods, classes, attributes between IMGUI and UI Toolkit:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>IMGUI</strong></th>
+	<th style="text-align:left;"><strong>IMGUI namespaces</strong></th>
+	<th style="text-align:left;"><strong>UI Toolkit</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUIUtility.AddCursorRect.html"><code>AddCursorRect()</code></a></td>
+	<td style="text-align:left;">EditorGUIUtility</td>
+	<td style="text-align:left;">Set <a href="../ScriptReference/UIElements.IStyle-cursor.html"><code>VisualElement.style.cursor</code></a>, or set a visual element’s cursor texture in the UI Builder or USS. For more detailed interactivity, use C# events.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUILayout.AreaScope.html"><code>AreaScope</code></a></td>
+	<td style="text-align:left;">GUILayout</td>
+	<td style="text-align:left;">Scopes are generally not needed in UI Toolkit. See <code>BeginArea()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUILayout.BeginArea.html"><code>BeginArea()</code></a></td>
+	<td style="text-align:left;">GUILayout</td>
+	<td style="text-align:left;">To define the area itself, create a visual element and set <a href="../ScriptReference/UIElements.IStyle-position.html"><code>style.position</code></a> to <a href="../ScriptReference/UIElements.Position.Absolute.html"><code>Position.Absolute</code></a>. To create children for the area, create child visual elements under it.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUILayout.BeginBuildTargetSelectionGrouping.html"><code>BeginBuildTargetSelectionGrouping()</code></a></td>
+	<td style="text-align:left;">EditorGUILayout</td>
+	<td style="text-align:left;">No equivalent.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.BeginChangeCheck.html"><code>BeginChangeCheck()</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;">Register callbacks on each element in the change check range. If using a <a href="../ScriptReference/UIElements.PropertyField.html"><code>PropertyField</code></a> as a stand-in for a serialized field in a custom Inspector, use <a href="../ScriptReference/UIElements.CallbackEventHandler.RegisterCallback.html"><code>PropertyField.RegisterCallback&lt;SerializedPropertyChangeEvent&gt;()</code></a> or <a href="../ScriptReference/UIElements.PropertyField.RegisterValueChangeCallback.html"><code>PropertyField.RegisterValueChangeCallback()</code></a>. In all other cases, use <a href="../ScriptReference/UIElements.CallbackEventHandler.RegisterCallback.html"><code>VisualElement.RegisterCallback&lt;ChangeEvent&lt;T&gt;&gt;()</code></a> or <a href="../ScriptReference/UIElements.INotifyValueChangedExtensions.RegisterValueChangedCallback.html"><code>VisualElement.RegisterValueChangedCallback&lt;T&gt;()</code></a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.BeginDisabledGroup.html"><code>BeginDisabledGroup()</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.VisualElement.SetEnabled.html"><code>VisualElement.SetEnabled(false)</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.BeginFoldoutHeaderGroup.html"><code>BeginFoldoutHeaderGroup()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;">See <code>Foldout()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.BeginGroup.html"><code>BeginGroup()</code></a></td>
+	<td style="text-align:left;">GUI</td>
+	<td style="text-align:left;">See <code>BeginArea()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUILayout.BeginHorizontal.html"><code>BeginHorizontal()</code></a></td>
+	<td style="text-align:left;">EditorGUILayout, GUILayout</td>
+	<td style="text-align:left;">See <code>BeginArea()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.BeginProperty.html"><code>BeginProperty()</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;">If you use <code>BeginProperty()</code>/<code>EndProperty()</code> to bind a simple control to a serialized property, you can do that in UI Toolkit by calling <a href="../ScriptReference/UIElements.BindingExtensions.BindProperty.html"><code>BindProperty()</code></a>, by setting <a href="../ScriptReference/UIElements.BindableElement-bindingPath.html"><code>bindingPath</code></a>, or by setting the <code>binding-path</code> UXML attribute. If you use <code>BeginProperty()</code>/<code>EndProperty()</code> to make a single property out of complex custom UI, that is not supported well in UI Toolkit.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.BeginScrollView.html"><code>BeginScrollView()</code></a></td>
+	<td style="text-align:left;">EditorGUILayout, GUI, GUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ScrollView.html"><code>UnityEngine.UIElements.ScrollView</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUILayout.BeginToggleGroup.html"><code>BeginToggleGroup()</code></a></td>
+	<td style="text-align:left;">EditorGUILayout</td>
+	<td style="text-align:left;">No equivalent.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUILayout.BeginVertical.html"><code>BeginVertical()</code></a></td>
+	<td style="text-align:left;">EditorGUILayout, GUILayout</td>
+	<td style="text-align:left;">See <code>BeginArea()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.BoundsField.html"><code>BoundsField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.BoundsField.html"><code>BoundsField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.BoundsIntField.html"><code>BoundsIntField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.BoundsIntField.html"><code>BoundsIntField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.Box.html"><code>Box()</code></a></td>
+	<td style="text-align:left;">GUI, GUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Box.html"><code>Box</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.BringWindowToBack.html"><code>BringWindowToBack()</code></a></td>
+	<td style="text-align:left;">GUI</td>
+	<td style="text-align:left;">See <code>Window()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.BringWindowToFront.html"><code>BringWindowToFront()</code></a></td>
+	<td style="text-align:left;">GUI</td>
+	<td style="text-align:left;">See <code>Window()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.Button.html"><code>Button()</code></a></td>
+	<td style="text-align:left;">GUI, GUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Button.html"><code>Button</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.CanCacheInspectorGUI.html"><code>CanCacheInspectorGUI()</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;">Not needed in retained mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.ChangeCheckScope.html"><code>ChangeCheckScope</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;">Scopes are generally not needed in UI Toolkit. See <code>BeginChangeCheck()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.ColorField.html"><code>ColorField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ColorField.html"><code>ColorField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUIUtility.CommandEvent.html"><code>CommandEvent()</code></a></td>
+	<td style="text-align:left;">EditorGUIUtility</td>
+	<td style="text-align:left;">Generally not needed in retained mode. Use C# callbacks to handle events.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.CurveField.html"><code>CurveField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.CurveField.html"><code>CurveField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.DelayedDoubleField.html"><code>DelayedDoubleField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.DoubleField.html"><code>DoubleField</code></a> with <a href="../ScriptReference/UIElements.TextInputBaseField_1-isDelayed.html"><code>isDelayed</code></a> set to true.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.DelayedFloatField.html"><code>DelayedFloatField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.FloatField.html"><code>FloatField</code></a> with <a href="../ScriptReference/UIElements.TextInputBaseField_1-isDelayed.html"><code>isDelayed</code></a> set to true.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.DelayedIntField.html"><code>DelayedIntField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.IntegerField.html"><code>IntegerField</code></a> with <a href="../ScriptReference/UIElements.TextInputBaseField_1-isDelayed.html"><code>isDelayed</code></a> set to true.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.DelayedTextField.html"><code>DelayedTextField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.TextField.html"><code>TextField</code></a> with <a href="../ScriptReference/UIElements.TextInputBaseField_1-isDelayed.html"><code>isDelayed</code></a> set to true.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.DisabledScope.html"><code>DisabledScope</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;">Scopes are generally not needed in UI Toolkit. See <code>BeginDisabledGroup()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.DoubleField.html"><code>DoubleField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.DoubleField.html"><code>DoubleField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.DragWindow.html"><code>DragWindow()</code></a></td>
+	<td style="text-align:left;">GUI</td>
+	<td style="text-align:left;">See <code>Window()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.DrawPreviewTexture.html"><code>DrawPreviewTexture()</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;">No equivalent.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.DrawRect.html"><code>DrawRect()</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;">Use <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a>. Set <a href="../ScriptReference/UIElements.IStyle-position.html"><code>style.position</code></a> to <a href="../ScriptReference/UIElements.Position.Absolute.html"><code>Absolute</code></a>. Set <a href="../ScriptReference/UIElements.IStyle-top.html"><code>style.top</code></a> and <a href="../ScriptReference/UIElements.IStyle-left.html"><code>style.left</code></a> to define the position. Set <a href="../ScriptReference/UIElements.IStyle-width.html"><code>style.width</code></a> and <a href="../ScriptReference/UIElements.IStyle-height.html"><code>style.height</code></a> to define the size. Set <a href="../ScriptReference/UIElements.IStyle-backgroundColor.html"><code>style.backgroundColor</code></a> to set the color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.DrawTexture.html"><code>DrawTexture()</code></a></td>
+	<td style="text-align:left;">GUI</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.Image.html"><code>Image</code></a>. Set <a href="../ScriptReference/UIElements.Image-tintColor.html"><code>tintColor</code></a> in place of <code>color</code>. There is no equivalent for a false <code>alphaBlend</code>. There are no equivalents for <code>borderWidth</code>, <code>borderWidths</code>, <code>borderRadius</code>, or <code>borderRadiuses</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.DrawTextureAlpha.html"><code>DrawTextureAlpha()</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;">No equivalent.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.DrawTextureWithTexCoords.html"><code>DrawTextureWithTexCoords()</code></a></td>
+	<td style="text-align:left;">GUI</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.Image.html"><code>Image</code></a>. Set <a href="../ScriptReference/UIElements.Image-uv.html"><code>uv</code></a> in place of <code>texCoords</code>. There is no equivalent for a false <code>alphaBlend</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.DropdownButton.html"><code>DropdownButton()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;">No exact equivalent. Use fully-fledged <a href="../ScriptReference/UIElements.DropdownField.html"><code>DropdownField</code></a>s instead of just a <code>DropdownButton()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.DropShadowLabel.html"><code>DropShadowLabel()</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.Label.html"><code>Label</code></a> with shadow values set in <a href="../ScriptReference/UIElements.IStyle-textShadow.html"><code>style.textShadow</code></a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUILayout.EditorToolbar.html"><code>EditorToolbar()</code></a></td>
+	<td style="text-align:left;">EditorGUILayout</td>
+	<td style="text-align:left;">Create a <a href="../ScriptReference/UIElements.Toolbar.html"><code>Toolbar</code></a> with one <a href="../ScriptReference/UIElements.ToolbarButton.html"><code>ToolbarButton</code></a> for each tool. For each <code>ToolbarButton</code>, register a callback when clicked to call either <a href="../ScriptReference/EditorTools.ToolManager.SetActiveTool.html"><code>ToolManager.SetActiveTool()</code></a> or <a href="../ScriptReference/EditorTools.ToolManager.RestorePreviousTool.html"><code>ToolManager.RestorePreviousTool()</code></a> to make that button activate the tool or deactivate it, respectively.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUILayout.EndArea.html"><code>EndArea()</code></a></td>
+	<td style="text-align:left;">GUILayout</td>
+	<td style="text-align:left;">See <code>BeginArea()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUILayout.EndBuildTargetSelectionGrouping.html"><code>EndBuildTargetSelectionGrouping()</code></a></td>
+	<td style="text-align:left;">EditorGUILayout</td>
+	<td style="text-align:left;">See <code>BeginBuildTargetSelectionGrouping()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.EndChangeCheck.html"><code>EndChangeCheck()</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;">See <code>BeginChangeCheck()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.EndDisabledGroup.html"><code>EndDisabledGroup()</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;">See <code>BeginDisabledGroup()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.EndFoldoutHeaderGroup.html"><code>EndFoldoutHeaderGroup()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;">See <code>Foldout()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.EndGroup.html"><code>EndGroup()</code></a></td>
+	<td style="text-align:left;">GUI</td>
+	<td style="text-align:left;">See <code>BeginArea()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUILayout.EndHorizontal.html"><code>EndHorizontal()</code></a></td>
+	<td style="text-align:left;">EditorGUILayout, GUILayout</td>
+	<td style="text-align:left;">See <code>BeginArea()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.EndProperty.html"><code>EndProperty()</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;">See <code>BeginProperty()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.EndScrollView.html"><code>EndScrollView()</code></a></td>
+	<td style="text-align:left;">EditorGUILayout, GUI, GUILayout</td>
+	<td style="text-align:left;">See <code>BeginScrollView()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUILayout.EndToggleGroup.html"><code>EndToggleGroup()</code></a></td>
+	<td style="text-align:left;">EditorGUILayout</td>
+	<td style="text-align:left;">See <code>BeginToggleGroup()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUILayout.EndVertical.html"><code>EndVertical()</code></a></td>
+	<td style="text-align:left;">EditorGUILayout, GUILayout</td>
+	<td style="text-align:left;">See <code>BeginArea()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.EnumFlagsField.html"><code>EnumFlagsField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.EnumFlagsField.html"><code>EnumFlagsField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.EnumPopup.html"><code>EnumPopup()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.EnumField.html"><code>EnumField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUILayout.ExpandHeight.html"><code>ExpandHeight()</code></a></td>
+	<td style="text-align:left;">GUILayout</td>
+	<td style="text-align:left;">No equivalent.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUILayout.ExpandWidth.html"><code>ExpandWidth()</code></a></td>
+	<td style="text-align:left;">GUILayout</td>
+	<td style="text-align:left;">No equivalent.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUILayout.FlexibleSpace.html"><code>FlexibleSpace()</code></a></td>
+	<td style="text-align:left;">GUILayout</td>
+	<td style="text-align:left;">See <code>Space()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.FloatField.html"><code>FloatField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.FloatField.html"><code>FloatField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.FocusControl.html"><code>FocusControl()</code></a></td>
+	<td style="text-align:left;">GUI</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Focusable.Focus.html"><code>VisualElement.Focus()</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.FocusTextInControl.html"><code>FocusTextInControl()</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Focusable.Focus.html"><code>TextField.Focus()</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.FocusWindow.html"><code>FocusWindow()</code></a></td>
+	<td style="text-align:left;">GUI</td>
+	<td style="text-align:left;">See <code>Window()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.Foldout.html"><code>Foldout()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Foldout.html"><code>Foldout</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUILayout.GetControlRect.html"><code>GetControlRect()</code></a></td>
+	<td style="text-align:left;">EditorGUILayout</td>
+	<td style="text-align:left;">Only needed to convert from EditorGUILayout to EditorGUI. Not needed in UI Toolkit.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.GetNameOfFocusedControl.html"><code>GetNameOfFocusedControl()</code></a></td>
+	<td style="text-align:left;">GUI</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.FocusController-focusedElement.html"><code>VisualElement.focusController.focusedElement</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.GetPropertyHeight.html"><code>GetPropertyHeight()</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Rect-height.html"><code>PropertyField.layout.height</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.GradientField.html"><code>GradientField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.GradientField.html"><code>GradientField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.GroupScope.html"><code>GroupScope</code></a></td>
+	<td style="text-align:left;">GUI</td>
+	<td style="text-align:left;">Scopes are generally not needed in UI Toolkit. See <code>BeginArea()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUILayout.Height.html"><code>Height()</code></a></td>
+	<td style="text-align:left;">GUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.IStyle-height.html"><code>VisualElement.style.height</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.HelpBox.html"><code>HelpBox()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.HelpBox.html"><code>HelpBox</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUILayout.HorizontalScope.html"><code>HorizontalScope</code></a></td>
+	<td style="text-align:left;">EditorGUILayout, GUILayout</td>
+	<td style="text-align:left;">Scopes are generally not needed in UI Toolkit. See <code>BeginArea()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.HorizontalScrollbar.html"><code>HorizontalScrollbar()</code></a></td>
+	<td style="text-align:left;">GUI, GUILayout</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.Scroller.html"><code>Scroller</code></a> with <a href="../ScriptReference/UIElements.Scroller-direction.html"><code>direction</code></a> set to <a href="../ScriptReference/UIElements.SliderDirection.Horizontal.html"><code>Horizontal</code></a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.HorizontalSlider.html"><code>HorizontalSlider()</code></a></td>
+	<td style="text-align:left;">GUI, GUILayout</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.Slider.html"><code>Slider</code></a> with <a href="../ScriptReference/UIElements.BaseSlider_1-direction.html"><code>direction</code></a> set to <a href="../ScriptReference/UIElements.SliderDirection.Horizontal.html"><code>Horizontal</code></a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.InspectorTitlebar.html"><code>InspectorTitlebar()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;">No equivalent.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.IntField.html"><code>IntField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.IntegerField.html"><code>IntegerField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.IntPopup.html"><code>IntPopup()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;">No equivalent.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.IntSlider.html"><code>IntSlider()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.SliderInt.html"><code>SliderInt</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.Label.html"><code>Label()</code></a></td>
+	<td style="text-align:left;">GUI, GUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Label.html"><code>Label</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.LabelField.html"><code>LabelField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.TextField.html"><code>TextField</code></a> with <a href="../ScriptReference/UIElements.TextInputBaseField_1-isReadOnly.html"><code>isReadOnly</code></a> set to true.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.LayerField.html"><code>LayerField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.LayerField.html"><code>LayerField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.LinkButton.html"><code>LinkButton()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;">No equivalent.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUIUtility.Load.html"><code>Load()</code></a></td>
+	<td style="text-align:left;">EditorGUIUtility</td>
+	<td style="text-align:left;">If using C#, you can use this function as is and assign its return value to the <code>VisualElement.style</code> property you want. If using USS, use function <code>resource()</code> with the same argument you would give to <code>Load()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.LongField.html"><code>LongField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.LongField.html"><code>LongField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.MaskField.html"><code>MaskField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.MaskField.html"><code>MaskField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUILayout.MaxHeight.html"><code>MaxHeight()</code></a></td>
+	<td style="text-align:left;">GUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.IStyle-maxHeight.html"><code>VisualElement.style.maxHeight</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUILayout.MaxWidth.html"><code>MaxWidth()</code></a></td>
+	<td style="text-align:left;">GUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.IStyle-maxWidth.html"><code>VisualElement.style.maxWidth</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUILayout.MinHeight.html"><code>MinHeight()</code></a></td>
+	<td style="text-align:left;">GUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.IStyle-minHeight.html"><code>VisualElement.style.minHeight</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.MinMaxSlider.html"><code>MinMaxSlider()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.MinMaxSlider.html"><code>MinMaxSlider</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUILayout.MinWidth.html"><code>MinWidth()</code></a></td>
+	<td style="text-align:left;">GUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.IStyle-minWidth.html"><code>VisualElement.style.minWidth</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.ModalWindow.html"><code>ModalWindow()</code></a></td>
+	<td style="text-align:left;">GUI</td>
+	<td style="text-align:left;">See <code>Window()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/NonReorderableAttribute.html"><code>[NonReorderable]</code> attribute</a></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Ensure that <a href="../ScriptReference/UIElements.BaseVerticalCollectionView-reorderable.html"><code>ListView.reorderable</code></a> is false.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.ObjectField.html"><code>ObjectField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ObjectField.html"><code>ObjectField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.PasswordField.html"><code>PasswordField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout, GUI, GUILayout</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.TextField.html"><code>TextField</code></a> with <a href="../ScriptReference/UIElements.TextInputBaseField_1-isPasswordField.html"><code>isPasswordField</code></a> set to true</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUIUtility.PixelsToPoints.html"><code>PixelsToPoints()</code></a></td>
+	<td style="text-align:left;">EditorGUIUtility</td>
+	<td style="text-align:left;">Valid for use with UI Toolkit.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUIUtility.PointsToPixels.html"><code>PointsToPixels()</code></a></td>
+	<td style="text-align:left;">EditorGUIUtility</td>
+	<td style="text-align:left;">Valid for use with UI Toolkit.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.Popup.html"><code>Popup()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.PopupField_1.html"><code>PopupField&lt;T0&gt;</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.ProgressBar.html"><code>ProgressBar()</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ProgressBar.html"><code>ProgressBar</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.PropertyField.html"><code>PropertyField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.PropertyField.html"><code>PropertyField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.PropertyScope.html"><code>PropertyScope</code></a></td>
+	<td style="text-align:left;">EditorGUI</td>
+	<td style="text-align:left;">Scopes are generally not needed in UI Toolkit. See <code>BeginProperty()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.RectField.html"><code>RectField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.RectField.html"><code>RectField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.RectIntField.html"><code>RectIntField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.RectIntField.html"><code>RectIntField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.RepeatButton.html"><code>RepeatButton()</code></a></td>
+	<td style="text-align:left;">GUI, GUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.RepeatButton.html"><code>RepeatButton</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.ScrollTo.html"><code>ScrollTo()</code></a></td>
+	<td style="text-align:left;">GUI</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.ScrollView.ScrollTo.html"><code>ScrollView.ScrollTo()</code></a> or <a href="../ScriptReference/UIElements.ScrollView-scrollOffset.html"><code>ScrollView.scrollOffset</code></a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUILayout.ScrollViewScope.html"><code>ScrollViewScope</code></a></td>
+	<td style="text-align:left;">EditorGUILayout, GUI, GUILayout</td>
+	<td style="text-align:left;">Scopes are generally not needed in UI Toolkit. See <code>BeginScrollView()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.SelectableLabel.html"><code>SelectableLabel()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;">No equivalent.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.SelectionGrid.html"><code>SelectionGrid()</code></a></td>
+	<td style="text-align:left;">GUI, GUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.RadioButton.html"><code>RadioButton</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.SetNextControlName.html"><code>SetNextControlName()</code></a></td>
+	<td style="text-align:left;">GUI</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.VisualElement-name.html"><code>VisualElement.name</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUIUtility-singleLineHeight.html"><code>singleLineHeight</code></a></td>
+	<td style="text-align:left;">EditorGUIUtility</td>
+	<td style="text-align:left;">Use USS variable <code>--unity-metrics-single_line-height</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.Slider.html"><code>Slider()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Slider.html"><code>Slider</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUILayout.Space.html"><code>Space()</code></a></td>
+	<td style="text-align:left;">EditorGUILayout, GUILayout</td>
+	<td style="text-align:left;">Use <code>flex</code> properties to configure spacing between visual elements.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.TagField.html"><code>TagField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.TagField.html"><code>TagField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.TextArea.html"><code>TextArea()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout, GUI, GUILayout</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.TextField.html"><code>TextField</code></a> with <a href="../ScriptReference/UIElements.TextField-multiline.html"><code>multiline</code></a> set to true, <a href="../ScriptReference/UIElements.IStyle-whiteSpace.html"><code>style.whiteSpace</code></a> set to <a href="../ScriptReference/UIElements.WhiteSpace.Normal.html"><code>Normal</code></a>, and <a href="../ScriptReference/UIElements.ScrollView-verticalScrollerVisibility.html"><code>ScrollView.verticalScrollerVisibility</code></a> set to <a href="../ScriptReference/UIElements.ScrollerVisibility.Auto.html"><code>Auto</code></a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.TextField.html"><code>TextField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout, GUI, GUILayout</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.TextField.html"><code>TextField</code></a> with <a href="../ScriptReference/UIElements.TextField-multiline.html"><code>multiline</code></a> set to true and <a href="../ScriptReference/UIElements.IStyle-whiteSpace.html"><code>style.whiteSpace</code></a> set to <a href="../ScriptReference/UIElements.WhiteSpace.NoWrap.html"><code>NoWrap</code></a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.Toggle.html"><code>Toggle()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout, GUI, GUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Toggle.html"><code>Toggle</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUILayout.ToggleGroupScope.html"><code>ToggleGroupScope</code></a></td>
+	<td style="text-align:left;">EditorGUILayout</td>
+	<td style="text-align:left;">Scopes are generally not needed in UI Toolkit. See <code>BeginToggleGroup()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.ToggleLeft.html"><code>ToggleLeft()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.Toggle.html"><code>Toggle</code></a>, but instead of setting <a href="../ScriptReference/UIElements.BaseField_1-label.html"><code>label</code></a>, set <a href="../ScriptReference/UIElements.BaseBoolField-text.html"><code>text</code></a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.Toolbar.html"><code>Toolbar()</code></a></td>
+	<td style="text-align:left;">GUI, GUILayout</td>
+	<td style="text-align:left;">No equivalent.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.UnfocusWindow.html"><code>UnfocusWindow()</code></a></td>
+	<td style="text-align:left;">GUI</td>
+	<td style="text-align:left;">See <code>Window()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.Vector2Field.html"><code>Vector2Field()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Vector2Field.html"><code>Vector2Field</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.Vector2IntField.html"><code>Vector2IntField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Vector2IntField.html"><code>Vector2IntField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.Vector3Field.html"><code>Vector3Field()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Vector3Field.html"><code>Vector3Field</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.Vector3IntField.html"><code>Vector3IntField()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Vector3IntField.html"><code>Vector3IntField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUI.Vector4Field.html"><code>Vector4Field()</code></a></td>
+	<td style="text-align:left;">EditorGUI, EditorGUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Vector4Field.html"><code>Vector4Field</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/EditorGUILayout.VerticalScope.html"><code>VerticalScope</code></a></td>
+	<td style="text-align:left;">EditorGUILayout, GUILayout</td>
+	<td style="text-align:left;">Scopes are generally not needed in UI Toolkit. See <code>BeginArea()</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.VerticalScrollbar.html"><code>VerticalScrollbar()</code></a></td>
+	<td style="text-align:left;">GUI, GUILayout</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.Scroller.html"><code>Scroller</code></a> with <a href="../ScriptReference/UIElements.Scroller-direction.html"><code>direction</code></a> set to <a href="../ScriptReference/UIElements.SliderDirection.Vertical.html"><code>Vertical</code></a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.VerticalSlider.html"><code>VerticalSlider()</code></a></td>
+	<td style="text-align:left;">GUI, GUILayout</td>
+	<td style="text-align:left;">
+<a href="../ScriptReference/UIElements.Slider.html"><code>Slider</code></a> with <a href="../ScriptReference/UIElements.BaseSlider_1-direction.html"><code>direction</code></a> set to <a href="../ScriptReference/UIElements.SliderDirection.Vertical.html"><code>Vertical</code></a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUILayout.Width.html"><code>Width()</code></a></td>
+	<td style="text-align:left;">GUILayout</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.IStyle-width.html"><code>VisualElement.style.width</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/GUI.Window.html"><code>Window()</code></a></td>
+	<td style="text-align:left;">GUI, GUILayout</td>
+	<td style="text-align:left;">No equivalent.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-simple-ui-toolkit-workflow.html">Get started with UI Toolkit</a></li>
+<li><a href="UIE-USS.html">Unity style sheets (USS)</a></li>
+<li><a href="UIE-examples.html">Examples</a></li>
+<li><a href="UIE-IMGUI-Events.html">IMGUI events</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Transitioning-From-UGUI.html"></a></span><div class="tip">Migrate from Unity UI (uGUI) to UI Toolkit</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="com.unity.ugui.html"></a></span><div class="tip">Unity UI </div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

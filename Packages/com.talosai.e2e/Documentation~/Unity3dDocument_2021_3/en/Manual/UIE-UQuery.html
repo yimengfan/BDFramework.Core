@@ -1,0 +1,306 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Find visual elements with UQuery</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-UQuery.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-UQuery.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-UQuery.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-UQuery.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-UQuery.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-UQuery.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-UQuery.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-UQuery.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-structure-ui.html">Structure UI</a></li>
+<li><a href="UIE-UXML.html">Structure UI with UXML</a></li>
+<li>Find visual elements with UQuery</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-LoadingUXMLcsharp.html"></a></span><div class="tip">Instantiate UXML from C# scripts</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Controls.html"></a></span><div class="tip">Structure UI with C# scripts</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Find visual elements with UQuery</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can use <a href="../ScriptReference/UIElements.UQuery.html">UQuery</a> to find elements from a <span class="tooltip"><a href="UIE-VisualTree.html">visual tree</a><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualtree" aria-label="Go to glossary anchor for Visualtree">Glossary</a></span></span></span>. UQuery was inspired by JQuery and Linq, and is designed to limit dynamic memory allocation. This allows for optimal performance on mobile platforms.</p>
+
+<h2>Query methods</h2>
+
+<p>You can use UQuery through the following extension methods:</p>
+
+<ul>
+<li><a href="../ScriptReference/UIElements.UQueryExtensions.Q.html"><code>Q</code></a></li>
+<li><a href="../ScriptReference/UIElements.UQueryExtensions.Query.html"><code>Query</code></a></li>
+</ul>
+
+<p>Internally, the <code>Q</code> and <code>Query</code> methods use <a href="../ScriptReference/UIElements.UQueryBuilder_1.html"><code>UQueryBuilder</code></a> to construct a query. These extension methods reduce the verbosity of creating a <code>UQueryBuilder</code>.</p>
+
+<p>To use UQuery to find elements, you must <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-manage-asset-reference.html">load</a> and <a href="UIE-LoadingUXMLcsharp.html">instantiate</a> the UXML first, and then use <code>Query</code> or <code>Q</code> to construct selection rules on a root <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="UIE-manage-asset-reference.html">load</a> and <a href="UIE-LoadingUXMLcsharp.html">instantiate</a> the UXML first, and then use <code>Query</code> or <code>Q</code> to construct selection rules on a root <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span>.</p>
+
+<p>
+<code>Query</code> returns a list of elements that match the selection rules. You can filter the return results of <code>Query</code> with the public methods of <a href="../ScriptReference/UIElements.UQueryBuilder_1.html"><code>UQueryBuilder</code></a>, such as <a href="../ScriptReference/UIElements.UQueryBuilder_1.First.html">First</a>, <a href="../ScriptReference/UIElements.UQueryBuilder_1.Last.html">Last</a>, <a href="../ScriptReference/UIElements.UQueryBuilder_1.AtIndex.html">AtIndex</a>, <a href="../ScriptReference/UIElements.UQueryBuilder_1.Children.html">Children</a>, and <a href="../ScriptReference/UIElements.UQueryBuilder_1.Where.html">Where</a>. </p>
+
+<p>
+<code>Q</code> is the shorthand for <code>Query&lt;T&gt;.First()</code>. It returns the first element that matches the selection rules.</p>
+
+<h2>Query elements</h2>
+
+<p>You can query elements by their <a href="#name">name</a>, their <a href="#class">USS class</a>, or their <a href="#type">element type (C# type)</a>. You can also query with a <a href="#predicate">predicate</a> or make <a href="#complex">complex hierarchical queries</a>.</p>
+
+<p>The following sections use this example UXML to demonstrate how to find elements:</p>
+
+<pre><code class="lang-xml">&lt;UXML xmlns=&quot;UnityEngine.UIElements&quot;&gt;
+    &lt;VisualElement name=&quot;container1&quot;&gt;
+      &lt;Button name=&quot;OK&quot; text=&quot;OK&quot; /&gt;
+      &lt;Button name=&quot;Cancel&quot; text=&quot;Cancel&quot; /&gt;
+    &lt;/VisualElement&gt;
+     &lt;VisualElement name=&quot;container2&quot;&gt;
+      &lt;Button name=&quot;OK&quot; class=&quot;yellow&quot; text=&quot;OK&quot; /&gt;
+      &lt;Button name=&quot;Cancel&quot; text=&quot;Cancel&quot; /&gt;
+    &lt;/VisualElement&gt;
+    &lt;VisualElement name=&quot;container3&quot;&gt;
+      &lt;Button name=&quot;OK&quot; class=&quot;yellow&quot; text=&quot;OK&quot; /&gt;
+      &lt;Button name=&quot;Cancel&quot; class=&quot;yellow&quot; text=&quot;Cancel&quot; /&gt;
+    &lt;/VisualElement&gt;
+&lt;/UXML&gt;
+</code></pre>
+
+<p><a name="name" aria-hidden="true"></a></p>
+
+<h3>Query by name</h3>
+
+<p>To find elements by their <a href="UIE-USS-Selectors-name.html">name</a>, use <code>Query(name: &quot;element-name&quot;)</code> or <code>Q(name: &quot;element-name&quot;)</code>. You can omit the <code>name</code> as it’s the first argument. For example:</p>
+
+<p>The following example finds a list of elements named “Ok”:</p>
+
+<pre><code class="lang-csharp">List&lt;VisualElement&gt; result = root.Query(&quot;OK&quot;).ToList();
+</code></pre>
+
+<p>The following example uses <code>Query</code> to find the first element named “Ok”:</p>
+
+<pre><code class="lang-csharp">VisualElement result = root.Query(&quot;OK&quot;).First(); //or VisualElement result = root.Q(&quot;OK&quot;);            
+</code></pre>
+
+<p>The following example uses <code>Q</code> to find the first element named “Ok”:</p>
+
+<pre><code class="lang-csharp">VisualElement result = root.Q(&quot;OK&quot;);            
+</code></pre>
+
+<p>The following example finds the second element named “Ok”:</p>
+
+<pre><code class="lang-csharp">VisualElement result3 = root.Query(&quot;OK&quot;).AtIndex(1);
+</code></pre>
+
+<p>The following example finds the last element named “Ok”:</p>
+
+<pre><code class="lang-csharp">VisualElement result4 = root.Query(&quot;OK&quot;).Last();
+</code></pre>
+
+<p><a name="class" aria-hidden="true"></a></p>
+
+<h3>Query by USS class</h3>
+
+<p>To find elements by a <a href="UIE-USS-Selectors-class.html">USS class</a>, use <code>Query(className: &quot;class-name&quot;)</code> or <code>Q(className: &quot;class-name&quot;)</code>. </p>
+
+<p>The following example finds all the elements that have the class “yellow” and assigns them to a list:</p>
+
+<pre><code class="lang-csharp">List&lt;VisualElement&gt; result = root.Query(className: &quot;yellow&quot;).ToList();
+</code></pre>
+
+<p>The following example finds the first element that has the class “yellow”:</p>
+
+<pre><code class="lang-csharp">VisualElement result = root.Q(className: &quot;yellow&quot;);
+</code></pre>
+
+<p><a name="type" aria-hidden="true"></a></p>
+
+<h3>Query by element type</h3>
+
+<p>To find elements by their <a href="UIE-USS-Selectors-type.html">element type</a>(C# type), use <code>Query&lt;Type&gt;</code> or <code>Q&lt;Type&gt;</code>. </p>
+
+<p>The following example finds the first button and adds a tooltip for it:</p>
+
+<pre><code class="lang-csharp">VisualElement result = root.Q&lt;Button&gt;();
+result.tooltip = &quot;This is a tooltip!&quot;;
+</code></pre>
+
+<p>The following example finds the third button:</p>
+
+<pre><code class="lang-csharp">VisualElement result = root.Query&lt;Button&gt;().AtIndex(2);
+</code></pre>
+
+<p>
+<strong>Note</strong>: You can only query by the actual type of the element, not base classes. </p>
+
+<p><a name="predicate" aria-hidden="true"></a></p>
+
+<h3>Query with a predicate</h3>
+
+<p>Other than to query elements by name, class, and type, you can also use the <code>Where</code> method to select all elements that satisfy a predicate. The predicate must be a function callback that takes a single <code>VisualElement</code> argument.</p>
+
+<p>The following example finds all the elements with the “yellow” USS class that have no tooltips:</p>
+
+<pre><code class="lang-csharp">List&lt;VisualElement&gt; result = root.Query(className: &quot;yellow&quot;).Where(elem =&gt; elem.tooltip == &quot;&quot;).ToList();
+</code></pre>
+
+<p><a name="complex" aria-hidden="true"></a></p>
+
+<h3>Complex hierarchical queries</h3>
+
+<p>You can combine name, class, and type to make complex hierarchical queries. </p>
+
+<p>The following example finds the first button named “OK” that has a class of “yellow”:</p>
+
+<pre><code class="lang-csharp">VisualElement result = root.Query&lt;Button&gt;(className: &quot;yellow&quot;, name: &quot;OK&quot;).First();
+</code></pre>
+
+<p>The following example finds the child cancel button of the “container2”:</p>
+
+<pre><code class="lang-csharp">VisualElement result = root.Query&lt;VisualElement&gt;(&quot;container2&quot;).Children&lt;Button&gt;(&quot;Cancel&quot;).First();
+</code></pre>
+
+<h3>Operate on results</h3>
+
+<p>You can use the <a href="../ScriptReference/UIElements.UQueryBuilder_1.ForEach.html">ForEach</a> method to operate directly on the query results. </p>
+
+<p>The following example adds a tooltip for any elements that have no tooltips:</p>
+
+<pre><code class="lang-csharp">root.Query().Where(elem =&gt; elem.tooltip == &quot;&quot;).ForEach(elem =&gt; elem.tooltip=&quot;This is a tooltip!&quot;);
+</code></pre>
+
+<h2>Best practices</h2>
+
+<p>Consider the following when you use UQuery:</p>
+
+<ul>
+<li>UQuery traverses through the hierarchy to find elements by name, class or type. Cache results from UQuery at initialization.</li>
+<li>If you need to retrieve multiple elements, use the <code>QueryState</code> struct (returned by the <code>element.Query()</code> method) and enumerate it to avoid creating lists. You can also construct a query once and execute it on different elements.</li>
+<li><span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit doesn’t destroy visual elements that are no longer needed, it uses C# garbage collector to collect them. Be mindful to not accidentally retain references to visual elements in a class that outlives the UIDocuments or Window where the elements came from.</li>
+<li>Capture <code>VisualElement</code> variables inside closures.</li>
+<li>When you create or release lots of elements, enable <a href="performance-incremental-garbage-collection.html">incremental garbage collection</a> to avoid garbage collector spikes.</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-USS-Selectors.html">USS selectors</a></li>
+<li><a href="UIE-VisualTree.html">Introduction to visual elements and visual tree</a></li>
+<li><a href="UIE-manage-asset-reference.html">Load UXML and USS from C# scripts</a></li>
+<li><a href="UIE-LoadingUXMLcsharp.html">Instantiate UXML with C#</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-LoadingUXMLcsharp.html"></a></span><div class="tip">Instantiate UXML from C# scripts</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Controls.html"></a></span><div class="tip">Structure UI with C# scripts</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

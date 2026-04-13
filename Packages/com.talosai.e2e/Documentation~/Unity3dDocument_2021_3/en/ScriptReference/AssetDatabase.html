@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: AssetDatabase</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">AssetDatabase</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEditor</p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>An Interface for accessing assets and performing operations on assets.</p>
+              </div>
+              <div class="subsection">
+                <h3>Static Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="AssetDatabase.ActiveRefreshImportMode.html">ActiveRefreshImportMode</a></td><td class="desc">Gets the refresh import mode currently in use by the asset database.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.DesiredWorkerCount.html">DesiredWorkerCount</a></td><td class="desc">The desired number of processes to use when importing assets, during an asset database refresh.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GlobalArtifactDependencyVersion.html">GlobalArtifactDependencyVersion</a></td><td class="desc">Changes during Refresh if anything has changed that can invalidate any artifact.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GlobalArtifactProcessedVersion.html">GlobalArtifactProcessedVersion</a></td><td class="desc">Changes whenever a new artifact is added to the artifact database.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase-onImportPackageItemsCompleted.html">onImportPackageItemsCompleted</a></td><td class="desc">Callback raised whenever a package import successfully completes that lists the items selected to be imported.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="AssetDatabase.AddObjectToAsset.html">AddObjectToAsset</a></td><td class="desc">Adds objectToAdd to an existing asset at path.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.AllowAutoRefresh.html">AllowAutoRefresh</a></td><td class="desc">Decrements an internal counter which Unity uses to determine whether to allow automatic AssetDatabase refreshing behavior.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.AssetPathToGUID.html">AssetPathToGUID</a></td><td class="desc">Get the GUID for the asset at path.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.CanConnectToCacheServer.html">CanConnectToCacheServer</a></td><td class="desc">Checks the availability of the Cache Server.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.CanOpenAssetInEditor.html">CanOpenAssetInEditor</a></td><td class="desc">Checks if Unity can open an asset in the Editor.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.CanOpenForEdit.html">CanOpenForEdit</a></td><td class="desc">Query whether an Asset file can be opened for editing in version control and is not exclusively locked by another user or otherwise unavailable.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.ClearImporterOverride.html">ClearImporterOverride</a></td><td class="desc">Clears the importer override for the asset.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.ClearLabels.html">ClearLabels</a></td><td class="desc">Removes all labels attached to an asset.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.CloseCacheServerConnection.html">CloseCacheServerConnection</a></td><td class="desc">Closes an active cache server connection. If no connection is active, then it does nothing.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.Contains.html">Contains</a></td><td class="desc">Is object an asset?</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.CopyAsset.html">CopyAsset</a></td><td class="desc">Duplicates the asset at path and stores it at newPath.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.CreateAsset.html">CreateAsset</a></td><td class="desc">Creates a new native Unity asset.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.CreateFolder.html">CreateFolder</a></td><td class="desc">Creates a new folder, in the specified parent folder.The parent folder string must start with the "Assets" folder, and all folders within the parent folder string must already exist. For example, when specifying "Assets/ParentFolder1/Parentfolder2/", the new folder will be created in "ParentFolder2" only if ParentFolder1 and ParentFolder2 already exist.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.DeleteAsset.html">DeleteAsset</a></td><td class="desc">Deletes the specified asset or folder.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.DeleteAssets.html">DeleteAssets</a></td><td class="desc">Lets you delete multiple assets or folders at once with performance benefits under version control.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.DisallowAutoRefresh.html">DisallowAutoRefresh</a></td><td class="desc">Increments an internal counter which Unity uses to determine whether to allow automatic AssetDatabase refreshing behavior.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.ExportPackage.html">ExportPackage</a></td><td class="desc">Exports the assets identified by assetPathNames to a unitypackage file in fileName.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.ExtractAsset.html">ExtractAsset</a></td><td class="desc">Creates an external Asset from an object (such as a Material) by extracting it from within an imported asset (such as an FBX file).</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.FindAssets.html">FindAssets</a></td><td class="desc">Search the asset database using the search filter string.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.ForceReserializeAssets.html">ForceReserializeAssets</a></td><td class="desc">Forcibly load and re-serialize the given assets, flushing any outstanding data changes to disk.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.ForceToDesiredWorkerCount.html">ForceToDesiredWorkerCount</a></td><td class="desc">Forces the Editor to use the desired amount of worker processes. Unity will either spawn new worker processes or shut down idle worker processes to reach the desired number.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GenerateUniqueAssetPath.html">GenerateUniqueAssetPath</a></td><td class="desc">Creates a new unique path for an asset.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetAllAssetBundleNames.html">GetAllAssetBundleNames</a></td><td class="desc">Return all the AssetBundle names in the asset database.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetAssetBundleDependencies.html">GetAssetBundleDependencies</a></td><td class="desc">Given an assetBundleName, returns the list of AssetBundles that it depends on.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetAssetDependencyHash.html">GetAssetDependencyHash</a></td><td class="desc">Returns the hash of all the dependencies of an asset.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetAssetOrScenePath.html">GetAssetOrScenePath</a></td><td class="desc">Returns the path name relative to the project folder where the asset is stored.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetAssetPath.html">GetAssetPath</a></td><td class="desc">Returns the path name relative to the project folder where the asset is stored.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetAssetPathFromTextMetaFilePath.html">GetAssetPathFromTextMetaFilePath</a></td><td class="desc">Gets the path to the asset file associated with a text .meta file.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetAssetPathsFromAssetBundle.html">GetAssetPathsFromAssetBundle</a></td><td class="desc">Returns an array containing the paths of all assets marked with the specified Asset Bundle name.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName.html">GetAssetPathsFromAssetBundleAndAssetName</a></td><td class="desc">Get the Asset paths for all Assets tagged with assetBundleName and
+                named assetName.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetAvailableImporterTypes.html">GetAvailableImporterTypes</a></td><td class="desc">Gets the importer types associated with a given Asset type.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetCachedIcon.html">GetCachedIcon</a></td><td class="desc">Retrieves an icon for the asset at the given asset path.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetCacheServerAddress.html">GetCacheServerAddress</a></td><td class="desc">Gets the IP address of the Cache Server in Editor Settings.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetCacheServerEnableDownload.html">GetCacheServerEnableDownload</a></td><td class="desc">Gets the Cache Server Download option from Editor Settings.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetCacheServerEnableUpload.html">GetCacheServerEnableUpload</a></td><td class="desc">Gets the Cache Server Upload option from Editor Settings.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetCacheServerNamespacePrefix.html">GetCacheServerNamespacePrefix</a></td><td class="desc">Gets the Cache Server Namespace prefix set in Editor Settings.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetCacheServerPort.html">GetCacheServerPort</a></td><td class="desc">Gets the Port number of the Cache Server in Editor Settings.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetCurrentCacheServerIp.html">GetCurrentCacheServerIp</a></td><td class="desc">Gets the IP address of the Cache Server currently in use by the Editor.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetDependencies.html">GetDependencies</a></td><td class="desc">Returns an array of all the assets that are dependencies of the asset at the specified pathName.Note: GetDependencies() gets the Assets that are referenced by other Assets. For example, a Scene could contain many GameObjects with a Material attached to them. In this case,  GetDependencies() will return the path to the Material Assets, but not the GameObjects as those are not Assets on your disk.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetImplicitAssetBundleName.html">GetImplicitAssetBundleName</a></td><td class="desc">Returns the name of the AssetBundle that a given asset belongs to.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetImplicitAssetBundleVariantName.html">GetImplicitAssetBundleVariantName</a></td><td class="desc">Returns the name of the AssetBundle Variant that a given asset belongs to.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetImporterOverride.html">GetImporterOverride</a></td><td class="desc">Returns the type of the override importer.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetLabels.html">GetLabels</a></td><td class="desc">Returns all labels attached to a given asset.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetMainAssetTypeAtPath.html">GetMainAssetTypeAtPath</a></td><td class="desc">Returns the type of the main asset object at assetPath.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetSubFolders.html">GetSubFolders</a></td><td class="desc">Given a path to a directory in the Assets folder, relative to the project folder, this method will return an array of all its subdirectories.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetTextMetaFilePathFromAssetPath.html">GetTextMetaFilePathFromAssetPath</a></td><td class="desc">Gets the path to the text .meta file associated with an asset.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetTypeFromPathAndFileID.html">GetTypeFromPathAndFileID</a></td><td class="desc">Gets an object's type from an Asset path and a local file identifier.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GetUnusedAssetBundleNames.html">GetUnusedAssetBundleNames</a></td><td class="desc">Return all the unused assetBundle names in the asset database.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GUIDFromAssetPath.html">GUIDFromAssetPath</a></td><td class="desc">Get the GUID for the asset at path.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.GUIDToAssetPath.html">GUIDToAssetPath</a></td><td class="desc">Gets the corresponding asset path for the supplied GUID, or an empty string if the GUID can't be found.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.ImportAsset.html">ImportAsset</a></td><td class="desc">Import asset at path.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.ImportPackage.html">ImportPackage</a></td><td class="desc">Imports package at packagePath into the current project.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.IsCacheServerEnabled.html">IsCacheServerEnabled</a></td><td class="desc">Checks whether the Cache Server is enabled in Project Settings.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.IsConnectedToCacheServer.html">IsConnectedToCacheServer</a></td><td class="desc">Checks connection status of the Cache Server.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.IsDirectoryMonitoringEnabled.html">IsDirectoryMonitoringEnabled</a></td><td class="desc">Reports whether Directory Monitoring is enabled.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.IsForeignAsset.html">IsForeignAsset</a></td><td class="desc">Determines whether the Asset is a foreign Asset.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.IsMainAsset.html">IsMainAsset</a></td><td class="desc">Is asset a main asset in the project window?</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.IsMainAssetAtPathLoaded.html">IsMainAssetAtPathLoaded</a></td><td class="desc">Returns true if the main asset object at assetPath is loaded in memory.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.IsMetaFileOpenForEdit.html">IsMetaFileOpenForEdit</a></td><td class="desc">Query whether an asset's metadata (.meta) file is open for edit in version control.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.IsNativeAsset.html">IsNativeAsset</a></td><td class="desc">Determines whether the Asset is a native Asset.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.IsOpenForEdit.html">IsOpenForEdit</a></td><td class="desc">Query whether an Asset file is open for editing in version control.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.IsSubAsset.html">IsSubAsset</a></td><td class="desc">Does the asset form part of another asset?</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.IsValidFolder.html">IsValidFolder</a></td><td class="desc">Given a path to a folder, returns true if it exists, false otherwise.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.LoadAllAssetRepresentationsAtPath.html">LoadAllAssetRepresentationsAtPath</a></td><td class="desc">Returns all sub Assets at assetPath.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.LoadAllAssetsAtPath.html">LoadAllAssetsAtPath</a></td><td class="desc">Returns an array of all Assets at assetPath.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.LoadAssetAtPath.html">LoadAssetAtPath</a></td><td class="desc">Returns the first asset object of type type at given path assetPath.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.LoadMainAssetAtPath.html">LoadMainAssetAtPath</a></td><td class="desc">Returns the main asset object at assetPath.The "main" Asset is the Asset at the root of a hierarchy (such as a Maya file which may contain multiples meshes and GameObjects).</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.MakeEditable.html">MakeEditable</a></td><td class="desc">Makes a file open for editing in version control.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.MoveAsset.html">MoveAsset</a></td><td class="desc">Move an asset file (or folder) from one folder to another.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.MoveAssetsToTrash.html">MoveAssetsToTrash</a></td><td class="desc">Lets you move multiple assets or folders to trash at once with performance benefits under version control.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.MoveAssetToTrash.html">MoveAssetToTrash</a></td><td class="desc">Moves the specified asset  or folder to the OS trash.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.OpenAsset.html">OpenAsset</a></td><td class="desc">Opens the asset with associated application.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.Refresh.html">Refresh</a></td><td class="desc">Import any changed assets.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.RefreshSettings.html">RefreshSettings</a></td><td class="desc">Apply pending Editor Settings changes to the Asset pipeline.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.RegisterCustomDependency.html">RegisterCustomDependency</a></td><td class="desc">Allows you to register a custom dependency that Assets can be dependent on. If you register a custom dependency, and specify that an Asset is dependent on it, then the Asset will get re-imported if the custom dependency changes.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.ReleaseCachedFileHandles.html">ReleaseCachedFileHandles</a></td><td class="desc">Calling this function will release file handles internally cached by Unity. This allows modifying asset or meta files safely thus avoiding potential file sharing IO errors.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.RemoveAssetBundleName.html">RemoveAssetBundleName</a></td><td class="desc">Remove the assetBundle name from the asset database. The forceRemove flag is used to indicate if you want to remove it even it's in use.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.RemoveObjectFromAsset.html">RemoveObjectFromAsset</a></td><td class="desc">Removes object from its asset (Additional resources: AssetDatabase.AddObjectToAsset).</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.RemoveUnusedAssetBundleNames.html">RemoveUnusedAssetBundleNames</a></td><td class="desc">Remove all the unused assetBundle names in the asset database.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.RenameAsset.html">RenameAsset</a></td><td class="desc">Rename an asset file.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.ResetCacheServerReconnectTimer.html">ResetCacheServerReconnectTimer</a></td><td class="desc">Resets the internal cache server connection reconnect timer values. The default delay timer value is 1 second, and the max delay value is 5 minutes. Everytime a connection attempt fails it will double the delay timer value, until a maximum time of the max value.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.SaveAssetIfDirty.html">SaveAssetIfDirty</a></td><td class="desc">Writes all unsaved changes to the specified asset to disk.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.SaveAssets.html">SaveAssets</a></td><td class="desc">Writes all unsaved asset changes to disk.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.SetImporterOverride.html">SetImporterOverride</a></td><td class="desc">Sets a specific importer to use for the asset.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.SetLabels.html">SetLabels</a></td><td class="desc">Replaces that list of labels on an asset.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.SetMainObject.html">SetMainObject</a></td><td class="desc">Specifies which object in the asset file should become the main object after the next import.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.StartAssetEditing.html">StartAssetEditing</a></td><td class="desc">Starts importing Assets into the Asset Database. This lets you group several Asset imports together into one larger import.Note:
+Calling AssetDatabase.StartAssetEditing() places the Asset Database in a state that will prevent imports until AssetDatabase.StopAssetEditing() is called.
+This means that if an exception occurs between the two function calls, the AssetDatabase will be unresponsive.
+Therefore, it is highly recommended that you place calls to AssetDatabase.StartAssetEditing() and AssetDatabase.StopAssetEditing() inside
+either a try..catch block, or a try..finally block as needed.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.StopAssetEditing.html">StopAssetEditing</a></td><td class="desc">Stops importing Assets into the Asset Database. This lets you group several Asset imports together into one larger import.Note:
+Calling AssetDatabase.StartAssetEditing() places the Asset Database in a state that will prevent imports until AssetDatabase.StopAssetEditing() is called.
+This means that if an exception occurs between the two function calls, the AssetDatabase will be unresponsive.
+Therefore, it is highly recommended that you place calls to AssetDatabase.StartAssetEditing() and AssetDatabase.StopAssetEditing() inside
+either a try..catch block, or a try..finally block as needed.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.TryGetGUIDAndLocalFileIdentifier.html">TryGetGUIDAndLocalFileIdentifier</a></td><td class="desc">Get the GUID and local file id from an object instance id.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.UnregisterCustomDependencyPrefixFilter.html">UnregisterCustomDependencyPrefixFilter</a></td><td class="desc">Removes custom dependencies that match the prefixFilter.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.ValidateMoveAsset.html">ValidateMoveAsset</a></td><td class="desc">Checks if an asset file can be moved from one folder to another. (Without actually moving the file).</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.WriteImportSettingsIfDirty.html">WriteImportSettingsIfDirty</a></td><td class="desc">Writes the import settings to disk.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Events</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Event</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="AssetDatabase-cacheServerConnectionChanged.html">cacheServerConnectionChanged</a></td><td class="desc">Unity raises this event when Cache Server connection is changed.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase-importPackageCancelled.html">importPackageCancelled</a></td><td class="desc">Callback raised whenever a package import is cancelled by the user.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase-importPackageCompleted.html">importPackageCompleted</a></td><td class="desc">Callback raised whenever a package import successfully completes.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase-importPackageFailed.html">importPackageFailed</a></td><td class="desc">Callback raised whenever a package import failed.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase-importPackageStarted.html">importPackageStarted</a></td><td class="desc">Callback raised whenever a package import starts.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Delegates</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Delegate</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="AssetDatabase.ImportPackageCallback.html">ImportPackageCallback</a></td><td class="desc">Delegate to be called from AssetDatabase.ImportPackage callbacks. packageName is the name of the package that raised the callback.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.ImportPackageFailedCallback.html">ImportPackageFailedCallback</a></td><td class="desc">Delegate to be called from AssetDatabase.ImportPackage callbacks. packageName is the name of the package that raised the callback. errorMessage is the reason for the failure.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

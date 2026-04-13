@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: 2D Sorting</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/2DSorting.html">English</a></li>
+<li><a href="/cn/current/Manual/2DSorting.html">中文</a></li>
+<li><a href="/ja/current/Manual/2DSorting.html">日本語</a></li>
+<li><a href="/kr/current/Manual/2DSorting.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/2DSorting.html">English</a></li>
+<li><a href="/cn/current/Manual/2DSorting.html">中文</a></li>
+<li><a href="/ja/current/Manual/2DSorting.html">日本語</a></li>
+<li><a href="/kr/current/Manual/2DSorting.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Unity2D.html">2D game development</a></li>
+<li>2D Sorting</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Quickstart2DCreate.html"></a></span><div class="tip">Creating a 2D game</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Sprites.html"></a></span><div class="tip">Work with sprites</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>2D Sorting</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>Overview</h2>
+
+<p>Unity sorts Renderers according to a priority order that depends on their types and usages. You can specify the render order of Renderers through their <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-SubShaderTags.html">Render Queue</a>. In general, there are two main queues: the <a href="../ScriptReference/Rendering.RenderQueue.Geometry.html">Opaque queue</a> and the <a href="../ScriptReference/Rendering.RenderQueue.Transparent.html">Transparent queue</a>. 2D Renderers are mainly within the Transparent queue, and include the <span class="tooltip"><a href="class-SpriteRenderer.html">Sprite Renderer</a><span class="tooltiptext">A component that lets you display images as Sprites for use in both 2D and 3D scenes. <a href="class-SpriteRenderer.html" href="SL-SubShaderTags.html">Render Queue</a>. In general, there are two main queues: the <a href="../ScriptReference/Rendering.RenderQueue.Geometry.html">Opaque queue</a> and the <a href="../ScriptReference/Rendering.RenderQueue.Transparent.html">Transparent queue</a>. 2D Renderers are mainly within the Transparent queue, and include the <span class="tooltip"><a href="class-SpriteRenderer.html">Sprite Renderer</a><span class="tooltiptext">A component that lets you display images as Sprites for use in both 2D and 3D scenes. <a href="class-SpriteRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SpriteRenderer" aria-label="Go to glossary anchor for SpriteRenderer">Glossary</a></span></span></span>, <a href="class-TilemapRenderer.html">Tilemap Renderer</a>, and <a href="class-SpriteShapeRenderer.html">Sprite Shape Renderer</a> types.</p>
+
+<h2>Transparent Queue Sorting Order by Priority</h2>
+
+<p>2D Renderers within the Transparent Queue generally follow the priority order below:</p>
+
+<ol>
+<li><a href="#sortlayer">Sorting Layer and Order in Layer</a></li>
+<li><a href="#renderqueue">Specify Render Queue</a></li>
+<li>
+<a href="#cameradistance">Distance to Camera</a>
+
+<ul>
+<li><a href="#persp">Perspective</a></li>
+<li><a href="#ortho">Orthographic</a></li>
+<li><a href="#customaxis">Custom Axis sort mode</a></li>
+<li><a href="#sortpoint">Sprite Sort Point</a></li>
+</ul>
+</li>
+<li><a href="#sortgroup">Sorting Group</a></li>
+<li><a href="#material">Material/Shader</a></li>
+<li><a href="#tiebreak">Tiebreaker</a></li>
+</ol>
+
+<p>There are other factors which can cause the sorting order to differ from the regular priority order. These factors vary from project to project.</p>
+
+<h2>Sorting Layer and Order in Layer<a name="sortlayer" aria-hidden="true"></a>
+</h2>
+
+<p>The <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Manual/class-TagManager.html#SortingLayers">Sorting Layer</a> and <strong>Order in Layer</strong> (in the Renderer’s <strong>Property</strong> settings) are available to all 2D Renderers through the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="https://docs.unity3d.com/Manual/class-TagManager.html#SortingLayers">Sorting Layer</a> and <strong>Order in Layer</strong> (in the Renderer’s <strong>Property</strong> settings) are available to all 2D Renderers through the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window or via the Unity Scripting API. Set the Renderer to an existing <strong>Sorting Layer</strong> or create a new one to determine its priority in the rendering queue. Change the value of the <strong>Order in Layer</strong> to set the Renderer’s priority among other Renderers within the same <strong>Sorting Layer</strong>.</p>
+
+<h2>Specify Render Queue<a name="renderqueue" aria-hidden="true"></a>
+</h2>
+
+<p>You can specify the Render Queue type of the Renderer in its Material settings or in the <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> settings of its Material. This is useful for grouping and sorting Renderers which are using different Materials. Refer to documentation on <a href="SL-SubShaderTags.html">ShaderLab: SubShader Tags</a> for more details.</p>
+
+<h2>Distance to Camera<a name="cameradistance" aria-hidden="true"></a>
+</h2>
+
+<p>The <a href="class-Camera.html">Camera component</a> sorts Renderers based on its <strong>Projection</strong> setting. The two options are <strong>Perspective</strong> and <strong>Orthographic</strong>. </p>
+
+<h3>Perspective<a name="persp" aria-hidden="true"></a>
+</h3>
+
+<p>In this mode, the sorting distance of a Renderer is the direct distance of the Renderer from the <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>’s position.</p>
+
+<h3>Orthographic<a name="ortho" aria-hidden="true"></a>
+</h3>
+
+<p>The sorting distance of a Renderer is the distance between the position of the Renderer and the Camera along the Camera’s view direction. For the default 2D setting, this is along the (0, 0, 1) axis.</p>
+
+<p>When you set the Camera component to <strong>Perspective</strong> or <strong>Orthographic,</strong> Unity automatically sets the Camera’s <a href="../ScriptReference/TransparencySortMode.html">TransparencySortMode</a> to match the selected mode. You can set the Transparency Sort Mode manually in two ways: </p>
+
+<ul>
+<li>Open the <strong><span class="tooltip"><strong>Project Settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html" href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span></strong> and go to <a href="class-GraphicsSettings.html#Camera">Graphics</a>, then under <strong>Camera Settings</strong> use Transparent Sort Mode</li>
+<li>Set the Camera’s <a href="../ScriptReference/TransparencySortMode.html">TransparencySortMode</a> via the Scripting API.</li>
+</ul>
+
+<p>The Camera <strong>Transparency Sort Mode</strong> settings are under the <strong>Graphics</strong> category in the <strong>Project Settings</strong> (main menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Graphics</strong>). When this is set to <strong>Default</strong>, a Camera component’s Projection setting take priority. When this is set to an option other than <strong>Default</strong>, the Camera component’s Projection setting remains the same, but the Camera’s <strong>Transparency Sort Mode</strong> changes to that option. </p>
+
+<p>An additional option available through the Project settings and via the Scripting API is the <a href="../ScriptReference/TransparencySortMode.CustomAxis.html">Custom Axis sort mode</a>.</p>
+
+<h3>Custom Axis sort mode<a name="customaxis" aria-hidden="true"></a>
+</h3>
+
+<p>Select this mode to sort Renderers based on their distance along the custom axis you set in the Project settings (main menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Graphics</strong> &gt; <strong>Transparency Sort Axis</strong>). This is commonly used in projects with <a href="Tilemap-Isometric.html">Isometric Tilemaps</a> to sort and render the Tile Sprites correctly on the Tilemap. Refer to <a href="Tilemap-Isometric-CreateIso.html">Creating an Isometric Tilemap</a> for further information.</p>
+
+<p>
+<strong>Note:</strong> If your project is a 2D Universal <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> (URP) project, the <strong>Transparency Sort Mode</strong> isn’t available in the <strong>Project Settings</strong>, and is instead configured in the 2D Renderer asset properties. Refer to the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/manual/2DRendererData-overview.html">Configure the 2D Renderer Asset documentation</a> for more information.</p>
+
+<h3>Sprite Sort Point<a name="sortpoint" aria-hidden="true"></a>
+</h3>
+
+<p>By default, a <span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span>’s <strong><a href="https://docs.unity3d.com/Manual/class-SpriteRenderer.html#sortpoint">Sort Point</a></strong> is set to its <strong>Center</strong>, and Unity measures the distance between the camera’s Transform position and the Center of the Sprite to determine their render order during sorting. An alternate option is to set a Sprite’s <strong>Sort Point</strong> to its <strong>Pivot</strong> position in World Space. Select the <strong>Pivot</strong> option in the Sprite’s <a href="class-SpriteRenderer.html">Sprite Renderer</a> property settings and edit the Sprite’s Pivot position in the <a href="SpriteEditor.html">Sprite Editor</a>.</p>
+
+<h2>Sorting Group<a name="sortgroup" aria-hidden="true"></a>
+</h2>
+
+<p>The <a href="class-SortingGroup.html">Sorting Group</a> is a component that groups Renderers which share a common root together for sorting purposes. All Renderers within the same Sorting Group share the same <strong>Sorting Layer, Order in Layer,</strong> and <strong>Distance to Camera</strong>. Refer to documentation on the <a href="class-SortingGroup.html">Sorting Group</a> component and its settings for more details.</p>
+
+<h2>Material/Shader<a name="material" aria-hidden="true"></a>
+</h2>
+
+<p>Unity sorts Renderers with the same <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html">Material settings</a> together for more efficient rendering performance, such as with <span class="tooltip"><a href="DrawCallBatching.html">dynamic batching</a><span class="tooltiptext">An automatic Unity process which attempts to render multiple meshes as if they were a single mesh for optimized graphics performance. The technique transforms all of the GameObject vertices on the CPU and groups many similar vertices together. <a href="DrawCallBatching.html" href="Shaders.html">Material settings</a> together for more efficient rendering performance, such as with <span class="tooltip"><a href="DrawCallBatching.html">dynamic batching</a><span class="tooltiptext">An automatic Unity process which attempts to render multiple meshes as if they were a single mesh for optimized graphics performance. The technique transforms all of the GameObject vertices on the CPU and groups many similar vertices together. <a href="DrawCallBatching.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DynamicBatching" aria-label="Go to glossary anchor for DynamicBatching">Glossary</a></span></span></span>.</p>
+
+<h2>Tiebreaker<a name="tiebreak" aria-hidden="true"></a>
+</h2>
+
+<p>When multiple Renderers have identical sorting priority, the tiebreaker is the order that Unity places the Renderers in the Render Queue. Because this is an internal process that you have no control over, you should use the sorting options (such as <strong>Sorting Layers</strong> and <strong>Sorting Groups</strong>) to make sure all Renderers have distinct sorting priorities.</p>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Quickstart2DCreate.html"></a></span><div class="tip">Creating a 2D game</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Sprites.html"></a></span><div class="tip">Work with sprites</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

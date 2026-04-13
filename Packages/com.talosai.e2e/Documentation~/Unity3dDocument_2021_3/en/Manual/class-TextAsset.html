@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Text assets</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-TextAsset.html">English</a></li>
+<li><a href="/cn/current/Manual/class-TextAsset.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-TextAsset.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-TextAsset.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-TextAsset.html">English</a></li>
+<li><a href="/cn/current/Manual/class-TextAsset.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-TextAsset.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-TextAsset.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AssetWorkflow.html">Asset Workflow</a></li>
+<li><a href="AssetTypes.html">Supported Asset Types</a></li>
+<li>Text assets</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ImporterConsistency.html"></a></span><div class="tip">Importer Consistency</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetMetadata.html"></a></span><div class="tip">Asset Metadata</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Text assets</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/TextAsset.html' title='Go to TextAsset page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Text Assets</strong> are a format for imported text files. When you drop a text file into your Project Folder, it will be converted to a Text Asset. The supported text formats are:</p>
+
+<ul>
+<li><strong>.txt</strong></li>
+<li><strong>.html</strong></li>
+<li><strong>.htm</strong></li>
+<li><strong>.xml</strong></li>
+<li><strong>.bytes</strong></li>
+<li><strong>.json</strong></li>
+<li><strong>.csv</strong></li>
+<li><strong>.yaml</strong></li>
+<li><strong>.fnt</strong></li>
+<li><strong>.md</strong></li>
+</ul>
+
+<p><em>Note that script files are also considered text assets for the purposes of using the <a href="../ScriptReference/AssetDatabase.FindAssets.html">AssetDatabase.FindAssets</a> function, so they will also be included in the list of results when this function is used with the “t:TextAsset” filter.</em></p>
+
+<figure>
+<img src="../uploads/Main/TextAssetInspector.png" alt="The Text Asset Inspector">
+<figcaption>The Text Asset Inspector</figcaption>
+</figure>
+
+<h2>Properties</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property:</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function:</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Text</strong><span class="tooltiptext">A non-interactive piece of text to the user. This can be used to provide captions or labels for other GUI controls or to display instructions or other text. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about script-Text.html" href="script-Text.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Text" aria-label="Go to glossary anchor for Text">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">The full text of the asset as a single string.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Details</h2>
+
+<p>The Text Asset is a very specialized use case. It is extremely useful for getting text from different text files into your game while you are building it. You can write up a simple .txt file and bring the text into your game very easily. It is not intended for text file generation at runtime. For that you will need to use traditional Input/Output programming techniques to read and write external files.</p>
+
+<p>Consider the following scenario. You are making a traditional text-heavy adventure game. For production simplicity, you want to break up all the text in the game into the different rooms. In this case you would make one text file that contains all the text that will be used in one room. From there it is easy to make a reference to the correct Text Asset for the room you enter. Then with some customized parsing logic, you can manage a large amount of text very easily.</p>
+
+<h3>Binary data</h3>
+
+<p>A special feature of the text asset is that it can be used to store binary data. By giving a file the extension <strong>.bytes</strong> it can be loaded as a text asset and the data can be accessed through the <strong>bytes</strong> property.</p>
+
+<p>For example put a jpeg file into the Resources folder and change the extension to <strong>.bytes</strong>, then use the following script code to read the data at runtime:</p>
+
+<pre><code>//Load texture from disk
+TextAsset bindata = Resources.Load(&quot;Texture&quot;) as TextAsset;
+Texture2D tex = new Texture2D(1,1);
+tex.LoadImage(bindata.bytes); 
+</code></pre>
+
+<p>Please notice that files with the <strong>.txt</strong> and <strong>.bytes</strong> extension will be treated as text and binary files, respectively. Do not attempt to store a binary file using the <strong>.txt</strong> extension, as this will create unexpected behaviour when attempting to read data from it.</p>
+
+<h2>Hints</h2>
+
+<ul>
+<li>Text Assets are serialized like all other assets in a build. There is no physical text file included when you publish your game.</li>
+<li>Text Assets are not intended to be used for text file generation at runtime.</li>
+</ul>
+<!-- area:graphics -->
+
+<p><span class="search-words">TextAsset</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ImporterConsistency.html"></a></span><div class="tip">Importer Consistency</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetMetadata.html"></a></span><div class="tip">Asset Metadata</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Asset auditing</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="core" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/BestPracticeUnderstandingPerformanceInUnity4.html">English</a></li>
+<li><a href="/cn/current/Manual/BestPracticeUnderstandingPerformanceInUnity4.html">中文</a></li>
+<li><a href="/ja/current/Manual/BestPracticeUnderstandingPerformanceInUnity4.html">日本語</a></li>
+<li><a href="/kr/current/Manual/BestPracticeUnderstandingPerformanceInUnity4.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/BestPracticeUnderstandingPerformanceInUnity4.html">English</a></li>
+<li><a href="/cn/current/Manual/BestPracticeUnderstandingPerformanceInUnity4.html">中文</a></li>
+<li><a href="/ja/current/Manual/BestPracticeUnderstandingPerformanceInUnity4.html">日本語</a></li>
+<li><a href="/kr/current/Manual/BestPracticeUnderstandingPerformanceInUnity4.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="BestPracticeUnderstandingPerformanceInUnity.html">Understanding optimization in Unity</a></li>
+<li>Asset auditing</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="BestPracticeUnderstandingPerformanceInUnity.html"></a></span><div class="tip">Understanding optimization in Unity</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="BestPracticeUnderstandingPerformanceInUnity5.html"></a></span><div class="tip">Strings and text</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Asset auditing</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Many of the problems found in real projects occur because of honest mistakes – temporary “test” changes and misclicks by a tired developer can silently add poorly-performing Assets, or change the import settings of existing Assets.</p>
+
+<p>For any project of significant scale, it is best to have a first line of defense against human errors. It is relatively simple to write a small piece of code that ensures that no one can add a 4K uncompressed Texture to a project.</p>
+
+<p>And yet, this is a surprisingly common problem. A 4K uncompressed Texture occupies 60 megabytes of memory. On a low-end mobile device, such as an iPhone 4S, it is dangerous to consume more than about 180–200 megabytes of memory. If added by mistake, this Texture inadvertently occupies between a third and a quarter of the application’s memory budget, and causes difficult-to-diagnose out-of-memory errors.</p>
+
+<p>While it is now possible to track these issues down with the 5.3 Memory <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span>, it is arguably better to make sure such mistakes are impossible in the first place.</p>
+
+<h2>Using AssetPostprocessor</h2>
+
+<p>The <code>AssetPostprocessor</code> class in the Unity Editor can be used to enforce certain minimum standards on a Unity project. This class receives callbacks when Assets are imported. To use it, inherit from <code>AssetPostprocessor</code> and implement one or more <code>OnPreprocess</code> methods. Significant ones include:</p>
+
+<ul>
+<li><p><code>OnPreprocessTexture</code></p></li>
+<li><p><code>OnPreprocessModel</code></p></li>
+<li><p><code>OnPreprocessAnimation</code></p></li>
+<li><p><code>OnPreprocessAudio</code></p></li>
+</ul>
+
+<p>See the Scripting Reference on <a href="../ScriptReference/AssetPostprocessor.html">AssetPostprocessor</a> for more possible <code>OnPreprocess</code> methods.</p>
+
+<pre><code>
+public class ReadOnlyModelPostprocessor : AssetPostprocessor {
+
+   public void OnPreprocessModel() {
+
+        ModelImporter modelImporter =
+
+ (ModelImporter)assetImporter;
+
+        if(modelImporter.isReadable) {
+
+            modelImporter.isReadable = false;
+
+            modelImporter.SaveAndReimport();
+
+        }
+
+    }
+
+}
+
+</code></pre>
+
+<p>This is a simple example of an <code>AssetPostprocessor</code> enforcing rules on a project:</p>
+
+<p>This class is called any time a model is imported into the project, or whenever a model has its import settings changed. The code simply checks to see if the <code>Read/Write enabled</code> flag (represented by the <code>isReadable</code> property) is set to <code>true</code>. If it is, it forces the flag to be <code>false</code> and then saves and reimports the Asset.</p>
+
+<p>Note that calling <code>SaveAndReimport</code> causes this snippet of code to be called again! However, because it is now assured that <code>isReadable</code> is false, this code does not produce an infinite reimport loop.</p>
+
+<p>The reason for this change is discussed in the “Models” section, below.</p>
+
+<h2>Common Asset rules</h2>
+
+<h4>Textures</h4>
+
+<p><strong>Disable the read/write enabled flag</strong></p>
+
+<p>The <code>Read/Write enabled</code> flag causes a Texture to be kept twice in memory: once on the GPU and once in CPU-addressable memory(1) (NOTE:
+ This is because, on most platforms, readback from GPU memory is extremely slow. Reading a Texture from GPU memory into a temporary buffer for use by CPU code (e.g. Texture.GetPixel) would be very nonperformant.). In Unity, this setting is disabled by default, but it can be accidentally switched on.</p>
+
+<p>
+<code>Read/Write Enabled</code> is only necessary when manipulating Texture data outside of <span class="tooltip"><strong>Shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> (such as with the <code>Texture.GetPixel</code> and <code>Texture.SetPixel</code> APIs) and should be avoided whenever possible.</p>
+
+<p><strong>Disable Mipmaps if possible</strong></p>
+
+<p>For objects that have a relatively invariant Z-depth relative to the <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>, it is possible to disable mipmaps to save about a third of the memory required to load the Texture. If an object changes Z-depth, disabling mipmaps can lead to worse Texture sampling performance on the GPU.</p>
+
+<p>In general, this is useful for <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Textures and other Textures that are displayed at a constant size on screen.</p>
+
+<p><strong>Compress all Textures</strong></p>
+
+<p>Using a texture <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> format suitable for the project’s target platform is crucial for saving memory.</p>
+
+<p>If the selected <span class="tooltip"><strong>texture compression</strong><span class="tooltiptext">3D Graphics hardware requires Textures to be compressed in specialized formats which are optimized for fast Texture sampling. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporterOverride.html" href="class-TextureImporterOverride.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TextureCompression" aria-label="Go to glossary anchor for TextureCompression">Glossary</a></span></span></span> format is unsuited to the target platform, Unity decompresses the Texture when the Texture is loaded, consuming both CPU time and an excessive amount of memory. This is most commonly a problem on Android devices, which often support vastly different texture compression formats depending on the chipset.</p>
+
+<p><strong>Enforce sensible Texture size limits</strong></p>
+
+<p>While this is simple, it is also very easy to forget to resize a Texture or to inadvertently alter the Texture size import setting. Determine a sensible maximum size for different types of Textures and enforce these via code.</p>
+
+<p>For many mobile applications, 2048x2048 or 1024x1024 is sufficient for Texture atlases, and 512x512 is sufficient for Textures applied to 3D models.</p>
+
+<h4>Models</h4>
+
+<p><strong>Disable the Read/Write enabled flag</strong></p>
+
+<p>The<code>Read/Write enabled</code> flag for models operates identically to the one described for Textures. However, it is enabled by default for models.</p>
+
+<p>Unity requires this flag to be enabled if a project is modifying a <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> at runtime via script, or if the Mesh is used as the basis for a MeshCollider component. If the model is not used in a MeshCollider and is not manipulated by <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html" href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> at runtime via script, or if the Mesh is used as the basis for a MeshCollider component. If the model is not used in a MeshCollider and is not manipulated by <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>, disable this flag to save half of the model’s memory.</p>
+
+<p><strong>Disable rigs on non-character models</strong></p>
+
+<p>By default, Unity imports a generic rig for non-character models. This causes an <code>Animator</code> component be to added if the model is instantiated at runtime. If the model is not animated via the Animation system, this adds unnecessary overhead to the animation system, because all active Animators must be ticked once per frame.</p>
+
+<p>Disable the rig on non-animated models to avoid this automatic addition of an <span class="tooltip"><strong>Animator component</strong><span class="tooltiptext">A component on a model that animates that model using the Animation system. The component has a reference to an Animator Controller asset that controls the animation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimatorController.html" href="class-AnimatorController.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AnimatorComponent" aria-label="Go to glossary anchor for AnimatorComponent">Glossary</a></span></span></span> and possible inadvertent addition of unwanted Animators to a <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#AnimatorComponent" aria-label="Go to glossary anchor for AnimatorComponent">Glossary</a></span></span></span> and possible inadvertent addition of unwanted Animators to a <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<p><strong>Enable the Optimize Game Objects option on animated models</strong></p>
+
+<p>The <strong>Optimize Game Objects</strong> option has a significant performance impact on animated models. When the option is disabled, Unity creates a large transform hierarchy mirroring the model’s bone structure whenever the model is instantiated. This transform hierarchy is expensive to update, especially if other components (such as Particle Systems or Colliders) are attached to it. It also limits Unity’s ability to multithread Mesh <span class="tooltip"><strong>skinning</strong><span class="tooltiptext">The process of binding bone joints to the vertices of a character’s mesh or ‘skin’. Performed with an external tool, such as Blender or Autodesk Maya. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingHumanoidChars.html" href="UsingHumanoidChars.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skinning" aria-label="Go to glossary anchor for Skinning">Glossary</a></span></span></span> and bone animation calculations.</p>
+
+<p>If specific locations on a model’s bone structure need to be exposed (such as exposing a model’s hands in order to dynamically attach weapon models) then these locations can be specifically allowed in the <code>Extra Transforms</code> list.</p>
+
+<p>Some additional details can be found in the Unity Manual page on the <a href="https://docs.unity3d.com/Manual/FBXImporter-Rig.html">Model Importer</a>.</p>
+
+<p><strong>Use Mesh compression when possible</strong></p>
+
+<p>Enabling Mesh compression reduces the number of bits used to represent the floating-point numbers for different channels of a model’s data. This can lead to a minor loss of precision, and the effects of this imprecision should be checked by artists before use in a final project.</p>
+
+<p>The specific numbers of bits that a given compression level uses are detailed in the <a href="https://docs.unity3d.com/ScriptReference/ModelImporterMeshCompression.html">ModelImporterMeshCompression</a> Scripting Reference.</p>
+
+<p>Note that it is possible to use different levels of compression for different channels, so a project may choose to compress only tangents and normals while leaving UVs and vertex positions uncompressed.</p>
+
+<p><strong>Note: <span class="tooltip"><strong>Mesh Renderer</strong><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshRenderer.html" href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span> Settings</strong></p>
+
+<p>When adding Mesh Renderers to <span class="tooltip"><strong>Prefabs</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> or <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> or <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, take note of the settings on the component. By default, Unity enables Shadow casting and receiving, <span class="tooltip"><strong>Light Probe</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, take note of the settings on the component. By default, Unity enables Shadow casting and receiving, <span class="tooltip"><strong>Light Probe</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span> sampling, <span class="tooltip"><strong>Reflection Probe</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html" href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span> sampling, <span class="tooltip"><strong>Reflection Probe</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span> sampling, and Motion Vector calculation.</p>
+
+<p>If a project does not require one or more of these features, ensure that they’re turned off by an automated script. Any runtime code that adds MeshRenderers needs to toggle these settings as well.</p>
+
+<p>For 2D games, accidentally adding a MeshRenderer to the Scene with the shadow options turned on adds a full shadow pass to the rendering loop. This is generally a waste of performance.</p>
+
+<h4>Audio</h4>
+
+<p><strong>Platform-appropriate compression settings</strong></p>
+
+<p>Enable a compression format for audio that matches the available hardware. All <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> devices include hardware MP3 decompressors, and many Android devices support Vorbis natively.</p>
+
+<p>Further, import uncompressed audio files into Unity. Unity always recompresses audio when building a project. There is no need to import compressed audio and then recompress it; this only serves to degrade the quality of the final <span class="tooltip"><strong>audio clips</strong><span class="tooltiptext">A container for audio data in Unity. Unity supports mono, stereo and multichannel audio assets (up to eight channels). Unity can import .aif, .wav, .mp3, and .ogg audio file format, and .xm, .mod, .it, and .s3m tracker module formats. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioClip.html" href="class-AudioClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioClip" aria-label="Go to glossary anchor for AudioClip">Glossary</a></span></span></span>.</p>
+
+<p><strong>Force audio clips to mono</strong></p>
+
+<p>Few mobile devices actually have stereo speakers. On a mobile project, forcing the imported audio clips to be mono-channel halves their memory consumption. This setting is also applicable to any audio without stereo effects, such as most UI sound effects.</p>
+
+<p><strong>Reduce audio bitrate</strong></p>
+
+<p>While this requires consultation with an audio designer, attempt to minimize the bitrate of audio files in order to further save on memory consumption and built project size.</p>
+<!-- area:core -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="BestPracticeUnderstandingPerformanceInUnity.html"></a></span><div class="tip">Understanding optimization in Unity</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="BestPracticeUnderstandingPerformanceInUnity5.html"></a></span><div class="tip">Strings and text</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

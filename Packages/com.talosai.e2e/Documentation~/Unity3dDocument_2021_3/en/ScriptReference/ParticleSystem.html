@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: ParticleSystem</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">ParticleSystem</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEngine</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Inherits from:<a href="Component.html" class="cl">Component</a></p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Implemented in:<a href="UnityEngine.ParticleSystemModule.html" class="cl">UnityEngine.ParticleSystemModule</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <a aria-label="go to usermanual page" href='../Manual/class-ParticleSystem.html' title='Go to ParticleSystem Component in the Manual' class='switch-link gray-btn sbtn left show'>Switch to Manual</a>
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Script interface for ParticleSystem. Unity's powerful and versatile particle system implementation.</p>
+              </div>
+              <div class="subsection">
+        <p>
+          <strong>General parameters</strong>
+          <br />
+          <br />The Particle System's general parameters are kept inside a special Main module. These parameters are visible in the Inspector above all the other modules:<br /><br /><img src="../StaticFiles/ScriptRefImages/ParticleSystemInspector.png" /><br /><br />In script, these parameters are accessible through <a href="ParticleSystem-main.html">ParticleSystem.main</a>.<br /><br /><strong>Accessing module properties</strong><br /><br />Particle System properties are grouped by the module they belong to, such as <a href="ParticleSystem-noise.html">ParticleSystem.noise</a> and <a href="ParticleSystem-emission.html">ParticleSystem.emission</a>. These properties are structs, but do not behave like normal C# structs. They are simply interfaces directly into the native code, so it is important to know how to use them, compared to a normal C# struct.<br /><br />The key difference is that it is not necessary to assign the struct back to the Particle System component. When you set any property on a module struct, Unity immediately assigns that value to the Particle System.<br /><br />Also, because each module is a struct, you must cache it in a local variable before you can assign any new values to the module. For example, instead of:<br />
+<code class="mono">ParticleSystem.emission.enabled = true;    // Doesn't compile</code><br />
+write:<br />
+<code class="mono">var emission = ParticleSystem.emission;    // Stores the module in a local variable</code><br />
+<code class="mono">emission.enabled = true;    // Applies the new value directly to the Particle System</code><br /><br /><br /><strong>Module effect multipliers</strong><br /><br />Every module has special multiplier properties that allow you to change the overall effect of a curve without having to edit the curve itself. These multiplier properties are all named after the curve they affect - for instance ParticleSystem.emission.rateMultiplier controls the overall effect of ParticleSystem.emission.rate in a given system.<br /><br /><strong>Constant value shorthand</strong><br /><br />Parameters support a shorthand notation for simple constant values. To set a constant value for a parameter, all you need to do is assign a number to it. It is not necessary to create a <a href="ParticleSystem.MinMaxCurve.html">MinMaxCurve</a> or <a href="ParticleSystem.MinMaxGradient.html">MinMaxGradient</a> object in the <a href="ParticleSystemCurveMode.Constant.html">ParticleSystemCurveMode.Constant</a> mode.<br /><br />For example, instead of:<br />
+<code class="mono">var emission = ParticleSystem.emission;</code><br />
+<code class="mono">emission.rate = new ParticleSystem.MinMaxCurve(5.0f);</code><br />
+write:<br />
+<code class="mono">var emission = ParticleSystem.emission;</code><br />
+<code class="mono">emission.rate = 5.0f;</code><br /><br /><strong>Performance note</strong>: When setting properties on particle modules, the settings are passed immediately into native code. This gives the best performance. This means that setting properties on a module struct doesn't set something in script that requires setting back to the Particle System; it all happens automatically.<br /><br />Additional resources: <a href="ParticleSystem.Particle.html">Particle</a>.</p>
+      </div>
+              <div class="subsection">
+                <h3>Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="ParticleSystem-collision.html">collision</a></td><td class="desc">Script interface for the CollisionModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-colorBySpeed.html">colorBySpeed</a></td><td class="desc">Script interface for the ColorByLifetimeModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-colorOverLifetime.html">colorOverLifetime</a></td><td class="desc">Script interface for the ColorOverLifetimeModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-customData.html">customData</a></td><td class="desc">Script interface for the CustomDataModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-emission.html">emission</a></td><td class="desc">Script interface for the EmissionModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-externalForces.html">externalForces</a></td><td class="desc">Script interface for the ExternalForcesModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-forceOverLifetime.html">forceOverLifetime</a></td><td class="desc">Script interface for the ForceOverLifetimeModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-inheritVelocity.html">inheritVelocity</a></td><td class="desc">Script interface for the InheritVelocityModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-isEmitting.html">isEmitting</a></td><td class="desc">Determines whether the Particle System is emitting particles. A Particle System may stop emitting when its emission module has finished, it has been paused or if the system has been stopped using Stop with the StopEmitting flag. Resume emitting by calling Play.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-isPaused.html">isPaused</a></td><td class="desc">Determines whether the Particle System is paused.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-isPlaying.html">isPlaying</a></td><td class="desc">Determines whether the Particle System is playing.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-isStopped.html">isStopped</a></td><td class="desc">Determines whether the Particle System is in the stopped state.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-lifetimeByEmitterSpeed.html">lifetimeByEmitterSpeed</a></td><td class="desc">Script interface for the Particle System Lifetime By Emitter Speed module.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-lights.html">lights</a></td><td class="desc">Script interface for the LightsModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-limitVelocityOverLifetime.html">limitVelocityOverLifetime</a></td><td class="desc">Script interface for the LimitVelocityOverLifetimeModule of a Particle System. .</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-main.html">main</a></td><td class="desc">Access the main Particle System settings.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-noise.html">noise</a></td><td class="desc">Script interface for the NoiseModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-particleCount.html">particleCount</a></td><td class="desc">The current number of particles (Read Only). The number doesn't include particles of child Particle Systems</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-proceduralSimulationSupported.html">proceduralSimulationSupported</a></td><td class="desc">Does this system support Procedural Simulation?</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-randomSeed.html">randomSeed</a></td><td class="desc">Override the random seed used for the Particle System emission.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-rotationBySpeed.html">rotationBySpeed</a></td><td class="desc">Script interface for the RotationBySpeedModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-rotationOverLifetime.html">rotationOverLifetime</a></td><td class="desc">Script interface for the RotationOverLifetimeModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-shape.html">shape</a></td><td class="desc">Script interface for the ShapeModule of a Particle System. </td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-sizeBySpeed.html">sizeBySpeed</a></td><td class="desc">Script interface for the SizeBySpeedModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-sizeOverLifetime.html">sizeOverLifetime</a></td><td class="desc">Script interface for the SizeOverLifetimeModule of a Particle System. </td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-subEmitters.html">subEmitters</a></td><td class="desc">Script interface for the SubEmittersModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-textureSheetAnimation.html">textureSheetAnimation</a></td><td class="desc">Script interface for the TextureSheetAnimationModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-time.html">time</a></td><td class="desc">Playback position in seconds.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-trails.html">trails</a></td><td class="desc">Script interface for the TrailsModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-trigger.html">trigger</a></td><td class="desc">Script interface for the TriggerModule of a Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-useAutoRandomSeed.html">useAutoRandomSeed</a></td><td class="desc">Controls whether the Particle System uses an automatically-generated random number to seed the random number generator.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem-velocityOverLifetime.html">velocityOverLifetime</a></td><td class="desc">Script interface for the VelocityOverLifetimeModule of a Particle System.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Public Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="ParticleSystem.AllocateAxisOfRotationAttribute.html">AllocateAxisOfRotationAttribute</a></td><td class="desc">Ensures that the axisOfRotations particle attribute array is allocated.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.AllocateCustomDataAttribute.html">AllocateCustomDataAttribute</a></td><td class="desc">Ensures that the customData1 and customData2 particle attribute arrays are allocated.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.AllocateMeshIndexAttribute.html">AllocateMeshIndexAttribute</a></td><td class="desc">Ensures that the meshIndices particle attribute array is allocated.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.Clear.html">Clear</a></td><td class="desc">Remove all particles in the Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.Emit.html">Emit</a></td><td class="desc">Emit count particles immediately.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.GetCustomParticleData.html">GetCustomParticleData</a></td><td class="desc">Get a stream of custom per-particle data.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.GetParticles.html">GetParticles</a></td><td class="desc">Gets the particles of this Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.GetPlaybackState.html">GetPlaybackState</a></td><td class="desc">Returns all the data that relates to the current internal state of the Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.GetTrails.html">GetTrails</a></td><td class="desc">Returns all the data relating to the current internal state of the Particle System Trails.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.IsAlive.html">IsAlive</a></td><td class="desc">Does the Particle System contain any live particles, or will it produce more?</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.Pause.html">Pause</a></td><td class="desc">Pauses the system so no new particles are emitted and the existing particles are not updated.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.Play.html">Play</a></td><td class="desc">Starts the Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.SetCustomParticleData.html">SetCustomParticleData</a></td><td class="desc">Set a stream of custom per-particle data.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.SetParticles.html">SetParticles</a></td><td class="desc">Sets the particles of this Particle System.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.SetPlaybackState.html">SetPlaybackState</a></td><td class="desc">Use this method with the results of an earlier call to ParticleSystem.GetPlaybackState, in order to restore the Particle System to the state stored in the playbackState object.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.SetTrails.html">SetTrails</a></td><td class="desc">Use this method with the results of an earlier call to ParticleSystem.GetTrails, in order to restore the Particle System to the state stored in the Trails object.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.Simulate.html">Simulate</a></td><td class="desc">Fast-forwards the Particle System by simulating particles over the given period of time, then pauses it.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.Stop.html">Stop</a></td><td class="desc">Stops playing the Particle System using the supplied stop behaviour.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.TriggerSubEmitter.html">TriggerSubEmitter</a></td><td class="desc">Triggers the specified sub emitter on all particles of the Particle System.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="ParticleSystem.ResetPreMappedBufferMemory.html">ResetPreMappedBufferMemory</a></td><td class="desc">Reset the cache of reserved graphics memory used for efficient rendering of Particle Systems.</td></tr>
+      <tr><td class="lbl"><a href="ParticleSystem.SetMaximumPreMappedBufferCounts.html">SetMaximumPreMappedBufferCounts</a></td><td class="desc">Limits the amount of graphics memory Unity reserves for efficient rendering of Particle Systems.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Inherited Members</h3>
+      
+      <div class="subsection"><h3>Properties</h3><table class="list"><thead><tr><th>Property</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Component-gameObject.html">gameObject</a></td><td class="desc">The game object this component is attached to. A component is always attached to a game object.</td></tr>
+        <tr><td class="lbl"><a href="Component-tag.html">tag</a></td><td class="desc">The tag of this game object.</td></tr>
+        <tr><td class="lbl"><a href="Component-transform.html">transform</a></td><td class="desc">The Transform attached to this GameObject.</td></tr>
+        <tr><td class="lbl"><a href="Object-hideFlags.html">hideFlags</a></td><td class="desc">Should the object be hidden, saved with the Scene or modifiable by the user?</td></tr>
+        <tr><td class="lbl"><a href="Object-name.html">name</a></td><td class="desc">The name of the object.</td></tr>
+      </table></div>
+      
+      
+      
+      <div class="subsection"><h3>Public Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Component.BroadcastMessage.html">BroadcastMessage</a></td><td class="desc">Calls the method named methodName on every MonoBehaviour in this game object or any of its children.</td></tr>
+        <tr><td class="lbl"><a href="Component.CompareTag.html">CompareTag</a></td><td class="desc">Checks the GameObject's tag against the defined tag.</td></tr>
+        <tr><td class="lbl"><a href="Component.GetComponent.html">GetComponent</a></td><td class="desc">Gets a reference to a component of type T on the same GameObject as the component specified.</td></tr>
+        <tr><td class="lbl"><a href="Component.GetComponentInChildren.html">GetComponentInChildren</a></td><td class="desc">Gets a reference to a component of type T on the same GameObject as the component specified, or any child of the GameObject.</td></tr>
+        <tr><td class="lbl"><a href="Component.GetComponentInParent.html">GetComponentInParent</a></td><td class="desc">Gets a reference to a component of type T on the same GameObject as the component specified, or any parent of the GameObject.</td></tr>
+        <tr><td class="lbl"><a href="Component.GetComponents.html">GetComponents</a></td><td class="desc">Gets references to all components of type T on the same GameObject as the component specified.</td></tr>
+        <tr><td class="lbl"><a href="Component.GetComponentsInChildren.html">GetComponentsInChildren</a></td><td class="desc">Gets references to all components of type T on the same GameObject as the component specified, and any child of the GameObject.</td></tr>
+        <tr><td class="lbl"><a href="Component.GetComponentsInParent.html">GetComponentsInParent</a></td><td class="desc">Gets references to all components of type T on the same GameObject as the component specified, and any parent of the GameObject.</td></tr>
+        <tr><td class="lbl"><a href="Component.SendMessage.html">SendMessage</a></td><td class="desc">Calls the method named methodName on every MonoBehaviour in this game object.</td></tr>
+        <tr><td class="lbl"><a href="Component.SendMessageUpwards.html">SendMessageUpwards</a></td><td class="desc">Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.</td></tr>
+        <tr><td class="lbl"><a href="Component.TryGetComponent.html">TryGetComponent</a></td><td class="desc">Gets the component of the specified type, if it exists.</td></tr>
+        <tr><td class="lbl"><a href="Object.GetInstanceID.html">GetInstanceID</a></td><td class="desc">Gets  the instance ID of the object.</td></tr>
+        <tr><td class="lbl"><a href="Object.ToString.html">ToString</a></td><td class="desc">Returns the name of the object.</td></tr>
+      </table></div>
+      
+      <div class="subsection"><h3>Static Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object.Destroy.html">Destroy</a></td><td class="desc">Removes a GameObject, component or asset.</td></tr>
+        <tr><td class="lbl"><a href="Object.DestroyImmediate.html">DestroyImmediate</a></td><td class="desc">Destroys the object obj immediately. You are strongly recommended to use Destroy instead.</td></tr>
+        <tr><td class="lbl"><a href="Object.DontDestroyOnLoad.html">DontDestroyOnLoad</a></td><td class="desc">Do not destroy the target Object when loading a new Scene.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindAnyObjectByType.html">FindAnyObjectByType</a></td><td class="desc">Retrieves any active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindFirstObjectByType.html">FindFirstObjectByType</a></td><td class="desc">Retrieves the first active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectOfType.html">FindObjectOfType</a></td><td class="desc">Returns the first active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectsByType.html">FindObjectsByType</a></td><td class="desc">Retrieves a list of all loaded objects of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectsOfType.html">FindObjectsOfType</a></td><td class="desc">Gets a list of all loaded objects of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.Instantiate.html">Instantiate</a></td><td class="desc">Clones the object original and returns the clone.</td></tr>
+      </table></div>
+      <div class="subsection"><h3>Operators</h3><table class="list"><thead><tr><th>Operator</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object-operator_Object.html">bool</a></td><td class="desc">Does the object exist?</td></tr>
+        <tr><td class="lbl"><a href="Object-operator_ne.html">operator !=</a></td><td class="desc">Compares if two objects refer to a different object.</td></tr>
+        <tr><td class="lbl"><a href="Object-operator_eq.html">operator ==</a></td><td class="desc">Compares two object references to see if they refer to the same object.</td></tr>
+      </table></div>
+      
+      
+      
+    </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

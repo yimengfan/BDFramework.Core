@@ -1,0 +1,554 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create a list view runtime UI</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-HowTo-CreateRuntimeUI.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-HowTo-CreateRuntimeUI.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-HowTo-CreateRuntimeUI.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-HowTo-CreateRuntimeUI.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-HowTo-CreateRuntimeUI.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-HowTo-CreateRuntimeUI.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-HowTo-CreateRuntimeUI.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-HowTo-CreateRuntimeUI.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-structure-ui.html">Structure UI</a></li>
+<li><a href="UIE-uxml-examples.html">Structure UI examples</a></li>
+<li>Create a list view runtime UI</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-create-list-view-complex.html"></a></span><div class="tip">Create a complex list view</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-wrap-content-inside-scrollview.html"></a></span><div class="tip">Wrap content inside a scroll view</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create a list view runtime UI</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Version</strong>: 2021.3+</p>
+
+<p>This example demonstrates how to create a list view runtime <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>. This example uses the UXML and USS files directly to create the structure and style of the UI. If you are new to UI Toolkit and want to use UI Builder to create the UI, see <a href="UIB-getting-started.html">Create an example UI with UI Builder</a>.</p>
+
+<h2>Example overview</h2>
+
+<p>This example creates a simple character selection screen. When you click the name of a character from a list on the left, the detail of the character appears on the right.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-runtimeUI-final.png" alt="Final view of the runtime UI">
+<figcaption>Final view of the runtime UI</figcaption>
+</figure>
+
+<p>You can find the completed files that this example creates in this <a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/2021.3/create-listview-runtime-ui">GitHub repository</a>.</p>
+
+<h2>Prerequisites</h2>
+
+<p>This guide is for developers familiar with the Unity Editor, UI Toolkit, and C# scripting. Before you start, get familiar with the following:</p>
+
+<ul>
+<li><a href="UIE-UXML.html">UXML</a></li>
+<li><a href="../ScriptReference/UIElements.ListView.html"><code>ListView</code></a></li>
+<li><a href="../ScriptReference/UIElements.Label.html"><code>Label</code></a></li>
+<li><a href="../ScriptReference/UIElements.PanelSettings.html"><code>PanelSettings</code></a></li>
+<li><a href="../ScriptReference/UIElements.UIDocument.html"><code>UIDocument</code></a></li>
+</ul>
+
+<h2>Create the main UI Document</h2>
+
+<p>Create the main view UI Document and a USS file to style the <span class="tooltip"><strong>visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span>. Add two visual elements as containers in the UI Document: one that contains the list of character names and another that contains the selected character’s details.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-runtimeUI-finalMainView.png" alt="The UI layout setup for the main view">
+<figcaption>The UI layout setup for the main view</figcaption>
+</figure>
+
+<ol>
+<li><p>Create a project in Unity with any template.</p></li>
+<li><p>In the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, create a folder named <code>UI</code> to store all the UI Document and Style Sheet files.</p></li>
+<li>
+<p>In the <code>UI</code> folder, create a UI Document named <code>MainView.uxml</code> with the following content:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot; editor-extension-mode=&quot;False&quot;&gt;
+    &lt;Style src=&quot;MainView.uss&quot; /&gt;
+    &lt;ui:VisualElement name=&quot;background&quot;&gt;
+        &lt;ui:VisualElement name=&quot;main-container&quot;&gt;
+            &lt;ui:ListView focusable=&quot;true&quot; name=&quot;character-list&quot; /&gt;
+            &lt;ui:VisualElement name=&quot;right-container&quot;&gt;
+                &lt;ui:VisualElement name=&quot;details-container&quot;&gt;
+                    &lt;ui:VisualElement name=&quot;details&quot;&gt;
+                        &lt;ui:VisualElement name=&quot;character-portrait&quot; /&gt;
+                    &lt;/ui:VisualElement&gt;
+                    &lt;ui:Label text=&quot;Label&quot; name=&quot;character-name&quot; /&gt;
+                    &lt;ui:Label text=&quot;Label&quot; display-tooltip-when-elided=&quot;true&quot; name=&quot;character-class&quot; /&gt;
+                &lt;/ui:VisualElement&gt;
+            &lt;/ui:VisualElement&gt;
+        &lt;/ui:VisualElement&gt;
+    &lt;/ui:VisualElement&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+</li>
+<li><p>In the <code>UI</code> folder, create a USS style sheet named <code>MainView.uss</code> with the following content:</p></li>
+</ol>
+
+<pre><code class="lang-css">#background {
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(115, 37, 38);
+}
+
+#main-container {
+    flex-direction: row;
+    height: 350px;
+}
+
+#character-list {
+    width: 230px;
+    border-color: rgb(49, 26, 17);
+    border-width: 4px;
+    background-color: rgb(110, 57, 37);
+    border-radius: 15px;
+    margin-right: 6px;
+}
+
+#character-name {
+    -unity-font-style: bold;
+    font-size: 18px;
+}
+
+#character-class {
+    margin-top: 2px;
+    margin-bottom: 8px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#right-container {
+    justify-content: space-between; 
+    align-items: flex-end;
+}
+
+#details-container {
+    align-items: center; 
+    background-color: rgb(170, 89, 57); 
+    border-width: 4px; 
+    border-color: rgb(49, 26, 17);
+    border-radius: 15px;
+    width: 252px; 
+    justify-content: center; 
+    padding: 8px;
+    height: 163px;
+}
+
+#details {
+    border-color: rgb(49, 26, 17); 
+    border-width: 2px; 
+    height: 120px; 
+    width: 120px; 
+    border-radius: 13px; 
+    padding: 4px;
+    background-color: rgb(255, 133, 84);
+}
+
+#character-portrait {
+    flex-grow: 1; 
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.unity-collection-view__item {
+    justify-content: center;
+}
+</code></pre>
+
+<h2>Create a list entry UI Document</h2>
+
+<p>Create a UI Document and a Style Sheet for the individual entries in the list. The character list entry consists of a colored background frame and the character’s name.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-runtimeUI-listEntryFinal.png" alt="List entry that shows a characters name">
+<figcaption>List entry that shows a character’s name</figcaption>
+</figure>
+
+<ol>
+<li>
+<p>In the <code>UI</code> folder, create a UI Document named <code>ListEntry.uxml</code> with the following content:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot; editor-extension-mode=&quot;False&quot;&gt;
+&lt;Style src=&quot;ListEntry.uss&quot; /&gt;
+&lt;ui:VisualElement name=&quot;list-entry&quot;&gt;
+    &lt;ui:Label text=&quot;Label&quot; display-tooltip-when-elided=&quot;true&quot; name=&quot;character-name&quot; /&gt;
+&lt;/ui:VisualElement&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+</li>
+<li><p>In the <code>UI</code> folder, create a Style Sheet file named <code>ListEntry.uss</code> with the following content:</p></li>
+</ol>
+
+<pre><code class="lang-css">#list-entry {
+    height: 41px;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 10px;
+    background-color: rgb(170, 89, 57);
+    border-color: rgb(49, 26, 17);
+    border-width: 2px;
+    border-radius: 15px;
+}
+
+#character-name {
+    -unity-font-style: bold;
+    font-size: 18px;
+    color: rgb(49, 26, 17);
+}
+</code></pre>
+
+<h2>Create sample data to display</h2>
+
+<p>Create sample data to fill the character list in the UI. For the character list, create a class that holds a character name, class, and a portrait image.</p>
+
+<ol>
+<li><p>In the Asset folder, create a folder named <code>Scripts</code> to store your C# <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>.</p></li>
+<li>
+<p>In the <code>Scripts</code> folder, create a C# script named <code>CharacterData.cs</code> with the following content:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+    
+public enum ECharacterClass
+{
+    Knight, Ranger, Wizard
+}
+    
+[CreateAssetMenu]
+public class CharacterData : ScriptableObject
+{
+    public string CharacterName;
+    public ECharacterClass Class;
+    public Sprite PortraitImage;
+}
+</code></pre>
+
+<p>This creates a <strong>Character Data</strong> item in the <strong>Assets</strong> &gt; <strong>Create</strong> menu.</p>
+</li>
+<li><p>In the Assets folder, create a folder named <code>Resources</code>.</p></li>
+<li><p>In the <code>Resources</code> folder, create a folder named <code>Characters</code> to store all your sample character data. </p></li>
+<li><p>In the <code>Characters</code> folder, right-click and select <strong>Create</strong> &gt; <strong>Character Data</strong> to create an instance of the <code>ScriptableObject</code>.</p></li>
+<li><p>Create more <code>CharacterData</code> instances and fill them with placeholder data. </p></li>
+</ol>
+
+<h2>Set up the scene</h2>
+
+<p>Create a UIDocument <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the SampleScene and add the UI Document as the source asset.</p>
+
+<ol>
+<li>In the SampleScene, select <strong>GameObject</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>UI Document</strong>.</li>
+<li>Select the <strong>UIDocument</strong> GameObject in the Hierarchy window.</li>
+<li>Drag <strong>MainView.uxml</strong> from your Project window to the <strong>Source Asset</strong> field of the UI Document component in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window. This references the source asset to the UXML file.</li>
+</ol>
+
+<h2>Create controllers for the list entry and the main view</h2>
+
+<p>Create two C# scripts with the following classes:</p>
+
+<ul>
+<li>A <code>CharacterListEntryController</code> class to display the data of a character instance in the UI of the list entry. It needs to access the label for the character name and set it to display the name of the given character instance.</li>
+<li>A <code>CharacterListController</code> class for the character list in the main view, and a <code>MonoBehaviour</code> script that instantiates and assigns it to the <span class="tooltip"><strong>visual tree</strong><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualtree" aria-label="Go to glossary anchor for Visualtree">Glossary</a></span></span></span>.</li>
+</ul>
+
+<p>
+<strong>Note</strong>: The <code>CharacterListEntryController</code> class isn’t a <code>MonoBehaviour</code>. Since the visual elements in UI Toolkit aren’t GameObjects, you can’t attach components to them. Instead, you attach the class to the <code>userData</code> property in the <code>CharacterListController</code> class. </p>
+
+<ol>
+<li>
+<p>In the <code>Scripts</code> folder, create a C# script named <code>CharacterListEntryController.cs</code> with the following contents:</p>
+
+<pre><code class="lang-cs">using UnityEngine.UIElements;
+    
+public class CharacterListEntryController
+{
+    Label m_NameLabel;
+    
+    // This function retrieves a reference to the 
+    // character name label inside the UI element.
+    public void SetVisualElement(VisualElement visualElement)
+    {
+        m_NameLabel = visualElement.Q&lt;Label&gt;(&quot;character-name&quot;);
+    }
+    
+    // This function receives the character whose name this list 
+    // element is supposed to display. Since the elements list 
+    // in a `ListView` are pooled and reused, it's necessary to 
+    // have a `Set` function to change which character's data to display.
+    public void SetCharacterData(CharacterData characterData)
+    {
+        m_NameLabel.text = characterData.CharacterName;
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>In the <code>Scripts</code> folder, create a C# script named <code>CharacterListController.cs</code> with the following content:</p>
+
+<pre><code class="lang-cs">using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
+    
+public class CharacterListController
+{
+    // UXML template for list entries
+    VisualTreeAsset m_ListEntryTemplate;
+    
+    // UI element references
+    ListView m_CharacterList;
+    Label m_CharClassLabel;
+    Label m_CharNameLabel;
+    VisualElement m_CharPortrait;
+    
+    List&lt;CharacterData&gt; m_AllCharacters;
+    
+    public void InitializeCharacterList(VisualElement root, VisualTreeAsset listElementTemplate)
+    {
+        EnumerateAllCharacters();
+    
+        // Store a reference to the template for the list entries
+        m_ListEntryTemplate = listElementTemplate;
+    
+        // Store a reference to the character list element
+        m_CharacterList = root.Q&lt;ListView&gt;(&quot;character-list&quot;);
+    
+        // Store references to the selected character info elements
+        m_CharClassLabel = root.Q&lt;Label&gt;(&quot;character-class&quot;);
+        m_CharNameLabel = root.Q&lt;Label&gt;(&quot;character-name&quot;);
+        m_CharPortrait = root.Q&lt;VisualElement&gt;(&quot;character-portrait&quot;);
+    
+        FillCharacterList();
+    
+        // Register to get a callback when an item is selected
+        m_CharacterList.onSelectionChange += OnCharacterSelected;
+    }
+    
+    void EnumerateAllCharacters()
+    {
+        m_AllCharacters = new List&lt;CharacterData&gt;();
+        m_AllCharacters.AddRange(Resources.LoadAll&lt;CharacterData&gt;(&quot;Characters&quot;));
+    }
+    
+    void FillCharacterList()
+    {
+        // Set up a make item function for a list entry
+        m_CharacterList.makeItem = () =&gt;
+        {
+            // Instantiate the UXML template for the entry
+            var newListEntry = m_ListEntryTemplate.Instantiate();
+    
+            // Instantiate a controller for the data
+            var newListEntryLogic = new CharacterListEntryController();
+    
+            // Assign the controller script to the visual element
+            newListEntry.userData = newListEntryLogic;
+    
+            // Initialize the controller script
+            newListEntryLogic.SetVisualElement(newListEntry);
+    
+            // Return the root of the instantiated visual tree
+            return newListEntry;
+        };
+    
+        // Set up bind function for a specific list entry
+        m_CharacterList.bindItem = (item, index) =&gt;
+        {
+            (item.userData as CharacterListEntryController)?.SetCharacterData(m_AllCharacters[index]);
+        };
+    
+        // Set a fixed item height matching the height of the item provided in makeItem. 
+        // For dynamic height, see the virtualizationMethod property.
+        m_CharacterList.fixedItemHeight = 45;
+    
+        // Set the actual item's source list/array
+        m_CharacterList.itemsSource = m_AllCharacters;
+    }
+    
+    void OnCharacterSelected(IEnumerable&lt;object&gt; selectedItems)
+    {
+        // Get the currently selected item directly from the ListView
+        var selectedCharacter = m_CharacterList.selectedItem as CharacterData;
+    
+        // Handle none-selection (Escape to deselect everything)
+        if (selectedCharacter == null)
+        {
+            // Clear
+            m_CharClassLabel.text = &quot;&quot;;
+            m_CharNameLabel.text = &quot;&quot;;
+            m_CharPortrait.style.backgroundImage = null;
+    
+            return;
+        }
+    
+        // Fill in character details
+        m_CharClassLabel.text = selectedCharacter.Class.ToString();
+        m_CharNameLabel.text = selectedCharacter.CharacterName;
+        m_CharPortrait.style.backgroundImage = new StyleBackground(selectedCharacter.PortraitImage);
+    }
+}
+</code></pre>
+</li>
+</ol>
+
+<h2>Attach the controller script to the main view</h2>
+
+<p>The <code>CharacterListController</code> isn’t a <code>MonoBehaviour</code>, so you can’t directly attach it to a GameObject. To overcome this, create a <code>MonoBehaviour</code> script and attach it to the same GameObject as the UIDocument. In this script, you don’t need to instantiate the <code>MainView.uxml</code> as it’s already instantiated by the UIDocument component. Instead, access the UIDocument component to get a reference of the already instantiated visual tree. Then, create an instance of the <code>CharacterListController</code> and pass in the root element of the visual tree and the UXML template used for the individual list elements.</p>
+
+<p>
+<strong>Note</strong>: When the UI reloads, any associated <code>MonoBehaviour</code> components on the same GameObject that contain the UIDocument component are disabled before the reload, and then re-enabled after the reload. Therefore, you must place your UI-related code within the <code>OnEnable</code> and <code>OnDisable</code> methods of this <code>MonoBehaviour</code>. For more information, refer to <a href="UIE-render-runtime-ui.html#lifecycle-of-ui-document-components">Render UI in the Game view</a>.</p>
+
+<ol>
+<li>
+<p>In the <code>Scripts</code> folder, create a C# script named <code>MainView.cs</code> with the following content:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.UIElements;
+    
+public class MainView : MonoBehaviour
+{
+    [SerializeField]
+    VisualTreeAsset m_ListEntryTemplate;
+    
+    void OnEnable()
+    {
+        // The UXML is already instantiated by the UIDocument component
+        var uiDocument = GetComponent&lt;UIDocument&gt;();
+    
+        // Initialize the character list controller
+        var characterListController = new CharacterListController();
+        characterListController.InitializeCharacterList(uiDocument.rootVisualElement, m_ListEntryTemplate);
+    }
+}
+</code></pre>
+</li>
+<li><p>In the SampleScene, select <strong>UIDocument</strong>.</p></li>
+<li><p>Drag <code>MainView.cs</code> to <strong>Add Component</strong> in the Inspector window.</p></li>
+<li><p>Drag <strong>ListEntry.uxml</strong> to the <strong>ListEntry Template</strong> field.</p></li>
+<li><p>Enter Play mode to see your UI displayed in the game view.</p></li>
+</ol>
+
+<h2>Additional resource</h2>
+
+<ul>
+<li><a href="UIE-uxml-element-ListView.html">UXML element ListView</a></li>
+<li><a href="UIE-get-started-with-runtime-ui.html">Get started with runtime UI</a></li>
+<li><a href="UIE-render-runtime-ui.html">Render UI in the Game view</a></li>
+<li><a href="UIE-Runtime-Panel-Settings.html">The Panel Settings asset</a></li>
+<li><a href="UIE-Runtime-Event-System.html">Runtime event system</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-create-list-view-complex.html"></a></span><div class="tip">Create a complex list view</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-wrap-content-inside-scrollview.html"></a></span><div class="tip">Wrap content inside a scroll view</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

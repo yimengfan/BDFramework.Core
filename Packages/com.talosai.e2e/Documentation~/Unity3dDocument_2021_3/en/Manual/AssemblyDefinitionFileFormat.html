@@ -1,0 +1,421 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Assembly Definition File Format</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssemblyDefinitionFileFormat.html">English</a></li>
+<li><a href="/cn/current/Manual/AssemblyDefinitionFileFormat.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssemblyDefinitionFileFormat.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssemblyDefinitionFileFormat.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssemblyDefinitionFileFormat.html">English</a></li>
+<li><a href="/cn/current/Manual/AssemblyDefinitionFileFormat.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssemblyDefinitionFileFormat.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssemblyDefinitionFileFormat.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="unity-architecture.html">Unity architecture</a></li>
+<li><a href="script-compilation.html">Script compilation</a></li>
+<li><a href="ScriptCompilationAssemblyDefinitionFiles.html">Assembly definitions</a></li>
+<li>Assembly Definition File Format</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-AssemblyDefinitionReferenceImporter.html"></a></span><div class="tip">Assembly Definition Reference properties</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Plugins.html"></a></span><div class="tip">Plug-ins</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Assembly Definition File Format</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Assembly Definition and Assembly Definition Reference assets are JSON files. You can edit the asset files inside the Unity Editor using the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window, but you can also modify the JSON content with an external tool.</p>
+
+<h2>Assembly Definition JSON</h2>
+
+<p>An Assembly Definition is a JSON object with the following fields:</p>
+
+<h4>allowUnsafeCode bool</h4>
+
+<p>Optional. Defaults to false. See <a href="class-AssemblyDefinitionImporter.html#general">Allow ‘unsafe’ Code</a>.</p>
+
+<pre><code class="yml">&quot;allowUnsafeCode&quot; : true
+</code></pre>
+
+<h4>autoReferenced bool</h4>
+
+<p>Optional. Defaults to true. See <a href="class-AssemblyDefinitionImporter.html#general">Auto Referenced</a>.</p>
+
+<pre><code class="yml">&quot;autoReferenced&quot;: false
+</code></pre>
+
+<h4>defineConstraints string[]</h4>
+
+<p>Optional. The symbols that serve as constraints. Can be empty. See <a href="class-AssemblyDefinitionImporter.html#define-constraints">Define Constraints</a>.</p>
+
+<pre><code class="yml">&quot;defineConstraints&quot;: [
+        &quot;UNITY_2019&quot;,
+        &quot;UNITY_INCLUDE_TESTS&quot;
+    ]
+</code></pre>
+
+<p><a name="exclude-platforms" aria-hidden="true"></a></p>
+
+<h4>excludePlatforms string[]</h4>
+
+<p>Optional. The platform name strings to exclude or an empty array. The excludePlatforms array must be empty if <a href="#include-platforms">includePlatforms</a> contains values. You can retrieve the platform name strings with the <a href="ScriptRef:CompilationPipeline.GetAssemblyDefinitionPlatforms.html">CompilationPipeline.GetAssemblyDefinitionPlatforms</a> function (support for a platform must be installed for the current Editor when calling this function.) See <a href="class-AssemblyDefinitionImporter.html#platforms">Platforms</a>.</p>
+
+<pre><code class="yml">&quot;includePlatforms&quot;: [],
+&quot;excludePlatforms&quot;: [
+        &quot;iOS&quot;,
+        &quot;macOSStandalone&quot;,
+        &quot;tvOS&quot;
+]
+</code></pre>
+
+<p><a name="include-platforms" aria-hidden="true"></a></p>
+
+<h4>includePlatforms string[]</h4>
+
+<p>Optional. The platform name strings to include or an empty array. The includePlatforms array must be empty if <a href="#exclude-platforms">excludePlatforms</a> contains values. You can retrieve the platform name strings with the <a href="ScriptRef:CompilationPipeline.GetAssemblyDefinitionPlatforms.html">CompilationPipeline.GetAssemblyDefinitionPlatforms</a> function (support for a platform must be installed for the current Editor when calling this function.) See <a href="class-AssemblyDefinitionImporter.html#platforms">Platforms</a>.</p>
+
+<pre><code class="yml">&quot;includePlatforms&quot;: [
+        &quot;Android&quot;,
+        &quot;LinuxStandalone64&quot;,
+        &quot;WebGL&quot;
+],
+&quot;excludePlatforms&quot;: []
+</code></pre>
+
+<h4>name string</h4>
+
+<p>Required. Any <a href="https://docs.microsoft.com/en-us/dotnet/standard/assembly/names">legal assembly name</a>.</p>
+
+<pre><code class="yml">&quot;name&quot; : &quot;MyAssemblyName&quot; 
+</code></pre>
+
+<h4>noEngineReferences bool</h4>
+
+<p>Optional. Defaults to false. See <a href="class-AssemblyDefinitionImporter.html#general">No Engine References</a>. </p>
+
+<pre><code class="yml">&quot;noEngineReferences&quot;: false
+</code></pre>
+
+<h4>optionalUnityReferences string[]</h4>
+
+<p>Optional. In earlier versions of Unity, this field serialized the <strong>Unity References : Test Assemblies</strong> option used to designate the assembly as a test assembly. As of Unity 2019.3, the option is no longer displayed. The field is still supported, but if the asset is reserialized in a newer version of the Unity Editor, the field is replaced by the equivalent assembly references.</p>
+
+<p>See <a href="ScriptCompilationAssemblyDefinitionFiles.html#create-test-assembly">Creating a test assembly</a> for more information about test assemblies.</p>
+
+<pre><code class="yml">&quot;optionalUnityReferences&quot;: [
+    &quot;TestAssemblies&quot;
+  ]
+</code></pre>
+
+<p><a name="override-references" aria-hidden="true"></a></p>
+
+<h4>overrideReferences bool</h4>
+
+<p>Optional. Set to true if <a href="#precompiled-references">precompiledReferences</a> contains values. Defaults to false. </p>
+
+<p>See [Override References].</p>
+
+<pre><code class="yml">&quot;overrideReferences&quot;: true
+</code></pre>
+
+<p><a name="precompiled-references" aria-hidden="true"></a></p>
+
+<h4>precompiledReferences string[]</h4>
+
+<p>Optional. The file names of referenced DLL libraries including extension, but without other path elements. Can be empty. This array is ignored unless you set <a href="#override-references">overrideReferences</a> to true. </p>
+
+<p>See <a href="class-AssemblyDefinitionImporter.html#assembly-references">Assembly References</a>.</p>
+
+<pre><code class="yml">&quot;overrideReferences&quot;: true,
+&quot;precompiledReferences&quot;: [
+        &quot;Newtonsoft.Json.dll&quot;,
+        &quot;nunit.framework.dll&quot;
+]
+</code></pre>
+
+<h4>references string[]</h4>
+
+<p>Optional. References to other assemblies created with Assembly Definition assets. You can use either the GUID of the Assembly Definition asset file or the name of the assembly (as defined by the <a href="class-AssemblyDefinitionImporter.html#name">name</a> field of the Assembly Definition). You must use the same form for all references in the list. Can be empty.</p>
+
+<p>You can use the <a href="ScriptRef:AssetDatabase.AssetPathToGUID.html">AssetDatabase.AssetPathToGUID</a> function to retrieve the GUID of an asset. (The GUID is also part of the metadata associated with every asset.)</p>
+
+<p>Note that the Editor displays a <strong>Use GUIDs</strong> option in the Assembly Definition Inspector. This option is not serialized in the associated JSON file. Instead, the choice is inferred from the form of reference found in the file.</p>
+
+<p>See <a href="ScriptCompilationAssemblyDefinitionFiles.html#reference-another-assembly">Referencing another assembly</a>.</p>
+
+<p>Using GUIDs:</p>
+
+<pre><code class="yml">&quot;references&quot;: [
+        &quot;GUID:17b36165d09634a48bf5a0e4bb27f4bd&quot;,
+        &quot;GUID:b470eee7144904e59a1064b70fa1b086&quot;,
+        &quot;GUID:2bafac87e7f4b9b418d9448d219b01ab&quot;,
+        &quot;GUID:27619889b8ba8c24980f49ee34dbb44a&quot;,
+        &quot;GUID:0acc523941302664db1f4e527237feb3&quot;
+]
+</code></pre>
+
+<p>Using assembly names:</p>
+
+<pre><code class="yml">&quot;references&quot;: [
+        &quot;Unity.CollabProxy.Editor&quot;,
+        &quot;AssemblyB&quot;,
+        &quot;UnityEngine.UI&quot;,
+        &quot;UnityEngine.TestRunner&quot;,
+        &quot;UnityEditor.TestRunner&quot;
+]
+</code></pre>
+
+<h4>versionDefines object[]</h4>
+
+<p>Optional. Contains an object for each version define. This object has three fields:</p>
+
+<ul>
+<li>name:string – the name of the resource</li>
+<li>expression:string – the expression defining the version or range of versions of the resource</li>
+<li>define:string – the symbol to define</li>
+</ul>
+
+<p>See <a href="class-AssemblyDefinitionImporter.html#version-defines">Version Defines</a>.</p>
+
+<pre><code class="yml">&quot;versionDefines&quot;: [
+    {
+        &quot;name&quot;: &quot;com.unity.ide.vscode&quot;,
+        &quot;expression&quot;: &quot;[1.7,2.4.1]&quot;,
+        &quot;define&quot;: &quot;MY_SYMBOL&quot;
+    },
+    {
+        &quot;name&quot;: &quot;com.unity.test-framework&quot;,
+        &quot;expression&quot;: &quot;[2.7.2-preview.8]&quot;,
+        &quot;define&quot;: &quot;TESTS&quot;
+    }
+]
+</code></pre>
+
+<h3>Example Assembly Definition JSON strings</h3>
+
+<p>Using assembly names for references to other Assembly Definitions and <em>includePlatforms</em>:</p>
+
+<pre><code class="yml">{
+    &quot;name&quot;: &quot;BeeAssembly&quot;,
+    &quot;references&quot;: [
+        &quot;Unity.CollabProxy.Editor&quot;,
+        &quot;AssemblyB&quot;,
+        &quot;UnityEngine.UI&quot;,
+        &quot;UnityEngine.TestRunner&quot;,
+        &quot;UnityEditor.TestRunner&quot;
+    ],
+    &quot;includePlatforms&quot;: [
+        &quot;Android&quot;,
+        &quot;LinuxStandalone64&quot;,
+        &quot;WebGL&quot;
+    ],
+    &quot;excludePlatforms&quot;: [],
+    &quot;overrideReferences&quot;: true,
+    &quot;precompiledReferences&quot;: [
+        &quot;Newtonsoft.Json.dll&quot;,
+        &quot;nunit.framework.dll&quot;
+    ],
+    &quot;autoReferenced&quot;: false,
+    &quot;defineConstraints&quot;: [
+        &quot;UNITY_2019&quot;,
+        &quot;UNITY_INCLUDE_TESTS&quot;
+    ],
+    &quot;versionDefines&quot;: [
+        {
+            &quot;name&quot;: &quot;com.unity.ide.vscode&quot;,
+            &quot;expression&quot;: &quot;[1.7,2.4.1]&quot;,
+            &quot;define&quot;: &quot;MY_SYMBOL&quot;
+        },
+        {
+            &quot;name&quot;: &quot;com.unity.test-framework&quot;,
+            &quot;expression&quot;: &quot;[2.7.2-preview.8]&quot;,
+            &quot;define&quot;: &quot;TESTS&quot;
+        }
+    ],
+    &quot;noEngineReferences&quot;: false
+}
+</code></pre>
+
+<p>Using GUIDS for references to other Assembly Definitions and <em>excludePlatforms</em>:</p>
+
+<pre><code class="yml">{
+    &quot;name&quot;: &quot;BeeAssembly&quot;,
+    &quot;references&quot;: [
+        &quot;GUID:17b36165d09634a48bf5a0e4bb27f4bd&quot;,
+        &quot;GUID:b470eee7144904e59a1064b70fa1b086&quot;,
+        &quot;GUID:2bafac87e7f4b9b418d9448d219b01ab&quot;,
+        &quot;GUID:27619889b8ba8c24980f49ee34dbb44a&quot;,
+        &quot;GUID:0acc523941302664db1f4e527237feb3&quot;
+    ],
+    &quot;includePlatforms&quot;: [],
+    &quot;excludePlatforms&quot;: [
+        &quot;iOS&quot;,
+        &quot;macOSStandalone&quot;,
+        &quot;tvOS&quot;
+    ],
+    &quot;allowUnsafeCode&quot;: false,
+    &quot;overrideReferences&quot;: true,
+    &quot;precompiledReferences&quot;: [
+        &quot;Newtonsoft.Json.dll&quot;,
+        &quot;nunit.framework.dll&quot;
+    ],
+    &quot;autoReferenced&quot;: false,
+    &quot;defineConstraints&quot;: [
+        &quot;UNITY_2019&quot;,
+        &quot;UNITY_INCLUDE_TESTS&quot;
+    ],
+    &quot;versionDefines&quot;: [
+        {
+            &quot;name&quot;: &quot;com.unity.ide.vscode&quot;,
+            &quot;expression&quot;: &quot;[1.7,2.4.1]&quot;,
+            &quot;define&quot;: &quot;MY_SYMBOL&quot;
+        },
+        {
+            &quot;name&quot;: &quot;com.unity.test-framework&quot;,
+            &quot;expression&quot;: &quot;[2.7.2-preview.8]&quot;,
+            &quot;define&quot;: &quot;TESTS&quot;
+        }
+    ],
+    &quot;noEngineReferences&quot;: false
+}
+</code></pre>
+
+<h2>Assembly Definition Reference JSON</h2>
+
+<p>An Assembly Definition Reference is a JSON object with the following field:</p>
+
+<h4>reference string</h4>
+
+<p>Required. The assembly definition to reference. See <a href="class-AssemblyDefinitionReferenceImporter.html">Assembly Definition References</a>.</p>
+
+<p>You can reference an Assembly Definition asset using either the name of the assembly or the GUID of the asset.You can use the <a href="ScriptRef:AssetDatabase.AssetPathToGUID.html">AssetDatabase.AssetPathToGUID</a> function to retrieve the GUID of an asset. (The GUID is also part of the metadata associated with every asset.)</p>
+
+<p>Using assembly name:</p>
+
+<pre><code class="yml">{
+    &quot;reference&quot;: &quot;AssemblyA&quot;
+}
+</code></pre>
+
+<p>Using Assembly Definition asset GUID</p>
+
+<pre><code class="yml">{
+    &quot;reference&quot;: &quot;GUID:f4de40948f4904ecb94b59dd38aab8a1&quot;
+}
+</code></pre>
+
+<p>See <a href="ScriptCompilationAssemblyDefinitionFiles.html#create-asmref">Creating an Assembly Definition Reference asset</a>.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-AssemblyDefinitionReferenceImporter.html"></a></span><div class="tip">Assembly Definition Reference properties</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Plugins.html"></a></span><div class="tip">Plug-ins</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

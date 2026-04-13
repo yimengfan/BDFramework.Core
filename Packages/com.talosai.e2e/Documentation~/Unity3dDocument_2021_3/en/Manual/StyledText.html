@@ -1,0 +1,415 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Rich Text</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/StyledText.html">English</a></li>
+<li><a href="/cn/current/Manual/StyledText.html">中文</a></li>
+<li><a href="/ja/current/Manual/StyledText.html">日本語</a></li>
+<li><a href="/kr/current/Manual/StyledText.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/StyledText.html">English</a></li>
+<li><a href="/cn/current/Manual/StyledText.html">中文</a></li>
+<li><a href="/ja/current/Manual/StyledText.html">日本語</a></li>
+<li><a href="/kr/current/Manual/StyledText.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="com.unity.ugui.html">Unity UI </a></li>
+<li>Rich Text</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIAutoLayout.html"></a></span><div class="tip">Auto Layout</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="EventSystem.html"></a></span><div class="tip">Event System</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Rich Text</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The text for <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> elements and text meshes can incorporate multiple font styles and sizes. The Text, GUIStyle, and TextMesh classes have a <strong>Rich Text</strong> setting which instructs Unity to look for markup tags within the text. The <a href="../ScriptReference/Debug.Log.html">Debug.Log</a> function can also use these markup tags to enhance error reports from code. The tags are not displayed but indicate style changes to be applied to the text.</p>
+
+<h2>Markup format</h2>
+
+<p>The markup system is inspired by HTML but isn’t intended to be strictly compatible with standard HTML. The basic idea is that a section of text can be enclosed inside a pair of matching tags:-</p>
+
+<p><code>We are &lt;b&gt;not&lt;/b&gt; amused.</code></p>
+
+<p>As the example shows, the tags are just pieces of text inside the “angle bracket” characters, <code>&lt;</code> and <code>&gt;</code>. </p>
+
+<p>You place the <em>opening</em> tag at the beginning of the section. The text inside the tag denotes its name (which in this case is just <strong>b</strong>). </p>
+
+<p>You place another tag at the end of the section. This is the <em>closing</em> tag. It has the same name as the opening tag, but the name is prefixed with a slash <code>/</code> character. Every opening tag must have a corresponding closing tag. If you don’t <em>close</em> an opening tag, it is rendered as regular text.</p>
+
+<p>The tags are not displayed to the user directly but are interpreted as instructions for styling the text they enclose. The <code>b</code> tag used in the example above applies boldface to the word “not”, so the text appears ons creen as:-</p>
+
+<p>We are <strong>not</strong> amused</p>
+
+<figure>
+<img src="../uploads/Main/StyleTextBold.png" alt="">
+</figure>
+
+<p>A marked up section of text (including the tags that enclose it) is referred to as an <strong>element</strong>.</p>
+
+<h3>Nested elements</h3>
+
+<p>It is possible to apply more than one style to a section of text by “nesting” one element inside another</p>
+
+<p><code>We are &lt;b&gt;&lt;i&gt;definitely not&lt;/i&gt;&lt;/b&gt; amused</code></p>
+
+<p>The <code>&lt;i&gt;</code> tag applies italic style, so this would be presented onscreen as</p>
+
+<p>We are <strong><em>definitely not</em></strong> amused</p>
+
+<figure>
+<img src="../uploads/Main/StyleTextBoldItalic1.png" alt="">
+</figure>
+
+<p>Note the ordering of the closing tags, which is in reverse to that of the opening tags. The reason for this is perhaps clearer when you consider that the inner tags need not span the whole text of the outermost element</p>
+
+<p><code>We are &lt;b&gt;absolutely &lt;i&gt;definitely&lt;/i&gt; not&lt;/b&gt; amused</code></p>
+
+<p>which gives</p>
+
+<p>We are <strong>absolutely <em>definitely</em> not</strong> amused</p>
+
+<figure>
+<img src="../uploads/Main/StyleTextBoldItalic2.png" alt="">
+</figure>
+
+<h3>Tag parameters</h3>
+
+<p>Some tags have a simple all-or-nothing effect on the text but others might allow for variations. For example, the <strong>color</strong> tag needs to know which color to apply. Information like this is added to tags by the use of <strong>parameters</strong>:-</p>
+
+<p><code>We are &lt;color=green&gt;green&lt;/color&gt; with envy</code></p>
+
+<p>Which produces this result:</p>
+
+<figure>
+<img src="../uploads/Main/StyleTextColorGreen.png" alt="">
+</figure>
+
+<p>Note that the ending tag doesn’t include the parameter value. Optionally, the value can be surrounded by quotation marks but this isn’t required.</p>
+
+<p>Tag parameters cannot include blank spaces. For example:</p>
+
+<p><code>We are &lt;color = green&gt;green&lt;/color&gt; with envy</code></p>
+
+<p>does not work because of the spaces to either side of the <code>=</code> character.</p>
+
+<h2>Supported tags</h2>
+
+<p>The following list describes all the styling tags supported by Unity.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Tag</em></strong></th>
+	<th style="text-align:left;"><strong><em>Description</em></strong></th>
+	<th style="text-align:left;"><strong><em>Example</em></strong></th>
+	<th style="text-align:left;"><strong><em>Notes</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>b</strong></td>
+	<td style="text-align:left;">Renders the text in boldface.</td>
+	<td style="text-align:left;"><code>We are &lt;b&gt;not&lt;/b&gt; amused.</code></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>i</strong></td>
+	<td style="text-align:left;">Renders the text in italics.</td>
+	<td style="text-align:left;"><code>We are &lt;i&gt;usually&lt;/i&gt; not amused.</code></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>size</strong></td>
+	<td style="text-align:left;">Sets the size of the text according to the parameter value, given in pixels.</td>
+	<td style="text-align:left;"><code>We are &lt;size=50&gt;largely&lt;/size&gt; unaffected.</code></td>
+	<td style="text-align:left;">Although this tag is available for Debug.Log, you will find that the line spacing in the window bar and Console looks strange if the size is set too large.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="ColorTag" aria-hidden="true"></a><strong>color</strong>
+</td>
+	<td style="text-align:left;">Sets the color of the text according to the parameter value. The color can be specified in the traditional HTML format. <code>#rrggbbaa</code> …where the letters correspond to pairs of hexadecimal digits denoting the red, green, blue and alpha (transparency) values for the color. For example, cyan at full opacity would be specified by <code>color=#00ffffff</code>…<br><br>You can specify hexadecimal values in uppercase or lowercase; <code>#FF0000</code> is equivalent to <code>#ff0000</code>.</td>
+	<td style="text-align:left;"><code>We are &lt;color=#ff0000ff&gt;colorfully&lt;/color&gt; amused</code></td>
+	<td style="text-align:left;">Another option is to use the name of the color. This is easier to understand but naturally, the range of colors is limited and full opacity is always assumed. <code>&lt;color=cyan&gt;some text&lt;/color&gt;</code> The available color names are given in the <a href="#ColorNames">table below</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>material</strong></td>
+	<td style="text-align:left;">This is only useful for text meshes and renders a section of text with a material specified by the parameter. The value is an index into the text mesh’s array of materials as shown by the inspector.</td>
+	<td style="text-align:left;"><code>We are &lt;material=2&gt;texturally&lt;/material&gt; amused</code></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>quad</strong></td>
+	<td style="text-align:left;">This is only useful for text meshes and renders an image inline with the text. It takes parameters that specify the material to use for the image, the image height in pixels, and a further four that denote a rectangular area of the image to display. Unlike the other tags, quad does not surround a piece of text and so there is no ending tag - the slash character is placed at the end of the initial tag to indicate that it is “self-closing”.</td>
+	<td style="text-align:left;"><code>&lt;quad material=1 size=20 x=0.1 y=0.1 width=0.5 height=0.5&gt;</code></td>
+	<td style="text-align:left;">This selects the material at position in the renderer’s material array and sets the height of the image to 20 pixels. The rectangular area of image starts at given by the x, y, width and height values, which are all given as a fraction of the unscaled width and height of the texture.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="ColorNames" aria-hidden="true"></a></p>
+
+<h3>Supported colors</h3>
+
+<p>The following table lists colors for which you can use a name instead of a hexadecimal tag in the <a href="#ColorTag"><code>&lt;color&gt;</code></a> rich text tag.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Color name</em></strong></th>
+	<th style="text-align:left;"><strong><em>Hex value</em></strong></th>
+	<th style="text-align:left;"><strong><em>Swatch</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">aqua (same as cyan)</td>
+	<td style="text-align:left;"><code>#00ffffff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/CyanSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">black</td>
+	<td style="text-align:left;"><code>#000000ff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/BlackSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">blue</td>
+	<td style="text-align:left;"><code>#0000ffff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/BlueSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">brown</td>
+	<td style="text-align:left;"><code>#a52a2aff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/BrownSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">cyan (same as aqua)</td>
+	<td style="text-align:left;"><code>#00ffffff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/CyanSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">darkblue</td>
+	<td style="text-align:left;"><code>#0000a0ff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/DarkblueSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">fuchsia (same as magenta)</td>
+	<td style="text-align:left;"><code>#ff00ffff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/MagentaSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">green</td>
+	<td style="text-align:left;"><code>#008000ff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/GreenSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">grey</td>
+	<td style="text-align:left;"><code>#808080ff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/GreySwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">lightblue</td>
+	<td style="text-align:left;"><code>#add8e6ff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/LightblueSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">lime</td>
+	<td style="text-align:left;"><code>#00ff00ff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/LimeSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">magenta (same as fuchsia)</td>
+	<td style="text-align:left;"><code>#ff00ffff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/MagentaSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">maroon</td>
+	<td style="text-align:left;"><code>#800000ff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/MaroonSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">navy</td>
+	<td style="text-align:left;"><code>#000080ff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/NavySwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">olive</td>
+	<td style="text-align:left;"><code>#808000ff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/OliveSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">orange</td>
+	<td style="text-align:left;"><code>#ffa500ff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/OrangeSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">purple</td>
+	<td style="text-align:left;"><code>#800080ff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/PurpleSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">red</td>
+	<td style="text-align:left;"><code>#ff0000ff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/RedSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">silver</td>
+	<td style="text-align:left;"><code>#c0c0c0ff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/SilverSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">teal</td>
+	<td style="text-align:left;"><code>#008080ff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/TealSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">white</td>
+	<td style="text-align:left;"><code>#ffffffff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/WhiteSwatch.png" alt=""></td>
+</tr>
+<tr>
+	<td style="text-align:left;">yellow</td>
+	<td style="text-align:left;"><code>#ffff00ff</code></td>
+	<td style="text-align:left;"><img src="../uploads/Main/YellowSwatch.png" alt=""></td>
+</tr>
+</tbody>
+</table>
+
+<h2>Editor GUI</h2>
+
+<p>Rich text is disabled by default in the editor GUI system but it can be enabled explicitly using a custom <a href="../ScriptReference/GUIStyle.html">GUIStyle</a>. The <code>richText</code> property should be set to true and the style passed to the GUI function in question:</p>
+
+<pre><code>GUIStyle style = new GUIStyle ();
+style.richText = true;
+GUILayout.Label(&quot;&lt;size=30&gt;Some &lt;color=yellow&gt;RICH&lt;/color&gt; text&lt;/size&gt;&quot;,style);
+</code></pre>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIAutoLayout.html"></a></span><div class="tip">Auto Layout</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="EventSystem.html"></a></span><div class="tip">Event System</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

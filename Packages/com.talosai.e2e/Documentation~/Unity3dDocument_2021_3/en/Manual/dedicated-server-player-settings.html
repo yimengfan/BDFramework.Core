@@ -1,0 +1,511 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Dedicated Server Player settings</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/dedicated-server-player-settings.html">English</a></li>
+<li><a href="/cn/current/Manual/dedicated-server-player-settings.html">中文</a></li>
+<li><a href="/ja/current/Manual/dedicated-server-player-settings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/dedicated-server-player-settings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/dedicated-server-player-settings.html">English</a></li>
+<li><a href="/cn/current/Manual/dedicated-server-player-settings.html">中文</a></li>
+<li><a href="/ja/current/Manual/dedicated-server-player-settings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/dedicated-server-player-settings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="dedicated-server.html">Dedicated Server</a></li>
+<li><a href="dedicated-server-get-started.html">Get started with Dedicated Server</a></li>
+<li>Dedicated Server Player settings</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="dedicated-server-requirements.html"></a></span><div class="tip">Dedicated Server requirements</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="dedicated-server-optimizations.html"></a></span><div class="tip">Dedicated Server optimizations</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Dedicated Server Player settings</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Player settings for the Dedicated Server Player are a subset of the Desktop target Player settings. For a description of the general Player settings, refer to <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html">Player Settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html" href="class-PlayerSettings.html">Player Settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/dedicated-server-player-settings.png" alt="Dedicated Server Player settings">
+<figcaption>Dedicated Server Player settings</figcaption>
+</figure>
+
+<p>Due to the headless and server application nature of the Dedicated Server, only the options in the <strong>Other Settings</strong> section are applicable. You can find documentation for the same in the <a href="#OtherSettings">Other Settings</a> section:</p>
+
+<p>The following options don’t apply:</p>
+
+<ul>
+<li>Icon</li>
+<li>Resolution and Presentation</li>
+<li>Splash Image</li>
+<li>Publishing Settings</li>
+</ul>
+
+<p><a name="OtherSettings" aria-hidden="true"></a></p>
+
+<h2>Other Settings</h2>
+
+<p>This section allows you to customize a range of options organized into the following groups:</p>
+
+<ul>
+<li><a href="#Configuration">Configuration</a></li>
+<li><a href="#ShaderSettings">Shader Settings</a></li>
+<li><a href="#ShaderVariantLoading">Shader Variant Loading Settings</a></li>
+<li><a href="#ScriptCompilation">Script Compilation</a></li>
+<li><a href="#Optimization">Optimization</a></li>
+<li><a href="#StackTrace">Stack Trace</a></li>
+<li><a href="#Legacy">Legacy</a></li>
+<li><a href="#CaptureLogs">Capture Logs</a></li>
+</ul>
+
+<p><a name="Configuration" aria-hidden="true"></a></p>
+
+<h3>Configuration</h3>
+<table>
+<thead><tr>
+<th colspan="2"><strong>Property</strong></th>
+<th><strong>Description</strong></th>
+</tr></thead>
+<tbody>
+<tr>
+ <td rowspan="3"><strong>Scripting Backend</strong></td>
+ <td colspan="2">
+<a name="backend" aria-hidden="true"></a>Choose the scripting backend you want to use. The scripting backend determines how Unity compiles and executes C# code in your Project.</td>
+</tr>
+<tr>
+ <td><strong>Mono</strong></td>
+ <td>Compiles C# code into .NET Common Intermediate Language (CIL) and executes that CIL using a Common Language Runtime. For more information, refer to <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Mono.html">Mono</a><span class="tooltiptext">A scripting backend used in Unity. <a href="IL2CPP.html" href="Mono.html">Mono</a><span class="tooltiptext">A scripting backend used in Unity. <a href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mono" aria-label="Go to glossary anchor for Mono">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+ <td><strong>IL2CPP</strong></td>
+ <td>Compiles C# code into CIL, converts the CIL to C++ and then compiles that C++ into native machine code, which executes directly at runtime. For more information, refer to <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html" href="IL2CPP.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+ <td rowspan="3"><strong>API Compatibility Level</strong></td>
+ <td colspan="2">Choose which .NET APIs you can use in your project. This setting can affect compatibility with third-party libraries. However, it has no effect on Editor-specific code (code in an Editor directory, or within an Editor-specific Assembly Definition).<br><br><strong>Tip:</strong> If you are having problems with a third-party assembly, you can try the suggestion in the <a href="#apiComp">API Compatibility Level</a> section below.</td>
+</tr>
+<tr>
+ <td><strong>.Net Framework</strong></td>
+ <td>Compatible with the .NET Framework 4 (which includes everything in the .NET Standard 2.0 profile plus additional APIs). Choose this option when using libraries that access APIs not included in .NET Standard 2.0. Produces larger builds and any additional APIs available aren’t necessarily supported on all platforms. Refer to <a href="dotnetProfileAssemblies.html">Referencing additional class library assemblies</a> for more information.</td>
+</tr>
+<tr>
+ <td><strong>.Net Standard 2.1</strong></td>
+ <td>Produces smaller builds and has full cross-platform support.</td>
+</tr>
+<tr>
+ <td rowspan="3"><strong>Editor Assemblies Compatibility Level</strong></td>
+ <td colspan="2">Select which .NET APIs to use in your Editor assemblies.</td>
+</tr>
+<tr>
+ <td><strong>.NET Framework</strong></td>
+ <td>Compatible with the .NET Framework 4 (which includes everything in the .NET Standard 2.1 profile plus additional APIs). Choose this option when using libraries that access APIs not included in .NET Standard 2.1. Produces larger builds and any additional APIs available aren’t necessarily supported on all platforms. Refer to <a href="dotnetProfileAssemblies.html">Referencing additional class library assemblies</a> for more information.</td>
+</tr>
+<tr>
+ <td><strong>.NET Standard</strong></td>
+ <td>Compatible with <a href="https://docs.microsoft.com/en-us/dotnet/standard/net-standard">.NET Standard 2.1</a>. Produces smaller builds and has full cross-platform support.</td>
+</tr>
+<tr>
+ <td rowspan="3"><strong>IL2CPP Code Generation</strong></td>
+ <td colspan="2">Defines how Unity manages IL2CPP code generation. This option is only available if you use the IL2CPP scripting backend.</td>
+</tr>
+<tr>
+ <td><strong>Faster runtime</strong></td>
+ <td>Generates code optimized for runtime performance. This setting is activated by default.</td>
+</tr>
+<tr>
+ <td><strong>Faster (smaller) builds</strong></td>
+ <td>Generates code optimized for build size and iteration. This setting generates less code and produces a smaller build, but can reduce runtime performance for generic code. Use this option when faster build times are important, such as when iterating on changes.</td>
+</tr>
+<tr>
+ <td rowspan="4"><strong>C++ Compiler Configuration</strong></td>
+ <td colspan="2">Choose the C++ compiler configuration used when compiling IL2CPP generated code.</td>
+</tr>
+<tr>
+ <td><strong>Debug</strong></td>
+ <td>Debug configuration turns off all optimizations, which makes the code quicker to build but slower to run.</td>
+</tr>
+<tr>
+ <td><strong>Release</strong></td>
+ <td>Release configuration enables optimizations, so the compiled code runs faster and the binary size is smaller but it takes longer to compile.</td>
+</tr>
+<tr>
+ <td><strong>Master</strong></td>
+ <td>Master configuration enables all possible optimizations, squeezing every bit of performance possible. For instance, on platforms that use the MSVC++ compiler, this option enables link-time code generation. Compiling code using this configuration can take significantly longer than it does using the Release configuration. Unity recommends building the shipping version of your game using the Master configuration if the increase in build time is acceptable.</td>
+</tr>
+<tr>
+ <td rowspan="3"><strong>IL2CPP Stacktrace Information</strong></td>
+ <td colspan="2">Select the information to be included in a stack trace. For further details on the information types, refer to <a href="IL2CPP-managed-stack-traces.html">Managed stack traces with IL2CPP</a>.</td>
+</tr>
+<tr>
+ <td><strong>Method Name </strong></td>
+ <td>Include each managed method in the stack trace.</td>
+</tr>
+<tr>
+ <td><strong>Method Name, File Name, and Line Number</strong></td>
+ <td>Include each managed method with file and line number information in the stack trace.
+ Note: Using this option can increase both the build time and final size of the built program.</td>
+</tr>
+<tr>
+ <td><strong>Use incremental GC</strong></td>
+ <td colspan="2">Uses the incremental garbage collector, which spreads garbage collection over several frames to reduce garbage collection-related spikes in frame duration. For more information, refer to <a href="performance-managed-memory.html">Automatic Memory Management</a>.</td>
+</tr>
+<tr>
+ <td rowspan="4"><strong>Allow downloads over HTTP</strong></td>
+ <td colspan="2">Indicates whether to allow downloading content over HTTP. The default option is <strong>Not allowed</strong> due to the recommended protocol being HTTPS, which is more secure.</td>
+</tr>
+<tr>
+ <td><strong>Not Allowed</strong></td>
+ <td>Never allow downloads over HTTP.</td>
+</tr>
+<tr>
+ <td><strong>Allowed in Development Builds</strong></td>
+ <td>Only allow downloads over HTTP in development builds.</td>
+</tr>
+<tr>
+ <td><strong>Always Allowed</strong></td>
+ <td>Allow downloads over HTTP in development and release builds.</td>
+</tr>
+<tr>
+ <td><strong>Target minimum macOS version</strong></td>
+ <td colspan="2">Specifies the minimum supported macOS version which is 10.13.0</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="apiComp" aria-hidden="true"></a></p>
+
+<h4>API Compatibility Level</h4>
+
+<p>You can choose your mono API compatibility level for all targets. Sometimes a third-party .NET library uses functionality that’s outside of your .NET compatibility level. To understand what’s going on in such cases, and how to best fix it, try following these suggestions:</p>
+
+<ol>
+<li>Install <a href="https://www.microsoft.com/en-us/p/ilspy/9mxfbkfvsq13?cid=msft_web_chart&amp;activetab=pivot:overviewtab">ILSpy</a> for Windows.</li>
+<li>Drag the .NET assemblies for the API compatibility level that you are having issues with into ILSpy. You can find these under <code>Frameworks/Mono/lib/mono/YOURSUBSET/</code>.</li>
+<li>Drag in your third-party assembly.</li>
+<li>Right-click your third-party assembly and select <strong>Analyze</strong>.</li>
+<li>In the analysis report, inspect the <strong>Depends on</strong> section. The report highlights anything that the third-party assembly depends on, but that’s not available in the .NET compatibility level of your choice in red.</li>
+</ol>
+
+<p><a name="ShaderSettings" aria-hidden="true"></a></p>
+
+<h3>Shader Settings</h3>
+<table>
+ <thead>
+ <tr>
+ <th><strong>Property</strong></th>
+ <th colspan="2"><strong>Description</strong></th>
+ </tr>
+ </thead>
+ <tbody>
+<tr>
+<td rowspan="3"><b>Shader Precision Model</b></td>
+<td colspan="2">Select the default precision shaders use. For more information, refer to <a href="SL-Use16BitPrecisionInShaders.html">Use 16-bit precision in shaders</a>.</td>
+</tr>
+<tr>
+<td><b>Platform default</b></td>
+<td>Use lower precision on mobile platforms, and full precision on other platforms.</td>
+</tr>
+<tr>
+<td><b>Unified</b></td>
+<td>Use lower precision if the platform supports it.</td>
+</tr>
+<tr>
+<td rowspan="1"><b>Strict shader variant matching</b></td>
+<td colspan="2">Use the error shader if a shader variant is missing and display an error in the console.</td>
+</tr>
+<tr>
+<td rowspan="1"><b>Keep Loaded Shaders Alive</b></td>
+<td colspan="2">Keep all loaded shaders alive and prevent unloading.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="ShaderVariantLoading" aria-hidden="true"></a></p>
+
+<h3>Shader Variant Loading Settings</h3>
+
+<p>Use these settings to control how much memory <span class="tooltip"><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> use at runtime.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Default chunk size (MB)</strong></td>
+	<td style="text-align:left;">Sets the maximum size of compressed shader variant data chunks Unity stores in your built application for all platforms. The default is <code>16</code>. For more information, refer to <a href="shader-loading.html#dynamicloading">Shader loading</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Default chunk count</strong></td>
+	<td style="text-align:left;">Sets the default limit on how many decompressed chunks Unity keeps in memory on all platforms. The default is <code>0</code>, which means there’s no limit.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Override</strong></td>
+	<td style="text-align:left;">Enables overriding <strong>Default chunk size</strong> and <strong>Default chunk count</strong> for this build target.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Chunk size (MB)</strong></td>
+	<td style="text-align:left;">Overrides the value of <strong>Default chunk size (MB)</strong> on this build target.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Chunk count</strong></td>
+	<td style="text-align:left;">Overrides the value of <strong>Default chunk count</strong> on this build target.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="ScriptCompilation" aria-hidden="true"></a></p>
+
+<h3>Script Compilation</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Scripting Define Symbols</strong></td>
+	<td style="text-align:left;">Sets custom compilation flags. <br><br> For more details, refer to <a href="PlatformDependentCompilation.html">Platform dependent compilation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Additional Compiler Arguments</strong></td>
+	<td style="text-align:left;">Adds entries to this list to pass additional arguments to the Roslyn compiler. Use one new entry for each additional argument.<br>To create a new entry, click <strong>Add</strong> (<strong>+</strong>). To remove an entry, click <strong>Remove</strong> (<strong>-</strong>).<br><br>When you have added all desired arguments, click <strong>Apply</strong> to include your additional arguments in future compilations. Click <strong>Revert</strong> to reset this list to the most recent applied state.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Suppress Common Warnings</strong></td>
+	<td style="text-align:left;">Indicates whether to display the C# warnings <a href="https://docs.microsoft.com/en-us/dotnet/csharp/misc/cs0169">CS0169</a> and <a href="https://docs.microsoft.com/en-us/dotnet/csharp/misc/CS0649">CS0649</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Allow ‘unsafe’ Code</strong></td>
+	<td style="text-align:left;">Activate support for compiling <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/unsafe">‘unsafe’ C# code</a> in a pre-defined assembly (for example, <code>Assembly-CSharp.dll</code>). <br>For Assembly Definition Files (<code>.asmdef</code>), click on one of your <code>.asmdef</code> files and activate the option in the Inspector window that appears.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Use Deterministic Compilation</strong></td>
+	<td style="text-align:left;">Indicates whether to prevent compilation with the -deterministic C# flag. With this setting active, compiled assemblies are byte-for-byte the same each time they’re compiled.<br><br>For more information, refer to Microsoft’s <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/deterministic-compiler-option">deterministic compiler option</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Optimization" aria-hidden="true"></a></p>
+
+<h3>Optimization</h3>
+<table>
+<thead><tr>
+<th colspan="2"><strong>Property</strong></th>
+<th><strong>Description</strong></th>
+</tr></thead>
+<tbody>
+<tr>
+<td colspan="2"><strong>Prebake Collision Meshes</strong></td>
+<td>Adds collision data to <a href="class-Mesh.html">Meshes</a> at build time. </td>
+</tr>
+<tr>
+<td colspan="2"><strong>Preloaded Assets</strong></td>
+<td>Sets an array of Assets for the player to load on startup. <br>To add new Assets, increase the value of the <strong>Size</strong> property and then set a reference to the Asset to load in the new <strong>Element</strong> box that appears.</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Managed Stripping Level</strong></td>
+<td>Chooses how aggressively Unity strips unused managed (C#) code. The options are <strong>Minimal</strong>, <strong>Low</strong>, <strong>Medium</strong>, and <strong>High</strong>. <br>When Unity builds your app, the Unity Linker process can strip unused code from the managed DLLs your Project uses. Stripping code can make the resulting executable significantly smaller, but can sometimes accidentally remove code that’s in use. <br><br>For more information about these options and bytecode stripping with IL2CPP, refer to <a href="../ScriptReference/ManagedStrippingLevel.html">ManagedStrippingLevel</a>.</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Vertex Compression</strong></td>
+<td>Sets vertex compression per channel. This affects all the meshes in your project. <br>Typically, Vertex Compression is used to reduce the size of mesh data in memory, reduce file size, and improve GPU performance. <br><br>For more information on how to configure vertex compression and limitations of this setting, refe to <a href="mesh-compression.html">Compressing mesh data</a>. </td>
+</tr>
+<tr>
+<td colspan="2"><strong>Optimize Mesh Data</strong></td>
+<td>Enable this option to strip unused vertex attributes from the mesh used in a build. This option reduces the amount of data in the mesh, which can help reduce build size, loading times, and runtime memory usage. <br><br> <strong>Warning:</strong> If you have this setting enabled, you should remember to not change material or shader settings at runtime. <br><br> For more information, refer to <a href="../ScriptReference/PlayerSettings-stripUnusedMeshComponents.html">PlayerSettings.stripUnusedMeshComponents</a>.</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Texture MipMap Stripping</strong></td>
+<td>Enables mipmap stripping for all platforms. This strips unused mipmaps from Textures at build time. Unity determines unused mipmaps by comparing the value of the mipmap against the <strong>Quality Settings</strong> for the current platform. If a mipmap value is excluded from every <strong>Quality Setting</strong> for the current platform, then Unity strips those mipmaps from the build at build time. If <a href="../ScriptReference/QualitySettings-masterTextureLimit.html">QualitySettings.masterTextureLimit</a> is set to a mipmap value that has been stripped, Unity will set the value to the closest mipmap value that has not been stripped.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="StackTrace" aria-hidden="true"></a></p>
+
+<h3>Stack Trace</h3>
+
+<p>Select your preferred logging type by enabling the option that corresponds to each Log Type.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">No logs are ever recorded.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ScriptOnly</strong></td>
+	<td style="text-align:left;">Logs only when running <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Full</strong></td>
+	<td style="text-align:left;">Logs all the time.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Refer to <a href="StackTrace.html">stack trace logging</a> for more information.</p>
+
+<p><a name="Legacy" aria-hidden="true"></a></p>
+
+<h3>Legacy</h3>
+
+<p>Activate the <strong>Clamp BlendShapes (Deprecated)</strong> option to clamp the range of blend shape weights in <a href="class-SkinnedMeshRenderer.html">SkinnedMeshRenderers</a>.</p>
+
+<p><a name="CaptureLogs" aria-hidden="true"></a></p>
+
+<h3>Capture Logs</h3>
+
+<p>Activate the <strong>Capture Startup Logs</strong> option to capture the startup logs for later processing.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="dedicated-server-build.html">Build your application for Dedicated Server</a></li>
+<li><a href="dedicated-server-assetbundles.html">Dedicated Server AssetBundles</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="dedicated-server-requirements.html"></a></span><div class="tip">Dedicated Server requirements</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="dedicated-server-optimizations.html"></a></span><div class="tip">Dedicated Server optimizations</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

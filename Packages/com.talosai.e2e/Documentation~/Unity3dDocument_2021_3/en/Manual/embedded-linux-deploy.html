@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Deploy an Embedded Linux project</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/embedded-linux-deploy.html">English</a></li>
+<li><a href="/cn/current/Manual/embedded-linux-deploy.html">中文</a></li>
+<li><a href="/ja/current/Manual/embedded-linux-deploy.html">日本語</a></li>
+<li><a href="/kr/current/Manual/embedded-linux-deploy.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/embedded-linux-deploy.html">English</a></li>
+<li><a href="/cn/current/Manual/embedded-linux-deploy.html">中文</a></li>
+<li><a href="/ja/current/Manual/embedded-linux-deploy.html">日本語</a></li>
+<li><a href="/kr/current/Manual/embedded-linux-deploy.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="embedded-systems.html">Embedded systems</a></li>
+<li><a href="embedded-linux.html">Embedded Linux</a></li>
+<li><a href="embedded-linux-build-and-deliver.html">Build and deliver for Embedded Linux</a></li>
+<li>Deploy an Embedded Linux project</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="embedded-linux-build-command-line.html"></a></span><div class="tip">Build for Embedded Linux from the command line</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="qnx.html"></a></span><div class="tip">QNX</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Deploy an Embedded Linux project</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>On the Embedded Linux player, Unity uses SDL2 to handle keyboard, mouse, and controller input to interact with the Player window. Depending on the graphics API used, it requires SDL to dynamically load <code>libEGL</code> and <code>libGLESv2</code> for OpenGL ES, or <code>libvulkan</code> for Vulkan from the user space.</p>
+
+<h2>Setup for <a href="https://wiki.archlinux.org/title/Wayland">Wayland</a>
+</h2>
+
+<p>Although this setup assumes that you’re using <a href="https://gitlab.freedesktop.org/wayland/weston">Weston</a> (the reference Wayland server), you can use the same setup with slight modifications for another compositor.</p>
+
+<h2>Prerequisites</h2>
+
+<p>This assumes that you have a Wayland compositor (Weston) running, which exports the Wayland socket in the directory that the environment variable <code>XDG_RUNTIME_DIR</code> is linked to.</p>
+
+<h3>Setup on Desktop shell</h3>
+
+<p>To deploy your project on desktop shell:</p>
+
+<ol>
+<li>Verify that the environment variable <code>XDG_RUNTIME_DIR</code> is set to the correct directory. If not, then run <code>export XDG_RUNTIME_DIR=&lt;dir&gt;</code> with the correct directory (<code>/run/user/1000/</code>is the default for a Weston installation).</li>
+<li>Run Unity Player.</li>
+</ol>
+
+<h3>Setup on IVI-shell extension</h3>
+
+<p>You can deploy your project using IVI-shell extension, which is an alternative shell extension for Weston.</p>
+
+<ol>
+<li><p>Set up IVI Surface IDs that the Unity Player needs to use with the environment variable <code>UNITY_IVI_SURFACE_IDS</code>. If this isn’t set, the Unity Player uses ID <code>4711</code> and upwards for the newly created surfaces (for example, Unity Display 1 will use 4711, Unity Display 2 will use 4712 etc.).</p></li>
+<li><p>
+<strong>Note</strong>: The environment variable expects a comma-separated list of IDs. For example, <code>export UNITY_IVI_SURFACE_IDS=100,200,300 uses ID</code> <code>100</code> for Unity Display 1, <code>200</code> for Unity Display 2, etc..</p></li>
+<li><p>If you’re only using a single display output, a single ID is sufficient. For example, export <code>UNITY_IVI_SURFACE_IDS=100</code>.</p></li>
+<li><p>Verify that the environment variable <code>XDG_RUNTIME_DIR</code>is set to the correct directory. If this isn’t set, run <code>export XDG_RUNTIME_DIR=&lt;dir&gt;</code> with the correct directory (<code>/run/user/1000/</code> is the default for a Weston installation).</p></li>
+<li><p>Run the Unity Player.</p></li>
+<li>
+<p>Use the following steps to set up an IVI surface for Unity (example, <code>weston</code> to <code>fullscreen map</code> surface).</p>
+
+<ol>
+<li>
+<p>Create IVI Layer.</p>
+
+<p><code>LayerManagerControl create layer 0 &lt;display-width&gt; &lt;display-height&gt;</code></p>
+</li>
+<li>
+<p>Add Layer on Screen.</p>
+
+<p><code>LayerManagerControl set screen 0 render order 0</code></p>
+</li>
+<li>
+<p>Add Unity Player Surface on Layer.</p>
+
+<p><code>LayerManagerControl set layer 0 render order &lt;surface-id&gt;</code></p>
+</li>
+<li>
+<p>Add Surface Source Region.</p>
+
+<p><code>LayerManagerControl set surface &lt;surface-id&gt; source region 0 0 &lt;display-width&gt; &lt;display-height&gt;</code></p>
+</li>
+<li>
+<p>Add Surface Destination Region.</p>
+
+<p><code>LayerManagerControl set surface &lt;surface-id&gt; destination region 0 0 &lt;display-width&gt; &lt;display-height&gt;</code></p>
+</li>
+<li>
+<p>Add Layer Visibility.</p>
+
+<p><code>LayerManagerControl set layer 0 visibility 1</code></p>
+</li>
+<li>
+<p>Add Surface Visibility.</p>
+
+<p><code>LayerManagerControl set surface &lt;surface-id&gt; visibility 1</code></p>
+</li>
+</ol>
+</li>
+</ol>
+
+<p>Unity Player appears on screen.</p>
+
+<h3>Additional information</h3>
+
+<p>By default, Unity creates surfaces of the same size as the physical displays. If you want to use surfaces other than physical displays, such as rendering multiple surfaces to one screen, use <code>UNITY_IVI_EXPORT_DISPLAYS</code> as the environment variable.</p>
+
+<p>For example, with the setting <code>export</code> <code>UNITY_IVI_EXPORT_DISPLAYS=1024x768@60,1920x1080@60</code> Unity uses a surface size of <em>1024x768</em> for Unity Display 1, and a surface size of <em>1920x1080</em> for Unity Display 2.</p>
+
+<p>You can omit <code>@60</code> and use <code>export UNITY_IVI_EXPORT_DISPLAYS=1024x768,1920x1080</code>because <code>@60</code> is automatically assumed.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="embedded-linux-build-and-deliver.html">Build and deliver for Embedded Linux</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="embedded-linux-build-command-line.html"></a></span><div class="tip">Build for Embedded Linux from the command line</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="qnx.html"></a></span><div class="tip">QNX</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Copying NativeContainer structures</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/job-system-copy-nativecontainer.html">English</a></li>
+<li><a href="/cn/current/Manual/job-system-copy-nativecontainer.html">中文</a></li>
+<li><a href="/ja/current/Manual/job-system-copy-nativecontainer.html">日本語</a></li>
+<li><a href="/kr/current/Manual/job-system-copy-nativecontainer.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/job-system-copy-nativecontainer.html">English</a></li>
+<li><a href="/cn/current/Manual/job-system-copy-nativecontainer.html">中文</a></li>
+<li><a href="/ja/current/Manual/job-system-copy-nativecontainer.html">日本語</a></li>
+<li><a href="/kr/current/Manual/job-system-copy-nativecontainer.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="JobSystem.html">Job system </a></li>
+<li><a href="JobSystemNativeContainer.html">Thread safe types</a></li>
+<li>Copying NativeContainer structures</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="job-system-custom-nativecontainer.html"></a></span><div class="tip">Implement a custom native container</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="job-system-custom-nativecontainer-example.html"></a></span><div class="tip">Custom NativeContainer example</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Copying NativeContainer structures</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<a href="JobSystemNativeContainer.html">Native containers</a> are value types, which means that when they’re assigned to a variable, Unity copies the <code>NativeContainer</code> structure, which contains pointers to where the native container’s data is stored, including its <a href="../ScriptReference/Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle.html"><code>AtomicSafetyHandle</code></a>. It doesn’t copy the entire contents of the <code>NativeContainer</code>. </p>
+
+<p>This scenario means that there might be multiple copies of a <code>NativeContainer</code> structure which all reference the same region of memory, and all contain <code>AtomicSafetyHandle</code> objects which reference the same central record.</p>
+
+<figure>
+<img src="../uploads/Main/native-container-diagram.png" alt="How copies of NativeContainer objects work">
+<figcaption>How copies of NativeContainer objects work</figcaption>
+</figure>
+
+<p>The above diagram shows three different copies of a <code>NativeArray</code> structure that all represent the same actual container. Each copy points to the same stored data, and the same safety data as the original <code>NativeArray</code>. However, each copy of the <code>NativeArray</code> has different flags that indicate what a job is allowed to do with that copy. The pointer to the safety data, combined with the flags, make up the <code>AtomicSafetyHandle</code>.</p>
+
+<h2>Version numbers</h2>
+
+<p>If a <code>NativeContainer</code> is disposed of, all the copies of the <code>NativeContainer</code> structure must recognize that the original <code>NativeContainer</code> is invalid. Disposing of the original <code>NativeContainer</code> means that the block of memory that used to hold the data for the <code>NativeContainer</code> has been deallocated. In this situation, the pointer to the data which is stored in each copy of the <code>NativeContainer</code> is invalid, and might cause access violations if you use it. </p>
+
+<p>The <code>AtomicSafetyHandle</code> also points at a central record which becomes invalid for the <code>NativeContainer</code> instances. However, the safety system never deallocates the memory for the central record, so it avoids the risk of access violations.</p>
+
+<p>Instead, each record contains a version number. A copy of the version number is stored inside each <code>AtomicSafetyHandle</code> that references that record. When a NativeContainer is disposed of, Unity calls <code>Release()</code>, which increments the version number on the central record. After this, the record can be reused for other <code>NativeContainer</code> instances. </p>
+
+<p>Each remaining <code>AtomicSafetyHandle</code>compares its stored version number against the version number in the central record to test whether the <code>NativeContainer</code> has been disposed of. Unity performs this test automatically as part of calls to methods such as <a href="../ScriptReference/Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle.CheckReadAndThrow.html"><code>CheckReadAndThrow</code></a>, and <a href="../ScriptReference/Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle.CheckWriteAndThrow.html"><code>CheckWriteAndThrow</code></a>.</p>
+
+<h2>Static views of dynamic native containers</h2>
+
+<p>A dynamic native container is one which has a variable size that you can continue to add elements to, such as <a href="https://docs.unity3d.com/Packages/com.unity.collections@latest/index.html?subfolder=/api/Unity.Collections.NativeList-1.html"><code>NativeList&lt;T&gt;</code></a> (which is available in the Collections package). This is in contrast to a static native container like <a href="../ScriptReference/Unity.Collections.NativeArray_1.html"><code>NativeArray&lt;T&gt;</code></a>, which has a fixed size that you can’t change. </p>
+
+<p>When you use a dynamic native container, you can also directly access its data through another interface, called a view. A view allows you to alias a <code>NativeContainer</code> object’s data without copying or taking ownership of the data. Examples of views include enumerator objects, which you can use to access the data in a native container element-by-element, and methods such as <a href="https://docs.unity3d.com/Packages/com.unity.collections@latest/index.html?subfolder=/api/Unity.Collections.NativeList-1.html#Unity_Collections_NativeList_1_AsArray"><code>NativeList&lt;T&gt;.AsArray</code></a>, which you can use to treat a <code>NativeList</code> as if it were a <code>NativeArray</code>.</p>
+
+<p>Views aren’t typically thread safe if the size of the dynamic native container changes. This is because when the size of the native container changes, Unity relocates where the data is stored in memory, which causes any pointers that a view stores to become invalid.</p>
+
+<h3>Secondary version numbers</h3>
+
+<p>To support situations when the size of the dynamic native container changes, the safety system includes a secondary version number in an <code>AtomicSafetyHandle</code>. This mechanism is similar to the versioning mechanism, but uses a second version number stored in the central record which can be incremented independently of the first version number.</p>
+
+<p>To use a secondary version number, you can use <a href="../ScriptReference/Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle.UseSecondaryVersion.html"><code>UseSecondaryVersion</code></a> to configure the views into the data stored in a <code>NativeContainer</code>. For operations that change the size of the native container, or otherwise make existing views invalid, use <a href="../ScriptReference/Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle.CheckWriteAndBumpSecondaryVersion.html"><code>CheckWriteAndBumpSecondaryVersion</code></a> instead of <code>CheckWriteAndThrow</code>. You also need to set <a href="../ScriptReference/Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle.SetBumpSecondaryVersionOnScheduleWrite.html"><code>SetBumpSecondaryVersionOnScheduleWrite</code></a> on the <code>NativeContainer</code> to automatically invalidate views whenever a job is scheduled that writes to the native container.</p>
+
+<p>When you create a view and copy the <code>AtomicSafetyHandle</code> to it, use <a href="../ScriptReference/Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle.CheckGetSecondaryDataPointerAndThrow.html"><code>CheckGetSecondaryDataPointerAndThrow</code></a> to confirm that it’s safe to copy the pointer to the native container’s memory into the view.</p>
+
+<h2>Special handles</h2>
+
+<p>There are two special handles, which you can use when working with temporary native containers: </p>
+
+<ul>
+<li>
+<a href="../ScriptReference/Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle.GetTempMemoryHandle.html"><code>GetTempMemoryHandle</code></a>: Returns an <code>AtomicSafetyHandle</code> which you can use in native containers which are allocated with <code>Allocator.Temp</code>. Unity automatically invalidates this handle when the current temporary memory scope exits, so you don’t need to release it yourself. To test whether a particular <code>AtomicSafetyHandle</code> is the handle returned by <code>GetTempMemoryHandle</code>, use <code>IsTempMemoryHandle</code>.</li>
+<li>
+<a href="../ScriptReference/Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle.GetTempUnsafePtrSliceHandle.html"><code>GetTempUnsafePtrSliceHandle</code></a>: Returns a global handle you can use for temporary native containers which are backed by unsafe memory. For example, a <code>NativeSlice</code> constructed from stack memory. You can’t pass containers that use this handle into jobs.</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="job-system-custom-nativecontainer.html"></a></span><div class="tip">Implement a custom native container</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="job-system-custom-nativecontainer-example.html"></a></span><div class="tip">Custom NativeContainer example</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

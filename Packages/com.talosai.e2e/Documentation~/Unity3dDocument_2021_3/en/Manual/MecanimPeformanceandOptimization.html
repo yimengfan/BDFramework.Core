@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Performance and optimization</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/MecanimPeformanceandOptimization.html">English</a></li>
+<li><a href="/cn/current/Manual/MecanimPeformanceandOptimization.html">中文</a></li>
+<li><a href="/ja/current/Manual/MecanimPeformanceandOptimization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/MecanimPeformanceandOptimization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/MecanimPeformanceandOptimization.html">English</a></li>
+<li><a href="/cn/current/Manual/MecanimPeformanceandOptimization.html">中文</a></li>
+<li><a href="/ja/current/Manual/MecanimPeformanceandOptimization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/MecanimPeformanceandOptimization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AnimationSection.html">Animation</a></li>
+<li>Performance and optimization</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Retargeting.html"></a></span><div class="tip">Retargeting of Humanoid animations</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="comp-AnimationGroup.html"></a></span><div class="tip">Animation Reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Performance and optimization</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page contains some tips to help you obtain the best performance in Unity, covering the <a href="#anim">animation system</a> and <a href="#runtime">run-time optimizations</a>.</p>
+
+<p>
+<strong>Note:</strong> For tips on modeling your character in a 3d application for best performance in Unity, see <a href="ModelingOptimizedCharacters.html">Modeling characters for optimal performance</a>.</p>
+
+<p><a name="anim" aria-hidden="true"></a></p>
+
+<h2>Animation system</h2>
+
+<h3>Controllers</h3>
+
+<p>The <a href="class-Animator.html">Animator</a> doesn’t spend time processing when a <a href="class-AnimatorController.html">Controller</a> is not set to it.</p>
+
+<h3>Simple animation</h3>
+
+<p>Playing a single <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html">Animation Clip</a><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a href="class-AnimationClip.html" href="class-AnimationClip.html">Animation Clip</a><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> with no blending can make Unity slower than the <a href="Animations.html">legacy animation system</a>. The old system is very direct, sampling the curve and directly writing into the transform. Unity’s current animation system has temporary buffers it uses for blending, and there is additional copying of the sampled curve and other data. The current system layout is optimized for animation blending and more complex setups.</p>
+
+<h3>Scale curves</h3>
+
+<p>Animating scale curves is more expensive than animating translation and rotation curves. To improve performance, avoid scale animations. </p>
+
+<p>
+<strong>Note:</strong> This does not apply to constant curves (curves that have the same value for the length of the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationClips.html">animation clip</a>). Constant curves are optimized, and are less expensive than normal curves. Constant curves that have the same values as the default <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="AnimationClips.html">animation clip</a>). Constant curves are optimized, and are less expensive than normal curves. Constant curves that have the same values as the default <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> values do not write to the scene every frame.</p>
+
+<h3>Layers</h3>
+
+<p>Most of the time Unity is evaluating animations, and keeps the overhead for <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationLayers.html">animation layers</a><span class="tooltiptext">An Animation Layer contains an Animation State Machine that controls animations of a model or part of it. An example of this is if you have a full-body layer for walking or jumping and a higher layer for upper-body motions such as throwing an object or shooting. The higher layers take precedence for the body parts they control. <a href="AnimationLayers.html" href="AnimationLayers.html">animation layers</a><span class="tooltiptext">An Animation Layer contains an Animation State Machine that controls animations of a model or part of it. An example of this is if you have a full-body layer for walking or jumping and a higher layer for upper-body motions such as throwing an object or shooting. The higher layers take precedence for the body parts they control. <a href="AnimationLayers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AnimationLayer" aria-label="Go to glossary anchor for AnimationLayer">Glossary</a></span></span></span> and <span class="tooltip"><a href="AnimationStateMachines.html">Animation State Machines</a><span class="tooltiptext">A graph within an Animator Controller that controls the interaction of Animation States. Each state references an Animation Blend Tree or a single Animation Clip. <a href="AnimationStateMachines.html" href="Glossary.html#AnimationLayer" aria-label="Go to glossary anchor for AnimationLayer">Glossary</a></span></span></span> and <span class="tooltip"><a href="AnimationStateMachines.html">Animation State Machines</a><span class="tooltiptext">A graph within an Animator Controller that controls the interaction of Animation States. Each state references an Animation Blend Tree or a single Animation Clip. <a href="AnimationStateMachines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationStateMachine" aria-label="Go to glossary anchor for AnimationStateMachine">Glossary</a></span></span></span> to the minimum. The cost of adding another layer to the animator, synchronized or not, depends on what animations and blend trees are played by the layer. When the weight of the layer is zero, Unity skips the layer update.</p>
+
+<h3>Humanoid vs. Generic animation types</h3>
+
+<p>These are tips to help you decide between these types:</p>
+
+<ul>
+<li>When importing <span class="tooltip"><strong>Humanoid animation</strong><span class="tooltiptext">An animation using humanoid skeletons. Humanoid models generally have the same basic structure, representing the major articulate parts of the body, head and limbs. This makes it easy to map animations from one humanoid skeleton to another, allowing retargeting and inverse kinematics. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ConfiguringtheAvatar.html" href="ConfiguringtheAvatar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Humanoidanimation" aria-label="Go to glossary anchor for Humanoidanimation">Glossary</a></span></span></span> use an <span class="tooltip"><strong>Avatar</strong><span class="tooltiptext">An interface for retargeting animation from one rig to another. <a href="ConfiguringtheAvatar.html" href="Glossary.html#Humanoidanimation" aria-label="Go to glossary anchor for Humanoidanimation">Glossary</a></span></span></span> use an <span class="tooltip"><strong>Avatar</strong><span class="tooltiptext">An interface for retargeting animation from one rig to another. <a href="ConfiguringtheAvatar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Avatar" aria-label="Go to glossary anchor for Avatar">Glossary</a></span></span></span> Mask (class-AvatarMask) to remove IK Goals or finger animation if you don’t need them.</li>
+<li>When you use Generic, using <span class="tooltip"><strong>root motion</strong><span class="tooltiptext">Motion of character’s root node, whether it’s controlled by the animation itself or externally. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RootMotion.html" href="RootMotion.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RootMotion" aria-label="Go to glossary anchor for RootMotion">Glossary</a></span></span></span> is more expensive than not using it. If your animations don’t use root motion, make sure that you have not specified a root bone.</li>
+</ul>
+
+<h3>Scene-level optimization</h3>
+
+<p>There are many optimizations that can be made, some useful tips include:</p>
+
+<ul>
+<li>Use hashes instead of strings to query the Animator.</li>
+<li>Implement a small AI Layer to control the Animator. You can make it provide simple callbacks for OnStateChange, OnTransitionBegin, and other events.</li>
+<li>Use State Tags to easily match your AI <span class="tooltip"><strong>state machine</strong><span class="tooltiptext">The set of states in an Animator Controller that a character or animated GameObject can be in, along with a set of transitions between those states and a variable to remember the current state. The states available will depend on the type of gameplay, but typical states include things like idling, walking, running and jumping. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about StateMachineBasics.html" href="StateMachineBasics.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#StateMachine" aria-label="Go to glossary anchor for StateMachine">Glossary</a></span></span></span> to the Unity state machine.</li>
+<li>Use additional curves to simulate events.</li>
+<li>Use additional curves to mark up your animations; for example, in conjunction with <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about TargetMatching.html">target matching</a><span class="tooltiptext">A scripting function that allows you to move characters in such a way that a hand or foot lands in a certain place at a certain time. For example, the character may need to jump across stepping stones or jump and grab an overhead beam. <a href="TargetMatching.html" href="TargetMatching.html">target matching</a><span class="tooltiptext">A scripting function that allows you to move characters in such a way that a hand or foot lands in a certain place at a certain time. For example, the character may need to jump across stepping stones or jump and grab an overhead beam. <a href="TargetMatching.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Targetmatching" aria-label="Go to glossary anchor for Targetmatching">Glossary</a></span></span></span>.</li>
+</ul>
+
+<p><a name="runtime" aria-hidden="true"></a></p>
+
+<h2>Runtime Optimizations</h2>
+
+<h3>Visibility and updates</h3>
+
+<p>Always optimize animations by setting the animator <a href="class-Animator.html">Culling Mode</a> to <strong>Cull Completely</strong>, and disable the <a href="class-SkinnedMeshRenderer.html">skinned mesh renderer’s</a> <strong>Update When Offscreen</strong> property. This saves Unity from updating animations when the character is not visible.</p>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Retargeting.html"></a></span><div class="tip">Retargeting of Humanoid animations</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="comp-AnimationGroup.html"></a></span><div class="tip">Animation Reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

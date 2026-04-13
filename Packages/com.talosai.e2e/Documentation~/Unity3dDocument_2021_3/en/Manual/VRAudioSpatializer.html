@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Audio spatializers in XR</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="platforms" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/VRAudioSpatializer.html">English</a></li>
+<li><a href="/cn/current/Manual/VRAudioSpatializer.html">中文</a></li>
+<li><a href="/ja/current/Manual/VRAudioSpatializer.html">日本語</a></li>
+<li><a href="/kr/current/Manual/VRAudioSpatializer.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/VRAudioSpatializer.html">English</a></li>
+<li><a href="/cn/current/Manual/VRAudioSpatializer.html">中文</a></li>
+<li><a href="/ja/current/Manual/VRAudioSpatializer.html">日本語</a></li>
+<li><a href="/kr/current/Manual/VRAudioSpatializer.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="XR.html">XR</a></li>
+<li><a href="xr-audio.html">XR audio</a></li>
+<li>Audio spatializers in XR</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="xr-audio.html"></a></span><div class="tip">XR audio</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="xr-sdk.html"></a></span><div class="tip">Unity XR SDK</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Audio spatializers in XR</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Audio spatializers use physical characteristics of a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, such as the distance and angle between an <a href="class-AudioListener.html">AudioListener</a> and an <a href="class-AudioSource.html">AudioSource</a>, to modify the properties of sound transmitted to the user. Spatialization can improve the perception that a sound originates from a specific location in a scene.</p>
+
+<p>The Unity audio system supports spatialization through <span class="tooltip"><strong>plug-ins</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Plugins.html" href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> built with the Unity <a href="AudioSpatializerSDK.html">Audio Spatializer SDK</a>. Unity doesn’t provide any built-in spatializer plug-ins itself, but several plug-in implementations are available in third-party 3D audio SDKs. These audio SDKs typically provide additional Unity components and tools for 3D audio. Refer to the following sections to understand the available third-party audio SDKs and how to enable them in Unity.</p>
+
+<h2>Audio spatializer reference</h2>
+
+<p>The following is a non-comprehensive list of third-party audio SDKs that provide Unity audio spatialization plug-ins:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Maker</th>
+	<th style="text-align:left;">Name</th>
+	<th style="text-align:left;">Platforms</th>
+	<th style="text-align:left;">Documentation</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Microsoft</td>
+	<td style="text-align:left;"><a href="https://github.com/microsoft/spatialaudio-unity">Microsoft Spatializer</a></td>
+	<td style="text-align:left;">Windows, Android</td>
+	<td style="text-align:left;">
+<a href="https://learn.microsoft.com/en-us/windows/mixed-reality/develop/unity/spatial-sound-in-unity">Spatial sound in Unity</a> (Microsoft learn)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Meta</td>
+	<td style="text-align:left;"><a href="https://assetstore.unity.com/packages/tools/integration/meta-xr-audio-sdk-264557">Meta XR Audio SDK</a></td>
+	<td style="text-align:left;">Windows, Android</td>
+	<td style="text-align:left;">
+<a href="https://developers.meta.com/horizon/documentation/unity/meta-xr-audio-sdk-unity-intro">Meta XR Audio SDK Unity Plugin</a> (Meta developer documentation)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Qualcomm</td>
+	<td style="text-align:left;"><a href="https://assetstore.unity.com/packages/tools/audio/3d-audio-plugin-for-unity-148379">Qualcomm 3D Audio Plugin for Unity</a></td>
+	<td style="text-align:left;">Windows, Android</td>
+	<td style="text-align:left;">
+<a href="https://www.qualcomm.com/developer/software/3d-audio-plugin-for-unity">3D Audio Plugin for Unity</a> (Qualcomm documentation)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Steam</td>
+	<td style="text-align:left;"><a href="https://valvesoftware.github.io/steam-audio/downloads.html">Steam Audio</a></td>
+	<td style="text-align:left;">Windows, macOS, Linux, Android</td>
+	<td style="text-align:left;">
+<a href="https://valvesoftware.github.io/steam-audio/doc/unity/index.html">Steam Audio Unity Integration</a> (Valve GitHub)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Vive</td>
+	<td style="text-align:left;"><a href="https://developer.vive.com/resources/vive-sense/3dsp-audio-sdk/download/latest/">3DSP Audio SDK</a></td>
+	<td style="text-align:left;">Windows, Android</td>
+	<td style="text-align:left;">
+<a href="https://hub.vive.com/storage/3dsp/">VIVE 3DSP Audio SDK Developer Guide</a> (Vive)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Google (now open source)</td>
+	<td style="text-align:left;"><a href="https://resonance-audio.github.io/resonance-audio/">Resonance Audio</a></td>
+	<td style="text-align:left;">Android, <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span>, Web</td>
+	<td style="text-align:left;">
+<a href="https://resonance-audio.github.io/resonance-audio/develop/unity/developer-guide">Developer Guide for Resonance Audio for Unity</a> (Resonance audio GitHub)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Apple</td>
+	<td style="text-align:left;"><a href="https://github.com/apple/unityplugins/tree/main/plug-ins/Apple.PHASE/">PHASE</a></td>
+	<td style="text-align:left;">iOS, macOS</td>
+	<td style="text-align:left;">
+<a href="https://developer.apple.com/documentation/phase">PHASE</a> (Apple developer documentation)</td>
+</tr>
+</tbody>
+</table>
+
+<p>Some <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about xr-support-packages.html">XR provider plug-in</a> include spatializer plug-ins for an associated <span class="tooltip"><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a href="XR.html" href="xr-support-packages.html">XR provider plug-in</a> include spatializer plug-ins for an associated <span class="tooltip"><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> device. For example, the Windows <span class="tooltip"><strong>Mixed Reality</strong><span class="tooltiptext">Mixed Reality (MR) combines its own virtual environment with the user’s real-world environment and allows them to interact with each other.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MixedReality" aria-label="Go to glossary anchor for MixedReality">Glossary</a></span></span></span> feature group for OpenXR includes the <a href="https://github.com/microsoft/spatialaudio-unity">MS HRTF Spatializer</a> plug-in. Note that these provider plug-ins don’t include any additional components that might be available in the full SDK packages from their maker.</p>
+
+<p>
+<strong>Note:</strong> Although many spatializer plug-ins were developed for use with <span class="tooltip"><strong>VR</strong><span class="tooltiptext">Virtual Reality <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VROverview.html" href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VR" aria-label="Go to glossary anchor for VR">Glossary</a></span></span></span> devices, their use isn’t limited to VR games or applications.</p>
+
+<h2>Enable an audio spatializer plug-in</h2>
+
+<p>After you have added the package containing an <span class="tooltip"><strong>audio spatializer</strong><span class="tooltiptext">A plug-in that changes the way audio is transmitted from an audio source into the surrounding space. It takes the source and regulates the gains of the left and right ear contributions based on the distance and angle between the AudioListener and the AudioSource. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AudioSpatializerSDK.html" href="AudioSpatializerSDK.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioSpatializer" aria-label="Go to glossary anchor for AudioSpatializer">Glossary</a></span></span></span> plug-in to your project, you can enable the plug-in in the project audio settings.</p>
+
+<p>To enable a plug-in:</p>
+
+<ol>
+<li>Open the Project Settings window (menu: <strong>Edit &gt; Project Settings</strong>).</li>
+<li>Select the <strong>Audio</strong> category.</li>
+<li>Choose the plug-in from the <strong>Spatializer Plugin</strong> dropdown menu.</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/AudioManagerInspector.png" alt="">
+</figure>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="https://docs.unity3d.com/Manual/AudioOverview.html">Audio overview</a></li>
+</ul>
+<!-- area:platforms -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="xr-audio.html"></a></span><div class="tip">XR audio</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="xr-sdk.html"></a></span><div class="tip">Unity XR SDK</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

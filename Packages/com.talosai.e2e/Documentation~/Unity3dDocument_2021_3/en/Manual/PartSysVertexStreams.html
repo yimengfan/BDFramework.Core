@@ -1,0 +1,365 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Particle System vertex streams and Standard Shader support</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PartSysVertexStreams.html">English</a></li>
+<li><a href="/cn/current/Manual/PartSysVertexStreams.html">中文</a></li>
+<li><a href="/ja/current/Manual/PartSysVertexStreams.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PartSysVertexStreams.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PartSysVertexStreams.html">English</a></li>
+<li><a href="/cn/current/Manual/PartSysVertexStreams.html">中文</a></li>
+<li><a href="/ja/current/Manual/PartSysVertexStreams.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PartSysVertexStreams.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="visual-effects.html">Visual effects</a></li>
+<li><a href="ParticleSystems.html">Particle systems</a></li>
+<li><a href="Built-inParticleSystem.html">Built-in Particle System</a></li>
+<li>Particle System vertex streams and Standard Shader support</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="PartSysUsage.html"></a></span><div class="tip">Using the Built-in Particle System</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="PartSysInstancing.html"></a></span><div class="tip">Particle System GPU Instancing</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Particle System vertex streams and Standard Shader support</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>If you are comfortable writing your own <span class="tooltip"><strong>Shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>, use this addition to the <a href="../ScriptReference/ParticleSystemRenderer.html">Renderer Module</a> to configure your <span class="tooltip"><strong>Particle Systems</strong><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a href="class-ParticleSystem.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>, use this addition to the <a href="../ScriptReference/ParticleSystemRenderer.html">Renderer Module</a> to configure your <span class="tooltip"><strong>Particle Systems</strong><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a href="class-ParticleSystem.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#particlesystem" aria-label="Go to glossary anchor for particlesystem">Glossary</a></span></span></span> to pass a wider range of data into your custom Shaders.</p>
+
+<p>There are a number of built-in <a href="../ScriptReference/ParticleSystemVertexStream.html">data streams</a> to choose from, such as velocity, size and center position. Aside from the ability to create powerful custom Shaders, these streams allow a number of more general benefits:</p>
+
+<ul>
+<li>Use the <a href="../ScriptReference/ParticleSystemVertexStream.Tangent.html">Tangent</a> stream to support normal mapped particles.</li>
+<li>You can remove Color and then add the Tangent <a href="../ScriptReference/ParticleSystemVertexStream.UV2.html">UV2</a> and <a href="../ScriptReference/ParticleSystemVertexStream.AnimBlend.html">AnimBlend</a> streams to use the Standard Shader on particles.</li>
+<li>To easily perform linear texture blending of flipbooks, add the UV2 and AnimBlend streams, and attach the Particles/Anim Alpha Blended Shader.</li>
+</ul>
+
+<p>There are also two completely custom per-particle data streams (<a href="../ScriptReference/ParticleSystemVertexStreams.Custom1.html">ParticleSystemVertexStreams.Custom1</a> and <a href="../ScriptReference/ParticleSystemVertexStreams.Custom2.html">ParticleSystemVertexStreams.Custom2</a>), which can be populated from script. Call <a href="../ScriptReference/ParticleSystem.SetCustomParticleData.html">SetCustomParticleData</a> and <a href="../ScriptReference/ParticleSystem.GetCustomParticleData.html">GetCustomParticleData</a> with your array of data to use them. There are two ways of using this:</p>
+
+<ul>
+<li>To drive custom behavior in <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> by attaching your own data to particles; for example, attaching a “health” value to each particle.</li>
+<li>To pass this data into a Shader by adding one of the two custom streams, in the same way you would send any other stream to your Shader (see <a href="../ScriptReference/ParticleSystemRenderer.EnableVertexStreams.html">ParticleSystemRenderer.EnableVertexStreams</a>). To elaborate on the first example, maybe your custom health attribute could now also drive some kind of visual effect, as well as driving script-based game logic.</li>
+</ul>
+
+<p>When adding vertex streams, Unity will provide you with some information in brackets, next to each item, to help you read the correct data in your shader:</p>
+
+<figure>
+<img src="../uploads/Main/PartSysVertexStreams-VertexShaders.png" alt="">
+</figure>
+
+<p>Each item in brackets corresponds to a <span class="tooltip"><strong>Vertex Shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-ShaderPrograms.html" href="SL-ShaderPrograms.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span> input, which you should specify in your Shader. Here is the correct input structure for this configuration.</p>
+
+<pre><code>            struct appdata_t {
+                float4 vertex : POSITION;
+                float3 normal : NORMAL;
+                fixed4 color : COLOR;
+                float4 texcoords : TEXCOORD0;
+                float texcoordBlend : TEXCOORD1;
+            };
+</code></pre>
+
+<p>Notice that both UV and UV2 are passed in different parts of TEXCOORD0, so we use a single declaration for both. To access each one in your shader, you would use the xy and zw swizzles. This allows you to pack your vertex data efficiently.</p>
+
+<p>Here is an example of an animated flip-book Shader. It uses the default inputs (<strong>Position</strong>, <span class="tooltip"><strong>Normal</strong><span class="tooltiptext">The direction perpendicular to the surface of a mesh, represented by a Vector. Unity uses normals to determine object orientation and apply shading. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VectorCookbook.html" href="VectorCookbook.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normal" aria-label="Go to glossary anchor for Normal">Glossary</a></span></span></span>, <strong>Color</strong>, <strong>UV</strong>), but also uses two additional streams for the second UV stream (<strong>UV2</strong>) and the flip-book frame information (<strong>AnimBlend</strong>).</p>
+
+<figure>
+<img src="../uploads/Main/PartSysVertexStreams-Inspector.png" alt="">
+</figure>
+
+<pre><code>Shader &quot;Particles/Anim Alpha Blended&quot; {
+Properties {
+    _TintColor (&quot;Tint Color&quot;, Color) = (0.5,0.5,0.5,0.5)
+    _MainTex (&quot;Particle Texture&quot;, 2D) = &quot;white&quot; {}
+    _InvFade (&quot;Soft Particles Factor&quot;, Range(0.01,3.0)) = 1.0
+}
+
+Category {
+    Tags { &quot;Queue&quot;=&quot;Transparent&quot; &quot;IgnoreProjector&quot;=&quot;True&quot; &quot;RenderType&quot;=&quot;Transparent&quot; &quot;PreviewType&quot;=&quot;Plane&quot; }
+    Blend SrcAlpha OneMinusSrcAlpha
+    ColorMask RGB
+    Cull Off Lighting Off ZWrite Off
+
+    SubShader {
+        Pass {
+        
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma target 2.0
+            #pragma multi_compile_particles
+            #pragma multi_compile_fog
+            
+            #include &quot;UnityCG.cginc&quot;
+
+            sampler2D _MainTex;
+            fixed4 _TintColor;
+            
+            struct appdata_t {
+                float4 vertex : POSITION;
+                fixed4 color : COLOR;
+                float4 texcoords : TEXCOORD0;
+                float texcoordBlend : TEXCOORD1;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
+            };
+
+            struct v2f {
+                float4 vertex : SV_POSITION;
+                fixed4 color : COLOR;
+                float2 texcoord : TEXCOORD0;
+                float2 texcoord2 : TEXCOORD1;
+                fixed blend : TEXCOORD2;
+                UNITY_FOG_COORDS(3)
+                #ifdef SOFTPARTICLES_ON
+                float4 projPos : TEXCOORD4;
+                #endif
+                UNITY_VERTEX_OUTPUT_STEREO
+            };
+            
+            float4 _MainTex_ST;
+
+            v2f vert (appdata_t v)
+            {
+                v2f o;
+                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o); 
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                #ifdef SOFTPARTICLES_ON
+                o.projPos = ComputeScreenPos (o.vertex);
+                COMPUTE_EYEDEPTH(o.projPos.z);
+                #endif
+                o.color = v.color * _TintColor;
+                o.texcoord = TRANSFORM_TEX(v.texcoords.xy,_MainTex);
+                o.texcoord2 = TRANSFORM_TEX(v.texcoords.zw,_MainTex);
+                o.blend = v.texcoordBlend;
+                UNITY_TRANSFER_FOG(o,o.vertex);
+                return o;
+            }
+
+            sampler2D_float _CameraDepthTexture;
+            float _InvFade;
+            
+            fixed4 frag (v2f i) : SV_Target
+            {
+                #ifdef SOFTPARTICLES_ON
+                float sceneZ = LinearEyeDepth (SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(i.projPos)));
+                float partZ = i.projPos.z;
+                float fade = saturate (_InvFade * (sceneZ-partZ));
+                i.color.a *= fade;
+                #endif
+                
+                fixed4 colA = tex2D(_MainTex, i.texcoord);
+                fixed4 colB = tex2D(_MainTex, i.texcoord2);
+                fixed4 col = 2.0f * i.color * lerp(colA, colB, i.blend);
+                UNITY_APPLY_FOG(i.fogCoord, col);
+                return col;
+            }
+            ENDHLSL 
+        }
+    }   
+}
+}
+
+
+</code></pre>
+
+<p>It’s also possible to use <span class="tooltip"><strong>Surface Shaders</strong><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-SurfaceShaders.html" href="SL-SurfaceShaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SurfaceShader" aria-label="Go to glossary anchor for SurfaceShader">Glossary</a></span></span></span> with this system, although there are some extra things to be aware of:</p>
+
+<ul>
+<li>The input structure to your surface function is not the same as the input structure to the vertex Shader. You need to provide your own vertex Shader input structure. See below for an example, where it is called <code>appdata_particles</code>.</li>
+<li>When surface Shaders are built, there is automatic handling of variables whose names begin with certain tokens. The most notable one is <code>uv</code>. To prevent the automatic handling from causing problems here, be sure to give your UV inputs different names (for example, “texcoord”).</li>
+</ul>
+
+<p>Here is the same functionality as the first example, but in a Surface Shader:</p>
+
+<pre><code>Shader &quot;Particles/Anim Alpha Blend Surface&quot; {
+    Properties {
+        _Color (&quot;Color&quot;, Color) = (1,1,1,1)
+        _MainTex (&quot;Albedo (RGB)&quot;, 2D) = &quot;white&quot; {}
+        _Glossiness (&quot;Smoothness&quot;, Range(0,1)) = 0.5
+        _Metallic (&quot;Metallic&quot;, Range(0,1)) = 0.0
+    }
+    SubShader {
+        Tags {&quot;Queue&quot;=&quot;Transparent&quot; &quot;RenderType&quot;=&quot;Transparent&quot;}
+        Blend SrcAlpha OneMinusSrcAlpha
+        ZWrite off
+        LOD 200
+        
+        CGPROGRAM
+        // Physically based Standard lighting model, and enable shadows on all light types
+        #pragma surface surf Standard alpha vertex:vert
+
+        // Use shader model 3.0 target, to get nicer looking lighting
+        #pragma target 3.0
+
+        sampler2D _MainTex;
+
+         struct appdata_particles {
+            float4 vertex : POSITION;
+            float3 normal : NORMAL;
+            float4 color : COLOR;
+            float4 texcoords : TEXCOORD0;
+            float texcoordBlend : TEXCOORD1;
+            };
+
+
+        struct Input {
+            float2 uv_MainTex;
+            float2 texcoord1;
+            float blend;
+            float4 color;
+        };
+
+
+        void vert(inout appdata_particles v, out Input o) {
+            UNITY_INITIALIZE_OUTPUT(Input,o);
+            o.uv_MainTex = v.texcoords.xy;
+            o.texcoord1 = v.texcoords.zw;
+            o.blend = v.texcoordBlend;
+            o.color = v.color;
+          }
+
+
+        half _Glossiness;
+        half _Metallic;
+        fixed4 _Color;
+
+
+        void surf (Input IN, inout SurfaceOutputStandard o) {
+            fixed4 colA = tex2D(_MainTex, IN.uv_MainTex);
+            fixed4 colB = tex2D(_MainTex, IN.texcoord1);
+            fixed4 c = 2.0f * IN.color * lerp(colA, colB, IN.blend) * _Color;
+                 
+            o.Albedo = c.rgb;
+            // Metallic and smoothness come from slider variables
+            o.Metallic = _Metallic;
+            o.Smoothness = _Glossiness;
+            o.Alpha = c.a;
+        }
+        ENDCG
+    }
+    FallBack &quot;Diffuse&quot;
+}
+
+</code></pre>
+
+<hr>
+
+<ul>
+<li><span class="page-edit">2017–05–15 Page amended
+</span></li>
+</ul>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="PartSysUsage.html"></a></span><div class="tip">Using the Built-in Particle System</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="PartSysInstancing.html"></a></span><div class="tip">Particle System GPU Instancing</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

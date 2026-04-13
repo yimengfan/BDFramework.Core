@@ -1,0 +1,476 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Surface Shader lighting examples</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-SurfaceShaderLightingExamples.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-SurfaceShaderLightingExamples.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-SurfaceShaderLightingExamples.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-SurfaceShaderLightingExamples.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-SurfaceShaderLightingExamples.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-SurfaceShaderLightingExamples.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-SurfaceShaderLightingExamples.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-SurfaceShaderLightingExamples.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-writing.html">Writing shaders</a></li>
+<li><a href="SL-SurfaceShaders.html">Writing Surface Shaders</a></li>
+<li>Surface Shader lighting examples</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-SurfaceShaderLighting.html"></a></span><div class="tip">Custom lighting models in Surface Shaders</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-SurfaceShaderTessellation.html"></a></span><div class="tip">Surface Shaders with DX11 / OpenGL Core Tessellation</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Surface Shader lighting examples</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page provides examples of custom <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-SurfaceShaderLighting.html">Surface Shader lighting models</a> in <span class="tooltip"><a href="SL-SurfaceShaders.html">Surface Shaders</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html" href="SL-SurfaceShaderLighting.html">Surface Shader lighting models</a> in <span class="tooltip"><a href="SL-SurfaceShaders.html">Surface Shaders</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#SurfaceShader" aria-label="Go to glossary anchor for SurfaceShader">Glossary</a></span></span></span>. For more general Surface <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#SurfaceShader" aria-label="Go to glossary anchor for SurfaceShader">Glossary</a></span></span></span>. For more general Surface <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> guidance, see <a href="SL-SurfaceShaderExamples.html">Surface Shader Examples</a>.</p>
+
+<p>Because <strong>Deferred Lighting</strong> does not play well with some custom per-material lighting models, most of the examples below make the shaders compile to <span class="tooltip"><strong>Forward Rendering</strong><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderTech-ForwardRendering.html" href="RenderTech-ForwardRendering.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ForwardRendering" aria-label="Go to glossary anchor for ForwardRendering">Glossary</a></span></span></span> only.</p>
+
+<h2>Render pipeline compatibility</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature name</strong></th>
+	<th style="text-align:left;"><strong>Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span></strong></th>
+	<th style="text-align:left;"><strong>Universal Render Pipeline (URP)</strong></th>
+	<th style="text-align:left;"><strong>High Definition Render Pipeline (HDRP)</strong></th>
+	<th style="text-align:left;"><strong>Custom SRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Surface Shaders</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>For a streamlined way of creating Shader objects in URP, see <a href="shader-graph.html">Shader Graph</a>.</td>
+	<td style="text-align:left;">No<br><br>For a streamlined way of creating Shader objects in HDRP, see <a href="shader-graph.html">Shader Graph</a>.</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Diffuse</h2>
+
+<p>The following is an example of a shader that uses the built-in Lambert lighting model:</p>
+
+<pre><code>  Shader &quot;Example/Diffuse Texture&quot; {
+    Properties {
+      _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+    }
+    SubShader {
+      Tags { &quot;RenderType&quot; = &quot;Opaque&quot; }
+      CGPROGRAM
+      #pragma surface surf Lambert
+      
+      struct Input {
+          float2 uv_MainTex;
+      };
+      
+      sampler2D _MainTex;
+      
+      void surf (Input IN, inout SurfaceOutput o) {
+          o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb;
+      }
+      ENDCG
+    }
+    Fallback &quot;Diffuse&quot;
+  }
+</code></pre>
+
+<p>Here’s how it looks like with a Texture and without a Texture, with one directional Light in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>: </p>
+
+<p>
+<img src="../uploads/Main/SurfaceShaderDiffuseTexture.jpg" alt="">
+<img src="../uploads/Main/SurfaceShaderDiffuseNoTex.png" alt=""> </p>
+
+<p>The following example shows how to achieve the same result by writing a custom lighting model instead of using the built-in Lambert model. </p>
+
+<p>To do this, you need to use a number of Surface Shader lighting model functions. Here’s a simple Lambert one. Note that only the <code>CGPROGRAM</code> section changes; the surrounding Shader code is exactly the same:</p>
+
+<pre><code>    Shader &quot;Example/Diffuse Texture&quot; {
+        Properties {
+            _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+        }
+        SubShader {
+        Tags { &quot;RenderType&quot; = &quot;Opaque&quot; }
+        CGPROGRAM
+          #pragma surface surf SimpleLambert
+  
+          half4 LightingSimpleLambert (SurfaceOutput s, half3 lightDir, half atten) {
+              half NdotL = dot (s.Normal, lightDir);
+              half4 c;
+              c.rgb = s.Albedo * _LightColor0.rgb * (NdotL * atten);
+              c.a = s.Alpha;
+              return c;
+          }
+  
+        struct Input {
+            float2 uv_MainTex;
+        };
+        
+        sampler2D _MainTex;
+        
+        void surf (Input IN, inout SurfaceOutput o) {
+            o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb;
+        }
+        ENDCG
+        }
+        Fallback &quot;Diffuse&quot;
+    }
+</code></pre>
+
+<p>This simple Diffuse lighting model uses the <code>LightingSimpleLambert</code> function. It computes lighting by calculating a dot product between surface normal and light direction, and then applying light attenuation and color.</p>
+
+<h2>Diffuse Wrap</h2>
+
+<p>The following example shows <strong>Wrapped Diffuse</strong>, a modification of <strong>Diffuse</strong> lighting where illumination “wraps around” the edges of objects. It’s useful for simulating subsurface scattering effects. Only the <code>CGPROGRAM</code> section changes, so once again, the surrounding Shader code is omitted:</p>
+
+<pre><code>    ...ShaderLab code...
+    CGPROGRAM
+    #pragma surface surf WrapLambert
+
+    half4 LightingWrapLambert (SurfaceOutput s, half3 lightDir, half atten) {
+        half NdotL = dot (s.Normal, lightDir);
+        half diff = NdotL * 0.5 + 0.5;
+        half4 c;
+        c.rgb = s.Albedo * _LightColor0.rgb * (diff * atten);
+        c.a = s.Alpha;
+        return c;
+    }
+
+    struct Input {
+        float2 uv_MainTex;
+    };
+    
+    sampler2D _MainTex;
+        void surf (Input IN, inout SurfaceOutput o) {
+        o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb;
+    }
+    ENDCG
+    ...ShaderLab code...
+</code></pre>
+
+<p>Here’s how it looks like with a Texture and without a Texture, with one directional Light in the Scene: </p>
+
+<p>
+<img src="../uploads/Main/SurfaceShaderDiffuseWrap.jpg" alt="">
+<img src="../uploads/Main/SurfaceShaderDiffuseWrapNoTex.png" alt=""> </p>
+
+<h2>Toon Ramp</h2>
+
+<p>The following example shows a “Ramp” lighting model that uses a Texture ramp to define how surfaces respond to the angles between the light and the normal. This can be used for a variety of effects, and is especially effective when used with <strong>Toon</strong> lighting.</p>
+
+<pre><code>    ...ShaderLab code...
+    CGPROGRAM
+    #pragma surface surf Ramp
+
+    sampler2D _Ramp;
+
+    half4 LightingRamp (SurfaceOutput s, half3 lightDir, half atten) {
+        half NdotL = dot (s.Normal, lightDir);
+        half diff = NdotL * 0.5 + 0.5;
+        half3 ramp = tex2D (_Ramp, float2(diff)).rgb;
+        half4 c;
+        c.rgb = s.Albedo * _LightColor0.rgb * ramp * atten;
+        c.a = s.Alpha;
+        return c;
+    }
+
+    struct Input {
+        float2 uv_MainTex;
+    };
+    
+    sampler2D _MainTex;
+    
+    void surf (Input IN, inout SurfaceOutput o) {
+        o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb;
+    }
+    ENDCG
+    ...ShaderLab code...
+</code></pre>
+
+<p>Here’s how it looks like with a Texture and without a Texture, with one directional Light in the Scene: </p>
+
+<p>
+<img src="../uploads/Main/SurfaceShaderToonRamp.jpg" alt="">
+<img src="../uploads/Main/SurfaceShaderToonRampNoTex.jpg" alt=""> </p>
+
+<figure>
+<img src="../uploads/Main/SurfaceShaderToonRampItself.png" alt="">
+</figure>
+
+<h2>Simple Specular</h2>
+
+<p>The following example shows a simple specular lighting model, similar to the built-in BlinnPhong lighting model.</p>
+
+<pre><code>    ...ShaderLab code...
+    CGPROGRAM
+    #pragma surface surf SimpleSpecular
+
+    half4 LightingSimpleSpecular (SurfaceOutput s, half3 lightDir, half3 viewDir, half atten) {
+        half3 h = normalize (lightDir + viewDir);
+
+        half diff = max (0, dot (s.Normal, lightDir));
+
+        float nh = max (0, dot (s.Normal, h));
+        float spec = pow (nh, 48.0);
+
+        half4 c;
+        c.rgb = (s.Albedo * _LightColor0.rgb * diff + _LightColor0.rgb * spec) * atten;
+        c.a = s.Alpha;
+        return c;
+    }
+
+    struct Input {
+        float2 uv_MainTex;
+    };
+    
+    sampler2D _MainTex;
+    
+    void surf (Input IN, inout SurfaceOutput o) {
+        o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb;
+    }
+    ENDCG
+    ...ShaderLab code...
+</code></pre>
+
+<p>Here’s how it looks like with a Texture and without a Texture, with one directional Light in the Scene: </p>
+
+<p>
+<img src="../uploads/Main/SurfaceShaderSimpleSpecular.jpg" alt="">
+<img src="../uploads/Main/SurfaceShaderSimpleSpecularNoTex.png" alt=""> </p>
+
+<h2>Custom GI</h2>
+
+<p>We’ll start with a Shader that mimics Unity’s built-in GI:</p>
+
+<pre><code>    Shader &quot;Example/CustomGI_ToneMapped&quot; {
+        Properties {
+            _MainTex (&quot;Albedo (RGB)&quot;, 2D) = &quot;white&quot; {}
+        }
+        SubShader {
+            Tags { &quot;RenderType&quot;=&quot;Opaque&quot; }
+            
+            CGPROGRAM
+            #pragma surface surf StandardDefaultGI
+    
+            #include &quot;UnityPBSLighting.cginc&quot;
+    
+            sampler2D _MainTex;
+    
+            inline half4 LightingStandardDefaultGI(SurfaceOutputStandard s, half3 viewDir, UnityGI gi)
+            {
+                return LightingStandard(s, viewDir, gi);
+            }
+    
+            inline void LightingStandardDefaultGI_GI(
+                SurfaceOutputStandard s,
+                UnityGIInput data,
+                inout UnityGI gi)
+            {
+                LightingStandard_GI(s, data, gi);
+            }
+    
+            struct Input {
+                float2 uv_MainTex;
+            };
+    
+            void surf (Input IN, inout SurfaceOutputStandard o) {
+                o.Albedo = tex2D(_MainTex, IN.uv_MainTex);
+            }
+            ENDCG
+        }
+        FallBack &quot;Diffuse&quot;
+    }
+</code></pre>
+
+<p>Now, let’s add some tone mapping on top of the GI:</p>
+
+<pre><code>    Shader &quot;Example/CustomGI_ToneMapped&quot; {
+        Properties {
+            _MainTex (&quot;Albedo (RGB)&quot;, 2D) = &quot;white&quot; {}
+            _Gain(&quot;Lightmap tone-mapping Gain&quot;, Float) = 1
+            _Knee(&quot;Lightmap tone-mapping Knee&quot;, Float) = 0.5
+            _Compress(&quot;Lightmap tone-mapping Compress&quot;, Float) = 0.33
+        }
+        SubShader {
+            Tags { &quot;RenderType&quot;=&quot;Opaque&quot; }
+            
+            CGPROGRAM
+            #pragma surface surf StandardToneMappedGI
+    
+            #include &quot;UnityPBSLighting.cginc&quot;
+    
+            half _Gain;
+            half _Knee;
+            half _Compress;
+            sampler2D _MainTex;
+    
+            inline half3 TonemapLight(half3 i) {
+                i *= _Gain;
+                return (i &gt; _Knee) ? (((i - _Knee)*_Compress) + _Knee) : i;
+            }
+    
+            inline half4 LightingStandardToneMappedGI(SurfaceOutputStandard s, half3 viewDir, UnityGI gi)
+            {
+                return LightingStandard(s, viewDir, gi);
+            }
+    
+            inline void LightingStandardToneMappedGI_GI(
+                SurfaceOutputStandard s,
+                UnityGIInput data,
+                inout UnityGI gi)
+            {
+                LightingStandard_GI(s, data, gi);
+    
+                gi.light.color = TonemapLight(gi.light.color);
+                #ifdef DIRLIGHTMAP_SEPARATE
+                    #ifdef LIGHTMAP_ON
+                        gi.light2.color = TonemapLight(gi.light2.color);
+                    #endif
+                    #ifdef DYNAMICLIGHTMAP_ON
+                        gi.light3.color = TonemapLight(gi.light3.color);
+                    #endif
+                #endif
+                gi.indirect.diffuse = TonemapLight(gi.indirect.diffuse);
+                gi.indirect.specular = TonemapLight(gi.indirect.specular);
+            }
+    
+            struct Input {
+                float2 uv_MainTex;
+            };
+    
+            void surf (Input IN, inout SurfaceOutputStandard o) {
+                o.Albedo = tex2D(_MainTex, IN.uv_MainTex);
+            }
+            ENDCG
+        }
+        FallBack &quot;Diffuse&quot;
+    }
+</code></pre>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-SurfaceShaderLighting.html"></a></span><div class="tip">Custom lighting models in Surface Shaders</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-SurfaceShaderTessellation.html"></a></span><div class="tip">Surface Shaders with DX11 / OpenGL Core Tessellation</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

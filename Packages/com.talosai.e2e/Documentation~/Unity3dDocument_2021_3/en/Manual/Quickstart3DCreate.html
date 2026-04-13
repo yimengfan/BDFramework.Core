@@ -1,0 +1,359 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Creating a 3D game</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Quickstart3DCreate.html">English</a></li>
+<li><a href="/cn/current/Manual/Quickstart3DCreate.html">中文</a></li>
+<li><a href="/ja/current/Manual/Quickstart3DCreate.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Quickstart3DCreate.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Quickstart3DCreate.html">English</a></li>
+<li><a href="/cn/current/Manual/Quickstart3DCreate.html">中文</a></li>
+<li><a href="/ja/current/Manual/Quickstart3DCreate.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Quickstart3DCreate.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="QuickstartGuides.html">Quickstart guides</a></li>
+<li><a href="Quickstart3D.html">3D game development quickstart guide</a></li>
+<li>Creating a 3D game</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Quickstart3D.html"></a></span><div class="tip">3D game development quickstart guide</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="best-practice-guides.html"></a></span><div class="tip">Advanced best practice guides</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Creating a 3D game</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p><a name="TopOfPage" aria-hidden="true"></a></p>
+
+<p>To create a 3D game, <a href="Quickstart3D.html#3DInitialSetup">set up your Unity project</a> and then familiarize yourself with the relevant concepts in the following order:</p>
+
+<ul>
+<li><a href="#Fundamentals">Fundamentals</a></li>
+<li><a href="#Scripting">Scripting</a></li>
+<li><a href="#3Dassets">3D Assets</a></li>
+<li><a href="#Environments">Building in-game environments</a></li>
+<li><a href="#Animation">Animation</a></li>
+<li><a href="#Graphics">Graphics</a></li>
+<li><a href="#Audio">Audio</a></li>
+<li><a href="#Physics">Physics</a></li>
+<li><a href="#UI">User interface</a></li>
+</ul>
+
+<p><a name="Fundamentals" aria-hidden="true"></a></p>
+
+<h2>Fundamentals</h2>
+
+<p><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html">GameObjects</a><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="class-GameObject.html">GameObjects</a><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> are fundamental objects in Unity that represent characters, props, scenery, and more. Every object in your game is a GameObject.</p>
+
+<p>GameObjects live in 3D environments called <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html">scenes</a><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="CreatingScenes.html">scenes</a><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. You can think of a scene as a game level, but it might also represent a menu, the credits at the end of the game or something else entirely.</p>
+
+<p>The behavior of GameObjects is defined by blocks of functionality called components. You can attach multiple components to GameObjects. The following components are fundamental for 3D games:</p>
+
+<ul>
+<li>
+<a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Transform.html">Transform</a>: the <span class="tooltip"><strong>Transform component</strong><span class="tooltiptext">A Transform component determines the Position, Rotation, and Scale of each object in the scene. Every GameObject has a Transform. <a href="class-Transform.html" href="class-Transform.html">Transform</a>: the <span class="tooltip"><strong>Transform component</strong><span class="tooltiptext">A Transform component determines the Position, Rotation, and Scale of each object in the scene. Every GameObject has a Transform. <a href="class-Transform.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TransformComponent" aria-label="Go to glossary anchor for TransformComponent">Glossary</a></span></span></span> determines the Position, Rotation, and Scale of each GameObject in the scene. Every GameObject has a Transform component.</li>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshFilter.html">Mesh Filter</a><span class="tooltiptext">A mesh component that takes a mesh from your assets and passes it to the Mesh Renderer for rendering on the screen. <a href="class-MeshFilter.html" href="class-MeshFilter.html">Mesh Filter</a><span class="tooltiptext">A mesh component that takes a mesh from your assets and passes it to the Mesh Renderer for rendering on the screen. <a href="class-MeshFilter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshFilter" aria-label="Go to glossary anchor for MeshFilter">Glossary</a></span></span></span>: this component defines the shape of a 3D GameObject.</li>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshRenderer.html">Mesh Renderer</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html" href="class-MeshRenderer.html">Mesh Renderer</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span>: this component defines how the 3D shape defined by the <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html" href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span>: this component defines how the 3D shape defined by the <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> Filter looks.</li>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Camera.html">Cameras</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="class-Camera.html">Cameras</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>: specially-configured GameObjects that capture and display the world to the player.</li>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Rigidbody.html">Rigidbody</a><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a href="class-Rigidbody.html" href="class-Rigidbody.html">Rigidbody</a><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a href="class-Rigidbody.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span>: Rigidbodies allow GameObjects to interact with the Physics system, including gravity and <span class="tooltip"><strong>collisions</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a href="CollidersOverview.html" href="Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span>: Rigidbodies allow GameObjects to interact with the Physics system, including gravity and <span class="tooltip"><strong>collisions</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span>. See the <a href="#Physics">Physics</a> section of this guide.</li>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html">Colliders</a><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a href="CollidersOverview.html" href="CollidersOverview.html">Colliders</a><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span>: this component defines the shape of a 3D GameObject for the purpose of physical collisions.</li>
+</ul>
+
+<p><a href="#TopOfPage">Back to Top</a></p>
+
+<p><a name="Scripting" aria-hidden="true"></a></p>
+
+<h2>Scripting</h2>
+
+<p>Unity allows you to create your own Components using <strong><span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span></strong>. Scripts let you trigger game events, modify Component properties over time and respond to user input.
+Unity supports the C# programming language natively.
+Here some examples of how you can use scripts in your game:</p>
+
+<ul>
+<li>To receive input from the player and have a GameObject move or act based on that input.</li>
+<li>To set win and lose states which open relevant win or lose scenes to create a full game loop.</li>
+<li>To affect the components of GameObjects, such as their transform, animation, or renderer, based on other variables.</li>
+</ul>
+
+<p>For details on how to use scripts in Unity, see <a href="ScriptingSection.html">Scripting Overview</a>.
+To learn the fundamentals of scripting, follow the <a href="https://learn.unity.com/course/beginner-scripting">Unity Learn Beginner Scripting course</a>.
+For more in-depth guidance, see the example projects <a href="https://learn.unity.com/course/create-with-code">Create with Code</a> and <a href="https://learn.unity.com/project/creator-kit-beginner-code">Creator Kit: Beginner Code</a>.</p>
+
+<p>
+<a href="#TopOfPage">Back to Top</a>
+<a name="3Dassets" aria-hidden="true"></a>
+</p>
+
+<h2>3D Assets</h2>
+
+<p>Models are 3D representations of objects. The majority of the visuals for 3D games consist of models, such as characters, interactable objects, and the world around the player.</p>
+
+<p>You can use tools like <a href="https://unity3d.com/unity/features/worldbuilding/probuilder">Probuilder</a> to create models in Unity. However, these work best for prototyping, rather than for the final product.</p>
+
+<p>To add more polished 3D assets to your final product, create 3D Models, Materials and Textures in 3D modeling software and then import them into Unity.</p>
+
+<figure>
+<img src="../uploads/Main/quickstart-3D-Graphics.png" alt="Left: A 3D polygon mesh for a player character. Right: The player mesh rendered in Unity with materials">
+<figcaption>Left: A 3D polygon mesh for a player character. Right: The player mesh rendered in Unity with materials</figcaption>
+</figure>
+
+<h3>Importing 3D Model Files</h3>
+
+<p>Unity uses the .fbx model format. You can also use other common native <a href="3D-formats.html">model formats</a> (for example, .max, .blend, .mb, .ma), and Unity converts them into .fbx once they are imported.</p>
+
+<p>
+<a href="ImportingModelFiles.html">Import models</a> into Unity to use them in your project.</p>
+
+<h3>Rendering Meshes</h3>
+
+<p>A 3D mesh is the structural build of a 3D model. It is made up of multiple polygon shapes. To add a 3D model to a GameObject, add a <a href="MeshFilter">Mesh Filter</a> to the GameObject. The <a href="class-MeshRenderer.html">Mesh Renderer</a> component renders meshes in your scene; to ensure models appear in your game, add a Mesh Renderer to any GameObject that has a Mesh Filter component.</p>
+
+<h3>Materials</h3>
+
+<p><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Materials.html">Materials</a><span class="tooltiptext">An asset that defines how a surface should be rendered. <a href="class-Material.html" href="Materials.html">Materials</a><span class="tooltiptext">An asset that defines how a surface should be rendered. <a href="class-Material.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span> combine information about the visual appearance of a surface, such as <span class="tooltip"><a href="Textures.html">Textures</a><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a href="class-TextureImporter.html" href="Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span> combine information about the visual appearance of a surface, such as <span class="tooltip"><a href="Textures.html">Textures</a><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a href="class-TextureImporter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#texture" aria-label="Go to glossary anchor for texture">Glossary</a></span></span></span>, color tints, and <span class="tooltip"><a href="ShadersOverview.html">Shaders</a><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#texture" aria-label="Go to glossary anchor for texture">Glossary</a></span></span></span>, color tints, and <span class="tooltip"><a href="ShadersOverview.html">Shaders</a><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>. Use Materials to define how to render surfaces.</p>
+
+<ul>
+<li>Textures are any 2D image files that you import into Unity. Use <a href="Textures.html">Textures</a> to wrap a mesh and add fine detail to a model.</li>
+<li>Use Color tints to alter the color of the texture.</li>
+<li>Shaders are a series of instructions which determine how Unity displays GameObjects on screen. Use <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadersOverview.html">Shaders</a> to affect how Unity renders each <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a href="ShadowPerformance.html" href="ShadersOverview.html">Shaders</a> to affect how Unity renders each <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> based on lighting input and Material configuration.</li>
+</ul>
+
+<p>See the Learn Tutorial on <a href="https://learn.unity.com/tutorial/shading-material-design">Material Design</a>.</p>
+
+<p>
+<a href="#TopOfPage">Back to Top</a>
+<a name="Environments" aria-hidden="true"></a>
+</p>
+
+<h2>Building in-game environments</h2>
+
+<figure>
+<img src="../uploads/Main/quickstart-3D-environment.png" alt="An environment has been created by adding models and other assets to the scene.">
+<figcaption>An environment has been created by adding models and other assets to the scene.</figcaption>
+</figure>
+
+<p>Environment design is the process of creating an environment for gameplay to take place in. You might design and build your environment at the same time in the Unity Editor, or you might design an environment outside of Unity and then build it in Unity.</p>
+
+<p>To build an in-game environment, you add GameObjects to the scene and position them to suit your preference and design.
+In addition to hand-placing your models in the scene, the Unity Editor includes a built-in set of <span class="tooltip"><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> features that allow you to add landscapes to your game. In the Editor, you can create multiple Terrain tiles, adjust the height or appearance of your landscape, and add trees or grass to it. Read more about <a href="terrain-UsingTerrains.html">Creating and Using Terrains</a>.</p>
+
+<p>
+<a href="#TopOfPage">Back to Top</a>
+<a name="Animation" aria-hidden="true"></a>
+</p>
+
+<h2>Animation</h2>
+
+<p>You can import animations made in other programs, or animate your assets directly in the Editor.
+For more information on 3D animation, see the Unity Learn Course <a href="https://learn.unity.com/course/introduction-to-3d-animation-systems?uv=2019.4">Introduction to 3D Animation Systems</a>.</p>
+
+<figure>
+<img src="../uploads/Main/quickstart-3D-animation.png" alt="The player is standing still so the idle animation is playing.">
+<figcaption>The player is standing still so the idle animation is playing.</figcaption>
+</figure>
+
+<h3>Importing Animations</h3>
+
+<p>Unity can <a href="class-AnimationClip.html">import animation clips</a> when you import a model with animation. This means you can animate models in another program and then access and manipulate the clips in Unity.</p>
+
+<h3>Animating Models in Unity</h3>
+
+<p>Use the <a href="AnimationEditorGuide.html">Animation window</a> to create and modify Animation Clips directly inside Unity.
+Use <span class="tooltip"><strong>Keyframe</strong><span class="tooltiptext">A frame that marks the start or end point of a transition in an animation. Frames in between the keyframes are called inbetweens.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#keyframe" aria-label="Go to glossary anchor for keyframe">Glossary</a></span></span></span> animation to add simple animations to a GameObject within your scene, such as changing its position, size, or rotation.</p>
+
+<h3>Controlling animations</h3>
+
+<p>To control which <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationClips.html">Animation Clips</a><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a href="class-AnimationClip.html" href="AnimationClips.html">Animation Clips</a><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> play, you can call them directly in a script with the <a href="https://docs.unity3d.com/ScriptReference/Animator.html">Animator</a> Class, or create and modify the <span class="tooltip"><a href="AnimatorController">Animator Controller</a><span class="tooltiptext">Controls animation through Animation Layers with Animation State Machines and Animation Blend Trees, controlled by Animation Parameters. The same Animator Controller can be referenced by multiple models with Animator components. <a href="class-AnimatorController.html" href="Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> play, you can call them directly in a script with the <a href="https://docs.unity3d.com/ScriptReference/Animator.html">Animator</a> Class, or create and modify the <span class="tooltip"><a href="AnimatorController">Animator Controller</a><span class="tooltiptext">Controls animation through Animation Layers with Animation State Machines and Animation Blend Trees, controlled by Animation Parameters. The same Animator Controller can be referenced by multiple models with Animator components. <a href="class-AnimatorController.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AnimatorController" aria-label="Go to glossary anchor for AnimatorController">Glossary</a></span></span></span> in the <span class="tooltip"><a href="AnimatorWindow.html">Animator window</a><span class="tooltiptext">The window where the Animator Controller is visualized and edited. <a href="AnimatorWindow.html" href="Glossary.html#AnimatorController" aria-label="Go to glossary anchor for AnimatorController">Glossary</a></span></span></span> in the <span class="tooltip"><a href="AnimatorWindow.html">Animator window</a><span class="tooltiptext">The window where the Animator Controller is visualized and edited. <a href="AnimatorWindow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorWindow" aria-label="Go to glossary anchor for AnimatorWindow">Glossary</a></span></span></span>.</p>
+
+<p>You can use the <a href="AnimatorWindow.html">Animator window</a> to:</p>
+
+<ul>
+<li>Create and set up the <a href="AnimatorController">Animation Controller</a>
+</li>
+<li>Create <a href="class-State.html">Animator States</a> with <a href="AnimationClips.html">Animation Clips</a>
+</li>
+<li>Create <a href="AnimationParameters.html">Animator Parameters</a>, which scripts can access or assign values to</li>
+<li>Create <a href="class-Transition.html">Animator Transitions</a> which specify conditions (based on parameters) for when a State should change and how long the blend between states should take</li>
+</ul>
+
+<p>
+<a href="#TopOfPage">Back to Top</a>
+<a name="Graphics" aria-hidden="true"></a>
+</p>
+
+<h2>Graphics</h2>
+
+<h3>Lighting</h3>
+
+<p>Light your Scenes to add depth and mood to your environments and to help the player experience the game world you’ve created.
+To set up lighting:</p>
+
+<ol>
+<li>Create a Light. Right-click in the Hierarchy window to open the GameObject menu, select <strong>Light</strong>, and select a type of Light to add to your scene. See <a href="Lighting.html">Types of Light</a>.</li>
+<li>Place your Lights in the Scene. Adjust the color, intensity, and placement of your Lights until you achieve the desired effect. See <a href="UsingLights.html">Using Lights</a>.</li>
+<li>Perfect your lighting. For example, you can choose a different <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightModes.html">Light mode</a><span class="tooltiptext">A Light property that defines the use of the Light. Can be set to Realtime, Baked and Mixed. <a href="LightModes.html" href="LightModes.html">Light mode</a><span class="tooltiptext">A Light property that defines the use of the Light. Can be set to Realtime, Baked and Mixed. <a href="LightModes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightMode" aria-label="Go to glossary anchor for LightMode">Glossary</a></span></span></span>, or add a <a href="Cookies.html">cookie</a> mask to create shadows.</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/quickstart-3D-lights.png" alt="A spotlight Light creates atmospheric lighting in this scene">
+<figcaption>A spotlight Light creates atmospheric lighting in this scene</figcaption>
+</figure>
+
+<p>Refer to the Unity Learn <a href="https://learn.unity.com/project/creative-core-lighting">Lighting in URP</a> tutorial.</p>
+
+<p>
+<a href="#TopOfPage">Back to Top</a>
+<a name="Audio" aria-hidden="true"></a>
+</p>
+
+<h2>Audio</h2>
+
+<p>You can add background music and sound effects to your game in Unity; see <a href="AudioOverview.html">Audio Overview</a>. Use third-party software to create your audio and import it into Unity with the recommended settings.</p>
+
+<p>
+<a href="#TopOfPage">Back to Top</a>
+<a name="Physics" aria-hidden="true"></a>
+</p>
+
+<h2>Physics</h2>
+
+<figure>
+<img src="../uploads/Main/quickstart-3D-physics.png" alt="The Player character has a capsule collider component which uses the Physics system to allow the character to collide with the walls. ">
+<figcaption>The Player character has a capsule collider component which uses the Physics system to allow the character to collide with the walls. </figcaption>
+</figure>
+
+<p>Use Unity’s <span class="tooltip"><strong>physics engine</strong><span class="tooltiptext">A system that simulates aspects of physical systems so that objects can accelerate correctly and be affected by collisions, gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PhysicsSection.html" href="PhysicsSection.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PhysicsEngine" aria-label="Go to glossary anchor for PhysicsEngine">Glossary</a></span></span></span> to control how GameObjects interact. You can use this to replicate forces such as gravity and mechanics, which define how GameObjects behave on collision in the real world. You can also configure the physics settings to create custom physics to fit the design of your game, which might not be an accurate simulation of the real world.
+To learn how to use Unity’s physics engine, see the Unity Learn tutorial <a href="https://learn.unity.com/project/ruby-s-2d-rpg">Ruby’s Adventure: 2D Beginner</a>. Refer to the <a href="PhysicsSection.html">Physics section</a> of the User Manual for more information.</p>
+
+<p>To set up Physics for your GameObjects:</p>
+
+<ol>
+<li>To allow your GameObject to be affected by the Physics system, and react to things like gravity and collisions, add a <a href="/RigidbodiesOverview.html">Rigidbody</a> component.</li>
+<li>Use <a href="CollidersOverview.html">Colliders</a> to enable GameObjects to interact with other GameObjects in the scene. For example, GameObjects with a collider can move or be moved by another GameObject with a collider.</li>
+<li>To be able to call a function in code when two GameObjects intersect, add a <a href="CollidersOverview.html">Collider</a> and make it a <a href="CollidersOverview.html#triggers">trigger</a>.</li>
+</ol>
+
+<p>
+<a href="#TopOfPage">Back to Top</a>
+<a name="UI" aria-hidden="true"></a>
+</p>
+
+<h2>User Interface</h2>
+
+<p>If you want to add a menu or help to your game, you need to set up a <a href="UIToolkits.html">user interface</a>. To set up a user interface, use <a href="UIToolkits.html">Unity UI</a>.</p>
+
+<p><a href="#TopOfPage">Back to Top</a></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Quickstart3D.html"></a></span><div class="tip">3D game development quickstart guide</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="best-practice-guides.html"></a></span><div class="tip">Advanced best practice guides</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,455 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Encapsulate UXML documents with logic</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-encapsulate-uxml-with-logic.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-encapsulate-uxml-with-logic.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-encapsulate-uxml-with-logic.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-encapsulate-uxml-with-logic.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-encapsulate-uxml-with-logic.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-encapsulate-uxml-with-logic.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-encapsulate-uxml-with-logic.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-encapsulate-uxml-with-logic.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-structure-ui.html">Structure UI</a></li>
+<li>Encapsulate UXML documents with logic</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-best-practices-for-managing-elements.html"></a></span><div class="tip">Best practices for managing elements</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-ElementRef.html"></a></span><div class="tip">UXML elements reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Encapsulate UXML documents with logic</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html">Prefab</a><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html" href="Prefabs.html">Prefab</a><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> is a pre-made <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> is a pre-made <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> that you can instantiate multiple times in a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> that you can instantiate multiple times in a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. Prefabs are useful for creating reusable components. <span class="tooltip"><strong>Visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. Prefabs are useful for creating reusable components. <span class="tooltip"><strong>Visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span> in <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html" href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span> in <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit aren’t GameObjects and therefore Prefabs don’t apply. However, you can <a href="UIE-custom-controls.html">create a custom control</a> as a reusable UI component that encapsulates a specific hierarchy of elements with logic. Because UI Toolkit encourages you to separate the UI from your game or application code, you can use <a href="UIE-UXML.html">UXML</a> to define the structure, use <a href="UIE-USS.html">USS</a> to define the look, and use C# to define the logic of your custom control. </p>
+
+<h2>Create reusable UI components</h2>
+
+<p>To create a reusable UI component, such as a custom control called <code>CardElement</code> for a card, which displays an image for the character, and the life and attack statistics as shown below:</p>
+
+<figure>
+<img src="../uploads/Main/uxml/reusable-card.png" alt="An example card">
+<figcaption>An example card</figcaption>
+</figure>
+
+<p>These are the general steps to accomplish this:</p>
+
+<ol>
+<li><p>In C#, declare a <a href="UIE-create-custom-controls.html">custom element type</a> called CardElement.</p></li>
+<li>
+<p>In UXML, define the hierarchy of the custom control. You can use two approaches. Both approaches support instantiating the <code>CardElement</code> in C# and in a parent UXML.</p>
+
+<ul>
+<li>
+<a href="#uxml-first-approach">UXML-first approach</a> adds children after element construction.</li>
+<li>
+<a href="#element-first-approach">Element-first approach</a> adds children during element construction.</li>
+</ul>
+</li>
+<li><p>Locate references to child elements of the custom control. </p></li>
+<li><p>Expose properties and methods, and encapsulate logic in your custom control the same way as you do with any C# classes. </p></li>
+<li><p>Connect your custom control with your game or application code. You can also register event callbacks to implement user interaction.</p></li>
+</ol>
+
+<p><a name="uxml-first-approach" aria-hidden="true"></a></p>
+
+<h2>UXML-first approach</h2>
+
+<p>With this approach, you include your custom element CardElement in the hierarchy UXML document and declare its child elements directly underneath, and use the hierarchy UXML document as a <a href="UIE-reuse-uxml-files.html">template</a>. This approach offers a simpler solution with a fixed UI structure within the hierarchy UXML document.</p>
+
+<p>The following C# and UXML examples demonstrate how to use the UXML-first approach to create reusable UI.</p>
+
+<p><a name="create-the-custom-control-class" aria-hidden="true"></a></p>
+
+<h3>Create the custom control class</h3>
+
+<p>Create a C# script that defines CardElement custom control. The custom control class assigns an image and badge values to CardElement.</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.UIElements;
+
+// Define the custom control type.
+public class CardElement : VisualElement
+{
+    // Expose the custom control to UXML and UI Builder.
+    public new class UxmlFactory : UxmlFactory&lt;CardElement&gt; {}
+
+    private VisualElement portraitImage =&gt; this.Q(&quot;image&quot;);
+    private Label attackBadge =&gt; this.Q&lt;Label&gt;(&quot;attack-badge&quot;);
+    private Label healthBadge =&gt; this.Q&lt;Label&gt;(&quot;health-badge&quot;);
+
+    // Use the Init() approach instead of a constructor because 
+    // we don't have children yet.
+    public void Init(Texture2D image, int health, int attack)
+    {
+        portraitImage.style.backgroundImage = image;
+        attackBadge.text = health;
+        healthBadge.text = attack;
+    }
+
+    // Custom controls need a default constructor. 
+    public CardElement() {}
+}
+</code></pre>
+
+<h3>Define the hierarchy of the custom control</h3>
+
+<p>Create a UXML document (<code>CardElement.uxml</code>) that defines the hierarchy of CardElement. This example styles CardElement with a USS file.</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot; editor-extension-mode=&quot;False&quot;&gt;
+    &lt;Style src=&quot;CardElementUI.uss&quot; /&gt;
+    &lt;CardElement&gt; 
+        &lt;ui:VisualElement name=&quot;image&quot; /&gt;
+        &lt;ui:VisualElement name=&quot;stats&quot;&gt;
+            &lt;ui:Label name=&quot;attack-badge&quot; class=&quot;badge&quot; /&gt;
+            &lt;ui:Label name=&quot;health-badge&quot; class=&quot;badge&quot; /&gt;
+        &lt;/ui:VisualElement&gt;
+    &lt;/CardElement&gt; 
+&lt;/ui:UXML&gt;
+</code></pre>
+
+<h3>Connect custom controls to your game</h3>
+
+<p>You can connect your custom control to your game by the following:</p>
+
+<ul>
+<li>Instantiate <code>CardElement.uxml</code> inside a parent UXML document. You can <a href="UIB-structuring-ui-templates.html#edit-a-uxml-document-template-instance">navigate back and forth</a> between the hierarchy UXML and this UXML document in UI Builder.</li>
+<li>Instantiate <code>CardElement.uxml</code> containing <code>CardElement</code> from a MonoBehaviour C# script. You must use <a href="UIE-UQuery.html">UQuery</a> to find CardElement before you add it to the scene.</li>
+</ul>
+
+<p>You call <code>Init()</code> after adding the custom control into the scene.</p>
+
+<figure>
+<img src="../uploads/Main/uxml/option-b.png" alt="Workflow of the UXML-first approach">
+<figcaption>Workflow of the UXML-first approach</figcaption>
+</figure>
+
+<p>You can also add gameplay-related actions, such as a click event to interact with the elements.</p>
+
+<p><strong>Instantiate inside parent UXML</strong></p>
+
+<p>The following shows an example of instantiation in UXML:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot; editor-extension-mode=&quot;False&quot;&gt;
+    &lt;ui:Template name=&quot;CardElement&quot; src=&quot;CardElement.uxml&quot;/&gt;
+    &lt;ui:Instance template=”CardElement”/&gt;
+    &lt;ui:Instance template=”CardElement”/&gt;
+    &lt;ui:Instance template=”CardElement”/&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+
+<p>For information on how to render the UXML document in your game, see <a href="UIE-render-runtime-ui.html">Render UI in the Game view</a>.</p>
+
+<p><strong>Instantiate directly in C#</strong></p>
+
+<p>
+<strong>Note</strong>: For learning purposes, the example code on this page uses <a href="UIE-manage-asset-reference.html#use-a-resources-folder">the Resources folder</a> method to load the UXML files which is convenient. However, this method doesn’t scale well. It’s recommended that you use <a href="UIE-manage-asset-reference.html">other methods</a> to load references for your production projects.</p>
+
+<p>The following shows an example of instantiation in C#:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.UIElements;
+
+public class UIManager : MonoBehaviour
+{
+    public void Start()
+    {
+        UIDocument document = GetComponent&lt;UIDocument&gt;();
+
+        // Load the UXML document that defines the hierarchy of CardElement.
+        // It assumes the UXML file is placed at the &quot;Resources&quot; folder.
+        VisualTreeAsset template = Resources.Load&lt;VisualTreeAsset&gt;(&quot;CardElement&quot;);
+
+        // Create a loop to modify properties and perform interactions 
+        // for each card.  It assumes that you have created a function 
+        // called `GetCards()` to get all the cards in your game.
+        foreach(Card card in GetCards())
+        {
+            // Instantiate a template container.
+            var templateContainer = template.Instantiate();
+
+            // Find the custom element inside the template container.
+            var cardElement = templateContainer.Q&lt;CardElement&gt;();
+
+            // Add the custom element into the scene.
+            document.rootVisualElement.Add(cardElement);
+
+            // Initialize the card.
+            cardElement.Init(card.image, card.health, card.attack);
+
+            // Register an event callback for additional interaction.
+            cardElement.RegisterCallback&lt;ClickEvent&gt;(SomeInteraction);
+        }
+    }
+
+    private void SomeInteraction(ClickEvent evt)
+    {
+        // Interact with the elements here.
+    }
+}
+</code></pre>
+
+<p><a name="element-first-approach" aria-hidden="true"></a></p>
+
+<h2>Element-first approach</h2>
+
+<p>With this approach, you only include the child elements in the hierarchy UXML document and use C# to <a href="UIE-manage-asset-reference.html">load the hierarchy UXML document</a> into the CardElement class definition. This approach offers a flexible UI structure for custom controls. For example, you can load different hierarchy UXML documents depending on specific conditions.</p>
+
+<p>The following C# and UXML examples demonstrate how to use the element-first approach to create reusable UI.</p>
+
+<h3>Create the custom control class</h3>
+
+<p>Create a C# script that defines the CardElement custom control. In addition to <a href="#create-the-custom-control-class">defining a constructor to assign an image and badge values to CardElement</a>, the custom control loads the hierarchy UXML document in its class definition. </p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.UIElements;
+
+// Define the custom control type.
+public class CardElement : VisualElement
+{
+    // Expose the custom control to UXML and UI Builder.
+    public new class UxmlFactory : UxmlFactory&lt;CardElementA&gt; {}
+
+    private VisualElement portraitImage =&gt; this.Q(&quot;image&quot;);
+    private Label attackBadge =&gt; this.Q&lt;Label&gt;(&quot;attack-badge&quot;);
+    private Label healthBadge =&gt; this.Q&lt;Label&gt;(&quot;health-badge&quot;);
+
+
+    // Custom controls need a default constructor. This default constructor 
+    // calls the other constructor in this class.
+    public CardElement() {}
+
+    // Define a constructor that loads the UXML document that defines 
+    // the hierarchy of CardElement and assigns an image and badge values.
+    public CardElement(Texture2D image, int health, int attack)
+    {
+        // It assumes the UXML file is called &quot;CardElement.uxml&quot; and 
+        // is placed at the &quot;Resources&quot; folder.
+        var asset = Resources.Load&lt;VisualTreeAsset&gt;(&quot;CardElement&quot;);
+        asset.CloneTree(this);
+
+        portraitImage.style.backgroundImage = image;
+        attackBadge.text = health.ToString();
+        healthBadge.text = attack.ToString();
+    }
+}
+</code></pre>
+
+<p>
+<strong>Note</strong>: If you have performance concerns, use lazy initialization to keep fields to cache the references and avoid re-evaluating the queries too often.</p>
+
+<h3>Define the hierarchy of the custom control</h3>
+
+<p>Create a UXML document (<code>CardElement.uxml</code>) that defines the hierarchy of the child elements of CardElement. The example styles CardElement with a USS file.</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot; editor-extension-mode=&quot;False&quot;&gt;
+    &lt;Style src=&quot;CardElementUI.uss&quot; /&gt; 
+    &lt;ui:VisualElement name=&quot;image&quot; /&gt;
+    &lt;ui:VisualElement name=&quot;stats&quot;&gt;
+        &lt;ui:Label name=&quot;attack-badge&quot; class=&quot;badge&quot; /&gt;
+        &lt;ui:Label name=&quot;health-badge&quot; class=&quot;badge&quot; /&gt;
+    &lt;/ui:VisualElement&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+
+<h3>Connect custom controls to your game</h3>
+
+<p>You can connect your custom control to your game by doing the following:</p>
+
+<ul>
+<li>Instantiate <code>CardElement.uxml</code> inside a parent UXML document. In UI Builder, you can’t navigate back and forth between the hierarchy UXML and this UXML document because child elements are loaded from C#.</li>
+<li>Instantiate <code>CardElement.uxml</code> containing <code>CardElement</code> from a MonoBehaviour C# script.</li>
+</ul>
+
+<p>You call the constructor before adding the custom control to the scene.</p>
+
+<figure>
+<img src="../uploads/Main/uxml/option-a.png" alt="Workflow of the element-first approach">
+<figcaption>Workflow of the element-first approach</figcaption>
+</figure>
+
+<p>You can also add gameplay-related actions, such as a click event to interact with the elements.</p>
+
+<p><strong>Instantiate inside parent UXML</strong></p>
+
+<p>The following shows an example of instantiation in UXML:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot; editor-extension-mode=&quot;False&quot;&gt;
+   &lt;CardElement /&gt;
+   &lt;CardElement /&gt;
+   &lt;CardElement /&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+
+<p>For information on how to render the UXML document in your game, see <a href="UIE-render-runtime-ui.html">Render UI in the Game view</a>.</p>
+
+<p><strong>Instantiate directly in C#</strong></p>
+
+<p>The following shows an example of instantiation in C#:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.UIElements;
+
+public class UIManager : MonoBehaviour
+{
+    public void Start()
+    {
+        UIDocument document = GetComponent&lt;UIDocument&gt;();
+
+        // Create a loop to modify properties and perform interactions 
+        // for each card. It assumes that you have created a function 
+        // called `GetCards()` to get all the cards in your game.
+        foreach(Card card in GetCards())
+        {
+            var cardElement = new CardElement(card.image, card.health, card.attack);
+
+            // Register an event callback for additional interaction.
+            cardElement.RegisterCallback&lt;ClickEvent&gt;(SomeInteraction);
+
+            // Add the custom element into the scene.
+            document.rootVisualElement.Add(cardElement);
+        }
+    }
+
+    private void SomeInteraction(ClickEvent evt)
+    {
+        // Interact with the elements here.
+    }
+}
+</code></pre>
+
+<h2>Build more complex elements</h2>
+
+<p>As the UI of your project gets more complex, it’s better to isolate your logic into higher-level components. This makes orchestrating the UI easier for the rest of the game or application.</p>
+
+<p>You can apply the concepts on this page to gradually build specialized components out of smaller, more generic components. For example, to build a main title screen from which the user can access an Options menu and an About section, you can create a TitleScreenManager element with three different child UXML documents. Each defines its own elements: Title, Options, and About. </p>
+
+<figure>
+<img src="../uploads/Main/uxml/title-screen-manager.png" alt="An example main title screen">
+<figcaption>An example main title screen</figcaption>
+</figure>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-UQuery.html">Find visual elements with UQuery</a></li>
+<li><a href="UIB-structuring-ui-templates.html">Use UXML instances as templates</a></li>
+<li><a href="UIE-reuse-uxml-files.html">Reuse UXML files</a></li>
+<li><a href="UIE-support-for-runtime-ui.html">Support for runtime UI</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-best-practices-for-managing-elements.html"></a></span><div class="tip">Best practices for managing elements</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-ElementRef.html"></a></span><div class="tip">UXML elements reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

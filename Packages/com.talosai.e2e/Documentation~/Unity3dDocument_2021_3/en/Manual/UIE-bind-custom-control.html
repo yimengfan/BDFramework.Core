@@ -1,0 +1,366 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Bind a custom control </title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-bind-custom-control.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-bind-custom-control.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-bind-custom-control.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-bind-custom-control.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-bind-custom-control.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-bind-custom-control.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-bind-custom-control.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-bind-custom-control.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-support-for-editor-ui.html">Support for Editor UI</a></li>
+<li><a href="UIE-Binding.html">SerializedObject data binding</a></li>
+<li><a href="UIE-binding-examples.html">Binding examples</a></li>
+<li>Bind a custom control </li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-bind-to-list-without-listview.html"></a></span><div class="tip">Bind to a list without ListView</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-bind-to-custom-data-type.html"></a></span><div class="tip">Bind a custom control to custom data type</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Bind a custom control</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Version</strong>: 2021.3+</p>
+
+<p>This example demonstrates how to bind a custom control to a native Unity type. </p>
+
+<h2>Example overview</h2>
+
+<p>The example creates a custom control that displays a 2D image. It uses the custom control in a custom Editor for a new asset type, and it binds the custom control to a field in an asset of the new type.</p>
+
+<figure>
+<img src="../uploads/Main/uie_bind_custom_control.png" alt="">
+</figure>
+
+<p>You can find the completed files that this example creates in this <a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/master/bind-custom-control">GitHub repository</a>.</p>
+
+<h2>Prerequisites</h2>
+
+<p>This guide is for developers familiar with the Unity Editor, <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit, and C# scripting. Before you start, get familiar with the following:</p>
+
+<ul>
+<li><span class="tooltip"><a href="UIE-VisualTree.html">Visual Tree</a><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualtree" aria-label="Go to glossary anchor for Visualtree">Glossary</a></span></span></span></li>
+<li><a href="UIE-UXML.html">UXML</a></li>
+<li><a href="UIE-USS.html">USS</a></li>
+<li><a href="../ScriptReference/UIElements.BindableElement.html"><code>BindableElement</code></a></li>
+<li><a href="../ScriptReference/UIElements.INotifyValueChanged_1.html"><code>INotifyValueChanged</code></a></li>
+</ul>
+
+<h2>Create a serialized object</h2>
+
+<p>Create a serialized object that contains a Texture2D.</p>
+
+<ol>
+<li><p>Create a Unity project with any template.</p></li>
+<li><p>In the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, create a folder named <code>bind-custom-control</code> to store the files.</p></li>
+<li>
+<p>Create a C# script named <code>TextureAsset.cs</code> and replace its contents with the following:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+    
+namespace UIToolkitExamples
+{
+    [CreateAssetMenu(menuName = &quot;UIToolkitExamples/TextureAsset&quot;)]
+    public class TextureAsset : ScriptableObject
+    {
+        public Texture2D texture;
+    
+        public void Reset()
+        {
+            texture = null;
+        }
+    }
+}
+</code></pre>
+</li>
+</ol>
+
+<h2>Create and style a custom control</h2>
+
+<p>Create a custom control with C# that represents a reference to a 2D texture asset, and style it with USS.</p>
+
+<ol>
+<li>In that folder, create a folder named <code>Editor</code>.</li>
+<li>In the <strong>Editor</strong> folder, create a C# script named <code>TexturePreviewElement.cs</code>.</li>
+<li>Replace the contents of <code>TexturePreviewElement.cs</code> with the following:</li>
+</ol>
+
+<pre><code class="lang-cs">using System;
+using UnityEditor.UIElements;
+using UnityEngine;
+using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
+
+namespace UIToolkitExamples
+{
+    public class TexturePreviewElement : BindableElement, INotifyValueChanged&lt;Object&gt;
+    {
+        public new class UxmlTraits : BindableElement.UxmlTraits { }
+        public new class UxmlFactory : UxmlFactory&lt;TexturePreviewElement, UxmlTraits&gt; { }
+
+        public static readonly string ussClassName = &quot;texture-preview-element&quot;;
+
+        Image m_Preview;
+        ObjectField m_ObjectField;
+        Texture2D m_Value;
+
+        public TexturePreviewElement()
+        {
+            AddToClassList(ussClassName);
+
+            // Create a preview image.
+            m_Preview = new Image();
+            Add(m_Preview);
+
+            // Create an ObjectField, set its object type, and register a callback when its value changes.
+            m_ObjectField = new ObjectField();
+            m_ObjectField.objectType = typeof(Texture2D);
+            m_ObjectField.RegisterValueChangedCallback(OnObjectFieldValueChanged);
+            Add(m_ObjectField);
+
+            styleSheets.Add(Resources.Load&lt;StyleSheet&gt;(&quot;texture_preview_element&quot;));
+        }
+        
+        void OnObjectFieldValueChanged(ChangeEvent&lt;Object&gt; evt)
+        {
+            value = evt.newValue;
+        }
+
+        public void SetValueWithoutNotify(Object newValue)
+        {
+            if (newValue == null || newValue is Texture2D)
+            {
+                // Update the preview Image and update the ObjectField.
+                m_Value = newValue as Texture2D;
+                m_Preview.image = m_Value;
+                // Notice that this line calls the ObjectField's SetValueWithoutNotify() method instead of just setting
+                // m_ObjectField.value. This is very important; you don't want m_ObjectField to send a ChangeEvent.
+                m_ObjectField.SetValueWithoutNotify(m_Value);
+            }
+            else throw new ArgumentException($&quot;Expected object of type {typeof(Texture2D)}&quot;);
+        }
+
+        public Object value
+        {
+            get =&gt; m_Value;
+            // The setter is called when the user changes the value of the ObjectField, which calls
+            // OnObjectFieldValueChanged(), which calls this.
+            set
+            {
+                if (value == this.value)
+                    return;
+
+                var previous = this.value;
+                SetValueWithoutNotify(value);
+
+                using (var evt = ChangeEvent&lt;Object&gt;.GetPooled(previous, value))
+                {
+                    evt.target = this;
+                    SendEvent(evt);
+                }
+            }
+        }
+    }
+}
+</code></pre>
+
+<ol>
+<li><p>In the <strong>Editor</strong> folder, create a folder named <code>Resources</code>.</p></li>
+<li>
+<p>In the <strong>Resources</strong> folder, create a StyleSheet named <code>texture_preview_element.uss</code> and replace its contents with the following:</p>
+
+<pre><code class="lang-css">.texture-preview-element {
+    width: 200px;
+    height: 200px;
+}
+
+.texture-preview-element &gt; .unity-image {
+    flex-grow: 1;
+}
+</code></pre>
+</li>
+</ol>
+
+<h2>Create the Inspector UI</h2>
+
+<p>Create the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> UI, and bind the custom control to the Texture2D object. </p>
+
+<ol>
+<li>
+<p>In the <strong>Editor</strong> folder, create a C# script named <code>TextureAssetEditor.cs</code> and replace its contents with the following:</p>
+
+<pre><code class="lang-cs">using UnityEditor;
+using UnityEngine.UIElements;
+using UnityEngine;
+
+namespace UIToolkitExamples
+{
+    [CustomEditor(typeof(TextureAsset))]
+    public class TextureAssetEditor : Editor
+    {
+        [SerializeField]
+        VisualTreeAsset m_VisualTree;
+
+        public override VisualElement CreateInspectorGUI()
+        {
+            return m_VisualTree.CloneTree();
+        }
+    }
+}
+</code></pre>
+</li>
+</ol>
+
+<h2>Set the binding with UXML</h2>
+
+<p>Create a UXML file with a TexturePreviewElement, and set the <code>binding-path</code> property to <code>texture</code>. This binds the TexturePreviewElement to <code>TextureAsset.texture</code>.</p>
+
+<ol>
+<li>
+<p>In the <strong>Editor</strong> folder, create a UI Document named <code>texture_asset_editor.uxml</code> and replace its contents with the following:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:example=&quot;UIToolkitExamples&quot; editor-extension-mode=&quot;True&quot;&gt;
+    &lt;example:TexturePreviewElement binding-path=&quot;texture&quot; /&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+</li>
+<li><p>In the Project window, select <strong>TextureAssetEditor.cs</strong>.</p></li>
+<li><p>Drag <strong>texture_asset_editor.uxml</strong> to <strong>Visual Tree</strong> in the Inspector.</p></li>
+</ol>
+
+<h2>Test the binding</h2>
+
+<ol>
+<li>From the menu, select <strong>Assets</strong> &gt; <strong>Create</strong> &gt; <strong>UIToolkitExamples</strong> &gt; <strong>TextureAsset</strong>. This creates an instance of a <code>TextureAsset</code>.</li>
+<li>Select the new TextureAsset object. In the <strong>Inspector</strong>, you can see the Texture Preview Element. If you put a texture asset reference into the field, you can see a preview above the field. If you change the asset reference in the Texture Preview Element in the UI, the <code>TextureAsset.texture</code> changes.</li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-Binding.html">SerializedObject data binding</a></li>
+<li><a href="UIE-bindable-elements.html">Bindable elements</a></li>
+<li><a href="UIE-binding-data-type-conversion.html">Binding data type conversion</a></li>
+<li><a href="UIE-binding-implementation-details.html">Implementation details</a></li>
+<li><a href="UIE-binding-examples.html">Binding examples</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-bind-to-list-without-listview.html"></a></span><div class="tip">Bind to a list without ListView</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-bind-to-custom-data-type.html"></a></span><div class="tip">Bind a custom control to custom data type</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

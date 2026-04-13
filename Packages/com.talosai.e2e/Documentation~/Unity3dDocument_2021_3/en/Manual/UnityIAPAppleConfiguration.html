@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Configuring for Apple App Store and Mac App Store</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="monetization" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UnityIAPAppleConfiguration.html">English</a></li>
+<li><a href="/cn/current/Manual/UnityIAPAppleConfiguration.html">中文</a></li>
+<li><a href="/ja/current/Manual/UnityIAPAppleConfiguration.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UnityIAPAppleConfiguration.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UnityIAPAppleConfiguration.html">English</a></li>
+<li><a href="/cn/current/Manual/UnityIAPAppleConfiguration.html">中文</a></li>
+<li><a href="/ja/current/Manual/UnityIAPAppleConfiguration.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UnityIAPAppleConfiguration.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityServices.html">Unity Services</a></li>
+<li><a href="UnityIAP.html">﻿Unity IAP</a></li>
+<li><a href="UnityIAPSettingUp.html">Setting up Unity IAP</a></li>
+<li>Configuring for Apple App Store and Mac App Store</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UnityIAPSettingUp.html"></a></span><div class="tip">Setting up Unity IAP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnityIAPGoogleConfiguration.html"></a></span><div class="tip">Configuring for Google Play Store</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Configuring for Apple App Store and Mac App Store</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>Introduction</h2>
+
+<p>This guide describes the process of establishing the digital records and relationships necessary for a Unity game to interact with an In-App Purchase Store. The <span class="tooltip"><a href="UnityIAP.html">Unity IAP</a><span class="tooltiptext">Abbreviation of Unity <strong>In App Purchase</strong><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UnityIAP" aria-label="Go to glossary anchor for UnityIAP">Glossary</a></span></span></span> purchasing API is targeted. </p>
+
+<p>In-App Purchase (IAP) is the process of transacting money for digital goods. A platform’s Store allows purchase of Products, representing digital goods. These Products have an Identifier, typically of string datatype. Products have Types to represent their durability: <em>subscription</em>, <em>consumable</em> (capable of being rebought), and <em>non-consumable</em> (capable of being bought only once) are the most common. </p>
+
+<h2>Apple App Store</h2>
+
+<h3>Getting Started</h3>
+
+<ol>
+<li><p>Write a game implementing Unity IAP. Refer to <a href="UnityIAPInitialization.html">Unity IAP Initialization</a>.</p></li>
+<li>
+<p>Keep the game’s product identifiers on-hand for use in iTunes Connect later.</p>
+
+<figure>
+<img src="../uploads/Main/IAPAppleImage0.png" alt="">
+</figure>
+</li>
+</ol>
+
+<h3>Register the Application</h3>
+
+<ol>
+<li><p>In the <a href="https://developer.apple.com/account">Apple Developer Center</a>, navigate to the appropriate Identifiers section. </p></li>
+<li>
+<p>Add a new App ID to create a fundamental application entity with Apple. </p>
+
+<p>
+<strong>NOTE:</strong> Use an Explicit App ID. You cannot use Wildcard App IDs (com.example.*) for applications that use In-App Purchases. </p>
+
+<p>
+<strong>NOTE:</strong> The App ID is available to use in iTunes Connect after you create it in the Developer Center.</p>
+
+<figure>
+<img src="../uploads/Main/IAPAppleImage1.png" alt="">
+</figure>
+</li>
+<li>
+<p>Navigate to <a href="https://itunesconnect.apple.com">iTunes Connect</a> and create an App, to establish a Store relationship with your game. </p>
+
+<figure>
+<img src="../uploads/Main/IAPAppleImage2.png" alt="">
+</figure>
+</li>
+<li>
+<p>Use the newly created App ID for the app’s Bundle ID. </p>
+
+<figure>
+<img src="../uploads/Main/IAPAppleImage3.png" alt="">
+</figure>
+</li>
+</ol>
+
+<h3>Add In-App Purchases</h3>
+
+<ol>
+<li>
+<p>Choose <strong>Features</strong> and add a new In-App Purchase with the plus (“+”) button. </p>
+
+<figure>
+<img src="../uploads/Main/IAPAppleImage4.png" alt="">
+</figure>
+</li>
+<li>
+<p>Choose a <a href="UnityIAPDefiningProducts.html">Product Type</a>. </p>
+
+<figure>
+<img src="../uploads/Main/IAPAppleImage5.jpg" alt="">
+</figure>
+</li>
+<li>
+<p>Specify the Product Identifier, and complete other fields as requested.</p>
+
+<p>
+<strong>Note</strong>: The “Product ID” here is the same identifier used in the game source code, added to the Unity IAP ConfigurationBuilder instance by using <strong>AddProduct()</strong> or <strong>AddProducts()</strong>. </p>
+
+<p>
+<strong>Note</strong>: When targeting multiple Apple device groups (for example, shipping on both iOS and Mac) Apple requires usage of different, unique product identifiers for each distinct device group. Use Unity IAP’s Purchasing.IDs class and define a one-to-many mapping Product IDs to the store-specific identifiers, and pass that mapping in when initializing IAP. </p>
+
+<figure>
+<img src="../uploads/Main/IAPAppleImage6.jpg" alt="">
+</figure>
+</li>
+<li>
+<p>Result:</p>
+
+<figure>
+<img src="../uploads/Main/IAPAppleImage7.png" alt="">
+</figure>
+</li>
+</ol>
+
+<h3>Test IAP</h3>
+
+<ol>
+<li>
+<p>Create <strong>Sandbox Testers</strong> using iTunes Connect for use on your test device’s iTunes Account. To do this, go to <strong>iTunes Connect &gt; Users and Roles</strong>, and choose the plus (“+”) button. You must review <a href="https://developer.apple.com/library/ios/documentation/LanguagesUtilities/Conceptual/iTunesConnect_Guide/Chapters/SettingUpUserAccounts.html#/apple_ref/doc/uid/TP40011225-CH25-SW9">Apple’s Sandbox Tester documentation</a> as there are several additional important usage notes, and you must use a real email address to create Testers. </p>
+
+<p>
+<strong>Note</strong>: For more information, refer to the <a href="UnityIAPiOSMAS.html">iOS and Mac App Store guides</a>. </p>
+
+<p>
+<strong>Tip</strong>: To simplify managing the email address, use an email service capable of sub-addressing (emailaccount+subaddress@example.com) such as Gmail, iCloud, and Outlook.com. This allows one email account to receive email for multiple sub-addresses. </p>
+
+<figure>
+<img src="../uploads/Main/IAPAppleImage8.png" alt="">
+</figure>
+</li>
+<li>
+<p>Complete the user creation wizard. </p>
+
+<figure>
+<img src="../uploads/Main/IAPAppleImage9.png" alt="">
+</figure>
+</li>
+<li>
+<p>Build the Xcode project for your game by using Unity.</p>
+
+<p>
+<strong>Note</strong>: Ensure the Bundle Identifier in Unity (<strong>Edit</strong> &gt; <strong>Project Settings</strong>, then select the <strong>Other Settings</strong> category, and navigate to the <strong>Bundle Identifier</strong> section) matches that used in iTunes Connect.</p>
+</li>
+<li>
+<p>In your game’s Xcode project, ensure the Team (Project Navigator &gt; your game Target &gt; General &gt; Identity &gt; Team) is set to that of your Apple Developer account.</p>
+
+<figure>
+<img src="../uploads/Main/IAPAppleImage10.png" alt="">
+</figure>
+</li>
+</ol>
+
+<h4>For iOS</h4>
+
+<ol>
+<li>
+<p>Using the target <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> device, sign out of any existing Apple ID accounts. Only sign in as the Sandbox Tester when prompted by the app, later. Any subsequent purchases are routed through the Apple Sandbox instead of the Production Store.</p>
+
+<figure>
+<img src="../uploads/Main/IAPAppleImage11.png" alt="">
+</figure>
+</li>
+<li><p>Build and run the game on your iOS device. <code>UnityPurchasing.Initialize()</code> succeeds if everything has been correctly configured. </p></li>
+<li>
+<p>Test the IAP by making a purchase in the game on the device. A modified purchase dialog displays, explaining that this purchase is being performed in the Sandbox Environment. Use the Sandbox User Tester password when prompted for purchase. </p>
+
+<p>
+<strong>Warning</strong>: If the indicator is not present, then an account is charged real money for the product.</p>
+
+<figure>
+<img src="../uploads/Main/IAPAppleImage12.png" alt="">
+</figure>
+</li>
+</ol>
+
+<h4>For Mac</h4>
+
+<ol>
+<li><p>When building a desktop Mac build, select <strong>Mac App Store Validation</strong> within Unity’s Mac <strong>Player</strong> settings.</p></li>
+<li><p>After you have built your App, update its <code>info.plist</code> file with your bundle identifier and version strings. Right-click the .app file and select <strong>Show Package Contents</strong>, locate the <code>info.plist</code> file and update the <code>CFBundleIdentifier</code> string to your application’s bundle identifier.</p></li>
+<li>
+<p>Sign, package, and install your application. Run the following commands from an OSX terminal, filling in “your.app” and “your.pkg” appropriately.</p>
+
+<p>
+<strong>Tip</strong>: To sign the bundle, you might first need to remove the Contents.meta file if it exists: <code>your.app/Contents/Plugins/unitypurchasing.bundle/Contents.meta</code>
+</p>
+
+<ol>
+<li><p><code>codesign -f --deep -s &quot;3rd Party Mac Developer Application: &quot; your.app/Contents/Plugins/unitypurchasing.bundle</code></p></li>
+<li><p><code>codesign -f --deep -s &quot;3rd Party Mac Developer Application: &quot; your.app</code></p></li>
+<li><p><code>productbuild --component your.app /Applications --sign &quot;3rd Party Mac Developer Installer: &quot; your.pkg</code></p></li>
+</ol>
+</li>
+<li><p>To install the package correctly, delete the unpackaged .app file before you run the newly created package and install it.</p></li>
+<li><p>Launch the app from the <em>Applications</em> folder. The first time you do so, you are prompted to enter your iTunes account details, for which you can then make test purchases against the sandbox environment.</p></li>
+</ol>
+
+<p>For more information on Apple App Store testing and signing, refer to <a href="UnityIAPiOSMAS.html">iOS and Mac Extended Functionality</a> and <a href="macos-building.html">Building your macOS application</a>. </p>
+<!-- area:monetization -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UnityIAPSettingUp.html"></a></span><div class="tip">Setting up Unity IAP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnityIAPGoogleConfiguration.html"></a></span><div class="tip">Configuring for Google Play Store</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

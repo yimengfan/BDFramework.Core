@@ -1,0 +1,243 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Windows Player: IL2CPP Scripting Backend</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="platforms" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/WindowsPlayerIL2CPPScriptingBackend.html">English</a></li>
+<li><a href="/cn/current/Manual/WindowsPlayerIL2CPPScriptingBackend.html">中文</a></li>
+<li><a href="/ja/current/Manual/WindowsPlayerIL2CPPScriptingBackend.html">日本語</a></li>
+<li><a href="/kr/current/Manual/WindowsPlayerIL2CPPScriptingBackend.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/WindowsPlayerIL2CPPScriptingBackend.html">English</a></li>
+<li><a href="/cn/current/Manual/WindowsPlayerIL2CPPScriptingBackend.html">中文</a></li>
+<li><a href="/ja/current/Manual/WindowsPlayerIL2CPPScriptingBackend.html">日本語</a></li>
+<li><a href="/kr/current/Manual/WindowsPlayerIL2CPPScriptingBackend.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="Windows.html">Windows</a></li>
+<li>Windows Player: IL2CPP Scripting Backend</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="WindowsLowIntegrity.html"></a></span><div class="tip">Windows integrity control</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="WindowsStandaloneBinaries.html"></a></span><div class="tip">Windows Build Settings</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Windows Player: IL2CPP Scripting Backend</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can use IL2CPP as an alternative to Mono for <span class="tooltip"><strong>scripting backend</strong><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about scripting-backends.html" href="scripting-backends.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScriptingBackend" aria-label="Go to glossary anchor for ScriptingBackend">Glossary</a></span></span></span> when building projects for Windows Player.</p>
+
+<p>When you build a Project using IL2CPP, Unity converts IL code from <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> and assemblies to C++ before creating a native binary. See <span class="tooltip"><a href="IL2CPP.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html" href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> and assemblies to C++ before creating a native binary. See <span class="tooltip"><a href="IL2CPP.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> for more information. </p>
+
+<h2>C++ source code plugins for IL2CPP</h2>
+
+<p>You can add C++ (.cpp) code files directly into a Unity Project when using the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html">IL2CPP</a> scripting backend. The C++ files act as plugins within the Plugin <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="IL2CPP.html">IL2CPP</a> scripting backend. The C++ files act as plugins within the Plugin <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>. If you configure the C++ files to be compatible with Windows Player, Unity compiles them together with C++ code that gets generated from managed assemblies. </p>
+
+<p>To view the plugin importer settings for C++ files, click a .cpp file and select the appropriate <strong>Windows</strong> option in the Platform settings section of the Inspector:</p>
+
+<figure>
+<img src="../uploads/Main/PlatformIL2CPPPlatformSettings.png" alt="Plugin importer settings for C++ files">
+<figcaption>Plugin importer settings for C++ files</figcaption>
+</figure>
+
+<p>Because the functions are linked together with generated C++ code, there is no separate DLL to <code>_P/Invoke</code> into. Due to this, you can use the <code>“__Internal”</code> keyword in place of the DLL name, which makes it the C++ linker’s responsibility to resolve the functions, rather than loading them at run time, as the following example shows:</p>
+
+<pre><code>[DllImport(&quot;__Internal&quot;)]
+private static extern int
+CountLettersInString([MarshalAs(UnmanagedType.LPWStr)]string str);
+</code></pre>
+
+<p>You can define this kind of function in <code>NativeFunctions.cpp</code> as follows:</p>
+
+<pre><code>extern &quot;C&quot; __declspec(dllexport) int __stdcall CountLettersInString(wchar_t* str)
+{
+    int length = 0;
+    while (*str++ != L'\0')
+        length++;
+    return length;
+}
+</code></pre>
+
+<p>Because the linker resolves the function call, any error made in the function declaration on the managed side (C# code that executes under managed run time) produces a linker error instead of a run-time error. This means, no dynamic loading can take place during run time, and the function is called directly from C#, which significantly decreases the performance overhead of a <code>P/Invoke</code> call.</p>
+
+<p>Unity compiles source code plug-ins with the same C++ compiler arguments as the generated C++ code, which can’t be modified. If some <span class="tooltip"><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Plugins.html" href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> source code requires control over C++ compiler arguments, you must build a native plug-in instead. For more information, see <span class="tooltip"><a href="NativePlugins.html">Native plug-in</a><span class="tooltiptext">A platform-specific native code library that is created outside of Unity for use in Unity. Allows you can access features like OS calls and third-party code libraries that would otherwise not be available to Unity. <a href="Plugins.html" href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> source code requires control over C++ compiler arguments, you must build a native plug-in instead. For more information, see <span class="tooltip"><a href="NativePlugins.html">Native plug-in</a><span class="tooltiptext">A platform-specific native code library that is created outside of Unity for use in Unity. Allows you can access features like OS calls and third-party code libraries that would otherwise not be available to Unity. <a href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Nativeplug-in" aria-label="Go to glossary anchor for Nativeplug-in">Glossary</a></span></span></span>.</p>
+
+<h2>IL2CPP build files</h2>
+
+<p>A project using the IL2CPP scripting backend typically produces these files:</p>
+
+<figure>
+<img src="../uploads/Main/IL2CPPBuildProducedFiles.png" alt="IL2CPP files produced during build">
+<figcaption>IL2CPP files produced during build</figcaption>
+</figure>
+
+<p>The following files are common to projects that use IL2CPP:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>File:</strong></th>
+	<th style="text-align:left;"><strong>Description:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>a_Data</strong></td>
+	<td style="text-align:left;">Folder with game data.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>a.exe</strong></td>
+	<td style="text-align:left;">Main game executable.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UnityCrashHandler64.exe</strong></td>
+	<td style="text-align:left;">Crash handler executable.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UnityPlayer.dll</strong></td>
+	<td style="text-align:left;">Unity Player library containing all native code.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>WinPixEventRuntime.dll</strong></td>
+	<td style="text-align:left;">PIX for Windows runtime. This file is present only in <span class="tooltip"><strong>development builds</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview" href="https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DevelopmentBuild" aria-label="Go to glossary anchor for DevelopmentBuild">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>a_BackUpThisFolder_ButDontShipItWithYourGame</strong></td>
+	<td style="text-align:left;">Folder containing data required to debug your game, including PDB (debug info) files and C++ code generated from your scripts. You should back up this folder for every build you ship, but don’t redistribute it.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GameAssembly.dll</strong></td>
+	<td style="text-align:left;">Library that contains the IL2CPP runtime and all your script code.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SymbolMap</strong></td>
+	<td style="text-align:left;">File containing a list of all managed function addresses and their lengths. IL2CPP needs this to resolve managed stack traces. If you delete it, you can still run your game but there’s no gurantee that exceptions will generate sensible call stacks.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources:</h2>
+
+<ul>
+<li><a href="PluginInspector.html">Plugin Inspector</a></li>
+<li><a href="IL2CPP.html">IL2CPP</a></li>
+<li><a href="https://docs.unity3d.com/Manual/uwp-pinvoke.html">Use P/Invoke</a></li>
+</ul>
+<!-- area:platforms -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="WindowsLowIntegrity.html"></a></span><div class="tip">Windows integrity control</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="WindowsStandaloneBinaries.html"></a></span><div class="tip">Windows Build Settings</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: The Mipmap Streaming system API</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/TextureStreaming-API.html">English</a></li>
+<li><a href="/cn/current/Manual/TextureStreaming-API.html">中文</a></li>
+<li><a href="/ja/current/Manual/TextureStreaming-API.html">日本語</a></li>
+<li><a href="/kr/current/Manual/TextureStreaming-API.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/TextureStreaming-API.html">English</a></li>
+<li><a href="/cn/current/Manual/TextureStreaming-API.html">中文</a></li>
+<li><a href="/ja/current/Manual/TextureStreaming-API.html">日本語</a></li>
+<li><a href="/kr/current/Manual/TextureStreaming-API.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Textures.html">Textures</a></li>
+<li><a href="texture-mipmaps.html">Mipmaps</a></li>
+<li>The Mipmap Streaming system API</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="TextureStreaming.html"></a></span><div class="tip">The Mipmap Streaming system</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-StreamingController.html"></a></span><div class="tip">Streaming Controller component</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>The Mipmap Streaming system API</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use this API to override the default settings in the <a href="TextureStreaming.html">Mipmap Streaming system</a>, or get more fine-grained control.</p>
+
+<p>This page contains the following information:</p>
+
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#ControlMipmapStreaming">Controlling the Mipmap Streaming system</a></li>
+<li><a href="#ControllingCameras">Controlling Cameras</a></li>
+<li><a href="#LoadSpecificMipmap">Loading a specific mipmap level</a></li>
+<li><a href="#DebuggingAPI">Debugging and profiling</a></li>
+<li><a href="#related">Related Unity API methods</a></li>
+</ul>
+
+<p>For general information about this system, see <a href="TextureStreaming.html">Mipmap Streaming system</a>.</p>
+
+<p><a name="overview" aria-hidden="true"></a></p>
+
+<h2>Overview</h2>
+
+<p>You can use the API to override behavior for specific situations, while the Mipmap Streaming system automatically manages the default settings.</p>
+
+<p>This is useful if you know that Unity needs to fully load certain textures; for example, if they relate to <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> that move large distances quickly, or if you use instantaneous <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> that move large distances quickly, or if you use instantaneous <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> cuts.</p>
+
+<p><a name="ControlMipmapStreaming" aria-hidden="true"> </a></p>
+
+<h2>Controlling the Mipmap Streaming system</h2>
+
+<p>To enable and control Mipmap Streaming on a texture, use the following properties:</p>
+
+<ul>
+<li><a href="../ScriptReference/TextureImporter-streamingMipmaps.html">TextureImporter.streamingMipmaps</a></li>
+<li><a href="../ScriptReference/TextureImporter-streamingMipmapsPriority.html">TextureImporter.streamingMipmapsPriority</a></li>
+<li><a href="../ScriptReference/IHVImageFormatImporter-streamingMipmaps.html">IHVImageFormatImporter.streamingMipmaps</a></li>
+<li><a href="../ScriptReference/IHVImageFormatImporter-streamingMipmapsPriority.html">IHVImageFormatImporter.streamingMipmapsPriority</a></li>
+</ul>
+
+<p>Mipmap Streaming automatically reduces the mipmap level of textures until they fit into the Mipmap Streaming <strong>Memory Budget</strong>. The Texture’s <strong>Mip Map Priority</strong> number is roughly a mipmap offset for the <strong>Memory Budget</strong>. For example, with a priority of 2, the Mipmap Streaming system tries to use a mipmap level that is two levels higher than other textures with a priority of 0. Negative values are also valid. If it can’t do this, it uses a lower mipmap level to fit the <strong>Memory Budget</strong>.</p>
+
+<p>These properties are read-only at runtime:</p>
+
+<ul>
+<li><a href="../ScriptReference/SystemInfo-supportsMipStreaming.html">SystemInfo.supportsMipStreaming</a></li>
+<li><a href="../ScriptReference/Texture2D-streamingMipmaps.html">Texture2D.streamingMipmaps</a></li>
+<li><a href="../ScriptReference/Texture2D-streamingMipmapsPriority.html">Texture2D.streamingMipmapsPriority</a></li>
+</ul>
+
+<p>To control what happens at runtime, use the following static properties:</p>
+
+<ul>
+<li><a href="../ScriptReference/QualitySettings-streamingMipmapsActive.html">QualitySettings.streamingMipmapsActive</a></li>
+<li>
+<a href="../ScriptReference/QualitySettings-streamingMipmapsMemoryBudget.html">QualitySettings.streamingMipmapsMemoryBudget</a> (defaults to 512 MB)</li>
+<li>
+<a href="../ScriptReference/QualitySettings-streamingMipmapsRenderersPerFrame.html">QualitySettings.streamingMipmapsRenderersPerFrame</a> (defaults to 512)</li>
+<li>
+<a href="../ScriptReference/QualitySettings-streamingMipmapsMaxLevelReduction.html">QualitySettings.streamingMipmapsMaxLevelReduction</a> (defaults to 2)</li>
+<li>
+<a href="../ScriptReference/QualitySettings-streamingMipmapsMaxFileIORequests.html">QualitySettings.streamingMipmapsMaxFileIORequests</a> (defaults to 1024)</li>
+<li>
+<a href="../ScriptReference/Texture-streamingTextureDiscardUnusedMips.html">Texture2D.streamingTextureDiscardUnusedMips</a> (defaults to false)</li>
+</ul>
+
+<p><a name="ControllingCameras" aria-hidden="true"></a></p>
+
+<h2>Controlling Cameras</h2>
+
+<p>When cutting from one location to another, the Mipmap Streaming system needs time to stream the required Textures into Unity. To trigger preloading at a disabled target Camera location, call <a href="../ScriptReference/StreamingController.SetPreloading.html">StreamingController.SetPreloading</a> on the target Camera’s Streaming Controller component. You can specify a time-out to end the preloading phase. To automatically enable the Camera at the end of the preloading phase, set the <code>activateCameraOnTimeout</code> flag to true in script. To disable a Camera after you cut from it to the new one, pass that Camera as the <code>disableCameraCuttingFrom</code> parameter.</p>
+
+<pre><code>void StreamingController.SetPreloading(float timeoutSeconds=0.0f, bool activateCameraOnTimeout=false, Camera disableCameraCuttingFrom=null)
+</code></pre>
+
+<p>To cancel or query the preloading state, use the following methods:</p>
+
+<ul>
+<li><a href="../ScriptReference/StreamingController.CancelPreloading.html">StreamingController.CancelPreloading</a></li>
+<li><a href="../ScriptReference/StreamingController.IsPreloading.html">StreamingController.IsPreloading</a></li>
+</ul>
+
+<p>To determine whether the Mipmap Streaming system is still loading Textures, you can query the following properties:</p>
+
+<ul>
+<li><a href="../ScriptReference/Texture-streamingTextureLoadingCount.html">Texture.streamingTextureLoadingCount</a></li>
+<li><a href="../ScriptReference/Texture-streamingTexturePendingLoadCount.html">Texture.streamingTexturePendingLoadCount</a></li>
+</ul>
+
+<p>Note that there is delay between when you enable a Camera and when these properties become a value other than zero. This delay is because the Mipmap Streaming system calculates the required mipmaps using time-sliced processing. For this reason, during a Camera cut you should wait a minimum length of time before the cut. Texture budget and <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> movement can cause continuous Mipmap Streaming, so you also need to set a maximum length of time before the cut.</p>
+
+<p><a name="LoadSpecificMipmap" aria-hidden="true"> </a></p>
+
+<h2>Loading a specific mipmap level</h2>
+
+<p>To override the mipmap level calculation for a specific Texture, use <a href="../ScriptReference/Texture2D-requestedMipmapLevel.html">Texture2D.requestedMipmapLevel</a>. This is an exact mipmap level ranging from 0 to the maximum mipmap level of the specific Texture, or the <strong>Max Level Reduction</strong> value if that is lower. 0 is the highest resolution mipmap.</p>
+
+<p>To check if your requested mipmap level has loaded, use <a href="../ScriptReference/Texture2D.IsRequestedMipmapLevelLoaded.html">Texture2D.IsRequestedMipmapLevelLoaded</a>.</p>
+
+<p>If you no longer want to override the mipmap level you requested and instead want the system to continue to calculate mipmap levels, use <a href="../ScriptReference/Texture2D.ClearRequestedMipmapLevel.html">Texture2D.ClearRequestedMipmapLevel</a> to reset the value.</p>
+
+<p>To get an estimate of the UV density on a <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span>, use the following:</p>
+
+<pre><code>float Mesh.GetUVDistributionMetric(int uvSetIndex)
+</code></pre>
+
+<p>You can use the UV distribution metric to calculate the mipmap level you need, based on the position of the Camera. See <a href="../ScriptReference/Mesh.GetUVDistributionMetric.html">Mesh.GetUVDistributionMetric</a> for example code.</p>
+
+<p>To override the system and force all mipmap levels to load, use <a href="../ScriptReference/Texture-streamingTextureForceLoadAll.html">Texture.streamingTextureForceLoadAll</a>.</p>
+
+<p><a name="DebuggingAPI" aria-hidden="true"> </a></p>
+
+<h3>Debugging and profiling</h3>
+
+<p>To get per-texture streaming info in material properties that can be used for creating debug visualisations use <a href="../ScriptReference/Texture.SetStreamingTextureMaterialDebugProperties.html">Texture.SetStreamingTextureMaterialDebugProperties</a>.</p>
+
+<p>You can use <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Texture.SetStreamingTextureMaterialDebugProperties.html">Texture.SetStreamingTextureMaterialDebugProperties</a> to assign streaming status information for each texture to material properties. You can then use these properties in the <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="../ScriptReference/Texture.SetStreamingTextureMaterialDebugProperties.html">Texture.SetStreamingTextureMaterialDebugProperties</a> to assign streaming status information for each texture to material properties. You can then use these properties in the <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> to create debug visualizations.</p>
+
+<p>You can also use these properties to create Mipmap Streaming profiling and debugging tools for your project.</p>
+
+<ul>
+<li><a href="../ScriptReference/Texture-currentTextureMemory.html">Texture.currentTextureMemory</a></li>
+<li><a href="../ScriptReference/Texture-desiredTextureMemory.html">Texture.desiredTextureMemory</a></li>
+<li><a href="../ScriptReference/Texture-totalTextureMemory.html">Texture.totalTextureMemory</a></li>
+<li><a href="../ScriptReference/Texture-targetTextureMemory.html">Texture.targetTextureMemory</a></li>
+<li><a href="../ScriptReference/Texture-nonStreamingTextureMemory.html">Texture.nonStreamingTextureMemory</a></li>
+</ul>
+
+<p>To get information about the number of Textures or renderers the Mipmap Streaming system is interacting with, use the following properties:</p>
+
+<ul>
+<li><a href="../ScriptReference/Texture-streamingMipmapUploadCount.html">Texture.streamingMipmapUploadCount</a></li>
+<li><a href="../ScriptReference/Texture-nonStreamingTextureCount.html">Texture.nonStreamingTextureCount</a></li>
+<li><a href="../ScriptReference/Texture-streamingTextureCount.html">Texture.streamingTextureCount</a></li>
+<li><a href="../ScriptReference/Texture-streamingRendererCount.html">Texture.streamingRendererCount</a></li>
+</ul>
+
+<p>To get information about mipmap levels for a texture, use the following properties:</p>
+
+<ul>
+<li><a href="../ScriptReference/Texture2D-desiredMipmapLevel.html">Texture2D.desiredMipmapLevel</a></li>
+<li><a href="../ScriptReference/Texture2D-loadingMipmapLevel.html">Texture2D.loadingMipmapLevel</a></li>
+<li><a href="../ScriptReference/Texture2D-loadedMipmapLevel.html">Texture2D.loadedMipmapLevel</a></li>
+</ul>
+
+<p><a name="related" aria-hidden="true"></a></p>
+
+<h2>Related Unity API methods</h2>
+
+<p>To get and set a Texture assigned to a Material, use:</p>
+
+<ul>
+<li><a href="../ScriptReference/Material.GetTexture.html">Material.GetTexture</a></li>
+<li><a href="../ScriptReference/Material.SetTexture.html">Material.SetTexture</a></li>
+</ul>
+
+<p>To get all Texture properties on a Material, use:</p>
+
+<ul>
+<li><a href="../ScriptReference/Material.GetTexturePropertyNames.html">Material.GetTexturePropertyNames</a></li>
+<li><a href="../ScriptReference/Material.GetTexturePropertyNameIDs.html">Material.GetTexturePropertyNameIDs</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="TextureStreaming.html"></a></span><div class="tip">The Mipmap Streaming system</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-StreamingController.html"></a></span><div class="tip">Streaming Controller component</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

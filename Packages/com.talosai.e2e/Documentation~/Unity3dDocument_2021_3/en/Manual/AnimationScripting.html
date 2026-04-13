@@ -1,0 +1,337 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Animation Scripting (Legacy)</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AnimationScripting.html">English</a></li>
+<li><a href="/cn/current/Manual/AnimationScripting.html">中文</a></li>
+<li><a href="/ja/current/Manual/AnimationScripting.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AnimationScripting.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AnimationScripting.html">English</a></li>
+<li><a href="/cn/current/Manual/AnimationScripting.html">中文</a></li>
+<li><a href="/ja/current/Manual/AnimationScripting.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AnimationScripting.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AnimationSection.html">Animation</a></li>
+<li><a href="Animations.html">Legacy Animation system</a></li>
+<li>Animation Scripting (Legacy)</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-Animation.html"></a></span><div class="tip">Animation</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIToolkits.html"></a></span><div class="tip">User interface (UI)</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Animation Scripting (Legacy)</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity’s Animation System allows you to create beautifully animated skinned characters. The Animation System supports animation blending, mixing, additive animations, walk cycle time synchronization, <span class="tooltip"><strong>animation layers</strong><span class="tooltiptext">An Animation Layer contains an Animation State Machine that controls animations of a model or part of it. An example of this is if you have a full-body layer for walking or jumping and a higher layer for upper-body motions such as throwing an object or shooting. The higher layers take precedence for the body parts they control. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationLayers.html" href="AnimationLayers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AnimationLayer" aria-label="Go to glossary anchor for AnimationLayer">Glossary</a></span></span></span>, control over all aspects of the animation playback (time, speed, blend-weights), <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html" href="Glossary.html#AnimationLayer" aria-label="Go to glossary anchor for AnimationLayer">Glossary</a></span></span></span>, control over all aspects of the animation playback (time, speed, blend-weights), <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> <span class="tooltip"><strong>skinning</strong><span class="tooltiptext">The process of binding bone joints to the vertices of a character’s mesh or ‘skin’. Performed with an external tool, such as Blender or Autodesk Maya. <a href="UsingHumanoidChars.html" href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> <span class="tooltip"><strong>skinning</strong><span class="tooltiptext">The process of binding bone joints to the vertices of a character’s mesh or ‘skin’. Performed with an external tool, such as Blender or Autodesk Maya. <a href="UsingHumanoidChars.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skinning" aria-label="Go to glossary anchor for Skinning">Glossary</a></span></span></span> with 1, 2 or 4 bones per vertex as well as supporting physically based rag-dolls and procedural animation. To obtain the best results, it is recommended that you read about the best practices and techniques for creating a rigged character with optimal performance in Unity on the <a href="ModelingOptimizedCharacters.html">Modeling Optimized Characters</a> page.</p>
+
+<p>Making an animated character involves two things; <em>moving</em> it through the world and <em>animating</em> it accordingly. If you want to learn more about moving characters around, take a look at the <a href="class-CharacterController.html">Character Controller page</a>. This page focuses on the animation. The actual animating of characters is done through Unity’s scripting interface.</p>
+
+<p>You can download <a href="http://unity3d.com/support/resources/example-projects/">example demos</a> showing pre-setup animated characters. Once you have learned the basics on this page you can also see the <a href="../ScriptReference/Animation.html">animation script interface</a>.</p>
+
+<h2>Animation Blending</h2>
+
+<p>In today’s games, animation blending is an essential feature to ensure that characters have smooth animations. Animators create separate animations, for example, a walk cycle, run cycle, idle animation or shoot animation. At any point in time during your game you need to be able to transition from the idle animation into the walk cycle and vice versa. Naturally, you want the transition to be smooth and avoid sudden jerks in the motion.</p>
+
+<p>This is where animation blending comes in. In Unity you can have any number of animations playing on the same character. All animations are blended or added together to generate the final animation.</p>
+
+<p>Our first step will be to make a character blend smoothly between the idle and walk animations. In order to make the scripter’s job easier, we will first set the <strong>Wrap Mode</strong> of the animation to <strong>Loop</strong>. Then we will turn off <strong>Play Automatically</strong> to make sure our script is the only one playing animations.</p>
+
+<p>Our first script for animating the character is quite simple; we only need some way to detect how fast our character is moving, and then fade between the walk and idle animations. For this simple test, we will use the standard input axes:-</p>
+
+<pre><code>function Update () {
+   if (Input.GetAxis(&quot;Vertical&quot;) &gt; 0.2)
+       animation.CrossFade (&quot;walk&quot;);
+   else
+      animation.CrossFade (&quot;idle&quot;);
+}
+
+</code></pre>
+
+<p>To use this script in your project:-</p>
+
+<ol>
+<li>Create a Javascript file using <strong>Assets &gt; Create &gt; Javascript</strong>.</li>
+<li>Copy and paste the code into it</li>
+<li>Drag the script onto the character (it needs to be attached to the <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> that has the animation)</li>
+</ol>
+
+<p>When you hit the Play button, the character will start walking in place when you hold the up arrow key and return to the idle pose when you release it.</p>
+
+<h2>Animation Layers</h2>
+
+<p>Layers are an incredibly useful concept that allow you to group animations and prioritize weighting.</p>
+
+<p>Unity’s animation system can blend between as many <span class="tooltip"><strong>animation clips</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html" href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> as you want. You can assign blend weights manually or simply use <strong>animation.CrossFade()</strong>, which will animate the weight automatically.</p>
+
+<h3>Blend weights are always normalized before being applied</h3>
+
+<p>Let’s say you have a walk cycle and a run cycle, both having a weight of 1 (100%). When Unity generates the final animation, it will normalize the weights, which means the walk cycle will contribute 50% to the animation and the run cycle will also contribute 50%.</p>
+
+<p>However, you will generally want to prioritize which animation receives most weight when there are two animations playing. It is certainly possible to ensure that the weight sums up to 100% manually, but it is easier just to use layers for this purpose.</p>
+
+<h3>Layering Example</h3>
+
+<p>As an example, you might have a shoot animation, an idle and a walk cycle. The walk and idle animations would be blended based on the player’s speed but when the player shoots, you would want to show only the shoot animation. Thus, the shoot animation essentially has a higher priority.</p>
+
+<p>The easiest way to do this is to simply keep playing the walk and idle animations while shooting. To do this, we need to make sure that the shoot animation is in a higher layer than the idle and walk animations, which means the shoot animation will receive blend weights first. The walk and idle animations will receive weights only if the shoot animation doesn’t use all 100% of the blend weighting. So, when CrossFading the shoot animation in, the weight will start out at zero and over a short period become 100%. In the beginning the walk and idle layer will still receive blend weights but when the shoot animation is completely faded in, they will receive no weights at all. This is exactly what we need!</p>
+
+<pre><code>function Start () {
+   // Set all animations to loop
+   animation.wrapMode = WrapMode.Loop;
+   // except shooting
+   animation[&quot;shoot&quot;].wrapMode = WrapMode.Once;
+
+   // Put idle and walk into lower layers (The default layer is always 0)
+   // This will do two things
+   // - Since shoot and idle/walk are in different layers they will not affect
+   // each other's playback when calling CrossFade.
+   // - Since shoot is in a higher layer, the animation will replace idle/walk
+   // animations when faded in.
+   animation[&quot;shoot&quot;].layer = 1;
+
+   // Stop animations that are already playing
+   //(In case user forgot to disable play automatically)
+   animation.Stop();
+}
+
+function Update () {
+   // Based on the key that is pressed,
+   // play the walk animation or the idle animation
+   if (Mathf.Abs(Input.GetAxis(&quot;Vertical&quot;)) &gt; 0.1)
+      animation.CrossFade(&quot;walk&quot;);
+   else
+      animation.CrossFade(&quot;idle&quot;);
+
+   // Shoot
+   if (Input.GetButtonDown (&quot;Fire1&quot;))
+      animation.CrossFade(&quot;shoot&quot;);
+}
+
+</code></pre>
+
+<p>By default the <strong>animation.Play()</strong> and <strong>animation.CrossFade()</strong> will stop or fade out animations that are in the same layer. This is exactly what we want in most cases. In our shoot, idle, run example, playing idle and run will not affect the shoot animation and vice versa (you can change this behavior with an optional parameter to animation.CrossFade if you like).</p>
+
+<h2>Animation Mixing</h2>
+
+<p>Animation mixing allow you to cut down on the number of animations you need to create for your game by having some animations apply to part of the body only. This means such animations can be used together with other animations in various combinations.</p>
+
+<p>You add an animation mixing transform to an animation by calling <strong>AddMixingTransform()</strong> on the given AnimationState.</p>
+
+<h3>Mixing Example</h3>
+
+<p>An example of mixing might be something like a hand-waving animation. You might want to make the hand wave either when the character is idle or when it is walking. Without animation mixing you would have to create separate hand waving animations for the idle and walking states. However, if you add the shoulder transform as a mixing transform to the hand waving animation, the hand waving animation will have full control only from the shoulder <span class="tooltip"><strong>joint</strong><span class="tooltiptext">A physics component allowing a dynamic connection between Rigidbody components, usually allowing some degree of movement such as a hinge. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Joints.html" href="Joints.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#joint" aria-label="Go to glossary anchor for joint">Glossary</a></span></span></span> to the hand. Since the rest of the body will not be affected by the hand-waving, it will continue playing the idle or walk animation. Consequently, only the one animation is needed to make the hand wave while the rest of the body is using the idle or walk animation.</p>
+
+<pre><code>/// Adds a mixing transform using a Transform variable
+var shoulder : Transform;
+animation[&quot;wave_hand&quot;].AddMixingTransform(shoulder);
+
+</code></pre>
+
+<p>Another example using a path.</p>
+
+<pre><code>function Start () {
+   // Adds a mixing transform using a path instead
+   var mixTransform : Transform = transform.Find(&quot;root/upper_body/left_shoulder&quot;);
+   animation[&quot;wave_hand&quot;].AddMixingTransform(mixTransform);
+}
+
+</code></pre>
+
+<h2>Additive Animations</h2>
+
+<p>Additive animations and animation mixing allow you to cut down on the number of animations you have to create for your game, and are important for creating facial animations.</p>
+
+<p>Suppose you want to create a character that leans to the sides as it turns while walking and running. This leads to four combinations (walk-lean-left, walk-lean-right, run-lean-left, run-lean-right), each of which needs an animation. Creating a separate animation for each combination clearly leads to a lot of extra work even in this simple case but the number of combinations increases dramatically with each additional action. Fortunately additive animation and mixing avoids the need to produce separate animations for combinations of simple movements.</p>
+
+<h3>Additive Animation Example</h3>
+
+<p>Additive animations allow you to overlay the effects of one animation on top of any others that may be playing. When generating additive animations, Unity will calculate the difference between the first frame in the animation clip and the current frame. Then it will apply this difference on top of all other playing animations.</p>
+
+<p>Referring to the previous example, you could make animations to lean right and left and Unity would be able to superimpose these on the walk, idle or run cycle. This could be achieved with code like the following:-</p>
+
+<pre><code>private var leanLeft : AnimationState;
+private var leanRight : AnimationState;
+
+function Start () {
+   leanLeft = animation[&quot;leanLeft&quot;];
+   leanRight = animation[&quot;leanRight&quot;];
+
+   // Put the leaning animation in a separate layer
+   // So that other calls to CrossFade won't affect it.
+   leanLeft.layer = 10;
+   leanRight.layer = 10;
+
+   // Set the lean animation to be additive
+   leanLeft.blendMode = AnimationBlendMode.Additive;
+   leanRight.blendMode = AnimationBlendMode.Additive;
+
+   // Set the lean animation ClampForever
+   // With ClampForever animations will not stop
+   // automatically when reaching the end of the clip
+   leanLeft.wrapMode = WrapMode.ClampForever;
+   leanRight.wrapMode = WrapMode.ClampForever;
+
+   // Enable the animation and fade it in completely
+   // We don't use animation.Play here because we manually adjust the time
+   // in the Update function.
+   // Instead we just enable the animation and set it to full weight
+   leanRight.enabled = true;
+   leanLeft.enabled = true;
+   leanRight.weight = 1.0;
+   leanLeft.weight = 1.0;
+
+   // For testing just play &quot;walk&quot; animation and loop it
+   animation[&quot;walk&quot;].wrapMode = WrapMode.Loop;
+   animation.Play(&quot;walk&quot;);
+}
+
+// Every frame just set the normalized time
+// based on how much lean we want to apply
+function Update () {
+   var lean = Input.GetAxis(&quot;Horizontal&quot;);
+   // normalizedTime is 0 at the first frame and 1 at the last frame in the clip
+   leanLeft.normalizedTime = -lean;
+   leanRight.normalizedTime = lean;
+}
+
+</code></pre>
+
+<p>
+<strong>Tip:</strong> When using Additive animations, it is critical that you also play some other non-additive animation on every transform that is also used in the additive animation, otherwise the animations will add on top of the last frame’s result. This is most certainly not what you want.</p>
+
+<h2>Animating Characters Procedurally</h2>
+
+<p>Sometimes you want to animate the bones of your character procedurally. For example, you might want the head of your character to look at a specific point in 3D space which is best handled by a script that tracks the target point. Fortunately, Unity makes this very easy, since bones are just Transforms which drive the skinned mesh. Thus, you can control the bones of a character from a script just like the Transforms of a GameObject.</p>
+
+<p>One important thing to know is that the animation system updates Transforms after the <strong>Update()</strong> function and before the <strong>LateUpdate()</strong> function. Thus if you want to do a <strong>LookAt()</strong> function you should do that in <strong>LateUpdate()</strong> to make sure that you are really overriding the animation.</p>
+
+<p>Ragdolls are created in the same way. You simply have to attach <span class="tooltip"><strong>Rigidbodies</strong><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Rigidbody.html" href="class-Rigidbody.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span>, <span class="tooltip"><strong>Character Joints</strong><span class="tooltiptext">An extended ball-socket joint which allows a joint to be limited on each axis. Mainly used for Ragdoll effects. <a href="class-CharacterJoint.html" href="Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span>, <span class="tooltip"><strong>Character Joints</strong><span class="tooltiptext">An extended ball-socket joint which allows a joint to be limited on each axis. Mainly used for Ragdoll effects. <a href="class-CharacterJoint.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#CharacterJoint" aria-label="Go to glossary anchor for CharacterJoint">Glossary</a></span></span></span> and Capsule <span class="tooltip"><strong>Colliders</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a href="CollidersOverview.html" href="Glossary.html#CharacterJoint" aria-label="Go to glossary anchor for CharacterJoint">Glossary</a></span></span></span> and Capsule <span class="tooltip"><strong>Colliders</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> to the different bones. This will then physically animate your skinned character.</p>
+
+<h2>Animation Playback and Sampling</h2>
+
+<p>This section explains how animations in Unity are sampled when they are played back by the engine.</p>
+
+<p>AnimationClips are typically authored at a fixed frame rate. For example, you may create your animation in Autodesk® 3ds Max® or Autodesk® Maya® at a frame rate of 60 <span class="tooltip"><strong>frames per second</strong><span class="tooltiptext">The frequency at which consecutive frames are displayed in a running game. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingStatistics.html" href="RenderingStatistics.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#framespersecond" aria-label="Go to glossary anchor for framespersecond">Glossary</a></span></span></span> (fps). When importing the animation in Unity, this frame rate will be read by the importer, so the data of the imported animation is also sampled at 60 <span class="tooltip"><strong>fps</strong><span class="tooltiptext">See first person shooter, frames per second.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#FPS" aria-label="Go to glossary anchor for FPS">Glossary</a></span></span></span>.</p>
+
+<p>However, games typically run at a variable frame rate. The frame rate may be higher on some computers than on others, and it may also vary from one second to the next based on the complexity of the view the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> is looking at at any given moment. Basically this means that we can make no assumptions about the exact frame rate the game is running at. What this means is that even if an animation is authored at 60 fps, it may be played back at a different frame rate, such as 56.72 fps, or 83.14 fps, or practically any other value.</p>
+
+<p>As a result, Unity must sample an animation at variable frame rates, and cannot guarantee the frame rate for which it was originally designed. Fortunately, animations for 3D computer graphics do not consist of discrete frames, but rather of continuous curves. These curves can be sampled at any point in time, not just at those points in time that correspond to frames in the original animation. In fact, if the game runs at a higher frame rate than the animation was authored with, the animation will actually look smoother and more fluid in the game than it did in the animation software.</p>
+
+<p>For most practical purposes, you can ignore the fact that Unity samples animations at variable frame rates. However, if you have gameplay logic that relies on animations that animate transforms or properties into very specific configurations, then you need to be aware that the re-sampling takes place behind the <span class="tooltip"><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. For example, if you have an animation that rotates an object from 0 to 180 degrees over 30 frames, and you want to know from your code when it has reached half way there, you should not do it by having a conditional statement in your code that checks if the current rotation is 90 degrees. Because Unity samples the animation according to the variable frame rate of the game, it may sample it when the rotation is just below 90 degrees, and the next time right after it reached 90 degrees. If you need to be notified when a specific point in an animation is reached, you should use an <a href="script-AnimationWindowEvent.html">AnimationEvent</a> instead.</p>
+
+<p>Note also that as a consequence of the variable frame rate sampling, an animation that is played back using <strong>WrapMode.Once</strong> may not be sampled at the exact time of the last frame. In one frame of the game the animation may be sampled just before the end of the animation, and in the next frame the time can have exceeded the length of the animation, so it is disabled and not sampled further. If you absolutely need the last frame of the animation to be sampled exactly, you should use <strong>WrapMode.ClampForever</strong> which will keep sampling the last frame indefinitely until you stop the animation yourself.</p>
+<!-- area:none -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-Animation.html"></a></span><div class="tip">Animation</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIToolkits.html"></a></span><div class="tip">User interface (UI)</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

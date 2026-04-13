@@ -1,0 +1,370 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Package manifest</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-manifestPkg.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-manifestPkg.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-manifestPkg.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-manifestPkg.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-manifestPkg.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-manifestPkg.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-manifestPkg.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-manifestPkg.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li><a href="CustomPackages.html">Creating custom packages</a></li>
+<li>Package manifest</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="cus-samples.html"></a></span><div class="tip">Creating samples for packages</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-semver.html"></a></span><div class="tip">Versioning</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Package manifest</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity uses a <strong>package manifest</strong> file (<code>package.json</code>) to manage information about a specific version of a specific package. The package manifest is always at the root of the package and has crucial information about the package, such as its registered name and version number. </p>
+
+<p>The package manifest also defines useful information to communicate to the user, such as:</p>
+
+<ul>
+<li>A user-friendly name that appears in the <span class="notooltips">UI</span>.</li>
+<li>A brief description of the package.</li>
+<li>The earliest version of the Unity Editor the package is compatible with.</li>
+</ul>
+
+<p>The package manifest uses the JSON (JavaScript Object Notation) syntax to describe what’s inside the package. The file’s format is similar to <a href="https://www.npmjs.com/">npm</a>’s <code>package.json</code> format, but uses different semantics for some of its properties. Refer to the <a href="#example">example</a> for a sample package manifest file.</p>
+
+<p>The Package Manager reads this manifest to find out the package’s contents, how to unpack its contents, and what information to display the user in the <a href="upm-ui.html">Package Manager window</a>. The manifest stores this information in a series of <a href="#required">required</a>, <a href="#mandatory">recommended</a>, and <a href="#optional">optional</a> properties.</p>
+
+<p><a name="required" aria-hidden="true"></a></p>
+
+<h2>Required properties</h2>
+
+<p>If these properties aren’t present, either the registry refuses the package when it’s published, or the Package Manager can’t fetch or load the package.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>JSON Type</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<a name="name" aria-hidden="true"></a><strong>name</strong>
+</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">A unique identifier that conforms to the Unity Package Manager naming convention, which uses reverse domain name notation. For more information about the naming convention, refer to <a href="cus-naming.html">Naming your package</a>.<br><br><strong>Note</strong>: The <code>name</code> identifier is different than the <a href="#displayName">user-friendly name</a> that appears in the list view in the <strong>Package Manager</strong> window.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="version" aria-hidden="true"></a><strong>version</strong>
+</td>
+	<td style="text-align:left;">string</td>
+	<td style="text-align:left;">The package version number (<strong>MAJOR.MINOR.PATCH</strong>). <br><br>For example, “3.2.1” indicates that this is the 3rd major release, the 2nd minor release, and the first patch. <br><br>This value must respect <a href="http://semver.org/">Semantic Versioning</a>. For more information, refer to <a href="upm-semver.html">Versioning</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="mandatory" aria-hidden="true"></a></p>
+
+<h2>Recommended properties</h2>
+
+<p>The Package Manager can install packages in a project even if the recommended properties don’t have valid values or are missing.</p>
+
+<p>However, the recommended best practice is to assign values for these properties to ensure that your package is discoverable and to offer a better experience for users.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>JSON Type</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<a name="description" aria-hidden="true"></a><strong>description</strong>
+</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">A brief description of the package. This is the text that appears in the <a href="upm-ui-details.html">details view</a> of the <strong>Package Manager</strong> window. This field supports <a href="https://en.wikipedia.org/wiki/UTF-8">UTF–8</a> character codes. This means that you can use special formatting character codes, such as line breaks (<strong>\n</strong>) and bullets (<strong>\u25AA</strong>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="displayName" aria-hidden="true"></a><strong>displayName</strong>
+</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">A user-friendly name to appear in the Unity Editor (for example, in the Project Browser, the <strong>Package Manager</strong> window, etc.). <br><br>For example, <strong>Unity Timeline</strong>, <strong>ProBuilder</strong>, <strong>In App Purchasing</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="unity" aria-hidden="true"></a><strong>unity</strong>
+</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">Indicates the lowest Unity version the package is compatible with. If omitted, the Package Manager considers the package compatible with all Unity versions. <br><br>The expected format is “<strong>&lt;MAJOR&gt;.&lt;MINOR&gt;</strong>” (for example, <strong>2018.3</strong>). To point to a specific patch, use the <a href="#unityRelease">unityRelease</a> property as well.<br><br><strong>Note</strong>: A package that isn’t compatible with Unity doesn’t appear in the <a href="upm-ui.html">Package Manager window</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="optional" aria-hidden="true"></a></p>
+
+<h2>Optional properties</h2>
+
+<p>These properties are optional, meaning that you can omit them. However, if they’re present, they must have a valid value.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>JSON Type</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>author</strong></td>
+	<td style="text-align:left;">Object or string</td>
+	<td style="text-align:left;">The author of the package. This property supports only one author. <br><br>This property has one required field, <strong>name</strong>, and two optional fields, <strong>email</strong> and <strong>url</strong>. <br><br>You can specify these fields as a JSON object, or collapse them into a single string whose key is <strong>author</strong>.<br><br>Object example: <br><code>{</code><br>   <code>&quot;name&quot; : &quot;John Doe&quot;,</code><br>   <code>&quot;email&quot; : &quot;john.doe@example.com&quot;,</code><br>   <code>&quot;url&quot; : &quot;http://john.doe.example.com/&quot;</code><br><code>}</code> <br><br>String example: <br><code>&quot;John Doe &lt;john.doe@example.com&gt; (http://john.doe.example.com/)&quot;</code>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="changelogUrl" aria-hidden="true"></a><strong>changelogUrl</strong>
+</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">Custom location for this package’s changelog specified as a URL. For example:<br><code>&quot;changelogUrl&quot;: &quot;https://example.com/changelog.html&quot;</code><br><br><strong>Note</strong>: When the Package Manager can’t reach the URL location (for example, if there is a network issue), it does the following:<br><br>- If the package is installed, the Package Manager opens a file browser displaying the <code>CHANGELOG.md</code> file in the package cache. <br>- If the package isn’t installed, the Package Manager displays a warning that an offline changelog isn’t available.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="dependencies" aria-hidden="true"></a><strong>dependencies</strong>
+</td>
+	<td style="text-align:left;">Object</td>
+	<td style="text-align:left;">A map of package dependencies. Keys are package names, and values are specific versions. They identify other packages that this package depends on. <br><br><strong>Note</strong>: The Package Manager doesn’t support range syntax, only <strong>SemVer</strong> versions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="documentationUrl" aria-hidden="true"></a><strong>documentationUrl</strong>
+</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">Custom location for this package’s documentation specified as a URL. For example:<br><code>&quot;documentationUrl&quot;: &quot;https://example.com/&quot;</code><br><br><strong>Note</strong>: When the Package Manager can’t reach the URL location (for example, if there is a network issue), it does the following:<br><br>- If the package is installed, the Package Manager opens a file browser displaying the <code>Documentation~</code> folder in the package cache. <br>- If the package isn’t installed, the Package Manager displays a warning that offline documentation isn’t available.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="hideInEditor" aria-hidden="true"></a><strong>hideInEditor</strong>
+</td>
+	<td style="text-align:left;">Boolean</td>
+	<td style="text-align:left;">By default, a package’s assets are hidden in the <strong>Project</strong> window and omitted from the results when you use the <a href="EditingValueProperties.html#ref-assign-objectpicker">Object Picker</a> in the <strong>Inspector</strong> window. Set this property to “false” to make sure that this package’s assets are always visible.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>keywords</strong></td>
+	<td style="text-align:left;">Array of Strings</td>
+	<td style="text-align:left;">An array of keywords used by the Package Manager search APIs. This helps users find relevant packages.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>license</strong></td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">Identifier for an OSS license using the <a href="https://spdx.org/licenses/">SPDX identifier format</a>, or a string such as “See <code>LICENSE.md</code> file”.<br><br><strong>Note</strong>: If you omit this property in your package manifest, your package must contain a <code>LICENSE.md</code> file.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="licensesUrl" aria-hidden="true"></a><strong>licensesUrl</strong>
+</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">Custom location for this package’s license information specified as a URL. For example:<br><code>&quot;licensesUrl&quot;: &quot;https://example.com/licensing.html&quot;</code><br><br><strong>Note</strong>: When the Package Manager can’t reach the URL location (for example, if there is a network issue), it does the following:<br><br>- If the package is installed, it opens a file browser displaying the <code>LICENSE.md</code> file in the package cache. <br>- If the package isn’t installed, the Package Manager displays a warning that offline license information isn’t available.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>samples</strong></td>
+	<td style="text-align:left;">Array of Objects</td>
+	<td style="text-align:left;">List of samples included in the package. Each sample has a display name, a description, and the path to the sample folder starting at the <code>Samples~</code> folder itself:<br><br><code>{</code><br>   <code>&quot;displayName&quot;: &quot;&lt;name-to-appear-in-the-UI&gt;&quot;,</code><br>   <code>&quot;description&quot;: &quot;&lt;brief-description&gt;&quot;,</code><br>   <code>&quot;path&quot;: &quot;Samples~/&lt;sample-subfolder&gt;&quot;</code><br><code>}</code><br><br> For more information, refer to <a href="cus-samples.html">Creating samples for packages</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>type</strong></td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">A constant that provides additional information to the Package Manager. <br><br><strong>Reserved for internal use.</strong>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="unityRelease" aria-hidden="true"></a><strong>unityRelease</strong>
+</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">Part of a Unity version indicating the specific release of Unity that the package is compatible with. You can use this property when an updated package requires changes made during the Unity alpha/beta development cycle. This might be the case if the package needs newly introduced APIs, or uses existing APIs that have changed in a non-backward-compatible way without <a href="APIUpdater.html">API Updater</a> rules. <br><br>The expected format is “<strong>&lt;UPDATE&gt;&lt;RELEASE&gt;</strong>” (for example, <strong>0b4</strong>). <br><br><strong>Note</strong>: If you omit the recommended <a href="#unity">unity</a> property, this property has no effect. <br><br>A package that isn’t compatible with Unity doesn’t appear in the <a href="upm-ui.html">Package Manager window</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="example" aria-hidden="true"></a></p>
+
+<h2>Package manifest example</h2>
+
+<pre><code class="lang-json">{
+  &quot;name&quot;: &quot;com.[company-name].[package-name]&quot;,
+  &quot;version&quot;: &quot;1.2.3&quot;,
+  &quot;displayName&quot;: &quot;Package Example&quot;,
+  &quot;description&quot;: &quot;This is an example package&quot;,
+  &quot;unity&quot;: &quot;2019.1&quot;,
+  &quot;unityRelease&quot;: &quot;0b5&quot;,
+  &quot;documentationUrl&quot;: &quot;https://example.com/&quot;,
+  &quot;changelogUrl&quot;: &quot;https://example.com/changelog.html&quot;,
+  &quot;licensesUrl&quot;: &quot;https://example.com/licensing.html&quot;,
+  &quot;dependencies&quot;: {
+    &quot;com.[company-name].some-package&quot;: &quot;1.0.0&quot;,
+    &quot;com.[company-name].other-package&quot;: &quot;2.0.0&quot;
+ },
+ &quot;keywords&quot;: [
+    &quot;keyword1&quot;,
+    &quot;keyword2&quot;,
+    &quot;keyword3&quot;
+  ],
+  &quot;author&quot;: {
+    &quot;name&quot;: &quot;Unity&quot;,
+    &quot;email&quot;: &quot;unity@example.com&quot;,
+    &quot;url&quot;: &quot;https://www.unity3d.com&quot;
+  }
+}
+
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="upm-manifestPrj.html"><span class="notooltips">Project manifest</span></a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="cus-samples.html"></a></span><div class="tip">Creating samples for packages</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-semver.html"></a></span><div class="tip">Versioning</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

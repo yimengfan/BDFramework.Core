@@ -1,0 +1,673 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Upgrading to Unity 2021 LTS</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UpgradeGuide2021LTS.html">English</a></li>
+<li><a href="/cn/current/Manual/UpgradeGuide2021LTS.html">中文</a></li>
+<li><a href="/ja/current/Manual/UpgradeGuide2021LTS.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UpgradeGuide2021LTS.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UpgradeGuide2021LTS.html">English</a></li>
+<li><a href="/cn/current/Manual/UpgradeGuide2021LTS.html">中文</a></li>
+<li><a href="/ja/current/Manual/UpgradeGuide2021LTS.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UpgradeGuide2021LTS.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="UpgradeGuides.html">Upgrading Unity</a></li>
+<li>Upgrading to Unity 2021 LTS</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="APIUpdater.html"></a></span><div class="tip">API updater</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UpgradeGuide2020LTS.html"></a></span><div class="tip">Upgrading to Unity 2020 LTS</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Upgrading to Unity 2021 LTS</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Note</strong>: Follow the advice in this section in release order. For example, if you need to upgrade your project from 2019 to 2021, read the 2020 upgrade guides to see if there are any changes that you need to make before you read the 2021 upgrade guides.</p>
+
+<p>This page lists changes in the Unity 2021 LTS version which might affect existing projects when you upgrade from a 2020 version to 2021 LTS.</p>
+
+<p>
+<strong>Note</strong>: 2021LTS is also known as 2021.3.</p>
+
+<h3>Page Outline</h3>
+
+<ul>
+<li><a href="#Device">Device Simulator</a></li>
+<li><a href="#Lighting">Environment Lighting</a></li>
+<li><a href="#LightingProbe">Environment lighting: Ambient probe and skybox reflection probe are now automatically baked</a></li>
+<li><a href="#CodeCoverage">Enable Code Coverage preference</a></li>
+<li><a href="#Particles">Particle System Force Fields</a></li>
+<li><a href="#ParticleDelay">Particle System Start Delay + Rate over Distance emission</a></li>
+<li><a href="#Build">BuildReport - PackedAssets</a></li>
+<li><a href="#Terrain">Terrain APIs out of experimental (WIP)</a></li>
+<li><a href="#Texture">Texture2D.Resize renamed to Reinitialize</a></li>
+<li><a href="#Android">Android changes</a></li>
+<li><a href="#UI">UI Toolkit - Default scaleMode for Image changed</a></li>
+<li><a href="#Upgrade">Mono upgrade behavior changes</a></li>
+<li><a href="#Performance">Adaptive Performance</a></li>
+<li><a href="#Render">RenderTexture DepthStencilFormat</a></li>
+<li><a href="#Graphics">Graphics formats DepthAuto, ShadowAuto and VideoAuto are deprecated</a></li>
+<li><a href="#WebGL">WebGL: Updated Emscripten to 2.0.19</a></li>
+<li><a href="#Lightmapper">Progressive GPU Lightmapper dropped support for CPU OpenCL devices</a></li>
+<li><a href="#Process">OnPostprocessAllAssets behavior changes</a></li>
+<li><a href="#BakeLighting">Mixed point and spot lights with no shadows bake direct light in subtractive lighting mode</a></li>
+<li><a href="#Shader">Shader keyword system improvements</a></li>
+<li><a href="#NET">Unity supports .NET Standard 2.1 APIs</a></li>
+<li><a href="#Windows">Windows XR plugin removed</a></li>
+</ul>
+
+<p><a name="Device" aria-hidden="true"></a></p>
+
+<h2>Device Simulator</h2>
+
+<p>The <a href="https://docs.unity3d.com/Packages/com.unity.device-simulator@latest?subfolder=/manual/index.html">Device Simulator</a> is now part of the Editor and is accessible from the Game window.
+To set up the Device Simulator, add the <code>UnityEngine.Device</code> namespace to the Screen, Application, and SystemInfo classes:
+<code>UnityEngine.Device.Screen;</code>
+<code>UnityEngine.Device.Application;</code>
+<code>UnityEngine.Device.SystemInfo;</code>
+</p>
+
+<p>To switch to <code>UnityEngine.Device</code>, add the following logic to each script you want to use with the simulator:
+<code>
+using Screen = UnityEngine.Device.Screen;
+using Application = UnityEngine.Device.Application;
+using SystemInfo = UnityEngine.Device.SystemInfo;
+</code>
+The new namespace <code>UnityEngine.Device</code> transitions smoothly from Simulator (when in Editor) to actual device API with a runtime build.</p>
+
+<p><a name="Lighting" aria-hidden="true"></a></p>
+
+<h2>Environment Lighting</h2>
+
+<p>The Editor now automatically bakes the default <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about skyboxes-using.html">skybox</a><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a href="class-Skybox.html" href="skyboxes-using.html">skybox</a><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a href="class-Skybox.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Skybox" aria-label="Go to glossary anchor for Skybox">Glossary</a></span></span></span> probe and <a href="../ScriptReference/RenderSettings-ambientProbe.html">ambient probe</a> and retains that data until you manually bake the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Skybox" aria-label="Go to glossary anchor for Skybox">Glossary</a></span></span></span> probe and <a href="../ScriptReference/RenderSettings-ambientProbe.html">ambient probe</a> and retains that data until you manually bake the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. When you upgrade, Scenes with no <span class="tooltip"><strong>ambient light</strong><span class="tooltiptext">Light that doesn’t come from any specific direction, and contributes equal light in all directions to the Scene. <a href="lighting-window.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. When you upgrade, Scenes with no <span class="tooltip"><strong>ambient light</strong><span class="tooltiptext">Light that doesn’t come from any specific direction, and contributes equal light in all directions to the Scene. <a href="lighting-window.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Ambientlight" aria-label="Go to glossary anchor for Ambientlight">Glossary</a></span></span></span> contribution might visually change. To restore the original look of these Scenes, set the Environment lighting <a href="lighting-window.html#EnvironmentSection">intensity multiplier</a> to 0. Alternatively, set the skybox to black, bake the scene, then reset the skybox to your preferred sky color.</p>
+
+<p><a name="LightingProbe" aria-hidden="true"></a></p>
+
+<h2>Environment lighting: Ambient probe and skybox reflection probe are now automatically baked</h2>
+
+<p>Unity’s Progressive <strong><span class="tooltip"><strong>Lightmapper</strong><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Lightmapper" aria-label="Go to glossary anchor for Lightmapper">Glossary</a></span></span></span></strong> now automatically generates the ambient probe and the skybox <span class="tooltip"><strong>reflection probe</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html" href="Glossary.html#Lightmapper" aria-label="Go to glossary anchor for Lightmapper">Glossary</a></span></span></span></strong> now automatically generates the ambient probe and the skybox <span class="tooltip"><strong>reflection probe</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span> for every scene by default. This means that a scene automatically receives environment lighting in accordance with the settings in the <strong>Environment</strong> tab in the <strong>Lighting</strong> settings panel. The Editor updates the ambient probe and skybox reflection probe every time the environment lighting changes, until you generate lighting. When you bake with the <strong>Generate Lighting</strong> control, the Editor stops updating the probes, and only updates them again at the next bake. When you enable the <strong>Auto Generate</strong> option, the Editor continues to update the probes every time the environment lighting changes. If you generate lighting and then delete this lighting data by removing the Lighting Data Asset from the project, the Editor automatically generates the ambient probe and skybox reflection probe again.</p>
+
+<p>There is one situation which requires action when you upgrade a project. This is when you don’t wish to have any Environment lighting contribution in a project which also:</p>
+
+<ul>
+<li>Doesn’t have a Lighting Data Asset.</li>
+<li>Doesn’t have <strong>Auto Generate</strong> enabled.</li>
+<li>Has an Environment contribution set to a color other than black.</li>
+</ul>
+
+<p>In this situation, navigate to <strong>Window</strong> &gt; <strong>Rendering</strong> &gt; <strong>Lighting Settings</strong> &gt; <strong>Environment</strong> and disable the environment contribution of the automatically generated ambient probe and skybox reflection probe by making one of the following changes:</p>
+
+<ul>
+<li>Option 1: Set the <strong>Intensity Multiplier</strong> to 0.</li>
+<li>Option 2: Use a black <strong>Skybox Material</strong>.</li>
+<li>Option 3: Use a black color in either <strong>Color</strong> or <strong>Gradient</strong> mode for the <strong>Source</strong>.</li>
+</ul>
+
+<p><a name="CodeCoverage" aria-hidden="true"></a></p>
+
+<h2>Enable Code Coverage preference</h2>
+
+<p>The user interface for managing Code Coverage has moved from General Preferences to within the <a href="https://docs.unity3d.com/Packages/com.unity.testtools.codecoverage@latest">Code Coverage package</a>.</p>
+
+<figure>
+<img src="../uploads/Main/upgrade211CodeCoverage.png" alt="In Unity 2021 the Enable Code Coverage checkbox was moved in the Code Coverage window.">
+<figcaption>In Unity 2021 the Enable Code Coverage checkbox was moved in the Code Coverage window.</figcaption>
+</figure>
+
+<p>The Code Coverage package is available as a released package via the Package Manager for Unity 2019.3 and above. The latest version is 1.0.0.</p>
+
+<p>You can use one of the following methods to enable code coverage:</p>
+
+<ul>
+<li>
+<a href="https://docs.unity3d.com/Packages/com.unity.testtools.codecoverage@1.0/manual/InstallingCodeCoverage.html">Install</a> the Code Coverage package, open the <a href="https://docs.unity3d.com/Packages/com.unity.testtools.codecoverage@1.0/manual/CodeCoverageWindow.html">Code Coverage window</a> (<strong>Window</strong> &gt; <strong>Analysis</strong> &gt; <strong>Code Coverage</strong>) and select <a href="https://docs.unity3d.com/Packages/com.unity.testtools.codecoverage@1.0/manual/Quickstart.html#4-enable-code-coverage-sub1-minsub"><strong>Enable Code Coverage</strong></a>.</li>
+<li>Use the <a href="CommandLineArguments.html">Command line argument</a> <code>-enableCodeCoverage</code> in batchmode.</li>
+<li>Use the <a href="../ScriptReference/TestTools.Coverage-enabled.html"><code>Coverage.enabled</code></a> API. Example class:</li>
+</ul>
+
+<pre><code>// Create a new C# script called CodeCoverageMenuItem and place it
+// under the Editor folder.
+// This class creates a toggle menu item under Code Coverage &gt; Enable
+// Code Coverage. Use it to enable/disable Code Coverage.
+
+using UnityEditor;
+using UnityEngine.TestTools;
+
+class CodeCoverageMenuItem
+{
+    const string EnableCodeCoverageItemName = &quot;Code Coverage/Enable Code Coverage&quot;;
+
+    [MenuItem(EnableCodeCoverageItemName, false)]
+    static void EnableCodeCoverage()
+    {
+        Coverage.enabled = !Coverage.enabled;
+    }
+
+    [MenuItem(EnableCodeCoverageItemName, true)]
+    static bool EnableCodeCoverageValidate()
+    {
+        Menu.SetChecked(EnableCodeCoverageItemName, Coverage.enabled);
+        return true;
+    }
+}
+</code></pre>
+
+<p><a name="Particles" aria-hidden="true"></a></p>
+
+<h2>Particle System Force Fields</h2>
+
+<p>Previously, some Force Field properties behaved differently at different frame rates (or if using the Time Scale in the Time Manager settings)</p>
+
+<p>The <span class="tooltip"><strong>Particle System</strong><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ParticleSystem.html" href="class-ParticleSystem.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#particlesystem" aria-label="Go to glossary anchor for particlesystem">Glossary</a></span></span></span> now uses a reference frame rate of 30fps to serve as the basis for the simulation. If your app runs at a different frame rate, the following settings might behave differently compared to earlier versions of Unity:</p>
+
+<ul>
+<li>Gravity</li>
+<li>Rotation</li>
+<li>Vector Fields</li>
+</ul>
+
+<p>If these settings are affected, adjust the strengths of the affected areas to get the desired appearance.</p>
+
+<p><a name="ParticleDelay" aria-hidden="true"></a></p>
+
+<h2>Particle System Start Delay + Rate over Distance emission</h2>
+
+<p>Previously, Rate over Distance emission ignored the Start Delay setting. Now, if the Start Delay setting is defined, it delays the start for the distance-based emission.</p>
+
+<p>If this field was previously set, you might need to adjust it.</p>
+
+<p><a name="Build" aria-hidden="true"></a></p>
+
+<h2>BuildReport - PackedAssets</h2>
+
+<p>PackedAssets.file has been marked obsolete without a direct replacement. Previously this held an integer signifying a file id or index into BuildReport.files
+To look up BuildReport files now, use PackedAssets.shortPath.</p>
+
+<p><a name="Terrain" aria-hidden="true"></a></p>
+
+<h2>Terrain APIs out of experimental (WIP)</h2>
+
+<p>The experimental <span class="tooltip"><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> APIs have been moved to non-experimental namespaces. There have also been some other minor changes to the Terrain API. If you used the experimental Terrain APIs, use the following APIs instead:</p>
+
+<ul>
+<li>
+<code>UnityEngine.TerrainTools</code>;</li>
+<li>
+<code>UnityEditor.TerrainTools</code>;</li>
+<li>
+<code>UnityEngine.TerrainUtils</code>;</li>
+</ul>
+
+<p>Here is the full list of API changes:</p>
+
+<ul>
+<li>In most cases, <code>UnityEngine.Experimental.TerrainAPI</code> and <code>UnityEditor.Experimental.TerrainAPI</code> are now <code>UnityEngine.TerrainTools</code> and <code>UnityEditor.TerrainTools</code>, respectively. Some runtime APIs have moved to a new <code>UnityEngine.TerrainUtils</code> namespace.</li>
+<li>The <code>GetDesc()</code> of the <code>TerrainPaintTool&lt;T&gt;</code> class was renamed to <code>GetDescription()</code>.</li>
+<li>The <code>TerrainUtility</code> class has moved from <code>UnityEngine.Experimental.TerrainAPI</code> to <code>UnityEngine.TerrainUtils</code>.</li>
+<li>The <code>TerrainUtility.TerrainMap</code> class is no longer an inner-class and belongs to the <code>UnityEngine.TerrainUtils</code> namespace.</li>
+<li>The <code>TerrainMap.TileCoord</code> structure is no longer in the <code>TerrainMap</code> class, has been renamed to <code>TerrainTileCoord</code>, and is now also part of the <code>UnityEngine.TerrainUtils</code> namespace.</li>
+<li>The <code>UnityEditor.Experimental.TerrainAPI.BrushPreviewMode</code> enum has been renamed to <code>TerrainBrushPreviewMode</code> and moved to the <code>UnityEditor.TerrainTools</code> namespace.</li>
+<li>The <code>TerrainPaintUtilityEditor.BuiltinPaintMaterialPasses</code> enum has moved from the <code>TerrainPaintUtilityEditor</code> class and into the <code>UnityEditor.TerrainTools</code> namespace. It has also been renamed to <code>TerrainBuiltinPaintMaterialPasses</code>.</li>
+<li>The three <code>ShowBrushGUI</code> functions in <code>IOnInspectorGUI</code> have been merged into one function with default parameter values instead of the different overloaded functions.</li>
+<li>
+<code>TerrainFilter</code> has been removed. Use <code>System.Predicate&lt;Terrain&gt;</code> instead.</li>
+</ul>
+
+<p><a name="Texture" aria-hidden="true"></a></p>
+
+<h2>Texture2D.Resize renamed to Reinitialize</h2>
+
+<p>
+<code>Texture2D.Resize</code> and its overloads have been renamed to <code>Texture2D.Reinitialize</code>.</p>
+
+<p>The API Updater should rename this automatically. If not, change any usage of <code>Texture2D.Resize</code> to <code>Texture2D.Reinitialize</code>.</p>
+
+<p><a name="Android" aria-hidden="true"></a></p>
+
+<h2>Android changes</h2>
+
+<p>A large part of the Android build pipeline is now incremental and Unity removed the following features that were in the previous build pipeline:</p>
+
+<ul>
+<li>Unity no longer copies <span class="tooltip"><strong>Gradle</strong><span class="tooltiptext">An Android build system that automates several build processes. This automation means that many common build errors are less likely to occur. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about android-gradle-overview.html" href="android-gradle-overview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Gradle" aria-label="Go to glossary anchor for Gradle">Glossary</a></span></span></span> project assets located in <strong>Assets</strong>/<strong>Plugins</strong>/<strong>Android</strong>/<strong>[res, assets]</strong> to the Gradle project.
+
+<ul>
+<li>Previously you could place Gradle resources in this folder and Unity copied them into the Gradle project. You should now use <a href="AndroidAARPlugins.html">AAR or androidlib plug-ins</a> to pass additional Gradle resources to the application.</li>
+<li>If you place project assets in this folder, Unity shows a build error message.</li>
+</ul>
+</li>
+<li>Unity no longer ignores files inside the <strong>GENERATED BY UNITY. REMOVE THIS COMMENT TO PREVENT OVERWRITING WHEN EXPORTING AGAIN</strong> comment.
+
+<ul>
+<li>Previously Unity wouldn’t overwrite files if you removed this comment. If you didn’t remove the comment, Unity always regenerated build.gradle, manifest, and UnityPlayerActivity files.</li>
+<li>If you want your changes to persist using the new build pipeline, use templates.</li>
+</ul>
+</li>
+<li>When you export an Android project, Unity no longer creates a symbols zip package. The symbols are now available in the <strong>unityLibrary\symbols</strong> directory which you can zip. The reason for this change is that not all symbols files are available when you export a project; Gradle produces the <code>libil2cpp.so</code> symbols when it builds the application.</li>
+<li>Changed how Unity checks to see if an obb is compatible with an <span class="tooltip"><strong>apk</strong><span class="tooltiptext">The Android Package format output by Unity. An APK is automatically deployed to your device when you select File &gt; Build &amp; Run. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about android-BuildProcess.html" href="android-BuildProcess.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#APK" aria-label="Go to glossary anchor for APK">Glossary</a></span></span></span>. Both the apk and obb now have unity_obb_guid file inside them and if the contents match between them, Unity treats them as being compatible.</li>
+<li>For custom build <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> that use <a href="../ScriptReference/BuildOptions.PatchPackage.html">PatchPackage</a>, note that <strong>Patch/Patch &amp; Run</strong> now works with all types of assets and doesn’t require a Script Only Build.</li>
+</ul>
+
+<p>The default <a href="gradle-templates.html">launcherTemplate.gradle</a> file has changed. If you use a custom launcher template, you must regenerate it and reapply your changes on top. Otherwise, your application can experience performance regressions if it uses <a href="../ScriptReference/Resources.Load.html">Resources.Load</a>.</p>
+
+<p><a name="UI" aria-hidden="true"></a></p>
+
+<h2>UI Toolkit - Default scaleMode for Image changed</h2>
+
+<p>Default Image.scaleMode was changed from ScaleAndCrop to ScaleToFit.</p>
+
+<p>The expected behavior for an image is to scale to the size of the element, so we changed the default value of Image.scaleMode to ScaleToFit.
+If you didn’t override the Image scale mode, some cropped images might shrink to fit the size of the element.
+If ScaleAndCrop was the expected mode for your images, you can override their style by adding the following value in your UXML file inline style: </p>
+
+<p><code>-unity-background-scale-mode: scale-and-crop;</code></p>
+
+<p>You can also create a style class with the override and apply it to images that require ScaleAndCrop.</p>
+
+<p><a name="Upgrade" aria-hidden="true"></a></p>
+
+<h2>Mono upgrade behavior changes</h2>
+
+<p>The underlying C# runtime, Mono, has been upgraded in the latest version. This includes many fixes from the upstream version of Mono, and some notable changes in behavior.</p>
+
+<ul>
+<li>
+<code>Directory.GetFiles</code> is no longer guaranteed to return a sorted list.
+
+<ul>
+<li>Previously, this always returned an alphabetically sorted list of items. If your project needs items to be returned in the same order every time, sort the returned list. For example:
+var files = <code>Directory.GetFiles(dir).OrderBy(f =&gt; f)</code>;</li>
+</ul>
+</li>
+<li>
+<code>Object.GetHashCode</code> now returns a different value and shouldn’t be relied on as a deterministic hashing algorithm between operating systems.
+
+<ul>
+<li>In general, you shouldn’t use the result of <code>GetHashCode</code> outside of the current process, that is don’t serialize it or expect it to be the same the next time the code runs in a new process. Unity recommends using a deterministic hashing algorithm such as MD5.</li>
+</ul>
+</li>
+<li>Some bug fixes have resulted in new exceptions being thrown. Additionally, the content of some exception messages have changed.
+
+<ul>
+<li>This new behavior will be particularly noticeable in automated testing scenarios and may require changing the expected behavior if the tests are parsing the logs for specific exception messages.</li>
+</ul>
+</li>
+</ul>
+
+<p><a name="Performance" aria-hidden="true"></a></p>
+
+<h2>Adaptive Performance</h2>
+
+<p>Version 3.0 of the Adaptive Performance package is now available. For information on how to upgrade to version 3.0, see the <a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@3.0/manual/upgrade-guides.html">Adaptive Performance upgrade guides</a>.</p>
+
+<p><a name="Render" aria-hidden="true"></a></p>
+
+<h2>RenderTexture DepthStencilFormat</h2>
+
+<p>Previously, if you set the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/2021.2/Documentation/ScriptReference/RenderTexture-depth.html"><code>RenderTexture.depth</code></a> property to 32-bit, you could get D24_S8 depending on the platform. Now if you set it to 32-bit, you get D32_S8 with 32-bit for the depth component if that format is supported on the current platform. However, this doubles the memory usage for that <span class="tooltip"><strong>depth buffer</strong><span class="tooltiptext">A memory store that holds the z-value depth of each pixel in an image, where the z-value is the depth for each rendered pixel from the projection plane. <a href="class-RenderTexture.html" href="https://docs.unity3d.com/2021.2/Documentation/ScriptReference/RenderTexture-depth.html"><code>RenderTexture.depth</code></a> property to 32-bit, you could get D24_S8 depending on the platform. Now if you set it to 32-bit, you get D32_S8 with 32-bit for the depth component if that format is supported on the current platform. However, this doubles the memory usage for that <span class="tooltip"><strong>depth buffer</strong><span class="tooltiptext">A memory store that holds the z-value depth of each pixel in an image, where the z-value is the depth for each rendered pixel from the projection plane. <a href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#depthbuffer" aria-label="Go to glossary anchor for depthbuffer">Glossary</a></span></span></span>. </p>
+
+<p>The new <a href="https://docs.unity3d.com/2021.2/Documentation/ScriptReference/RenderTexture-depthStencilFormat.html"><code>RenderTexture.depthStencilFormat</code></a> property returns the format that the graphics API uses to create the resource in video memory. You can also use this property to request a specific format. However, not all platforms support all depth stencil formats. When you set the <code>DepthStencilFormat</code> property to an unsupported format, Unity automatically selects a compatible format that has the equal or greater amount of bits for the depth and stencil components. </p>
+
+<h3>Upgrading</h3>
+
+<p>The RenderTexture asset now serializes the depth stencil format that you selected. If you use an API that takes a number of bits instead of a format, these bits get mapped to a format and that format is serialized. RenderTexture assets from previous versions that had the depth set to more than 16-bits are automatically upgraded to use D24_S8. </p>
+
+<p>On some platforms (for example Windows) that use the DirectX graphics API, this results in a format with fewer depth bits because the graphics backend selects the D32_S8 format internally if you set bits&gt;16. To ensure consistent upgrades across all platforms, D24_S8 is used on all platforms for the automatic upgrader. However, this might introduce visual artifacts in the render output of your project if you have RenderTexture assets in your project. Review these assets and change the depth stencil format to D32_S8 when needed. The following issues might occur:</p>
+
+<ul>
+<li>The memory size might increase for the RenderTextures that you use. However, the memory reported is now correct.</li>
+<li>Now that setting the depth property to 32-bit gives you a 32-bit depth component, the memory usage increases. To avoid this, set the bits to 24 and use D24_S8 if that is supported on your platform.</li>
+<li>If a platform doesn’t support D24_S8, Unity falls back to the compatible format D32_S8 by default. To prevent this, in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window, disable the <a href="class-RenderTexture.html">Enable Compatible Format</a> property on an asset. If Unity doesn’t support the format D32_S8 and it can’t fall back, you see the error message: <strong>RenderTexture.Create failed: depth/stencil format unsupported. There is no compatible format on this platform or this fallback to a compatible format is disabled in the import inspector.</strong>. In most cases, to fix the issue you can turn on <strong>Enable Compatible Format</strong>.</li>
+</ul>
+
+<p><a name="Graphics" aria-hidden="true"></a></p>
+
+<h2>Graphics formats DepthAuto, ShadowAuto and VideoAuto are deprecated</h2>
+
+<p>The following graphics formats have now been deprecated:</p>
+
+<ul>
+<li>DepthAuto</li>
+<li>ShadowAuto</li>
+<li>VideoAuto</li>
+</ul>
+
+<p>These <strong>Auto</strong> formats are unclear about the exact format that’s used and might vary by platform.</p>
+
+<p>The steps to remove the use of these deprecated formats depends on the format and use case.</p>
+
+<h3>For VideoAuto</h3>
+
+<p>To get the current platform’s automatic video format, use <code>SystemInfo.GetGraphicsFormat(DefaultFormat.Video)</code>.</p>
+
+<h3>For DepthAuto/ShadowAuto used to indicate a depth-only render texture.</h3>
+
+<p>The GraphicsFormat API often uses DepthAuto or ShadowAuto to create <span class="tooltip"><strong>render textures</strong><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span> with depth-only rendering, and no color buffer. Examples of this use case are:</p>
+
+<ul>
+<li><code>renderTextureDescriptor.graphicsFormat = GraphicsFormat.ShadowAuto</code></li>
+<li><code>RenderTexture.GetTemporary(width, height, bits, GraphicsFormat.ShadowAuto)</code></li>
+</ul>
+
+<p>To indicate depth-only (non-color) rendering, use GraphicsFormat.None as the new color format.
+<code>renderTextureDescriptor.graphicsFormat = GraphicsFormat.None;</code>
+</p>
+
+<p>If you used ShadowAuto, set the shadowSamplingMode of your RenderTextureDescriptor to ShadowSamplingMode.CompareDepths to enable depth-compare sampling on the depth texture, and change the code to use an overload that takes a RenderTextureDescriptor.
+<code>renderTextureDescriptor.shadowSamplingMode = ShadowSamplingMode.CompareDepths;</code>
+</p>
+
+<h3>For DepthAuto/ShadowAuto in other situations</h3>
+
+<p>In some situations the DepthAuto/ShadowAuto formats represented an automatically selected depth format appropriate for the current platform. To replace the deprecated values in this case, use <code>SystemInfo.GetGraphicsFormat(DefaultFormat.Depth/Shadow)</code>
+</p>
+
+<p><a name="WebGL" aria-hidden="true"></a></p>
+
+<h2>WebGL: Updated Emscripten to 2.0.19</h2>
+
+<p>The asm.js Linker target that was available for advanced users is no longer available.</p>
+
+<ul>
+<li>In Unity 2021.2, the underlying Emscripten compiler used by the <span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span> platform was updated to version 2.0.19. This upgraded the native code object file format, and therefore requires recompiling all native code plugins (C/C++ code plugins) in a project. If you are using closed source 3rd-party plugins from Unity <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a href="AssetStore.html" href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span> platform was updated to version 2.0.19. This upgraded the native code object file format, and therefore requires recompiling all native code plugins (C/C++ code plugins) in a project. If you are using closed source 3rd-party plugins from Unity <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span>, for example, remember to ask the author for an updated version for Unity 2021.2.</li>
+<li>The Emscripten runtime JavaScript function <code>Pointer_stringify()</code>is now deprecated. Instead, call the function <code>UTF8ToString()</code> to marshal a UTF8-encoded null-terminated C string from the WebAssembly heap to a JavaScript string.</li>
+</ul>
+
+<p><a name="Lightmapper" aria-hidden="true"></a></p>
+
+<h2>Progressive GPU Lightmapper dropped support for CPU OpenCL devices</h2>
+
+<p>The Progressive GPU Lightmapper no longer supports CPU OpenCL devices. If no supported GPU is found but a CPU OpenCL device is detected, a warning message informs you that the device is skipped and falls back to the Progressive CPU Lightmapper. The Progressive CPU Lightmapper offers better performance for CPU-based computation of <span class="tooltip"><strong>lightmaps</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span>.
+This change of behavior will happen automatically and lightmaps should be computed as expected.</p>
+
+<p><a name="Process" aria-hidden="true"></a></p>
+
+<h2><a href="https://docs.unity3d.com/2021.2/Documentation/ScriptReference/AssetPostprocessor.OnPostprocessAllAssets.html">OnPostprocessAllAssets behavior changes</a></h2>
+
+<p>When Unity calls <code>InitializeOnLoad</code> methods during the asset import process, asset loading can fail. During asset import, the asset database is in an update state and Unity can’t determine which assets have already been imported. <code>InitializeOnLoad</code> methods can’t load assets that haven’t been imported.</p>
+
+<p>To improve the asset import process, the <code>OnPostprocessAllAssets</code> callback has been enhanced. In particular, the <code>OnPostprocessAllAssets</code> callback:</p>
+
+<ul>
+<li>Can perform initialization after a domain reload, when the asset database is guaranteed to be in a ready state.</li>
+<li>Contains the <code>didDomainReload</code> parameter, which is set to true if the domain has reloaded.</li>
+<li>Supports asset operations. This includes asset loading, which behaves in the same way as loading assets via a menu item.</li>
+<li>Has moved out of the asset database importing loop. Callback processing is postponed until asset import is complete.</li>
+</ul>
+
+<p>Move any domain-related initialization logic that requires asset operations to the <code>OnPostprocessAllAsset</code> callback; do not perform asset operations inside <code>InitializeOnLoad</code> methods.</p>
+
+<p>The following behavior change code examples show how asset operations were previously postponed.</p>
+
+<p>Example 1:</p>
+
+<pre><code>public class AssetPostprocessorTester1 : AssetPostprocessor
+{
+    static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
+    {
+        var assetPath = &quot;Assets/hello.txt&quot;;
+
+        if (File.Exists(assetPath))
+        {
+            var txtObj = AssetDatabase.LoadAssetAtPath&lt;TextAsset&gt;(&quot;Assets/hello.txt&quot;);
+            AssetDatabase.DeleteAsset(&quot;Assets/hello.txt&quot;);
+
+            if (txtObj == null)
+                Debug.Log(&quot;New Behaviour: Asset object is unloaded&quot;);
+            else
+                Debug.Log(&quot;Old Behaviour: Asset is loaded for deleted asset!!&quot;);
+        }
+    }
+}
+</code></pre>
+
+<p>Example 2:</p>
+
+<pre><code> public class AssetPostprocessorTester2 : AssetPostprocessor
+{
+    static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
+    {
+        var assetPath = &quot;Assets/SomeText.txt&quot;;
+        if (!File.Exists(assetPath))
+        {
+            File.WriteAllText(assetPath, &quot;hello world&quot;);
+
+            AssetDatabase.ImportAsset(assetPath);
+            var txtObj = AssetDatabase.LoadAssetAtPath&lt;TextAsset&gt;(assetPath);
+
+            if (txtObj == null)
+                Debug.Log(&quot;Old Behaviour: Asset hasn't been imported yet&quot;);
+            else
+                Debug.Log(&quot;New Behaviour: Asset is imported and loaded&quot;);
+        }
+    }
+}
+</code></pre>
+
+<p>The following example has the new <code>OnPostprocessAllAssets</code> variant with the <code>didDomainReload</code> parameter:</p>
+
+<pre><code>static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool didDomainReload)
+{
+    if (didDomainReload)
+        Debug.Log(&quot;Domain has been reloaded&quot;);
+    else
+        Debug.Log(&quot;Domain did not reload during import&quot;);
+}
+</code></pre>
+
+<p>All domain reloads are now processed inside the asset database.</p>
+
+<p>
+<code>OnPostprocessAllAssets</code> now works better with asset operations, but any processing in this callback increases asset database refresh and domain reload time. <code>InitializeOnLoad</code> methods also add to domain reload time. It is best practice to minimize processing in these callbacks to improve Editor responsiveness between iterations. </p>
+
+<p><a name="BakeLighting" aria-hidden="true"></a></p>
+
+<h2>Mixed point and spot lights with no shadows bake direct light in subtractive lighting mode</h2>
+
+<p>
+<a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightMode-Mixed.html">Mixed mode</a> point and spot lights now consistently contribute baked direct light in Scenes using <a href="LightMode-Mixed-Subtractive.html">Subtractive lighting mode</a>, regardless of their <a href="class-Light.html">Shadow Type</a> setting. As a result, specular lighting for Static <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="LightMode-Mixed.html">Mixed mode</a> point and spot lights now consistently contribute baked direct light in Scenes using <a href="LightMode-Mixed-Subtractive.html">Subtractive lighting mode</a>, regardless of their <a href="class-Light.html">Shadow Type</a> setting. As a result, specular lighting for Static <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> may appear to be missing in affected Scenes. To resolve this issue, replace affected Mixed mode lights with <a href="LightMode-Realtime.html">Realtime mode Lights</a>. Alternatively, use <a href="LightMode-Mixed-BakedIndirect.html">Baked Indirect</a> or <span class="tooltip"><a href="LightMode-Mixed-Shadowmask.html">Shadowmask</a><span class="tooltiptext">A Texture that shares the same UV layout and resolution with its corresponding lightmap. <a href="LightMode-Mixed-Shadowmask.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> may appear to be missing in affected Scenes. To resolve this issue, replace affected Mixed mode lights with <a href="LightMode-Realtime.html">Realtime mode Lights</a>. Alternatively, use <a href="LightMode-Mixed-BakedIndirect.html">Baked Indirect</a> or <span class="tooltip"><a href="LightMode-Mixed-Shadowmask.html">Shadowmask</a><span class="tooltiptext">A Texture that shares the same UV layout and resolution with its corresponding lightmap. <a href="LightMode-Mixed-Shadowmask.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shadowmask" aria-label="Go to glossary anchor for Shadowmask">Glossary</a></span></span></span> lighting mode(s) with Mixed lights.</p>
+
+<p><a name="Shader" aria-hidden="true"></a></p>
+
+<h2>Shader keyword system improvements</h2>
+
+<p>The <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> keyword system now allows up to 65534 local keywords per shader or compute shader and 2<sup>32</sup>–2 global keywords per project. All keywords you declare in a shader or compute shader are now local to this shader. Keywords you declare in a directive with the _local suffix aren’t affected by the state of global keywords.</p>
+
+<p>Example:</p>
+
+<p>A pass in a shader declares the following keywords:</p>
+
+<ul>
+<li><code>#pragma shader_feature FOO BAR</code></li>
+<li><code>#pragma shader_feature_local BOO BAZ</code></li>
+</ul>
+
+<p>When using this pass, keywords FOO and BAR are enabled if they’re enabled either globally or on the material. Keywords BOO and BAZ are only enabled if they’re enabled on the material.</p>
+
+<p><a name="NET" aria-hidden="true"></a></p>
+
+<h2>Unity supports .NET Standard 2.1 APIs</h2>
+
+<p>Unity now supports many additional APIs in the .NET base class libraries, including all APIs in the .NET Standard 2.1 API. Your project might fail to compile if any of your code has conflicts with new APIs.</p>
+
+<p>To avoid errors when you upgrade projects created in previous versions of Unity, check and update your code to ensure that there are no conflicts with types and methods that are now available in .NET Standard 2.1.</p>
+
+<p>Sources of conflict include the following:</p>
+
+<ul>
+<li>ambiguous references</li>
+<li>extension methods</li>
+<li>precompiled assemblies</li>
+</ul>
+
+<h3>Resolve ambiguous references</h3>
+
+<p>If your code implements types or methods with a name that conflicts with types or methods that .NET Standard 2.1 adds, your code fails to compile. Name conflicts can lead to C# compiler errors due to ambiguous references.</p>
+
+<p>For example, if you add a type named <code>MyCompany.MyCode.Range</code> to your project’s code, this might conflict with the existing <code>System.Range</code> type. Code that contains both <code>using System;</code> and <code>using MyCompany;</code> statements fails to compile.</p>
+
+<p>To prevent errors, fully specify the namespace in the C# code for any types that have conflicting names.</p>
+
+<h3>Resolve conflicting extension methods</h3>
+
+<p>If your existing code has an extension method that .NET Standard 2.1 now implements on a type directly, you can choose to rename your extension methods or to use the methods implemented by the base class library.</p>
+
+<p>For example, code in your project might implement an extension method named <code>CopyTo</code> on the <code>ArraySegment</code> type. In .NET Standard 2.1, <code>ArraySegment</code> has a built-in <code>CopyTo</code> method. You can choose to rename your <code>CopyTo</code> extension method, or eliminate it entirely and use the built-in one.</p>
+
+<h3>Resolve conflicting assemblies</h3>
+
+<p>If your project uses precompiled assemblies (that is, managed plugins) that implement types and methods that are now part of the base class library, then remove these assemblies from your project and use the built-in implementations.</p>
+
+<p>For example, in previous versions of Unity, you needed to use the <code>System.Memory.dll</code> assembly from NuGet to access the <code>System.Span</code> value type. Now, .NET Standard 2.1 provides <code>System.Span</code> in the base class library. If you try to use the <code>System.Memory.dll</code> managed plugin in Unity 2021.2, the project fails to build.</p>
+
+<p><a name="Windows" aria-hidden="true"></a></p>
+
+<h2>Windows XR plugin removed</h2>
+
+<p>Microsoft has deprecated the Windows <span class="tooltip"><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html" href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> plugin and now supports Windows <span class="tooltip"><strong>Mixed Reality</strong><span class="tooltiptext">Mixed Reality (MR) combines its own virtual environment with the user’s real-world environment and allows them to interact with each other.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MixedReality" aria-label="Go to glossary anchor for MixedReality">Glossary</a></span></span></span> (WMR) features and devices through the OpenXR plugin.</p>
+
+<ul>
+<li>The Windows XR plugin has been removed as of Unity 2021.2.</li>
+<li>When you open an existing project in Unity 2021.2, the update process removes the Windows XR plugin, if present.</li>
+<li>To continue to use the project for Windows Mixed Reality, you must enable the Unity OpenXR plugin.</li>
+<li>Depending on which features you are using, you must also install Microsoft’s Mixed Reality OpenXR support plugin and possibly additional tools from the Microsoft Mixed Reality Toolkit.</li>
+</ul>
+
+<p>To upgrade to the Unity OpenXR plugin:</p>
+
+<ol>
+<li>Open the <strong><span class="tooltip"><strong>Project Settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html" href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span></strong> window.</li>
+<li>In the <strong>XR <span class="tooltip"><strong>Plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Plugins.html" href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> Management</strong> section, enable <strong>OpenXR</strong> in the <strong>Plug-in Providers</strong> list.
+If needed, Unity downloads and installs the OpenXR plugin.</li>
+</ol>
+
+<p>Once the OpenXR plugin is enabled, you can use the <strong>Mixed Reality Feature Tool</strong> provided by Microsoft to install the required supporting packages.</p>
+
+<p>To install or update WMR features, tools, and samples:</p>
+
+<ol>
+<li>Download and run the <a href="https://docs.microsoft.com/en-us/windows/mixed-reality/develop/unity/welcome-to-mr-feature-tool">Mixed Reality Feature Tool</a>.</li>
+<li>Choose the Unity Project to update and click Discover Features.</li>
+<li>Under Platform Support, select the Mixed Reality OpenXR Plugin.</li>
+<li>Select any additional features you wish to add.</li>
+<li>Click Get features.</li>
+<li>Click Import and then Approve to complete the process.</li>
+<li>Return to the XR Plug-in Management section of your Unity Project Settings and enable and configure the added features.</li>
+</ol>
+
+<p>For more information about setting up new and updated Unity projects to use Windows Mixed Reality, see <a href="https://docs.microsoft.com/en-us/windows/mixed-reality/develop/unity/xr-project-setup?tabs=openxr">Setting up your XR configuration</a> on Microsoft’s documentation site.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="APIUpdater.html"></a></span><div class="tip">API updater</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UpgradeGuide2020LTS.html"></a></span><div class="tip">Upgrading to Unity 2020 LTS</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Collision module</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PartSysCollisionModule.html">English</a></li>
+<li><a href="/cn/current/Manual/PartSysCollisionModule.html">中文</a></li>
+<li><a href="/ja/current/Manual/PartSysCollisionModule.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PartSysCollisionModule.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PartSysCollisionModule.html">English</a></li>
+<li><a href="/cn/current/Manual/PartSysCollisionModule.html">中文</a></li>
+<li><a href="/ja/current/Manual/PartSysCollisionModule.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PartSysCollisionModule.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="visual-effects.html">Visual effects</a></li>
+<li><a href="ParticleSystems.html">Particle systems</a></li>
+<li><a href="Built-inParticleSystem.html">Built-in Particle System</a></li>
+<li><a href="PartSysReference.html">Components and Modules</a></li>
+<li><a href="ParticleSystemModules.html">Particle System modules</a></li>
+<li>Collision module</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="PartSysExtForceModule.html"></a></span><div class="tip">External Forces module</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="PartSysTriggersModule.html"></a></span><div class="tip">Triggers module</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Collision module</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This module controls how <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ParticleSystem.html">particles</a><span class="tooltiptext">A small, simple image or mesh that is emitted by a particle system. A particle system can display and move particles in great numbers to represent a fluid or amorphous entity. The effect of all the particles together creates the impression of the complete entity, such as smoke. <a href="class-ParticleSystem.html" href="class-ParticleSystem.html">particles</a><span class="tooltiptext">A small, simple image or mesh that is emitted by a particle system. A particle system can display and move particles in great numbers to represent a fluid or amorphous entity. The effect of all the particles together creates the impression of the complete entity, such as smoke. <a href="class-ParticleSystem.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#particle" aria-label="Go to glossary anchor for particle">Glossary</a></span></span></span> collide with <span class="tooltip"><a href="GameObjects.html">GameObjects</a><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#particle" aria-label="Go to glossary anchor for particle">Glossary</a></span></span></span> collide with <span class="tooltip"><a href="GameObjects.html">GameObjects</a><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the <span class="tooltip"><a href="CreatingScenes.html">Scene</a><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the <span class="tooltip"><a href="CreatingScenes.html">Scene</a><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. Use the first drop-down to define whether your collision settings apply to <strong>Planes</strong> or to the <span class="tooltip"><strong>World</strong><span class="tooltiptext">The area in your scene in which all objects reside. Often used to specify that coordinates are world-relative, as opposed to object-relative.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#World" aria-label="Go to glossary anchor for World">Glossary</a></span></span></span>. If you choose <strong>World</strong>, use the <strong>Collision Mode</strong> drop-down to define whether your collision settings apply for a <a href="2Dor3D.html">2D or 3D</a> world.</p>
+
+<h2>Using the Collision module</h2>
+
+<p>This module is part of the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ParticleSystem.html">Particle System</a><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a href="class-ParticleSystem.html" href="class-ParticleSystem.html">Particle System</a><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a href="class-ParticleSystem.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#particlesystem" aria-label="Go to glossary anchor for particlesystem">Glossary</a></span></span></span> component. When you create a new Particle System GameObject, or add a Particle System component to an exiting GameObject, Unity adds the Collision module to the Particle System. By default, Unity disables this module. To create a new Particle System and enable this module:</p>
+
+<ol>
+<li>Click <strong>GameObject</strong> &gt; <strong>Effects</strong> &gt; <strong>Particle System</strong>.</li>
+<li>In the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, find the Particle System component.</li>
+<li>In the Particle System component, find the Collision module fold-out.</li>
+<li>To the left of the fold-out header, enable the checkbox.</li>
+</ol>
+
+<h3>API</h3>
+
+<p>Since this module is part of the Particle System component, you access it through the <a href="../ScriptReference/ParticleSystem.html">ParticleSystem</a> class. For information on how to access it and change values at runtime, see the <a href="../ScriptReference/ParticleSystem-collision.html">Collision module API documentation</a>.</p>
+
+<h2>Planes module properties</h2>
+
+<figure>
+<img src="../uploads/Main/PartSysCollisionInsp.png" alt="">
+</figure>
+
+<p>For some properties in this section, you can use different modes to set their value. For information on the modes you can use, see <a href="PartSysUsage.html#VaryOverTime">Varying properties over time</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Planes popup</strong></td>
+	<td style="text-align:left;">Select <strong>Planes</strong> mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Planes</strong></td>
+	<td style="text-align:left;">An expandable list of Transforms that define collision planes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Visualization</strong></td>
+	<td style="text-align:left;">Selects whether the collision plane <span class="tooltip"><strong>Gizmos</strong><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GizmosMenu.html#GizmosIcons" href="GizmosMenu.html#GizmosIcons">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Gizmo" aria-label="Go to glossary anchor for Gizmo">Glossary</a></span></span></span> will be shown in the <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html" href="Glossary.html#Gizmo" aria-label="Go to glossary anchor for Gizmo">Glossary</a></span></span></span> will be shown in the <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> as wireframe grids or solid planes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale Plane</strong></td>
+	<td style="text-align:left;">Size of planes used for visualization.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Dampen</strong></td>
+	<td style="text-align:left;">The fraction of a particle’s speed that it loses after a collision.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bounce</strong></td>
+	<td style="text-align:left;">The fraction of a particle’s speed that rebounds from a surface after a collision.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Lifetime Loss</strong></td>
+	<td style="text-align:left;">The fraction of a particle’s total lifetime that it loses if it collides.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Min Kill Speed</strong></td>
+	<td style="text-align:left;">Particles travelling below this speed after a collision will be removed from the system.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Max Kill Speed</strong></td>
+	<td style="text-align:left;">Particles travelling above this speed after a collision will be removed from the system.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Radius Scale</strong></td>
+	<td style="text-align:left;">Allows you to adjust the radius of the particle collision spheres so it more closely fits the visual edges of the particle graphic.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Send Collision Messages</strong></td>
+	<td style="text-align:left;">If enabled, particle collisions can be detected from <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> by the <a href="../ScriptReference/MonoBehaviour.OnParticleCollision.html">OnParticleCollision</a> function.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Visualize Bounds</strong></td>
+	<td style="text-align:left;">Renders the collision bounds of each particle as a wireframe shape in the Scene view.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>World module properties</h2>
+
+<figure>
+<img src="../uploads/Main/PartSysCollisionInsp2.png" alt="">
+</figure>
+
+<p>For some properties in this section, you can use different modes to set their value. For information on the modes you can use, see <a href="PartSysUsage.html#VaryOverTime">Varying properties over time</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>World popup</strong></td>
+	<td style="text-align:left;">Select <strong>World</strong> mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Collision Mode</strong></td>
+	<td style="text-align:left;">3D or 2D.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Dampen</strong></td>
+	<td style="text-align:left;">The fraction of a particle’s speed that it loses after a collision.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bounce</strong></td>
+	<td style="text-align:left;">The fraction of a particle’s speed that rebounds from a surface after a collision.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Lifetime Loss</strong></td>
+	<td style="text-align:left;">The fraction of a particle’s total lifetime that it loses if it collides.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Min Kill Speed</strong></td>
+	<td style="text-align:left;">Particles travelling below this speed after a collision will be removed from the system.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Max Kill Speed</strong></td>
+	<td style="text-align:left;">Particles travelling above this speed after a collision will be removed from the system.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Radius Scale</strong></td>
+	<td style="text-align:left;">Setting for 2D or 3D.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Collision Quality</strong></td>
+	<td style="text-align:left;">Use the drop-down to set the quality of particle collisions. This affects how many particles can pass through a collider. At lower quality levels, particles can sometimes pass through colliders, but are less resource-intensive to calculate.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    High</td>
+	<td style="text-align:left;">When <strong>Collision Quality</strong> is set to <strong>High</strong>, collisions always use the physics system for detecting the collision results. This is the most resource-intensive option, but also the most accurate.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Medium (Static Colliders)</td>
+	<td style="text-align:left;">When <strong>Collision Quality</strong> is set to <strong>Medium (Static Colliders)</strong>, collisions use a grid of voxels to cache previous collisions, for faster re-use in later frames. See <a href="#WorldCollisions">World collisions</a>, below, to learn more about this cache. <br><br>The only difference between <strong>Medium</strong> and <strong>Low</strong> is how many times per frame the Particle System queries the physics system. <strong>Medium</strong> makes more queries per frame than <strong>Low</strong>. <br><br>Note that this setting is only suitable for static colliders that never move.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Low (Static Colliders)</td>
+	<td style="text-align:left;">When <strong>Collision Quality</strong> is set to <strong>Low (Static Colliders)</strong>, collisions use a grid of voxels to cache previous collisions, for faster re-use in later frames. See <a href="#WorldCollisions">World collisions</a>, below, to learn more about this cache. <br><br>The only difference between <strong>Medium</strong> and <strong>Low</strong> is how many times per frame the Particle System queries the physics system. <strong>Medium</strong> makes more queries per frame than <strong>Low</strong>. <br><br>Note that this setting is only suitable for static colliders that never move.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Collides With</strong></td>
+	<td style="text-align:left;">Particles will only collide with objects on the selected layers.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Max Collision Shapes</strong></td>
+	<td style="text-align:left;">How many collision shapes can be considered for particle collisions. Excess shapes are ignored, and <span class="tooltip"><strong>terrains</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> take priority.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Enable Dynamic Colliders</strong></td>
+	<td style="text-align:left;">Dynamic colliders are any collider not configured as Kinematic (see documentation on <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html">colliders</a><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a href="CollidersOverview.html" href="CollidersOverview.html">colliders</a><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> for further information on collider types). <br><br>Check this option to include these collider types in the set of objects that the particles respond to in collisions. If you uncheck this option, the particles only respond to collisions against static colliders.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Voxel Size</strong></td>
+	<td style="text-align:left;">A voxel represents a value on a regular grid in three-dimensional space. When using <strong>Medium</strong> or <strong>Low</strong> quality collisions, Unity caches collisions in a grid structure. This setting controls the grid size. Smaller values give more accuracy, but cost more memory, and are less efficient. <br><br><strong>Note</strong>: You can only access this property when <strong>Collision Quality</strong> is set to <strong>Medium</strong> or <strong>Low</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Collider Force</strong></td>
+	<td style="text-align:left;">Apply a force to Physics Colliders after a Particle collision. This is useful for pushing colliders with particles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Multiply by Collision Angle</strong></td>
+	<td style="text-align:left;">When applying forces to Colliders, scale the strength of the force based on the collision angle between the particle and the collider. Grazing angles will generate less force than a head-on collision.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Multiply by Particle Speed</strong></td>
+	<td style="text-align:left;">When applying forces to Colliders, scale the strength of the force based on the speed of the particle. Fast-moving particles will generate more force than slower ones.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Multiply by Particle Size</strong></td>
+	<td style="text-align:left;">When applying forces to Colliders, scale the strength of the force based on the size of the particle. Larger particles will generate more force than smaller ones.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Send Collision Messages</strong></td>
+	<td style="text-align:left;">Check this to be able to detect particle collisions from scripts by the <a href="../ScriptReference/MonoBehaviour.OnParticleCollision.html">OnParticleCollision</a> function.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Visualize Bounds</strong></td>
+	<td style="text-align:left;">Preview the collision spheres for each particle in the Scene view.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Details</h2>
+
+<p>When other objects surround a Particle System, the effect is often more convincing when the particles interact with those objects. For example, water or debris should be obstructed by a solid wall rather than simply passing through it. With the <span class="tooltip"><strong>Collision</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span> module enabled, particles can collide with objects in the Scene.</p>
+
+<p>A Particle System can be set so its particles collide with any Collider in the scene by selecting <strong>World</strong> mode from the pop-up. Colliders can also be disabled according to the layer they are on by using the <strong>Collides With</strong> property. The pop-up also has a <strong>Planes</strong> mode option which allows you to add a set of planes to the Scene that don’t need to have Colliders. This option is useful for simple floors, walls and similar objects, and has a lower processor overhead than <strong>World</strong> mode. </p>
+
+<p>When <strong>Planes</strong> mode is enabled, a list of transforms (typically empty GameObjects) can be added via the <strong>Planes</strong> property. The planes extend infinitely in the objects’ local XZ planes, with the positive Y axis indicating the planes’ normal vectors. To assist with development, the planes will be shown as Gizmos in the Scene, regardless of whether or not the objects have any visible <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> themselves. The Gizmos can be shown as a wireframe grid or a solid plane, and can also be scaled. However, the scaling only applies to the visualization - the collision planes themselves extend infinitely through the Scene.</p>
+
+<p>When collisions are enabled, the size of a particle is sometimes a problem because its graphic can be clipped as it makes contact with a surface. This can result in a particle appearing to “sink” partway into a surface before stopping or bouncing. The <strong>Radius Scale</strong> property addresses this issue by defining an approximate circular radius for the particles, as a percentage of its actual size. This size information is used to prevent clipping and avoid the sinking-in effect.</p>
+
+<p>The <strong>Dampen</strong> and <strong>Bounce</strong> properties are useful for when the particles represent solid objects. For example, gravel will tend to bounce off a hard surface when thrown but a snowball’s particles might lose speed during a collision. <strong>Lifetime Loss</strong> and <strong>Min Kill Speed</strong> can help to reduce the effects of residual particles following a collision. For example, a fireball might last for a few seconds while flying through the air but after colliding, the separate fire particles should dissipate quickly.</p>
+
+<p>You can also detect particle collisions from a script if <strong>Send Collision Messages</strong> is enabled. The script can be attached to the object with the particle system, or the one with the Collider, or both. By detecting collisions, you can use particles as active objects in gameplay, for example as projectiles, magic spells and power-ups. See the script reference page for <a href="../ScriptReference/MonoBehaviour.OnParticleCollision.html">MonoBehaviour.OnParticleCollision</a> for further details and examples.</p>
+
+<p><a name="WorldCollisions" aria-hidden="true"> </a></p>
+
+<h2>World Collision Quality</h2>
+
+<p>The World Collision module has a <strong>Collision Quality</strong> property, which you can set to <strong>High</strong>, <strong>Medium</strong> or <strong>Low</strong>. When <strong>Collision Quality</strong> is set to <strong>Medium (Static Colliders)</strong> or <strong>Low (Static Colliders)</strong>, collisions use a grid of <span class="tooltip"><strong>voxels</strong><span class="tooltiptext">A 3D pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about nav-AdvancedSettings.html" href="nav-AdvancedSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Voxel" aria-label="Go to glossary anchor for Voxel">Glossary</a></span></span></span> (values on a 3D grid) to cache previous collisions, for fast re-use in later frames. </p>
+
+<p>This cache consists of a plane in each voxel, where the plane represents the collision surface at that location. On each frame, Unity checks the cache for a plane at the position of the particle, and if there is one, Unity uses it for <span class="tooltip"><strong>collision detection</strong><span class="tooltiptext">An automatic process performed by Unity which determines whether a moving GameObject with a Rigidbody and collider component has come into contact with any other colliders. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#CollisionDetection" aria-label="Go to glossary anchor for CollisionDetection">Glossary</a></span></span></span>. Otherwise, it asks the physics system. If a collision is returned, it is added to the cache for fast querying on subsequent frames.</p>
+
+<p>This is an approximation, so some missed collisions might occur. You can reduce the Voxel Size value to help with this; however, doing so uses extra memory, and is less efficient.</p>
+
+<p>The only difference between <strong>Medium</strong> and <strong>Low</strong> is how many times per frame the system is allowed to query the physics system. Low makes fewer queries per frame than Medium. Once the per-frame budget has been exceeded, only the cache is used for any remaining particles. This can lead to an increase in missed collisions, until the cache has been more comprehensively populated.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="class-QualitySettings.html#particles">Quality Settings</a></li>
+</ul>
+
+<hr>
+
+<ul>
+<li><p><span class="page-edit"> 2017–05–30 Page amended
+</span></p></li>
+<li><p><span class="page-history">Functionality of Collision module changed in Unity <a href="../Manual/30_search.html?q=newin20171">2017.1</a> <span class="search-words">NewIn20171</span></span></p></li>
+</ul>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="PartSysExtForceModule.html"></a></span><div class="tip">External Forces module</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="PartSysTriggersModule.html"></a></span><div class="tip">Triggers module</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,650 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Built-in shader variables</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-UnityShaderVariables.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-UnityShaderVariables.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-UnityShaderVariables.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-UnityShaderVariables.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-UnityShaderVariables.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-UnityShaderVariables.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-UnityShaderVariables.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-UnityShaderVariables.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-writing.html">Writing shaders</a></li>
+<li><a href="SL-ShaderPrograms.html">HLSL in Unity</a></li>
+<li>Built-in shader variables</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-BuiltinFunctions.html"></a></span><div class="tip">Built-in shader helper functions</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-DataTypesAndPrecision.html"></a></span><div class="tip">HLSL data types</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Built-in shader variables</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity’s built-in include files contain global variables for your <span class="tooltip"><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>: things like current object’s transformation matrices, light parameters, current time and so on. You use them in <a href="SL-ShaderPrograms.html">shader programs</a> like any other variable, but if you include the relevant include file, you don’t have to declare them.</p>
+
+<p>For more information on include files, see <a href="SL-BuiltinIncludes.html">Built-in include files</a>.</p>
+
+<h2>Transformations</h2>
+
+<p>All these matrices are <code>float4x4</code> type, and are column major.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;"><strong>Value</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;">UNITY_MATRIX_MVP</td>
+	<td style="text-align:left;">Current model * view * projection matrix.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">UNITY_MATRIX_MV</td>
+	<td style="text-align:left;">Current model * view matrix.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">UNITY_MATRIX_V</td>
+	<td style="text-align:left;">Current view matrix.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">UNITY_MATRIX_P</td>
+	<td style="text-align:left;">Current projection matrix.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">UNITY_MATRIX_VP</td>
+	<td style="text-align:left;">Current view * projection matrix.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">UNITY_MATRIX_T_MV</td>
+	<td style="text-align:left;">Transpose of model * view matrix.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">UNITY_MATRIX_IT_MV</td>
+	<td style="text-align:left;">Inverse transpose of model * view matrix.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_ObjectToWorld</td>
+	<td style="text-align:left;">Current model matrix.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_WorldToObject</td>
+	<td style="text-align:left;">Inverse of current world matrix.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Camera and screen</h2>
+
+<p>These variables will correspond to the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Camera.html">Camera</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="class-Camera.html">Camera</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> that is rendering. For example during shadowmap rendering, they will still refer to the Camera component values, and not the “virtual camera” that is used for the shadowmap projection.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Name</strong></th>
+	<th style="text-align:left;"><strong>Type</strong></th>
+	<th style="text-align:left;"><strong>Value</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2">_WorldSpaceCameraPos</td>
+	<td style="text-align:left;">float3</td>
+	<td style="text-align:left;">World space position of the camera.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">_ProjectionParams</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">
+<code>x</code> is 1.0 (or –1.0 if currently rendering with a <a href="SL-PlatformDifferences.html">flipped projection matrix</a>), <code>y</code> is the camera’s near plane, <code>z</code> is the camera’s far plane and <code>w</code> is 1/FarPlane.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">_ScreenParams</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">
+<code>x</code> is the width of the camera’s target texture in <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span>, <code>y</code> is the height of the camera’s target texture in pixels, <code>z</code> is 1.0 + 1.0/width and <code>w</code> is 1.0 + 1.0/height.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">_ZBufferParams</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">Used to linearize Z buffer values.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>x</code></td>
+	<td style="text-align:left;"> </td>
+	<td style="text-align:left;">
+<code>1-far/near</code>, or <code>-1+far/near</code> if <code>UNITY_REVERSED_Z</code> is set to 1. For more information about <code>UNITY_REVERSED_Z</code>, refer to <a href="shader-branching-platform">Branch based on platform features</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>y</code></td>
+	<td style="text-align:left;"> </td>
+	<td style="text-align:left;">
+<code>far/near</code>, or <code>1</code> if <code>UNITY_REVERSED_Z</code> is set to 1. For more information about <code>UNITY_REVERSED_Z</code>, refer to <a href="shader-branching-platform">Branch based on platform features</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>z</code></td>
+	<td style="text-align:left;"> </td>
+	<td style="text-align:left;"><code>x/far</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>w</code></td>
+	<td style="text-align:left;"> </td>
+	<td style="text-align:left;"><code>y/far</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">unity_OrthoParams</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">
+<code>x</code> is orthographic camera’s width, <code>y</code> is orthographic camera’s height, <code>z</code> is unused and <code>w</code> is 1.0 when camera is orthographic, 0.0 when perspective.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">unity_CameraProjection</td>
+	<td style="text-align:left;">float4x4</td>
+	<td style="text-align:left;">Camera’s projection matrix.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">unity_CameraInvProjection</td>
+	<td style="text-align:left;">float4x4</td>
+	<td style="text-align:left;">Inverse of camera’s projection matrix.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">unity_CameraWorldClipPlanes[6]</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">Camera frustum plane world space equations, in this order: left, right, bottom, top, near, far.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Time</h2>
+
+<p>Time is measured in seconds, and is scaled by the Time multiplier in your Project’s <a href="class-TimeManager.html">Time settings</a>. There is no built-in variable that provides access to unscaled time.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;"><strong>Type</strong></td>
+	<td style="text-align:left;"><strong>Value</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;">_Time</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">Time since level load (t/20, t, t*2, t*3), use to animate things inside the shaders.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">_SinTime</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">Sine of time: (t/8, t/4, t/2, t).</td>
+</tr>
+<tr>
+	<td style="text-align:left;">_CosTime</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">Cosine of time: (t/8, t/4, t/2, t).</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_DeltaTime</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">Delta time: (dt, 1/dt, smoothDt, 1/smoothDt).</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Lighting</h2>
+
+<p>Light parameters are passed to shaders in different ways depending on which <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingPaths.html">Rendering Path</a><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a href="RenderingPaths.html" href="RenderingPaths.html">Rendering Path</a><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a href="RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderingPath" aria-label="Go to glossary anchor for RenderingPath">Glossary</a></span></span></span> is used,
+and which LightMode <a href="SL-PassTags.html">Pass Tag</a> is used in the shader.</p>
+
+<p><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderTech-ForwardRendering.html">Forward rendering</a><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a href="RenderTech-ForwardRendering.html" href="RenderTech-ForwardRendering.html">Forward rendering</a><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a href="RenderTech-ForwardRendering.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ForwardRendering" aria-label="Go to glossary anchor for ForwardRendering">Glossary</a></span></span></span> (<code>ForwardBase</code> and <code>ForwardAdd</code> pass types):</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;"><strong>Type</strong></td>
+	<td style="text-align:left;"><strong>Value</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;">_LightColor0 <em>(declared in UnityLightingCommon.cginc)</em>
+</td>
+	<td style="text-align:left;">fixed4</td>
+	<td style="text-align:left;">Light color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">_WorldSpaceLightPos0</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">Directional lights: (world space direction, 0). Other lights: (world space position, 1).</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_WorldToLight <em>(declared in AutoLight.cginc)</em>
+</td>
+	<td style="text-align:left;">float4x4</td>
+	<td style="text-align:left;">World-to-light matrix. Used to sample cookie &amp; attenuation textures.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_4LightPosX0, unity_4LightPosY0, unity_4LightPosZ0</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">
+<em>(ForwardBase pass only)</em> world space positions of first four non-important point lights.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_4LightAtten0</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">
+<em>(ForwardBase pass only)</em> attenuation factors of first four non-important point lights.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_LightColor</td>
+	<td style="text-align:left;">half4[4]</td>
+	<td style="text-align:left;">
+<em>(ForwardBase pass only)</em> colors of of first four non-important point lights.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_WorldToShadow</td>
+	<td style="text-align:left;">float4x4[4]</td>
+	<td style="text-align:left;">World-to-shadow matrices. One matrix for Spot Lights, up to four for directional light cascades.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Deferred shading and deferred lighting, used in the lighting pass shader (all declared in UnityDeferredLibrary.cginc):</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;"><strong>Type</strong></td>
+	<td style="text-align:left;"><strong>Value</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;">_LightColor</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">Light color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_WorldToLight</td>
+	<td style="text-align:left;">float4x4</td>
+	<td style="text-align:left;">World-to-light matrix. Used to sample cookie &amp; attenuation textures.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_WorldToShadow</td>
+	<td style="text-align:left;">float4x4[4]</td>
+	<td style="text-align:left;">World-to-shadow matrices. One matrix for Spot Lights, up to four for directional light cascades.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Spherical harmonics coefficients (used by ambient and light probes) are set up for <code>ForwardBase</code>, <code>PrePassFinal</code> and <code>Deferred</code>
+pass types. They contain 3rd order SH to be evaluated by world space normal (see <code>ShadeSH9</code> from <a href="SL-BuiltinIncludes.html">UnityCG.cginc</a>).
+The variables are all half4 type, <code>unity_SHAr</code> and similar names.</p>
+
+<p>
+<a href="RenderTech-VertexLit.html">Vertex-lit rendering</a> (<code>Vertex</code> pass type):</p>
+
+<p>Up to 8 lights are set up for a <code>Vertex</code> pass type; always sorted starting from the brightest one. So if you want
+to render objects affected by two lights at once, you can just take first two entries in the arrays. If there are fewer than eight
+lights affecting the object, the rest will have their color set to black.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;"><strong>Type</strong></td>
+	<td style="text-align:left;"><strong>Value</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_LightColor</td>
+	<td style="text-align:left;">half4[8]</td>
+	<td style="text-align:left;">Light colors.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_LightPosition</td>
+	<td style="text-align:left;">float4[8]</td>
+	<td style="text-align:left;">View-space light positions. (-direction,0) for directional lights; (position,1) for Point or Spot Lights.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_LightAtten</td>
+	<td style="text-align:left;">half4[8]</td>
+	<td style="text-align:left;">Light attenuation factors. <em>x</em> is cos(spotAngle/2) or –1 for non-Spot Lights; <em>y</em> is 1/cos(spotAngle/4) or 1 for non-Spot Lights; <em>z</em> is quadratic attenuation; <em>w</em> is squared light range.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_SpotDirection</td>
+	<td style="text-align:left;">float4[8]</td>
+	<td style="text-align:left;">View-space Spot Lights positions; (0,0,1,0) for non-Spot Lights.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Lightmaps</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;"><strong>Type</strong></td>
+	<td style="text-align:left;"><strong>Value</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_Lightmap</td>
+	<td style="text-align:left;">Texture2D</td>
+	<td style="text-align:left;">Contains <span class="tooltip"><strong>lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_LightmapST</td>
+	<td style="text-align:left;">float4[8]</td>
+	<td style="text-align:left;">Scales and translates the UV information to the correct range to sample the lightmap texture.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Fog and Ambient</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;"><strong>Type</strong></td>
+	<td style="text-align:left;"><strong>Value</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_AmbientSky</td>
+	<td style="text-align:left;">fixed4</td>
+	<td style="text-align:left;">Sky ambient lighting color in gradient ambient lighting case.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_AmbientEquator</td>
+	<td style="text-align:left;">fixed4</td>
+	<td style="text-align:left;">Equator ambient lighting color in gradient ambient lighting case.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_AmbientGround</td>
+	<td style="text-align:left;">fixed4</td>
+	<td style="text-align:left;">Ground ambient lighting color in gradient ambient lighting case.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_IndirectSpecColor</td>
+	<td style="text-align:left;">fixed4</td>
+	<td style="text-align:left;">If you use a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about skyboxes-using.html">skybox</a><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a href="class-Skybox.html" href="skyboxes-using.html">skybox</a><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a href="class-Skybox.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skybox" aria-label="Go to glossary anchor for Skybox">Glossary</a></span></span></span>, this is the average color of the skybox, which Unity calculates using the <code>DC</code> component of the <a href="LightProbes-TechnicalInformation.html">spherical harmonics data</a> in the <a href="../ScriptReference/RenderSettings-ambientProbe.html">ambient probe</a>. Otherwise this is black.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">UNITY_LIGHTMODEL_AMBIENT</td>
+	<td style="text-align:left;">fixed4</td>
+	<td style="text-align:left;">Ambient lighting color (sky color in gradient ambient case). Legacy variable.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_FogColor</td>
+	<td style="text-align:left;">fixed4</td>
+	<td style="text-align:left;">Fog color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_FogParams</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">Parameters for fog calculation: (density / sqrt(ln(2)), density / ln(2), –1/(end-start), end/(end-start)). <em>x</em> is useful for Exp2 fog mode, <em>y</em> for Exp mode, <em>z</em> and <em>w</em> for Linear mode.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="unity_LODFade" aria-hidden="true"></a></p>
+
+<h2>Various</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;"><strong>Type</strong></td>
+	<td style="text-align:left;"><strong>Value</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;">unity_LODFade</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">Level-of-detail fade when using <a href="class-LODGroup.html">LODGroup</a>. <em>x</em> is fade (0..1), <em>y</em> is fade quantized to 16 levels, <em>z</em> and <em>w</em> unused.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">_TextureSampleAdd</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">Set automatically by Unity <strong>for <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> only</strong> based on whether the texture being used is in Alpha8 format (the value is set to (1,1,1,0)) or not (the value is set to (0,0,0,0)).</td>
+</tr>
+</tbody>
+</table>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-BuiltinFunctions.html"></a></span><div class="tip">Built-in shader helper functions</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-DataTypesAndPrecision.html"></a></span><div class="tip">HLSL data types</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

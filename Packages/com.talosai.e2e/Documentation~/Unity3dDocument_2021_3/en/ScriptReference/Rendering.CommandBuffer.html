@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: CommandBuffer</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">CommandBuffer</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEngine.Rendering</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Implemented in:<a href="UnityEngine.CoreModule.html" class="cl">UnityEngine.CoreModule</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>List of graphics commands to execute.</p>
+              </div>
+              <div class="subsection">
+        <p>Command buffers hold list of rendering commands ("set render target, draw mesh, ..."). They can be set to execute at various points during camera rendering (see <a href="Camera.AddCommandBuffer.html">Camera.AddCommandBuffer</a>), light rendering (see <a href="Light.AddCommandBuffer.html">Light.AddCommandBuffer</a>) or be executed immediately (see <a href="Graphics.ExecuteCommandBuffer.html">Graphics.ExecuteCommandBuffer</a>).<br /><br />Typically they would be used to extend Unity's render pipelines in a custom way. For example, you could render some additional objects into deferred rendering G-buffer after all regular objects are done, or do custom processing of light
+shadow maps. See <a href="../Manual/GraphicsCommandBuffers.html">command buffers overview</a> page for more details.<br /><br />Command buffers can be created and then executed many times if needed.<br /><br />Additional resources: <a href="Camera.AddCommandBuffer.html">Camera.AddCommandBuffer</a>, <a href="Light.AddCommandBuffer.html">Light.AddCommandBuffer</a>, <a href="Rendering.CameraEvent.html">CameraEvent</a>, <a href="Rendering.LightEvent.html">LightEvent</a>, <a href="Graphics.ExecuteCommandBuffer.html">Graphics.ExecuteCommandBuffer</a>, <a href="../Manual/GraphicsCommandBuffers.html">command buffers overview</a>.</p>
+      </div>
+              <div class="subsection">
+                <h3>Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer-name.html">name</a></td><td class="desc">Name of this command buffer.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer-sizeInBytes.html">sizeInBytes</a></td><td class="desc">Size of this command buffer in bytes (Read Only).</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Constructors</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Constructor</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer-ctor.html">CommandBuffer</a></td><td class="desc">Create a new empty command buffer.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Public Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.BeginSample.html">BeginSample</a></td><td class="desc">Adds a command to begin profile sampling.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.Blit.html">Blit</a></td><td class="desc">Adds a command to use a shader to copy the pixel data from a texture into a render texture.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.BuildRayTracingAccelerationStructure.html">BuildRayTracingAccelerationStructure</a></td><td class="desc">Adds a command to build the RayTracingAccelerationStructure to be used in a ray tracing dispatch.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.Clear.html">Clear</a></td><td class="desc">Clear all commands in the buffer.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.ClearRandomWriteTargets.html">ClearRandomWriteTargets</a></td><td class="desc">Unset random write targets for Shader Model 4.5 level pixel shaders.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.ClearRenderTarget.html">ClearRenderTarget</a></td><td class="desc">Adds a "clear render target" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.ConvertTexture.html">ConvertTexture</a></td><td class="desc">Adds a command to copy the pixel data from one texture, convert the data into a different format, and copy it into another texture.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.CopyBuffer.html">CopyBuffer</a></td><td class="desc">Adds a command to copy the contents of one GraphicsBuffer into another.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.CopyCounterValue.html">CopyCounterValue</a></td><td class="desc">Adds a command to copy ComputeBuffer or GraphicsBuffer counter value.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.CopyTexture.html">CopyTexture</a></td><td class="desc">Adds a command to copy pixel data from one texture to another.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.CreateAsyncGraphicsFence.html">CreateAsyncGraphicsFence</a></td><td class="desc">Shortcut for calling CommandBuffer.CreateGraphicsFence with GraphicsFenceType.AsyncQueueSynchronisation as the first parameter.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.CreateGraphicsFence.html">CreateGraphicsFence</a></td><td class="desc">Creates a GraphicsFence.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.DisableKeyword.html">DisableKeyword</a></td><td class="desc">Adds a command to disable a global or local shader keyword.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.DisableScissorRect.html">DisableScissorRect</a></td><td class="desc">Add a command to disable the hardware scissor rectangle.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.DisableShaderKeyword.html">DisableShaderKeyword</a></td><td class="desc">Adds a command to disable a global shader keyword with a given name.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.DispatchCompute.html">DispatchCompute</a></td><td class="desc">Add a command to execute a ComputeShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.DispatchRays.html">DispatchRays</a></td><td class="desc">Adds a command to execute a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.DrawMesh.html">DrawMesh</a></td><td class="desc">Add a "draw mesh" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.DrawMeshInstanced.html">DrawMeshInstanced</a></td><td class="desc">Adds a "draw mesh with instancing" command.The mesh will be just drawn once, it won't be per-pixel lit and will not cast or receive realtime shadows.The command will not immediately fail and throw an exception if Material.enableInstancing is false, but it will log an error and skips rendering each time the command is being executed if such a condition is detected.InvalidOperationException will be thrown if the current platform doesn't support this API (i.e. if GPU instancing is not available). See SystemInfo.supportsInstancing.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.DrawMeshInstancedIndirect.html">DrawMeshInstancedIndirect</a></td><td class="desc">Add a "draw mesh with indirect instancing" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.DrawMeshInstancedProcedural.html">DrawMeshInstancedProcedural</a></td><td class="desc">Add a "draw mesh with instancing" command.Draw a mesh using Procedural Instancing. This is similar to Graphics.DrawMeshInstancedIndirect, except that when the instance count is known from script, it can be supplied directly using this method, rather than via a ComputeBuffer.
+If Material.enableInstancing is false, the command logs an error and skips rendering each time the command is executed; the command does not immediately fail and throw an exception.InvalidOperationException will be thrown if the current platform doesn't support this API (for example, if GPU instancing is not available). See SystemInfo.supportsInstancing.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.DrawOcclusionMesh.html">DrawOcclusionMesh</a></td><td class="desc">Adds a command onto the commandbuffer to draw the VR Device's occlusion mesh to the current render target.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.DrawProcedural.html">DrawProcedural</a></td><td class="desc">Add a "draw procedural geometry" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.DrawProceduralIndirect.html">DrawProceduralIndirect</a></td><td class="desc">Add a "draw procedural geometry" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.DrawRenderer.html">DrawRenderer</a></td><td class="desc">Add a "draw renderer" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.DrawRendererList.html">DrawRendererList</a></td><td class="desc">Adds a "draw renderer list" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.EnableKeyword.html">EnableKeyword</a></td><td class="desc">Adds a command to enable a global or local shader keyword.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.EnableScissorRect.html">EnableScissorRect</a></td><td class="desc">Add a command to enable the hardware scissor rectangle.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.EnableShaderKeyword.html">EnableShaderKeyword</a></td><td class="desc">Adds a command to enable a global keyword with a given name.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.EndSample.html">EndSample</a></td><td class="desc">Adds a command to end profile sampling.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.GenerateMips.html">GenerateMips</a></td><td class="desc">Generate mipmap levels of a render texture.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.GetTemporaryRT.html">GetTemporaryRT</a></td><td class="desc">Add a "get a temporary render texture" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.GetTemporaryRTArray.html">GetTemporaryRTArray</a></td><td class="desc">Add a "get a temporary render texture array" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.IncrementUpdateCount.html">IncrementUpdateCount</a></td><td class="desc">Increments the updateCount property of a Texture.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.IssuePluginCustomBlit.html">IssuePluginCustomBlit</a></td><td class="desc">Send a user-defined blit event to a native code plugin.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.IssuePluginCustomTextureUpdateV2.html">IssuePluginCustomTextureUpdateV2</a></td><td class="desc">Send a texture update event to a native code plugin.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.IssuePluginEvent.html">IssuePluginEvent</a></td><td class="desc">Send a user-defined event to a native code plugin.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.IssuePluginEventAndData.html">IssuePluginEventAndData</a></td><td class="desc">Send a user-defined event to a native code plugin with custom data.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.MarkLateLatchMatrixShaderPropertyID.html">MarkLateLatchMatrixShaderPropertyID</a></td><td class="desc">Mark a global shader property id to be late latched.  Possible shader properties include view, inverseView, viewProjection, and inverseViewProjection matrices. The Universal Render Pipeline (URP) uses this function to support late latching of shader properties. If you call this function when using built-in Unity rendering or the High-Definition Rendering Pipeline (HDRP), the results are ignored.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.ReleaseTemporaryRT.html">ReleaseTemporaryRT</a></td><td class="desc">Add a "release a temporary render texture" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.RequestAsyncReadback.html">RequestAsyncReadback</a></td><td class="desc">Adds an asynchonous GPU readback request command to the command buffer.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.RequestAsyncReadbackIntoNativeArray.html">RequestAsyncReadbackIntoNativeArray</a></td><td class="desc">Adds an asynchonous GPU readback request command to the command buffer.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.RequestAsyncReadbackIntoNativeSlice.html">RequestAsyncReadbackIntoNativeSlice</a></td><td class="desc">Adds an asynchonous GPU readback request command to the command buffer.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.ResolveAntiAliasedSurface.html">ResolveAntiAliasedSurface</a></td><td class="desc">Force an antialiased render texture to be resolved.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetBufferCounterValue.html">SetBufferCounterValue</a></td><td class="desc">Adds a command to set the counter value of append/consume buffer.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetBufferData.html">SetBufferData</a></td><td class="desc">Adds a command to set the buffer with values from an array.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetComputeBufferParam.html">SetComputeBufferParam</a></td><td class="desc">Adds a command to set an input or output buffer parameter on a ComputeShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetComputeConstantBufferParam.html">SetComputeConstantBufferParam</a></td><td class="desc">Adds a command to set a constant buffer on a ComputeShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetComputeFloatParam.html">SetComputeFloatParam</a></td><td class="desc">Adds a command to set a float parameter on a ComputeShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetComputeFloatParams.html">SetComputeFloatParams</a></td><td class="desc">Adds a command to set multiple consecutive float parameters on a ComputeShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetComputeIntParam.html">SetComputeIntParam</a></td><td class="desc">Adds a command to set an integer parameter on a ComputeShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetComputeIntParams.html">SetComputeIntParams</a></td><td class="desc">Adds a command to set multiple consecutive integer parameters on a ComputeShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetComputeMatrixArrayParam.html">SetComputeMatrixArrayParam</a></td><td class="desc">Adds a command to set a matrix array parameter on a ComputeShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetComputeMatrixParam.html">SetComputeMatrixParam</a></td><td class="desc">Adds a command to set a matrix parameter on a ComputeShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetComputeTextureParam.html">SetComputeTextureParam</a></td><td class="desc">Adds a command to set a texture parameter on a ComputeShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetComputeVectorArrayParam.html">SetComputeVectorArrayParam</a></td><td class="desc">Adds a command to set a vector array parameter on a ComputeShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetComputeVectorParam.html">SetComputeVectorParam</a></td><td class="desc">Adds a command to set a vector parameter on a ComputeShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetExecutionFlags.html">SetExecutionFlags</a></td><td class="desc">Set flags describing the intention for how the command buffer will be executed.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetGlobalBuffer.html">SetGlobalBuffer</a></td><td class="desc">Add a "set global shader buffer property" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetGlobalColor.html">SetGlobalColor</a></td><td class="desc">Add a "set global shader color property" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetGlobalConstantBuffer.html">SetGlobalConstantBuffer</a></td><td class="desc">Add a command to bind a global constant buffer.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetGlobalDepthBias.html">SetGlobalDepthBias</a></td><td class="desc">Adds a command to set the global depth bias.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetGlobalFloat.html">SetGlobalFloat</a></td><td class="desc">Add a "set global shader float property" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetGlobalFloatArray.html">SetGlobalFloatArray</a></td><td class="desc">Add a "set global shader float array property" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetGlobalInt.html">SetGlobalInt</a></td><td class="desc">Adds a command to set the value of a given property for all Shaders, where the property has a type of Int in ShaderLab code.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetGlobalInteger.html">SetGlobalInteger</a></td><td class="desc">Adds a command to set the value of a given property for all Shaders, where the property is an integer.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetGlobalMatrix.html">SetGlobalMatrix</a></td><td class="desc">Add a "set global shader matrix property" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetGlobalMatrixArray.html">SetGlobalMatrixArray</a></td><td class="desc">Add a "set global shader matrix array property" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetGlobalTexture.html">SetGlobalTexture</a></td><td class="desc">Add a "set global shader texture property" command, referencing a RenderTexture.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetGlobalVector.html">SetGlobalVector</a></td><td class="desc">Add a "set global shader vector property" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetGlobalVectorArray.html">SetGlobalVectorArray</a></td><td class="desc">Add a "set global shader vector array property" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetInstanceMultiplier.html">SetInstanceMultiplier</a></td><td class="desc">Adds a command to multiply the instance count of every draw call by a specific multiplier.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetInvertCulling.html">SetInvertCulling</a></td><td class="desc">Add a "set invert culling" command to the buffer.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetKeyword.html">SetKeyword</a></td><td class="desc">Adds a command to set the state of a global or local shader keyword.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetLateLatchProjectionMatrices.html">SetLateLatchProjectionMatrices</a></td><td class="desc">Set the current stereo projection matrices for late latching. Stereo matrices is passed in as an array of two matrices.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetProjectionMatrix.html">SetProjectionMatrix</a></td><td class="desc">Add a command to set the projection matrix.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetRandomWriteTarget.html">SetRandomWriteTarget</a></td><td class="desc">Set random write target for Shader Model 4.5 level pixel shaders.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetRayTracingAccelerationStructure.html">SetRayTracingAccelerationStructure</a></td><td class="desc">Adds a command to set the RayTracingAccelerationStructure to be used with the RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetRayTracingBufferParam.html">SetRayTracingBufferParam</a></td><td class="desc">Adds a command to set an input or output buffer parameter on a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetRayTracingConstantBufferParam.html">SetRayTracingConstantBufferParam</a></td><td class="desc">Adds a command to set a constant buffer on a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetRayTracingFloatParam.html">SetRayTracingFloatParam</a></td><td class="desc">Adds a command to set a float parameter on a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetRayTracingFloatParams.html">SetRayTracingFloatParams</a></td><td class="desc">Adds a command to set multiple consecutive float parameters on a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetRayTracingIntParam.html">SetRayTracingIntParam</a></td><td class="desc">Adds a command to set an integer parameter on a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetRayTracingIntParams.html">SetRayTracingIntParams</a></td><td class="desc">Adds a command to set multiple consecutive integer parameters on a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetRayTracingMatrixArrayParam.html">SetRayTracingMatrixArrayParam</a></td><td class="desc">Adds a command to set a matrix array parameter on a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetRayTracingMatrixParam.html">SetRayTracingMatrixParam</a></td><td class="desc">Adds a command to set a matrix parameter on a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetRayTracingShaderPass.html">SetRayTracingShaderPass</a></td><td class="desc">Adds a command to select which Shader Pass to use when executing ray/geometry intersection shaders.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetRayTracingTextureParam.html">SetRayTracingTextureParam</a></td><td class="desc">Adds a command to set a texture parameter on a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetRayTracingVectorArrayParam.html">SetRayTracingVectorArrayParam</a></td><td class="desc">Adds a command to set a vector array parameter on a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetRayTracingVectorParam.html">SetRayTracingVectorParam</a></td><td class="desc">Adds a command to set a vector parameter on a RayTracingShader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetRenderTarget.html">SetRenderTarget</a></td><td class="desc">Add a "set active render target" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetShadowSamplingMode.html">SetShadowSamplingMode</a></td><td class="desc">Add a "set shadow sampling mode" command.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetSinglePassStereo.html">SetSinglePassStereo</a></td><td class="desc">Add a command to set single-pass stereo mode for the camera.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetViewMatrix.html">SetViewMatrix</a></td><td class="desc">Add a command to set the view matrix.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetViewport.html">SetViewport</a></td><td class="desc">Add a command to set the rendering viewport.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetViewProjectionMatrices.html">SetViewProjectionMatrices</a></td><td class="desc">Add a command to set the view and projection matrices.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.SetWireframe.html">SetWireframe</a></td><td class="desc">Add a "set wireframe" command to the buffer.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.UnmarkLateLatchMatrix.html">UnmarkLateLatchMatrix</a></td><td class="desc">Unmark a global shader property for late latching. After unmarking, the shader property will no longer be late latched.  This function is intended for the Universal Render Pipeline (URP) to specify late latched shader properties.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.WaitAllAsyncReadbackRequests.html">WaitAllAsyncReadbackRequests</a></td><td class="desc">Adds an "AsyncGPUReadback.WaitAllRequests" command to the CommandBuffer.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.WaitOnAsyncGraphicsFence.html">WaitOnAsyncGraphicsFence</a></td><td class="desc">Instructs the GPU to pause processing of the queue until it passes through the GraphicsFence fence.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

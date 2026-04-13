@@ -1,0 +1,379 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Choosing and configuring a render pipeline and lighting solution</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/BestPracticeLightingPipelines.html">English</a></li>
+<li><a href="/cn/current/Manual/BestPracticeLightingPipelines.html">中文</a></li>
+<li><a href="/ja/current/Manual/BestPracticeLightingPipelines.html">日本語</a></li>
+<li><a href="/kr/current/Manual/BestPracticeLightingPipelines.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/BestPracticeLightingPipelines.html">English</a></li>
+<li><a href="/cn/current/Manual/BestPracticeLightingPipelines.html">中文</a></li>
+<li><a href="/ja/current/Manual/BestPracticeLightingPipelines.html">日本語</a></li>
+<li><a href="/kr/current/Manual/BestPracticeLightingPipelines.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="render-pipelines.html">Render pipelines</a></li>
+<li>Choosing and configuring a render pipeline and lighting solution</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="srp-setting-render-pipeline-asset.html"></a></span><div class="tip">How to get, set, and configure the active render pipeline</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="built-in-render-pipeline.html"></a></span><div class="tip">Using the Built-in Render Pipeline</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Choosing and configuring a render pipeline and lighting solution</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This guide is an updated version of the following Unity blog post: <a href="https://blogs.unity3d.com/2018/08/28/spotlight-team-best-practices-setting-up-the-lighting-pipeline/">Spotlight Team Best Practices: Setting up the Lighting Pipeline - Pierre Yves Donzallaz</a>.</p>
+
+<h2>Definitions</h2>
+
+<p>First, let’s go through the definitions of several important graphics rendering terms that you will encounter frequently in this article.</p>
+
+<ul>
+<li>A <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html">render pipeline</a><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html" href="render-pipelines.html">render pipeline</a><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> determines how the objects in your <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> determines how the objects in your <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> are displayed, in three main stages.
+
+<ul>
+<li>The first step is culling; it lists the objects that need to be rendered, preferably the ones visible to the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> (<a href="https://docs.unity3d.com/Manual/UnderstandingFrustum.html">frustum culling</a>) and unoccluded by other objects (<span class="tooltip"><a href="https://docs.unity3d.com/Manual/OcclusionCulling.html">occlusion culling</a><span class="tooltiptext">A process that disables rendering GameObjects that are hidden (occluded) from the view of the camera. <a href="OcclusionCulling.html" href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> (<a href="https://docs.unity3d.com/Manual/UnderstandingFrustum.html">frustum culling</a>) and unoccluded by other objects (<span class="tooltip"><a href="https://docs.unity3d.com/Manual/OcclusionCulling.html">occlusion culling</a><span class="tooltiptext">A process that disables rendering GameObjects that are hidden (occluded) from the view of the camera. <a href="OcclusionCulling.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Occlusionculling" aria-label="Go to glossary anchor for Occlusionculling">Glossary</a></span></span></span>).</li>
+<li>The second stage, rendering, is the drawing of these objects, with the correct lighting and some of their properties, into pixel-based buffers.</li>
+<li>Finally, <span class="tooltip"><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span> operations can be carried out on these buffers, for instance applying color grading, bloom and <span class="tooltip"><strong>depth of field</strong><span class="tooltiptext">A post-processing effect that simulates the focus properties of a camera lens. <a href="PostProcessingOverview.html" href="Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span> operations can be carried out on these buffers, for instance applying color grading, bloom and <span class="tooltip"><strong>depth of field</strong><span class="tooltiptext">A post-processing effect that simulates the focus properties of a camera lens. <a href="PostProcessingOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DepthofField" aria-label="Go to glossary anchor for DepthofField">Glossary</a></span></span></span>, to generate the final output frame that is sent to a display device.</li>
+</ul>
+</li>
+</ul>
+
+<p>These operations are repeated many times a second, depending on the frame rate.</p>
+
+<figure>
+<img src="../uploads/Main/BestPracticeLightingPipeline3.svg" alt="">
+</figure>
+
+<ul>
+<li>A <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> is a generic name for a program, or a collection of programs, running on the Graphics Processing Unit (GPU). For instance, after the culling stage is completed, a <span class="tooltip"><strong>Vertex Shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a href="SL-ShaderPrograms.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> is a generic name for a program, or a collection of programs, running on the Graphics Processing Unit (GPU). For instance, after the culling stage is completed, a <span class="tooltip"><strong>Vertex Shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a href="SL-ShaderPrograms.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span> is used to transform the vertex coordinates of the visible objects from “object space” into a different space called “clip space”; these new coordinates are then used by the GPU to rasterize the scene, i.e. convert the vectorial representation of the scene into actual pixels. At a later stage, these pixels will be colored by <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a href="ShadowPerformance.html" href="Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span> is used to transform the vertex coordinates of the visible objects from “object space” into a different space called “clip space”; these new coordinates are then used by the GPU to rasterize the scene, i.e. convert the vectorial representation of the scene into actual pixels. At a later stage, these pixels will be colored by <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> (or fragment) shaders; the pixel color will generally depend on the material properties of the respective surface and the surrounding lighting. Another common type of shader available on modern hardware is Compute Shaders: they allow programmers to exploit the considerable parallel processing power of GPUs for any kind of mathematical operations, such as light culling, particle physics, or volumetric simulation.</li>
+<li>Direct lighting refers to lighting which originates from a self-emitting source of light, such as a light bulb, and isn’t the result of light bouncing off a surface. Depending on the size of the light source and its distance to the receiver, such lighting typically produces clear distinct shadows.
+
+<ul>
+<li>Direct lighting should not be confused with directional lighting, which is light emitted by an infinitely-distant light source (e.g. the computer-simulated sun). The noticeable properties of a directional light are the ability to cover the entire scene with parallel light rays, and the lack of distance falloff (or light decay); that is, the amount of lighting received does not decay as the distance to the light source increases.</li>
+<li>In reality, the sunlight, like any other source of light, falls off over distance, based on the inverse-square law. Simply put, the amount of received light drops quickly when increasing the distance between the receiver and the light source. For example, the illuminance on Mercury is almost <a href="https://www.nasa.gov/audience/foreducators/9-12/features/F_How_Far_How_Faint.html">7 times higher</a> than on Earth, and Mars receives nearly half of Earth’s sunshine, whereas Pluto enjoys a mere 0.06%. Nevertheless, for most real-time applications with a limited altitude range, the sunlight decay is insignificant. Therefore, the directional light is perfectly adequate to simulate sunlight in most Unity scenes, including large, planet-centric, open worlds.</li>
+</ul>
+</li>
+<li>Indirect lighting results from light bouncing off surfaces and being transmitted and scattered through a medium, such as the atmosphere or translucent materials. Under these conditions, occluders generally cast soft or indiscernible shadows.</li>
+<li><span class="tooltip"><strong>Global illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span> (GI) is a group of techniques that model both direct and indirect lighting to provide realistic lighting results. There are several methods for GI, such as baked/dynamic <span class="tooltip"><strong>lightmaps</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a href="Lightmapping.html" href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span> (GI) is a group of techniques that model both direct and indirect lighting to provide realistic lighting results. There are several methods for GI, such as baked/dynamic <span class="tooltip"><strong>lightmaps</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span>, irradiance volumes, light propagation volumes, baked/dynamic light probes, voxel-based GI, and distance field-based GI. Out of the box, Unity supports baked/dynamic lightmaps and light probes.</li>
+<li>A <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmappers.html">lightmapper</a><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a href="Lightmapping.html" href="Lightmappers.html">lightmapper</a><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmapper" aria-label="Go to glossary anchor for Lightmapper">Glossary</a></span></span></span> is the underlying system that generates the data for the lightmaps and light probes by shooting light rays, calculating the light bounces, and applying the resulting lighting into textures. Different lightmappers will therefore often produce different lighting looks, as they might rely on different techniques to produce the lighting data.</li>
+</ul>
+
+<h2>Overview</h2>
+
+<p>The following flowchart provides a high-level perspective of the entire lighting pipeline in Unity, from the point of view of a content creator.</p>
+
+<figure>
+<img src="../uploads/Main/BestPracticeLightingPipeline15.svg" alt="">
+</figure>
+
+<p>You start by selecting a render pipeline. Then you decide how the indirect lighting is generated and pick a Global Illumination system accordingly. After you’ve made sure all the global lighting settings are tuned appropriately for your project, you can continue adding <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Manual/Lighting.html">Lights</a>, <a href="https://docs.unity3d.com/Manual/StandardShaderMaterialParameterEmission.html">Emissive Surfaces</a>, <span class="tooltip"><a href="https://docs.unity3d.com/Manual/class-ReflectionProbe.html">Reflection Probes</a><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html" href="https://docs.unity3d.com/Manual/Lighting.html">Lights</a>, <a href="https://docs.unity3d.com/Manual/StandardShaderMaterialParameterEmission.html">Emissive Surfaces</a>, <span class="tooltip"><a href="https://docs.unity3d.com/Manual/class-ReflectionProbe.html">Reflection Probes</a><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span>, <span class="tooltip"><a href="https://docs.unity3d.com/Manual/LightProbes.html">Light Probes</a><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html" href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span>, <span class="tooltip"><a href="https://docs.unity3d.com/Manual/LightProbes.html">Light Probes</a><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span>, and <a href="https://docs.unity3d.com/Manual/class-LightProbeProxyVolume.html">Light Probe Proxy Volumes (LPPVs)</a>. Detailing the usage and features of all these lighting objects is beyond the scope of this article, therefore I encourage you to read the Lighting section of the manual to learn how to utilize them correctly in your projects.</p>
+
+<h2>Render pipelines</h2>
+
+<p>Until early 2018, only one render pipeline was available in Unity; the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Manual/built-in-render-pipeline.html">Built-In Render Pipeline</a>. This render pipeline offers a choice of <span class="tooltip"><a href="https://docs.unity3d.com/Manual/RenderingPaths.html">rendering paths</a><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a href="RenderingPaths.html" href="https://docs.unity3d.com/Manual/built-in-render-pipeline.html">Built-In Render Pipeline</a>. This render pipeline offers a choice of <span class="tooltip"><a href="https://docs.unity3d.com/Manual/RenderingPaths.html">rendering paths</a><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a href="RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderingPath" aria-label="Go to glossary anchor for RenderingPath">Glossary</a></span></span></span>: forward, and deferred.</p>
+
+<ul>
+<li>When using the (multi-pass) <a href="https://docs.unity3d.com/Manual/RenderTech-ForwardRendering.html">forward rendering path</a>, all objects in the scene are rendered one by one sequentially, potentially in multiple passes, depending on the number of lights affecting each object, thus the rendering cost can dramatically increase when objects are lit by multiple lights. This type of renderer commonly offers a wide variety of shaders and can handle transparency easily.</li>
+<li>When using the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Manual/RenderTech-DeferredShading.html">deferred rendering path</a>, all the (opaque) geometries are first rendered into buffers that store information about their materials (color, specular, smoothness, etc.). In a later pass (hence “deferred”), each pixel is shaded sequentially: the rendering time will depend mainly on the number of lights affecting each pixel. The transparent objects, and certain objects with complex shaders, will still require additional <span class="tooltip"><strong>forward rendering</strong><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a href="RenderTech-ForwardRendering.html" href="https://docs.unity3d.com/Manual/RenderTech-DeferredShading.html">deferred rendering path</a>, all the (opaque) geometries are first rendered into buffers that store information about their materials (color, specular, smoothness, etc.). In a later pass (hence “deferred”), each pixel is shaded sequentially: the rendering time will depend mainly on the number of lights affecting each pixel. The transparent objects, and certain objects with complex shaders, will still require additional <span class="tooltip"><strong>forward rendering</strong><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a href="RenderTech-ForwardRendering.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ForwardRendering" aria-label="Go to glossary anchor for ForwardRendering">Glossary</a></span></span></span> passes. Deferred rendering is usually recommended when dealing with scenes containing many dynamic lights, such as artificially lit interiors or projects with a combination of outdoor and indoor lighting.</li>
+</ul>
+
+<p>In January 2018, Unity unveiled the <a href="https://docs.unity3d.com/Manual/ScriptableRenderPipeline.html">Scriptable Render Pipeline (SRP)</a>, which allows you to customize the rendering loop via C# scripting. This is actually a minor revolution in the realm of game engines: users are finally able to personalize the culling of objects, their drawing, and the post-processing of the frame without having to use a low-level programming language like C++.</p>
+
+<p>Unity currently provides two pre-built SRPs:</p>
+
+<ul>
+<li>The <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest">High-Definition Render Pipeline (HDRP)</a> is a hybrid deferred/forward tile/cluster renderer. It offers advanced rendering and shading features and is designed for PC and advanced console projects that require a high degree of visual fidelity.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/BestPracticeLightingPipeline6.svg" alt="">
+</figure>
+
+<p>A tile is a small 2-dimensional square pixel section of the frame, and a cluster is a 3-dimensional volume inside the camera frustum. Both the tile and cluster rendering techniques rely on the listing of the lights affecting every single tile and cluster, whose lighting can then be computed in one single pass with the corresponding list of known lights. Opaque objects will most likely be shaded using the tile system, whereas transparent ones will rely on the cluster system. The main advantage is faster processing of the lighting and the considerable reduction in bandwidth consumption compared to the Built-In Render Pipeline (deferred), which depends on much slower multi-pass light accumulation.</p>
+
+<ul>
+<li>The <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/manual/index.html">Universal Render Pipeline (URP)</a> is a fast single-pass forward renderer; it has been designed primarily for lower-end devices lacking support for compute shader technology, such as older smartphones, tablets and <span class="tooltip"><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a href="XR.html" href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/manual/index.html">Universal Render Pipeline (URP)</a> is a fast single-pass forward renderer; it has been designed primarily for lower-end devices lacking support for compute shader technology, such as older smartphones, tablets and <span class="tooltip"><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> devices. However, URP can also deliver higher-quality graphics for midrange devices such as consoles and PC, sometimes for a lower performance cost than the Built-In Render Pipeline. The lights are culled per-object and allow for the lighting to be computed in one single pass, which results in reduced draw calls compared to the Built-In Render Pipeline. Finally, URP also offers a 2D Renderer, and a <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/manual/rendering/deferred-rendering-path.html">Deferred renderer</a>.</li>
+</ul>
+
+<p>You can use the following decision chart to quickly find out which render pipeline you should select based on a few critical criteria.</p>
+
+<figure>
+<img src="../uploads/Main/BestPracticeLightingPipeline16.svg" alt="">
+</figure>
+
+<h3>Setup</h3>
+
+<p>You can download the latest versions of HDRP and URP via the Unity Package Manager (<strong>Window</strong> &gt; <strong>Package Manager</strong>). The easiest way to get started with one of these SRPs is to create a new project with the <a href="https://docs.unity3d.com/hub/manual/Projects.html">Unity Hub</a> and use one of the corresponding templates.</p>
+
+<p>If you want to set up your project for HDRP, ensure you have the required package installed. Then use the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest/index.html?subfolder=/manual/Render-Pipeline-Wizard.html">HD Render Pipeline Wizard</a> (<strong>Window</strong> &gt; <strong>Render Pipeline</strong> &gt; <strong>HD Render Pipeline Wizard</strong>) to set up your project in one click.</p>
+
+<h3>Extensibility</h3>
+
+<p>If you have some rendering knowledge, are familiar with C#, and need to fully tailor the renderer for your Project, you can experiment with the SRP concept to create your own Custom Scriptable Render Pipeline. The Universal Render Pipeline is especially easy to extend, due to its smaller shader library and the ability to inject, remove and swap rendering passes rapidly.</p>
+
+<h3>Compatibility</h3>
+
+<p>Porting your project’s materials from the Built-In Render Pipeline to HDRP or to URP is relatively easy in Unity, thanks to a 1-click material converter under <strong>Edit</strong> &gt; <strong>Render Pipeline</strong> &gt; <strong>Upgrade…</strong>. Note that it is a non-reversible action. Backing up your project beforehand is highly recommended!</p>
+
+<figure>
+<img src="../uploads/Main/BestPracticeLightingPipeline9.png" alt="">
+</figure>
+
+<p>Nevertheless, custom shaders will have to be ported by hand, so transitioning from the Built-In Render Pipeline to HDRP or URP during production might be time-consuming, depending on the number of custom shaders you would have to rewrite.</p>
+
+<p>Additionally, because the HDRP is more physically correct than the Built-In Render Pipeline, especially regarding light attenuation and distribution, you should not expect your project to look identical after switching to HDRP.</p>
+
+<p>Furthermore, HDRP and URP are not cross-compatible, as they do not share the same rendering features. Porting your project from HDRP to URP and vice versa is possible, but it is not a 1-click operation and will require manual rework of the lighting, the materials, and the shaders!</p>
+
+<h2>Global Illumination systems</h2>
+
+<p>Two of the Global Illumination systems available in Unity are:</p>
+
+<ol>
+<li><p>
+<a class="tooltipMoreInfoLink" aria-label="Navigate to more info about realtime-gi-using-enlighten.html">Realtime Global Illumination</a>: This system is built on Enlighten, a third-party middleware solution. It enables you to adjust your lighting in real-time if you do a precompute and do not modify <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="realtime-gi-using-enlighten.html">Realtime Global Illumination</a>: This system is built on Enlighten, a third-party middleware solution. It enables you to adjust your lighting in real-time if you do a precompute and do not modify <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in your scene with the <strong>ContributeGI</strong> setting enabled. See the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@12.0?subfolder=/manual/Feature-Comparison.html">HDRP</a> and <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.0?subfolder=/manual/universalrp-builtin-feature-comparison.html">URP</a> for compatibility information specific to scriptable render pipelines. Unless otherwise specified, the Built-In Render Pipeline supports all features described in this article.</p></li>
+<li><p>Baked Global Illumination: When you use this system, Unity bakes lighting data into textures called lightmaps, and into Light Probes and into reflection probes. There are two lightmappers: Enlighten Baked Global Illumination and the Progressive Lightmapper (CPU or GPU). See the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@12.0?subfolder=/manual/Feature-Comparison.html">HDRP</a> and <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.0?subfolder=/manual/universalrp-builtin-feature-comparison.html">URP</a> documentation for compatibility information specific to scriptable render pipelines. Unless otherwise specified, the Built-In Render Pipeline supports all features described in this article.</p></li>
+</ol>
+
+<p>The Progressive Lightmapper calculates indirect lighting values using path tracing. It can prioritize precomputing lighting that affects objects visible to the <span class="tooltip"><strong>scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> camera. Although only updating lighting for parts of lightmaps increases the overall bake time, it also enables you to more quickly iterate on your lighting design.</p>
+
+<figure>
+<img src="../uploads/Main/BestPracticeLightingPipeline4.svg" alt="">
+</figure>
+
+<p>For more information about lighting features in the Scriptable Render Pipelines, see the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.0/manual/lighting.html">Universal Render Pipeline</a> and <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@12.0/manual/HDRP-Features.html#Lighting">High Definition Render Pipeline Documentation</a>.</p>
+
+<h3>Static versus Dynamic</h3>
+
+<p>No matter which Global Illumination system you use, Unity will only consider objects that are marked as <a href="https://docs.unity3d.com/Manual/StaticObjects.html">“Contribute GI”</a> during the baking/precomputing of the lighting. Dynamic (i.e. non-static) objects have to rely on the Light Probes you placed throughout the scene to receive indirect lighting.</p>
+
+<p>Because the baking/precomputing of the lighting is a relatively slow process, only large and complex assets with distinct lighting variations, such as concavity and self-shadowing, should be tagged as “Contribute GI”. Smaller and convex meshes that receive homogeneous lighting should not be marked as such, and they should, therefore, receive indirect lighting from the <a href="https://docs.unity3d.com/Manual/LightProbes.html">Light Probes</a> which store a simpler approximation of the lighting. Larger dynamic objects can rely on <a href="https://docs.unity3d.com/Manual/class-LightProbeProxyVolume.html">LPPVs</a>, in order to receive better localized indirect lighting. Limiting the number of objects tagged as “Contribute GI” in your scene is absolutely crucial to minimize baking times while maintaining an adequate lighting quality. You can learn more about this optimization process and the importance of Probe lighting in this <a href="https://unity3d.com/learn/tutorials/topics/graphics/introduction-precomputed-realtime-gi?playlist=17102">tutorial</a>.</p>
+
+<h3>Warning</h3>
+
+<p>The Unity Editor and Player allow you to use both <span class="tooltip"><strong>Enlighten Realtime Global Illumination</strong><span class="tooltiptext">A lighting system by Geomerics used in Unity for lightmapping and for Enlighten Realtime Global Illumination. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://www.siliconstudio.co.jp/en/products-service/enlighten/" href="https://www.siliconstudio.co.jp/en/products-service/enlighten/">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#EnlightenRealtimeGlobalIllumination" aria-label="Go to glossary anchor for EnlightenRealtimeGlobalIllumination">Glossary</a></span></span></span> and baked lighting at the same time.</p>
+
+<p>However, simultaneously enabling these features greatly increases baking time and memory usage at runtime, because they do not use the same data sets. You can expect visual differences between indirect light you have baked and indirect light provided by Enlighten Realtime Global Illumination, regardless of the lightmapper you use for baking. This is because Enlighten Realtime Global Illumination often operates at a significantly different resolution than Unity’s baking backends, and relies on different techniques to simulate indirect lighting.</p>
+
+<p>If you wish to use both Enlighten Realtime Global Illumination and baked lighting at the same time, limit your simultaneous use of both global illumination systems to high-end platforms and/or to projects that have tightly controlled scenes with predictable costs. Only expert users who have a very good understanding of all lighting settings can effectively use this approach. Consequently, picking one of the two global illumination systems is usually a safer strategy for most projects. Using both systems is rarely recommended.</p>
+
+<h3>Light Modes</h3>
+
+<p>The Mode property of a Light component is a common source of confusion.</p>
+
+<p>There are three <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightModes.html">Light Modes</a><span class="tooltiptext">A Light property that defines the use of the Light. Can be set to Realtime, Baked and Mixed. <a href="LightModes.html" href="LightModes.html">Light Modes</a><span class="tooltiptext">A Light property that defines the use of the Light. Can be set to Realtime, Baked and Mixed. <a href="LightModes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightMode" aria-label="Go to glossary anchor for LightMode">Glossary</a></span></span></span> available in the <a href="class-Light.html">Light Inspector</a>:</p>
+
+<ol>
+<li>
+<a href="LightMode-Baked.html">Baked</a>: The direct and indirect lighting from these lights is baked into lightmaps, which can be a time-consuming process. There is no runtime cost to process these lights, however applying the resulting lightmaps to the scene does have a minor cost.</li>
+<li>
+<a href="LightMode-Realtime.html">Realtime</a>: The direct lighting and shadows from these lights are real-time and therefore not baked into lightmaps. Their runtime cost can be high, depending on the complexity of the scene, the number of shadow casting lights, the number of overlapping lights, etc. Furthermore, if you enable Enlighten Realtime Global Illumination, further performance costs will be incurred to update the indirect lighting at runtime.</li>
+<li>
+<a href="LightMode-Mixed.html">Mixed</a>: This is a hybrid mode that offers a mix of baked and real-time features, such as baked indirect lighting and real-time direct lighting. The behavior of all Mixed lights in your Scene and their performance impact depends on the <a href="lighting-mode.html">Lighting Mode</a> for that Scene.</li>
+</ol>
+
+<p>It is important to note that the mode of a light is only relevant if the Baked Global Illumination system is enabled. If you do not use any global illumination system or only use Enlighten Realtime Global Illumination system, then all Baked and Mixed lights will behave as though their Mode property was set to Realtime.</p>
+
+<figure>
+<img src="../uploads/Main/BestPracticeLightingPipeline7.svg" alt="">
+</figure>
+
+<p>The following diagram combines a decision flowchart with a comparison table; it can help you decide which light mode is appropriate every time a new light is added into the scene.</p>
+
+<figure>
+<img src="../uploads/Main/BestPracticeLightingPipeline12.svg" alt="">
+</figure>
+
+<h3>Lighting Modes</h3>
+
+<p>As you can see in the previous diagram, all Mixed Lights in a Scene have specific baked and real-time capabilities, depending on the Lighting Mode that you picked in the Lighting window.</p>
+
+<p>There are three modes to choose from:</p>
+
+<ol>
+<li>Subtractive</li>
+<li>Baked Indirect</li>
+<li>Shadowmask</li>
+</ol>
+
+<p>Shadowmask Lighting Mode has two quality settings:</p>
+
+<ol>
+<li>Shadowmask</li>
+<li>Distance Shadowmask</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/BestPracticeLightingPipeline5.svg" alt="">
+</figure>
+
+<p>When using HDRP’s <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest/index.html?subfolder=/manual/Lighting-Mode-Shadowmask.html">Shadowmask Lighting Mode</a>, the <span class="tooltip"><strong>Shadowmask</strong><span class="tooltiptext">A Texture that shares the same UV layout and resolution with its corresponding lightmap. <a href="LightMode-Mixed-Shadowmask.html" href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest/index.html?subfolder=/manual/Lighting-Mode-Shadowmask.html">Shadowmask Lighting Mode</a>, the <span class="tooltip"><strong>Shadowmask</strong><span class="tooltiptext">A Texture that shares the same UV layout and resolution with its corresponding lightmap. <a href="LightMode-Mixed-Shadowmask.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shadowmask" aria-label="Go to glossary anchor for Shadowmask">Glossary</a></span></span></span> feature is enabled in the HDRP Asset assigned in the Graphics settings; it then has to be activated specifically for your camera(s) via the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest/index.html?subfolder=/manual/Frame-Settings.html">Frame Settings</a>.</p>
+
+<h2>Render pipeline comparison table</h2>
+
+<p>See the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@12.0?subfolder=/manual/Feature-Comparison.html">HDRP</a> and <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.0?subfolder=/manual/universalrp-builtin-feature-comparison.html">URP</a> documentation for compatibility information specific to scriptable render pipelines. Unless otherwise specified, the Built-In Render Pipeline supports all features described in this article.</p>
+
+<h2>Lighting scenarios</h2>
+
+<p>Now that we have introduced the render pipelines and the main lighting features, let’s have a look at a few examples of projects and see which settings could be used to light them. Since every project is unique, you might use slightly different options based on your requirements.</p>
+
+<h3>1. Prototype or quick previsualization</h3>
+
+<p>If you rely heavily on the <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span> to build your prototype, the Built-In Render Pipeline could be the only suitable render pipeline, as most assets found on the Store are not fully compatible with HDRP and URP; nonetheless, asset compatibility will improve over time. If you are building all the assets from the ground up and already have a clear idea of your project’s requirements, then you could pick one of the two SRPs (i.e. URP or HDRP) or even create a custom one.</p>
+
+<p>When you are in the early stage of (pre-)production and need a quick turnaround and maximum flexibility for the lighting, you might prefer a full real-time approach that does not require any precomputation, therefore you might want to turn off both Baked Global Illumination and Enlighten Realtime Global Illumination. To alleviate the lack of proper indirect lighting, you can enable Screen Space <span class="tooltip"><strong>Ambient Occlusion</strong><span class="tooltiptext">A method to approximate how much ambient light (light not coming from a specific direction) can hit a point on a surface.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Ambientocclusion" aria-label="Go to glossary anchor for Ambientocclusion">Glossary</a></span></span></span>: it can help ground the object in the scene by offering cheap real-time contact shadows.</p>
+
+<h3>2. 3D Mobile strategy game</h3>
+
+<p>If you are targeting mobile devices, URP could be a great candidate to ensure solid performance for your game. It is in many cases possible to customise URP to suit your game’s specific needs, with help from a graphics programmer.</p>
+
+<p>The Built-In Render Pipeline and URP both support Shadowmask Lighting Mode which makes it possible for you to bake shadows for static objects while still enabling dynamic objects to cast real-time shadows. If Shadowmasks are too expensive for your project, you can fall back to the cheapest Subtractive mode. Finally, the forward rendering path is probably the best option if you have a very small number of lights in your level(s), and if you’re targeting older hardware.</p>
+
+<h3>3. AAA corridor shooter (fixed time of day)</h3>
+
+<p>If you are aiming for AAA-quality visuals on PC and consoles for your linear first-person shooter, HDRP should be the preferred render pipeline. Again, with the help of graphics programmers, a custom SRP could also be developed.</p>
+
+<p>If your levels contain many real-time shadow casting lights (e.g. destructible light props and moving lights), then using the Baked Global Illumination system with the Baked Indirect mode should ensure you get great looking indirect lighting from the Mixed directional light and the <span class="tooltip"><strong>Baked lights</strong><span class="tooltiptext">Light components whose Mode property is set to Baked. Unity pre-calculates the illumination from Baked Lights before runtime, and does not include them in any runtime lighting calculations. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightMode-Baked.html" href="LightMode-Baked.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#BakedLights" aria-label="Go to glossary anchor for BakedLights">Glossary</a></span></span></span> in static light props. If your levels consist of a larger proportion of fixed shadow casting lights, then an approach with Shadowmasks could be recommended because HDRP offers a great hybrid Shadowmask mode which gives you more control over the blend between real-time and baked shadows.</p>
+
+<p>If you also plan to support the Nintendo Switch, then using URP would be recommended, so that you can support most gaming platforms on the market and not having to go through the potentially tedious process of porting your project from HDRP to URP, or vice versa.</p>
+
+<h3>4. Battle Royale (day-night cycle)</h3>
+
+<p>If you plan to release a battle royale game for PC and consoles, that features large-scale environments and fully dynamic lighting, you should select HDRP, or extend it to tailor the rendering pipeline to your project. You could consider URP if you are not aiming for AAA visual fidelity and are targeting mobile devices or systems with lower specifications.</p>
+
+<p>For this particular scenario, if you are using the Built-in Render Pipeline, activating both the Enlighten Realtime Global Illumination and a Baked Global Illumination system is not recommended, because the resulting overhead in terms of performance and scene management for an immense level could be problematic. Another argument against the use of both global illumination systems is the unpredictable nature of such large-scale multiplayer games: performance estimations are for instance more difficult than in a highly-scripted linear level.</p>
+
+<h2>Final words</h2>
+
+<p>The rendering landscape has changed radically in Unity over the past few years, thanks to the introduction of the Scriptable Render Pipelines. Therefore, keeping up with all these changes and their implications for the lighting pipeline can be exhausting.</p>
+
+<p>Hopefully, this guide and its many illustrations have given you a better understanding of the capabilities of each Render Pipeline so that you can confidently start your projects in Unity with the appropriate rendering and lighting settings!</p>
+
+<p>You can learn more about the lighting in Unity and the rendering pipelines with the following pages:</p>
+
+<ul>
+<li><p>
+<a href="http://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/manual/index.html">URP documentation</a> &amp; <a href="http://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest/index.html?subfolder=/manual/HDRP-Features.html">HDRP documentation</a>
+</p></li>
+<li><p><a href="https://docs.unity3d.com/hub/manual/Templates.html">Use the Unity Hub to get started with HDRP, URP or Built-In RP</a></p></li>
+<li><p><a href="https://unity3d.com/learn/tutorials/topics/graphics/introduction-lighting-and-rendering?playlist=17102">Introduction to Lighting and Rendering tutorial</a></p></li>
+<li><p><a href="https://unity3d.com/learn/tutorials/s/creating-believable-visuals">Creating Believable Visuals tutorial (Built-In RP)</a></p></li>
+<li><p><a href="https://blogs.unity3d.com/2020/01/09/how-to-set-up-unitys-unitys-high-definition-render-pipeline-for-high-end-visualizations/">Set up HDRP for high-end visualizations</a></p></li>
+<li><p><a href="https://blogs.unity3d.com/2019/02/05/create-high-quality-light-fixtures-in-unity/">Create high-quality light fixtures in Unity</a></p></li>
+</ul>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="srp-setting-render-pipeline-asset.html"></a></span><div class="tip">How to get, set, and configure the active render pipeline</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="built-in-render-pipeline.html"></a></span><div class="tip">Using the Built-in Render Pipeline</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

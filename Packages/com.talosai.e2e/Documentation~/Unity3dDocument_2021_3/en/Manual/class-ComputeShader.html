@@ -1,0 +1,500 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Compute shaders</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-ComputeShader.html">English</a></li>
+<li><a href="/cn/current/Manual/class-ComputeShader.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-ComputeShader.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-ComputeShader.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-ComputeShader.html">English</a></li>
+<li><a href="/cn/current/Manual/class-ComputeShader.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-ComputeShader.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-ComputeShader.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="ShadersOverview.html">Shaders core concepts</a></li>
+<li>Compute shaders</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-ShaderReplacement.html"></a></span><div class="tip">Replacing shaders at runtime</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="shader-error.html"></a></span><div class="tip">Error and loading shaders</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Compute shaders</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/ComputeShader.html' title='Go to ComputeShader page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Compute shaders are <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> programs that run on the GPU, outside of the normal rendering pipeline.</p>
+
+<p>They can be used for massively parallel GPGPU algorithms, or to accelerate parts of game rendering. In order to efficiently use them, an in-depth knowledge of GPU architectures and parallel algorithms is often needed; as well as knowledge of <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ff476331.aspx">DirectCompute</a>, <a href="https://www.khronos.org/opengl/wiki/Compute_Shader">OpenGL Compute</a>, <a href="http://en.wikipedia.org/wiki/CUDA">CUDA</a>, or <a href="http://en.wikipedia.org/wiki/OpenCL">OpenCL</a>.</p>
+
+<p>Compute shaders in Unity closely match <a href="https://en.wikipedia.org/wiki/DirectX"> DirectX</a> 11 DirectCompute technology. Platforms where compute shaders work:</p>
+
+<ul>
+<li><p>Windows and Windows Store, with a DirectX 11 or DirectX 12 graphics API and Shader Model 5.0 GPU</p></li>
+<li><p>macOS and <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> using <a href="https://developer.apple.com/metal/">Metal graphics</a> API</p></li>
+<li><p>Android, Linux and Windows platforms with <a href="https://www.khronos.org/vulkan/">Vulkan</a> API</p></li>
+<li><p>Modern <a href="https://www.opengl.org/">OpenGL</a> platforms (OpenGL 4.3 on Linux or Windows; OpenGL ES 3.1 on Android). Note that Mac OS X does not support OpenGL 4.3</p></li>
+<li><p>Modern consoles</p></li>
+</ul>
+
+<p>Compute shader support can be queried runtime using <a href="../ScriptReference/SystemInfo-supportsComputeShaders.html">SystemInfo.supportsComputeShaders</a>.</p>
+
+<h2>Compute shader Assets</h2>
+
+<p>Similar to <a href="class-Shader.html">shader assets</a>, compute shader assets are files in your project. with a <em>.compute</em> file extension. They are written in DirectX 11 style <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/bb509561.aspx">HLSL</a> language, with a minimal number of #pragma compilation directives to indicate which functions to compile as compute shader kernels.</p>
+
+<p>Here’s a basic example of a compute shader file, which fills the output texture with red:</p>
+
+<pre><code>// test.compute
+
+#pragma kernel FillWithRed
+
+RWTexture2D&lt;float4&gt; res;
+
+[numthreads(1,1,1)]
+void FillWithRed (uint3 dtid : SV_DispatchThreadID)
+{
+    res[dtid.xy] = float4(1,0,0,1);
+}
+</code></pre>
+
+<p>The language is standard DX11 HLSL, with an additional <code>#pragma kernel FillWithRed</code> directive. One compute shader Asset file must contain at least one<code>compute kernel</code> that can be invoked, and that function is indicated by the <code>#pragma directive</code>. There can be more kernels in the file; just add multiple <code>#pragma kernel</code> lines.</p>
+
+<p>When using multiple <code>#pragma kernel</code> lines, note that comments of the style <code>// text</code> are not permitted on the same line as the <code>#pragma kernel</code> directives, and cause compilation errors if used.</p>
+
+<p>The <code>#pragma kernel</code> line can optionally be followed by a number of preprocessor macros to define while compiling that kernel, for example:</p>
+
+<pre><code>#pragma kernel KernelOne SOME_DEFINE DEFINE_WITH_VALUE=1337
+#pragma kernel KernelTwo OTHER_DEFINE
+// ...
+</code></pre>
+
+<h2>Invoking compute shaders</h2>
+
+<p>In your script, define a variable of ComputeShader type and assign a reference to the Asset. This allows you to invoke them with <a href="../ScriptReference/ComputeShader.Dispatch.html">ComputeShader.Dispatch</a> function. See Unity documentation on <a href="../ScriptReference/ComputeShader.html">ComputeShader class</a> for more details.</p>
+
+<p>Closely related to compute shaders is a <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/ComputeBuffer.html">ComputeBuffer</a> class, which defines arbitrary data buffer (“structured buffer” in DX11 lingo). <span class="tooltip"><a href="../ScriptReference/RenderTexture.html">Render Textures</a><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a href="class-RenderTexture.html" href="../ScriptReference/ComputeBuffer.html">ComputeBuffer</a> class, which defines arbitrary data buffer (“structured buffer” in DX11 lingo). <span class="tooltip"><a href="../ScriptReference/RenderTexture.html">Render Textures</a><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span> can also be written into from compute shaders, if they have “random access” flag set (“unordered access view” in DX11). See <a href="../ScriptReference/RenderTexture-enableRandomWrite.html">RenderTexture.enableRandomWrite</a> to learn more about this.</p>
+
+<h2>Texture samplers in compute shaders</h2>
+
+<p>Textures and samplers aren’t separate objects in Unity, so to use them in compute shaders you must follow one of the following Unity-specific rules:</p>
+
+<ul>
+<li><p>Use the same name as the Texture name, with <code>sampler</code> at the beginning (for example, <code>Texture2D MyTex</code>; <code>SamplerState samplerMyTex</code>). In this case, the sampler is initialized to that Texture’s filter/wrap/aniso settings.</p></li>
+<li><p>Use a predefined sampler. For this, the name has to have <code>Linear</code> or <code>Point</code> (for filter mode) and <code>Clamp</code> or <code>Repeat</code> (for wrap mode). For example, <code>SamplerState MyLinearClampSampler</code> creates a sampler that has Linear filter mode and Clamp wrap mode.</p></li>
+</ul>
+
+<p>For more information, see documentation on <a href="SL-SamplerStates.html">Sampler States</a>.</p>
+
+<h2>Cross-platform support</h2>
+
+<p>As with regular shaders, Unity is capable of <a href="shader-compilation.html">translating</a> compute shaders from HLSL to other shader languages. Therefore, for the easiest cross-platform builds, you should write compute shaders in HLSL. However, there are some factors that need to be considered when doing this.</p>
+
+<h3>Cross-platform best practices</h3>
+
+<p>DirectX 11 (DX11) supports many actions that are not supported on other platforms (such as <a href="https://developer.apple.com/metal/">Metal</a> or <a href="https://www.opengl.org/">OpenGL ES</a>). Therefore, you should always ensure your shader has well-defined behavior on platforms that offer less support, rather than only on DX11. Here are few things to consider:</p>
+
+<ul>
+<li><p>Out-of-bounds memory accesses are bad. DX11 might consistently return zero when reading, and read some writes without issues, but platforms that offer less support might crash the GPU when doing this. Watch out for DX11-specific hacks, buffer sizes not matching with multiple of your thread group size, trying to read neighboring data elements from the beginning or end of the buffer, and similar incompatibilities.</p></li>
+<li><p>Initialize your resources. The contents of new buffers and Textures are undefined. Some platforms might provide all zeroes, but on others, there could be anything including NaNs. </p></li>
+<li><p>Bind all the resources your compute shader declares. Even if you know for sure that the shader does not use resources in its current state because of branching, you must still ensure a resource is bound to it.</p></li>
+</ul>
+
+<h3>Platform-specific differences</h3>
+
+<ul>
+<li>
+<a href="https://developer.apple.com/metal/">Metal</a> (for iOS and tvOS platforms) does not support atomic operations on Textures. Metal also does not support <code>GetDimensions</code> queries on buffers. Pass the buffer size info as constant to the shader if needed.</li>
+<li>
+<a href="https://www.opengl.org/">OpenGL ES</a> 3.1 (for (Android, iOS, tvOS platforms) only guarantees support for 4 compute buffers at a time. Actual implementations typically support more, but in general if developing for OpenGL ES, you should consider grouping related data in structs rather than having each data item in its own buffer.</li>
+<li>OpenGL (ES) and <a href="https://www.vulkan.org/">Vulkan</a> require an image format qualifier for <code>RWTextures&lt;T&gt;</code> that are not write-only.<br>
+ Unity derives this qualifier from the type T in the angle-brackets. The format qualifier needs to match the <a href="../ScriptReference/Experimental.Rendering.GraphicsFormat.html">GraphicsFormat</a>/<a href="../ScriptReference/RenderTextureFormat.html">RenderTextureFormat</a> of the <a href="../ScriptReference/RenderTexture.html">RenderTexture</a> that is bound to the RWTexture. The following table maps Unity RenderTexture GraphicsFormats and RenderTextureFormats to their corresponding HLSL type and image format qualifier:</li>
+</ul>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">GraphicsFormat</th>
+	<th style="text-align:left;">RenderTextureFormat</th>
+	<th style="text-align:left;">HLSL type</th>
+	<th style="text-align:left;">GLSL image format qualifier</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">R32G32B32A32_SFloat</td>
+	<td style="text-align:left;">ARGBFloat</td>
+	<td style="text-align:left;">float4</td>
+	<td style="text-align:left;">rgba32f</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R16G16B16A16_SFloat</td>
+	<td style="text-align:left;">ARGBHalf</td>
+	<td style="text-align:left;">min16float4/half4</td>
+	<td style="text-align:left;">rgba16f</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R32G32_SFloat</td>
+	<td style="text-align:left;">RGFloat</td>
+	<td style="text-align:left;">float2</td>
+	<td style="text-align:left;">rg32f</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R16G16_SFloat</td>
+	<td style="text-align:left;">RGHalf</td>
+	<td style="text-align:left;">min16float2/half2</td>
+	<td style="text-align:left;">rg16f</td>
+</tr>
+<tr>
+	<td style="text-align:left;">B10G11R11_UFloatPack32</td>
+	<td style="text-align:left;">RGB111110Float</td>
+	<td style="text-align:left;">min10float3</td>
+	<td style="text-align:left;">r11f_g11f_b10f</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R32_SFloat</td>
+	<td style="text-align:left;">RFloat</td>
+	<td style="text-align:left;">float</td>
+	<td style="text-align:left;">r32f</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R16_SFloat</td>
+	<td style="text-align:left;">RHalf</td>
+	<td style="text-align:left;">min16float/half</td>
+	<td style="text-align:left;">r16f</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R16G16B16A16_UNorm</td>
+	<td style="text-align:left;">ARGB64</td>
+	<td style="text-align:left;">unorm min16float4/half4</td>
+	<td style="text-align:left;">rgba16</td>
+</tr>
+<tr>
+	<td style="text-align:left;">A2B10G10R10_UNormPack32</td>
+	<td style="text-align:left;">ARGB2101010</td>
+	<td style="text-align:left;">unorm min10float4</td>
+	<td style="text-align:left;">rgb10_a2</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R8G8B8A8_UNorm</td>
+	<td style="text-align:left;">ARGB32</td>
+	<td style="text-align:left;">unorm float4</td>
+	<td style="text-align:left;">rgba8</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R16G16_UNorm</td>
+	<td style="text-align:left;">RG32</td>
+	<td style="text-align:left;">unorm min16float2/half2</td>
+	<td style="text-align:left;">rg16</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R8G8_UNorm</td>
+	<td style="text-align:left;">RG16</td>
+	<td style="text-align:left;">unorm float2</td>
+	<td style="text-align:left;">rg8</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R16_UNorm</td>
+	<td style="text-align:left;">R16</td>
+	<td style="text-align:left;">unorm min16float/half</td>
+	<td style="text-align:left;">r16</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R8_UNorm</td>
+	<td style="text-align:left;">R8</td>
+	<td style="text-align:left;">unorm float</td>
+	<td style="text-align:left;">r8</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R16G16B16A16_SNorm</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">snorm min16float4/half4</td>
+	<td style="text-align:left;">rgba16_snorm</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R8G8B8A8_SNorm</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">snorm float4</td>
+	<td style="text-align:left;">rgba8_snorm</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R16G16_SNorm</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">snorm min16float2/half2</td>
+	<td style="text-align:left;">rg16_snorm</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R8G8_SNorm</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">snorm float2</td>
+	<td style="text-align:left;">rg8_snorm</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R16_SNorm</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">snorm min16float/half</td>
+	<td style="text-align:left;">r16_snorm</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R8_SNorm</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">snorm float</td>
+	<td style="text-align:left;">r8_snorm</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R32G32B32A32_SInt</td>
+	<td style="text-align:left;">ARGBInt</td>
+	<td style="text-align:left;">int4</td>
+	<td style="text-align:left;">rgba32i</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R16G16B16A16_SInt</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">min16int4</td>
+	<td style="text-align:left;">rgba16i</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R8G8B8A8_SInt</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">min12int4</td>
+	<td style="text-align:left;">rgba8i</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R32G32_SInt</td>
+	<td style="text-align:left;">RGInt</td>
+	<td style="text-align:left;">int2</td>
+	<td style="text-align:left;">rg32i</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R16G16_SInt</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">min16int2</td>
+	<td style="text-align:left;">rg16i</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R8G8_SInt</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">min12int2</td>
+	<td style="text-align:left;">rg8i</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R32_SInt</td>
+	<td style="text-align:left;">RInt</td>
+	<td style="text-align:left;">int</td>
+	<td style="text-align:left;">r32i</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R16_SInt</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">min16int</td>
+	<td style="text-align:left;">r16i</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R8_SInt</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">min12int</td>
+	<td style="text-align:left;">r8i</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R32G32B32A32_UInt</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">uint4</td>
+	<td style="text-align:left;">rgba32i</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R16G16B16A16_UInt</td>
+	<td style="text-align:left;">RGBAUShort</td>
+	<td style="text-align:left;">min16uint4</td>
+	<td style="text-align:left;">rgba16ui</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R8G8B8A8_UInt</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">rgba8ui</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R32G32_UInt</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">uint2</td>
+	<td style="text-align:left;">rg32ui</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R16G16_UInt</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">min16uint2</td>
+	<td style="text-align:left;">rg16ui</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R8G8_UInt</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">rg8ui</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R32_UInt</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">uint</td>
+	<td style="text-align:left;">r32ui</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R16_UInt</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">min16uint</td>
+	<td style="text-align:left;">r16ui</td>
+</tr>
+<tr>
+	<td style="text-align:left;">R8_UInt</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">r8ui</td>
+</tr>
+<tr>
+	<td style="text-align:left;">A2B10G10R10_UIntPack32</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">unsupported</td>
+	<td style="text-align:left;">rgb10_a2ui</td>
+</tr>
+</tbody>
+</table>
+
+<h2>HLSL-only or GLSL-only compute shaders</h2>
+
+<p>Usually, compute shader files are written in <a href="https://en.wikipedia.org/wiki/High-Level_Shading_Language">HLSL</a>, and compiled or translated into all necessary platforms automatically. However, it is possible to either prevent translation to other languages (that is, only keep HLSL platforms), or to write <a href="https://en.wikipedia.org/wiki/OpenGL_Shading_Language">GLSL</a> compute code manually.</p>
+
+<p>The following information only applies to HLSL-only or GLSL-only compute shaders, not cross-platform builds. This is because this information can result in compute shader source being excluded from some platforms. </p>
+
+<ul>
+<li><p>Compute shader source surrounded by <code>CGPROGRAM</code> and <code>ENDCG</code> keywords is not processed for non-HLSL platforms.</p></li>
+<li><p>Compute shader source surrounded by <code>GLSLPROGRAM</code> and <code>ENDGLSL</code> keywords is treated as GLSL source, and emitted verbatim. This only works when targeting OpenGL or GLSL platforms. You should also note that while automatically translated shaders follow HLSL data layout on buffers, manually written GLSL shaders follow GLSL layout rules.</p></li>
+</ul>
+
+<h2>Variants and keywords</h2>
+
+<p>You can use keywords to produce multiple variants of compute shaders, the same as you can for graphics shaders.</p>
+
+<p>For general information on variants, see <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about shader-variants.html">Shader variants</a><span class="tooltiptext">A verion of a shader program that Unity generates according to a specific combination of shader keywords and their status. A Shader object can contain multiple shader variants. <a href="shader-variants.html" href="shader-variants.html">Shader variants</a><span class="tooltiptext">A verion of a shader program that Unity generates according to a specific combination of shader keywords and their status. A Shader object can contain multiple shader variants. <a href="shader-variants.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shadervariant" aria-label="Go to glossary anchor for Shadervariant">Glossary</a></span></span></span>. For information on how to implement these features in compute shaders, see <a href="SL-MultipleProgramVariants.html">Declaring and using shader keywords in HLSL</a> and the <a href="../ScriptReference/ComputeShader.html">ComputeShader API documentation</a>.</p>
+
+<p><span class="search-words">ComputeShader</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-ShaderReplacement.html"></a></span><div class="tip">Replacing shaders at runtime</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="shader-error.html"></a></span><div class="tip">Error and loading shaders</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

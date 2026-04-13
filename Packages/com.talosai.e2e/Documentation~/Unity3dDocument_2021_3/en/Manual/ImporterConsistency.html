@@ -1,0 +1,242 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Importer Consistency</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ImporterConsistency.html">English</a></li>
+<li><a href="/cn/current/Manual/ImporterConsistency.html">中文</a></li>
+<li><a href="/ja/current/Manual/ImporterConsistency.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ImporterConsistency.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ImporterConsistency.html">English</a></li>
+<li><a href="/cn/current/Manual/ImporterConsistency.html">中文</a></li>
+<li><a href="/ja/current/Manual/ImporterConsistency.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ImporterConsistency.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AssetWorkflow.html">Asset Workflow</a></li>
+<li><a href="AssetTypes.html">Supported Asset Types</a></li>
+<li>Importer Consistency</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ScriptedImporters.html"></a></span><div class="tip">Scripted Importers</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-TextAsset.html"></a></span><div class="tip">Text assets</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Importer Consistency</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Asset importers, including any scripted importers that you write, should produce consistent (deterministic) results. This means they should always produce the same output from the same input and set of dependencies.</p>
+
+<p>To verify that this is the case for your importers, the Asset Database has two ways that you can check the consistency of the import results of the assets currently in your project. The two ways to check consistency are:</p>
+
+<ul>
+<li><p>Manually reimport one or more assets in the Editor</p></li>
+<li><p>Use the <strong>-consistencyCheck</strong> command line argument to open the Editor</p></li>
+</ul>
+
+<h2>Manual reimport consistency checks</h2>
+
+<p>Manually reimporting an asset causes Unity to check whether a new import result matches the previous cached import results.</p>
+
+<p>To start a manual reimport, right-click on an asset and select <strong>Reimport</strong> from the context menu.</p>
+
+<p>Unity then checks the resulting import for consistency. If it detects inconsistent results, Unity prints a warning in the <span class="tooltip"><strong>Console window</strong><span class="tooltiptext">A Unity Editor window that shows errors, warnings and other messages generated by Unity, or your own scripts. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Console.html" href="Console.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Consolewindow" aria-label="Go to glossary anchor for Consolewindow">Glossary</a></span></span></span> with details about which importer caused the issue, such as:</p>
+
+<p><code>Importer(&lt;name of importer&gt;) generated inconsistent result for asset(guid:&lt;guid of the asset&gt;) &quot;&lt;name of asset&gt;&quot;</code></p>
+
+<p>When you reimport a root asset, Unity also reimports and performs the consistency check on its child assets.</p>
+
+<h2>Command line consistency checks</h2>
+
+<p>The second way of doing the consistency check is to open Unity with the <strong>-consistencyCheck</strong> command line argument. This performs a consistency check on all assets and importers in the project.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Command line argument</th>
+	<th style="text-align:left;">Description</th>
+	<th style="text-align:left;">Example(s)</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>-consistencyCheck</code></td>
+	<td style="text-align:left;">Tells the Editor to perform a consistency check on startup. By default it performs a “local” check (see below).</td>
+	<td style="text-align:left;">-consistencyCheck</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-consistencyCheckSourceMode string</code></td>
+	<td style="text-align:left;">Sets the source for the consistency checker to check against when it compares the asset imports. There are two possible values: “local” or “cacheserver”.<br><br>“local” means that it forces a reimport of all assets locally and checks if imports differ from the previous import.<br><br>“cacheserver” means that it asks the cacheserver for the metadata for the assets and compares if the results locally match what is on the cacheserver. In this case reimporting all assets does not happen.</td>
+	<td style="text-align:left;">
+<code>-consistencyCheckSourceMode local</code> <br>-consistencyCheckSourceMode cacheserver</td>
+</tr>
+</tbody>
+</table>
+
+<p>Any inconsistencies found during startup are logged to the Console, as well as the Editor log file.</p>
+
+<p>The consistency checker only checks asset imports that are cacheable. So if you disable caching for your ScriptedImporter then the consistency check for that import will also be disabled. See <a href="../ScriptReference/AssetImporters.ScriptedImporterAttribute.html">AssetImporters.ScriptedImporterAttribute</a> for details on how to disable caching for a scripted importer. </p>
+
+<p>To use the cache server as validation source, see the <a href="UnityAccelerator.html">Unity Accelerator</a> documentation.</p>
+
+<h3>Editor log</h3>
+
+<p>When importer inconsistencies are detected, you can find more information about the issue in the Editor log. This includes:</p>
+
+<ul>
+<li><p>Which asset caused the failed consistency check</p></li>
+<li><p>The GUID of that asset</p></li>
+<li><p>The content hash for the asset import result</p></li>
+<li><p>How it compares to the previous revision of the asset</p></li>
+</ul>
+
+<p>The following is an example of an Editor log that shows importer inconsistencies:</p>
+
+<pre><code>ConsistencyChecker - guid: a1945cd7aab67441ba89015f97494624, dependenciesHash.value: fb8cfb407bba82d4daded6031688ba9b, artifactid: 07078a054d3f597b4c2cc47e8e4c0bde, producedFiles[0].extension: , producedFiles[0].contentHash: 8490a5ed35a4361d679e6055a386969e
+
+ConsistencyChecker - guid: a1945cd7aab67441ba89015f97494624, dependenciesHash.value: fb8cfb407bba82d4daded6031688ba9b, artifactid: 07078a054d3f597b4c2cc47e8e4c0bde, producedFiles[1].extension: .info, producedFiles[1].contentHash: 4bd9140e19d2e44782f1131172e514ba
+
+ConsistencyChecker - guid: a1945cd7aab67441ba89015f97494624, dependenciesHash.value: fb8cfb407bba82d4daded6031688ba9b, artifactid: 646d6432767729ea7d288c636183de97, producedFiles[0].extension: , producedFiles[0].contentHash: 5ca760170f85012ce16aa8c22e8d9ea1
+
+ConsistencyChecker - guid: a1945cd7aab67441ba89015f97494624, dependenciesHash.value: fb8cfb407bba82d4daded6031688ba9b, artifactid: 646d6432767729ea7d288c636183de97, producedFiles[1].extension: .info, producedFiles[1].contentHash: 4bd9140e19d2e44782f1131172e514ba
+
+Importer(ScriptedImporter:Assembly-CSharp::RandomImporter) generated inconsistent result for asset(guid:a1945cd7aab67441ba89015f97494624) &quot;Assets/first.rand&quot;
+</code></pre>
+
+<p>If the cache server is not available, the consistency checker prints out warnings in the Editor log.</p>
+
+<p>If a cache server hasn’t been set up for the project, the following message is printed.</p>
+
+<p><code>ConsistencyChecker - Cacheserver is not enabled</code></p>
+
+<p>If Unity cannot connect to the cache server, this message is printed.</p>
+
+<p><code>ConsistencyChecker - Not connected to accelerator/cacheserver</code></p>
+
+<h2>Debugging</h2>
+
+<p>You can use the tool ‘binary2text’, located in the Data/Tools folder in your Unity Editor installation, to examine the contents of the library folder to see exactly what the importer generated. </p>
+
+<p>For example:</p>
+
+<p><code>./Data/Tools/binary2text ./myProject/Library/Artifacts/84/8490a5ed35a4361d679e6055a386969e output_file</code></p>
+
+<p>The hash value is the asset’s content hash. To find the reported inconsistency and see what content was generated during the check, look at the Editor log.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ScriptedImporters.html"></a></span><div class="tip">Scripted Importers</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-TextAsset.html"></a></span><div class="tip">Text assets</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

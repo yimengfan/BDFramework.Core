@@ -1,0 +1,217 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Managed memory</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-managed-memory.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-managed-memory.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-managed-memory.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-managed-memory.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-managed-memory.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-managed-memory.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-managed-memory.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-managed-memory.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="performance-memory-overview.html">Memory in Unity</a></li>
+<li>Managed memory</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-memory-overview.html"></a></span><div class="tip">Memory in Unity</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="performance-garbage-collector.html"></a></span><div class="tip">Garbage collector overview</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Managed memory</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity’s <strong>managed memory system</strong> is a C# scripting environment based on the <a href="scripting-backends.html">Mono or IL2CPP Virtual Machines (VMs)</a>. The benefit of the managed memory system is that it manages the release of memory, so you don’t need to manually request the release of memory through your code. </p>
+
+<p>Unity’s managed memory system uses a <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about performance-garbage-collector.html">garbage collector</a> and a <a href="#managed-heap">managed heap</a> to automatically free memory allocations when your <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html" href="performance-garbage-collector.html">garbage collector</a> and a <a href="#managed-heap">managed heap</a> to automatically free memory allocations when your <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> no longer hold any references to those allocations. This helps safeguard against memory leaks. Memory leaks occur when memory is allocated, the reference to it is lost, and then the memory is never freed because it needs a <a href="#value-reference">reference</a> to it to free it. </p>
+
+<p>This memory management system also guards memory access, which means that you can’t access memory that has been freed, or that was never valid for your code to access. However, this memory management process impacts runtime performance, because allocating managed memory is time-consuming for the CPU. <a href="performance-garbage-collector.html">Garbage collection</a> might also stop the CPU from doing other work until it completes.</p>
+
+<p><a name="value-reference" aria-hidden="true"></a></p>
+
+<h2>Value and reference types</h2>
+
+<p>When a method is called, the scripting back end copies the values of its parameters to an area of memory reserved for that specific call, in a data structure called a <strong>call stack</strong>. The scripting back end can quickly copy data types that occupy a few bytes. However, it’s common for objects, strings, and arrays to be much larger, and it’s inefficient for the scripting back end to copy these types of data on a regular basis.</p>
+
+<p>All non-null <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types">reference-type objects</a> and all <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/types/boxing-and-unboxing">boxed value-typed objects</a> in managed code must be allocated on the managed heap.</p>
+
+<p>It’s important that you are familiar with value and reference types, so that you can effectively manage your code. For more information, see Microsoft’s documentation on <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-types">value types</a>, and <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/reference-types">reference types</a>.</p>
+
+<h2>Automatic memory management</h2>
+
+<p>When an object is created, Unity allocates the memory required to store it from a central pool called <strong>the heap</strong>, which is a section of memory that your Unity project’s selected scripting runtime (Mono or IL2CPP) automatically manages. When an object is no longer in use, the memory it once occupied can be reclaimed and used for something else. </p>
+
+<p>
+<a href="scripting-backends.html">Unity’s scripting back ends</a> use a <a href="performance-garbage-collector.html">garbage collector</a> to automatically manage your application’s memory, so that you don’t need to allocate and release these blocks of memory with explicit method calls. Automatic memory management requires less coding effort than explicit allocation/release and reduces the potential for memory leaks.</p>
+
+<p><a name="managed-heap" aria-hidden="true"></a></p>
+
+<h3>Managed heap overview</h3>
+
+<p>The <strong>managed heap</strong> is a section of memory that your Unity project’s selected scripting runtime (Mono or IL2CPP) automatically manages. </p>
+
+<figure>
+<img src="../uploads/Main/managed-heap.jpg" alt="A quantity of memory. Marked A on the diagram is some free memory.">
+<figcaption>A quantity of memory. Marked A on the diagram is some free memory.</figcaption>
+</figure>
+
+<p>In the above diagram, the blue box represents a quantity of memory that Unity allocates to the managed heap. The white boxes within it represent data values that Unity stores within the managed heap’s memory space. When additional data values are needed, Unity allocates them free space from the managed heap (annotated <strong>A</strong>).</p>
+
+<h3>Memory fragmentation and heap expansion</h3>
+
+<figure>
+<img src="../uploads/Main/managed-heap-removed-objects.jpg" alt="A quantity of memory, with some objects released represented by grey dashed lines.">
+<figcaption>A quantity of memory, with some objects released represented by grey dashed lines.</figcaption>
+</figure>
+
+<p>The above diagram shows an example of memory fragmentation. When Unity releases an object, the memory that the object occupied is freed up. However, the free space doesn’t become part of a single large pool of “free memory.” </p>
+
+<p>The objects on either side of the released object might still be in use. Because of this, the freed space is a “gap” between other segments of memory. Unity can only use this gap to store data of identical or lesser size than the released object.</p>
+
+<p>This situation is called <strong>memory fragmentation</strong>. This happens when there is a large amount of memory available in the heap, but it is only available in the “gaps” between objects. This means that even though there is enough total space for a large memory allocation, the managed heap can’t find a large enough single block of contiguous memory to assign to the allocation.</p>
+
+<figure>
+<img src="../uploads/Main/managed-heap-fragmentation.jpg" alt="The object annotated A, is the new object needed to be added to the heap. The items annotated B are the memory space that the released objects took up, plus the free, unreserved memory. Even though there is enough total free space, because there isnt enough contiguous space, the memory for the new object annotated A cant fit on the heap, and the garbage collector must run.">
+<figcaption>The object annotated A, is the new object needed to be added to the heap. The items annotated B are the memory space that the released objects took up, plus the free, unreserved memory. Even though there is enough total free space, because there isn’t enough contiguous space, the memory for the new object annotated A can’t fit on the heap, and the garbage collector must run.</figcaption>
+</figure>
+
+<p>If a large object is allocated and there is insufficient contiguous free space to accommodate it, as illustrated above, the Unity memory manager performs two operations:</p>
+
+<ul>
+<li>First, the garbage collector runs, if it hasn’t already done so. This attempts to free up enough space to fulfill the allocation request.</li>
+<li>If, after the garbage collector runs, there is still not enough contiguous space to fit the requested amount of memory, the heap must expand. The specific amount that the heap expands is platform-dependent; however, on most platforms, when the heap expands, it expands by double the amount of the previous expansion.</li>
+</ul>
+
+<h3>Managed heap expansion considerations</h3>
+
+<p>The unexpected expansion of the heap can be problematic. Unity’s garbage collection strategy tends to fragment memory more often. You should be aware of the following:</p>
+
+<ul>
+<li>Unity doesn’t release the memory allocated to the managed heap when it expands regularly; instead, it retains the expanded heap, even if a large section of it is empty. This is to prevent the need to re-expand the heap if further large allocations occur.</li>
+<li>On most platforms, Unity eventually releases the memory that the empty portions of the managed heap uses back to the operating system. The interval at which this happens isn’t guaranteed and is unreliable.</li>
+<li>The garbage collector does not clear out native memory objects or other native allocations. <a href="../ScriptReference/Resources.UnloadUnusedAssets.html">Resources.UnloadUnusedAssets</a> does that for any native object that no longer has any references pointing to it. It also triggers a <code>GC.Collect</code> to make sure the state of these references is up to date. Bear in mind that:
+
+<ul>
+<li>
+<code>UnloadUnusedAssets</code> is not triggered automatically, only manually and on <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> changes. If you want to free that memory earlier, which can be crucial, for example, for fullscreen RenderTextures on platforms with low RAM, you should call <a href="../ScriptReference/Object.Destroy.html">Destroy</a> on the objects to make optimal use of the memory you have.</li>
+<li>There’s a risk of managed memory leaks. If you’ve kept references to the cleaned-up objects, you risk leaking the native objects that the managed objects reference. Static fields and events are are common sources of this kind of memory leak. For more information on how to analyze these issues with the Memory <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span>, refer to <a href="https://docs.unity3d.com/Packages/com.unity.memoryprofiler@1.1/manual/managed-shell-objects.html">Managed shell objects</a> in the Memory Profiler package documentation.</li>
+<li>Calling <code>UnloadUnusedAssets</code> or <code>GC.Collect</code> triggers a CPU-intensive process that you might want to avoid during Gameplay.</li>
+</ul>
+</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-memory-overview.html"></a></span><div class="tip">Memory in Unity</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="performance-garbage-collector.html"></a></span><div class="tip">Garbage collector overview</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

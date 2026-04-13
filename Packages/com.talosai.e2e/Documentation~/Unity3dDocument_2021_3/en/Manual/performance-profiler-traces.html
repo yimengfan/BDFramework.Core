@@ -1,0 +1,240 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Analyzing profiler traces</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-profiler-traces.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-profiler-traces.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-profiler-traces.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-profiler-traces.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-profiler-traces.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-profiler-traces.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-profiler-traces.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-profiler-traces.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="performance-profiling-tools.html">Profiling tools</a></li>
+<li>Analyzing profiler traces</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-profiling-tools.html"></a></span><div class="tip">Profiling tools</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="LogFiles.html"></a></span><div class="tip">Log files</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Analyzing profiler traces</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>When you profile your application, there are some common issues that you might come across. This page outlines how to investigate the cause of some common performance issues.</p>
+
+<h2>Dissecting startup traces</h2>
+
+<p>When looking at a trace of start-up times, there are two key methods to inspect: <code>UnityInitApplicationGraphics</code> and <code>UnityLoadApplication</code>. These two methods are the primary places where the configuration, assets, and code of a project can impact start-up time.</p>
+
+<p>
+<strong>Note:</strong> The start-up time of your application differs from platform to platform. On most platforms, start up happens while the <a href="class-PlayerSettingsSplashScreen.html">splash screen</a> appears. </p>
+
+<figure>
+<img src="../uploads/Main/UnderstandingPerformanceinUnity-ProfilingSection_image_0.png" alt="Instruments trace of an example Unity project running on an iOS device">
+<figcaption>Instruments trace of an example Unity project running on an iOS device</figcaption>
+</figure>
+
+<p>In the above screenshot from an Instruments trace of an example Unity project running on an <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> device, in the platform-specific <code>startUnity</code> method, note the <code>UnityInitApplicationGraphics</code> and <code>UnityLoadApplication</code> methods.</p>
+
+<p>
+<code>UnityInitApplicationGraphics</code> performs a lot of internal work, such as setting up the graphics device and initializing a lot of Unity’s internal systems. It also initializes the <a href="BestPracticeUnderstandingPerformanceInUnity6.html">Resources system</a> by loading an index of all the files contained in the Resources system.</p>
+
+<p>Unity’s <a href="../ScriptReference/Resources.html">Resource system</a> includes every <a href="AssetTypes.html">asset file</a> in its data that’s in the <code>Resources</code> folder in the <code>Assets</code> folder of your project. This includes any files in the <code>Resources</code> folder’s children folders. As such, the time required to initialize the Resources system increases in correlation with the number of files within the <code>Resources</code> folders in your application’s project. </p>
+
+<p>
+<code>UnityLoadApplication</code> contains methods that load and initialize the first <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> in the project. This includes deserializing and instantiating the data necessary to display the first Scene, such as compiling <span class="tooltip"><strong>Shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> in the project. This includes deserializing and instantiating the data necessary to display the first Scene, such as compiling <span class="tooltip"><strong>Shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>, uploading Textures and instantiating <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>, uploading Textures and instantiating <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. Also, Unity executes the <code>Awake</code> callbacks of all <code>MonoBehaviour</code>s in the first Scene.</p>
+
+<p>These processes mean that if there is any long-running code in an <code>Awake</code> callback in the first Scene of a project, that code could be responsible for slowing down the project’s initial start-up time. Resolving this involves either eliminating the slow code, or executing it elsewhere in the application’s lifecycle.</p>
+
+<h2>Dissecting run time traces</h2>
+
+<p>For profiling traces captured after the initial startup time, the primary place of interest is the method <code>PlayerLoop</code>. This is Unity’s main loop, and the code within it runs once per frame.</p>
+
+<figure>
+<img src="../uploads/Main/UnderstandingPerformanceinUnity-ProfilingSection_image_1.png" alt="Instruments trace of an example Unity project">
+<figcaption>Instruments trace of an example Unity project</figcaption>
+</figure>
+
+<p>The above screenshot illustrates several of the most performance-impacting methods within <code>PlayerLoop</code>. <strong>Note:</strong> The names of methods within the <code>PlayerLoop</code> might vary between Unity versions.</p>
+
+<p>
+<code>PlayerRender</code> is the method that runs Unity’s rendering system. This includes culling objects, calculating dynamic batches, and submitting drawing instructions to the GPU. Any Image Effects or rendering-based script callbacks (<a href="../ScriptReference/MonoBehaviour.OnWillRenderObject.html">OnWillRenderObject</a>, for example) also run here. In general, this should be the top consumer of CPU time while the project is interactive.</p>
+
+<p>
+<code>BaseBehaviourManager</code> calls three templated versions of <code>CommonUpdate</code>. These invoke certain callbacks within the <code>MonoBehaviour</code>s attached to active GameObjects in the current Scene:</p>
+
+<ul>
+<li>
+<code>CommonUpdate&lt;UpdateManager&gt;</code> calls <code>Update</code> callbacks</li>
+<li>
+<code>CommonUpdate&lt;LateUpdateManager&gt;</code> calls <code>LateUpdate</code> callbacks</li>
+<li>
+<code>CommonUpdate&lt;FixedUpdateManager&gt;</code> calls <code>FixedUpdate</code> if the physics system has ticked</li>
+</ul>
+
+<p>In general, <code>BaseBehaviourManager::CommonUpdate&lt;UpdateManager&gt;</code> is the most useful method family to inspect, because it’s the entry point for most of the script code running within a Unity project.</p>
+
+<p>There are several other methods that are useful to inspect:</p>
+
+<ul>
+<li>
+<code>UI::CanvasManager</code> invokes several different callbacks if a project uses the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.ugui@latest">UGUI system</a>. This includes Unity <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html" href="https://docs.unity3d.com/Packages/com.unity.ugui@latest">UGUI system</a>. This includes Unity <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>’s batch computation and layout updates; the two operations that most often cause <code>CanvasManager</code> to appear in the <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a href="Profiler.html" href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>’s batch computation and layout updates; the two operations that most often cause <code>CanvasManager</code> to appear in the <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span>.</li>
+<li>
+<code>DelayedCallManager::Update</code> runs <a href="Coroutines.html">coroutines</a>.</li>
+<li>
+<code>PhysicsManager::FixedUpdate</code> runs the PhysX physics system. This primarily involves running PhysX’s internal code. The number of physics objects in the current Scene, such as <code>Rigidbody</code> and <code>Collider</code> influence PhysX’s internal code. Physics-based callbacks also appear here: in particular, <code>OnTriggerStay</code> and <code>OnCollisionStay</code>.</li>
+</ul>
+
+<p>If the project is using 2D physics, that appears as a similar set of calls under <code>Physics2DManager::FixedUpdate</code>.</p>
+
+<h2>Dissecting a script method</h2>
+
+<p>When <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> are invoked on platforms cross-compiled with <span class="tooltip"><strong>IL2CPP</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html" href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> are invoked on platforms cross-compiled with <span class="tooltip"><strong>IL2CPP</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span>, look for trace lines that contain a <code>ScriptingInvocation</code> object. This is the point where Unity’s internal native code transitions into the script runtime to execute script code. <strong>Note:</strong> Technically, after Unity runs your C# code through IL2CPP, it also becomes native code. However, this cross-compiled code primarily executes methods via the IL2CPP runtime framework and doesn’t resemble handwritten C++.</p>
+
+<figure>
+<img src="../uploads/Main/UnderstandingPerformanceinUnity-ProfilingSection_image_2.png" alt="A trace from an example Unity project">
+<figcaption>A trace from an example Unity project</figcaption>
+</figure>
+
+<p>In the above screenshot, the methods nested beneath the <code>RuntimeInvoker_Void</code> line are part of cross-compiled C# scripts that Unity executed once per frame.</p>
+
+<p>The trace lines’ names are the name of the original class followed by an underscore and the name of the original method. In this example trace, you can see <code>EventSystem.Update</code>, <code>PlayerShooting.Update</code> and several other <code>Update</code> methods. These are the standard Unity <code>Update</code> callbacks found in most <code>MonoBehaviours</code>.</p>
+
+<p>You can expand these methods to see which methods within them consumed CPU time. This includes other script methods within the project, Unity APIs, and C# library code.</p>
+
+<p>The above trace shows that the <code>StandaloneInputModule.Process</code> method was ray casting through the entire UI once per frame. This method detects whether any touch events were hovering over, or activating any UI elements. The method iterating over all the UI elements, and testing whether the mouse’s position is within their bounding rectangle is resource-intensive.</p>
+
+<h2>Asset loading</h2>
+
+<p>You can also identify asset loading in CPU traces. The main method that indicates an Asset load is <code>SerializedFile::ReadObject</code>. This method connects a binary data stream from a file to Unity’s serialization system, which operates via a method named <code>Transfer</code>. The <code>Transfer</code> method is on all Asset types, such as Textures, MonoBehaviours and <span class="tooltip"><strong>Particle Systems</strong><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ParticleSystem.html" href="class-ParticleSystem.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#particlesystem" aria-label="Go to glossary anchor for particlesystem">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/UnderstandingPerformanceinUnity-ProfilingSection_image_3.png" alt="Trace of a Scene loading">
+<figcaption>Trace of a Scene loading</figcaption>
+</figure>
+
+<p>The above screenshot is a trace of Unity loading a Scene. When it loads a Scene, Unity reads and deserializes all the Assets within the Scene, as denoted by the calls to various <code>Transfer</code> methods beneath <code>SerializedFile::ReadObject</code>.</p>
+
+<p>If you see a performance stutter during runtime and the performance trace shows that <code>SerializedFile::ReadObject</code> used a significant amount of time, it means that Asset loads reduced the frame rate. <strong>Note:</strong> <code>SerializedFile::ReadObject</code> usually appears on the main thread when the <code>SceneManager</code>, <code>Resources</code> or AssetBundle APIs request synchronous Asset loads.</p>
+
+<p>To resolve this performance stutter can you can make Asset loading asynchronous (which moves the heavy <code>ReadObject</code> call to a worker thread), or preload certain heavy Assets.</p>
+
+<p>
+<code>Transfer</code> calls also appear when Unity clones objects (denoted by the <code>CloneObject</code> method in a trace). If a call to <code>Transfer</code> appears beneath a <code>CloneObject</code> call, then Unity isn’t loading the Asset from storage. Instead, Unity transfers the old object’s data to the new object. To do this, Unity serializes the old object and deserializes the resulting data as the new object.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-profiling-tools.html"></a></span><div class="tip">Profiling tools</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="LogFiles.html"></a></span><div class="tip">Log files</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

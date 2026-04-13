@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Graphics tiers</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/graphics-tiers.html">English</a></li>
+<li><a href="/cn/current/Manual/graphics-tiers.html">中文</a></li>
+<li><a href="/ja/current/Manual/graphics-tiers.html">日本語</a></li>
+<li><a href="/kr/current/Manual/graphics-tiers.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/graphics-tiers.html">English</a></li>
+<li><a href="/cn/current/Manual/graphics-tiers.html">中文</a></li>
+<li><a href="/ja/current/Manual/graphics-tiers.html">日本語</a></li>
+<li><a href="/kr/current/Manual/graphics-tiers.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="render-pipelines.html">Render pipelines</a></li>
+<li><a href="built-in-render-pipeline.html">Using the Built-in Render Pipeline</a></li>
+<li>Graphics tiers</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="built-in-render-pipeline.html"></a></span><div class="tip">Using the Built-in Render Pipeline</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="RenderingPaths.html"></a></span><div class="tip">Rendering paths in the Built-in Render Pipeline</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Graphics tiers</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>In the Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>, you can use <strong>graphics tiers</strong> to apply different graphics settings when your application runs on hardware with different capabilities. You can use Unity’s built-in <strong>tier settings</strong> to configure common settings, or you can define custom behaviors in your own <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>, you can use <strong>graphics tiers</strong> to apply different graphics settings when your application runs on hardware with different capabilities. You can use Unity’s built-in <strong>tier settings</strong> to configure common settings, or you can define custom behaviors in your own <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> code or C# code. </p>
+
+<p>
+<strong>Note:</strong> This feature is only supported in the Built-in Render Pipeline. In other render pipelines, Unity still examines the hardware on startup and stores its value in <a href="../ScriptReference/Graphics-activeTier.html">Graphics.activeTier</a>; however, the value of this field has no effect, and Unity does not perform any other operations relating to graphics tiers.</p>
+
+<h2>Graphics tiers overview</h2>
+
+<p>When Unity first loads your application, it examines the hardware and graphics API and determines which graphics tier the current environment corresponds to. </p>
+
+<p>The graphics tiers are:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Value</strong></th>
+	<th style="text-align:left;"><strong>Hardware</strong></th>
+	<th style="text-align:left;"><strong>Corresponding <a href="../ScriptReference/Rendering.GraphicsTier.html">GraphicsTier</a> enum value</strong></th>
+	<th style="text-align:left;"><strong>Corresponding <a href="shader-keywords.html">shader keyword</a>
+</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">1</td>
+	<td style="text-align:left;">Android: devices that only support OpenGL ES 2<br>iOS: iPhones before iPhone 5S (not including 5S, but including 5C), iPods up to and including 5th generation, iPads up to 4th generation, iPad mini first generation<br>Desktop: DirectX 9<br>XR: HoloLens</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Rendering.GraphicsTier.Tier1.html">Tier1</a></td>
+	<td style="text-align:left;"><code>UNITY_HARDWARE_TIER1</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">2</td>
+	<td style="text-align:left;">Android: devices that support OpenGL ES 3, devices that support Vulkan<br>iOS: iPhones starting from iPhone 5S, iPad Air, iPad mini 2nd generation, iPod 6th generation, AppleTV<br>WebGL: all devices</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Rendering.GraphicsTier.Tier2.html">Tier2</a></td>
+	<td style="text-align:left;"><code>UNITY_HARDWARE_TIER2</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">3</td>
+	<td style="text-align:left;">Desktop: OpenGL, Metal, Vulkan, DirectX 11+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Rendering.GraphicsTier.Tier3.html">Tier3</a></td>
+	<td style="text-align:left;"><code>UNITY_HARDWARE_TIER3</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2>Using graphics tiers with C# scripts</h2>
+
+<p>Unity stores the value of the current graphics tier in <a href="../ScriptReference/Graphics-activeTier.html">Graphics.activeTier</a>, represented by a <a href="../ScriptReference/Rendering.GraphicsTier.html">GraphicsTier</a> enum. To add custom behavior based on the current graphics tier, you can test against this value.</p>
+
+<p>To override the value of <code>Graphics.activeTier</code>, set it directly. Note that you must do this before Unity loads any shaders that vary based on graphics tier. A good place to set this value is in a pre-loading <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, before you load your main scene.</p>
+
+<p><a name="tier-settings" aria-hidden="true"></a></p>
+
+<h2>Tier settings</h2>
+
+<p>In the Unity Editor, you can configure <strong>tier settings</strong>. Tier settings allow you to enable or disable graphics features for each tier.</p>
+
+<p>Tier settings work by changing <code>#define</code> preprocessor directives in Unity’s internal shader code. These changes automatically affect prebuilt shaders for the Built-in Render Pipeline (such as the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about shader-StandardShader.html">Standard Shader</a>), and the internal shader library code for <span class="tooltip"><a href="SL-SurfaceShaders.html">Surface Shaders</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html" href="shader-StandardShader.html">Standard Shader</a>), and the internal shader library code for <span class="tooltip"><a href="SL-SurfaceShaders.html">Surface Shaders</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SurfaceShader" aria-label="Go to glossary anchor for SurfaceShader">Glossary</a></span></span></span>. You can also add code to your own hand-coded shaders that changes their behavior based on tier settings. For more information, see <a href="#shader-variants">Graphics tiers and shader variants</a>.</p>
+
+<p>The default tier settings are suitable for most use cases. You should only change them if you are experiencing performance issues, or if you want to enable features on lower-end devices that are not enabled by default.</p>
+
+<p>You can configure different tier settings for each graphics tier of a given build target. You can change tier settings in the following ways:</p>
+
+<ul>
+<li>Use the <a href="class-GraphicsSettings.html">Graphics Settings</a> window, in the <strong>Tier Settings</strong> section.</li>
+<li>Use these APIs in an Editor script:
+
+<ul>
+<li><a href="../ScriptReference/Rendering.EditorGraphicsSettings.html">EditorGraphicsSettings</a></li>
+<li><a href="../ScriptReference/Rendering.TierSettings.html">TierSettings</a></li>
+</ul>
+</li>
+</ul>
+
+<p>You can test tier settings in the Editor. To do this, navigate to <strong>Edit &gt; Graphics Tier</strong> and choose the tier that you want the Unity Editor to use.</p>
+
+<p><a name="shader-variants" aria-hidden="true"></a></p>
+
+<h2>Graphics tiers and shader variants</h2>
+
+<p>In the Built-in Render Pipeline, Unity can generate <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about shader-variants.html">shader variants</a><span class="tooltiptext">A verion of a shader program that Unity generates according to a specific combination of shader keywords and their status. A Shader object can contain multiple shader variants. <a href="shader-variants.html" href="shader-variants.html">shader variants</a><span class="tooltiptext">A verion of a shader program that Unity generates according to a specific combination of shader keywords and their status. A Shader object can contain multiple shader variants. <a href="shader-variants.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shadervariant" aria-label="Go to glossary anchor for Shadervariant">Glossary</a></span></span></span> that correspond to graphics tiers.</p>
+
+<p>
+<strong>Note:</strong> These tier shader variants work differently to regular shader variants. At runtime, when Unity loads a <span class="tooltip"><strong>Shader object</strong><span class="tooltiptext">An instance of the Shader class, a Shader object is container for shader programs and GPU instructions, and information that tells Unity how to use them. Use them with materials to determine the appearance of your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about shader-objects.html" href="shader-objects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shaderobject" aria-label="Go to glossary anchor for Shaderobject">Glossary</a></span></span></span> into CPU memory, it only loads the variants for the active tier; it does not load the variants for other tiers. This helps to reduce the runtime impact of tier variants.</p>
+
+<p>To generate tier shader variants, Unity adds this set of <a href="shader-keywords.html">shader keywords</a> to all graphics shaders:</p>
+
+<pre><code>UNITY_HARDWARE_TIER1
+UNITY_HARDWARE_TIER2
+UNITY_HARDWARE_TIER3
+</code></pre>
+
+<p>You can use these keywords in your HLSL code to write conditional behavior for lower or higher-end hardware, the same way that you would for any shader keywords. For example:</p>
+
+<pre><code>#if UNITY_HARDWARE_TIER1
+// Put code for tier 1 devices here
+#else
+// Put code for other devices here
+#endif
+</code></pre>
+
+<p>For more information on working with shader keywords in HLSL code, see <a href="SL-MultipleProgramVariants.html">Declaring and using shader keywords in HLSL</a>.</p>
+
+<p>Unity automatically generates tier shader variants based on the tier settings for the current build target, like this:</p>
+
+<ul>
+<li>If all settings for all tiers are identical, Unity does not generate any tier shader variants.</li>
+<li>If any of the settings for different tiers differ in any way, Unity generates all tier shader variants.</li>
+</ul>
+
+<p>After generating all tier shader variants, Unity identifies and <a href="shader-variants.html#deduplication">deduplicates</a> identical tier shader variants. This means that if the settings for two tiers are identical (for example, if tier 1 is different but tier 2 and tier 3 are identical to one another), then these variants do not add to the file size of your application, and the way that Unity loads tier variants means that they do not affect loading times or runtime memory usage. However, this still results in redundant compilation work.</p>
+
+<p>If you want to use different settings for different tiers, but you also know that this will result in redundant work - for example, if you know that your application will only ever run on tier 1 and tier 2 devices - you can use a script to strip unneeded tier variants from compilation, the same as for any other variants. For more information, see <a href="shader-variant-stripping.html">Shader variant stripping</a>.</p>
+
+<p>In addition to the automatic behavior, you can also force Unity to generate tier shader variants on a per-shader basis. This is useful if you use these constants in your HLSL code and you want to be certain that Unity will compile the required variants, regardless of whether the tier settings for the current build differ from each other</p>
+
+<p>To manually force Unity to generate tier shader variants for a given shader, use the <code>#pragma hardware_tier_variants</code> preprocessor directive in your HLSL code, and specify the graphics APIs for which you want to generate per-tier variants:</p>
+
+<pre><code>#pragma hardware_tier_variants gles3
+</code></pre>
+
+<p>For a list of valid graphics API names that you can use with this directive, see <a href="SL-ShaderCompilationAPIs.html">Targeting graphics APIs</a>. For general information on <code>#pragma</code> directives, see <a href="SL-PragmaDirectives.html">pragma directives</a>.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="built-in-render-pipeline.html"></a></span><div class="tip">Using the Built-in Render Pipeline</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="RenderingPaths.html"></a></span><div class="tip">Rendering paths in the Built-in Render Pipeline</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

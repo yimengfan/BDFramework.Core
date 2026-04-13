@@ -1,0 +1,397 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: ShaderLab: legacy texture combining</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-SetTexture.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-SetTexture.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-SetTexture.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-SetTexture.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-SetTexture.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-SetTexture.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-SetTexture.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-SetTexture.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-writing.html">Writing shaders</a></li>
+<li><a href="SL-Reference.html">ShaderLab</a></li>
+<li><a href="shader-shaderlab-commands.html">ShaderLab: commands</a></li>
+<li><a href="shader-shaderlab-legacy.html">ShaderLab legacy functionality</a></li>
+<li>ShaderLab: legacy texture combining</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-AlphaTest.html"></a></span><div class="tip">ShaderLab: legacy alpha testing</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-BindChannels.html"></a></span><div class="tip">ShaderLab: legacy vertex data channel mapping</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>ShaderLab: legacy texture combining</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Note</strong>: The <span class="tooltip"><strong>ShaderLab</strong><span class="tooltiptext">Unity’s language for defining the structure of Shader objects. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-Shader.html" href="SL-Shader.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span> functionality on this page is legacy, and is documented for backwards compatibility only. If your <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span> functionality on this page is legacy, and is documented for backwards compatibility only. If your <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> source file includes HLSL code, Unity ignores these commands completely. If your shader source file does not include HLSL code, Unity compiles these commands into regular shader programs on import.</p>
+
+<h2>Render pipeline compatibility</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature name</strong></th>
+	<th style="text-align:left;"><strong>Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span></strong></th>
+	<th style="text-align:left;"><strong>Universal Render Pipeline (URP)</strong></th>
+	<th style="text-align:left;"><strong>High Definition Render Pipeline (HDRP)</strong></th>
+	<th style="text-align:left;"><strong>Custom SRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Legacy texture combining</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<h1>Overview</h1>
+
+<p>After the basic vertex lighting has been calculated, textures are applied. In ShaderLab this is done using <strong>SetTexture</strong> command.</p>
+
+<p>Fixed function texturing is the place to do old-style combiner effects. You can have multiple SetTexture commands inside a pass - all textures are applied in sequence, like layers in a painting program. SetTexture commands must be placed at the end of a <a href="SL-Pass.html">Pass</a>.</p>
+
+<h2>Syntax</h2>
+
+<pre><code>SetTexture [TextureName] {Texture Block}
+</code></pre>
+
+<p>Assigns a texture. <em>TextureName</em> must be defined as a texture property. How to apply the texture is defined inside the <em>TextureBlock</em>.</p>
+
+<p>The texture block controls how the texture is applied. Inside the texture block can be up to two commands: <code>combine</code> and <code>constantColor</code>.</p>
+
+<h2>Texture block <code>combine</code> command</h2>
+
+<p>
+<code>combine</code> <em>src1</em> * <em>src2</em>: Multiplies src1 and src2 together. The result will be darker than either input.</p>
+
+<p>
+<code>combine</code> <em>src1</em> + <em>src2</em>: Adds src1 and src2 together. The result will be lighter than either input.</p>
+
+<p>
+<code>combine</code> <em>src1</em> - <em>src2</em>: Subtracts src2 from src1.</p>
+
+<p>
+<code>combine</code> <em>src1</em> <code>lerp</code> (<em>src2</em>) <em>src3</em>: Interpolates between src3 and src1, using the alpha of src2. Note that the interpolation is opposite direction: src1 is used when alpha is one, and src3 is used when alpha is zero.</p>
+
+<p>
+<code>combine</code> <em>src1</em> * <em>src2</em> + <em>src3</em>: Multiplies src1 with the alpha component of src2, then adds src3.</p>
+
+<p>All the <strong>src</strong> properties can be either one of <em>previous</em>, <em>constant</em>, <em>primary</em> or <em>texture</em>. </p>
+
+<ul>
+<li>
+<strong>Previous</strong> is the the result of the previous SetTexture.</li>
+<li>
+<strong>Primary</strong> is the color from the <a href="SL-Material.html">lighting calculation</a> or the vertex color if it is <a href="SL-BindChannels.html">bound</a>.</li>
+<li>
+<strong>Texture</strong> is the color of the texture specified by <em>TextureName</em> in the SetTexture (see above).</li>
+<li>
+<strong>Constant</strong> is the color specified in <strong>ConstantColor</strong>.</li>
+</ul>
+
+<p>Modifiers:</p>
+
+<ul>
+<li>The formulas specified above can optionally be followed by the keywords <strong>Double</strong> or <strong><span class="tooltip"><strong>Quad</strong><span class="tooltiptext">A primitive object that resembles a plane but its edges are only one unit long, it uses only 4 vertices, and the surface is oriented in the XY plane of the local coordinate space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PrimitiveObjects.html" href="PrimitiveObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Quad" aria-label="Go to glossary anchor for Quad">Glossary</a></span></span></span></strong> to make the resulting color 2x or 4x as bright.</li>
+<li>All the <strong>src</strong> properties, except <code>lerp</code> argument, can optionally be preceded by <strong>one -</strong> to make the resulting color negated.</li>
+<li>All the <strong>src</strong> properties can be followed by <strong>alpha</strong> to take only the alpha channel.</li>
+</ul>
+
+<h2>Texture block <code>constantColor</code> command</h2>
+
+<p>
+<strong>ConstantColor color:</strong> Defines a constant color that can be used in the combine command.</p>
+
+<h2>Functionality removed in Unity 5.0</h2>
+
+<p>Unity versions before 5.0 did support texture coordinate transformations with a <code>matrix</code> command inside a texture block. If you need this functionality now, consider rewriting your shader as a <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-ShaderPrograms.html">programmable shader</a> instead, and do the UV transformation in the <span class="tooltip"><strong>vertex shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a href="SL-ShaderPrograms.html" href="SL-ShaderPrograms.html">programmable shader</a> instead, and do the UV transformation in the <span class="tooltip"><strong>vertex shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a href="SL-ShaderPrograms.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span>.</p>
+
+<p>Similarly, 5.0 removed signed add (<code>a+-b</code>), multiply signed add (<code>a*b+-c</code>), multiply subtract (<code>a*b-c</code>) and dot product (<code>dot3</code>, <code>dot3rgba</code>) texture combine modes. If you need them, do the math in the <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> shader instead.</p>
+
+<h2>Details</h2>
+
+<p>Before <a href="SL-ShaderPrograms.html">fragment programs</a> existed, older graphics cards used a layered approach to textures. The textures are applied one after each other, modifying the color that will be written to the screen. For each texture, the texture is typically combined with the result of the previous operation. These days it is advisable to use actual fragment programs.</p>
+
+<figure>
+<img src="../uploads/SL/SetTextureGraph.png" alt="">
+</figure>
+
+<p>Note that each texture stage may or might not be clamped to 0..1 range, depending on the platform. This might affect SetTexture stages that can produce values higher than 1.0.</p>
+
+<h2>Separate Alpha &amp; Color computation</h2>
+
+<p>By default, the combiner formula is used for calculating both the RGB and alpha component of the color. Optionally, you can specify a separate formula for the alpha calculation. This looks like this:</p>
+
+<pre><code>SetTexture [_MainTex] { combine previous * texture, previous + texture }
+</code></pre>
+
+<p>Here, we multiply the RGB colors and add the alpha.</p>
+
+<h2>Specular highlights</h2>
+
+<p>By default the <strong>primary</strong> color is the sum of the diffuse, ambient and <span class="tooltip"><strong>specular colors</strong><span class="tooltiptext">The color of a specular highlight.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#specularcolor" aria-label="Go to glossary anchor for specularcolor">Glossary</a></span></span></span> (as defined in the <a href="SL-Material.html">Lighting calculation</a>). If you specify <strong>SeparateSpecular On</strong> in the pass options, the specular color will be added in <em>after</em> the combiner calculation, rather than before. This is the default behavior of the built-in VertexLit shader.</p>
+
+<h2>Graphics hardware support</h2>
+
+<p>Modern graphics cards with <a href="SL-ShaderPrograms.html">fragment shader</a> support (“shader model 2.0” on desktop, OpenGL ES 2.0 on mobile) support all <strong>SetTexture</strong> modes and at least 4 texture stages (many of them support 8). If you’re running on really old hardware (made before 2003 on PC, or before iPhone3GS on mobile), you might have as low as two texture stages. The shader author should write separate <a href="SL-SubShader.html">SubShaders</a> for the cards they want to support.</p>
+
+<h2>Examples</h2>
+
+<h3>Alpha Blending Two Textures</h3>
+
+<p>This small examples takes two textures. First it sets the first combiner to just take the <strong>_MainTex</strong>, then is uses the alpha channel of <strong>_BlendTex</strong> to fade in the RGB colors of <strong>_BlendTex</strong>
+</p>
+
+<pre><code>Shader &quot;Examples/2 Alpha Blended Textures&quot; {
+    Properties {
+        _MainTex (&quot;Base (RGB)&quot;, 2D) = &quot;white&quot; {}
+        _BlendTex (&quot;Alpha Blended (RGBA) &quot;, 2D) = &quot;white&quot; {}
+    }
+    SubShader {
+        Pass {
+            // Apply base texture
+            SetTexture [_MainTex] {
+                combine texture
+            }
+            // Blend in the alpha texture using the lerp operator
+            SetTexture [_BlendTex] {
+                combine texture lerp (texture) previous
+            }
+        }
+    }
+}
+</code></pre>
+
+<h3>Alpha Controlled Self-illumination</h3>
+
+<p>This shader uses the alpha component of the <strong>_MainTex</strong> to decide where to apply lighting. It does this by applying the texture to two stages; In the first stage, the alpha value of the texture is used to blend between the vertex color and solid white. In the second stage, the RGB values of the texture are multiplied in.</p>
+
+<pre><code>Shader &quot;Examples/Self-Illumination&quot; {
+    Properties {
+        _MainTex (&quot;Base (RGB) Self-Illumination (A)&quot;, 2D) = &quot;white&quot; {}
+    }
+    SubShader {
+        Pass {
+            // Set up basic white vertex lighting
+            Material {
+                Diffuse (1,1,1,1)
+                Ambient (1,1,1,1)
+            }
+            Lighting On
+
+            // Use texture alpha to blend up to white (= full illumination)
+            SetTexture [_MainTex] {
+                constantColor (1,1,1,1)
+                combine constant lerp(texture) previous
+            }
+            // Multiply in texture
+            SetTexture [_MainTex] {
+                combine previous * texture
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>We can do something else for free here, though; instead of blending to solid white, we can add a self-illumination color and blend to that. Note the use of <strong>ConstantColor</strong> to get a _SolidColor from the properties into the texture blending.</p>
+
+<pre><code>Shader &quot;Examples/Self-Illumination 2&quot; {
+    Properties {
+        _IlluminCol (&quot;Self-Illumination color (RGB)&quot;, Color) = (1,1,1,1)
+        _MainTex (&quot;Base (RGB) Self-Illumination (A)&quot;, 2D) = &quot;white&quot; {}
+    }
+    SubShader {
+        Pass {
+            // Set up basic white vertex lighting
+            Material {
+                Diffuse (1,1,1,1)
+                Ambient (1,1,1,1)
+            }
+            Lighting On
+
+            // Use texture alpha to blend up to white (= full illumination)
+            SetTexture [_MainTex] {
+                // Pull the color property into this blender
+                constantColor [_IlluminCol]
+                // And use the texture's alpha to blend between it and
+                // vertex color
+                combine constant lerp(texture) previous
+            }
+            // Multiply in texture
+            SetTexture [_MainTex] {
+                combine previous * texture
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>And finally, we take all the lighting properties of the vertexlit shader and pull that in:</p>
+
+<pre><code>Shader &quot;Examples/Self-Illumination 3&quot; {
+    Properties {
+        _IlluminCol (&quot;Self-Illumination color (RGB)&quot;, Color) = (1,1,1,1)
+        _Color (&quot;Main Color&quot;, Color) = (1,1,1,0)
+        _SpecColor (&quot;Spec Color&quot;, Color) = (1,1,1,1)
+        _Emission (&quot;Emmisive Color&quot;, Color) = (0,0,0,0)
+        _Shininess (&quot;Shininess&quot;, Range (0.01, 1)) = 0.7
+        _MainTex (&quot;Base (RGB)&quot;, 2D) = &quot;white&quot; {}
+    }
+
+    SubShader {
+        Pass {
+            // Set up basic vertex lighting
+            Material {
+                Diffuse [_Color]
+                Ambient [_Color]
+                Shininess [_Shininess]
+                Specular [_SpecColor]
+                Emission [_Emission]
+            }
+            Lighting On
+
+            // Use texture alpha to blend up to white (= full illumination)
+            SetTexture [_MainTex] {
+                constantColor [_IlluminCol]
+                combine constant lerp(texture) previous
+            }
+            // Multiply in texture
+            SetTexture [_MainTex] {
+                combine previous * texture
+            }
+        }
+    }
+}
+</code></pre>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-AlphaTest.html"></a></span><div class="tip">ShaderLab: legacy alpha testing</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-BindChannels.html"></a></span><div class="tip">ShaderLab: legacy vertex data channel mapping</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

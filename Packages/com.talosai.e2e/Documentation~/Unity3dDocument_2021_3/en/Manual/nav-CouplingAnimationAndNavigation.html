@@ -1,0 +1,389 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Coupling Animation and Navigation</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/nav-CouplingAnimationAndNavigation.html">English</a></li>
+<li><a href="/cn/current/Manual/nav-CouplingAnimationAndNavigation.html">中文</a></li>
+<li><a href="/ja/current/Manual/nav-CouplingAnimationAndNavigation.html">日本語</a></li>
+<li><a href="/kr/current/Manual/nav-CouplingAnimationAndNavigation.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/nav-CouplingAnimationAndNavigation.html">English</a></li>
+<li><a href="/cn/current/Manual/nav-CouplingAnimationAndNavigation.html">中文</a></li>
+<li><a href="/ja/current/Manual/nav-CouplingAnimationAndNavigation.html">日本語</a></li>
+<li><a href="/kr/current/Manual/nav-CouplingAnimationAndNavigation.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Navigation.html">Navigation and Pathfinding</a></li>
+<li><a href="nav-HowTos.html">Navigation How-Tos</a></li>
+<li>Coupling Animation and Navigation</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="nav-AgentPatrol.html"></a></span><div class="tip">Making an Agent Patrol Between a Set of Points</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnityServices.html"></a></span><div class="tip">Unity Services</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Coupling Animation and Navigation</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The goal of this document is to guide you to setup navigating humanoid characters to move using the navigation system.</p>
+
+<p>We’ll be using Unity’s built-in systems for animation and navigation along with custom scripting to achieve this.</p>
+
+<p>It’s assumed you’re familiar with the basics of Unity and the Mecanim animation system.</p>
+
+<p>An example project is available — so you don’t have add <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> or set up animations and animation controller from scratch:</p>
+
+<ul>
+<li>
+<a href="../uploads/Examples/NavigationAnimation_53.zip">NavigationAnimation_53.zip</a> <em>Works with Unity 5.3+</em>
+</li>
+</ul>
+
+<h2>Creating the Animation Controller</h2>
+
+<p>To get a responsive and versatile animation controller — covering a wide range of movements — we need a set of animations moving in different directions. This is sometimes referred to as a strafe-set.</p>
+
+<p>In addition to the move animations we need an animation for the standing character.</p>
+
+<p>We proceed by arranging the strafe-set in a 2D blend tree — choose blend type: <strong>2D Simple Directional</strong> and place animations using <strong>Compute Positions &gt; Velocity XZ</strong>
+</p>
+
+<p>For blending control we add two float parameters <strong>velx</strong> and <strong>vely</strong>, and assign them to the blend tree.</p>
+
+<p>Here we’ll be placing 7 run animations — each with a different velocity. In addition to the forwards (+ left/right) and backwards (+ left/right) we also use an <span class="tooltip"><strong>animation clip</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html" href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> for running on the spot. The latter is highlighted in the center of the 2D blend map below. The reason for having an animation running on the spot is two-fold, firstly it preserves the style of running when blended with the other animations. Secondly the animation prevents foot-sliding when blending. </p>
+
+<figure>
+<img src="../uploads/Main/NavAnimBlend2d.jpg" alt="">
+</figure>
+
+<p>Then we add the idle animation clip in it’s own node (<strong>Idle</strong>).
+We now have two discrete animation states that we couple with 2 transitions.</p>
+
+<figure>
+<img src="../uploads/Main/NavAnimStates.png" alt="">
+</figure>
+
+<p>To control the switch between the moving and idle states we add a boolean control parameter <strong>move</strong>. Then disable the <strong>Has Exit Time</strong> property on the transitions. This allows the transition to trigger at any time during the animation. Transition time should be set to around 0.10 second to get a responsive transition.</p>
+
+<figure>
+<img src="../uploads/Main/NavAnimTransition.png" alt="">
+</figure>
+
+<p>Now place the new created animation controller on the character you want to move.</p>
+
+<p>Press play and select the character in the <strong>Hierarchy window</strong>. You can now manually control the animation values in the <strong><span class="tooltip"><strong>Animator window</strong><span class="tooltiptext">The window where the Animator Controller is visualized and edited. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimatorWindow.html" href="AnimatorWindow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorWindow" aria-label="Go to glossary anchor for AnimatorWindow">Glossary</a></span></span></span></strong> and change the move state and velocity.</p>
+
+<p>The next step is to create other means of controlling the <span class="tooltip"><strong>animation parameters</strong><span class="tooltiptext">Used to communicate between scripting and the Animator Controller. Some parameters can be set in scripting and used by the controller, while other parameters are based on Custom Curves in Animation Clips and can be sampled using the scripting API. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationParameters.html" href="AnimationParameters.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationParameters" aria-label="Go to glossary anchor for AnimationParameters">Glossary</a></span></span></span>.</p>
+
+<h2>Navigation Control</h2>
+
+<p>Place a <strong>NavMeshAgent</strong> component on the character and adjust the radius, height and to match the character - additionally change the speed property to match the maximum speed in the <span class="tooltip"><strong>animation blend tree</strong><span class="tooltiptext">Used for continuous blending between similar Animation Clips based on float Animation Parameters. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-BlendTree.html" href="class-BlendTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationBlendTree" aria-label="Go to glossary anchor for AnimationBlendTree">Glossary</a></span></span></span>.</p>
+
+<p>Create a <span class="tooltip"><strong>navmesh</strong><span class="tooltiptext">A mesh that Unity generates to approximate the walkable areas and obstacles in your environment for path finding and AI-controlled navigation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about nav-BuildingNavMesh.html" href="nav-BuildingNavMesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#NavMesh" aria-label="Go to glossary anchor for NavMesh">Glossary</a></span></span></span> for the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#NavMesh" aria-label="Go to glossary anchor for NavMesh">Glossary</a></span></span></span> for the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> you’ve placed the character in.</p>
+
+<p>Next we need to tell the character where to navigate to. This typically is very specific to the application. Here we choose a click to move behavior — the character moved to the point in the world where the user has clicked on the screen.</p>
+
+<pre><code>// ClickToMove.cs
+using UnityEngine;
+using UnityEngine.AI;
+
+[RequireComponent (typeof (NavMeshAgent))]
+public class ClickToMove : MonoBehaviour {
+    RaycastHit hitInfo = new RaycastHit();
+    NavMeshAgent agent;
+
+    void Start () {
+        agent = GetComponent&lt;NavMeshAgent&gt; ();
+    }
+    void Update () {
+        if(Input.GetMouseButtonDown(0)) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray.origin, ray.direction, out hitInfo))
+                agent.destination = hitInfo.point;
+        }
+    }
+}
+</code></pre>
+
+<p>Pressing play now — and clicking around in the scene — you’ll see the character move around in the scene. However — the animations don’t match the movement at all. We need to communicate the state and velocity of the agent to the animation controller.</p>
+
+<p>To transfer the velocity and state info from the agent to the animation controller we will add another script.</p>
+
+<pre><code>// LocomotionSimpleAgent.cs
+using UnityEngine;
+using UnityEngine.AI;
+
+[RequireComponent (typeof (NavMeshAgent))]
+[RequireComponent (typeof (Animator))]
+public class LocomotionSimpleAgent : MonoBehaviour {
+    Animator anim;
+    NavMeshAgent agent;
+    Vector2 smoothDeltaPosition = Vector2.zero;
+    Vector2 velocity = Vector2.zero;
+
+    void Start ()
+    {
+        anim = GetComponent&lt;Animator&gt; ();
+        agent = GetComponent&lt;NavMeshAgent&gt; ();
+        // Don’t update position automatically
+        agent.updatePosition = false;
+    }
+    
+    void Update ()
+    {
+        Vector3 worldDeltaPosition = agent.nextPosition - transform.position;
+
+        // Map 'worldDeltaPosition' to local space
+        float dx = Vector3.Dot (transform.right, worldDeltaPosition);
+        float dy = Vector3.Dot (transform.forward, worldDeltaPosition);
+        Vector2 deltaPosition = new Vector2 (dx, dy);
+
+        // Low-pass filter the deltaMove
+        float smooth = Mathf.Min(1.0f, Time.deltaTime/0.15f);
+        smoothDeltaPosition = Vector2.Lerp (smoothDeltaPosition, deltaPosition, smooth);
+
+        // Update velocity if time advances
+        if (Time.deltaTime &gt; 1e-5f)
+            velocity = smoothDeltaPosition / Time.deltaTime;
+
+        bool shouldMove = velocity.magnitude &gt; 0.5f &amp;&amp; agent.remainingDistance &gt; agent.radius;
+
+        // Update animation parameters
+        anim.SetBool(&quot;move&quot;, shouldMove);
+        anim.SetFloat (&quot;velx&quot;, velocity.x);
+        anim.SetFloat (&quot;vely&quot;, velocity.y);
+
+        GetComponent&lt;LookAt&gt;().lookAtTargetPosition = agent.steeringTarget + transform.forward;
+    }
+
+    void OnAnimatorMove ()
+    {
+        // Update position to agent position
+        transform.position = agent.nextPosition;
+    }
+}
+</code></pre>
+
+<p>This script deserves a little explanation. It’s placed on the character — which has an <strong>Animator</strong> and a <strong>NavMeshAgent</strong> component attached — as well as the click to move script above.</p>
+
+<p>First the script tells the agent not to update the character position automatically. We handle the position update that last in the script. The orientation is updated by the agent.</p>
+
+<p>The animation blend is controlled by reading the agent velocity. It is transformed into a relative velocity (based on character orientation) — and then smoothed. The transformed horizontal velocity components are then passed to the <strong>Animator</strong> and additionally the state switching between idle and moving is controlled by the speed (i.e. velocity magnitude).</p>
+
+<p>In the <code>OnAnimatorMove()</code> callback we update the position of the character to match the <strong>NavMeshAgent</strong>.</p>
+
+<p>Playing the scene again gives show that animation matches the movement to as close as possible.</p>
+
+<h2>Improving the Quality of the Navigating Character</h2>
+
+<p>To improve the quality of the animated and navigating character we will explore a couple of options.</p>
+
+<h3>Looking</h3>
+
+<p>Having the character to look and turn towards points of interest is important to convey attention and anticipation. We’ll use the animation systems lookat API. This calls for another script.</p>
+
+<pre><code>// LookAt.cs
+using UnityEngine;
+using System.Collections;
+
+[RequireComponent (typeof (Animator))]
+public class LookAt : MonoBehaviour {
+    public Transform head = null;
+    public Vector3 lookAtTargetPosition;
+    public float lookAtCoolTime = 0.2f;
+    public float lookAtHeatTime = 0.2f;
+    public bool looking = true;
+
+    private Vector3 lookAtPosition;
+    private Animator animator;
+    private float lookAtWeight = 0.0f;
+
+    void Start ()
+    {
+        if (!head)
+        {
+            Debug.LogError(&quot;No head transform - LookAt disabled&quot;);
+            enabled = false;
+            return;
+        }
+        animator = GetComponent&lt;Animator&gt; ();
+        lookAtTargetPosition = head.position + transform.forward;
+        lookAtPosition = lookAtTargetPosition;
+    }
+
+    void OnAnimatorIK ()
+    {
+        lookAtTargetPosition.y = head.position.y;
+        float lookAtTargetWeight = looking ? 1.0f : 0.0f;
+
+        Vector3 curDir = lookAtPosition - head.position;
+        Vector3 futDir = lookAtTargetPosition - head.position;
+
+        curDir = Vector3.RotateTowards(curDir, futDir, 6.28f*Time.deltaTime, float.PositiveInfinity);
+        lookAtPosition = head.position + curDir;
+
+        float blendTime = lookAtTargetWeight &gt; lookAtWeight ? lookAtHeatTime : lookAtCoolTime;
+        lookAtWeight = Mathf.MoveTowards (lookAtWeight, lookAtTargetWeight, Time.deltaTime/blendTime);
+        animator.SetLookAtWeight (lookAtWeight, 0.2f, 0.5f, 0.7f, 0.5f);
+        animator.SetLookAtPosition (lookAtPosition);
+    }
+}
+</code></pre>
+
+<p>Add the script to the character and assign the head property to the head transform in your characters transform hierarchy. The LookAt script has no notion of navigation control — so to control where to look we go back to the <strong>LocomotionSimpleAgent.cs</strong> script and add a couple of lines to control the looking. Add the end of <code>Update()</code> add:</p>
+
+<pre><code>        LookAt lookAt = GetComponent&lt;LookAt&gt; ();
+        if (lookAt)
+            lookAt.lookAtTargetPosition = agent.steeringTarget + transform.forward;
+</code></pre>
+
+<p>This will tell the <strong>LookAt</strong> script to set the point of interest to approximately the next corner along the path or — if no corners — to the end of the path.</p>
+
+<p>Try it out.</p>
+
+<h3>Animation Driven Character using Navigation</h3>
+
+<p>The character has so far been controlled completely by the position dictated by the agent. This ensures that the avoidance of other characters and obstacles translates directly to the character position. However it may lead to foot-sliding if the animation doesn’t cover the proposed velocity. Here we’ll relax the constraint of the character a bit. Basically we’ll be trading the avoidance quality for animation quality.</p>
+
+<p>Replace the <code>OnAnimatorMove()</code> callback on the <strong>LocomotionSimpleAgent.cs</strong> script replace the line with the following</p>
+
+<pre><code>    void OnAnimatorMove ()
+    {
+        // Update position based on animation movement using navigation surface height
+        Vector3 position = anim.rootPosition;
+        position.y = agent.nextPosition.y;
+        transform.position = position;
+    }
+</code></pre>
+
+<p>When trying this out you may notice the that character can now drift away from the agent position (green wireframe cylinder) . You may need to limit that character animation drift. This can be done either by pulling the agent towards the character — or pull the character towards the agent position. Add the following at the end of the <code>Update()</code> method on the script <strong>LocomotionSimpleAgent.cs</strong>.</p>
+
+<pre><code>        // Pull character towards agent
+        if (worldDeltaPosition.magnitude &gt; agent.radius)
+            transform.position = agent.nextPosition - 0.9f*worldDeltaPosition;
+</code></pre>
+
+<p>Or — if you want the agent to follow the character.</p>
+
+<pre><code>        // Pull agent towards character
+        if (worldDeltaPosition.magnitude &gt; agent.radius)
+            agent.nextPosition = transform.position + 0.9f*worldDeltaPosition;
+</code></pre>
+
+<p>What works best very much depends on the specific use-case.</p>
+
+<h2>Conclusion</h2>
+
+<p>We have set up a character that moves using the navigation system and animates accordingly. Tweaking the numbers of blend time, look-at weights etc. can improve the looks — and is a good way to further explore this setup.</p>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="nav-AgentPatrol.html"></a></span><div class="tip">Making an Agent Patrol Between a Set of Points</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnityServices.html"></a></span><div class="tip">Unity Services</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

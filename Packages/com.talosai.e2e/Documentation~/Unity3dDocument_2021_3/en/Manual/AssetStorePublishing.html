@@ -1,0 +1,222 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Publishing to the Asset Store</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetStorePublishing.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetStorePublishing.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetStorePublishing.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetStorePublishing.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetStorePublishing.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetStorePublishing.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetStorePublishing.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetStorePublishing.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AssetStore.html">Unity's Asset Store</a></li>
+<li>Publishing to the Asset Store</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetPackagesLabels.html"></a></span><div class="tip">Using labels to organize My Assets</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetStoreCreateAcct.html"></a></span><div class="tip">Creating your Publisher Account</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Publishing to the Asset Store</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This is the basic workflow for publishing your assets to the <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span>:</p>
+
+<ol>
+<li>
+<a href="AssetStoreCreateAcct.html">Create your Publisher Account</a>.</li>
+<li>
+<a href="AssetStoreCreatePkg.html">Create a new package draft</a>. You can also <a href="AssetStoreDeletePkg.html">delete your draft</a> at any time and create a new draft.</li>
+<li>
+<a href="AssetStoreUpload.html">Upload the assets into the package</a>.</li>
+<li>
+<a href="AssetStorePkgDetails.html">Finalize the package details</a>.</li>
+<li>
+<a href="AssetStoreSubmit.html">Submit the package for approval</a>.</li>
+<li>
+<a href="AssetStoreStatus.html">View the status of your asset Store submissions</a>.</li>
+</ol>
+
+<p>While you wait to hear whether Unity has accepted your package to the Asset Store, you can <a href="AssetStorePayouts.html">set up your payout profile</a> so you can collect revenue from your packages. If you haven’t already done this, you can also <a href="AssetStoreSupport.html">set up customer support for your publisher account</a>.</p>
+
+<p>Once your package is on the Asset Store, you can take these actions to improve discoverability and encourage customers to purchase your package:</p>
+
+<ul>
+<li>
+<a href="AssetStoreMassLabeler.html">Add tags to your package</a> to make it easier for your customers to find it.</li>
+<li>
+<a href="AssetStoreAnalytics.html">Connecting your account to Google Analytics</a> to track website traffic to your package page on the Asset Store.</li>
+<li>Unity might offer you the chance to include your package in an Asset Store sales promotion. You can either <a href="AssetStorePromotion.html">participate in Unity’s sales promotion or set up one of your own</a>.</li>
+<li>Authorize Unity <a href="AssetStoreRefunding.html">to refund your customers</a> for a package.</li>
+</ul>
+
+<p>If you want to update or enhance an existing package, you can <a href="AssetStoreUpgrade.html">create a major upgrade version</a>. After your upgrade is published to the Asset Store, you can <a href="AssetStoreRemoving.html">deprecate your old package</a> so that new users only find the most recent version. You can also create a “lite” upgrade version, which can be useful to allow customers to test out your package without spending the full amount.</p>
+
+<p>You can use the tabs on your Publisher Account page to: </p>
+
+<ul>
+<li>Read the <a href="AssetStoreAdmin.html#reviews">Reviews</a> about your packages.</li>
+<li>Check <a href="AssetStoreAdmin.html#sales">Sales</a> and <a href="AssetStoreAdmin.html#revenue">Revenue</a>.</li>
+<li>See the statistics on your package <a href="AssetStoreAdmin.html#downloads">Downloads</a> and any <a href="AssetStoreAdmin.html#vouchers">Vouchers</a> you issued to customers.</li>
+<li>Manage the <a href="AssetStoreAdmin.html#users">Users</a> on your team.</li>
+<li>Manage your account <a href="AssetStoreAdmin.html#info">Info</a>.</li>
+</ul>
+
+<p>For additional help with any of these procedures, see the online <a href="https://support.unity3d.com/hc/en-us/sections/201163815-Asset-Store-Publishers-">Asset Store FAQ</a> and the <a href="https://forum.unity.com/forums/assets-and-asset-store.32/">Asset Store forum</a>. Publishers who have an asset accepted to the Asset Store can also apply to join <a href="https://forum.unity.com/forums/asset-store-publishers.91/">the Publisher’s forum</a>.</p>
+
+<h2>Concepts</h2>
+
+<p>Here are some important concepts you need to know about publishing to the Unity Asset Store:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Concept:</strong></th>
+	<th style="text-align:left;"><strong>Definition:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Unity ID (account)</strong></td>
+	<td style="text-align:left;">Your user account for use in Unity. Your Unity ID enables you to buy subscriptions, manage your Projects and collaborate with teams, and acquire tools and samples on the Asset Store.<br><br>You can only access and manage your Asset Store purchases when you are logged in with your Unity account. If you decide to create a publisher account, you also need your Unity account.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Publisher account</strong></td>
+	<td style="text-align:left;">This account is tied to your Unity account, but it also gives you access to creating and publishing packages, setting up payouts, viewing sales and revenues, and managing all aspects of your profile on the Asset Store.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Payout profiles</strong></td>
+	<td style="text-align:left;">Payout profiles let you specify how (and how often) Unity pays you for your Asset sales, and whether Unity needs to withhold taxes (as some tax authorities require). Payout profiles are associated with <a href="OrgsUnityOrganizations.html">Organizations</a>. You must be the Organization’s <a href="OrgsManagingyourOrganization.html#membersandgroups">Owner</a> to see, create or update its payout profile. For more information, see <a href="OrgsManagingyourOrganization.html">Managing your Organization</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Asset Store Tools</strong></td>
+	<td style="text-align:left;">You need <a href="https://assetstore.unity.com/packages/tools/utilities/asset-store-publishing-tools-115">these tools</a> to be able to create packages to sell on the Asset Store from inside Unity. You can get them from the Asset Store itself: they are like any other Asset available on the store. Download the tools to your computer and import them into your Project.<br><br>The <strong>Asset Store Tools</strong> package also includes <a href="AssetStoreUpload.html#ValidatorTool">the Validator tool</a>, which you can use to check your Asset Store package before uploading and submitting it for review. Validating your package with this tool is part of the review process that the Asset Store curation team performs on your Assets when you submit a package to the Asset Store, so running it on your package can reduce the reviewing time. However, note that the Validator tool cannot completely simulate the approval process, and might sometimes give false positives.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Package status</strong></td>
+	<td style="text-align:left;">Describes what part of the package lifecycle each package is at. For more information, see <a href="AssetStoreAdmin.html#pkg-status">Package status</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetPackagesLabels.html"></a></span><div class="tip">Using labels to organize My Assets</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetStoreCreateAcct.html"></a></span><div class="tip">Creating your Publisher Account</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: IL2CPP Overview</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="core" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/IL2CPP.html">English</a></li>
+<li><a href="/cn/current/Manual/IL2CPP.html">中文</a></li>
+<li><a href="/ja/current/Manual/IL2CPP.html">日本語</a></li>
+<li><a href="/kr/current/Manual/IL2CPP.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/IL2CPP.html">English</a></li>
+<li><a href="/cn/current/Manual/IL2CPP.html">中文</a></li>
+<li><a href="/ja/current/Manual/IL2CPP.html">日本語</a></li>
+<li><a href="/kr/current/Manual/IL2CPP.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="unity-architecture.html">Unity architecture</a></li>
+<li><a href="scripting-backends.html">Scripting backends</a></li>
+<li>IL2CPP Overview</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Mono.html"></a></span><div class="tip">Mono overview</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="handling-IL2CPP-additional-args.html"></a></span><div class="tip">Handling platform specific settings for IL2CPP additional arguments</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>IL2CPP Overview</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <strong><strong>IL2CPP</strong></strong> (Intermediate Language To C++) <span class="tooltip"><strong>scripting backend</strong><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about scripting-backends.html" href="scripting-backends.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScriptingBackend" aria-label="Go to glossary anchor for ScriptingBackend">Glossary</a></span></span></span> is an alternative to the Mono backend. IL2CPP provides better support for applications across a wider range of platforms. The IL2CPP backend converts MSIL (Microsoft Intermediate Language) code (for example, C# code in scripts) into C++ code, then uses the C++ code to create a native binary file (for example, .exe, .apk, or .xap) for your chosen platform.</p>
+
+<p>This type of compilation, in which Unity compiles code specifically for a target platform when it builds the native binary, is called ahead-of-time (AOT) compilation. The <a href="Mono.html">Mono backend</a> compiles code at runtime, with a technique called just-in-time compilation (JIT).</p>
+
+<p>On this page:</p>
+
+<ul>
+<li><a href="#BuildingProject">Building a project using IL2CPP</a></li>
+<li><a href="#HowItWorks">How IL2CPP works</a></li>
+<li><a href="#OptimizingBuildTimes">Optimising IL2CPP build times</a></li>
+<li><a href="#EnablingRuntimeChecksUsingIl2CppSetOption">Enabling runtime checks using IL2CppSetOption</a></li>
+</ul>
+
+<p>Some platforms don’t support <span class="tooltip"><strong>AOT compilation</strong><span class="tooltiptext">Ahead of Time (AOT) compilation is an iOS optimization method for optimizing the size of the built iOS player <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone-playerSizeOptimization.html" href="iphone-playerSizeOptimization.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AOTCompilation" aria-label="Go to glossary anchor for AOTCompilation">Glossary</a></span></span></span>, so the IL2CPP backend doesn’t work on every platform. Other platforms support AOT and IL2CPP, but don’t allow JIT compilation, and so can’t support the Mono backend. When a platform can support both backends, Mono is the default. For more information, see <a href="ScriptingRestrictions.html">Scripting restrictions</a>.</p>
+
+<p>IL2CPP can improve performance across a variety of platforms, but the need to include machine code in built applications increases both the build time and the size of the final built application. For more information, see How IL2CPP works and the blog series <a href="https://blog.unity.com/technology/an-introduction-to-ilcpp-internals">An introduction to IL2CPP internals.</a>
+</p>
+
+<p>IL2CPP supports the debugging of managed code in the same way as the Mono scripting backend. For more information, see <a href="ManagedCodeDebugging.html">Debugging C# code in Unity</a>.</p>
+
+<h2>
+<a name="BuildingProject" aria-hidden="true"></a> Building a project using IL2CPP</h2>
+
+<p>To build a project with IL2CPP, you need to have the backend installed in your Unity installation. You can select IL2CPP as an optional module when you first install a version of Unity, or add IL2CPP support to an existing installation through the Unity Hub. For more information, see <a href="https://docs.unity3d.com/hub/manual/index.html">Installing the Unity Hub</a> and <a href="https://docs.unity3d.com/hub/manual/AddModules.html">Add modules to the Unity Editor</a>.</p>
+
+<p>IL2CPP also requires some systems native to the target platform to generate the C++ code. This means that to use IL2CPP on a specific platform, you need to build the application on that platform. For example, to use IL2CPP with MacOS as a build target, you need to build the application on a machine that uses MacOS. For more information about system requirements for desktop platforms, including IL2CPP requirements for individual platforms, see the Desktop section of <a href="https://docs.unity3d.com/Manual/system-requirements.html#desktop">System Requirements for Unity</a>.</p>
+
+<p>You can change the scripting backend Unity uses to build your application in one of two ways:</p>
+
+<ul>
+<li>
+<p>Through the <strong><span class="tooltip"><strong>Player Settings</strong><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html" href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span></strong> menu in the Editor. Perform the following steps to change the scripting backend through the <strong>Player Settings</strong> menu:</p>
+
+<ol>
+<li>Go to <strong>Edit</strong> &gt; <strong>Project Settings</strong>.</li>
+<li>Click on the <strong>Player Settings</strong> button to open the <a href="class-PlayerSettings.html"><strong>Player</strong></a> settings for the current platform in the <a href="UsingTheInspector.html"><strong>Inspector</strong></a>.</li>
+<li>Navigate to the <strong>Configuration</strong> section heading under the <strong>Other Settings</strong> sub-menu.</li>
+<li>Click on the <strong>Scripting Backend</strong> dropdown menu, then select <strong>IL2CPP</strong>.</li>
+</ol>
+
+<p>You can also open the <strong>Player Settings</strong> menu from inside the <strong>Build Settings</strong> menu; go to <strong>File</strong> &gt; <strong>Build Settings</strong> and click on the <strong>Player Settings</strong> button.</p>
+</li>
+<li><p>Through the Editor scripting API. Use the <a href="../ScriptReference/PlayerSettings.SetScriptingBackend.html">PlayerSettings.SetScriptingBackend</a> property to change the scripting backend that Unity uses.</p></li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/IL2CPP-build-settings.png" alt="The Configuration section of the Player settings">
+<figcaption>The <strong>Configuration</strong> section of the <strong>Player</strong> settings</figcaption>
+</figure>
+
+<p>To start the build process, open the <strong>Build Settings</strong> window and click the <strong>Build</strong> button. Unity then converts your C# code and assemblies into C++ and finally produces a binary file for your target platform.</p>
+
+<h2>
+<a name="HowItWorks" aria-hidden="true"></a> How IL2CPP works</h2>
+
+<p>When you start a build using IL2CPP, Unity automatically performs the following steps:</p>
+
+<ol>
+<li>The Roslyn C# compiler compiles your application’s C# code and any required package code to .NET DLLs (managed assemblies).</li>
+<li>Unity applies managed <a href="ManagedCodeStripping.html">bytecode stripping</a>. This step can significantly reduce the size of a built application.</li>
+<li>The IL2CPP backend converts all managed assemblies into standard C++ code.</li>
+<li>The C++ compiler compiles the generated C++ code and the runtime part of IL2CPP with a native platform compiler.</li>
+<li>Unity creates either an executable file or a DLL, depending on the platform you target.</li>
+</ol>
+
+<p>Both IL2CPP and Mono provide a few useful options which you can control with attributes in your <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>. For more information, see <a href="PlatformDependentCompilation.html">Platform-dependent compilation.</a>
+</p>
+
+<p>IL2CPP enables Unity to pre-compile code for specific platforms. The binary file Unity produces at the end of this process already contains necessary machine code for the target platform, while Mono has to compile this machine code at runtime during execution. AOT compilation does increase build time, but it also improves compatibility with the target platform and can improve performance.</p>
+
+<p>Both scripting backends require a new build for each platform you want to target. For example, to support both the Android and <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> platforms, you need to build your application twice and produce two binary files.</p>
+
+<p>The assembly stripping stage helps reduce the final binary size. Unity removes any bytecode that the final built application doesn’t use.</p>
+
+<h2>
+<a name="OptimizingBuildTimes" aria-hidden="true"></a> Optimizing IL2CPP build times</h2>
+
+<p>Project build times when using IL2CPP can be significantly longer than when using Mono. However, you can do several things to reduce build time.</p>
+
+<p><strong>Exclude your project from anti-malware software scans</strong></p>
+
+<p>You can exclude your Unity project folder and target build folders from anti-malware software scans before you build your project.</p>
+
+<p><strong>Store your project and target build folder on a solid-state drive (SSD)</strong></p>
+
+<p>Solid-state drives (SSDs) have faster read/write speeds than traditional hard disk drives (HDD). Converting IL code to C++ and compiling it involves a large number of read/write operations, so a faster storage device speeds up this process.</p>
+
+<p><strong>Change the IL2CPP Code Generation option in the Build Settings</strong></p>
+
+<p>To change how IL2CPP generates code, open the Build Settings and configure the IL2CPP Code Generation option By default, the Faster runtime option is enabled, which produces more machine code that reduces the impact of IL2CPP at runtime. To reduce build times, you can set this option to Faster (smaller) builds. This method produces and includes less machine code in the binary executable and so can reduce performance at runtime, but also significantly reduces build times and binary size.</p>
+
+<h2>
+<a name="EnablingRuntimeChecksUsingIl2CppSetOption" aria-hidden="true"></a> Enabling runtime checks using Il2CppSetOption</h2>
+
+<p>When you use the IL2CPP scripting backend, you can control how <strong>il2cpp.exe</strong> generates C++ code. You can use the <strong>Il2CppSetOption</strong> attribute to enable or disable the following runtime checks:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Description:</strong></th>
+	<th style="text-align:left;"><strong>Default:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Null checks</strong></td>
+	<td style="text-align:left;">If this option is enabled, the C++ code that IL2CPP generates contains null checks and throws managed NullReferenceException exceptions as necessary. If this option is disabled, IL2CPP doesn’t emit the null checks into the generated C++ code. For some projects, disabling this option might improve runtime performance.<br><br>When this setting is disabled, Unity doesn’t prevent attempts to access null values in the generated code, which might lead to incorrect behavior. Your application is likely to crash soon after it dereferences the null value. Unity recommends that you don’t disable this option.</td>
+	<td style="text-align:left;">Enabled</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Array bounds checks</strong></td>
+	<td style="text-align:left;">If this option is enabled, the C++ code that IL2CPP generates contains array bounds checks and throws managed IndexOutOfRangeException exceptions as necessary. If this option is disabled, IL2CPP doesn’t emit the array bounds checks into the generated C++ code. <br><br>For some projects, disabling this option might improve runtime performance. However, when this option is disabled, Unity doesn’t prevent attempts to access an array with invalid indices in the generated code, which might lead to incorrect behavior, including reading from or writing to arbitrary memory locations. In most cases, these memory accesses occur without any immediate side effects, and can corrupt the state of the application with no obvious warning signs. This can make debugging these errors extremely difficult. Unity recommends that you keep this option enabled.</td>
+	<td style="text-align:left;">Enabled</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Divide by zero checks</strong></td>
+	<td style="text-align:left;">If this option is enabled, C++ code generated by IL2CPP contains divide by zero checks for integer division and throw managed DivideByZeroException exceptions as necessary. If this option is disabled, IL2CPP doesn’t emit the divide by zero checks on integer division into the generated C++ code. <br><br>These checks have an impact on performance at runtime. You should only enable this option if you need to run divide by zero checks; otherwise, leave it disabled.</td>
+	<td style="text-align:left;">Disabled</td>
+</tr>
+</tbody>
+</table>
+
+<p>To use the <strong>Il2CppSetOption</strong> attribute:</p>
+
+<ol>
+<li>In the directory where your Unity version is installed, navigate to the <strong>Data\il2cpp</strong> directory on Windows, or the <strong>Contents/Frameworks/il2cpp</strong> directory on OS X.</li>
+<li>Find the <strong>Il2CppSetOptionAttribute.cs</strong> source file.</li>
+<li>Copy the source file into your project’s <strong>Assets</strong> directory.</li>
+</ol>
+
+<p>The below example describes how to use the <strong>Il2CppSetOption</strong> attribute:</p>
+
+<pre><code class="lang-C#">[Il2CppSetOption(Option.NullChecks, false)]
+public static string MethodWithNullChecksDisabled()
+{
+    var tmp = new object();
+    return tmp.ToString();
+}
+</code></pre>
+
+<p>You can apply the <strong>Il2CppSetOption</strong> attribute to types, methods, and properties. Unity uses the attribute from the most local scope.</p>
+
+<pre><code class="lang-C#">[Il2CppSetOption(Option.NullChecks, false)]
+public class TypeWithNullChecksDisabled
+{
+    public static string AnyMethod()
+    {
+        // Unity doesn’t perform null checks in this method.
+        var tmp = new object();
+        return tmp.ToString();
+    }
+
+    [Il2CppSetOption(Option.NullChecks, true)]
+    public static string MethodWithNullChecksEnabled()
+    {
+        // Unity performs null checks in this method.
+        var tmp = new object();
+        return tmp.ToString();
+    }
+}
+
+public class SomeType
+{
+    [Il2CppSetOption(Option.NullChecks, false)]
+    public string PropertyWithNullChecksDisabled
+    {
+        get
+        {
+            // Unity doesn’t perform null checks here.
+            var tmp = new object();
+            return tmp.ToString();
+        }
+        set
+        {
+            // Unity doesn’t perform null checks here.
+            value.ToString();
+        }
+    }
+
+    public string PropertyWithNullChecksDisabledOnGetterOnly
+    {
+        [Il2CppSetOption(Option.NullChecks, false)]
+        get
+        {
+            // Unity doesn’t perform null checks here.
+            var tmp = new object();
+            return tmp.ToString();
+        }
+        set
+        {
+            // Unity performs null checks here.
+            value.ToString();
+        }
+    }
+}
+</code></pre>
+
+<hr>
+
+<p>
+<span class="page-edit">• 2018–05–15 Page amended
+</span><br>
+</p>
+<!-- area:core -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Mono.html"></a></span><div class="tip">Mono overview</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="handling-IL2CPP-additional-args.html"></a></span><div class="tip">Handling platform specific settings for IL2CPP additional arguments</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

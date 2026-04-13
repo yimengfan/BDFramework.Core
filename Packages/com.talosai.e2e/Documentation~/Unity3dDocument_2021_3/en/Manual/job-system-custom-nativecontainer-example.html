@@ -1,0 +1,308 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Custom NativeContainer example</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/job-system-custom-nativecontainer-example.html">English</a></li>
+<li><a href="/cn/current/Manual/job-system-custom-nativecontainer-example.html">中文</a></li>
+<li><a href="/ja/current/Manual/job-system-custom-nativecontainer-example.html">日本語</a></li>
+<li><a href="/kr/current/Manual/job-system-custom-nativecontainer-example.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/job-system-custom-nativecontainer-example.html">English</a></li>
+<li><a href="/cn/current/Manual/job-system-custom-nativecontainer-example.html">中文</a></li>
+<li><a href="/ja/current/Manual/job-system-custom-nativecontainer-example.html">日本語</a></li>
+<li><a href="/kr/current/Manual/job-system-custom-nativecontainer-example.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="JobSystem.html">Job system </a></li>
+<li><a href="JobSystemNativeContainer.html">Thread safe types</a></li>
+<li>Custom NativeContainer example</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="job-system-copy-nativecontainer.html"></a></span><div class="tip">Copying NativeContainer structures</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="JobSystemCreatingJobs.html"></a></span><div class="tip">Create and run a job</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Custom NativeContainer example</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The following is a complete example of a custom <code>NativeContainer</code> as an append-only list. It demonstrates basic protection of read and write operations, as well as creating and invalidating aliasing views. For another example, see the <a href="../ScriptReference/Unity.Collections.LowLevel.Unsafe.NativeContainerAttribute.html"><code>NativeContainerAttribute</code></a> API documentation.</p>
+
+<pre><code class="lang-cs">using System;
+using System.Runtime.InteropServices;
+using Unity.Collections.LowLevel.Unsafe;
+using Unity.Collections;
+
+// Marks the struct as a NativeContainer. This tells the job system that it contains an AtomicSafetyHandle.
+[NativeContainer]
+public unsafe struct NativeAppendOnlyList&lt;T&gt; : IDisposable where T : unmanaged
+{
+    // Raw pointers aren't usually allowed inside structures that are passed to jobs, but because it's protected
+    // with the safety system, you can disable that restriction for it
+    [NativeDisableUnsafePtrRestriction]
+    internal void* m_Buffer;
+    internal int m_Length;
+    internal Allocator m_AllocatorLabel;
+
+    // You should only declare and use safety system members with the ENABLE_UNITY_COLLECTIONS_CHECKS define.
+    // In final builds of projects, the safety system is disabled for performance reasons, so these APIs aren't
+    // available in those builds.
+#if ENABLE_UNITY_COLLECTIONS_CHECKS
+    
+    // The AtomicSafetyHandle field must be named exactly 'm_Safety'.
+    internal AtomicSafetyHandle m_Safety;
+    
+    // Statically register this type with the safety system, using a name derived from the type itself
+    internal static readonly int s_staticSafetyId = AtomicSafetyHandle.NewStaticSafetyId&lt;NativeAppendOnlyList&lt;T&gt;&gt;();
+#endif
+
+    public NativeAppendOnlyList(Allocator allocator, params T[] initialItems)
+    {
+        m_Length = initialItems.Length;
+        m_AllocatorLabel = allocator;
+
+        // Calculate the size of the initial buffer in bytes, and allocate it
+        int totalSize = UnsafeUtility.SizeOf&lt;T&gt;() * m_Length;
+        m_Buffer = UnsafeUtility.MallocTracked(totalSize, UnsafeUtility.AlignOf&lt;T&gt;(), m_AllocatorLabel, 1);
+
+        // Copy the data from the array into the buffer
+        var handle = GCHandle.Alloc(initialItems, GCHandleType.Pinned);
+        try
+        {
+            UnsafeUtility.MemCpy(m_Buffer, handle.AddrOfPinnedObject().ToPointer(), totalSize);
+        }
+        finally
+        {
+            handle.Free();
+        }
+
+#if ENABLE_UNITY_COLLECTIONS_CHECKS
+        // Create the AtomicSafetyHandle and DisposeSentinel
+        m_Safety = AtomicSafetyHandle.Create();
+
+        // Set the safety ID on the AtomicSafetyHandle so that error messages describe this container type properly.
+        AtomicSafetyHandle.SetStaticSafetyId(ref m_Safety, s_staticSafetyId);
+        
+        // Automatically bump the secondary version any time this container is scheduled for writing in a job
+        AtomicSafetyHandle.SetBumpSecondaryVersionOnScheduleWrite(m_Safety, true);
+
+        // Check if this is a nested container, and if so, set the nested container flag
+        if (UnsafeUtility.IsNativeContainerType&lt;T&gt;()) 
+            AtomicSafetyHandle.SetNestedContainer(m_Safety, true);
+#endif
+    }
+
+    public int Length
+    {
+        get
+        {
+#if ENABLE_UNITY_COLLECTIONS_CHECKS
+            // Check that you are allowed to read information about the container 
+            // This throws InvalidOperationException if you aren't allowed to read from the native container,
+            // or if the native container has been disposed
+            AtomicSafetyHandle.CheckReadAndThrow(m_Safety);
+#endif
+            return m_Length;
+        }
+    }
+
+    public T this[int index]
+    {
+        get
+        {
+#if ENABLE_UNITY_COLLECTIONS_CHECKS
+            // Check that you can read from the native container right now.
+            AtomicSafetyHandle.CheckReadAndThrow(m_Safety);
+#endif
+
+            // Read from the buffer and return the value
+            return UnsafeUtility.ReadArrayElement&lt;T&gt;(m_Buffer, index);
+        }
+
+        set
+        {
+#if ENABLE_UNITY_COLLECTIONS_CHECKS
+            // Check that you can write to the native container right now.
+            AtomicSafetyHandle.CheckWriteAndThrow(m_Safety);
+#endif
+            // Write the value into the buffer
+            UnsafeUtility.WriteArrayElement(m_Buffer, index, value);
+        }
+    }
+
+    public void Add(T value)
+    {
+#if ENABLE_UNITY_COLLECTIONS_CHECKS
+        // Check that you can modify (write to) the native container right now, and if so, bump the secondary version so that
+        // any views are invalidated, because you are going to change the size and pointer to the buffer
+        AtomicSafetyHandle.CheckWriteAndBumpSecondaryVersion(m_Safety);
+#endif
+
+        // Replace the current buffer with a new one that has space for an extra element
+        int newTotalSize = (m_Length + 1) * UnsafeUtility.SizeOf&lt;T&gt;();
+        void* newBuffer = UnsafeUtility.MallocTracked(newTotalSize, UnsafeUtility.AlignOf&lt;T&gt;(), m_AllocatorLabel, 1);
+        UnsafeUtility.MemCpy(newBuffer, m_Buffer, m_Length * UnsafeUtility.SizeOf&lt;T&gt;());
+        UnsafeUtility.FreeTracked(m_Buffer, m_AllocatorLabel);
+        m_Buffer = newBuffer;
+        
+        // Put the new element at the end of the buffer and increase the length
+        UnsafeUtility.WriteArrayElement(m_Buffer, m_Length++, value);
+    }
+
+    public NativeArray&lt;T&gt; AsArray()
+    {
+#if ENABLE_UNITY_COLLECTIONS_CHECKS
+        // Check that it's safe for you to use the buffer pointer to construct a view right now.
+        AtomicSafetyHandle.CheckGetSecondaryDataPointerAndThrow(m_Safety);
+        
+        // Make a copy of the AtomicSafetyHandle, and mark the copy to use the secondary version instead of the primary
+        AtomicSafetyHandle handleForArray = m_Safety;
+        AtomicSafetyHandle.UseSecondaryVersion(ref handleForArray);
+#endif
+
+        // Create a new NativeArray which aliases the buffer, using the current size. This doesn't allocate or copy
+        // any data, it just sets up a NativeArray&lt;T&gt; which points at the m_Buffer.
+        var array = NativeArrayUnsafeUtility.ConvertExistingDataToNativeArray&lt;T&gt;(m_Buffer, m_Length, Allocator.None);
+        
+#if ENABLE_UNITY_COLLECTIONS_CHECKS
+        // Set the AtomicSafetyHandle on the newly created NativeArray to be the one that you copied from your handle
+        // and made to use the secondary version.
+        NativeArrayUnsafeUtility.SetAtomicSafetyHandle(ref array, handleForArray);
+#endif
+        
+        return array;
+    }
+
+    public void Dispose()
+    {
+#if ENABLE_UNITY_COLLECTIONS_CHECKS
+        AtomicSafetyHandle.CheckDeallocateAndThrow(m_Safety);
+        AtomicSafetyHandle.Release(m_Safety);
+#endif
+
+        // Free the buffer
+        UnsafeUtility.FreeTracked(m_Buffer, m_AllocatorLabel);
+        m_Buffer = null;
+        m_Length = 0;
+    }
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="JobSystemNativeContainer.html">Thread safe types</a></li>
+<li><a href="job-system-custom-nativecontainer.html">Implement a custom NativeContainer</a></li>
+<li><a href="job-system-copy-nativecontainer.html">Copying NativeContainer structures</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="job-system-copy-nativecontainer.html"></a></span><div class="tip">Copying NativeContainer structures</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="JobSystemCreatingJobs.html"></a></span><div class="tip">Create and run a job</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

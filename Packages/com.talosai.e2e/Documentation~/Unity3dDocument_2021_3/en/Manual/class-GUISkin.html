@@ -1,0 +1,361 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: GUI Skin (IMGUI System)</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-GUISkin.html">English</a></li>
+<li><a href="/cn/current/Manual/class-GUISkin.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-GUISkin.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-GUISkin.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-GUISkin.html">English</a></li>
+<li><a href="/cn/current/Manual/class-GUISkin.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-GUISkin.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-GUISkin.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="GUIScriptingGuide.html">Immediate Mode GUI (IMGUI)</a></li>
+<li>GUI Skin (IMGUI System)</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="gui-Extending.html"></a></span><div class="tip">Extending IMGUI</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-GUIStyle.html"></a></span><div class="tip">GUI Style (IMGUI System)</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>GUI Skin (IMGUI System)</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/GUISkin.html' title='Go to GUISkin page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>GUISkins</strong> are a collection of <strong>GUIStyles</strong> that can be applied to your GUI. Each <strong>Control</strong> type has its own Style definition. Skins are intended to allow you to apply style to an entire <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>, instead of a single Control by itself.</p>
+
+<figure>
+<img src="../uploads/Main/Inspector-GUISkin.png" alt="A GUI Skin as seen in the Inspector">
+<figcaption>A GUI Skin as seen in the Inspector</figcaption>
+</figure>
+
+<p>To create a GUISkin, select <strong>Assets-&gt;Create-&gt;GUI Skin</strong> from the menubar.</p>
+
+<p>
+<strong>Please Note</strong>: This page refers to part of the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GUIScriptingGuide.html">IMGUI</a> system, which is a <em>scripting-only</em> UI system. Unity has a full GameObject-based UI system which you may prefer to use. It allows you to design and edit user interface elements as visible objects in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="GUIScriptingGuide.html">IMGUI</a> system, which is a <em>scripting-only</em> UI system. Unity has a full GameObject-based UI system which you may prefer to use. It allows you to design and edit user interface elements as visible objects in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view. See the <a href="com.unity.ugui.html">UI System Manual</a> for more information.</p>
+
+<h2>Properties</h2>
+
+<p>All of the properties within a GUI Skin are an individual <a href="class-GUIStyle.html">GUIStyle</a>. Please read the <a href="class-GUIStyle.html">GUIStyle</a> page for more information about how to use Styles.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property:</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function:</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Font</strong></td>
+	<td style="text-align:left;">The global Font to use for every Control in the GUI</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Box</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Boxes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Button</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Buttons</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Toggle</strong><span class="tooltiptext">A checkbox that allows the user to switch an option on or off. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-uxml-element-Toggle.html" href="UIE-uxml-element-Toggle.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toggle" aria-label="Go to glossary anchor for Toggle">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Toggles</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Label</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Labels</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Text Field</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Text Fields</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Text Area</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Text Areas</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Window</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Windows</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Horizontal Slider</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Horizontal Slider bars</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Horizontal Slider Thumb</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Horizontal Slider Thumb Buttons</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Vertical Slider</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Vertical Slider bars</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Vertical Slider Thumb</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Vertical Slider Thumb Buttons</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Horizontal Scrollbar</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Horizontal Scrollbars</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Horizontal Scrollbar Thumb</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Horizontal Scrollbar Thumb Buttons</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Horizontal Scrollbar Left Button</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Horizontal Scrollbar scroll Left Buttons</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Horizontal Scrollbar Right Button</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Horizontal Scrollbar scroll Right Buttons</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Vertical Scrollbar</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Vertical Scrollbars</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Vertical Scrollbar Thumb</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Vertical Scrollbar Thumb Buttons</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Vertical Scrollbar Up Button</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Vertical Scrollbar scroll Up Buttons</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Vertical Scrollbar Down Button</strong></td>
+	<td style="text-align:left;">The <a href="class-GUIStyle.html">Style</a> to use for all Vertical Scrollbar scroll Down Buttons</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Custom 1–20</strong></td>
+	<td style="text-align:left;">Additional custom Styles that can be applied to any Control</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Custom Styles</strong></td>
+	<td style="text-align:left;">An array of additional custom Styles that can be applied to any Control</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Settings</strong></td>
+	<td style="text-align:left;">Additional Settings for the entire GUI</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Double Click Selects Word</strong>
+</td>
+	<td style="text-align:left;">If enabled, double-clicking a word will select it</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Triple Click Selects Line</strong>
+</td>
+	<td style="text-align:left;">If enabled, triple-clicking a word will select the entire line</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Cursor Color</strong>
+</td>
+	<td style="text-align:left;">Color of the keyboard cursor</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Cursor Flash Speed</strong>
+</td>
+	<td style="text-align:left;">The speed at which the text cursor will flash when editing any Text Control</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Selection Color</strong>
+</td>
+	<td style="text-align:left;">Color of the selected area of Text</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Details</h2>
+
+<p>When you are creating an entire GUI for your game, you will likely need to do a lot of customization for every different Control type. In many different game genres, like real-time strategy or role-playing, there is a need for practically every single Control type.</p>
+
+<p>Because each individual Control uses a particular Style, it does not make sense to create a dozen-plus individual Styles and assign them all manually. GUI Skins take care of this problem for you. By creating a GUI Skin, you have a pre-defined collection of Styles for every individual Control. You then apply the Skin with a single line of code, which eliminates the need to manually specify the Style of each individual Control.</p>
+
+<h3>Creating GUISkins</h3>
+
+<p>GUISkins are asset files. To create a GUI Skin, select <strong>Assets-&gt;Create-&gt;GUI Skin</strong> from the menubar. This will put a new GUISkin in your <strong>Project View</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/GUISkin-ProjectView.png" alt="A new GUISkin file in the Project View">
+<figcaption>A new GUISkin file in the Project View</figcaption>
+</figure>
+
+<h3>Editing GUISkins</h3>
+
+<p>After you have created a GUISkin, you can edit all of the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GUIStyle.html">Styles</a> it contains in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="class-GUIStyle.html">Styles</a> it contains in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>. For example, the <strong>Text Field</strong> <a href="class-GUIStyle.html">Style</a> will be applied to all Text Field Controls.</p>
+
+<figure>
+<img src="../uploads/Main/GUISkin-EditingTextField.png" alt="Editing the Text Field Style in a GUISkin">
+<figcaption>Editing the Text Field Style in a GUISkin</figcaption>
+</figure>
+
+<p>No matter how many Text Fields you create in your script, they will all use this <a href="class-GUIStyle.html">Style</a>. Of course, you have control over changing the styles of one Text Field over the other if you wish. We’ll discuss how that is done next.</p>
+
+<h3>Applying GUISkins</h3>
+
+<p>To apply a GUISkin to your GUI, you must use a simple script to read and apply the Skin to your Controls.</p>
+
+<pre><code>
+    // Create a public variable where we can assign the GUISkin
+    var customSkin : GUISkin;
+
+    // Apply the Skin in our OnGUI() function
+    function OnGUI () {
+        GUI.skin = customSkin;
+
+        // Now create any Controls you like, and they will be displayed with the custom Skin
+        GUILayout.Button (&quot;I am a re-Skinned Button&quot;);
+
+        // You can change or remove the skin for some Controls but not others
+        GUI.skin = null;
+
+        // Any Controls created here will use the default Skin and not the custom Skin
+        GUILayout.Button (&quot;This Button uses the default UnityGUI Skin&quot;);
+    }
+
+
+</code></pre>
+
+<p>In some cases you want to have two of the same Control with different Styles. For this, it does not make sense to create a new Skin and re-assign it. Instead, you use one of the <strong>Custom</strong> Styles in the skin. Provide a <strong>Name</strong> for the custom Style, and you can use that name as the last argument of the individual Control.</p>
+
+<pre><code>    // One of the custom Styles in this Skin has the name &quot;MyCustomControl&quot;
+    var customSkin : GUISkin;
+
+    function OnGUI () {
+        GUI.skin = customSkin;
+
+        // We provide the name of the Style we want to use as the last argument of the Control function
+        GUILayout.Button (&quot;I am a custom styled Button&quot;, &quot;MyCustomControl&quot;);
+
+        // We can also ignore the Custom Style, and use the Skin's default Button Style
+        GUILayout.Button (&quot;I am the Skin's Button Style&quot;);
+    }
+
+</code></pre>
+
+<p>For more information about working with GUIStyles, please read the <a href="class-GUIStyle.html">GUIStyle</a> page. For more information about using UnityGUI, please read the <a href="GUIScriptingGuide.html">GUI Scripting Guide</a>.</p>
+<!-- area:authoring -->
+
+<p><span class="search-words">GUISkin</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="gui-Extending.html"></a></span><div class="tip">Extending IMGUI</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-GUIStyle.html"></a></span><div class="tip">GUI Style (IMGUI System)</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

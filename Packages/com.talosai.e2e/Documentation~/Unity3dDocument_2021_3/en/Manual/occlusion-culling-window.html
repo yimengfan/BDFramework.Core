@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: The Occlusion Culling window </title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/occlusion-culling-window.html">English</a></li>
+<li><a href="/cn/current/Manual/occlusion-culling-window.html">中文</a></li>
+<li><a href="/ja/current/Manual/occlusion-culling-window.html">日本語</a></li>
+<li><a href="/kr/current/Manual/occlusion-culling-window.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/occlusion-culling-window.html">English</a></li>
+<li><a href="/cn/current/Manual/occlusion-culling-window.html">中文</a></li>
+<li><a href="/ja/current/Manual/occlusion-culling-window.html">日本語</a></li>
+<li><a href="/kr/current/Manual/occlusion-culling-window.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="CamerasOverview.html">Cameras</a></li>
+<li><a href="OcclusionCulling.html">Occlusion culling</a></li>
+<li>The Occlusion Culling window </li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-OcclusionPortal.html"></a></span><div class="tip">Occlusion Portals</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="CullingGroupAPI.html"></a></span><div class="tip">CullingGroup API</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>The Occlusion Culling window</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Open the Occlusion Culling window by navigating to the top menu and selecting <strong>Window</strong> &gt; <strong>Rendering</strong> &gt; <span class="tooltip"><strong>Occlusion Culling</strong><span class="tooltiptext">A process that disables rendering GameObjects that are hidden (occluded) from the view of the camera. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about OcclusionCulling.html" href="OcclusionCulling.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Occlusionculling" aria-label="Go to glossary anchor for Occlusionculling">Glossary</a></span></span></span>.</p>
+
+<p>The Occlusion Culling window has 3 tabs: <span class="tooltip"><strong>Object</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Object" aria-label="Go to glossary anchor for Object">Glossary</a></span></span></span>, <strong>Bake</strong>, and <strong>Visualization</strong>. In addition to this, when both the Occlusion Culling window and the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Object" aria-label="Go to glossary anchor for Object">Glossary</a></span></span></span>, <strong>Bake</strong>, and <strong>Visualization</strong>. In addition to this, when both the Occlusion Culling window and the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view are visible, the Occlusion Culling popup is visible in the <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view are visible, the Occlusion Culling popup is visible in the <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>.</p>
+
+<p><a name="object-tab" aria-hidden="true"></a></p>
+
+<h2>Object tab</h2>
+
+<figure>
+<img src="../uploads/Main/OcclusionCullingInspectorObject.png" alt="Occlusion Culling Window for a Mesh Renderer">
+<figcaption>Occlusion Culling Window for a Mesh Renderer</figcaption>
+</figure>
+
+<p>In the <strong>Object</strong> tab, you can click the <strong>All</strong>, <strong>Renderers</strong>, and <strong>Occlusion Areas</strong> buttons to filter the contents of the Hierarchy window.</p>
+
+<p>When the <strong>Renderers</strong> filter is active, select a Renderer in the Hierarchy window or Scene view to view and change its occlusion culling settings in the Occlusion Culling window.</p>
+
+<p>When the <strong>Occlusion Areas</strong> filter is active, you can select an Occlusion Area in the Hierarchy window or Scene view to view and change its <strong>Is View Volume</strong> setting in the Occlusion Culling window. You can also click Create New Occlusion Area to create a new Occlusion Area in the Scene.</p>
+
+<p><a name="bake-tab" aria-hidden="true"></a></p>
+
+<h2>Bake tab</h2>
+
+<p>In the <strong>Bake</strong> tab, you can fine-tune the parameters of the Occlusion Culling bake process. Configure these settings to find a balance between bake times, data size at runtime, and visual results.</p>
+
+<p>The <strong>Set Default Parameters</strong> button resets the parameters to the default values.</p>
+
+<figure>
+<img src="../uploads/Main/OcclusionCullingInspectorBake.png" alt="Occlusion culling inspector bake tab.">
+<figcaption>Occlusion culling inspector bake tab.</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Setting</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Smallest Occluder</strong></td>
+	<td style="text-align:left;">The size of the smallest GameObject that can occlude other GameObjects, in metres. In general, for the smallest file size and fastest bake times, you should choose the highest value that gives good results in your Scene.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Smallest Hole</strong></td>
+	<td style="text-align:left;">The diameter of the smallest gap through which a <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> can see, in metres. In general, for the smallest file size and fastest bake times, you should choose the highest value that gives good results in your Scene.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Backface Threshold</strong></td>
+	<td style="text-align:left;">If you need to reduce the size of the baked data, Unity can sample the Scene as it bakes, and exclude parts of the Scene where the visible occluder geometry consists of more than a given percentage of backfaces. An area with a high percentage of backfaces is likely to be underneath or inside geometry, and therefore not likely somewhere the Camera is at runtime. The default value of 100 never removes areas from the data. Lower values result in a smaller file size, but can lead to visual artifacts.</td>
+</tr>
+</tbody>
+</table>
+
+<p>At the bottom of the Bake tab are the <strong>Bake</strong> and <strong>Clear</strong> buttons. Click the <strong>Bake</strong> button to bake occlusion culling data. Click the <strong>Clear</strong> button to remove previously baked data.</p>
+
+<p><a name="visualization-tab" aria-hidden="true"></a></p>
+
+<h2>Visualization tab</h2>
+
+<p>When you select a Camera in the Scene view or Hierarchy window while the <strong>Visualization</strong> tab is visible, Unity updates the Scene view to show the effects of occlusion culling from the perspective of the selected Camera. You can use the Occlusion Culling popup in the Scene view to configure the visualization.</p>
+
+<p><a name="occlusion-culling-popup" aria-hidden="true"></a></p>
+
+<h2>Occlusion Culling popup in the Scene view</h2>
+
+<p>The Occlusion Culling popup has two modes: <strong>Edit</strong>, and <strong>Visualization</strong>. You can switch between them using the drop-down menu.</p>
+
+<h3>Edit mode</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Setting</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>View Volumes</strong></td>
+	<td style="text-align:left;">When this is enabled, the Scene view contains blue lines that show the cells in the occlusion culling data. The cell size is affected by the <strong>Smallest Occluder</strong> setting: a lower value results in more, smaller cells, which in turn results in increased precision, and a larger file size.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Visualize mode</h2>
+
+<p>
+<strong>Visualize</strong> mode allows you to preview the results of occlusion culling from the perspective of a given Camera. If you have a Camera selected, the preview relates to that Camera. Otherwise, the preview relates to the last Camera that you selected while in Visualize mode.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Setting</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Camera Volumes</strong></td>
+	<td style="text-align:left;">When this is enabled, you can see yellow lines that indicate the area of the Scene for which Unity has generated occlusion culling data. This is determined based on Scene geometry, and on any View Volumes that you have defined in your Scene using Occlusion Areas. When the Camera is outside of the yellow lines, Unity does not perform occlusion culling.<br><br>You can also see grey lines that indicate the cell in the occlusion culling data that the Camera’s current position corresponds to, and the subdivisions within the current cell. The <strong>Smallest Hole</strong> setting defines the minimum size of the subdivisions within cells: a lower value results in more, smaller subdivisions per cells, which in turn results in increased precision, and a larger file size.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Visibility Lines</strong></td>
+	<td style="text-align:left;">When this is enabled, you can see green lines that indicate what the currently selected Camera can see.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Portals</strong></td>
+	<td style="text-align:left;">When this is enabled, you can see lines that represent connections between cells in the occlusion data. The currently visible portals are the ones that the currently selected Camera can see.</td>
+</tr>
+</tbody>
+</table>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-OcclusionPortal.html"></a></span><div class="tip">Occlusion Portals</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="CullingGroupAPI.html"></a></span><div class="tip">CullingGroup API</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

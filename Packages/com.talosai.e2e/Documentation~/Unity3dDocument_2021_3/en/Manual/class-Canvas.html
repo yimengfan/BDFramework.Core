@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Canvas</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Canvas.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Canvas.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Canvas.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Canvas.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Canvas.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Canvas.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Canvas.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Canvas.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="com.unity.ugui.html">Unity UI </a></li>
+<li><a href="UIReference.html">UI Reference</a></li>
+<li><a href="comp-CanvasComponents.html">Canvas Components</a></li>
+<li>Canvas</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="comp-CanvasComponents.html"></a></span><div class="tip">Canvas Components</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="script-CanvasScaler.html"></a></span><div class="tip">Canvas Scaler</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Canvas</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/Canvas.html' title='Go to Canvas page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <span class="tooltip"><strong>Canvas</strong><span class="tooltiptext">The area that contains all UI elements in a scene. The Canvas area is shown as a rectangle in the Scene View. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UICanvas.html" href="UICanvas.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Canvas" aria-label="Go to glossary anchor for Canvas">Glossary</a></span></span></span> component represents the abstract space in which the UI is laid out and rendered. All UI elements must be children of a GameObject that has a Canvas component attached. When you create a UI element object from the menu (<strong>GameObject &gt; Create UI</strong>), a Canvas object will be created automatically if there isn’t one in the scene already.</p>
+
+<figure>
+<img src="../uploads/Main/UI_CanvasInspector.png" alt="Screen Space - Overlay Set">
+<figcaption>Screen Space - Overlay Set</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/UI_CanvasScreenSpaceCameraInspector.png" alt="Screen Space - Camera Set">
+<figcaption>Screen Space - Camera Set</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/UI_CanvasWorldSpaceInspector.png" alt="World Space Set">
+<figcaption>World Space Set</figcaption>
+</figure>
+
+<h2>Properties</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property:</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function:</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Render Mode</strong></td>
+	<td style="text-align:left;">The way the <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> is rendered to the screen or as an object in 3D space (see below). The options are <em>Screen Space - Overlay</em>, <em>Screen Space - Camera</em> and <em>World Space</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Pixel Perfect (<em>Screen Space</em> modes only)</strong></td>
+	<td style="text-align:left;">Should the UI be rendered without <span class="tooltip"><strong>antialiasing</strong><span class="tooltiptext">A technique for decreasing artifacts, like jagged lines (jaggies), in images to make them appear smoother.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Antialiasing" aria-label="Go to glossary anchor for Antialiasing">Glossary</a></span></span></span> for precision?</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Render </strong>Camera__ (<em>Screen Space - Camera</em> mode only)__</td>
+	<td style="text-align:left;">The camera to which the UI should be rendered (see below).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Plane Distance (<em>Screen Space - Camera</em> mode only)</strong></td>
+	<td style="text-align:left;">The distance at which the UI plane should be placed in front of the camera.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Event Camera (<em>World Space</em> mode only)</strong></td>
+	<td style="text-align:left;">The camera that will be used to process UI events.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Receives Events</strong></td>
+	<td style="text-align:left;">Are UI events processed by this Canvas?</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Details</h2>
+
+<p>A single Canvas for all UI elements is sufficient but multiple Canvases in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> is possible. It is also possible use nested Canvases, where one Canvas is placed as a child of another for optimization purposes. A nested Canvas uses the same Render Mode as its parent.</p>
+
+<p>Traditionally, UIs are rendered as if they were simple graphic designs drawn directly on the screen. That is to say, they have no concept of a 3D space being viewed by a camera. Unity supports this kind of screen space rendering but also allows UIs to rendered as objects in the scene, depending on the value of the <em>Render Mode</em> property. The modes available are <strong>Screen Space - Overlay</strong>, <strong>Screen Space - Camera</strong> and <strong>World Space</strong>.</p>
+
+<h3>Screen Space - Overlay</h3>
+
+<p>In this mode, the Canvas is scaled to fit the screen and then rendered directly without reference to the scene or a camera (the UI will be rendered even if there is no camera in the scene at all). If the screen’s size or resolution are changed then the UI will automatically rescale to fit. The UI will be drawn over any other graphics such as the camera view.</p>
+
+<figure>
+<img src="../uploads/Main/CanvasOverlay.png" alt="Overlay UI rendered over scene objects">
+<figcaption>Overlay UI rendered over scene objects</figcaption>
+</figure>
+
+<p>Note: The Screen Space - Overlay canvas needs to be stored at the top level of the hierarchy. If this is not used then the UI may disappear from the view. This is a built-in limitation. Keep the Screen Space - Overlay canvas at the top level of the hierarchy to get expected results. </p>
+
+<h3>Screen Space - Camera</h3>
+
+<p>In this mode, the Canvas is rendered as if it were drawn on a plane object some distance in front of a given camera. The onscreen size of the UI does not vary with the distance since it is always rescaled to fit exactly within the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about FrustumSizeAtDistance.html">camera frustum</a>. If the screen’s size or resolution or the camera frustum are changed then the UI will automatically rescale to fit. Any <span class="tooltip"><strong>3D objects</strong><span class="tooltiptext">A 3D GameObject such as a cube, terrain or ragdoll. <a href="GameObjects.html" href="FrustumSizeAtDistance.html">camera frustum</a>. If the screen’s size or resolution or the camera frustum are changed then the UI will automatically rescale to fit. Any <span class="tooltip"><strong>3D objects</strong><span class="tooltiptext">A 3D GameObject such as a cube, terrain or ragdoll. <a href="GameObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#3DObject" aria-label="Go to glossary anchor for 3DObject">Glossary</a></span></span></span> in the scene that are closer to the camera than the UI plane will be rendered in front of the UI, while objects behind the plane will be obscured.</p>
+
+<figure>
+<img src="../uploads/Main/CanvasCamera.png" alt="Camera mode UI with scene objects in front">
+<figcaption>Camera mode UI with scene objects in front</figcaption>
+</figure>
+
+<h3>World Space</h3>
+
+<p>This mode renders the UI as if it were a plane object in the scene. Unlike <em>Screen Space - Camera</em> mode, however, the plane need not face the camera and can be oriented however you like. The size of the Canvas can be set using its Rect Transform but its onscreen size will depend on the viewing angle and distance of the camera. Other scene objects can pass behind, through or in front of the Canvas.</p>
+
+<figure>
+<img src="../uploads/Main/CanvasWorldSpace.png" alt="World space UI intersecting scene objects">
+<figcaption>World space UI intersecting scene objects</figcaption>
+</figure>
+
+<h2>Hints</h2>
+
+<ul>
+<li>Read more about setting up a World Space Canvas on the <a href="HOWTO-UIWorldSpace.html">Creating a World Space UI</a> page.</li>
+<li>For information about making your Canvas and UI scale to different resolutions or <span class="tooltip"><strong>aspect ratios</strong><span class="tooltiptext">The relationship of an image’s proportional dimensions, such as its width and height.<br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AspectRatio" aria-label="Go to glossary anchor for AspectRatio">Glossary</a></span></span></span>, see the <a href="HOWTO-UIMultiResolution.html">Designing UI for Multiple Resolutions</a> page as well as the <span class="tooltip"><a href="script-CanvasScaler.html">Canvas Scaler</a><span class="tooltiptext">Controls the overall scale and pixel density of all UI elements in the Canvas, including font sizes and image borders. <a href="script-CanvasScaler.html" href="Glossary.html#AspectRatio" aria-label="Go to glossary anchor for AspectRatio">Glossary</a></span></span></span>, see the <a href="HOWTO-UIMultiResolution.html">Designing UI for Multiple Resolutions</a> page as well as the <span class="tooltip"><a href="script-CanvasScaler.html">Canvas Scaler</a><span class="tooltiptext">Controls the overall scale and pixel density of all UI elements in the Canvas, including font sizes and image borders. <a href="script-CanvasScaler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#CanvasScaler" aria-label="Go to glossary anchor for CanvasScaler">Glossary</a></span></span></span> page.</li>
+</ul>
+<!-- area:authoring -->
+
+<p><span class="search-words">Canvas</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="comp-CanvasComponents.html"></a></span><div class="tip">Canvas Components</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="script-CanvasScaler.html"></a></span><div class="tip">Canvas Scaler</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

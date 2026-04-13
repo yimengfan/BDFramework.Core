@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Support user input on Chrome OS devices</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/android-ChromeOS-support-user-input.html">English</a></li>
+<li><a href="/cn/current/Manual/android-ChromeOS-support-user-input.html">中文</a></li>
+<li><a href="/ja/current/Manual/android-ChromeOS-support-user-input.html">日本語</a></li>
+<li><a href="/kr/current/Manual/android-ChromeOS-support-user-input.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/android-ChromeOS-support-user-input.html">English</a></li>
+<li><a href="/cn/current/Manual/android-ChromeOS-support-user-input.html">中文</a></li>
+<li><a href="/ja/current/Manual/android-ChromeOS-support-user-input.html">日本語</a></li>
+<li><a href="/kr/current/Manual/android-ChromeOS-support-user-input.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="android.html">Android</a></li>
+<li><a href="android-ChromeOS-introducing.html">Chrome OS</a></li>
+<li><a href="android-ChromeOS-developing.html">Developing for Chrome OS </a></li>
+<li>Support user input on Chrome OS devices</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="android-ChromeOS-developing.html"></a></span><div class="tip">Developing for Chrome OS </div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="android-ChromeOS-debugging.html"></a></span><div class="tip">Debugging on a Chrome OS device</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Support user input on Chrome OS devices</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unlike Android applications that use touchscreens, many Chrome OS devices are laptops or have a laptop mode. As a result, when you build an application for Chrome OS, you must handle inputs from mice, touchpads, and keyboards. You can use the Player setting <strong>Chrome OS Input Emulation</strong> (<strong>menu: File &gt; Build Settings &gt; Player Settings &gt; Other Settings</strong>) to determine how your application handles user input on Chrome OS devices.</p>
+
+<figure>
+<img src="../uploads/Main/chromeos-player-settings-input-emulation.png" alt="Location of Chrome OS Input Emulation Player Setting">
+<figcaption>Location of Chrome OS Input Emulation Player Setting</figcaption>
+</figure>
+
+<h2>Mouse and touchpad input</h2>
+
+<p>To emulate touchscreen input, Chrome OS automatically converts left+clicks from a mouse or touchpad input into screen taps. As a result, an Android application that you developed for phones and tablets works by default on a Chrome OS device. </p>
+
+<p>
+<strong>Important: </strong>Only left+click and keyboard inputs are supported. Any other inputs are ignored.</p>
+
+<p>By default, this behavior is enabled via the <strong>Chrome OS Input Emulation</strong> Player Setting.</p>
+
+<p>To support mouse and touchpad input, disable the <strong>Chrome OS Input Emulation</strong> setting. When you disable this option, your application receives the following mouse and touchpad input unchanged:</p>
+
+<ul>
+<li>Left and right mouse clicks (instead of just left).</li>
+<li>Scroll wheel and touchpad scroll events.</li>
+<li>Updates to the position of the cursor,which allows you to implement mouse-over functionality, such as highlighting components with the cursor.</li>
+</ul>
+
+<p>When you disable this setting, you also need to write Unity input code to handle mouse and touchpad input. The input code must include information on how to read the cursor position, handle mouse and touchpad clicks, and read scrolling evens. For more information on writing input code, refer to <a href="https://docs.unity3d.com/ScriptReference/Input.html">Input</a> for API script references.</p>
+
+<p>
+<strong>Note:</strong> Android and Chrome OS support custom cursors. To customize your cursor, refer to <a href="../ScriptReference/WSA.Cursor.SetCustomCursor.html">Cursor.SetCustomCursor</a>.</p>
+
+<h2>UI and touch-screen keyboards</h2>
+
+<p>On Android, whenever there is an input field or text field selected, the virtual on-screen keyboard always comes up so that the user can enter text. On Chrome OS, when there is a hardware keyboard available, the on-screen keyboard isn’t shown or required. When a hardware keyboard isn’t available, the on-screen keyboard is displayed. This behavior isn’t affected by the <strong>Chrome OS Input Emulation</strong> Player setting. </p>
+
+<p>
+<strong>Note</strong>: If your Android application prompts the user to open a <a href="https://docs.unity3d.com/ScriptReference/TouchScreenKeyboard.html">TouchScreenKeyboard</a>, it behaves the same way on Chrome OS.</p>
+
+<h3>Hover over UI elements</h3>
+
+<p>To support hover over functionality, Unity needs the exact mouse position. When in <strong>Chrome OS Input Emulation</strong> mode, the exact mouse information isn’t available. As a result, you need to disable the <strong>Chrome OS Input Emulation</strong> setting to support hover over in your application.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="android-ChromeOS-developing.html"></a></span><div class="tip">Developing for Chrome OS </div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="android-ChromeOS-debugging.html"></a></span><div class="tip">Debugging on a Chrome OS device</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

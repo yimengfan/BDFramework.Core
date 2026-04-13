@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Xcode frame debugger Unity integration</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/XcodeFrameDebuggerIntegration.html">English</a></li>
+<li><a href="/cn/current/Manual/XcodeFrameDebuggerIntegration.html">中文</a></li>
+<li><a href="/ja/current/Manual/XcodeFrameDebuggerIntegration.html">日本語</a></li>
+<li><a href="/kr/current/Manual/XcodeFrameDebuggerIntegration.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/XcodeFrameDebuggerIntegration.html">English</a></li>
+<li><a href="/cn/current/Manual/XcodeFrameDebuggerIntegration.html">中文</a></li>
+<li><a href="/ja/current/Manual/XcodeFrameDebuggerIntegration.html">日本語</a></li>
+<li><a href="/kr/current/Manual/XcodeFrameDebuggerIntegration.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="cross-platform-features.html">Cross-platform features and considerations</a></li>
+<li>Xcode frame debugger Unity integration</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="deep-linking.html"></a></span><div class="tip">Deep linking</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="GraphicsAPIs.html"></a></span><div class="tip">Graphics API support</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Xcode frame debugger Unity integration</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://developer.apple.com/xcode/">Xcode</a><a href="https://developer.apple.com/documentation/metal/frame_capture_debugging_tools">frame debugger tool</a> lets you capture a frame of your application to see the commands that the GPU performed during that frame, examine data in GPU memory, and identify bottlenecks in your <span class="tooltip"><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="https://developer.apple.com/xcode/">Xcode</a><a href="https://developer.apple.com/documentation/metal/frame_capture_debugging_tools">frame debugger tool</a> lets you capture a frame of your application to see the commands that the GPU performed during that frame, examine data in GPU memory, and identify bottlenecks in your <span class="tooltip"><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>. This lets you analyze GPU performance in fine detail. </p>
+
+<p>Unity integrates with the Xcode frame debugger in the following ways:</p>
+
+<ul>
+<li>On macOS, <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span>, and tvOS, you can use Xcode frame debugger to analyze frames from your application while it’s running on the target device.</li>
+<li>On macOS, you can use Xcode frame debugger to analyze frames from the Unity Editor.</li>
+</ul>
+
+<p>
+<strong>Important:</strong> </p>
+
+<ul>
+<li>Frame debugging only works if the application is running on a platform and graphics API that Xcode supports.</li>
+<li>Xcode only supports macOS with Metal graphics.</li>
+<li>If Unity uses another API, the Xcode integration is disabled until you select a supported graphics API.</li>
+</ul>
+
+<h2>Capture a frame from your application</h2>
+
+<p>To use the Xcode frame debugger to capture a frame from do one of the following:</p>
+
+<ul>
+<li>Launch your application from Xcode and either use the Xcode <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> or the <a href="../ScriptReference/Apple.FrameCapture.html">FrameCapture</a> API to request frame captures. You can analyze the frame captures in Xcode immediately, or save them to disk. This workflow is supported on all platforms that use Metal.</li>
+<li>Launch your application directly from the command line without an Xcode project, and use the <a href="../ScriptReference/Apple.FrameCapture.html">FrameCapture</a> API to save frame captures to disk. <strong>Note:</strong> iOS doesn’t support this workflow.</li>
+</ul>
+
+<h3>Capture a frame from your application with Xcode</h3>
+
+<p>This section describes how to launch your application and perform a frame capture using the Xcode UI or the FrameCapture API. This workflow is supported on all platforms that use Metal.</p>
+
+<p><strong>1. Create an Xcode project.</strong></p>
+
+<p>You can either create an Xcode project from the Unity Editor, or use any other Xcode project to launch macOS applications.</p>
+
+<p>To build an Xcode project from the Unity Editor:</p>
+
+<ol>
+<li>Open the Build Settings window (<strong>File &gt; Build Settings</strong>).</li>
+<li>macOS only: Enable <strong>Create Xcode Project</strong>.</li>
+<li>Click Build.</li>
+</ol>
+
+<p>To use another Xcode project to launch macOS applications:</p>
+
+<ol>
+<li>In Xcode, create a new, empty macOS project, or open an existing macOS project.</li>
+<li>Go to Product &gt; Scheme &gt; Edit scheme, and open the Info tab.</li>
+<li>Set <strong>Executable</strong> to your built Unity application.</li>
+</ol>
+
+<p><strong>2. Edit the Xcode project scheme so that you can perform frame captures.</strong></p>
+
+<p>Either, use the Xcode GUI. To do this, follow the <a href="https://developer.apple.com/documentation/metal/frame_capture_debugging_tools/enabling_frame_capture">Enabling Frame Capture guide</a> in the Xcode documentation to set your project scheme’s GPU <strong>Frame Capture</strong> setting to Metal.</p>
+
+<p>You can also use the XcScheme API to configure an Xcode project scheme, which is useful for automated builds. For more information, see the <a href="../ScriptReference/iOS.Xcode.XcScheme.html">XcScheme API documentation</a>.</p>
+
+<p><strong>3. Launch your project from Xcode, and perform a frame capture.</strong></p>
+
+<p>In Xcode, press the Frame Capture button (camera icon) to capture the next frame of data.</p>
+
+<p>You can also use the <a href="../ScriptReference/Apple.FrameCapture.html">FrameCapture</a> API to perform a frame capture from a script. For information on analyzing frame capture data in Xcode, see the <a href="https://developer.apple.com/documentation/metal/frame_capture_debugging_tools">Xcode frame debugger documentation</a>.</p>
+
+<h3>Capture a frame from your application with the command line</h3>
+
+<p>This section describes how to launch your application from the command line, perform a frame capture using the <a href="../ScriptReference/Apple.FrameCapture.html">FrameCapture</a> API, and save the results to disk. <strong>Important:</strong> This workflow isn’t supported on iOS. To perform frame captures on iOS, you must always launch your application from Xcode.</p>
+
+<ol>
+<li>Add calls to <a href="../ScriptReference/Apple.FrameCapture.BeginCaptureToFile.html">FrameCapture.BeginCaptureToFile</a> and <a href="../ScriptReference/Apple.FrameCapture.EndCapture.html">EndCapture</a> to your code, so that you can perform frame captures as required.</li>
+<li>Launch your application from the command line, with the following flag: <code>-enable-metal-capture.</code> Xcode performs frame captures when your code requests them, and saves the results to disk.</li>
+</ol>
+
+<p>For information on how to analyze this data in Xcode, see Apple’s <a href="https://developer.apple.com/documentation/metal/frame_capture_debugging_tools">Xcode frame debugger documentation</a>.</p>
+
+<h2>Capture a frame from the Unity Editor</h2>
+
+<p>On macOS, you can use Xcode frame debugger to analyze frames from the Unity Editor. If you use Xcode to launch the Unity Editor, you can request frame captures from the Unity Editor UI.</p>
+
+<h3>Capture a frame from Unity Editor with Xcode</h3>
+
+<p>Follow these steps to launch the Unity Editor from Xcode and perform a frame capture using the Unity Editor UI, the Xcode UI, or the FrameCapture API. You can analyze the frame capture immediately, or save the results to disk. This workflow is supported on macOS.</p>
+
+<p>
+<strong>Preqrequisite:</strong> If the Unity Editor is open, close it.</p>
+
+<ol>
+<li>In Xcode, create a new, empty macOS project, or open an existing macOS project.</li>
+<li>Go to <strong>Product &gt; Scheme &gt; Edit scheme</strong>, and open the <strong>Info</strong> tab.</li>
+<li>Set <strong>Executable</strong> to Unity Editor.</li>
+<li>Follow the <a href="https://developer.apple.com/documentation/metal/frame_capture_debugging_tools/enabling_frame_capture">Enabling Frame Capture guide in the Xcode documentation</a> to set your project scheme’s <strong>GPU Frame Capture</strong> setting to <strong>Metal</strong>.</li>
+<li>
+<strong>Optional - If you have the Unity Hub installed:</strong> Go to the <strong>Arguments</strong> tab in the Xcode Scheme settings window and pass the path to your Unity project as an argument using <code>-projectPath</code>. This is to prevent the Unity Hub from opening when Xcode launches the Editor and instead directly debug the Editor with your project.
+<img src="../uploads/Main/xcode-frame-debugger-cmd.png" alt="The FrameDebug window displaying the project path">
+</li>
+<li>Run the Xcode project to launch the Unity Editor.</li>
+<li>Perform a frame capture using one of the following methods:
+
+<ul>
+<li>
+<strong>Unity Editor:</strong> Use the <strong>Xcode Capture</strong> button to the right of the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view or Game view to perform a frame capture.</li>
+<li>
+<strong>Xcode:</strong> Select the <strong>Frame Capture</strong> button (camera icon) to capture the next frame of data.</li>
+<li>
+<strong>Script:</strong> Use the <code>FrameCapture</code> API. For more information, see the <a href="https://docs.unity3d.com/ScriptReference/Apple.FrameCapture.html">FrameCapture API</a> documentation.
+For information on analyzing frame capture data in Xcode, see Apple’s <a href="https://developer.apple.com/documentation/metal/frame_capture_debugging_tools">Xcode frame debugger documentation</a>.</li>
+</ul>
+</li>
+</ol>
+
+<h3>Capture a frame from the Unity Editor with the command line</h3>
+
+<p>This workflow describes how to launch the Unity Editor from the command line, use the <a href="../ScriptReference/Apple.FrameCapture.html">FrameCapture API</a> to perform a frame capture, and save the frame capture to disk. This workflow is supported on macOS.</p>
+
+<ol>
+<li>Add calls to <a href="../ScriptReference/Apple.FrameCapture.BeginCaptureToFile.html">FrameCapture.BeginCaptureToFile</a> and <a href="../ScriptReference/Apple.FrameCapture.EndCapture.html">EndCapture</a> to your code, so that you can perform frame captures as required.</li>
+<li>
+<a href="CommandLineArguments.html">Launch the Unity Editor from the command line</a>, with the following flag: <code>-enable-metal-capture</code>. Xcode performs frame captures when your code requests them, and saves the results to disk.</li>
+</ol>
+
+<p>For information on how to analyze this data in Xcode, see the <a href="https://developer.apple.com/documentation/metal/frame_capture_debugging_tools">Xcode frame debugger documentation</a>.</p>
+
+<h2>Additional resources:</h2>
+
+<ul>
+<li><a href="../ScriptReference/iOS.Xcode.XcScheme.html">XcScheme API documentation</a></li>
+<li><a href="../ScriptReference/Apple.FrameCapture.html">FrameCapture API</a></li>
+<li><a href="CommandLineArguments.html">Launch the Unity Editor from the command line</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="deep-linking.html"></a></span><div class="tip">Deep linking</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="GraphicsAPIs.html"></a></span><div class="tip">Graphics API support</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

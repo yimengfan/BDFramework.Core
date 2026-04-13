@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Finding packages and feature sets</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-ui-find.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-ui-find.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-ui-find.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-ui-find.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-ui-find.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-ui-find.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-ui-find.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-ui-find.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li><a href="Packages.html">Unity's Package Manager</a></li>
+<li><a href="upm-ui.html">Package Manager window</a></li>
+<li>Finding packages and feature sets</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="fs-details.html"></a></span><div class="tip">Features (detail) view</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-ui-filter.html"></a></span><div class="tip">Packages list context</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Finding packages and feature sets</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Package Manager window provides several ways to help you find a specific package or feature set:</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-find.png" alt="At the top of the Package Manager window, there are several controls to help you narrow down the list of packages">
+<figcaption>At the top of the Package Manager window, there are several controls to help you narrow down the list of packages</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="3"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>(A)</strong></td>
+	<td style="text-align:left;"><a href="upm-ui-filter.html"><strong>Packages</strong> list context</a></td>
+	<td style="text-align:left;">Choose the “context” that determines what appears in the list. The context might be the source of the package, such as a registry server, the Asset Store, or the Unity Editor itself (for built-in packages); however, the <strong>In Project</strong> context displays only those packages and feature sets that are already installed in the current project, regardless of their origin.<br><br>For example, you can choose the <strong>My Assets</strong> context to show only Asset Store packages available to you in the list, or choose the <strong>In Project</strong> context to show only Unity packages and feature sets that are already installed in your project.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>(B)</strong></td>
+	<td style="text-align:left;"><a href="upm-ui-sort.html"><strong>Sort</strong></a></td>
+	<td style="text-align:left;">Sort the list in either ascending or descending order by name, published date (Unity packages and feature sets only), purchased date (Asset Store packages only), or update date. <br><br>For example, if you want to find a Unity package that has a very recent update but can’t remember the name of it, try sorting by update date in descending order and browse the list from the top down to find it.<br><br>Sorting affects the items under each expander, but leaves the expanders in place. If you sort from Z-A, the Package Manager reorders all the feature sets from Z- A inside its expander, and all the packages under each <a href="upm-ui-list.html#expanders">expander</a> but doesn’t mix the content in the list.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>(C)</strong></td>
+	<td style="text-align:left;"><a href="upm-ui-filter2.html">Asset Store <strong>Filters</strong></a></td>
+	<td style="text-align:left;">Choose how to narrow down the list of Asset Store packages using these groups:<br><br>- <strong>Status</strong> (hidden, deprecated, no labels)<br>- <span class="tooltip"><strong>Categories</strong><span class="tooltiptext">A Profiler category identifies the workload data for a Unity subsystem (for example, Rendering, Scripting and Animation categories). Unity applies colour-coding to categories to help visually distinguish the types of data in the Profiler window. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProfilerWindow.html" href="ProfilerWindow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#category" aria-label="Go to glossary anchor for category">Glossary</a></span></span></span> (2D, 3D, audio, templates, tools, etc.)<br>- <strong>Labels</strong> (custom labels you define in the Asset Store)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>(D)</strong></td>
+	<td style="text-align:left;"><a href="upm-ui-search.html">Search</a></td>
+	<td style="text-align:left;">Use the search box to look for a Unity package or an <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span> package by name.</td>
+</tr>
+</tbody>
+</table>
+
+<p>These controls help narrow down which packages and feature sets appear in the list view and in what order. This makes it easier to find what you are looking for or help you browse when you don’t know exactly what you want.</p>
+
+<p>When you use several of these controls at the same time, you narrow the set of matches that appears in the list.</p>
+
+<p>After you find the Unity package you need, then you can <a href="#VersionList">locate a specific version</a> from the list. For feature sets, there’s always only one version available, so you can either <a href="fs-install.html">install it or remove it</a>.</p>
+
+<p><a name="VersionList" aria-hidden="true"></a></p>
+
+<h2>Finding a specific version</h2>
+
+<p>To find a specific package version:</p>
+
+<ol>
+<li><p>In Unity, open the Package Manager window (navigate to Unity’s main menu and go to <strong>Window</strong> &gt; <strong>Package Manager</strong>).</p></li>
+<li>
+<p>If you are looking for a <a href="pack-preview.html">pre-release package</a>, follow these steps:</p>
+
+<ul>
+<li>
+<p>Select <strong>Advanced Project Settings</strong> under the <a href="upm-ui.html#Advanced">advanced settings</a> <img src="../uploads/Main/iconSettings.png" alt=""> icon.</p>
+
+<figure>
+<img src="../uploads/Main/upm-settings.png" alt="Advanced Project Settings opens up the Package Manager project settings window">
+<figcaption>Advanced Project Settings opens up the Package Manager project settings window</figcaption>
+</figure>
+
+<p>The <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PackageManager.html">Package Manager</a> <span class="tooltip"><strong>project settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a href="comp-ManagerGroup.html" href="class-PackageManager.html">Package Manager</a> <span class="tooltip"><strong>project settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span> window appears.</p>
+</li>
+<li><p>Under the <strong>Advanced Settings</strong> group, enable the <strong>Enable Pre-release Packages</strong> option.</p></li>
+<li><p>Close the <strong>Project Settings</strong> window. Any <a href="pack-preview.html">pre-release packages</a> now appear in the list with the <img src="../uploads/Main/iconPre.png" alt=""> label.</p></li>
+</ul>
+</li>
+<li>
+<p>You can either browse the <a href="upm-ui-list.html">list of packages</a> or find a specific package using one of these methods:</p>
+
+<ul>
+<li>
+<a href="upm-ui-search.html">Search for a package</a> by name or keyword.</li>
+<li>
+<a href="upm-ui-sort.html">Sort the list</a> (for example, by last updated in descending order to find the most recently updated packages).</li>
+<li>
+<a href="upm-ui-filter2.html">Apply filters</a> to the list (Asset Store packages only).</li>
+</ul>
+</li>
+<li>
+<p>In the <a href="upm-ui-list.html">list of packages</a>, click the expander icon to the left of the package name.</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-update-list.png" alt="Currently installed and Recommended are the only versions available">
+<figcaption><strong>Currently installed</strong> and <strong>Recommended</strong> are the only versions available</figcaption>
+</figure>
+
+<p>
+<strong>Note</strong>: If you see the <strong>See other versions</strong> link after expanding the package, you can click it to see the list of all available versions for that package.</p>
+</li>
+<li>
+<p>Select any version to see the <a href="upm-ui-details.html">details</a> specific to that version.</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-update.png" alt="The version appearing in the details pane and on the Update button match the selected version in the list">
+<figcaption>The version appearing in the details pane and on the <strong>Update</strong> button match the selected version in the list</figcaption>
+</figure>
+</li>
+<li>
+<p>You can perform a variety of actions when you select a specific version:</p>
+
+<ul>
+<li>You can click the <strong>View documentation</strong> link to <a href="upm-docs.html">open the documentation</a> that matches this version.</li>
+<li>You can click the <strong>View changelog</strong> link to see the list of changes from package creation up to this version.</li>
+<li>You can click the <strong>View licenses</strong> link to look at any license information for this package specifically for this version.</li>
+<li>You can see whether this package <a href="upm-dependencies.html">depends on</a> any other packages, or whether any other packages depend on this one.</li>
+<li>If this package is already installed and contains sample assets, you can click the <strong>Import</strong> button to save a copy of them under your project’s <code>Assets</code> folder.</li>
+<li>If you don’t already have this package installed in your project, you can <a href="upm-ui-install.html">install</a> this version.</li>
+<li>If another version of this package is already installed in your project, you can <a href="upm-ui-update.html">update</a> the package to this version.</li>
+<li>If you installed this package in your project but don’t want it anymore, you can <a href="upm-ui-remove.html">remove</a> the package from your project.</li>
+</ul>
+</li>
+</ol>
+
+<p><br></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="fs-details.html"></a></span><div class="tip">Features (detail) view</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-ui-filter.html"></a></span><div class="tip">Packages list context</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

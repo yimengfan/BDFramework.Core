@@ -1,0 +1,433 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Creating a simple render loop in a custom render pipeline</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/srp-creating-simple-render-loop.html">English</a></li>
+<li><a href="/cn/current/Manual/srp-creating-simple-render-loop.html">中文</a></li>
+<li><a href="/ja/current/Manual/srp-creating-simple-render-loop.html">日本語</a></li>
+<li><a href="/kr/current/Manual/srp-creating-simple-render-loop.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/srp-creating-simple-render-loop.html">English</a></li>
+<li><a href="/cn/current/Manual/srp-creating-simple-render-loop.html">中文</a></li>
+<li><a href="/ja/current/Manual/srp-creating-simple-render-loop.html">日本語</a></li>
+<li><a href="/kr/current/Manual/srp-creating-simple-render-loop.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="render-pipelines.html">Render pipelines</a></li>
+<li><a href="srp-custom.html">Creating a custom render pipeline</a></li>
+<li>Creating a simple render loop in a custom render pipeline</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="srp-creating-render-pipeline-asset-and-render-pipeline-instance.html"></a></span><div class="tip">Creating a Render Pipeline Asset and Render Pipeline Instance in a custom render pipeline</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="CamerasOverview.html"></a></span><div class="tip">Cameras</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Creating a simple render loop in a custom render pipeline</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A render loop is the term for all of the rendering operations that take place in a single frame. This page contains information on creating a simple render loop in a custom <span class="tooltip"><strong>render pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> that is based on Unity’s Scriptable Render Pipeline.</p>
+
+<p>The code examples on this page demonstrate the basic principles of using the Scriptable Render Pipeline. You can use this information to build your own custom Scriptable Render Pipeline, or to understand how Unity’s prebuilt Scriptable Render Pipelines work. </p>
+
+<h2>Preparing your project</h2>
+
+<p>Before you begin writing the code for your render loop, you must prepare your project.</p>
+
+<p>The steps are as follows:</p>
+
+<ol>
+<li>
+<a href="#creating-unity-shader">Create an SRP-compatible shader</a>.</li>
+<li>
+<a href="#creating-gameobject">Create one or more GameObjects to render</a>.</li>
+<li>
+<a href="#creating-srp">Create the basic structure of your custom SRP</a>.</li>
+<li>
+<em>Optional:</em> If you plan to extend your simple custom SRP to add more complex functionality, install the SRP Core package. The SRP Core package includes the SRP Core <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> library (which you can use to make your shaders SRP Batcher compatible), and utility functions for common operations. For more information, see the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.core@latest">SRP Core package documentation</a>.</li>
+</ol>
+
+<p><a name="creating-unity-shader" aria-hidden="true"></a></p>
+
+<h3>Creating an SRP-compatible shader</h3>
+
+<p>In the Scriptable Render Pipeline, you use the <code>LightMode</code> Pass tag to determine how to draw geometry. For more information on Pass tags, see <a href="SL-PassTags.html">ShaderLab: assigning tags to a Pass</a>.</p>
+
+<p>This task shows you how to create a very simple unlit <span class="tooltip"><strong>Shader object</strong><span class="tooltiptext">An instance of the Shader class, a Shader object is container for shader programs and GPU instructions, and information that tells Unity how to use them. Use them with materials to determine the appearance of your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about shader-objects.html" href="shader-objects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shaderobject" aria-label="Go to glossary anchor for Shaderobject">Glossary</a></span></span></span> with a LightMode Pass tag value of <code>ExampleLightModeTag</code>.</p>
+
+<ol>
+<li>Create a new shader asset in your project. For instructions on creating a shader asset, see <a href="class-Shader.html">Shader assets</a>.</li>
+<li>In your Project view, double click the shader asset to open the shader source code in a text editor.</li>
+<li>Replace the existing code with the following:</li>
+</ol>
+
+<pre><code>// This defines a simple unlit Shader object that is compatible with a custom Scriptable Render Pipeline.
+// It applies a hardcoded color, and demonstrates the use of the LightMode Pass tag.
+// It is not compatible with SRP Batcher.
+
+Shader &quot;Examples/SimpleUnlitColor&quot;
+{
+    SubShader
+    {
+        Pass
+        {
+            // The value of the LightMode Pass tag must match the ShaderTagId in ScriptableRenderContext.DrawRenderers
+            Tags { &quot;LightMode&quot; = &quot;ExampleLightModeTag&quot;}
+
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+
+    float4x4 unity_MatrixVP;
+            float4x4 unity_ObjectToWorld;
+
+            struct Attributes
+            {
+                float4 positionOS   : POSITION;
+            };
+
+            struct Varyings
+            {
+                float4 positionCS : SV_POSITION;
+            };
+
+            Varyings vert (Attributes IN)
+            {
+                Varyings OUT;
+                float4 worldPos = mul(unity_ObjectToWorld, IN.positionOS);
+                OUT.positionCS = mul(unity_MatrixVP, worldPos);
+                return OUT;
+            }
+
+            float4 frag (Varyings IN) : SV_TARGET
+            {
+                return float4(0.5,1,0.5,1);
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+
+<p><a name="creating-gameobject" aria-hidden="true"></a></p>
+
+<h3>Creating a GameObject to render</h3>
+
+<p>To test that your render loop works, you must create something to render. This task shows you how to put <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in your <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in your <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> that use the SRP-compatible shader that you created in the previous task.</p>
+
+<ol>
+<li>Create a new material asset in your Unity project. For instructions see <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Material.html">Materials</a><span class="tooltiptext">An asset that defines how a surface should be rendered. <a href="class-Material.html" href="class-Material.html">Materials</a><span class="tooltiptext">An asset that defines how a surface should be rendered. <a href="class-Material.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span>.</li>
+<li>Assign the shader asset to the material asset. For instructions, see <a href="class-Material.html">Materials</a>.</li>
+<li>Create a cube in your scene. For instructions, see <a href="PrimitiveObjects.html">Primitive objects</a>.</li>
+<li>Assign the material to it. For instructions, see <a href="class-Material.html">Materials</a>.</li>
+</ol>
+
+<p><a name="creating-srp" aria-hidden="true"></a></p>
+
+<h3>Creating the basic structure of your custom SRP</h3>
+
+<p>The final stage of preparation is to create the basic source files needed for your custom SRP, and tell Unity to begin rendering using the custom SRP.</p>
+
+<ol>
+<li>Create a class that inherits from <code>RenderPipeline</code> and a compatible Render Pipeline Asset, following the instructions in <a href="srp-creating-render-pipeline-asset-and-render-pipeline-instance.html">Creating a Render Pipeline Instance and Render Pipeline Asset</a>
+</li>
+<li>Set the active Render Pipeline Asset, following the instructions in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about srp-setting-render-pipeline-asset.html">How to get, set, and configure the active render pipeline</a>. Unity will begin rendering using the custom SRP immediately, which means that your <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html" href="srp-setting-render-pipeline-asset.html">How to get, set, and configure the active render pipeline</a>. Unity will begin rendering using the custom SRP immediately, which means that your <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> and Game view will be blank until you add code to your custom SRP.</li>
+</ol>
+
+<h2>Creating the render loop</h2>
+
+<p>In a simple render loop, the basic operations are:</p>
+
+<ul>
+<li>
+<a href="#clearing">Clearing the render target</a>, which means removing the geometry that was drawn during the last frame.</li>
+<li>
+<a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #culling">Culling</a>, which means filtering out geometry that is not visible to a <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="#culling">Culling</a>, which means filtering out geometry that is not visible to a <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>.</li>
+<li>
+<a href="#drawing">Drawing</a>, which means telling the GPU what geometry to draw, and how to draw it.</li>
+</ul>
+
+<p><a name="clearing" aria-hidden="true"></a></p>
+
+<h3>Clearing the render target</h3>
+
+<p>Clearing means removing the things that were drawn during the last frame. The render target is usually the screen; however, you can also render to textures to create a “picture in picture” effect. These examples demonstrate how to render to the screen, which is Unity’s default behavior.</p>
+
+<p>To clear the render target in the Scriptable Render Pipeline, you do the following:</p>
+
+<ol>
+<li>Configure a <code>CommandBuffer</code> with a <code>Clear</code> command.</li>
+<li>Add the <code>CommandBuffer</code> to the queue of commands on the <code>ScriptableRenderContext</code>; to do this, call <a href="../ScriptReference/Rendering.ScriptableRenderContext.ExecuteCommandBuffer.html">ScriptableRenderContext.ExecuteCommandBuffer</a>.</li>
+<li>Instruct the graphics API to perform the queue of commands on the <code>ScriptableRenderContext</code>; to do this, call <a href="../ScriptReference/Rendering.ScriptableRenderContext.Submit.html">ScriptableRenderContext.Submit</a>.</li>
+</ol>
+
+<p>As with all Scriptable Render Pipeline operations, you use the <a href="../ScriptReference/Rendering.RenderPipeline.Render.html">RenderPipeline.Render</a> method as the entry point for this code. This example code demonstrates how to do this:</p>
+
+<pre><code class="lang-csharp">/* 
+This is a simplified example of a custom Scriptable Render Pipeline.
+It demonstrates how a basic render loop works.
+It shows the clearest workflow, rather than the most efficient runtime performance.
+*/
+
+using UnityEngine;
+using UnityEngine.Rendering;
+
+public class ExampleRenderPipeline : RenderPipeline {
+    public ExampleRenderPipeline() {
+    }
+
+    protected override void Render (ScriptableRenderContext context, Camera[] cameras) {
+        // Create and schedule a command to clear the current render target
+        var cmd = new CommandBuffer();
+        cmd.ClearRenderTarget(true, true, Color.black);
+        context.ExecuteCommandBuffer(cmd);
+        cmd.Release();
+
+        // Instruct the graphics API to perform all scheduled commands
+        context.Submit();
+    }
+}
+</code></pre>
+
+<p><a name="culling" aria-hidden="true"></a></p>
+
+<h3>Culling</h3>
+
+<p>Culling is the process of filtering out geometry that is not visible to a Camera.</p>
+
+<p>To cull in the Scriptable Render Pipeline, you do the following:</p>
+
+<ol>
+<li>Populate a <a href="../ScriptReference/Rendering.ScriptableCullingParameters.html">ScriptableCullingParameters</a> struct with data about a Camera; to do this, call <a href="../ScriptReference/Camera.TryGetCullingParameters.html">Camera.TryGetCullingParameters</a>.</li>
+<li>Optional: Manually update the values of the <code>ScriptableCullingParameters</code> struct.</li>
+<li>Call <a href="../ScriptReference/Rendering.ScriptableRenderContext.Cull.html">ScriptableRenderContext.Cull</a>, and store the results in a <code>CullingResults</code> struct.</li>
+</ol>
+
+<p>This example code extends the example above, and demonstrates how to clear the render target and then perform a culling operation:</p>
+
+<pre><code class="lang-csharp">/* 
+This is a simplified example of a custom Scriptable Render Pipeline.
+It demonstrates how a basic render loop works.
+It shows the clearest workflow, rather than the most efficient runtime performance.
+*/
+
+using UnityEngine;
+using UnityEngine.Rendering;
+
+public class ExampleRenderPipeline : RenderPipeline {
+    public ExampleRenderPipeline() {
+    }
+
+    protected override void Render (ScriptableRenderContext context, Camera[] cameras) {
+        // Create and schedule a command to clear the current render target
+        var cmd = new CommandBuffer();
+        cmd.ClearRenderTarget(true, true, Color.black);
+        context.ExecuteCommandBuffer(cmd);
+        cmd.Release();
+
+        // Iterate over all Cameras
+        foreach (Camera camera in cameras)
+        {
+            // Get the culling parameters from the current Camera
+            camera.TryGetCullingParameters(out var cullingParameters);
+
+            // Use the culling parameters to perform a cull operation, and store the results
+            var cullingResults = context.Cull(ref cullingParameters);
+        }
+
+        // Instruct the graphics API to perform all scheduled commands
+        context.Submit();
+    }
+}
+</code></pre>
+
+<p><a name="drawing" aria-hidden="true"></a></p>
+
+<h3>Drawing</h3>
+
+<p>Drawing is the process of instructing the graphics API to draw a given set of geometry with given settings.</p>
+
+<p>To draw in SRP, you do the following:</p>
+
+<ol>
+<li>Perform a culling operation, as described above, and store the results in a <code>CullingResults</code> struct.</li>
+<li>Create and configure <a href="../ScriptReference/Rendering.FilteringSettings.html">FilteringSettings</a> struct, which describes how to filter the culling results.</li>
+<li>Create and configure a <a href="../ScriptReference/Rendering.DrawingSettings.html">DrawingSettings</a> struct, which describes which geometry to draw and how to draw it.</li>
+<li>
+<em>Optional</em>: By default, Unity sets the render state based on the Shader object. If you want to override the render state for some or all of the geometry that you are about to draw, you can use a <a href="../ScriptReference/Rendering.RenderStateBlock.html">RenderStateBlock</a> struct to do this.</li>
+<li>Call <a href="../ScriptReference/Rendering.ScriptableRenderContext.DrawRenderers.html">ScriptableRenderContext.DrawRenderers</a>, and pass the structs that you created as parameters. Unity draws the filtered set of geometry, according to the settings.</li>
+</ol>
+
+<p>This example code builds on the examples above, and demonstrates how to clear the render target, perform a culling operation, and draw the resulting geometry:</p>
+
+<pre><code class="lang-csharp">/* 
+This is a simplified example of a custom Scriptable Render Pipeline.
+It demonstrates how a basic render loop works.
+It shows the clearest workflow, rather than the most efficient runtime performance.
+*/
+
+using UnityEngine;
+using UnityEngine.Rendering;
+
+public class ExampleRenderPipeline : RenderPipeline {
+    public ExampleRenderPipeline() {
+    }
+
+    protected override void Render (ScriptableRenderContext context, Camera[] cameras) {
+        // Create and schedule a command to clear the current render target
+        var cmd = new CommandBuffer();
+        cmd.ClearRenderTarget(true, true, Color.black);
+        context.ExecuteCommandBuffer(cmd);
+        cmd.Release();
+
+        // Iterate over all Cameras
+        foreach (Camera camera in cameras)
+        {
+            // Get the culling parameters from the current Camera
+            camera.TryGetCullingParameters(out var cullingParameters);
+
+            // Use the culling parameters to perform a cull operation, and store the results
+            var cullingResults = context.Cull(ref cullingParameters);
+
+            // Update the value of built-in shader variables, based on the current Camera
+            context.SetupCameraProperties(camera);
+
+            // Tell Unity which geometry to draw, based on its LightMode Pass tag value
+            ShaderTagId shaderTagId = new ShaderTagId(&quot;ExampleLightModeTag&quot;);
+
+            // Tell Unity how to sort the geometry, based on the current Camera
+            var sortingSettings = new SortingSettings(camera);
+
+            // Create a DrawingSettings struct that describes which geometry to draw and how to draw it
+            DrawingSettings drawingSettings = new DrawingSettings(shaderTagId, sortingSettings);
+
+            // Tell Unity how to filter the culling results, to further specify which geometry to draw
+            // Use FilteringSettings.defaultValue to specify no filtering
+            FilteringSettings filteringSettings = FilteringSettings.defaultValue;
+        
+            // Schedule a command to draw the geometry, based on the settings you have defined
+            context.DrawRenderers(cullingResults, ref drawingSettings, ref filteringSettings);
+
+            // Schedule a command to draw the Skybox if required
+            if (camera.clearFlags == CameraClearFlags.Skybox &amp;&amp; RenderSettings.skybox != null)
+            {
+                context.DrawSkybox(camera);
+            }
+
+            // Instruct the graphics API to perform all scheduled commands
+            context.Submit();
+        }
+    }
+}
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="srp-creating-render-pipeline-asset-and-render-pipeline-instance.html"></a></span><div class="tip">Creating a Render Pipeline Asset and Render Pipeline Instance in a custom render pipeline</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="CamerasOverview.html"></a></span><div class="tip">Cameras</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

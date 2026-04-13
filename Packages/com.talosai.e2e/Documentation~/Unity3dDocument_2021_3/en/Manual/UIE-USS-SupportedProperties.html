@@ -1,0 +1,410 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: USS common properties</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-USS-SupportedProperties.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-USS-SupportedProperties.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-USS-SupportedProperties.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-USS-SupportedProperties.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-USS-SupportedProperties.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-USS-SupportedProperties.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-USS-SupportedProperties.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-USS-SupportedProperties.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-USS.html">Style UI</a></li>
+<li><a href="UIE-uss-properties.html">USS properties</a></li>
+<li>USS common properties</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-USS-PropertyTypes.html"></a></span><div class="tip">USS data types</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-LayoutEngine.html"></a></span><div class="tip">Position element with the layout engine</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>USS common properties</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page introduces the common USS properties, their syntax and accepted values, and differences from CSS. For a complete list of USS properties, see <a href="UIE-USS-Properties-Reference.html">USS properties reference</a>.</p>
+
+<h2>Box model</h2>
+
+<figure>
+<img src="../uploads/Main/style-box-model.png" alt="Box model">
+<figcaption>Box model</figcaption>
+</figure>
+
+<h3>Dimensions</h3>
+
+<pre><code class="lang-css">width: &lt;length&gt; | auto
+height: &lt;length&gt; | auto
+min-width: &lt;length&gt; | auto
+min-height: &lt;length&gt; | auto
+max-width: &lt;length&gt; | none
+max-height: &lt;length&gt; | none
+</code></pre>
+
+<p>The <code>width</code> and <code>height</code> specify the size of the element. If <code>width</code> isn’t specified, the width is based on the width of the element’s contents. If <code>height</code> isn’t specified, the height is based on the height of the element’s contents.</p>
+
+<h3>Margins</h3>
+
+<pre><code class="lang-css">margin-left: &lt;length&gt; | auto;
+margin-top: &lt;length&gt; | auto
+margin-right: &lt;length&gt; | auto
+margin-bottom: &lt;length&gt; | auto
+/* Shorthand */
+margin: [&lt;length&gt; | auto]{1,4}
+</code></pre>
+
+<h3>Borders</h3>
+
+<pre><code class="lang-css">border-left-width: &lt;length&gt;
+border-top-width: &lt;length&gt;
+border-right-width: &lt;length&gt;
+border-bottom-width: &lt;length&gt;
+/* Shorthand */
+border-width: &lt;length&gt;{1,4}
+</code></pre>
+
+<h3>Padding</h3>
+
+<pre><code class="lang-css">padding-left: &lt;length&gt;
+padding-top: &lt;length&gt;
+padding-right: &lt;length&gt;
+padding-bottom: &lt;length&gt;
+/* Shorthand */
+padding: &lt;length&gt;{1,4}
+</code></pre>
+
+<h3>Differences from CSS</h3>
+
+<p>The alternative box model that USS uses is different from the <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model#What_is_the_CSS_box_model">standard CSS box model</a>. In the standard CSS box model, <code>width</code> and <code>height</code> define the size of the content box. An element’s rendered size is the sum of its <code>padding</code>, <code>border-width</code>, and <code>width</code> / <code>height</code> values.</p>
+
+<p>Unity’s model is equivalent to setting the CSS <code>box-sizing</code> property to <code>border-box</code>. See the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing">MDN documentation</a> for details.</p>
+
+<p><a name="flex-layout" aria-hidden="true"></a></p>
+
+<h2>Flex layout</h2>
+
+<p>UI Toolkit includes a <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-LayoutEngine.html">layout engine</a> that positions <span class="tooltip"><strong>visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="UIE-LayoutEngine.html">layout engine</a> that positions <span class="tooltip"><strong>visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span> based on layout and styling properties. The layout engine implements a subset of Flexbox, an HTML/CSS layout system. </p>
+
+<p>By default, all items are vertically placed in their container. </p>
+
+<pre><code class="lang-css">/* Items */
+flex-grow: &lt;number&gt;
+flex-shrink: &lt;number&gt;
+flex-basis: &lt;length&gt; | auto
+flex: none | [ &lt;'flex-grow'&gt; &lt;'flex-shrink'&gt;? || &lt;'flex-basis'&gt; ]
+align-self: auto | flex-start | flex-end | center | stretch
+
+/* Containers */
+flex-direction: row | row-reverse | column | column-reverse
+flex-wrap: nowrap | wrap | wrap-reverse
+align-content: flex-start | flex-end | center | stretch
+
+/* The default value is `stretch`.
+`auto` sets `align-items` to `flex-end`. */
+align-items: auto | flex-start | flex-end | center | stretch 
+
+justify-content: flex-start | flex-end | center | space-between | space-around
+</code></pre>
+
+<h2>Positioning</h2>
+
+<pre><code class="lang-css">/* The default value is `relative` which positions the element based on its parent. 
+If sets to `absolute`, the element leaves its parent layout and values are specified based on the parent bounds.*/
+position: absolute | relative
+
+/* The distance from the parent edge or the original position of the element. */
+left: &lt;length&gt; | auto
+top: &lt;length&gt; | auto
+right: &lt;length&gt; | auto
+bottom: &lt;length&gt; | auto
+</code></pre>
+
+<p><a name="unity-background" aria-hidden="true"></a></p>
+
+<h2>Background</h2>
+
+<pre><code class="lang-css">background-color: &lt;color&gt;
+background-image: &lt;resource&gt; | &lt;url&gt; | none
+-unity-background-scale-mode: stretch-to-fill | scale-and-crop | scale-to-fit
+-unity-background-image-tint-color: &lt;color&gt;
+</code></pre>
+
+<p><a name="unity-slice" aria-hidden="true"></a></p>
+
+<h2>Slicing</h2>
+
+<p>When assigning a background image, you draw it with respect to a simplified 9-slice specification:</p>
+
+<pre><code class="lang-css">-unity-slice-left: &lt;integer&gt;
+-unity-slice-top: &lt;integer&gt;
+-unity-slice-right: &lt;integer&gt;
+-unity-slice-bottom: &lt;integer&gt;
+-unity-slice-scale: &lt;length&gt;
+</code></pre>
+
+<h2>Border color</h2>
+
+<pre><code class="lang-css">border-color: &lt;color&gt;
+</code></pre>
+
+<p><a name="drawing-borders" aria-hidden="true"></a></p>
+
+<h2>Border radius</h2>
+
+<pre><code class="lang-css">border-top-left-radius: &lt;length&gt;
+border-top-right-radius: &lt;length&gt;
+border-bottom-left-radius: &lt;length&gt;
+border-bottom-right-radius: &lt;length&gt;
+/* Shorthand */
+border-radius: &lt;length&gt;{1,4}
+</code></pre>
+
+<h3>Differences from CSS</h3>
+
+<p>Border radius properties work almost the same in USS and CSS. For detailed information about <code>border-radius</code>, see the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius">MDN documentation</a>.</p>
+
+<p>However, there are two main differences:</p>
+
+<ul>
+<li>Unity doesn’t support the second-radius shorthand (<code>border-radius: (first radius values) / (second radius values);</code>) used to create elliptical corners.</li>
+<li>Unity reduces border radius values to half of the element’s size in <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span>. For example, for a 100px x 100px element, any <code>border-radius</code> value greater than 50px is reduced to 50px. If you use percentage (<code>%</code>) values for border-radius properties, Unity first resolves the percentage to pixels and then reduces the <code>border-radius</code> value to half of the resolved pixel value. If you have different radius values for two or more corners, Unity reduces any values greater than half of the element’s size to half of the element’s size.</li>
+</ul>
+
+<p>
+<a name="unity-overflow-clip-box" aria-hidden="true"></a><a name="unity-paragraph-spacing" aria-hidden="true"></a>
+</p>
+
+<h2>Appearance</h2>
+
+<pre><code class="lang-css">overflow: hidden | visible
+-unity-overflow-clip-box: padding-box | content-box
+-unity-paragraph-spacing: &lt;length&gt;
+visibility: visible | hidden
+display: flex | none
+</code></pre>
+
+<p>The <code>-unity-overflow-clip-box</code> defines the clipping rectangle for the element content. The default is <code>padding-box</code>, the rectangle outside the padding area (the green rectangle in the box model image above); <code>content-box</code> represents the value inside the padding area (the blue rectangle in the box model image above).</p>
+
+<p><a name="display" aria-hidden="true"></a></p>
+
+<p>The <code>display</code> default value is <code>flex</code>. Set <code>display</code> to <code>none</code> to remove the element from the <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>. Set the <code>visibility</code> to <code>hidden</code> to hide the element, but the element still occupies space in the layout.</p>
+
+<p>The <code>overflow</code> property controls the clipping of an element’s content. The default value is <code>visible</code>, which means the element’s content isn’t clipped to the element’s bounds. If you set <code>overflow</code> to <code>hidden</code>, the element’s content is clipped to the element’s bounds. You can use <code>overflow</code> to <a href="UIE-masking.html">make a masking effect</a>. </p>
+
+<h3>Differences from CSS</h3>
+
+<p>The USS <code>display</code> property supports only a small subset of the CSS <code>display</code> property’s available keyword values. The USS version supports keywords that work with the Yoga layout engine.</p>
+
+<ul>
+<li>For more information about Yoga, see <a href="https://yogalayout.com/">Flexible Layouts with Yoga</a>.</li>
+<li>For more information about the CSS <code>display</code> property, see the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/display">MDN documentation</a>.</li>
+</ul>
+
+<p>
+<a name="unity-font" aria-hidden="true"></a><a name="unity-text" aria-hidden="true"></a>
+</p>
+
+<h2>Text properties</h2>
+
+<p>Text properties set the color, font, font size, and Unity-specific properties for font resource, font style, alignment, word wrap, and clipping.</p>
+
+<pre><code class="lang-css">color: &lt;color&gt;
+-unity-font: &lt;resource&gt; | &lt;url&gt;
+-unity-font-definition: &lt;resource&gt; | &lt;url&gt;
+font-size: &lt;number&gt;
+-unity-font-style: normal | italic | bold | bold-and-italic
+-unity-text-align: upper-left | middle-left | lower-left | upper-center | middle-center | lower-center | upper-right | middle-right | lower-right
+-unity-text-overflow-position: start | middle | end
+white-space: normal | nowrap
+
+-unity-text-outline-width: &lt;length&gt;
+-unity-text-outline-color: &lt;color&gt;
+/* Shorthand */
+-unity-text-outline: &lt;length&gt; | &lt;color&gt;
+</code></pre>
+
+<p>
+<strong>Note</strong>: When you set up the font in UI Builder, the <strong>Font</strong> control in the <strong><span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> sets <code>-unity-font</code>, and the <strong>Font Asset</strong> control sets <code>-unity-font-definition</code>. Because <code>-unity-font-definition</code> takes precedence over <code>-unity-font</code>, to use a font from the <strong>Font</strong> list, select <strong>None</strong> from <strong>Font Asset</strong>. Otherwise, the font you selected doesn’t take effect.</p>
+
+<p><a name="cursor" aria-hidden="true"></a></p>
+
+<h2>Cursor</h2>
+
+<p>The <code>cursor</code> property specifies the mouse cursor to be displayed when the mouse pointer is over an element.</p>
+
+<pre><code class="lang-css">cursor: [ [ &lt;resource&gt; | &lt;url&gt; ] [ &lt;integer&gt; &lt;integer&gt;]? , ] [ arrow | text | resize-vertical | resize-horizontal | link | slide-arrow | resize-up-right | resize-up-left | move-arrow | rotate-arrow | scale-arrow | arrow-plus | arrow-minus | pan | orbit | zoom | fps | split-resize-up-down | split-resize-left-right ]
+</code></pre>
+
+<p>
+<strong>Note</strong>: Cursor keywords are only available in the Editor UI. Cursor keywords don’t work in runtime UI. In runtime UI, you must use a texture for custom cursors.</p>
+
+<h3>Differences from CSS</h3>
+
+<p>In CSS, you can specify multiple optional custom cursors and a mandatory keyword in a single <code>cursor</code> style declaration. When you specify multiple cursors, they form a fallback chain. If the browser can’t load the first custom cursor, it tries each of the others in sequence until one of them loads or there are no more custom cursors to try. If the browser can’t load any custom cursors, it uses the keyword.</p>
+
+<p>In USS, custom cursors and keywords are mutually exclusive. A <code>cursor</code> style declaration can only have one custom cursor or one keyword.</p>
+
+<p>For detailed information about the CSS <code>cursor</code> property, see the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/cursor">MDN documentation</a>.</p>
+
+<p><a name="opacity" aria-hidden="true"></a></p>
+
+<h2>Opacity</h2>
+
+<pre><code class="lang-css">opacity: &lt;number&gt;
+</code></pre>
+
+<h3>Differences from CSS</h3>
+
+<p>USS opacity is similar to <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/opacity">CSS opacity</a>. The opacity of parent elements affects the <strong>perceived opacity</strong> of child elements. The perceivability is different between USS opacity and CSS opacity.</p>
+
+<p>In the following USS example, the blue square is a child of the red square. The red square has an <code>opacity</code> of <code>0.5</code>.</p>
+
+<pre><code class="lang-css">.red {
+    background-color: red;
+    opacity: 0.5;
+}
+
+.blue {
+    background-color: blue;
+    left: 20px;
+    top: 20px;
+}
+</code></pre>
+
+<p>Although the blue square doesn’t have an opacity value, it has a perceived opacity of <code>0.5</code> from the red square. You can see the red square through the blue square. </p>
+
+<figure>
+<img src="../uploads/Main/opacity-ui-builder.png" alt="USS opacity example">
+<figcaption>USS opacity example</figcaption>
+</figure>
+
+<p>In CSS, if you apply the same styles, both the red and blue squares are 50% transparent. However, you can’t see the red square through the blue square, unless you also set the <code>opacity</code> of blue to be less than <code>1</code>.</p>
+
+<figure>
+<img src="../uploads/Main/opacity-css.png" alt="CSS opacity example">
+<figcaption>CSS opacity example</figcaption>
+</figure>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-Transform.html">USS transform</a></li>
+<li><a href="UIE-Transitions.html">USS transition</a></li>
+<li><a href="UIE-USS-Properties-Reference.html">USS properties reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-USS-PropertyTypes.html"></a></span><div class="tip">USS data types</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-LayoutEngine.html"></a></span><div class="tip">Position element with the layout engine</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

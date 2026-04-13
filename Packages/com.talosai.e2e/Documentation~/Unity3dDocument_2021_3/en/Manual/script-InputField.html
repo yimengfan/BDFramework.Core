@@ -1,0 +1,366 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Input Field</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/script-InputField.html">English</a></li>
+<li><a href="/cn/current/Manual/script-InputField.html">中文</a></li>
+<li><a href="/ja/current/Manual/script-InputField.html">日本語</a></li>
+<li><a href="/kr/current/Manual/script-InputField.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/script-InputField.html">English</a></li>
+<li><a href="/cn/current/Manual/script-InputField.html">中文</a></li>
+<li><a href="/ja/current/Manual/script-InputField.html">日本語</a></li>
+<li><a href="/kr/current/Manual/script-InputField.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="com.unity.ugui.html">Unity UI </a></li>
+<li><a href="UIReference.html">UI Reference</a></li>
+<li><a href="comp-UIInteraction.html">Interaction Components</a></li>
+<li>Input Field</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="script-Dropdown.html"></a></span><div class="tip">Dropdown</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="script-ScrollRect.html"></a></span><div class="tip">Scroll Rect</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Input Field</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>An <strong>Input Field</strong> is a way to make the text of a <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about script-Text.html">Text Control</a> editable. Like the other interaction controls, it’s not a visible <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html" href="script-Text.html">Text Control</a> editable. Like the other interaction controls, it’s not a visible <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> element in itself and must be combined with one or more visual UI elements in order to be visible.</p>
+
+<figure>
+<img src="../uploads/Main/UI_InputFieldExample.png" alt="An empty Input Field.">
+<figcaption>An empty Input Field.</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/UI_InputFieldExample2.png" alt="Text entered into the Input Field.">
+<figcaption>Text entered into the Input Field.</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/UI_InputFieldInspector.png" alt="">
+</figure>
+
+<h2>Properties</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong><em>Property:</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function:</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong><strong>Interactable</strong></strong></td>
+	<td style="text-align:left;">A boolean that determines if the Input Field can be interacted with or not.</td>
+</tr>
+</tbody>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong><strong>Transition</strong></strong></td>
+	<td style="text-align:left;"><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about script-SelectableTransition.html">Transitions</a><span class="tooltiptext">The blend from one state to another in a state machine, such as transitioning a character from a walk to a jog animation. Transitions define how long the blend between states should take, and the conditions that activate the blend. <a href="class-Transition.html" href="script-SelectableTransition.html">Transitions</a><span class="tooltiptext">The blend from one state to another in a state machine, such as transitioning a character from a walk to a jog animation. Transitions define how long the blend between states should take, and the conditions that activate the blend. <a href="class-Transition.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Transition" aria-label="Go to glossary anchor for Transition">Glossary</a></span></span></span> are used to set how the input field transitions when <strong><em>Normal</em></strong>, <strong><em>Highlighted</em></strong>, <strong><em>Pressed</em></strong> or <strong><em>Disabled</em></strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong><strong>Navigation</strong></strong></td>
+	<td style="text-align:left;">Properties that determine the sequence of controls. See <a href="script-SelectableNavigation.html">Navigation Options</a>.</td>
+</tr>
+</tbody>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong><strong>TextComponent</strong></strong></td>
+	<td style="text-align:left;">A reference to the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about script-Text.html">Text</a><span class="tooltiptext">A non-interactive piece of text to the user. This can be used to provide captions or labels for other GUI controls or to display instructions or other text. <a href="script-Text.html" href="script-Text.html">Text</a><span class="tooltiptext">A non-interactive piece of text to the user. This can be used to provide captions or labels for other GUI controls or to display instructions or other text. <a href="script-Text.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Text" aria-label="Go to glossary anchor for Text">Glossary</a></span></span></span> element used as the contents of the <em><em>Input Field</em></em>
+</td>
+</tr>
+</tbody>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong><strong>Text</strong></strong></td>
+	<td style="text-align:left;">Starting Value. The initial text placed in the field before editing begins.</td>
+</tr>
+</tbody>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong><strong>Character Limit</strong></strong></td>
+	<td style="text-align:left;">The value of the maximum number of characters that can be entered into the input field.</td>
+</tr>
+</tbody>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong><strong>Content Type</strong></strong></td>
+	<td style="text-align:left;">Define the type(s) of characters that your input field accepts</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Standard</strong></td>
+	<td style="text-align:left;">Any character can be entered.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Autocorrected</strong></td>
+	<td style="text-align:left;">The autocorrection determines whether the input tracks unknown words and suggests a more suitable replacement candidate to the user, replacing the typed text automatically unless the user explicitly overrides the action.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Integer Number</strong></td>
+	<td style="text-align:left;">Allow only whole numbers to be entered.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Decimal Number</strong></td>
+	<td style="text-align:left;">Allow only numbers and a single decimal point to be entered.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Alphanumeric</strong></td>
+	<td style="text-align:left;">Allow both letters and numbers. Symbols cannot be entered.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;">Automatically capitalizes the first letter of each word. Note that the user can circumvent the capitalization rules using the <strong>Delete</strong> key.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Email Address</strong></td>
+	<td style="text-align:left;">Allows you to enter an Alphanumeric string consisting of a maximum of one @ sign. periods/baseline dots cannot be entered next to each other.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Password*</strong></td>
+	<td style="text-align:left;">Conceals the characters inputed with an asterisk. Allows symbols.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Pin</strong></td>
+	<td style="text-align:left;">Conceals the characters inputed with an asterisk. Only allows only whole numbers to be entered.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Custom</strong></td>
+	<td style="text-align:left;">Allows you to customise the Line Type, Input Type, Keyboard Type and Character Validation.</td>
+</tr>
+</tbody>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong><strong>Line Type</strong></strong></td>
+	<td style="text-align:left;">Defines how text is formatted inside the text field.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Single Line</strong></td>
+	<td style="text-align:left;">Only allows text to be on a single line.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Multi Line Submit</strong></td>
+	<td style="text-align:left;">Allows text to use multiple lines. Only uses a new line when needed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Multi Line Newline</strong></td>
+	<td style="text-align:left;">Allows text to use multiple lines. User can use a newline by pressing the return key.</td>
+</tr>
+</tbody>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong><strong>Placeholder</strong></strong></td>
+	<td style="text-align:left;">This is an optional ‘empty’ <a href="../ScriptReference/UI.Graphic.html">Graphic</a> to show that the <em><em>Input Field</em></em> is empty of text. Note that this ‘empty’ graphic still displays even when the <em><em>Input Field</em></em> is selected (that is; when there is focus on it). eg; “Enter text…”.</td>
+</tr>
+</tbody>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong><strong>Caret Blink Rate</strong></strong></td>
+	<td style="text-align:left;">Defines the blink rate for the mark placed on the line to indicate a proposed insertion of text.</td>
+</tr>
+</tbody>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong><strong>Selection Color</strong></strong></td>
+	<td style="text-align:left;">The background color of the selected portion of text.</td>
+</tr>
+</tbody>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong><strong>Hide Mobile Input</strong> (iOS only)</strong></td>
+	<td style="text-align:left;">Hides the native input field attached to the onscreen keyboard on mobile devices. Note that this only works on <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> devices.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+</tbody>
+</table>
+
+<h2>Events</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property:</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function:</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>On Value Change</strong></td>
+	<td style="text-align:left;">A <a href="UnityEvents.html">UnityEvent</a> that is invoked when the text content of the Input Field changes. The event can send the current text content as a <code>string</code> type dynamic argument.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>End Edit</strong></td>
+	<td style="text-align:left;">A <a href="UnityEvents.html">UnityEvent</a> that is invoked when the user finishes editing the text content either by submitting or by clicking somewhere that removes the focus from the Input Field. The event can send the current text content as a <code>string</code> type dynamic argument.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Details</h2>
+
+<p>The Input Field script can be added to any existing Text control object from the menu (<strong>Component &gt; UI &gt; Input Field</strong>). Having done this, you should also drag the object to the Input Field’s <em>Text</em> property to enable editing.</p>
+
+<p>The <em>Text</em> property of the Text control itself will change as the user types and the value can be retrieved from a script after editing. Note that Rich Text is intentionally not supported for editable Text controls; the field will apply any Rich Text markup instantly when typed but the markup essentially “disappears” and there is no subsequent way to change or remove the styling.</p>
+
+<h2>Hints</h2>
+
+<ul>
+<li>To obtain the text of the Input Field, use the text property on the InputField component itself, not the text property of the Text component that displays the text. The text property of the Text component may be cropped or may consist of asterisks for passwords.</li>
+</ul>
+<!-- area:authoring -->
+
+<p><span class="search-words">InputField</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="script-Dropdown.html"></a></span><div class="tip">Dropdown</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="script-ScrollRect.html"></a></span><div class="tip">Scroll Rect</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

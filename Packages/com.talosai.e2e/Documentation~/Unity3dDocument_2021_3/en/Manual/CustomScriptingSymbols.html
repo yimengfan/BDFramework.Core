@@ -1,0 +1,193 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Custom scripting symbols</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/CustomScriptingSymbols.html">English</a></li>
+<li><a href="/cn/current/Manual/CustomScriptingSymbols.html">中文</a></li>
+<li><a href="/ja/current/Manual/CustomScriptingSymbols.html">日本語</a></li>
+<li><a href="/kr/current/Manual/CustomScriptingSymbols.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/CustomScriptingSymbols.html">English</a></li>
+<li><a href="/cn/current/Manual/CustomScriptingSymbols.html">中文</a></li>
+<li><a href="/ja/current/Manual/CustomScriptingSymbols.html">日本語</a></li>
+<li><a href="/kr/current/Manual/CustomScriptingSymbols.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="unity-architecture.html">Unity architecture</a></li>
+<li><a href="script-compilation.html">Script compilation</a></li>
+<li><a href="PlatformDependentCompilation.html">Conditional compilation</a></li>
+<li>Custom scripting symbols</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="PlatformDependentCompilation.html"></a></span><div class="tip">Conditional compilation</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ScriptCompilationAssemblyDefinitionFiles.html"></a></span><div class="tip">Assembly definitions</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Custom scripting symbols</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>C# directives</strong> allow you to <a href="PlatformDependentCompilation.html">selectively include or exclude code from compilation</a>, based on whether certain <strong>scripting symbols</strong> are <em>defined</em> or <em>not defined</em>.</p>
+
+<p>In addition to the built-in scripting symbols (relating to <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PlatformDependentCompilation.html#Platform">Platform</a>, the <a href="PlatformDependentCompilation.html#Editor">Editor Version</a>, and <a href="PlatformDependentCompilation.html#Other">other</a> miscellaneous system environment scenarios), you can specify your own custom scripting symbols, either using the Editor <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html" href="PlatformDependentCompilation.html#Platform">Platform</a>, the <a href="PlatformDependentCompilation.html#Editor">Editor Version</a>, and <a href="PlatformDependentCompilation.html#Other">other</a> miscellaneous system environment scenarios), you can specify your own custom scripting symbols, either using the Editor <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>, via scripting, or via an asset file.</p>
+
+<h2>Setting scripting symbols via the Editor</h2>
+
+<p>To set or remove define directives via the Editor, go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong>. Then in the <strong>Other Settings</strong> panel, scroll down to <strong>Script Compilation</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/ScriptDefines.png" alt="The Scripting Define Symbols settings in the Project Settings window. This example shows two custom symbols defined in the list.">
+<figcaption>The Scripting Define Symbols settings in the Project Settings window. This example shows two custom symbols defined in the list.</figcaption>
+</figure>
+
+<p>You can add and remove your own custom scripting symbols to the <strong>Scripting Define Symbols</strong> list by using the <strong>+</strong> and <strong>-</strong> buttons, and typing the name of your new symbols into the fields. When you select <strong>Apply</strong>, your new scripting symbols are applied, and Unity recompiles the <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> in your project using these new symbols.</p>
+
+<p>The <strong>Copy Defines</strong> button copies the current set of custom scripting symbols from the list into your clipboard as a string of semicolon-separated values.</p>
+
+<h2>Defining scripting symbols via script</h2>
+
+<p>You can use the following API to define scripting symbols:</p>
+
+<ul>
+<li><a href="../ScriptReference/PlayerSettings.SetScriptingDefineSymbolsForGroup.html">PlayerSettings.SetScriptingDefineSymbolsForGroup</a></li>
+<li><a href="../ScriptReference/Build.Player.ScriptCompilationSettings-extraScriptingDefines.html">BuildPlayerOptions.extraScriptingDefines</a></li>
+<li><a href="../ScriptReference/Build.Player.ScriptCompilationSettings-extraScriptingDefines.html">Build.Player.ScriptCompilationSettings-extraScriptingDefines</a></li>
+</ul>
+
+<h3>Setting scripting symbols for Editor script compilation</h3>
+
+<p>If you need to define scripting symbols via scripts in the Editor so that your Editor scripts are affected by the change, you must use <a href="../ScriptReference/PlayerSettings.SetScriptingDefineSymbolsForGroup.html">PlayerSettings.SetScriptingDefineSymbolsForGroup</a>. However, there are some important details to note about how this operates.</p>
+
+<p>
+<strong>Important:</strong> this method does not take immediate effect. Calling this method from script does not immediately apply and recompile your scripts. For your directives to take effect based on a change in scripting symbols, you must allow control to be returned to the Editor, where it then asynchronously reloads the scripts and recompiles them based on your new symbols and the directives which act on them.</p>
+
+<p>So, for example, if you use this method in an Editor script, then immediately call <code>BuildPipeline.BuildPlayer</code> on the following line in the same script, at that point Unity is still running your Editor scripts with the old set of scripting symbols, because they have not yet been recompiled with the new symbols. This means if you have Editor scripts which run as part of your BuildPlayer execution, they run with the old scripting symbols and your player might not build as you expected.</p>
+
+<h3>Setting scripting symbols in batch mode</h3>
+
+<p>The asynchronous nature of Unity’s compilation mentioned above is also important to understand if you are writing Editor scripts which will run in batch mode in the Unity Editor on a continuous integration (CI) server. This is because when the Editor runs in batch mode, it runs “<a href="https://en.wikipedia.org/wiki/Headless_software">headless</a>”, so there is no <strong>editor loop</strong> which would cause it to recompile with the new scripting symbols. Because of this, you should not use Editor scripts to set scripting symbols within a batch mode CI server because the scripts will not be recompiled, so they will not be applied.</p>
+
+<p>Instead, if you need specific symbols to be defined in an Editor running in batch mode, you must ensure the editor is launched with the correct symbols defined from the start. You can do this by specifying the symbols using a csc.rsp asset file instead of using editor scripts, as described below.</p>
+
+<h2>Setting scripting symbols via an asset file</h2>
+
+<p>You can set custom scripting symbols via a text asset in your project. To do this you must add a text file that defines the custom scripting symbols named <code>csc.rsp</code> in the root of your project’s <strong>Assets</strong> folder. This special file is read by Unity at startup and applied before any code is compiled. </p>
+
+<p>As an example, if you include the single line -define:UNITY_DEBUG in your <strong>csc.rsp</strong> file, the symbol UNITY_DEBUG is included as a globally defined scripting symbol for C# scripts, except for Editor scripts.</p>
+
+<p>Every time you make changes to <strong>.rsp</strong> files, you need to recompile in order for them to be effective. You can do this by updating or reimporting a single script file.</p>
+
+<p>
+<strong>Note:</strong> If you want to modify only global scripting symbols, add them to the <strong>Scripting Define Symbols</strong> in the Editor via the <span class="tooltip"><strong>Player Settings</strong><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html" href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span> window (as described above), because this covers all the compilers. If you choose the <strong>.rsp</strong> files instead, you need to provide one file for every compiler Unity uses.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="PlatformDependentCompilation.html"></a></span><div class="tip">Conditional compilation</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ScriptCompilationAssemblyDefinitionFiles.html"></a></span><div class="tip">Assembly definitions</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

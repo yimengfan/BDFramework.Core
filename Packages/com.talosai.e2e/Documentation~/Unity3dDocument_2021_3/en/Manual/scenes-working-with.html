@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Creating, loading, and saving Scenes</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/scenes-working-with.html">English</a></li>
+<li><a href="/cn/current/Manual/scenes-working-with.html">中文</a></li>
+<li><a href="/ja/current/Manual/scenes-working-with.html">日本語</a></li>
+<li><a href="/kr/current/Manual/scenes-working-with.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/scenes-working-with.html">English</a></li>
+<li><a href="/cn/current/Manual/scenes-working-with.html">中文</a></li>
+<li><a href="/ja/current/Manual/scenes-working-with.html">日本語</a></li>
+<li><a href="/kr/current/Manual/scenes-working-with.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="CreatingGameplay.html">Create Gameplay</a></li>
+<li><a href="CreatingScenes.html">Scenes</a></li>
+<li>Creating, loading, and saving Scenes</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="CreatingScenes.html"></a></span><div class="tip">Scenes</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="MultiSceneEditing.html"></a></span><div class="tip">Work with multiple scenes in Unity</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Creating, loading, and saving Scenes</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page explains how to <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #creating-a-new-scene">create</a>, <a href="#loading-scenes">load</a>, and <a href="#saving-scenes">save</a> <span class="tooltip"><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="#creating-a-new-scene">create</a>, <a href="#loading-scenes">load</a>, and <a href="#saving-scenes">save</a> <span class="tooltip"><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<p><a name="creating-aew-scene" aria-hidden="true"></a></p>
+
+<h2>Creating a new scene</h2>
+
+<p>There are several ways to create a new scene:</p>
+
+<ul>
+<li>Use the <a href="#creating-a-new-scene-from-the-new-scene-dialog">New Scene dialog</a> to create a new scene from a specific scene template.</li>
+<li>Use the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #creating-a-new-scene-from-the-menu">menu</a> or the <span class="tooltip"><a href="#creating-a-new-scene-from-the-project-window">Project window</a><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a href="ProjectView.html" href="#creating-a-new-scene-from-the-menu">menu</a> or the <span class="tooltip"><a href="#creating-a-new-scene-from-the-project-window">Project window</a><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span> to create new scenes from your Project’s Basic scene template without opening the New Scene dialog.</li>
+<li>Create a scene from a specific template directly <a href="#creating-a-new-scene-from-a-csharp-script">from a C# script</a>.</li>
+</ul>
+
+<p>Unity creates every new scene from a scene template. For information about creating and managing scene templates, see <a href="scene-templates.html">Scene templates</a>.</p>
+
+<p><a name="creating-a-new-scene-from-the-new-scene-dialog" aria-hidden="true"></a></p>
+
+<h3>Creating a new scene from the New Scene dialog</h3>
+
+<p>Use the New Scene dialog to create new scenes from specific scene templates in your Project. You can also use the New Scene dialog to find and manage scene templates. For details see <a href="CreatingScenes.html#new-scene-dialog">The New Scene dialog</a>.</p>
+
+<p>By default, the New Scene dialog opens when you create a new scene from the menu (<strong>File</strong> &gt; <strong>New Scene</strong>) or by using a shortcut (<strong>Ctrl/Cmd + n</strong>).</p>
+
+<p>To create a new Scene:</p>
+
+<ol>
+<li>Select a template from the list.</li>
+<li>If you want Unity to load the new scene additively (see note below), enable <strong>Load Additively</strong>.</li>
+<li>Click <strong>Create</strong> to create a new scene from the template.</li>
+</ol>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Note:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Additive loading means that Unity loads the scene in addition to any other scenes you have open. For more information, see <a href="MultiSceneEditing.html">Multi-Scene editing</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>If the template does not have any <a href="scene-templates.html#templates-and-scene-dependencies">cloneable dependencies</a>, Unity loads the new scene in memory, but does not save it.</p>
+
+<p>If the template has <a href="scene-templates.html#templates-and-scene-dependencies">cloneable dependencies</a>, Unity prompts you to choose a location in the Project to save it to. When you save the scene, Unity creates a folder in the same location, and with the same name as the new scene. It then clones the cloneable dependencies into the new folder, and updates the new scene to use the cloned assets instead of the original assets used by the template scene.</p>
+
+<p><a name="creating-a-new-scene-from-the-menu" aria-hidden="true"></a></p>
+
+<h3>Creating a new scene from the menu:</h3>
+
+<p>Use the menu (<strong>Assets</strong> &gt; <strong>Create</strong> &gt; <strong>Scene</strong>) to create a new scene without opening the New Scene dialog.</p>
+
+<p>When you create a new scene from the menu, Unity automatically copies the project’s Basic template, and adds the new scene to whichever folder is currently open in the project window.</p>
+
+<p><a name="creating-a-new-scene-from-the-project-window" aria-hidden="true"></a></p>
+
+<h3>Creating a new scene from the project window</h3>
+
+<p>Use the context menu in the Project window to create a new scene without opening the New Scene dialog.</p>
+
+<ol>
+<li>Navigate to the folder where you want to create the new scene.</li>
+<li>Right click the folder in the left-hand pane, or right-click an empty area in the right hand pane, and select <strong>Create</strong> &gt; <strong>Scene</strong> from the context menu.</li>
+</ol>
+
+<p>When you create a new scene from the menu, Unity automatically copies the project’s Basic template, and adds the new scene to the selected folder.</p>
+
+<p><a name="creating-a-new-scene-from-a-csharp-script" aria-hidden="true"></a></p>
+
+<h3>Creating a new scene from a C# script</h3>
+
+<p>To create a new scene from a C# script using a specific scene template, use the <a href="../ScriptReference/SceneTemplate.SceneTemplateService.Instantiate.html"><strong>Instantiate</strong> method</a>.</p>
+
+<pre><code class="lang-csharp">Tuple&lt;Scene, SceneAsset&gt; SceneTemplate.Instantiate(SceneTemplateAsset sceneTemplate, bool loadAdditively, string newSceneOutputPath = null);
+</code></pre>
+
+<p>The <code>Instantiate</code> method instantiates a new scene from a scene template. It returns the newly created <code>Scene</code> handle, and its matching <code>SceneAsset</code>. You can create this scene additively. If the scene contains <a href="scene-templates.html#templates-and-scene-dependencies">assets that need to be cloned</a>, you must provide a path for Unity to save the scene to disk.</p>
+
+<h4>New scene events</h4>
+
+<p>When you create a new scene from a template, either from a script or using the New Scene dialog, Unity triggers an <a href="../ScriptReference/SceneTemplate.SceneTemplateService-newSceneTemplateInstantiated.html">event</a>. Unity triggers this event after the template is instantiated, and also after it triggers the <a href="../ScriptReference/SceneManagement.EditorSceneManager-newSceneCreated.html"><code>EditorSceneManager.newSceneCreated</code></a> or <a href="../ScriptReference/SceneManagement.EditorSceneManager-sceneOpened.html"><code>EditorSceneManager.sceneOpened</code></a> events.</p>
+
+<pre><code class="lang-csharp">
+public class SceneTemplate
+{
+    public delegate void NewTemplateInstantiated(SceneTemplateAsset sceneTemplateAsset, Scene scene, SceneAsset sceneAsset, bool additiveLoad);
+
+    public static event NewTemplateInstantiated newSceneTemplateInstantiated;
+}
+</code></pre>
+
+<p><a name="loading-scenes" aria-hidden="true"></a></p>
+
+<h2>Loading scenes</h2>
+
+<p>To open a scene, do one of the following:</p>
+
+<ul>
+<li>In the Project window, double-click the scene asset.</li>
+<li>From the menu, select <strong>File</strong> &gt; <strong>Open Scene</strong>.</li>
+<li>From the menu, select <strong>File</strong> &gt; <strong>Recent Scenes</strong> and select the name of the scene.</li>
+</ul>
+
+<p>If your current scene contains unsaved changes, Unity prompts you to save the scene or discard the changes.</p>
+
+<h3>Opening multiple scenes at once</h3>
+
+<p>You can open multiple scenes for editing at the same time. For details, see <a href="MultiSceneEditing.html">Multi-Scene editing</a>.</p>
+
+<p><a name="saving-scenes" aria-hidden="true"></a></p>
+
+<h2>Saving scenes</h2>
+
+<p>To save the scene you’re currently working on, choose <strong>File</strong> &gt; <strong>Save Scene</strong> from the menu, or press Ctrl + S (Windows) or Cmd + S (macOS).</p>
+
+<figure>
+<img src="../uploads/Main/SceneAssetsInProjectView_01.png" alt="Saved scene assets visible in the Project window">
+<figcaption>Saved scene assets visible in the Project window</figcaption>
+</figure>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="CreatingScenes.html"></a></span><div class="tip">Scenes</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="MultiSceneEditing.html"></a></span><div class="tip">Work with multiple scenes in Unity</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

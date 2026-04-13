@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Sprite Editor: Custom Outline</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SpriteOutlineEditor.html">English</a></li>
+<li><a href="/cn/current/Manual/SpriteOutlineEditor.html">中文</a></li>
+<li><a href="/ja/current/Manual/SpriteOutlineEditor.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SpriteOutlineEditor.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SpriteOutlineEditor.html">English</a></li>
+<li><a href="/cn/current/Manual/SpriteOutlineEditor.html">中文</a></li>
+<li><a href="/ja/current/Manual/SpriteOutlineEditor.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SpriteOutlineEditor.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Unity2D.html">2D game development</a></li>
+<li><a href="Sprites.html">Work with sprites</a></li>
+<li><a href="SpriteEditor.html">Sprite Editor</a></li>
+<li>Sprite Editor: Custom Outline</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="sprite-polygon-resizing.html"></a></span><div class="tip">Resize polygons</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="CustomPhysicsShape.html"></a></span><div class="tip">Sprite Editor: Custom Physics Shape</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Sprite Editor: Custom Outline</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SpriteEditor.html">Sprite Editor’s</a> <strong>Custom Outline</strong> option to edit the shape of the <span class="tooltip"><a href="class-Mesh.html">Mesh</a><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html" href="SpriteEditor.html">Sprite Editor’s</a> <strong>Custom Outline</strong> option to edit the shape of the <span class="tooltip"><a href="class-Mesh.html">Mesh</a><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> that Unity renders the <span class="tooltip"><a href="Sprites.html">Sprite</a><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html" href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> that Unity renders the <span class="tooltip"><a href="Sprites.html">Sprite</a><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> texture on. The Custom Outline editor allows you to use control points to create and define the shape of the Sprite’s Mesh outline.</p>
+
+<p>By default, Unity renders each Sprite on a rectangle Mesh. This Mesh might include transparent areas outside the Texture’s border, and rendering these transparent areas can negatively affect performance. When you use the Custom Outline editor to define a Mesh outline that matches the outline of the Sprite Texture, you reduce the size of the transparent areas, which improves performance.</p>
+
+<p>To access the Custom Outline editor, select a Sprite and then in the Sprite’s <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window, select the <a href="SpriteEditor.html">Sprite Editor</a> button. In the Sprite Editor window, open the upper-left drop-down menu and select <strong>Custom Outline</strong> to open the Custom Outline editor.</p>
+
+<figure>
+<img src="../uploads/Main/2DCustomOutline_2020.2_01.png" alt="Select Custom Outline from the Sprite Editor drop-down menu.">
+<figcaption>Select <strong>Custom Outline</strong> from the Sprite Editor drop-down menu.</figcaption>
+</figure>
+
+<h2>The Custom Outline editor</h2>
+
+<figure>
+<img src="../uploads/Main/2DCustomOutline_2020.2_02.png" alt="Editing a Sprite’s outline in the Custom Outline editor.">
+<figcaption>Editing a Sprite’s outline in the Custom Outline editor.</figcaption>
+</figure>
+
+<h3>Custom Outline editor properties</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Snap</strong></td>
+	<td style="text-align:left;">Snap control points to the nearest <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Outline Tolerance</strong></td>
+	<td style="text-align:left;">Use this slider to control how tightly and accurately the generated outline follows the outline of the Sprite texture. At the minimum value (0), the Sprite Editor generates a basic outline around the Sprite. At the maximum value (1), the Sprite Editor generates an outline that follows the outline of the Sprite texture as closely as possible.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Generate</strong></td>
+	<td style="text-align:left;">When you click this button, Unity automatically creates an outline based on the <strong>Outline Tolerance</strong> value you set.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Copy</strong></td>
+	<td style="text-align:left;">After you have generated or set up a custom outline, click this <strong>Copy</strong> button to duplicate the custom outline. Leaving the Custom outline module or closing the Sprite Editor removes the copied outline from memory.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Paste</strong></td>
+	<td style="text-align:left;">Use this button to paste a copied outline to the currently selected Sprite. If you have not used the <strong>Copy</strong> function to copy an outline, this button is not available. To <strong>Paste</strong> a copied custom outline to another Sprite, in the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span> select the Sprite while the Custom outline editor window is open. Then click the <strong>Paste</strong> button to paste the copied outline to the new Sprite. When you paste the outline, if a point in the outline is larger than the Sprite’s frame, Unity clamps the point to be inside the Sprite’s frame.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Paste All</strong></td>
+	<td style="text-align:left;">Use this button to paste a copied outline to all Sprites in the Sprite Editor window, regardless of selection. If you have not used the <strong>Copy</strong> function to copy an outline, this button is unavailable. Use this function to apply the same outline to multiple Sprites in the same Texture (such as when a Texture has its <a href="TextureTypes.html#Sprite">Sprite Mode</a> set to ‘Multiple’). When you paste the outline, if a point in the outline exceeds the Sprite’s frame, Unity clamps the point to be inside that Sprite’s frame.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Revert</strong></td>
+	<td style="text-align:left;">Undoes any unsaved recent changes made in the editor window. To save changes, click <strong>Apply</strong> first.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Apply</strong></td>
+	<td style="text-align:left;">Select this button to save all changes made in the editor window.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Using the Custom Outline editor</h2>
+
+<p>The Custom Outline editor allows you to to create or generate the Mesh of the Sprite. There are two ways to create a custom outline: have Unity automatically <a href="#generateOutline">generate</a> the shape, or <a href="CustomPhysicsShape.html">manually creating and editing</a> it in the editor window.</p>
+
+<h3>Generating the outline <a name="generateOutline" aria-hidden="true"></a>
+</h3>
+
+<p>To have Unity automatically generate an outline that follows the shape of the original Sprite texture, and that also takes into account transparent areas in the texture, click the <strong>Generate </strong>button. However, you can adjust how tightly the generated outline follows the Sprite texture by adjusting the <strong>Outline Tolerance </strong>slider.</p>
+
+<figure>
+<img src="../uploads/Main/2DCustomOutline_2020.2_03.png" alt="The Generate button is next to the Outline Tolerance slider.">
+<figcaption>The <strong>Generate</strong> button is next to the <strong>Outline Tolerance</strong> slider.</figcaption>
+</figure>
+
+<p>Adjust the <strong>Outline Tolerance</strong> slider to refine the outline of the Mesh that Unity generates. Increasing the value increases how closely the outline follows the shape of the Sprite texture. Leaving the slider at 0 generates a Mesh that more loosely follows the Sprite texture.</p>
+
+<figure>
+<img src="../uploads/Main/2DCustomOutline_7.png" alt="Left: An automatically generated Mesh outline with a low Outline Tolerance. Right: An automatically generated Mesh outline with a high Outline Tolerance.">
+<figcaption><em>Left</em>: An automatically generated Mesh outline with a low <strong>Outline Tolerance</strong>. <em>Right</em>: An automatically generated Mesh outline with a high <strong>Outline Tolerance</strong>.</figcaption>
+</figure>
+
+<h3>Editing the custom outline</h3>
+
+<p>You can create your own custom shape and edit it in two ways. The first way is by automatically <a href="#generateOutline">generating</a> an outline, and then moving the control points of the generated outline to further refine its shape. Alternatively click and drag over any space in the Custom Outline editor window to create a rectangular outline with four control points and begin refining the outline by moving the control points or adding and removing them.</p>
+
+<figure>
+<img src="../uploads/Main/2DCustomOutline_2.png" alt="You can create multiple outlines in the same texture.">
+<figcaption>You can create multiple outlines in the same texture.</figcaption>
+</figure>
+
+<p>Click and drag over the Sprite texture in the editor window to create rectangle outlines with four control points. Repeat this step to create multiple Mesh outlines within the Sprite. Unity only renders the areas enclosed within the Mesh outlines.</p>
+
+<h4><strong>Moving control points</strong></h4>
+
+<p>To adjust the shape of the Mesh outline, click and drag its control points. When you hover over a control point, it turns blue to indicate that you can select it. Click and drag the control point to different positions to adjust the shape of the Mesh outline. You can select multiple control points at once by clicking and dragging the cursor over an area to select all control points within that area. You can then re-position or <a href="#removePoint">remove</a> all selected control points altogether.</p>
+
+<figure>
+<img src="../uploads/Main/2DCustomOutline_3.png" alt="Moving a control point to change the shape of the Mesh outline.">
+<figcaption>Moving a control point to change the shape of the Mesh outline.</figcaption>
+</figure>
+
+<h4>Adding/Removing control points <a name="removePoint" aria-hidden="true"></a>
+</h4>
+
+<p>To add a control point, place the cursor over the edge of the outline. A preview of the control point appears along the outline’s edge. Click to add a new control point at that location. To remove a control point, select it and press the <strong>Del/Command+Del keys</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/2DCustomOutline_4.png" alt="Adding a control point to a Mesh outline">
+<figcaption>Adding a control point to a Mesh outline</figcaption>
+</figure>
+
+<h4>Moving edges</h4>
+
+<p>To move a section between two control points, hold the <strong>Control/Ctrl</strong> key to select the edges of the outline instead of its control points. To change the shape of the outline, click and drag the highlighted edge to move them into new positions.</p>
+
+<figure>
+<img src="../uploads/Main/2DCustomOutline_5.png" alt="Moving a section of Mesh outline between two control points">
+<figcaption>Moving a section of Mesh outline between two control points</figcaption>
+</figure>
+
+<hr>
+
+<ul>
+<li><span class="page-history">Copy and Paste editor window functions added in <a href="https://docs.unity3d.com/2020.1/Documentation/Manual/30_search.html?q=newin20201">2020.1</a> <span class="search-words">NewIn20201</span></span></li>
+<li><span class="page-history"><strong>Edit Outline</strong> renamed to <strong>Custom Outline</strong> in Unity version 2017.3.</span></li>
+</ul>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="sprite-polygon-resizing.html"></a></span><div class="tip">Resize polygons</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="CustomPhysicsShape.html"></a></span><div class="tip">Sprite Editor: Custom Physics Shape</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: MiniMap</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <div class="message message-error mb20">
+                  <b>Experimental</b>: this API is experimental and might be changed or removed in the future.</div>
+                <h1 class="heading inherit">MiniMap</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEditor.Experimental.GraphView</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Inherits from:<a href="Experimental.GraphView.GraphElement.html" class="cl">Experimental.GraphView.GraphElement</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>MiniMap.</p>
+              </div>
+              <div class="subsection">
+        <p>Shows all nodes in the graph in a small window.</p>
+      </div>
+              <div class="subsection">
+                <h3>Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Experimental.GraphView.MiniMap-anchored.html">anchored</a></td><td class="desc">True if the MiniMap is pinned or achored (non-movable). False if you can drag and move it around.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.MiniMap-graphView.html">graphView</a></td><td class="desc">The GraphView that the MiniMap is attached to.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.MiniMap-maxHeight.html">maxHeight</a></td><td class="desc">Max height.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.MiniMap-maxWidth.html">maxWidth</a></td><td class="desc">Max width.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.MiniMap-windowed.html">windowed</a></td><td class="desc">Set to true when the MiniMap displays in a separate window. Set to false when the MiniMap displays in the GraphView.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.MiniMap-zoomFactorTextChanged.html">zoomFactorTextChanged</a></td><td class="desc">Callback for when the zoom factor text has changed.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Constructors</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Constructor</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Experimental.GraphView.MiniMap-ctor.html">MiniMap</a></td><td class="desc">MiniMap's constructor.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Public Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Experimental.GraphView.MiniMap.BuildContextualMenu.html">BuildContextualMenu</a></td><td class="desc">Add menu items to the MiniMap contextual menu.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.MiniMap.OnResized.html">OnResized</a></td><td class="desc">Call this method after a user has resized a MiniMap to let the MiniMap know it needs to get updated.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Inherited Members</h3>
+      <div class="subsection"><h3>Static Properties</h3><table class="list"><thead><tr><th>Property</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-disabledUssClassName.html">disabledUssClassName</a></td><td class="desc">
+ USS class name of local disabled elements.
+ </td></tr>
+      </table></div>
+      <div class="subsection"><h3>Properties</h3><table class="list"><thead><tr><th>Property</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="UIElements.Focusable-canGrabFocus.html">canGrabFocus</a></td><td class="desc">
+ Return true if the element can be focused.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.Focusable-delegatesFocus.html">delegatesFocus</a></td><td class="desc">
+ Whether the element should delegate the focus to its children.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.Focusable-focusable.html">focusable</a></td><td class="desc">
+ True if the element can be focused.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.Focusable-focusController.html">focusController</a></td><td class="desc">
+ Return the focus controller for this element.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.Focusable-tabIndex.html">tabIndex</a></td><td class="desc">
+ An integer used to sort focusables in the focus ring. Must be greater than or equal to zero.
+ </td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement-capabilities.html">capabilities</a></td><td class="desc">The GraphElement's capabilities.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement-elementTypeColor.html">elementTypeColor</a></td><td class="desc">The color used for the MiniMap view.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement-layer.html">layer</a></td><td class="desc">The GraphElement's layer in the graph.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement-selected.html">selected</a></td><td class="desc">True if the GraphElement is currently selected.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement-showInMiniMap.html">showInMiniMap</a></td><td class="desc">Whether the element is shown in the minimap.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement-title.html">title</a></td><td class="desc">The GraphElement's title.</td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-childCount.html">childCount</a></td><td class="desc">
+  Number of child elements in this object's contentContainer. </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-contentContainer.html">contentContainer</a></td><td class="desc">
+ Child elements are added to it, usually this is the same as the element itself. 
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-contentRect.html">contentRect</a></td><td class="desc">
+ The rectangle of the content area of the element, in the local space of the element. (Read Only)
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-customStyle.html">customStyle</a></td><td class="desc">
+ The custom style properties accessor of a VisualElement (Read Only).
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-enabledInHierarchy.html">enabledInHierarchy</a></td><td class="desc">
+ Returns true if the VisualElement is enabled in its own hierarchy.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-enabledSelf.html">enabledSelf</a></td><td class="desc">
+ Returns true if the VisualElement is enabled locally.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-experimental.html">experimental</a></td><td class="desc">
+ Returns the UIElements experimental interfaces.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-generateVisualContent.html">generateVisualContent</a></td><td class="desc">
+ Delegate function to generate the visual content of a visual element.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-hierarchy.html">hierarchy</a></td><td class="desc">
+  Access to this element physical hierarchy </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-layout.html">layout</a></td><td class="desc">
+ The position and size of the VisualElement relative to its parent, as computed by the layout system. (Read Only)
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-localBound.html">localBound</a></td><td class="desc">
+ AABB after applying the transform to the rect, but before applying the layout translation.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-name.html">name</a></td><td class="desc">
+ The name of this VisualElement.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-paddingRect.html">paddingRect</a></td><td class="desc">
+ The rectangle of the padding area of the element, in the local space of the element.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-panel.html">panel</a></td><td class="desc">
+ The panel onto which this VisualElement is attached.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-parent.html">parent</a></td><td class="desc">
+ The parent of this VisualElement.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-pickingMode.html">pickingMode</a></td><td class="desc">
+ Determines if this element can be pick during mouseEvents or IPanel.Pick queries.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-resolvedStyle.html">resolvedStyle</a></td><td class="desc">
+ The final computed style values on a VisualElement (Read Only).
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-schedule.html">schedule</a></td><td class="desc">
+ Retrieves this VisualElement's IVisualElementScheduler
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-style.html">style</a></td><td class="desc">
+ Sets the style values on a VisualElement.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-styleSheets.html">styleSheets</a></td><td class="desc">
+ Returns a VisualElementStyleSheetSet that manipulates style sheets attached to this element.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.Index_operator.html">this[int]</a></td><td class="desc">
+ Retrieves the child element at a specific index.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-tooltip.html">tooltip</a></td><td class="desc">
+ Text to display inside an information box after the user hovers the element for a small amount of time. This is only supported in the Editor UI.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-transform.html">transform</a></td><td class="desc">
+ Returns a transform object for this VisualElement.
+ ITransform
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-usageHints.html">usageHints</a></td><td class="desc">
+ A combination of hint values that specify high-level intended usage patterns for the VisualElement.
+ This property can only be set when the VisualElement is not yet part of a Panel. Once part of a Panel, this property becomes effectively read-only, and attempts to change it will throw an exception.
+ The specification of proper UsageHints drives the system to make better decisions on how to process or accelerate certain operations based on the anticipated usage pattern.
+ Note that those hints do not affect behavioral or visual results, but only affect the overall performance of the panel and the elements within.
+ It's advised to always consider specifying the proper UsageHints, but keep in mind that some UsageHints might be internally ignored under certain conditions (e.g. due to hardware limitations on the target platform).
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-userData.html">userData</a></td><td class="desc">
+ This property can be used to associate application-specific user data with this VisualElement.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-viewDataKey.html">viewDataKey</a></td><td class="desc">
+ Used for view data persistence (ie. tree expanded states, scroll position, zoom level).
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-visible.html">visible</a></td><td class="desc">
+ Indicates whether or not this element should be rendered.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-visualTreeAssetSource.html">visualTreeAssetSource</a></td><td class="desc">
+ Stores the asset reference, if the generated element is cloned from a VisualTreeAsset.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-worldBound.html">worldBound</a></td><td class="desc">
+ AABB after applying the world transform to rect.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement-worldTransform.html">worldTransform</a></td><td class="desc">
+ Returns a matrix that cumulates the following operations (in order):
+ -Local Scaling
+ -Local Rotation
+ -Local Translation
+ -Layout Translation
+ -Parent worldTransform (recursive definition - consider identity when there is no parent)
+ </td></tr>
+      </table></div>
+      
+      
+      
+      <div class="subsection"><h3>Public Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="UIElements.CallbackEventHandler.HandleEvent.html">HandleEvent</a></td><td class="desc">
+ Handle an event, most often by executing the callbacks associated with the event.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.CallbackEventHandler.HasBubbleUpHandlers.html">HasBubbleUpHandlers</a></td><td class="desc">
+ Return true if event handlers for the event propagation BubbleUp phase have been attached on this object.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.CallbackEventHandler.HasTrickleDownHandlers.html">HasTrickleDownHandlers</a></td><td class="desc">
+ Returns true if event handlers, for the event propagation TrickleDown phase, are attached to this object.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.CallbackEventHandler.RegisterCallback.html">RegisterCallback</a></td><td class="desc">
+ Adds an event handler to the instance. If the event handler has already been registered for the same phase (either TrickleDown or BubbleUp) then this method has no effect.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.CallbackEventHandler.SendEvent.html">SendEvent</a></td><td class="desc">
+ Sends an event to the event handler.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.CallbackEventHandler.UnregisterCallback.html">UnregisterCallback</a></td><td class="desc">
+ Remove callback from the instance.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.Focusable.Blur.html">Blur</a></td><td class="desc">
+ Tell the element to release the focus.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.Focusable.Focus.html">Focus</a></td><td class="desc">
+ Attempt to give the focus to this element.
+ </td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.GetGlobalCenter.html">GetGlobalCenter</a></td><td class="desc">Get the GraphElement's center point.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.GetPosition.html">GetPosition</a></td><td class="desc">Get the GraphElement position.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.HitTest.html">HitTest</a></td><td class="desc">See if point is over the GraphElement.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.IsAscendable.html">IsAscendable</a></td><td class="desc">Checks if the GraphElement is automatically brought to front when selected.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.IsCopiable.html">IsCopiable</a></td><td class="desc">Checks whether the GraphElement is copiable.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.IsDroppable.html">IsDroppable</a></td><td class="desc">The GraphElement is drag&amp;droppable.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.IsGroupable.html">IsGroupable</a></td><td class="desc">Checks whether the GraphElement is groupable.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.IsMovable.html">IsMovable</a></td><td class="desc">The GraphElement is movable.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.IsRenamable.html">IsRenamable</a></td><td class="desc">The GraphElement is renamable.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.IsResizable.html">IsResizable</a></td><td class="desc">The GraphElement is resizable.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.IsSelectable.html">IsSelectable</a></td><td class="desc">The GraphElement is selectable.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.IsSelected.html">IsSelected</a></td><td class="desc">The GraphElement is currently selected in specific container.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.IsSnappable.html">IsSnappable</a></td><td class="desc">Checks whether the GraphElement is snappable.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.IsStackable.html">IsStackable</a></td><td class="desc">Checks whether the GraphElement is stackable.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.OnSelected.html">OnSelected</a></td><td class="desc">Called when the GraphElement is selected.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.OnUnselected.html">OnUnselected</a></td><td class="desc">Called when the GraphElement is unselected.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.ResetLayer.html">ResetLayer</a></td><td class="desc">Reset the GraphElement to its original layer.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.Select.html">Select</a></td><td class="desc">Select the GraphElement.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.SetPosition.html">SetPosition</a></td><td class="desc">Set the GraphElement position.</td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.Unselect.html">Unselect</a></td><td class="desc">Deselect the GraphElement.</td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.Add.html">Add</a></td><td class="desc">
+ Add an element to this element's contentContainer
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.AddToClassList.html">AddToClassList</a></td><td class="desc">
+ Adds a class to the class list of the element in order to assign styles from USS.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.BringToFront.html">BringToFront</a></td><td class="desc">
+ Brings this element to the end of its parent children list. The element will be visually in front of any overlapping sibling elements.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.Children.html">Children</a></td><td class="desc">
+ Returns the elements from its contentContainer.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.ClassListContains.html">ClassListContains</a></td><td class="desc">
+ Searches for a class in the class list of this element.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.Clear.html">Clear</a></td><td class="desc">
+ Remove all child elements from this element's contentContainer
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.ClearClassList.html">ClearClassList</a></td><td class="desc">
+ Removes all classes from the class list of this element.
+ AddToClassList
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.Contains.html">Contains</a></td><td class="desc">
+ Checks if this element is an ancestor of the specified child element.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.ContainsPoint.html">ContainsPoint</a></td><td class="desc">
+ Checks if the specified point intersects with this VisualElement's layout.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.ElementAt.html">ElementAt</a></td><td class="desc">
+ Retrieves the child element at a specific index.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.EnableInClassList.html">EnableInClassList</a></td><td class="desc">
+ Enables or disables the class with the given name.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.FindAncestorUserData.html">FindAncestorUserData</a></td><td class="desc">
+ Searches up the hierarchy of this VisualElement and retrieves stored userData, if any is found.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.FindCommonAncestor.html">FindCommonAncestor</a></td><td class="desc">
+ Finds the lowest common ancestor between two VisualElements inside the VisualTree hierarchy.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.GetClasses.html">GetClasses</a></td><td class="desc">
+ Retrieve the classes for this element.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.GetFirstAncestorOfType.html">GetFirstAncestorOfType</a></td><td class="desc">
+ Walks up the hierarchy, starting from this element's parent, and returns the first VisualElement of this type
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.GetFirstOfType.html">GetFirstOfType</a></td><td class="desc">
+ Walks up the hierarchy, starting from this element, and returns the first VisualElement of this type
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.IndexOf.html">IndexOf</a></td><td class="desc">
+ Retrieves the child index of the specified VisualElement.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.Insert.html">Insert</a></td><td class="desc">
+ Insert an element into this element's contentContainer
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.MarkDirtyRepaint.html">MarkDirtyRepaint</a></td><td class="desc">
+ Triggers a repaint of the VisualElement on the next frame.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.PlaceBehind.html">PlaceBehind</a></td><td class="desc">
+ Places this element right before the sibling element in their parent children list. If the element and the sibling position overlap, the element will be visually behind of its sibling.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.PlaceInFront.html">PlaceInFront</a></td><td class="desc">
+ Places this element right after the sibling element in their parent children list. If the element and the sibling position overlap, the element will be visually in front of its sibling.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.Remove.html">Remove</a></td><td class="desc">
+ Removes this child from the hierarchy
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.RemoveAt.html">RemoveAt</a></td><td class="desc">
+ Remove the child element located at this position from this element's contentContainer
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.RemoveFromClassList.html">RemoveFromClassList</a></td><td class="desc">
+ Removes a class from the class list of the element.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.RemoveFromHierarchy.html">RemoveFromHierarchy</a></td><td class="desc">
+ Removes this element from its parent hierarchy.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.SendEvent.html">SendEvent</a></td><td class="desc">
+ Sends an event to the event handler.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.SendToBack.html">SendToBack</a></td><td class="desc">
+ Sends this element to the beginning of its parent children list. The element will be visually behind any overlapping sibling elements.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.SetEnabled.html">SetEnabled</a></td><td class="desc">
+ Changes the VisualElement enabled state. A disabled VisualElement does not receive most events.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.Sort.html">Sort</a></td><td class="desc">
+ Reorders child elements from this VisualElement contentContainer.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.VisualElement.ToggleInClassList.html">ToggleInClassList</a></td><td class="desc">
+ Toggles between adding and removing the given class name from the class list.
+ </td></tr>
+      </table></div>
+      <div class="subsection"><h3>Protected Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="UIElements.CallbackEventHandler.ExecuteDefaultAction.html">ExecuteDefaultAction</a></td><td class="desc">
+ Executes logic after the callbacks registered on the event target have executed,
+ unless the event has been marked to prevent its default behaviour.
+ EventBase{T}.PreventDefault.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.CallbackEventHandler.ExecuteDefaultActionAtTarget.html">ExecuteDefaultActionAtTarget</a></td><td class="desc">
+ Executes logic after the callbacks registered on the event target have executed,
+ unless the event is marked to prevent its default behaviour.
+ EventBase{T}.PreventDefault.
+ </td></tr>
+        <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.OnCustomStyleResolved.html">OnCustomStyleResolved</a></td><td class="desc">Called when the custom style properties are resolved.</td></tr>
+      </table></div>
+      
+      
+      
+      
+      
+    </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

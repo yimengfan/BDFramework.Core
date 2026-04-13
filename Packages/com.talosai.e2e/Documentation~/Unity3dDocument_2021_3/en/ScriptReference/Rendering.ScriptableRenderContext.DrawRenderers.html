@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Rendering.ScriptableRenderContext.DrawRenderers</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">
+                  <a href="Rendering.ScriptableRenderContext.html">ScriptableRenderContext</a>.DrawRenderers</h1>
+                <div class="clear">
+                </div>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public void <span class="sig-kw">DrawRenderers</span>(<a href="Rendering.CullingResults.html">Rendering.CullingResults</a> <span class="sig-kw">cullingResults</span>,
+ref <a href="Rendering.DrawingSettings.html">Rendering.DrawingSettings</a> <span class="sig-kw">drawingSettings</span>,
+ref <a href="Rendering.FilteringSettings.html">Rendering.FilteringSettings</a> <span class="sig-kw">filteringSettings</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public void <span class="sig-kw">DrawRenderers</span>(<a href="Rendering.CullingResults.html">Rendering.CullingResults</a> <span class="sig-kw">cullingResults</span>,
+ref <a href="Rendering.DrawingSettings.html">Rendering.DrawingSettings</a> <span class="sig-kw">drawingSettings</span>,
+ref <a href="Rendering.FilteringSettings.html">Rendering.FilteringSettings</a> <span class="sig-kw">filteringSettings</span>,
+ref <a href="Rendering.RenderStateBlock.html">Rendering.RenderStateBlock</a> <span class="sig-kw">stateBlock</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public void <span class="sig-kw">DrawRenderers</span>(<a href="Rendering.CullingResults.html">Rendering.CullingResults</a> <span class="sig-kw">cullingResults</span>,
+ref <a href="Rendering.DrawingSettings.html">Rendering.DrawingSettings</a> <span class="sig-kw">drawingSettings</span>,
+ref <a href="Rendering.FilteringSettings.html">Rendering.FilteringSettings</a> <span class="sig-kw">filteringSettings</span>,
+NativeArray&lt;ShaderTagId&gt; <span class="sig-kw">renderTypes</span>,
+NativeArray&lt;RenderStateBlock&gt; <span class="sig-kw">stateBlocks</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public void <span class="sig-kw">DrawRenderers</span>(<a href="Rendering.CullingResults.html">Rendering.CullingResults</a> <span class="sig-kw">cullingResults</span>,
+ref <a href="Rendering.DrawingSettings.html">Rendering.DrawingSettings</a> <span class="sig-kw">drawingSettings</span>,
+ref <a href="Rendering.FilteringSettings.html">Rendering.FilteringSettings</a> <span class="sig-kw">filteringSettings</span>,
+<a href="Rendering.ShaderTagId.html">Rendering.ShaderTagId</a> <span class="sig-kw">tagName</span>,
+bool <span class="sig-kw">isPassTagName</span>,
+NativeArray&lt;ShaderTagId&gt; <span class="sig-kw">tagValues</span>,
+NativeArray&lt;RenderStateBlock&gt; <span class="sig-kw">stateBlocks</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">cullingResults</td>
+                    <td class="desc">The set of visible objects to draw. You typically obtain this from <a href="Rendering.ScriptableRenderContext.Cull.html">ScriptableRenderContext.Cull</a>.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">drawingSettings</td>
+                    <td class="desc">A struct that describes how to draw the objects.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">filteringSettings</td>
+                    <td class="desc">A struct that describes how to filter the set of visible objects, so that Unity only draws a subset.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">stateBlock</td>
+                    <td class="desc">A set of values that Unity uses to override the GPU's render state.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">tagName</td>
+                    <td class="desc">The name of a <a href="../Manual/SL-SubShaderTags.html">SubShader Tag</a> or <a href="../Manual/SL-PassTags.html">Pass Tag</a>.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">isPassTagName</td>
+                    <td class="desc">If set to true, <code class="mono">tagName</code> specifies a <a href="../Manual/SL-PassTags.html">Pass Tag</a>. Otherwise, <code class="mono">tagName</code> specifies a <a href="../Manual/SL-SubShaderTags.html">SubShader Tag</a>.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">tagValues</td>
+                    <td class="desc">An array of <a href="Rendering.ShaderTagId.html">ShaderTagId</a> structs, where the <a href="Rendering.ShaderTagId-name.html">name</a> is the value of a given <a href="../Manual/SL-SubShaderTags.html">SubShader Tag</a> or <a href="../Manual/SL-PassTags.html">Pass Tag</a>.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">renderTypes</td>
+                    <td class="desc">An array of <a href="Rendering.ShaderTagId.html">ShaderTagId</a> structs, where the <a href="Rendering.ShaderTagId-name.html">name</a> is the value of a <a href="../Manual/SL-SubShaderTags.html">SubShader Tag</a> that has the name "RenderType".</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">stateBlocks</td>
+                    <td class="desc">An array of structs that describe which parts of the GPU's render state to override.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Schedules the drawing of a set of visible objects, and optionally overrides the GPU's render state.</p>
+              </div>
+              <div class="subsection">
+        <p>This function creates commands to draw the specified geometry, and adds the commands to the internal command list of the <code class="mono">ScriptableRenderContext</code>. The <code class="mono">ScriptableRenderContext</code> executes all the commands in its internal list when <a href="Rendering.ScriptableRenderContext.Submit.html">ScriptableRenderContext.Submit</a> is called.<br /><br />This  example demonstrates using a <a href="Rendering.CommandBuffer.html">CommandBuffer</a> to set clear the render target, and then calling this function to draw geometry:</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using UnityEngine;
+using UnityEngine.Rendering;<br /><br />public class ExampleRenderPipeline : <a href="Rendering.RenderPipeline.html">RenderPipeline</a>
+{
+    public ExampleRenderPipeline()
+    {
+    }<br /><br />    protected override void Render(<a href="Rendering.ScriptableRenderContext.html">ScriptableRenderContext</a> context, <a href="Camera.html">Camera</a>[] cameras)
+    {
+        // Create and schedule a command to clear the current render target
+        var cmd = new <a href="Rendering.CommandBuffer.html">CommandBuffer</a>();
+        cmd.ClearRenderTarget(true, true, <a href="Color-black.html">Color.black</a>);
+        context.ExecuteCommandBuffer(cmd);
+        cmd.Release();<br /><br />        // Iterate over all Cameras
+        foreach (<a href="Camera.html">Camera</a> camera in cameras)
+        {
+            // Get the culling parameters from the current <a href="Camera.html">Camera</a>
+            camera.TryGetCullingParameters(out var cullingParameters);<br /><br />            // Use the culling parameters to perform a cull operation, and store the results
+            var cullingResults = context.Cull(ref cullingParameters);<br /><br />            // <a href="PlayerLoop.Update.html">Update</a> the value of built-in shader variables, based on the current <a href="Camera.html">Camera</a>
+            context.SetupCameraProperties(camera);<br /><br />            // Tell Unity which geometry to draw, based on its <a href="Experimental.GlobalIllumination.LightMode.html">LightMode</a> <a href="ShaderData.Pass.html">Pass</a> tag value
+            <a href="Rendering.ShaderTagId.html">ShaderTagId</a> shaderTagId = new <a href="Rendering.ShaderTagId.html">ShaderTagId</a>("ExampleLightModeTag");<br /><br />            // Tell Unity how to sort the geometry, based on the current <a href="Camera.html">Camera</a>
+            var sortingSettings = new <a href="Rendering.SortingSettings.html">SortingSettings</a>(camera);<br /><br />            // Create a <a href="Rendering.DrawingSettings.html">DrawingSettings</a> struct that describes which geometry to draw and how to draw it
+            <a href="Rendering.DrawingSettings.html">DrawingSettings</a> drawingSettings = new <a href="Rendering.DrawingSettings.html">DrawingSettings</a>(shaderTagId, sortingSettings);<br /><br />            // Tell Unity how to filter the culling results, to further specify which geometry to draw
+            // Use <a href="Rendering.FilteringSettings-defaultValue.html">FilteringSettings.defaultValue</a> to specify no filtering
+            <a href="Rendering.FilteringSettings.html">FilteringSettings</a> filteringSettings = <a href="Rendering.FilteringSettings-defaultValue.html">FilteringSettings.defaultValue</a>;<br /><br />            // Schedule a command to draw the geometry, based on the settings you have defined
+            context.DrawRenderers(cullingResults, ref drawingSettings, ref filteringSettings);<br /><br />            // Schedule a command to draw the <a href="Skybox.html">Skybox</a> if required
+            if (camera.clearFlags == <a href="CameraClearFlags.Skybox.html">CameraClearFlags.Skybox</a> &amp;&amp; <a href="RenderSettings-skybox.html">RenderSettings.skybox</a> != null)
+            {
+                context.DrawSkybox(camera);
+            }<br /><br />            // Instruct the graphics API to perform all scheduled commands
+            context.Submit();
+        }
+    }
+}
+</pre>
+      </div>
+              <div class="subsection">
+        <p>
+          <strong>Overriding the render state</strong>
+          <br />
+          <br />When you draw geometry using this function, you can use one or more <a href="Rendering.RenderStateBlock.html">RenderStateBlock</a> structs to override the GPU's render state in the following ways:
+</p>
+        <ul>
+          <li>You can use the <code class="mono">stateBlock</code> parameter to provide a single <a href="Rendering.RenderStateBlock.html">RenderStateBlock</a> struct. Unity uses the render state defined in <code class="mono">stateBlock</code> for all the geometry that this function draws.</li>
+          <li>You can use the <code class="mono">stateBlocks</code> parameter to provide an array of <a href="Rendering.RenderStateBlock.html">RenderStateBlock</a> structs, and the <code class="mono">renderTypes</code> parameter to provide an array of values for the <a href="../Manual/SL-SubShaderTags.html">SubShader Tag</a> with a name of <code class="mono">RenderType</code>. For each element in the <code class="mono">renderTypes</code> array, if Unity finds geometry with a SubShader Tag name of <code class="mono">RenderType</code> and a matching value, it uses the render state defined in the corresponding element of the <code class="mono">stateBlocks</code> array. If there are multiple matches, Unity uses the first one. If an element in the <code class="mono">renderTypes</code> array has the default value for <a href="Rendering.ShaderTagId.html">ShaderTagId</a>, Unity treats this as a catch-all and uses the corresponding render state for all geometry.</li>
+          <li>You can use the <code class="mono">stateBlocks</code> parameter to provide an array of <a href="Rendering.RenderStateBlock.html">RenderStateBlock</a> structs, and use the <code class="mono">tagName</code>, <code class="mono">tagValues</code>, and <code class="mono">isPassTagName</code> parameters to specify the name and values of any <a href="../Manual/SL-SubShaderTags.html">SubShader Tag</a> or <a href="../Manual/SL-SubShaderTags.html">Pass Tag</a>. For each element in the <code class="mono">tagNames</code> and <code class="mono">tagValues</code> arrays, Unity identifies geometry with a matching SubShader Tag or Pass Tag name and value, and applies the render state defined in the corresponding element of the <code class="mono">stateBlocks</code> array. If there are multiple matches, Unity uses the first one. If an element in the <code class="mono">tagValues</code> has the default value for <a href="Rendering.ShaderTagId.html">ShaderTagId</a>, Unity treats this as a catch-all and uses the corresponding render state for all geometry.</li>
+        </ul>
+        <p>This example demonstrates how to override the render state:</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using UnityEngine;
+using UnityEngine.Rendering;
+using Unity.Collections;<br /><br />public class OverrideRenderStateExample
+{
+    <a href="Rendering.ScriptableRenderContext.html">ScriptableRenderContext</a> scriptableRenderContext;<br /><br />    // Override the render state for all geometry that this function draws
+    public void OverrideRenderStateForAll(<a href="Rendering.CullingResults.html">CullingResults</a> exampleCullingResults, <a href="Rendering.DrawingSettings.html">DrawingSettings</a> exampleDrawingSettings, <a href="Rendering.FilteringSettings.html">FilteringSettings</a> exampleFilteringSettings)
+    {
+        // Tell Unity how to override the render state
+        var stateBlock = new <a href="Rendering.RenderStateBlock.html">RenderStateBlock</a>(<a href="Rendering.RenderStateMask.Depth.html">RenderStateMask.Depth</a>);
+        stateBlock.depthState = new <a href="Rendering.DepthState.html">DepthState</a>(true, <a href="Rendering.CompareFunction.LessEqual.html">CompareFunction.LessEqual</a>);<br /><br />        // Schedule a command to draw the geometry using the desired render state
+        // Unity will execute all scheduled commands during the next call to <a href="Rendering.ScriptableRenderContext.Submit.html">ScriptableRenderContext.Submit</a>
+        scriptableRenderContext.DrawRenderers(exampleCullingResults, ref exampleDrawingSettings, ref exampleFilteringSettings, ref stateBlock);
+    }<br /><br />    // Override the render state for all geometry that has a SubShader Tag
+    // with a name of "RenderType" and a value of "ExampleRenderTypeTagValue"
+    public void OverrideRenderStateUsingRenderTypeTag(<a href="Rendering.CullingResults.html">CullingResults</a> exampleCullingResults, <a href="Rendering.DrawingSettings.html">DrawingSettings</a> exampleDrawingSettings, <a href="Rendering.FilteringSettings.html">FilteringSettings</a> exampleFilteringSettings)
+    {
+        // Create the parameters that tell Unity how to override the render state
+        var stateBlock = new <a href="Rendering.RenderStateBlock.html">RenderStateBlock</a>(<a href="Rendering.RenderStateMask.Depth.html">RenderStateMask.Depth</a>);
+        stateBlock.depthState = new <a href="Rendering.DepthState.html">DepthState</a>(true, <a href="Rendering.CompareFunction.Greater.html">CompareFunction.Greater</a>);
+        var stateBlocks = new NativeArray&lt;<a href="Rendering.RenderStateBlock.html">RenderStateBlock</a>&gt;(1, <a href="Unity.Collections.Allocator.Temp.html">Allocator.Temp</a>);
+        stateBlocks[0] = stateBlock;<br /><br />        // Create the parameters that tell Unity when to override the render state
+        <a href="Rendering.ShaderTagId.html">ShaderTagId</a> renderType = new <a href="Rendering.ShaderTagId.html">ShaderTagId</a>("ExampleRenderTypeTagValue");
+        var renderTypes = new NativeArray&lt;<a href="Rendering.ShaderTagId.html">ShaderTagId</a>&gt;(1, <a href="Unity.Collections.Allocator.Temp.html">Allocator.Temp</a>);
+        renderTypes[0] = renderType;<br /><br />        // Schedule a command to draw the geometry using the desired render state
+        // Unity will execute all scheduled commands during the next call to <a href="Rendering.ScriptableRenderContext.Submit.html">ScriptableRenderContext.Submit</a>
+        scriptableRenderContext.DrawRenderers(exampleCullingResults, ref exampleDrawingSettings, ref exampleFilteringSettings, renderTypes, stateBlocks);<br /><br />        // DrawRenderers copies the array contents, so it is safe to dispose of the native arrays
+        stateBlocks.Dispose();
+        renderTypes.Dispose();
+    }<br /><br />    // Override the render state in two different ways.
+    // Use one state for all geometry that has a <a href="ShaderData.Pass.html">Pass</a> Tag
+    // with a name of "ExamplePassTagName" and a value of "ExamplePassTagValue".
+    // For all other geometry, use a second state.
+    public void OverrideRenderStateUsingPassTag(<a href="Rendering.CullingResults.html">CullingResults</a> exampleCullingResults, <a href="Rendering.DrawingSettings.html">DrawingSettings</a> exampleDrawingSettings, <a href="Rendering.FilteringSettings.html">FilteringSettings</a> exampleFilteringSettings)
+    {
+        // Create the parameters that tell Unity how to override the render state
+        var stateBlock0 = new <a href="Rendering.RenderStateBlock.html">RenderStateBlock</a>(<a href="Rendering.RenderStateMask.Depth.html">RenderStateMask.Depth</a>);
+        stateBlock0.depthState = new <a href="Rendering.DepthState.html">DepthState</a>(true, <a href="Rendering.CompareFunction.Greater.html">CompareFunction.Greater</a>);
+        var stateBlock1 = new <a href="Rendering.RenderStateBlock.html">RenderStateBlock</a>(<a href="Rendering.RenderStateMask.Depth.html">RenderStateMask.Depth</a>);
+        stateBlock1.depthState = new <a href="Rendering.DepthState.html">DepthState</a>(true, <a href="Rendering.CompareFunction.Less.html">CompareFunction.Less</a>);
+        var stateBlocks = new NativeArray&lt;<a href="Rendering.RenderStateBlock.html">RenderStateBlock</a>&gt;(2, <a href="Unity.Collections.Allocator.Temp.html">Allocator.Temp</a>);
+        stateBlocks[0] = stateBlock0;
+        stateBlocks[1] = stateBlock1; // default override<br /><br />        // Create the parameters that tell Unity when to override the render state
+        <a href="Rendering.ShaderTagId.html">ShaderTagId</a> tagName = new <a href="Rendering.ShaderTagId.html">ShaderTagId</a>("ExamplePassTagName");
+        bool isPassTagName = true;
+        var tagValues = new NativeArray&lt;<a href="Rendering.ShaderTagId.html">ShaderTagId</a>&gt;(2, <a href="Unity.Collections.Allocator.Temp.html">Allocator.Temp</a>);
+        tagValues[0] = new <a href="Rendering.ShaderTagId.html">ShaderTagId</a>("ExamplePassTagValue");
+        tagValues[1] = new <a href="Rendering.ShaderTagId.html">ShaderTagId</a>(); // catch all<br /><br />        // Schedule a command to draw the geometry using the desired render state
+        // Unity will execute all scheduled commands during the next call to <a href="Rendering.ScriptableRenderContext.Submit.html">ScriptableRenderContext.Submit</a>
+        scriptableRenderContext.DrawRenderers(exampleCullingResults, ref exampleDrawingSettings, ref exampleFilteringSettings, tagName, isPassTagName, tagValues, stateBlocks);<br /><br />        // DrawRenderers copies the array contents, so it is safe to dispose of the native arrays
+        stateBlocks.Dispose();
+        tagValues.Dispose();
+    }
+}
+</pre>
+      </div>
+              <div class="subsection">
+        <p>Additional resources: <a href="../Manual/srp-creating-simple-render-loop.html">Creating a simple render loop in a custom Scriptable Render Pipeline</a> <a href="Rendering.CullingResults.html">CullingResults</a>, <a href="Rendering.DrawingSettings.html">DrawingSettings</a>, <a href="Rendering.FilteringSettings.html">FilteringSettings</a>, <a href="Rendering.RenderStateBlock.html">RenderStateBlock</a>.</p>
+      </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

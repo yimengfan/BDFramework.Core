@@ -1,0 +1,346 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Normal map (Bump mapping)</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/StandardShaderMaterialParameterNormalMap.html">English</a></li>
+<li><a href="/cn/current/Manual/StandardShaderMaterialParameterNormalMap.html">中文</a></li>
+<li><a href="/ja/current/Manual/StandardShaderMaterialParameterNormalMap.html">日本語</a></li>
+<li><a href="/kr/current/Manual/StandardShaderMaterialParameterNormalMap.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/StandardShaderMaterialParameterNormalMap.html">English</a></li>
+<li><a href="/cn/current/Manual/StandardShaderMaterialParameterNormalMap.html">中文</a></li>
+<li><a href="/ja/current/Manual/StandardShaderMaterialParameterNormalMap.html">日本語</a></li>
+<li><a href="/kr/current/Manual/StandardShaderMaterialParameterNormalMap.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-built-in.html">Built-in shaders</a></li>
+<li><a href="shader-StandardShader.html">Standard Shader</a></li>
+<li><a href="StandardShaderMaterialParameters.html">Material parameters</a></li>
+<li>Normal map (Bump mapping)</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="StandardShaderMaterialParameterSmoothness.html"></a></span><div class="tip">Smoothness</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="StandardShaderMaterialParameterHeightMap.html"></a></span><div class="tip">Heightmap</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Normal map (Bump mapping)</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<figure>
+<img src="../uploads/Main/StandardShaderParameterNormalMap.png" alt="">
+</figure>
+
+<p>Normal maps are a type of <strong><strong>Bump Map</strong></strong>. They are a special kind of texture that allow you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.</p>
+
+<p>Unity uses Y+ <span class="tooltip"><strong>normal maps</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normalmap" aria-label="Go to glossary anchor for Normalmap">Glossary</a></span></span></span>, sometimes known as OpenGL format.</p>
+
+<p>For example, you might want to show a surface which has grooves and screws or rivets across the surface, like an aircraft hull. One way to do this would be to model these details as geometry, as shown below.</p>
+
+<figure>
+<img src="../uploads/Main/StandardShaderNormalMapBadGeometry.jpg" alt="A sheet of aircraft metal with details modeled as real geometry.">
+<figcaption>A sheet of aircraft metal with details modeled as real geometry.</figcaption>
+</figure>
+
+<p>Depending on the situation it is not normally a good idea to have such tiny details modelled as “real” geometry. On the right you can see the polygons required to make up the detail of a single screwhead. Over a large model with lots of fine surface detail this would require a very high number of polygons to be drawn. To avoid this, we should use a normal map to represent the fine surface detail, and a lower resolution polygonal surface for the larger shape of the model.</p>
+
+<p>If we instead represent this detail with a bump map, the surface geometry can become much simpler, and the detail is represented as a texture which modulates how light reflects off the surface. This is something modern graphics hardware can do extremely fast. Your metal surface can now be a low-poly flat plane, and the screws, rivets, grooves and scratches will catch the light and appear to have depth because of the texture.</p>
+
+<figure>
+<img src="../uploads/Main/StandardShaderNormalMapAircraftSurface.jpg" alt="The screws, grooves and scratches are defined in a normalmap, which modifies how light reflects off the surface of this low-poly plane, giving the impression of 3D detail. As well as the rivets and screws, a texture allows us to include far more detail like subtle bumps and scratches.">
+<figcaption>The screws, grooves and scratches are defined in a normalmap, which modifies how light reflects off the surface of this low-poly plane, giving the impression of 3D detail. As well as the rivets and screws, a texture allows us to include far more detail like subtle bumps and scratches.</figcaption>
+</figure>
+
+<p>In modern game development art pipelines, artists will use their 3D modelling applications to generate normal maps based on very high resolution source models. The normal maps are then mapped onto a lower-resolution game-ready version of the model, so that the original high-resolution detail is rendered using the normalmap.</p>
+
+<h1>How to create and use Bump Maps</h1>
+
+<p>Bump mapping is a relatively old graphics technique, but is still one of the core methods required to create detailed realistic realtime graphics. Bump Maps are also commonly referred to as <strong>Normal Maps</strong> or <strong>Height Maps</strong>, however these terms have slightly different meanings which will be explained below.</p>
+
+<h2>What are Surface Normals?</h2>
+
+<p>To really explain how normal mapping works, we will first describe what a “<strong>normal</strong>” is, and how it is used in realtime lighting. Perhaps the most basic example would be a model where each surface polygon is lit simply according to the surface angles relative to the light. The surface angle can be represented as a line protruding in a perpendicular direction from the surface, and this direction (which is a vector) relative to the surface is called a “<strong>surface normal</strong>”, or simply, a <strong>normal</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/BumpMap2Cylinders.png" alt="Two 12-sided cylinders, on the left with flat shading, and on the right with smoothed shading">
+<figcaption>Two 12-sided cylinders, on the left with flat shading, and on the right with smoothed shading</figcaption>
+</figure>
+
+<p>In the image above, the left cylinder has basic flat shading, and each polygon is shaded according to its relative angle to the light source. The lighting on each polygon is constant across the polygon’s area because the surface is flat. Here are the same two cylinders, with their wireframe <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> visible:</p>
+
+<figure>
+<img src="../uploads/Main/BumpMap2CylindersWire.png" alt="Two 12-sided cylinders, on the left with flat shading, and on the right with smoothed shading">
+<figcaption>Two 12-sided cylinders, on the left with flat shading, and on the right with smoothed shading</figcaption>
+</figure>
+
+<p>The model on the right has the same number of polygons as the model on the left, however the shading appears smooth - the lighting across the polygons gives the appearance of a curved surface. Why is this? The reason is that the <strong>surface normal</strong> at each point used for reflecting light gradually varies across the width of the polygon, so that for any given point on the surface, the light bounces <em>as if that surface was curved</em> and not the flat constant polygon that it really is. </p>
+
+<p>Viewed as a 2D diagram, three of the surface polygons around the outside of the flat-shaded cylinder would look like this:</p>
+
+<figure>
+<img src="../uploads/Main/BumpMapFlatShadingDiagram.svg" alt="Flat shading on three polygons, viewed as a 2D diagram">
+<figcaption>Flat shading on three polygons, viewed as a 2D diagram</figcaption>
+</figure>
+
+<p>The surface normals are represented by the orange arrows. These are the values used to calculate how light reflects off the surface, so you can see that light will respond the same across the length of each polygon, because the surface normals point in the same direction. This gives the “flat shading”, and is the reason the left cylinder’s polygons appear to have hard edges.</p>
+
+<p>For the smooth shaded cylinder however, the surface normals vary across the flat polygons, as represented here:</p>
+
+<figure>
+<img src="../uploads/Main/BumpMapSmoothShadingDiagram.svg" alt="Smooth shading on three polygons, viewed as a 2D diagram">
+<figcaption>Smooth shading on three polygons, viewed as a 2D diagram</figcaption>
+</figure>
+
+<p>The normal directions gradually change across the flat polygon surface, so that the shading across the surface gives the impression of a smooth curve (as represented by the green line). This does not affect the actual polygonal nature of the mesh, only how the lighting is calculated on the flat surfaces. This apparent curved surface is not really present, and viewing the faces at glancing angles will reveal the true nature of the flat polygons, however from most viewing angles the cylinder appears to have a smooth curved surface.</p>
+
+<p>Using this basic smooth shading, the data determining the normal direction is actually only stored <strong>per vertex</strong>, so the changing values across the surface are interpolated from one vertex to the next. In the diagram above, the red arrows indicate the stored normal direction at each vertex, and the orange arrows indicate examples of the interpolated normal directions across the area of the polygon.</p>
+
+<h2>What is Normal mapping?</h2>
+
+<p>Normal mapping takes this modification of surface normals one step further, by using a texture to store information about how to modify the surface normals across the model. A normal map is an image texture mapped to the surface of a model, similar to regular colour textures, however each <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> in the texture of the normal map (called a <strong>texel</strong>) represents a deviation in surface normal direction away from the “true” surface normal of the flat (or smooth interpolated) polygon. </p>
+
+<figure>
+<img src="../uploads/Main/BumpMapBumpShadingDiagram.svg" alt="Normal mapping across three polygons, viewed as a 2D diagram">
+<figcaption>Normal mapping across three polygons, viewed as a 2D diagram</figcaption>
+</figure>
+
+<p>In this diagram, which is again a 2D representation of three polygons on the surface of a 3D model, each orange arrow corresponds to a pixel in the normalmap texture. Below, is a single-pixel slice of a normalmap texture. In the centre, you can see the normals have been modified, giving the <em>appearance</em> of a couple of bumps on the surface of the polygon. These bumps would only be apparent due to the way lighting appears on the surface, because these modified normals are used in the lighting calculations.</p>
+
+<p>The colours visible in a raw normal map file typically have a blueish hue, and don’t contain any actual light or dark shading - this is because the colours themselves are not intended to be displayed as they are. Instead, the RGB values of each texel represent the X,Y &amp; Z values of a direction vector, and are applied as a modification to the basic interpolated smooth normals of the polygon surfaces.</p>
+
+<figure>
+<img src="../uploads/Main/BumpMapTexturePreview.png" alt="An example normal map texture">
+<figcaption>An example normal map texture</figcaption>
+</figure>
+
+<p>This is a simple normal map, containing the bump information for some raised rectangles and text. This normal map can be imported into Unity and placed into Normal Map slot of the Standard <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>. When combined in a material with a colour map (the Albedo map) and applied to the surface of the cylinder mesh above, the result looks like this:</p>
+
+<figure>
+<img src="../uploads/Main/BumpMapLitExample.jpg" alt="The example normal map applied to the surface of the cylinder mesh used above">
+<figcaption>The example normal map applied to the surface of the cylinder mesh used above</figcaption>
+</figure>
+
+<p>Again, this does not affect the actual polygonal nature of the mesh, only how the lighting is calculated on the surfaces. This apparent raised lettering and shapes on the surface are not really present, and viewing the faces at glancing angles will reveal the true nature of the flat surface, however from most viewing angles the cylinder now appears to have embossed detail raised off the surface.</p>
+
+<h2>How do I get or make normal maps?</h2>
+
+<p>Commonly, Normal Maps are produced by 3D or Texture artists in conjunction with the model or textures they are producing, and they often mirror the layout and contents of the Albedo map. Sometimes they are produced by hand, and sometimes they are rendered out from a 3D application.</p>
+
+<p>How to render normal maps from a 3D application is beyond the scope of this documentation, however the basic concept is that a 3D artist would produce two versions of a model - a very high resolution model containing all detail as polygons, and a lower-res “game ready” model. The high res model would be too detailed to run optimally in a game (too many triangles in the mesh), but it is used in the 3D modelling application to generate the normal maps. The lower-res version of model can then omit the very fine level of geometry detail that is now stored in the normal maps, so that it can be rendered using the normal mapping instead. A typical use case for this would be to show the bumped detail of creases, buttons, buckles and seams on a characters clothing. </p>
+
+<p>There are some software packages which can analyse the lighting in a regular photographic texture, and extract a normalmap from it. This works by assuming the original texture is lit from a constant direction, and the light and dark areas are analysed and assumed to correspond with angled surfaces. However, when actually using a bump map, you need to make sure that your Albedo texture <em>does not</em> have lighting from any particular direction in the image - ideally it should represent the colours of the surface with no lighting at all - because the lighting information will be calculated by Unity according to the light direction, surface angle and bump map information.</p>
+
+<p>Here are two examples, one is a simple repeating stone wall texture with its corresponding normal map, and one is a character’s texture atlas with its corresponding normal map:</p>
+
+<figure>
+<img src="../uploads/Main/BumpMapColourMapStoneWallExample.jpg" alt="A stone wall texture and its corresponding normal map texture">
+<figcaption>A stone wall texture and its corresponding normal map texture</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/BumpMapColourMapAstrellaExample.jpg" alt="A character texture atlas, and its corresponding normal map texture atlas">
+<figcaption>A character texture atlas, and its corresponding normal map texture atlas</figcaption>
+</figure>
+
+<h2>What’s the difference between Bump Maps, Normal Maps and Height Maps?</h2>
+
+<p>
+<strong>Normal Maps</strong> and <strong>Height Maps</strong> are both <em>types</em> of Bump Map. They both contain data for representing apparent detail on the surface of simpler polygonal meshes, but they each store that data in a different way.</p>
+
+<figure>
+<img src="../uploads/Main/BumpMapHeightMapNormalMapComparison.jpg" alt="On the left, a height map for bump mapping a stone wall. On the right, a normal map for bump mapping a stone wall.">
+<figcaption>On the left, a height map for bump mapping a stone wall. On the right, a normal map for bump mapping a stone wall.</figcaption>
+</figure>
+
+<p>Above, on the left, you can see a height map used for bump mapping a stone wall. A height map is a simple black and white texture, where each pixel represents the amount that point on the surface should appear to be raised. The whiter the pixel colour, the higher the area appears to be raised.</p>
+
+<p>A normal map is an RGB texture, where each pixel represents the <em>difference in direction</em> the surface should appear to be facing, relative to its un-modified surface normal. These textures tend to have a bluey-purple tinge, because of the way the vector is stored in the RGB values.</p>
+
+<p>Modern realtime 3D graphics hardware rely on Normal Maps, because they contain the vectors required to modify how light should appear to bounce of the surface. Unity can also accept Height Maps for bump mapping, but they must be converted to Normal Maps on import in order to use them.</p>
+
+<h3>Why the bluey-purple colours?</h3>
+
+<p>Understanding this is not vital for using normal maps! It’s ok to skip this paragraph. However if you really want to know: The RGB colour values are used to store the X,Y,Z direction of the vector, with Z being “up” (contrary to Unity’s usual convention of using Y as “up”). In addition, the values in the texture are treated as having been halved, with 0.5 added. This allows vectors of all directions to be stored. Therefore to convert an RGB colour to a vector direction, you must multiply by two, then subtract 1. For example, an RGB value of (0.5, 0.5, 1) or #8080FF in hex results in a vector of (0,0,1) which is “up” for the purposes of normal-mapping - and represents no change to the surface of the model. This is the colour you see in the flat areas of the “example” normal map earlier on this page.</p>
+
+<figure>
+<img src="../uploads/Main/BumpMapFlatColour.png" alt="A normal map using only #8080FF, which translates to a normal vector of 0,0,1 or straight up. This applies no modification to the surface normal of the polygon, and therefore produces no change to the lighting. Any pixels which are different to this colour results in a vectors that point in a different direction - which therefore modify the angle that is used to calculate light bounce at that point.">
+<figcaption>A normal map using only #8080FF, which translates to a normal vector of 0,0,1 or “straight up”. This applies no modification to the surface normal of the polygon, and therefore produces no change to the lighting. Any pixels which are different to this colour results in a vectors that point in a different direction - which therefore modify the angle that is used to calculate light bounce at that point.</figcaption>
+</figure>
+
+<p>A value of (0.43, 0.91, 0.80) gives a vector of (–0.14, 0.82, 0.6), which is quite a steep modification to the surface. Colours like this can be seen in the bright cyan areas of the stone wall normal map at the top of some of the stone edges. The result is that these edges catch the light at a very different angle to the flatter faces of the stones.</p>
+
+<figure>
+<img src="../uploads/Main/BumpMapColourMapStoneWallExample.jpg" alt="The bright cyan areas in the normalmap for these stones show a steep modification to the polygons surface normals at the top edge of each stone, causing them to catch the light at the correct angle.">
+<figcaption>The bright cyan areas in the normalmap for these stones show a steep modification to the polygon’s surface normals at the top edge of each stone, causing them to catch the light at the correct angle.</figcaption>
+</figure>
+
+<p>Normal maps </p>
+
+<figure>
+<img src="../uploads/Main/BumpMapStoneExampleNoBumps.jpg" alt="A stone wall with no bumpmap effect. The edges and facets of the rock do not catch the directional sun light in the scene.">
+<figcaption>A stone wall with no bumpmap effect. The edges and facets of the rock do not catch the directional sun light in the scene.</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/BumpMapStoneExampleDay.jpg" alt="The same stone wall with bumpmapping applied. The edges of the stones facing the sun reflect the directional sun light very differently to the faces of the stones, and the edges facing away.">
+<figcaption>The same stone wall with bumpmapping applied. The edges of the stones facing the sun reflect the directional sun light very differently to the faces of the stones, and the edges facing away.</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/BumpMapStoneExampleNightTorch.jpg" alt="The same bumpmapped stone wall, in a different lighting scenario. A point light torch illuminates the stones. Each pixel of the stone wall is lit according to how the light hits the angle of the base model (the polygon), adjusted by the vectors in the normal maps. Therefore pixels facing the light are bright, and pixels facing away from the light are darker, or in shadow.">
+<figcaption>The same bumpmapped stone wall, in a different lighting scenario. A point light torch illuminates the stones. Each pixel of the stone wall is lit according to how the light hits the angle of the base model (the polygon), adjusted by the vectors in the normal maps. Therefore pixels facing the light are bright, and pixels facing away from the light are darker, or in shadow.</figcaption>
+</figure>
+
+<h2>How to import and use Normal Maps and Height Maps</h2>
+
+<p>A normal map can be imported by placing the texture file in your assets folder, as usual. However, you need to tell Unity that this texture is a normal map. You can do this by changing the “Texture Type” setting to “Normal Map” in the import <span class="tooltip"><strong>inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> settings.</p>
+
+<figure>
+<img src="../uploads/Main/BumpMapImportInspectorWindow.png" alt="">
+</figure>
+
+<p>To import a black and white <span class="tooltip"><strong>heightmap</strong><span class="tooltiptext">A greyscale Texture that stores height data for an object. Each pixel stores the height difference perpendicular to the face that pixel represents.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Heightmap" aria-label="Go to glossary anchor for Heightmap">Glossary</a></span></span></span> as a normal map, the process is almost identical, except you need to check the “Create from Greyscale” option.</p>
+
+<figure>
+<img src="../uploads/Main/BumpMapImportInspectorGreyscale.png" alt="">
+</figure>
+
+<p>With “Create From Greyscale” selected, a Bumpiness slider will appear in the inspector. You can use this to control how steep the angles in the normalmap are, when being converted from the heights in your heightmap. A low bumpiness value will mean that even sharp contrast in the heightmap will be translated to gentle angles and bumps. A high value will create exaggerated bumps and very high contrast lighting responses to the bumps.</p>
+
+<figure>
+<img src="../uploads/Main/BumpMapLowAndHighBumpiness.jpg" alt="Low and High Bumpiness settings when importing a height map as a normal map, and the resulting effect on the model.">
+<figcaption>Low and High Bumpiness settings when importing a height map as a normal map, and the resulting effect on the model.</figcaption>
+</figure>
+
+<p>Once you have a normalmap in your assets, you can place it into the Normal Map slot of your Material in the inspector. The Standard Shader has a normal map slot, and many of the older legacy shaders also support normal maps.</p>
+
+<figure>
+<img src="../uploads/Main/BumpMapPutIntoShader.png" alt="Placing a normal map texture into the correct slot in a material using the Standard Shader">
+<figcaption>Placing a normal map texture into the correct slot in a material using the Standard Shader</figcaption>
+</figure>
+
+<p>If you imported a normalmap or heightmap, and did not mark it as a normal map (By selecting <strong>Texture Type: Normal Map</strong> as described above), the Material inspector will warn you about this and offer to fix it, as so:</p>
+
+<figure>
+<img src="../uploads/Main/BumpMapPutIntoShaderFixNow.png" alt="The Fix Now warning appears when trying to use a normalmap that has not been marked as such in the inspector.">
+<figcaption>The “Fix Now” warning appears when trying to use a normalmap that has not been marked as such in the inspector.</figcaption>
+</figure>
+
+<p>Clicking “Fix Now” has the same effect as selecting <strong>Texture Type: Normal Map</strong> in the texture inspector settings. This will work if your texture really is a normal map. However if it is a greyscale heightmap, it will not automatically detect this - so for heightmaps you must always select the “Create from Greyscale” option in the texture’s inspector window.</p>
+
+<h2>Secondary Normal Maps</h2>
+
+<p>You may also notice that there is a second Normal Map slot further down in the Material inspector for the Standard Shader. This allows you to use an additional normal map for creating extra detail. You can add a normal map into this slot in the same way as the regular normal map slot, but the intention here is that you should use a different scale or frequency of tiling so that the two normal maps together produce a high <span class="tooltip"><strong>level of detail</strong><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LevelOfDetail.html" href="LevelOfDetail.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#levelofdetail" aria-label="Go to glossary anchor for levelofdetail">Glossary</a></span></span></span> at different scales. For example, your regular normal map could define the details of panelling on a wall or vehicle, with groves for the panel edges. A secondary normal map could provide very fine bump detail for scratches and wear on the surface which may be tiled at 5 to 10 times the scale of the base normal map. These details could be so fine as to only be visible when examined closely. To have this amount of detail on the base normal map would require the base normal map to be incredibly large, however by combining two at different scales, a high overall level of detail can be achieved with two relatively small normal map textures.</p>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="StandardShaderMaterialParameterSmoothness.html"></a></span><div class="tip">Smoothness</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="StandardShaderMaterialParameterHeightMap.html"></a></span><div class="tip">Heightmap</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

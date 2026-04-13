@@ -1,0 +1,475 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Conditional compilation</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PlatformDependentCompilation.html">English</a></li>
+<li><a href="/cn/current/Manual/PlatformDependentCompilation.html">中文</a></li>
+<li><a href="/ja/current/Manual/PlatformDependentCompilation.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PlatformDependentCompilation.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PlatformDependentCompilation.html">English</a></li>
+<li><a href="/cn/current/Manual/PlatformDependentCompilation.html">中文</a></li>
+<li><a href="/ja/current/Manual/PlatformDependentCompilation.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PlatformDependentCompilation.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="unity-architecture.html">Unity architecture</a></li>
+<li><a href="script-compilation.html">Script compilation</a></li>
+<li>Conditional compilation</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ScriptCompileOrderFolders.html"></a></span><div class="tip">Special folders and script compilation order</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="CustomScriptingSymbols.html"></a></span><div class="tip">Custom scripting symbols</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Conditional compilation</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity’s support for the C# language includes the use of <strong>directives</strong>, which allow you to selectively include or exclude code from compilation, based on whether certain <strong>scripting symbols</strong> are <code>defined</code> or <code>not defined</code>. </p>
+
+<p>You can read more broadly about how these directives work in C# in Microsoft’s user documentation on <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/preprocessor-directives">C# preprocessor directives</a>.</p>
+
+<p>Unity has a range of built-in scripting symbols which represent options that you can use in your <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> to selectively include or exclude portions of code from compilation.</p>
+
+<p>For example, the built-in scripting symbol that’s set when a player is built for Windows standalone platform is <code>UNITY_STANDALONE_WIN</code>. You can check whether this symbol is defined using a special type of if statement using the following query:</p>
+
+<pre><code>#if UNITY_STANDALONE_WIN
+
+  Debug.Log(&quot;Standalone Windows&quot;);
+
+#endif
+</code></pre>
+
+<p>The hash (<code>#</code>) character in front of the <code>if</code> and <code>endif</code> indicates that these statements are “directives”, and they’re handled during the compilation process, rather than at runtime.</p>
+
+<p>In the above example, the Debug line is only included for compilation in the Windows standalone build of the project. When compiled in the Unity Editor or in other target builds, it’s omitted entirely. This is different to using a regular <code>if .. then .. else</code> structure, which might only bypass the <code>execution</code> of certain part of code at runtime. </p>
+
+<p>There are a number of built-in scripting symbols which allow you to selectively compile or omit code based on the selected <a href="#Platform">Platform</a>, the <a href="#Editor">Editor Version</a>, and <a href="#Other">other</a> miscellaneous system environment scenarios. These built-in scripting symbols are listed below.</p>
+
+<p>In addition, you can define your own scripting symbols either using the Unity Editor <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>, via scripting, or via an asset file, which allows you to control compilation of portions of your code based on arbitrary definitions. For more information, check <a href="CustomScriptingSymbols.html">Custom scripting symbols</a>.</p>
+
+<p>*Note: <strong>Scripting symbols</strong> are sometimes referred to as <code>define symbols</code>,<code>preprocessor defines</code>, or just <code>defines</code>.</p>
+
+<p><a name="Platform" aria-hidden="true"></a></p>
+
+<h2>Platform scripting symbols</h2>
+
+<p>Unity automatically defines certain scripting symbols based on the authoring and build target platform. These are as follows:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Define</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_EDITOR</strong></td>
+	<td style="text-align:left;">Scripting symbol to call Unity Editor scripts from your game code.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_EDITOR_WIN</strong></td>
+	<td style="text-align:left;">Scripting symbol for Editor code on Windows.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_EDITOR_OSX</strong></td>
+	<td style="text-align:left;">Scripting symbol for Editor code in macOS.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_EDITOR_LINUX</strong></td>
+	<td style="text-align:left;">Scripting symbol for Editor code on Linux.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_EMBEDDED_LINUX</strong></td>
+	<td style="text-align:left;">Scripting symbol for embedded Linux.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_QNX</strong></td>
+	<td style="text-align:left;">Scripting symbol for QNX.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_STANDALONE_OSX</strong></td>
+	<td style="text-align:left;">Scripting symbol to compile or execute code specifically for macOS (including Universal, PPC and Intel architectures).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_STANDALONE_WIN</strong></td>
+	<td style="text-align:left;">Scripting symbol for compiling/executing code specifically for Windows standalone applications.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_STANDALONE_LINUX</strong></td>
+	<td style="text-align:left;">Scripting symbol for compiling/executing code specifically for Linux standalone applications.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_SERVER</strong></td>
+	<td style="text-align:left;">Scripting symbol for compiling/executing code for a dedicated server (macOS, Windows or Linux).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_IOS</strong></td>
+	<td style="text-align:left;">Scripting symbol for compiling/executing code for the iOS platform.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_IPHONE</strong></td>
+	<td style="text-align:left;">Deprecated. Use <strong>UNITY_IOS</strong> instead.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_ANDROID</strong></td>
+	<td style="text-align:left;">Scripting symbol for the Android platform.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_TVOS</strong></td>
+	<td style="text-align:left;">Scripting symbol for the Apple TV platform.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_WSA</strong></td>
+	<td style="text-align:left;">Scripting symbol for Universal Windows Platform. Additionally, <strong>NETFX_CORE</strong> is defined when compiling C# files against .NET Core and using .NET <span class="tooltip"><strong>scripting backend</strong><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about scripting-backends.html" href="scripting-backends.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScriptingBackend" aria-label="Go to glossary anchor for ScriptingBackend">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_WSA_10_0</strong></td>
+	<td style="text-align:left;">Scripting symbol for Universal Windows Platform. Additionally <strong>WINDOWS_UWP</strong> is defined when compiling C# files against .NET Core.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_WEBGL</strong></td>
+	<td style="text-align:left;">Scripting symbol for <span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_ANALYTICS</strong></td>
+	<td style="text-align:left;">Scripting symbol for calling Unity <span class="tooltip"><strong>Analytics</strong><span class="tooltiptext">Abbreviation of <strong>Unity Analytics</strong><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Analytics" aria-label="Go to glossary anchor for Analytics">Glossary</a></span></span></span> methods from your game code. Version 5.2 and above.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_ASSERTIONS</strong></td>
+	<td style="text-align:left;">Scripting symbol for assertions control process.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_64</strong></td>
+	<td style="text-align:left;">Scripting symbol for 64-bit platforms.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_CLOUD_BUILD</strong></td>
+	<td style="text-align:left;">Scripting symbol for <span class="tooltip"><strong>Cloud builds</strong><span class="tooltiptext">A continuous integration service for Unity projects that automates the process of creating builds on Unity’s servers. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity.com/devops/en/manual/unity-build-automation" href="https://docs.unity.com/devops/en/manual/unity-build-automation">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#CloudBuild" aria-label="Go to glossary anchor for CloudBuild">Glossary</a></span></span></span>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Editor" aria-hidden="true"></a></p>
+
+<h2>Editor version Scripting symbols</h2>
+
+<p>Unity automatically defines certain scripting symbols based on the version of the Unity Editor that you’re currently using.</p>
+
+<p>Given a version number <strong>X.Y.Z</strong> (for example, 2019.4.14), Unity exposes three global scripting symbols in the following formats: <strong>UNITY_X</strong>, <strong>UNITY_X_Y</strong> and <strong>UNITY_X_Y_Z</strong>.</p>
+
+<p>Here is an example of scripting symbols exposed in Unity 2019.4.14:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Define</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_2019</strong></td>
+	<td style="text-align:left;">Scripting symbol for the release version of Unity 2019, exposed in every 2019.Y.Z release.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_2019_4</strong></td>
+	<td style="text-align:left;">Scripting symbol for the major version of Unity 2019.4, exposed in every 2019.4.Z release.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_2019_4_14</strong></td>
+	<td style="text-align:left;">Scripting symbol for the minor version of Unity 2019.4.14.</td>
+</tr>
+</tbody>
+</table>
+
+<p>You can also compile code selectively based on the earliest version of Unity required to compile or execute
+a section of code snippet. Following the same version format as above (<strong>X.Y</strong>), Unity exposes one global <code>#define</code> in the format <strong>UNITY_X_Y_OR_NEWER</strong>, that you can use for this purpose.</p>
+
+<p><a name="Other" aria-hidden="true"></a></p>
+
+<h2>Other scripting symbols</h2>
+
+<p>The other scripting symbols Unity defines are:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Define</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>CSHARP_7_3_OR_NEWER</strong></td>
+	<td style="text-align:left;">Defined when building scripts with support for C# 7.3 or newer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ENABLE_MONO</strong></td>
+	<td style="text-align:left;">Scripting backend #define for Mono.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ENABLE_IL2CPP</strong></td>
+	<td style="text-align:left;">Scripting backend #define for <span class="tooltip"><strong>IL2CPP</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html" href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ENABLE_VR</strong></td>
+	<td style="text-align:left;">Defined when the target build platform supports <span class="tooltip"><strong>VR</strong><span class="tooltiptext">Virtual Reality <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VROverview.html" href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#VR" aria-label="Go to glossary anchor for VR">Glossary</a></span></span></span>. Doesn’t imply that VR is currently enabled or that the necessary <span class="tooltip"><strong>plug-ins</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a href="Plugins.html" href="Glossary.html#VR" aria-label="Go to glossary anchor for VR">Glossary</a></span></span></span>. Doesn’t imply that VR is currently enabled or that the necessary <span class="tooltip"><strong>plug-ins</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> and packages needed to support VR are installed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NET_2_0</strong></td>
+	<td style="text-align:left;">Defined when building scripts against .NET 2.0 API compatibility level on Mono and IL2CPP.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NET_2_0_SUBSET</strong></td>
+	<td style="text-align:left;">Defined when building scripts against .NET 2.0 Subset API compatibility level on Mono and IL2CPP.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NET_LEGACY</strong></td>
+	<td style="text-align:left;">Defined when building scripts against .NET 2.0 or .NET 2.0 Subset API compatibility level on Mono and IL2CPP.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NET_4_6</strong></td>
+	<td style="text-align:left;">Defined when building scripts against .NET 4.x API compatibility level on Mono and IL2CPP.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NET_STANDARD_2_0</strong></td>
+	<td style="text-align:left;">Defined when building scripts against .NET Standard 2.0 API compatibility level on Mono and IL2CPP.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NET_STANDARD_2_1</strong></td>
+	<td style="text-align:left;">Defined when building scripts against .NET Standard 2.1 API compatibility level on Mono and IL2CPP.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NET_STANDARD</strong></td>
+	<td style="text-align:left;">Defined when building scripts against .NET Standard 2.1 API compatibility level on Mono and IL2CPP.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NETSTANDARD2_1</strong></td>
+	<td style="text-align:left;">Defined when building scripts against .NET Standard 2.1 API compatibility level on Mono and IL2CPP.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NETSTANDARD</strong></td>
+	<td style="text-align:left;">Defined when building scripts against .NET Standard 2.1 API compatibility level on Mono and IL2CPP.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ENABLE_WINMD_SUPPORT</strong></td>
+	<td style="text-align:left;">Defined when Windows Runtime support is enabled on IL2CPP. For more information, refer to <a href="IL2CPP-WindowsRuntimeSupport.html">Windows Runtime Support</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ENABLE_INPUT_SYSTEM</strong></td>
+	<td style="text-align:left;">Defined when the Input System package is enabled in <span class="tooltip"><strong>Player Settings</strong><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html" href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ENABLE_LEGACY_INPUT_MANAGER</strong></td>
+	<td style="text-align:left;">Defined when the legacy <span class="tooltip"><strong>Input Manager</strong><span class="tooltiptext">Settings where you can define all the different input axes, buttons and controls for your project. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-InputManager.html" href="class-InputManager.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#InputManager" aria-label="Go to glossary anchor for InputManager">Glossary</a></span></span></span> is enabled in Player Settings.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UNITY_SERVER</strong></td>
+	<td style="text-align:left;">Defined when the Server Build setting is enabled in Build Settings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>DEVELOPMENT_BUILD</strong></td>
+	<td style="text-align:left;">Defined when your script is running in a Player which was built with the <strong>Development Build</strong> option enabled.<br><br>This define only reflects whether the development build option was enabled at the time of the build. To know whether your script is running in the development build mode, use <a href="../ScriptReference/Debug-isDebugBuild.html">Debug.isDebugBuild</a>. <code>__DEVELOPMENT\_BUILD__</code> isn’t sufficient to determine whether you’re currently running in a development build because most platforms allow changing between development and non-development build without rebuilding the project. However, on some platforms, Unity doesn’t support switching between development and non-development builds in the Editor and requires you to switch after the build is complete. For example, on Windows, you can choose the <strong>Create Visual Studio solution</strong> option to choose whether you want a development or non-development build in Visual Studio. Switching in Visual Studio doesn’t recompile your scripts and therefore, it will not reevaluate scripting defines. You can also switch from the final game build to a development build by swapping <code>UnityPlayer.dll</code> in the game build with the one from a development build for debugging live game builds.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Test precompiled code</h2>
+
+<p>The following example shows how to test your precompiled code. It also prints a message based on the platform you’ve selected for your target build.</p>
+
+<p>To test the compiled code:</p>
+
+<ol>
+<li>Open the <strong>Build Settings</strong> window (menu: File &gt; Build Settings).</li>
+<li>Choose the target platform you want to test your code against and click <strong>Switch Platform</strong>.</li>
+<li>Create a <a href="CreatingAndUsingScripts.html">script</a> and copy/paste the following code:</li>
+</ol>
+
+<pre><code>  using UnityEngine;
+  using System.Collections;
+  public class PlatformDefines : MonoBehaviour {
+  void Start () {
+
+    #if UNITY_EDITOR
+      Debug.Log(&quot;Unity Editor&quot;);
+    #endif
+
+    #if UNITY_IOS
+      Debug.Log(&quot;iOS&quot;);
+    #endif
+
+    #if UNITY_STANDALONE_OSX
+        Debug.Log(&quot;Standalone OSX&quot;);
+    #endif
+
+    #if UNITY_STANDALONE_WIN
+      Debug.Log(&quot;Standalone Windows&quot;);
+    #endif
+
+  }          
+  }
+</code></pre>
+
+<ol>
+<li>To test the code, click <strong>Play Mode</strong>. Confirm that the code works by checking for the relevant messages in the Unity console, depending on the platform you selected. For example, if you choose <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span>, the messages Unity Editor and Unity iOS will appear in the console.</li>
+</ol>
+
+<p>
+<strong>Note:</strong> In C# you can use a <code>CONDITIONAL</code> attribute which is a more clean, less error-prone way of stripping out functions. For more information, refer to <a href="https://msdn.microsoft.com/en-us/library/system.diagnostics.conditionalattribute(v=vs.110).aspx">ConditionalAttribute Class</a>. Common Unity callbacks such as <code>Start()</code>, <code>Update()</code>, <code>LateUpdate()</code>, <code>FixedUpdate()</code>, <code>Awake()</code> aren’t affected by this attribute because they’re called directly from the engine and, for performance reasons, it doesn’t take them into account.</p>
+
+<p>In addition to the basic <code>#if</code> compiler directive, you can also use a multiway test in C#:</p>
+
+<pre><code>#if UNITY_EDITOR
+
+    Debug.Log(&quot;Unity Editor&quot;);
+
+#elif UNITY_IOS
+
+    Debug.Log(&quot;Unity iOS&quot;);
+
+#else
+
+    Debug.Log(&quot;Any other platform&quot;);
+
+#endif
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="CreatingAndUsingScripts.html">How to create and use scripts in Unity</a></li>
+<li><a href="CustomScriptingSymbols.html">Custom scripting symbols</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ScriptCompileOrderFolders.html"></a></span><div class="tip">Special folders and script compilation order</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="CustomScriptingSymbols.html"></a></span><div class="tip">Custom scripting symbols</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

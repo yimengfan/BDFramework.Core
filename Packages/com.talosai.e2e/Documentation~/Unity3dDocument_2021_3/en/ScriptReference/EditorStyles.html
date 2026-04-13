@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: EditorStyles</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">EditorStyles</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEditor</p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Common GUIStyles used for EditorGUI controls.</p>
+              </div>
+              <div class="subsection">
+                <h3>Static Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="EditorStyles-boldFont.html">boldFont</a></td><td class="desc">Bold font.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-boldLabel.html">boldLabel</a></td><td class="desc">Style for bold label.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-centeredGreyMiniLabel.html">centeredGreyMiniLabel</a></td><td class="desc">Style for label with small font which is centered and grey.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-colorField.html">colorField</a></td><td class="desc">Style used for headings for Color fields.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-foldout.html">foldout</a></td><td class="desc">Style used for headings for EditorGUI.Foldout.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-foldoutHeader.html">foldoutHeader</a></td><td class="desc">Style used for headings for EditorGUILayout.BeginFoldoutHeaderGroup.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-foldoutHeaderIcon.html">foldoutHeaderIcon</a></td><td class="desc">Style used for icon for EditorGUILayout.BeginFoldoutHeaderGroup.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-foldoutPreDrop.html">foldoutPreDrop</a></td><td class="desc">Style used for headings for EditorGUI.Foldout.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-helpBox.html">helpBox</a></td><td class="desc">Style used for background box for EditorGUI.HelpBox.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-iconButton.html">iconButton</a></td><td class="desc">Style used for a standalone icon button.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-inspectorDefaultMargins.html">inspectorDefaultMargins</a></td><td class="desc">Wrap content in a vertical group with this style to get the default margins used in the Inspector.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-inspectorFullWidthMargins.html">inspectorFullWidthMargins</a></td><td class="desc">Wrap content in a vertical group with this style to get full width margins in the Inspector.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-label.html">label</a></td><td class="desc">Style used for the labelled on all EditorGUI overloads that take a prefix label.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-largeLabel.html">largeLabel</a></td><td class="desc">Style for label with large font.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-layerMaskField.html">layerMaskField</a></td><td class="desc">Style used for headings for Layer masks.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-linkLabel.html">linkLabel</a></td><td class="desc">Style used for links.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-miniBoldFont.html">miniBoldFont</a></td><td class="desc">Mini Bold font.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-miniBoldLabel.html">miniBoldLabel</a></td><td class="desc">Style for mini bold label.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-miniButton.html">miniButton</a></td><td class="desc">Style used for a standalone small button.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-miniButtonLeft.html">miniButtonLeft</a></td><td class="desc">Style used for the leftmost button in a horizontal button group.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-miniButtonMid.html">miniButtonMid</a></td><td class="desc">Style used for the middle buttons in a horizontal group.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-miniButtonRight.html">miniButtonRight</a></td><td class="desc">Style used for the rightmost button in a horizontal group.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-miniFont.html">miniFont</a></td><td class="desc">Mini font.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-miniLabel.html">miniLabel</a></td><td class="desc">Style for label with small font.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-miniPullDown.html">miniPullDown</a></td><td class="desc">Style used for the drop-down controls.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-miniTextField.html">miniTextField</a></td><td class="desc">Smaller text field.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-numberField.html">numberField</a></td><td class="desc">Style used for field editors for numbers.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-objectField.html">objectField</a></td><td class="desc">Style used for headings for object fields.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-objectFieldMiniThumb.html">objectFieldMiniThumb</a></td><td class="desc">Style used for object fields that have a thumbnail (e.g Textures). </td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-objectFieldThumb.html">objectFieldThumb</a></td><td class="desc">Style used for headings for the Select button in object fields.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-popup.html">popup</a></td><td class="desc">Style used for EditorGUI.Popup, EditorGUI.EnumPopup,.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-radioButton.html">radioButton</a></td><td class="desc">Style used for a radio button.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-selectionRect.html">selectionRect</a></td><td class="desc">Style used to draw a marquee selection rect in the SceneView.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-standardFont.html">standardFont</a></td><td class="desc">Standard font.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-textArea.html">textArea</a></td><td class="desc">Style used for EditorGUI.TextArea.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-textField.html">textField</a></td><td class="desc">Style used for EditorGUI.TextField.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-toggle.html">toggle</a></td><td class="desc">Style used for headings for EditorGUI.Toggle.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-toggleGroup.html">toggleGroup</a></td><td class="desc">Style used for headings for EditorGUILayout.BeginToggleGroup.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-toolbar.html">toolbar</a></td><td class="desc">Toolbar background from top of windows.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-toolbarButton.html">toolbarButton</a></td><td class="desc">Style for Button and Toggles in toolbars.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-toolbarDropDown.html">toolbarDropDown</a></td><td class="desc">Toolbar Dropdown.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-toolbarPopup.html">toolbarPopup</a></td><td class="desc">Toolbar Popup.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-toolbarSearchField.html">toolbarSearchField</a></td><td class="desc">Toolbar search field.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-toolbarTextField.html">toolbarTextField</a></td><td class="desc">Toolbar text field.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-whiteBoldLabel.html">whiteBoldLabel</a></td><td class="desc">Style for white bold label.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-whiteLabel.html">whiteLabel</a></td><td class="desc">Style for white label.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-whiteLargeLabel.html">whiteLargeLabel</a></td><td class="desc">Style for white large label.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-whiteMiniLabel.html">whiteMiniLabel</a></td><td class="desc">Style for white mini label.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-wordWrappedLabel.html">wordWrappedLabel</a></td><td class="desc">Style for word wrapped label.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles-wordWrappedMiniLabel.html">wordWrappedMiniLabel</a></td><td class="desc">Style for word wrapped mini label.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

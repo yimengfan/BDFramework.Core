@@ -1,0 +1,437 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Memory Profiler module</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ProfilerMemory.html">English</a></li>
+<li><a href="/cn/current/Manual/ProfilerMemory.html">中文</a></li>
+<li><a href="/ja/current/Manual/ProfilerMemory.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ProfilerMemory.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ProfilerMemory.html">English</a></li>
+<li><a href="/cn/current/Manual/ProfilerMemory.html">中文</a></li>
+<li><a href="/ja/current/Manual/ProfilerMemory.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ProfilerMemory.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="Profiler.html">Profiler overview</a></li>
+<li><a href="ProfilerWindow.html">The Profiler window</a></li>
+<li>Memory Profiler module</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ProfilerGPU.html"></a></span><div class="tip">GPU Usage Profiler module</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ProfilerPhysics.html"></a></span><div class="tip">Physics Profiler module</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Memory Profiler module</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>There are two ways of analyzing memory usage in your application in Unity:</p>
+
+<ul>
+<li>
+<strong>Memory</strong> <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> <strong>module</strong>: A built-in Profiler module that gives you basic information on where your application uses memory.</li>
+<li>
+<strong>Memory Profiler package</strong>: A Unity package that you can add to your project. It adds an additional Memory Profiler window to the Unity Editor, which you can then use to analyze memory usage in your application in even more detail. You can store and compare snapshots to find memory leaks, or see the memory layout to find memory fragmentation issues.</li>
+</ul>
+
+<p>This page covers information on the built-in Memory Profiler module. For more information on the Memory profiler package, see the <a href="https://docs.unity3d.com/Packages/com.unity.memoryprofiler@latest">Memory Profiler documentation</a>.</p>
+
+<p>The Memory Profiler module visualizes counters that represent the total allocated memory in your application. You can use the memory module to see information like the number of loaded objects, and the memory that they take in total per category. You can also see the number of <a href="performance-garbage-collector.html">GC allocations</a> per Profiler frame.</p>
+
+<h2>Memory profiling in the Editor</h2>
+
+<p>When you profile your application in the Editor, the Memory Profiler module reports higher data use than a similar profile of the application built on a target device would. This is because the Unity Editor uses specific objects that take up memory, and the Editor window itself uses extra memory.</p>
+
+<p>Part of the extra memory use is because Unity treats objects like textures as read/write enabled in the Editor and keeps an extra copy of each texture on the CPU. This effectively doubles the reported memory use of textures in the Editor; for a more accurate idea of memory use by textures, profile a built version of your application running on the target platform.</p>
+
+<p>Also, because Unity can’t cleanly separate the memory that the Profiler itself takes up from the Play mode’s memory, memory that the Profiler uses is displayed in the Profiler window. To remind you of this, a warning displays at the top of the Memory Profiler module details pane whenever you have the Profiler target set to <strong>Play Mode</strong> or <strong>Editor</strong>. For more precise numbers and memory usage for your application, you should profile your application on the target device and operating system you intend it to run on. For more information, see the documentation on <a href="profiler-profiling-applications.html">Profiling your application</a>. </p>
+
+<h2>Chart categories</h2>
+
+<p>The Memory Profiler module is divided into categories that display detailed information on where your application spends memory. You can also click a category’s colored legend to toggle its display.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Category</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Total Allocated</strong></td>
+	<td style="text-align:left;">The total memory your application has used.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Texture Memory</strong></td>
+	<td style="text-align:left;">How much memory the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html">Textures</a><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a href="class-TextureImporter.html" href="class-TextureImporter.html">Textures</a><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a href="class-TextureImporter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#texture" aria-label="Go to glossary anchor for texture">Glossary</a></span></span></span> in your application have used.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> Memory</strong></td>
+	<td style="text-align:left;">How much memory the <a href="class-Mesh.html">Meshes</a> in your application have used.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Material Count</strong></td>
+	<td style="text-align:left;">The number of <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Materials.html">Material</a><span class="tooltiptext">An asset that defines how a surface should be rendered. <a href="class-Material.html" href="Materials.html">Material</a><span class="tooltiptext">An asset that defines how a surface should be rendered. <a href="class-Material.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span> instances in your application.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Object Count</strong></td>
+	<td style="text-align:left;">The number of native object instances in your application.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GC Used Memory</strong></td>
+	<td style="text-align:left;">The amount of memory the <a href="performance-managed-memory.html#managed-heap">GC heap</a> has used.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GC Allocated in Frame</strong></td>
+	<td style="text-align:left;">The amount of memory allocated per frame on the GC heap.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Module details pane</h2>
+
+<p>There are two views available in the module details pane, located at the bottom of the Profiler window: </p>
+
+<ul>
+<li>
+<strong>Simple:</strong> Displays a high level overview of the memory statistics per frame</li>
+<li>
+<strong>Detailed:</strong> This view is deprecated. Use <a href="https://docs.unity3d.com/Packages/com.unity.memoryprofiler@latest">the Memory Profiler package</a> to get a detailed memory analysis of your application.</li>
+</ul>
+
+<h3>Simple view</h3>
+
+<p>The Simple view displays an overview of how Unity uses memory in real-time on a per-frame basis. It breaks down the total memory that your application uses into a few major categories. The <strong>Total</strong> value is based on the System Used Memory Profiler counter, which indicates how much memory the operating system (OS) reports as being in use by your application.</p>
+
+<figure>
+<img src="../uploads/Main/profiler-memory-simple-view.png" alt="The Simple view with some Profiler data loaded">
+<figcaption>The Simple view with some Profiler data loaded</figcaption>
+</figure>
+
+<p>Unity sets some memory pools aside for allocations to avoid asking the operating system for memory too often. The Profiler module displays how much memory Unity reserves, and how much memory Unity used at the time of the Profiler capture. </p>
+
+<p>The Simple view displays the data collected within the <strong>System Used Memory</strong> <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.profiling.core@1.0/manual/profilercounter-guide.html">Profiler counter</a><span class="tooltiptext">Placed in code with the ProfilerCounter API to track metrics, such as the number of enemies spawned in your game. <a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@latest/index.html?subfolder=/manual/profilercounter-guide.html" href="https://docs.unity3d.com/Packages/com.unity.profiling.core@1.0/manual/profilercounter-guide.html">Profiler counter</a><span class="tooltiptext">Placed in code with the ProfilerCounter API to track metrics, such as the number of enemies spawned in your game. <a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@latest/index.html?subfolder=/manual/profilercounter-guide.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profilercounter" aria-label="Go to glossary anchor for Profilercounter">Glossary</a></span></span></span>. This indicates how much memory the operating system (OS) reports as being in use by the app and corresponds to the <strong>Total</strong> value of the <strong>Total Committed Memory</strong> bar and the <strong>Total Memory Breakdown</strong> bar. </p>
+
+<p>On platforms that support getting the total memory size of the application from the operating system, the <strong>System Memory Usage</strong> is over 0 and is the same size in a task manager. </p>
+
+<p>The following reference table describes the statistics available in the Simple view, plus its corresponding profiler counter, and availability in Release builds. This information is also available via the<a href="../ScriptReference/Unity.Profiling.ProfilerRecorder.html"> ProfilerRecorder API</a> and in the<a href="profiler-module-editor.html"> Profiler Module Editor</a> so you can add them to a custom Profiler module.</p>
+
+<p><a name="markers" aria-hidden="true"></a></p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Corresponding Profiler counter</strong></th>
+	<th style="text-align:left;"><strong>Available in Release Players?</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Normalized</strong></td>
+	<td style="text-align:left;">Enable this setting to scale the <strong>Total Committed Memory</strong> and <strong>Total Memory Breakdown</strong> charts to the memory usage of the selected frame. If you disable this setting, the charts scale to the total used memory within the frame range. This setting can help you see how the total or relative amounts of memory change from frame to frame</td>
+	<td style="text-align:left;">N/A</td>
+	<td style="text-align:left;">N/A</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Total Committed Memory</strong></td>
+	<td style="text-align:left;">The length of the Total Committed Memory bar indicates the total amount of memory that Unity’s Memory Manager system tracked, how much of that it used, and how much memory isn’t tracked through this system.</td>
+	<td style="text-align:left;">System Used Memory</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Tracked Memory (in use / Reserved)</td>
+	<td style="text-align:left;">Indicates the total amount of memory that Unity uses and tracks (<strong>in use</strong>), and the amount of memory that Unity reserves for tracking purposes and pool allocations (<strong>Reserved</strong>).</td>
+	<td style="text-align:left;">Total Used Memory <br><br>Total Reserved Memory</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Untracked Memory</td>
+	<td style="text-align:left;">Indicates the total amount of memory that Unity used but isn’t aware of. Some examples of untracked memory are: <br><br>- Memory allocated through native plug-ins or some drivers <br>- Mono or IL2CPP type metadata <br>- Memory that executable code and DLLs use <br><br>The <a href="https://docs.unity3d.com/Packages/com.unity.memoryprofiler@latest">Memory Profiler package</a> and native platform providers might have more information on some of these untracked memory amounts.</td>
+	<td style="text-align:left;">N/A</td>
+	<td style="text-align:left;">N/A</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Total Memory Breakdown</strong></td>
+	<td style="text-align:left;">Displays the same total amount as the <strong>Total Committed Memory</strong> bar but breaks it into some high level categories, based on which subsystems Unity allocated the memory for. <br><br>Not all memory systems use pools or differentiate between used and reserved memory. Those that do display two numbers, the used and the reserved amount of memory. If the used amount doesn’t share the same unit (B, MB, GB) as the reserved amount, Unity displays the unit, otherwise it’s omitted.</td>
+	<td style="text-align:left;">System Used Memory</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Managed Heap (in use / Reserved)</td>
+	<td style="text-align:left;">The used heap size and total heap size that managed code uses. This memory is <a href="performance-garbage-collector.html">garbage collected</a>.</td>
+	<td style="text-align:left;">GC Used Memory <br><br>GC Reserved Memory</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Graphics &amp; Graphics Driver</td>
+	<td style="text-align:left;">The estimated amount of memory the driver uses on Textures, render targets, Shaders, and Mesh data.</td>
+	<td style="text-align:left;">Gfx Used Memory<br><br>Gfx Reserved Memory</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Audio</td>
+	<td style="text-align:left;">The Audio system’s estimated memory usage.</td>
+	<td style="text-align:left;">Audio Used Memory<br><br>Audio Reserved Memory</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Video</td>
+	<td style="text-align:left;">The Video system’s estimated memory usage.</td>
+	<td style="text-align:left;">Video Used Memory<br><br>Video Reserved Memory</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Other</td>
+	<td style="text-align:left;">Displays native memory that Unity tracks, but isn’t reported under a specific counter. <br><br>To get more information on the makeup of this or the other categories, use the <a href="https://docs.unity3d.com/Packages/com.unity.memoryprofiler@latest">Memory Profiler package</a>.</td>
+	<td style="text-align:left;">N/A</td>
+	<td style="text-align:left;">N/A</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Profiler</td>
+	<td style="text-align:left;">The memory that the Profiler functionality uses and reserves from the system.</td>
+	<td style="text-align:left;">Profiler Used Memory<br><br>Profiler Reserved Memory</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Objects stats</strong></td>
+	<td style="text-align:left;">Displays the amount of object instances of the types of Assets that commonly take up a high percentage of the memory (Textures, Meshes, Materials, Animation Clips), together with their accumulated sizes in memory (Assets, GameObjects, Scene Objects). <br><br><strong>Note:</strong> Texture and Mesh memory doesn’t map directly to the <strong>Graphics &amp; Graphics</strong> Driver stat in the <strong>Total Memory Breakdown</strong> view. This is because some of that memory might also fall into the <strong>Other</strong> category of the Total Memory Breakdown bar.</td>
+	<td style="text-align:left;">Object Count</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Textures</td>
+	<td style="text-align:left;">The total count of loaded textures and memory they use.</td>
+	<td style="text-align:left;">Texture Count<br><br>Texture Memory</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Meshes</td>
+	<td style="text-align:left;">The total count of loaded meshes and memory they use.</td>
+	<td style="text-align:left;">Mesh Count<br><br>Mesh Memory</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Materials</td>
+	<td style="text-align:left;">The total count of loaded materials and memory they use.</td>
+	<td style="text-align:left;">Material Count<br><br>Material Memory</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Animation Clips</td>
+	<td style="text-align:left;">The total count of loaded AnimationClips and memory they use.</td>
+	<td style="text-align:left;">AnimationClip Count<br><br>AnimationClip Memory</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Assets</td>
+	<td style="text-align:left;">The total number of loaded assets.</td>
+	<td style="text-align:left;">Asset Count</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Game Objects</td>
+	<td style="text-align:left;">The total number of <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/GameObject.html">GameObject</a><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="../ScriptReference/GameObject.html">GameObject</a><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> instances in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> instances in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</td>
+	<td style="text-align:left;">GameObject Count</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Scene Objects</td>
+	<td style="text-align:left;">The total number of dynamic <code>UnityEngine.Objects</code>. This number includes the GameObject Count, plus the total number of components, and everything which isn’t an asset in the scene.</td>
+	<td style="text-align:left;">Scene Object Count</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;">GC allocated in frame</td>
+	<td style="text-align:left;">Displays the amount of managed allocations in the selected frame, and their total size in bytes.</td>
+	<td style="text-align:left;">GC Allocation In Frame Count<br><br>GC Allocated In Frame</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Availability in Players</h3>
+
+<p>You can use the <a href="../ScriptReference/Unity.Profiling.ProfilerRecorder.html">ProfilerRecorder API</a> to access the Memory Profiler module’s counters in Players. The following example contains a simple script that collects <strong>Total Reserved Memory</strong>, <strong>GC Reserved Memory</strong> and <strong>System Used Memory</strong> metrics, and displays those as a <a href="../ScriptReference/GUI.TextAreaGUI.TextArea.html">GUI.TextArea</a>. The Memory Profiler module information belongs to the <a href="../ScriptReference/Unity.Profiling.ProfilerCategory.Memory.html">ProfilerCategory.Memory</a> <span class="tooltip"><strong>Profiler category</strong><span class="tooltiptext">Identifies the workload data for a Unity subsystem (for example, Rendering, Scripting and Animation categories). Unity applies color-coding to categories to visually distinguish between the types of data in the <strong>Profiler</strong> window.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profilercategory" aria-label="Go to glossary anchor for Profilercategory">Glossary</a></span></span></span>.</p>
+
+<pre><code class="language-csharp">using System.Text;
+using Unity.Profiling;
+using UnityEngine;
+
+public class MemoryStatsScript : MonoBehaviour
+{
+    string statsText;
+    ProfilerRecorder totalReservedMemoryRecorder;
+    ProfilerRecorder gcReservedMemoryRecorder;
+    ProfilerRecorder systemUsedMemoryRecorder;
+
+    void OnEnable()
+    {
+        totalReservedMemoryRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Memory, &quot;Total Reserved Memory&quot;);
+        gcReservedMemoryRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Memory, &quot;GC Reserved Memory&quot;);
+        systemUsedMemoryRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Memory, &quot;System Used Memory&quot;);
+    }
+
+    void OnDisable()
+    {
+        totalReservedMemoryRecorder.Dispose();
+        gcReservedMemoryRecorder.Dispose();
+        systemUsedMemoryRecorder.Dispose();
+    }
+
+    void Update()
+    {
+        var sb = new StringBuilder(500);
+        if (totalReservedMemoryRecorder.Valid)
+            sb.AppendLine($&quot;Total Reserved Memory: {totalReservedMemoryRecorder.LastValue}&quot;);
+        if (gcReservedMemoryRecorder.Valid)
+            sb.AppendLine($&quot;GC Reserved Memory: {gcReservedMemoryRecorder.LastValue}&quot;);
+        if (systemUsedMemoryRecorder.Valid)
+            sb.AppendLine($&quot;System Used Memory: {systemUsedMemoryRecorder.LastValue}&quot;);
+        statsText = sb.ToString();
+    }
+
+    void OnGUI()
+    {
+        GUI.TextArea(new Rect(10, 30, 250, 50), statsText);
+    }
+}
+</code></pre>
+
+<p>The following screenshot shows the result of adding the script to the <a href="https://assetstore.unity.com/packages/essentials/tutorial-projects/tanks-tutorial-46209">Tanks! tutorial project</a>.</p>
+
+<figure>
+<img src="../uploads/Main/profiler-tanks-memory-overlay.png" alt="Tanks! tutorial with the overlaid memory information">
+<figcaption>Tanks! tutorial with the overlaid memory information</figcaption>
+</figure>
+
+<p>This information is available in Release Players, as are the other high level counters in the table above. If you want to see the selected memory counters in a custom module in the Profiler window, use the <a href="profiler-module-editor.html">Module Editor</a> to configure the chart.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ProfilerGPU.html"></a></span><div class="tip">GPU Usage Profiler module</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ProfilerPhysics.html"></a></span><div class="tip">Physics Profiler module</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

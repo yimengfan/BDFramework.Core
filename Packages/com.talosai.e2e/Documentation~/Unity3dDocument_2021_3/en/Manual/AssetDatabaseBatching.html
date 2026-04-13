@@ -1,0 +1,220 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Batching with the AssetDatabase</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetDatabaseBatching.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetDatabaseBatching.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetDatabaseBatching.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetDatabaseBatching.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetDatabaseBatching.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetDatabaseBatching.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetDatabaseBatching.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetDatabaseBatching.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AssetWorkflow.html">Asset Workflow</a></li>
+<li><a href="AssetDatabase.html">The Asset Database</a></li>
+<li>Batching with the AssetDatabase</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetDatabaseCustomizingWorkflow.html"></a></span><div class="tip">Customizing the Asset Database workflow</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SpecialFolders.html"></a></span><div class="tip">Special folder names</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Batching with the AssetDatabase</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can use batching to reduce the amount of time and processing taken when making changes to Assets in your code.</p>
+
+<p>If you make changes to multiple Asset in your code (for example, copying or moving Asset files), the Asset Database’s default behavior is to process each change in turn, and perform a full Refresh process for the Asset before moving on to the next line of code.</p>
+
+<p>In the example below, three Assets are changed. Asset1 is copied, Asset2 is moved, and Asset3 is deleted:</p>
+
+<pre><code>AssetDatabase.CopyAsset(&quot;Assets/Asset1.txt&quot;, &quot;Assets/Text/Asset1.txt&quot;);
+AssetDatabase.MoveAsset(&quot;Assets/Asset2.txt&quot;, &quot;Assets/Text/Asset2.txt&quot;);
+AssetDatabase.DeleteAsset(&quot;Assets/Asset3.txt&quot;);
+</code></pre>
+
+<p>Without batching, Unity processes each change before moving on to the next line of code. This not only takes an unnecessarily long amount of time, but also triggers many callbacks that you can avoid if you use batching.</p>
+
+<p>Instead, you can specify that the Asset Database should process a group of operations at once. To do this, you need to tell the Asset Database to pause its normal behavior before you make your changes, then tell it to resume after your changes are complete.</p>
+
+<p>In particular, you should try to use batching if you are doing more than one of any of the following operations:</p>
+
+<ul>
+<li>AssetDatabase.ImportAsset</li>
+<li>AssetDatabase.MoveAsset</li>
+<li>AssetDatabase.CopyAsset</li>
+<li>AddObjectToAsset</li>
+</ul>
+
+<h2>Methods to process operations</h2>
+
+<p>To specify that the Asset Database should process a group of operations at once, you can use the following methods: <a href="../ScriptReference/AssetDatabase.StartAssetEditing.html">AssetDatabase.StartAssetEditing</a> and <a href="../ScriptReference/AssetDatabase.StopAssetEditing.html">AssetDatabase.StopAssetEditing</a>.</p>
+
+<p><strong>AssetDatabase.StartAssetEditing</strong></p>
+
+<p>This method tells the Asset Database that you are starting to make edits to Assets. The Asset Database enters a paused state, and does not process any further changes to your Assets until you call the corresponding <strong>StopAssetEditing</strong> method to tell it you are finished.</p>
+
+<p><strong>AssetDatabase.StopAssetEditing</strong></p>
+
+<p>Once you perform all of your Asset changes, call this method to tell the Asset Database to process your changes and resume its normal behavior of automatically processing changes immediately. The Asset Database then processes the changes you made between <code>StartAssetEditing</code> and <code>StopAssetEditing</code> in a Batch, which is faster than if they had been processed one by one. </p>
+
+<h3>Nested calls to StartAssetEditing and StopAssetEditing</h3>
+
+<p>If you make more than one call to <code>StartAssetEditing</code>, you must make the corresponding number of calls to <code>StopAssetEditing</code> to make the Asset Database resume its normal behavior of automatically processing changes.</p>
+
+<p>This is because these functions increment and decrement a counter, rather than acting as a simple on/off switch. Calling <code>StartAssetEditing</code> increments the counter, and calling <code>StopAssetEditing</code> decrements the counter. The Asset Database resumes its normal behavior when the counter reaches zero. </p>
+
+<p>The reason Unity uses a counter rather than a simple on/off boolean is so that if your code executes multiple nested “start” and “stop” pairs, the inner pairs do not accidentally re-enable the Asset Database’s normal behavior too early. Instead, each pair increments and decrements the counter by one, and if your code is correctly nested, the final outer call to <code>StopAssetEditing</code> sets the counter to zero.</p>
+
+<p>
+<strong>Note:</strong> Your code should never cause the counter to go below zero. Doing so generates an error.</p>
+
+<h2>Example</h2>
+
+<p>The following example shows the recommended way to use these methods:</p>
+
+<pre><code class="using UnityEngine;">using UnityEditor;
+public class StartStopAssetEditingExample : MonoBehaviour
+{
+    [MenuItem(&quot;APIExamples/StartStopAssetEditing&quot;)]
+    static void CallAssetDatabaseAPIsBetweenStartStopAssetEditing()
+    {
+        try
+        {
+            //Place the Asset Database in a state where
+            //importing is suspended for most APIs
+            AssetDatabase.StartAssetEditing();
+            AssetDatabase.CopyAsset(&quot;Assets/Asset1.txt&quot;, &quot;Assets/Text/Asset1.txt&quot;);
+            AssetDatabase.MoveAsset(&quot;Assets/Asset2.txt&quot;, &quot;Assets/Text/Asset2.txt&quot;);
+            AssetDatabase.DeleteAsset(&quot;Assets/Asset3.txt&quot;);
+        }
+        finally
+        {
+            //Adding a call to StopAssetEditing inside
+            //a &quot;finally&quot; block ensures that the AssetDatabase
+            //state will be reset when leaving this function
+            AssetDatabase.StopAssetEditing();
+        }
+    }
+}
+</code></pre>
+
+<h2>Using try…finally for Asset Editing</h2>
+
+<p>When you call <code>AssetDatabase.StartAssetEditing</code>, Unity puts the entire Editor’s AssetDatabase in a paused state. As such, if you do not make a corresponding call to AssetDatabase.<code>StopAssetEditing</code>, the Editor appears to be unresponsive when it comes to any Asset-related operations (Importing, Refreshing, etc.), and requires an Editor restart to restore its normal operation. </p>
+
+<p>Without using a <code>try</code> … <code>finally</code> block, if any of your code which modifies Assets causes an error, it might prevent the <code>StopAssetEditing</code> from being called. To avoid this situation, wrap the calls inside a <code>try</code>…<code>finally</code> block, with the <code>StartAssetEditing</code>, and your Asset modification code in the <code>try</code> block, and the <code>StopAssetEditing</code> call placed in the <code>finally</code> block. This ensures that if any exceptions happen while your changes are made in the <code>try</code> block, it’s still guaranteed that <code>AssetDatabase.StopAssetEditing</code> will be called.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetDatabaseCustomizingWorkflow.html"></a></span><div class="tip">Customizing the Asset Database workflow</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SpecialFolders.html"></a></span><div class="tip">Special folder names</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

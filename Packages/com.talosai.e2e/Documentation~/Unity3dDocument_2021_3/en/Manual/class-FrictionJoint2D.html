@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Friction Joint 2D</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-FrictionJoint2D.html">English</a></li>
+<li><a href="/cn/current/Manual/class-FrictionJoint2D.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-FrictionJoint2D.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-FrictionJoint2D.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-FrictionJoint2D.html">English</a></li>
+<li><a href="/cn/current/Manual/class-FrictionJoint2D.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-FrictionJoint2D.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-FrictionJoint2D.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Unity2D.html">2D game development</a></li>
+<li><a href="Physics2DReference.html">Physics Reference 2D</a></li>
+<li><a href="Joints2D.html">2D Joints</a></li>
+<li>Friction Joint 2D</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-FixedJoint2D.html"></a></span><div class="tip">Fixed Joint 2D</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-HingeJoint2D.html"></a></span><div class="tip">Hinge Joint 2D</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Friction Joint 2D</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/FrictionJoint2D.html' title='Go to FrictionJoint2D page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <strong>Friction <span class="tooltip"><strong>Joint</strong><span class="tooltiptext">A physics component allowing a dynamic connection between Rigidbody components, usually allowing some degree of movement such as a hinge. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Joints.html" href="Joints.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#joint" aria-label="Go to glossary anchor for joint">Glossary</a></span></span></span> 2D</strong> connects <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#joint" aria-label="Go to glossary anchor for joint">Glossary</a></span></span></span> 2D</strong> connects <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> controlled by <span class="tooltip"><strong>Rigidbody</strong><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a href="class-Rigidbody.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> controlled by <span class="tooltip"><strong>Rigidbody</strong><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a href="class-Rigidbody.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span> 2D physics. The Friction Joint 2D reduces both the linear and angular velocities between the objects to zero (ie, it slows them down).</p>
+
+<figure>
+<img src="../uploads/Main/FrictionJoint2DInspector.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Enable <span class="tooltip"><strong>Collision</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Enable this property to enable collisions between the two connected GameObjects.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Connected Rigid Body</strong></td>
+	<td style="text-align:left;">Specify the other object this joint connects to. Leave this as <strong>None</strong> to have the other end of the joint fixed at a point in space defined by the <strong>Connected Anchor</strong> property. Select the circle icon to the right to view a list of GameObjects to connect to.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Auto Configure Connected Anchor</strong></td>
+	<td style="text-align:left;">Enable this property to automatically set the anchor location for the other object this joint connects to. You do not need to enter coordinates for the <strong>Connected Anchor</strong> property if you enable this property.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Anchor</strong></td>
+	<td style="text-align:left;">Define where (in terms of x, y-coordinates on the <strong>Rigidbody 2D</strong>) the end point of the joint connects to this GameObject.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Connected Anchor</strong></td>
+	<td style="text-align:left;">Define where (in terms of x, y-coordinates on the <strong>Rigidbody 2D</strong>) the end point of the joint connects to the other GameObject.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Max Force</strong></td>
+	<td style="text-align:left;">Set the linear (or straight line) movement between joined GameObjects. A high value resists the linear movement between GameObjects.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Max Torque</strong></td>
+	<td style="text-align:left;">Set the angular (or rotation) movement between joined GameObjects. A high value resists the rotation movement between GameObjects.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Break Action</strong></td>
+	<td style="text-align:left;">Set the action taken when either the force or torque threshold is exceeded.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Break Force</strong></td>
+	<td style="text-align:left;">Set the force threshold which if exceeded, will cause the joint to perform the selected <strong>Break Action</strong>. The default value is set to <strong>Infinity</strong>, which can never be exceeded and therefore the <strong>Break Action</strong> can never be taken while the threshold remains at this value.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Break Torque</strong></td>
+	<td style="text-align:left;">Set the torque threshold which if exceeded, will cause the joint to perform the selected <strong>Break Action</strong>. The default value is set to <strong>Infinity</strong>, which can never be exceeded and therefore the <strong>Break Action</strong> can never be taken while the threshold remains at this value.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Using this joint</h2>
+
+<p>Use the Friction Joint 2D to slow down movement between two points to a stop. This joint’s aim is to maintain a zero relative linear and angular offset between two points. Those two points can be two <strong>Rigidbody 2D</strong> components or a <strong>Rigidbody 2D</strong> component and a fixed position in the world. (Connect to a fixed position in the world by setting <strong>Connected Rigidbody</strong> to None).</p>
+
+<h3>Resistance</h3>
+
+<p>The joint applies linear force (<strong>Force</strong>) and angle force (<strong>Torque</strong>) to both Rigidbody 2D points. It uses a simulated motor that is pre-configured to have a low motor power (and so, low resistance). You can change the resistance to make it weaker or stronger.</p>
+
+<p>Strong Resistance:</p>
+
+<ul>
+<li>A high (1,000,000 is the highest) <strong>Max Force</strong> creates strong linear resistance. The Rigidbody 2D GameObjects won’t move in a line relative to each other very much.</li>
+<li>A high (1,000,000 is the highest) <strong>Max Torque</strong> creates strong angular resistance. The Rigidbody 2D GameObjects won’t move at an angle relative to each other very much.</li>
+</ul>
+
+<p>Weak Resistance:</p>
+
+<ul>
+<li>A low <strong>Max Force</strong> creates weak linear resistance. The Rigidbody 2D GameObjects move easily in a line relative to each other.</li>
+<li>A low <strong>Max Torque</strong> creates weak angular resistance. The Rigidbody 2D GameObjects move easily at an angle relative to each other.</li>
+</ul>
+
+<h3>Constraints</h3>
+
+<p>Friction Joint 2D has two simultaneous constraints:</p>
+
+<ul>
+<li>Maintain a zero relative linear velocity between two anchor points on two Rigidbody 2Ds</li>
+<li>Maintain a zero relative angular velocity between two anchor points on two Rigidbody 2Ds</li>
+</ul>
+
+<p>You can use this joint to construct physical GameObjects that need to behave as if they have friction. They can resist either linear movement or angular movement, or both linear and angular movement. For example:</p>
+
+<ul>
+<li>A platform that does rotate, but resists applied forces, making it difficult but possible for the player to move it.</li>
+<li>A ball that resists linear movement. The ball’s friction is related to the GameObject’s velocity and not to any collisions. It acts like the <strong>Linear Drag</strong> and <strong>Angular Drag</strong> which is set in <strong>Rigidbody 2D</strong>. The difference is that Friction Joint 2D has the option of maximum <strong>Force</strong> and <strong>Torque</strong> settings.)</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li>Refer to <a href="Joints2D.html">Joints 2D</a> for more information about other 2D Joints.</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-FixedJoint2D.html"></a></span><div class="tip">Fixed Joint 2D</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-HingeJoint2D.html"></a></span><div class="tip">Hinge Joint 2D</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

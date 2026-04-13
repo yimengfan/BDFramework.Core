@@ -1,0 +1,1215 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: iOS Player settings</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-PlayerSettingsiOS.html">English</a></li>
+<li><a href="/cn/current/Manual/class-PlayerSettingsiOS.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-PlayerSettingsiOS.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-PlayerSettingsiOS.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-PlayerSettingsiOS.html">English</a></li>
+<li><a href="/cn/current/Manual/class-PlayerSettingsiOS.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-PlayerSettingsiOS.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-PlayerSettingsiOS.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="iphone.html">iOS</a></li>
+<li><a href="iphone-GettingStarted.html">Getting started with iOS</a></li>
+<li>iOS Player settings</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ios-environment-setup.html"></a></span><div class="tip">iOS environment setup</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ios-developing.html"></a></span><div class="tip">Developing for iOS</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>iOS Player settings</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page details the <strong>Player</strong> settings specific to <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span>. For a description of general <strong>Player</strong> settings that apply to all platforms, see <a href="https://docs.unity3d.com/Manual/class-PlayerSettings.html#general">Player - General settings</a>.</p>
+
+<figure>
+<img src="../uploads/Main/class-PlayerSettingsiOS.png" alt="Standalone iOS Player settings">
+<figcaption>Standalone iOS Player settings</figcaption>
+</figure>
+
+<p>You can find documentation for the properties in the following sections:</p>
+
+<ul>
+<li><a href="#icon">Icon</a></li>
+<li><a href="#resolution">Resolution and Presentation</a></li>
+<li><a href="#splash">Splash Image</a></li>
+<li><a href="#debugging">Debugging and crash reporting</a></li>
+<li><a href="#other">Other Settings</a></li>
+</ul>
+
+<p><a name="icon" aria-hidden="true"></a></p>
+
+<h2>Icon</h2>
+
+<p>Use the <strong>Icon</strong> settings to customize the branding for your app on the Apple Store.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetiOSIcon.jpg" alt="Icon settings in the iOS Player settings">
+<figcaption>Icon settings in the iOS Player settings</figcaption>
+</figure>
+
+<p>You can upload and assign these types of custom icons for each iOS device (iPhone, iPad):</p>
+<table>
+ <thead>
+ <tr>
+ <th style="text-align:left;"><strong>Icon type</strong></th>
+ <th style="text-align:left;"><strong>Where it displays</strong></th>
+ </tr>
+ </thead>
+ <tbody>
+<tr>
+ <td style="text-align:left;"><strong>Application icons</strong></td>
+ <td style="text-align:left;">Main icons for your app</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Spotlight icons</strong></td>
+ <td style="text-align:left;">Spotlight search results for your app</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Settings icons</strong></td>
+ <td style="text-align:left;">Device’s main Settings page</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Notification icons</strong></td>
+ <td style="text-align:left;">Notifications sent from your app</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Marketing icons</strong></td>
+ <td style="text-align:left;">App Store</td>
+</tr>
+</tbody>
+</table>
+
+<p>All icons you upload are <strong>Texture 2D</strong>-type Assets. If an icon Texture is missing, Unity scales the icon Texture with the nearest size, with a preference towards using larger Textures.</p>
+
+<p><a name="resolution" aria-hidden="true"></a></p>
+
+<h2>Resolution and presentation</h2>
+
+<p>Use the <strong>Resolution and Presentation</strong> section to customize aspects of the screen’s appearance.</p>
+
+<p>These settings are split into the following categories:</p>
+
+<ul>
+<li><a href="#Scaling">Resolution Scaling</a></li>
+<li><a href="#Orientation">Orientation</a></li>
+<li><a href="#supportedOris">Allowed Orientations for Auto Rotation</a></li>
+<li><a href="#Multitasking">Multitasking Support</a></li>
+<li><a href="#Status">Status Bar</a></li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/PlayerSetiOSResPres.png" alt="Resolution Scaling player settings for the iOS platform">
+<figcaption>Resolution Scaling player settings for the iOS platform</figcaption>
+</figure>
+
+<p><a name="Scaling" aria-hidden="true"></a></p>
+
+<h3>Resolution Scaling</h3>
+
+<p>Use the <strong>Resolution Scaling Mode</strong> setting to set the scaling to be equal to or below the native screen resolution:</p>
+<table>
+ <thead>
+ <tr>
+ <th style="text-align:left;"><strong>Setting</strong></th>
+ <th style="text-align:left;"><strong>Function</strong></th>
+ </tr>
+ </thead>
+ <tbody>
+<tr>
+ <td style="text-align:left;">
+<strong>Disabled</strong> </td>
+ <td style="text-align:left;">Scaling doesn’t apply and the application renders to its native screen resolution.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>FixedDPI</strong></td>
+ <td style="text-align:left;">When you select this value, the <strong>Target DPI</strong> property appears.<br><br>Use the <strong>Target DPI</strong> property to set the target DPI of the game screen. Unity downscales the game screen to match this setting if the device’s native screen DPI is higher than this value. This helps you optimize performance and battery life. You can also use it to target a specific DPI setting.<br><br>Unity calculates the scale as <code>min(Target DPI * Factor / Screen DPI, 1)</code>. The <code>Factor</code> uses the <strong>Resolution Scaling Fixed DPI Factor</strong> value you enter in the <a href="class-QualitySettings.html">Quality</a> settings.</td>
+</tr>
+<tr>
+ <td style="text-align:left;">
+<strong>Reset resolution on window resize</strong> </td>
+ <td style="text-align:left;">Indicates whether to set the screen resolution to the new native window size when the native window size changes. If you set <strong>Resolution Scaling Mode</strong> to <strong>Fixed DPI</strong>, Unity recalculates the resolution based on <strong>Fixed DPI</strong> property. </td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Orientation" aria-hidden="true"></a></p>
+
+<h3>Orientation</h3>
+
+<p>Choose the game’s screen orientation from the <strong>Default Orientation</strong> drop-down menu. The default setting is <strong>Auto Rotation</strong>. If selected, this setting causes the screen to rotate with device orientation.</p>
+
+<p>Select a different setting to determine a fixed location for where the Home button appears on the screen:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Home button position</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Portrait</strong></td>
+	<td style="text-align:left;">Bottom</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Portrait Upside Down</strong></td>
+	<td style="text-align:left;">Top</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Landscape Left</strong></td>
+	<td style="text-align:left;">Right side</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Landscape Right</strong></td>
+	<td style="text-align:left;">Left side.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Auto Rotation</strong></td>
+	<td style="text-align:left;">Screen orientation changes with device orientation. This is the default.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note:</strong> The <strong>Default Orientation</strong> setting applies to both iOS and Android devices.</p>
+
+<p>When you select <strong>Auto Rotation</strong> as the <strong>Default Orientation</strong>, these settings appear:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Use Animated Autorotation</strong></td>
+	<td style="text-align:left;">If you enable this check box, when the user rotates the device, screen rotation uses an animated transition. Otherwise, screen rotation changes instantly.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="supportedOris" aria-hidden="true"></a> <strong>Allowed Orientations for Auto Rotation</strong>
+</td>
+	<td style="text-align:left;">
+<strong>Auto Rotation</strong> changes screen orientation to match the device. You might want to limit the screen orientations allowed (for example, locking a device to landscape). Enable each orientation you want to allow by checking its box in this section.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Multitasking" aria-hidden="true"></a></p>
+
+<h3>Multitasking Support</h3>
+
+<p>Enable the <strong>Requires Fullscreen</strong> option if your application needs to run in full screen mode.</p>
+
+<p><a name="Status" aria-hidden="true"></a></p>
+
+<h3>Status Bar</h3>
+
+<p>Use the <strong>Status Bar</strong> section to specify parameters related to the iOS status bar.</p>
+<table>
+ <thead>
+ <tr>
+ <th style="text-align:left;"><strong>Setting</strong></th>
+ <th style="text-align:left;"><strong>Function</strong></th>
+ </tr>
+ </thead>
+ <tbody>
+<tr>
+ <td style="text-align:left;"><strong>Status Bar Hidden</strong></td>
+ <td style="text-align:left;">Enable this option to hide the status bar when your application launches.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Status Bar Style</strong></td>
+ <td style="text-align:left;">Define the style of the status bar when the application launches. The options are <em>Default</em> and <em>Light</em>.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Disable Depth and Stencil</strong></td>
+ <td style="text-align:left;">Enable this option to disable the depth and stencil buffers.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Render Over Native UI</strong></td>
+ <td style="text-align:left;">Enable this option to force your app to render on top of the native iOS UI. </td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Show Loading Indicator</strong></td>
+ <td style="text-align:left;">Select how the loading indicator appears. The options are <em>White Large</em>, <em>White</em>, and <em>Gray</em>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="splash" aria-hidden="true"></a></p>
+
+<h2>Splash image</h2>
+
+<p>Use the <strong>Splash Image</strong> section to customize your app’s splash image for different iOS-supported devices.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetiOSSplash.png" alt="Splash Settings for the iOS platform">
+<figcaption>Splash Settings for the iOS platform</figcaption>
+</figure>
+
+<p>The <strong><span class="tooltip"><strong>Virtual Reality</strong><span class="tooltiptext">Virtual Reality (VR) immerses users in an artificial 3D world of realistic images and sounds, using a headset and motion tracking. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VROverview.html" href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VirtualReality" aria-label="Go to glossary anchor for VirtualReality">Glossary</a></span></span></span> Splash Image</strong> setting, located above the <a href="https://docs.unity3d.com/Manual/class-PlayerSettingsSplashScreen.html">common Splash Screen settings</a>, allows you to select a custom splash image for Virtual Reality displays.</p>
+
+<h3>Custom storyboards</h3>
+
+<figure>
+<img src="../uploads/Main/PlayerSetiOSSplashStory.png" alt="Using a Storyboard as a launch screen for iOS">
+<figcaption>Using a Storyboard as a launch screen for iOS</figcaption>
+</figure>
+
+<p>When you select the <strong>Custom Storyboard</strong> option in the <strong>Launch screen type</strong> dropdown for either iPhone or iPad, the <strong>Custom Storyboard</strong> button appears.</p>
+
+<p>Click the <strong>Custom Storyboard</strong> button to select a storyboard to display when your game starts up on the device. For your storyboard to appear here, you must first create the storyboard in Xcode and copy it to your Project. For more information, see Apple developer documentation about <a href="https://help.apple.com/xcode/mac/10.2/#/dev62c993289">storyboards, scenes, and connections</a>.</p>
+
+<p>When you disable the <strong>Use Storyboard for Launch Screen</strong> checkbox, you can implement splash images with one of these methods:</p>
+
+<p>If you don’t use custom storyboards, you can use Unity’s built-in launch screens to implement splash images.</p>
+
+<p><a name="LaunchScreens" aria-hidden="true"></a></p>
+
+<h3>Launch Screens</h3>
+
+<p>A <strong>launch screen</strong> is a Storyboard file from which iOS creates a splash screen on the device. It has the following limitations:</p>
+
+<ul>
+<li>You can’t display different content based on device orientation for iPads.</li>
+<li>All iPhones support landscape launch screens, but certain iOS versions display the <strong>Landscape Left</strong> launch screen instead of the <strong>Landscape Right</strong> one due to a bug.</li>
+<li>Before iOS 13, it was impossible to override the root view controller for a storyboard, so the launch screen supports all orientations and ignores some <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> settings, like status bar behavior. Starting with iOS 13, launch screen is fully compliant with your app’s settings for orientation and status bar appearance.</li>
+</ul>
+
+<p>These limitations also apply to custom storyboards.</p>
+
+<p>Select the <strong>Launch screen type</strong> for iPhone and iPad in the <strong>iPhone Launch Screen</strong> and <strong>iPad Launch Screen</strong> sections:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Value</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Default</strong></td>
+	<td style="text-align:left;">When you select this option, Unity adds a solid blue-black image that’s the same color as the background for Unity’s default splash screen. The image is used for both portrait and landscape orientations, and displays using aspect-fill mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>None</strong></td>
+	<td style="text-align:left;">Apple no longer supports Launch Images. This option exists for backwards compatibility reasons. If you select it, your project will use Unity’s default splash screen instead.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Image and background (relative size)</strong></td>
+	<td style="text-align:left;">Displays an image in the center of the screen and fills the remaining area with a solid color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Portrait Image</em></td>
+	<td style="text-align:left;">Select an image for portrait orientation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Landscape Image</em></td>
+	<td style="text-align:left;">Select an image for landscape orientation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Background Color</em></td>
+	<td style="text-align:left;">Select a background color to fill any screen space that the image doesn’t cover.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Fill percentage</em></td>
+	<td style="text-align:left;">Specify image size as a percentage of the screen size. Unity calculates image size based on the length or width of the screen, whichever one is smaller (vertical for landscape displays, horizontal for portrait ones).</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Image and background (constant size)</strong></td>
+	<td style="text-align:left;">Displays an image in the center of the screen and fills the area with a solid color. This has the same options as <strong>Image and background (relative size)</strong>, except that you specify image size in points rather than as a percentage.<br><br><strong>Tip:</strong> Points and pixels aren’t the same. A pixel (px) is a single dot in your image. A point (pt) is a unit of length that measures 1/72th of an inch. Pixel sizes are relative to the screen size and resolution, while point sizes are the size on any screen. For more information, see <a href="https://www.w3.org/Style/Examples/007/units.en.html">W3C guidance</a> on size units.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Custom XIB</strong></td>
+	<td style="text-align:left;">When you select this option, the <strong>Custom XIB</strong> button appears. Click the button to select a custom XIB file to use as a loading screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Custom Storyboard</strong></td>
+	<td style="text-align:left;">When you select this option, the <strong>Custom Storyboard</strong> button appears. Click the button to select a custom Storyboard file to use as a loading screen.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note:</strong> With a Unity Personal subscription, the <a href="class-PlayerSettingsSplashScreen.html">Unity Splash Screen</a> displays as soon as the engine initializes, in addition to your chosen splash screen.</p>
+
+<p><a name="debugging" aria-hidden="true"></a></p>
+
+<h2>Debugging and crash reporting</h2>
+
+<p>Use the <strong>Debugging and crash reporting</strong> settings to gather data about your app’s performance and troubleshoot crashes.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetiOSDebugCrash.png" alt="Debugging and crash reporting on the iOS platform">
+<figcaption>Debugging and crash reporting on the iOS platform</figcaption>
+</figure>
+<table>
+ <thead>
+ <tr>
+ <th style="text-align:left;"><strong>Setting</strong></th>
+ <th style="text-align:left;"><strong>Function</strong></th>
+ </tr>
+ </thead>
+ <tbody>
+<tr>
+ <td style="text-align:left;"><strong>Enable Internal Profiler (Deprecated)</strong></td>
+ <td style="text-align:left;">This feature is deprecated and will be retired in a future version of Unity. Use the <a href="ProfilerWindow.html">Profiler window</a> instead (menu: <strong>Window &gt; Analytics &gt; Profiler</strong>).<br><br>The Profiler collects application performance data and prints a report to the console. The report contains the number of milliseconds each Unity subsystem takes to execute on each frame, averaged across 30 frames.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>On .Net UnhandledException</strong></td>
+ <td style="text-align:left;">Select the action Unity takes when a .NET unhandled exception occurs. The options are <strong>Crash</strong> (the app crashes and generates a crash report, which users can submit to iTunes and developers can use to troubleshoot the crash), or <strong>Silent Exit</strong> (the application exits with no errors and doesn’t generate a crash report).</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Log Obj-C Uncaught Exceptions</strong></td>
+ <td style="text-align:left;">When you enable this action, Unity prints Objective-C Uncaught Exception information to the console.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Enable Crash Report API</strong></td>
+ <td style="text-align:left;">Enables a custom crash reporter to capture crashes. You can use scripts to access crash logs via the <a href="../ScriptReference/CrashReport.html">CrashReport</a> API.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="other" aria-hidden="true"></a></p>
+
+<h2>Other settings</h2>
+
+<p>You can configure a range of <span class="tooltip"><strong>Player settings</strong><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html" href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span> in the <strong>Other Settings</strong> section. These options are organized into the following groups:</p>
+
+<ul>
+<li><a href="#Rendering">Rendering</a></li>
+<li><a href="#Identification">Identification</a></li>
+<li><a href="#Configuration">Configuration</a></li>
+<li><a href="#ShaderVariantLoading">Shader Variant Loading</a></li>
+<li><a href="#Optimization">Optimization</a></li>
+<li><a href="#Logging">Logging</a></li>
+<li><a href="#Legacy">Legacy</a></li>
+</ul>
+
+<p><a name="Rendering" aria-hidden="true"></a></p>
+
+<h3>Rendering</h3>
+
+<p>Use these settings to customize how Unity renders your application for the iOS platform.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetiOSOther-Rendering.png" alt="Rendering Player settings for iOS platforms">
+<figcaption>Rendering Player settings for iOS platforms</figcaption>
+</figure>
+<table>
+ <thead>
+ <tr>
+ <th style="text-align:left;"><strong>Setting</strong></th>
+ <th colspan="2" style="text-align:left;"><strong>Function</strong></th>
+ </tr>
+ </thead>
+ <tbody>
+<tr>
+<td rowspan="3"><strong>Color Space</strong></td>
+<td colspan="2">Choose which color space Unity uses for rendering: <strong>Gamma</strong> or <strong>Linear</strong>. For more information, see <a href="LinearLighting.html">Linear rendering overview</a>.</td>
+</tr>
+<tr>
+ <td><strong>Gamma</strong></td>
+ <td>Gamma color space is typically used for calculating lighting on older hardware restricted to 8 bits per channel for the frame buffer format. Even though monitors today are digital, they might still take a gamma-encoded signal as input.</td>
+</tr>
+<tr>
+ <td><strong>Linear</strong></td>
+ <td>Linear color space rendering gives more precise results. When you select to work in linear color space, the Editor defaults to using <a href="https://en.wikipedia.org/wiki/SRGB">sRGB</a> sampling. If your <a href="Textures.html">Textures</a> are in linear color space, you need to work in linear color space and disable sRGB sampling for each Texture.</td>
+</tr>
+<tr>
+<td> <strong>Color Gamut</strong> </td>
+<td colspan="2"> You can add or remove <a href="https://en.wikipedia.org/wiki/Gamut">color gamuts</a> for the iOS platform to use for rendering. Click the plus (+) icon to see a list of available gamuts. A color gamut defines a possible range of colors available for a given device (such as a monitor or screen). The sRGB gamut is the default (and required) gamut.<br>When targeting recent tvOS devices with wide color gamut displays, use <em>DisplayP3</em> to use the full display capabilities. Use <em>Metal Editor Support</em> as a fallback for older devices. </td>
+</tr>
+<tr>
+<td> <strong>Multithreaded Rendering</strong> </td>
+<td colspan="2"> Enable this option to move graphics API calls from Unity’s main thread to a separate worker thread. This can help to improve performance in applications that have high CPU usage on the main thread. </td>
+</tr>
+<tr>
+<td>
+<strong>Static Batching</strong> </td>
+<td colspan="2">Use Static batching. For more information, refer to <a href="DrawCallBatching.html">Draw call batching</a>.</td>
+</tr>
+<tr>
+<td>
+<strong>Dynamic Batching</strong> </td>
+<td colspan="2">Use dynamic batching (enabled by default). For more information, refer to <a href="DrawCallBatching.html">Draw call batching</a>.<br><br><strong>Note:</strong> Dynamic batching has no effect when a <a href="ScriptableRenderPipeline.html">Scriptable Render Pipeline</a> is active, so this setting is only visible if the <strong>Scriptable Render Pipeline Asset</strong> <a href="class-GraphicsSettings.html#SRLoop">Graphics</a> setting is blank. </td>
+</tr>
+<tr>
+<td>
+<strong>Compute Skinning</strong> </td>
+<td colspan="2">Enable this option to use Metal GPU compute skinning, which frees up CPU resources. To learn more about GPU compute skinning, see the <a href="https://en.wikipedia.org/wiki/Skeletal_animation">Wikipedia page on skeletal animation</a>.</td>
+</tr>
+<tr>
+<td>
+<strong>Graphics Jobs (Experimental)</strong> </td>
+<td colspan="2">Enable this option to instruct Unity to offload graphics tasks (render loops) to worker threads running on other CPU cores. This reduces the time spent in <code>Camera.Render</code> on the main thread, which is often a bottleneck. <br><br><strong>Note:</strong> This feature is experimental. It might not deliver a performance improvement for your Project, and might introduce instability.</td>
+</tr>
+<tr>
+<td> <strong>Texture compression format</strong> </td>
+<td colspan="2"> Choose between ASTC and PVRTC as the default texture compression format for iOS. Check the <a href="class-TextureImporterOverride.html#ios-and-tvos">texture compression format overview</a> for more information. </td>
+</tr>
+<tr>
+<td> <strong>Normal Map Encoding</strong> </td>
+<td colspan="2"> Choose XYZ or DXT5nm-style to set the normal map encoding. This affects the encoding scheme and compression format used for normal maps. DXT5nm-style normal maps are of higher quality, but more expensive to decode in shaders. </td>
+</tr>
+<tr>
+<td>
+<strong>Lightmap Encoding</strong> </td>
+<td colspan="2">Defines the encoding scheme and compression format of the lightmaps. <br>You can choose from <strong>Low Quality</strong>, <strong>Normal Quality</strong>, or <strong>High Quality</strong> . For more information, refer to <a href="Lightmaps-TechnicalInformation.html">Lightmaps: Technical information</a>.</td>
+</tr>
+<tr>
+<td>
+<strong>Lightmap Streaming</strong> </td>
+<td colspan="2">Uses <a href="TextureStreaming.html">Mipmap Streaming</a> for lightmaps. Unity applies this setting to all lightmaps when it generates them.<br><br><strong>Note:</strong> To use this setting, you must enable the <a href="class-QualitySettings.html#texStream">Texture Streaming Quality</a> setting.</td>
+</tr>
+<tr>
+<td>
+<strong>Streaming Priority</strong> </td>
+<td colspan="2">Sets the priority for all lightmaps in the <a href="TextureStreaming.html">Mipmap Streaming system</a>. Unity applies this setting to all lightmaps when it generates them.<br>Positive numbers give higher priority. Valid values range from –128 to 127.</td>
+</tr>
+<tr>
+<td><strong>Frame Timing Stats</strong></td>
+<td colspan="2">Allows Unity to gather CPU/GPU frame timing statistics. Use this option with the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DynamicResolution.html">Dynamic Resolution</a><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets, to reduce workload on the GPU. <a href="DynamicResolution.html" href="DynamicResolution.html">Dynamic Resolution</a><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets, to reduce workload on the GPU. <a href="DynamicResolution.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#dynamicresolution" aria-label="Go to glossary anchor for dynamicresolution">Glossary</a></span></span></span> camera setting to determine if your application is CPU or GPU bound.</td>
+</tr>
+<tr>
+<td> <strong>Virtual Texturing</strong> </td>
+<td colspan="2"> Currently not supported on iOS. </td>
+</tr>
+<tr>
+<td rowspan="3"><b>Shader Precision Model</b></td>
+<td colspan="2">Select the default precision shaders use. For more information, refer to <a href="SL-Use16BitPrecisionInShaders.html">Use 16-bit precision in shaders</a>.</td>
+</tr>
+<tr>
+<td><b>Platform default</b></td>
+<td>Use lower precision on mobile platforms, and full precision on other platforms.</td>
+</tr>
+<tr>
+<td><b>Unified</b></td>
+<td>Use lower precision if the platform supports it.</td>
+</tr>
+<tr>
+<td> <strong>360 Stereo Capture</strong> </td>
+<td colspan="2"> Currently not supported on iOS. </td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Identification" aria-hidden="true"></a></p>
+
+<h3>Identification</h3>
+
+<p>Enter identifying information for your app.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetiOSOther-Identification.png" alt="Identification settings for iOS platforms">
+<figcaption>Identification settings for iOS platforms</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Override Default Bundle Identifier</strong></td>
+	<td style="text-align:left;">Indicates whether you can manually set the bundle identifier.<br><strong>Note:</strong> This setting affects macOS, iOS, tvOS, and Android.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bundle Identifier</strong></td>
+	<td style="text-align:left;">Enter the provisioning profile of the application you are building. The basic structure of the identifier is <strong>com.CompanyName.ProductName</strong>. This structure might vary based on which country you live in, so always default to the string Apple provides to you for your Developer Account. Your <strong>ProductName</strong> is set up in your provisioning certificates.<br>The Bundle Identifier must follow the convention <code>com.YourCompanyName.YourProductName</code> and must contain only alphanumeric and hyphen characters. For more information, see <a href="https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html#/apple_ref/doc/uid/20001431-102070">CFBundleIdentifier</a>.<br><strong>Important</strong>: Unity automatically replaces any invalid characters you type with a hyphen.<br><br>To set this property, enable <strong>Override Default Bundle Identifier</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Version</strong></td>
+	<td style="text-align:left;">Enter the release-version-number string for the bundle (for example, 4.3.6).<br><br>This value appears as <code>CFBundleShortVersionString</code> in the associated <em>info.plist</em> file. For more information, see Apple developer documentation on <a href="https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html#//apple_ref/doc/uid/20001431-102364">CFBundleShortVersionString</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Build</strong><span class="tooltiptext">The process of compiling your project into a format that is ready to run on a specific platform or platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about BuildSettings.html" href="BuildSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#build" aria-label="Go to glossary anchor for build">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Enter the build number for this version of your app.<br><br>This value appears as <code>CFBundleVersion</code> in the associated <em>info.plist</em> file. For more information, see Apple developer documentation on <a href="https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html#//apple_ref/doc/uid/20001431-102364">CFBundleVersion</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Signing Team ID</strong></td>
+	<td style="text-align:left;">Enter your Apple Developer Team ID. You can find this on the Apple Developer website under <a href="https://help.apple.com/xcode/mac/current/#/devaf282080a?sub=dev8877b4398">Xcode Help</a>. This sets the Team ID for the generated Xcode project, allowing developers to use <strong>Build and Run</strong> functionality. You must enter an Apple Developer Team ID for automatic signing of your app.<br><br>For more information, see the Apple developer documentation on <a href="https://help.apple.com/xcode/mac/current/#/dev60b6fbbc7">Creating Your Team Provisioning Profile</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Automatically Sign</strong></td>
+	<td style="text-align:left;">Enable this option to instruct Xcode to automatically sign your build.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Configuration" aria-hidden="true"></a></p>
+
+<h3>Configuration</h3>
+
+<figure>
+<img src="../uploads/Main/PlayerSetiOSOther-ConfigurationLong.png" alt="Configuration settings for iOS platforms">
+<figcaption>Configuration settings for iOS platforms</figcaption>
+</figure>
+
+<ul>
+<li>
+<strong>A:</strong> <a href="#Config-API">API configuration settings</a>
+</li>
+<li>
+<strong>B:</strong> <a href="#Config-Apple">Apple-specific information</a>
+</li>
+<li>
+<strong>C:</strong> <a href="#Config-Device">Device information</a>
+</li>
+<li>
+<strong>D:</strong> <a href="#Config-Variant">Variant map for app slicing</a>
+</li>
+<li>
+<strong>E:</strong> <a href="#Config-Other">Other configuration settings</a>
+</li>
+</ul>
+
+<p><a name="Config-API" aria-hidden="true"></a></p>
+
+<h4>API configuration settings</h4>
+<table>
+ <thead>
+ <tr>
+ <th colspan="2" style="text-align:left;"><strong>Setting</strong></th>
+ <th style="text-align:left;"><strong>Function</strong></th>
+ </tr>
+ </thead>
+ <tbody>
+<tr>
+<td colspan="2">
+<a name="backend" aria-hidden="true"></a><span class="tooltip"><strong>Scripting Backend</strong><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about scripting-backends.html" href="scripting-backends.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScriptingBackend" aria-label="Go to glossary anchor for ScriptingBackend">Glossary</a></span></span></span> </td>
+<td>The scripting backend determines how Unity compiles and executes C# code in your Project. This setting defaults to IL2CPP for iOS and can’t be changed.<br><br>IL2CPP compiles C# code into CIL, converts the CIL to C++, and then compiles that C++ into native machine code, which executes directly at run time. For more information, see documentation on <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html" href="IL2CPP.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span>.<br><br>C++ code generated by the IL2CPP scripting backend can be updated incrementally, which allows incremental C++ build systems to compile only the changed source files. This can significantly lower iteration times. </td>
+</tr>
+<tr>
+<td colspan="2">
+<strong>API Compatibility Level</strong> </td>
+<td>Choose which .NET APIs you can use in your project. This setting can affect compatibility with 3rd-party libraries. However, it has no effect on Editor-specific code (code in an Editor directory, or within an Editor-specific Assembly Definition).</td>
+</tr>
+<tr>
+<td></td>
+<td><em>.Net Standard 2.0</em></td>
+<td>Compatible with <a href="https://docs.microsoft.com/en-us/dotnet/standard/net-standard">.NET Standard 2.0</a>. Produces smaller builds and has full cross-platform support.</td>
+</tr>
+<tr>
+<td></td>
+<td><em>.Net 4.x</em></td>
+<td>Compatible with the .NET Framework 4 (which includes everything in the .NET Standard 2.0 profile as well as additional APIs). Choose this option when using libraries that access APIs not included in .NET Standard 2.0. Produces larger builds and any additional APIs available are not necessarily supported on all platforms. See <a href="dotnetProfileAssemblies.html">Referencing additional class library assemblies</a> for more information. </td>
+</tr>
+<tr>
+<td colspan="2">
+<strong>C++ Compiler Configuration</strong> </td>
+<td>The C++ compiler configuration used when compiling IL2CPP generated code. This setting defaults to Release for iOS and can’t be changed.</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Use incremental GC</strong></td>
+<td> Uses the incremental garbage collector, which spreads garbage collection over several frames to reduce garbage collection-related spikes in frame duration. For more information, refer to <a href="performance-managed-memory.html">Automatic Memory Management</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="apiComp" aria-hidden="true"></a></p>
+
+<h5>API Compatibility Level</h5>
+
+<p>You can choose your mono API compatibility level for all targets. Sometimes a third-party .NET library uses functionality that is outside of your .NET compatibility level. If you’re on Windows, you can use the third-party software ILSpy to understand what’s happening and how to fix it. Follow these steps:</p>
+
+<ol>
+<li>Install <a href="https://www.microsoft.com/en-us/p/ilspy/9mxfbkfvsq13?cid=msft_web_chart&amp;activetab=pivot:overviewtab">ILSpy</a> for Windows.</li>
+<li>Drag the .NET assemblies for the API compatibility level that you are having issues with into ILSpy. You can find these under <em>Frameworks/Mono/lib/mono/YOURSUBSET/</em>.</li>
+<li>Drag in your third-party assembly.</li>
+<li>Right-click your third-party assembly and select <strong>Analyze</strong>.</li>
+<li>In the analysis report, inspect the <strong>Depends on</strong> section. Anything that the third-party assembly depends on, but that’s not available in the .NET compatibility level of your choice, is highlighted in red.</li>
+</ol>
+
+<p><a name="Config-Apple" aria-hidden="true"></a></p>
+
+<h4>Apple-specific information</h4>
+<table>
+ <thead>
+ <tr>
+ <th style="text-align:left;"><strong>Setting</strong></th>
+ <th colspan="2" style="text-align:left;"><strong>Function</strong></th>
+ </tr>
+ </thead>
+ <tbody>
+<tr>
+ <td style="text-align:left;"><strong>Camera Usage Description</strong></td>
+ <td style="text-align:left;">Enter the reason for accessing the camera on the device.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Microphone Usage Description</strong></td>
+ <td style="text-align:left;">Enter the reason for accessing the microphone on the device.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Location Usage Description</strong></td>
+ <td style="text-align:left;">Enter the reason for accessing the location of the device.</td>
+</tr>
+<tr>
+ <td style="text-align:left;">
+<a name="on-demand" aria-hidden="true"></a><strong>Use On-Demand Resources</strong>
+</td>
+ <td style="text-align:left;">Enable this option to use on-demand resources.<br><br>When enabled, the <a href="#Config-Variant">Variant map for app slicing</a> section appears.</td>
+</tr>
+<tr>
+ <td style="text-align:left;">
+<a name="Accelerometer" aria-hidden="true"></a><strong>Accelerometer Frequency</strong>
+</td>
+ <td style="text-align:left;">Define how often to sample the accelerometer. You can set the frequency at <em>15Hz</em>, <em>30Hz</em>, <em>60Hz</em>, or <em>100Hz</em>. Use a lower frequency for better performance. If your app doesn’t use the accelerometer, select <strong>Disabled</strong>.</td>
+</tr>
+<tr>
+<td>
+<strong>Mute Other Audio Sources</strong> </td>
+<td colspan="2">Enable this option if you want your Unity application to stop Audio from applications running in the background. Otherwise, Audio from background applications continues to play alongside your Unity application.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Prepare iOS for Recording</strong></td>
+ <td style="text-align:left;">Enable this option to initialize the microphone recording APIs. This lowers recording latency, but it also re-routes iPhone audio output via earphones.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Force iOS Speakers when Recording</strong></td>
+ <td style="text-align:left;">Enable this option to send the phone’s audio output through the internal speakers, even when headphones are plugged in and recording.</td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Requires Persistent WiFi</strong></td>
+ <td style="text-align:left;">Enable this option to require a Wi-Fi connection. This maintains the active Wi-Fi connection while the app is running.</td>
+</tr>
+<tr>
+<td><strong>Allow downloads over HTTP</strong></td>
+<td colspan="2"> Indicates whether to allow downloading content over HTTP. The options are <strong>Not allowed</strong>, <strong>Allowed in Development builds only</strong>, and <strong>Always allowed</strong>. The default option is <strong>Not allowed</strong> due to the recommended protocol being HTTPS, which is more secure. </td>
+</tr>
+<tr>
+ <td style="text-align:left;"><strong>Supported URL schemes</strong></td>
+ <td style="text-align:left;">A list of <a href="https://developer.apple.com/library/ios/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html#/apple_ref/doc/uid/TP40007072-CH6-SW1">supported URL schemes</a>.<br><br>To add new schemes, increase the value of the <strong>Size</strong> property, then set a reference to the Asset to load in the new <strong>Element</strong> box that appears.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Config-Device" aria-hidden="true"></a></p>
+
+<h4>Device information</h4>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Target Device</strong></td>
+	<td style="text-align:left;">Select which devices the app targets. The options are <em>iPhone Only</em>, <em>iPad Only</em>, and <em>iPhone + iPad</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Target SDK</strong></td>
+	<td style="text-align:left;">Select which SDK the app targets. The options are <em>Device SDK</em> and <em>Simulator SDK</em>.<br><br><strong>Note:</strong> Be sure to select the correct SDK. For example, if you select the Device SDK in Unity and target the Simulator in Xcode, your build will fail.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Target minimum iOS Version</strong></td>
+	<td style="text-align:left;">Select the minimum version of iOS that the app works on.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Enable ProMotion Support</strong></td>
+	<td style="text-align:left;">Enable this option to allow high frequency refresh rates (120 Hz) on ProMotion displays. This might cause your app to use more battery power.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Requires ARKit support</strong></td>
+	<td style="text-align:left;">Enable this option to restrict the app to iPhone 6s/iOS 11 or newer devices when you publish it to the App Store.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Automatically add capabilities</strong></td>
+	<td style="text-align:left;">When you enable this option, Unity generates an <em>entitlements.plist</em> file and adds capabiities for iOS APIs that your app implements (for example, Game Center or Notifications). For more information, see Apple developer documentation on <a href="https://developer.apple.com/documentation/bundleresources/entitlements">Entitlements</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Defer system gestures on edges</strong></td>
+	<td style="text-align:left;">Select one or more edges that users must swipe twice to enact system gestures. The options are <em>Top Edge</em>, <em>Left Edge</em>, <em>Bottom Edge</em>, and <em>Right Edge</em>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Hide home button on iPhone X</strong></td>
+	<td style="text-align:left;">Enable this option to hide the home button on iPhone X devices when the app is running.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Render Extra Frame on Pause</strong></td>
+	<td style="text-align:left;">Enable this option to issue an additional frame after the frame when the app is paused. This allows your app to display graphics that indicate the paused state when the app goes into the background.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Enable Custom Background Behaviors</strong></td>
+	<td style="text-align:left;">Select what the app is allowed to do when the user presses the home button to send the app to the background. For an example, see the <a href="https://github.com/Unity-Technologies/iOSNativeCodeSamples/tree/2019-dev/NativeIntegration/BackgroundTasks/BackgroundFetch">BackgroundFetch</a> GitHub project. The options are:<br><br>- <strong>Audio, AirPlay, PiP</strong> <br>- <strong>Location updates</strong><br>- <strong>Voice over IP</strong><br>- <strong>Newsstand downloads</strong><br>- <strong>External accessory communication</strong><br>- <strong>Uses Bluetooth LE accessories</strong><br>- <strong>Act as a Bluetooth LE accessory</strong><br>- <strong>Background fetch</strong><br>- <strong>Remote notifications</strong>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Config-Variant" aria-hidden="true"></a></p>
+
+<h4>Variant map for app slicing</h4>
+
+<p>Expand the Variant map for app slicing section to see the list of variant names configured in scripting. For more information on variants, see <a href="AppThinning.html#AppSlicing">App slicing</a>.</p>
+
+<p>
+<strong>Note:</strong> If you don’t see the section, make sure the <a href="#on-demand">Use on Demand Resource</a> property is enabled.</p>
+
+<p>You can add and remove new variants with the plus (+) and minus (-) icons. You can also select a variant from the list and see or modify its settings under Variant settings. For any of these settings except <strong>Variant name</strong>, if you choose <strong>Custom value</strong>, an additional property appears underneath where you can enter your own value to use:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Variant name</strong></td>
+	<td style="text-align:left;">Displays the name of the variant from the loading script.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Device</strong></td>
+	<td style="text-align:left;">Choose which device this variant targets. Options include <em>Any</em> (default), <em>iPhone</em>, <em>iPad</em>, <em>iWatch</em>, and <em>Custom value</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Memory</strong></td>
+	<td style="text-align:left;">Choose the minimum memory required for this variant. Options include <em>Any</em> (default), <em>1GB</em>, <em>2GB</em>, <em>3GB</em>, <em>4GB</em>, and <em>Custom value</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Graphics</strong></td>
+	<td style="text-align:left;">Choose the <a href="https://developer.apple.com/documentation/metal">Metal framework</a> to use. Options include <em>Any</em> (default), <em>Metal1v2</em>, <em>Metal2v2</em>, <em>Metal2v3</em>, <em>Metal3v1</em>, <em>Metal3v2</em>, <em>Metal4v1</em>, and <em>Custom value</em>.<br><br>For more information, see the Apple developer documentation about <a href="https://developer.apple.com/documentation/metal">Metal</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Display color space</strong></td>
+	<td style="text-align:left;">Choose the color gamut to use. Options include <em>Any</em> (default), <em>sRGB</em>, <em>DisplayP3</em>, and <em>Custom value</em>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>You can also add your own setting. Click the <strong>Add custom entry</strong> button and a new pair of text boxes appear:</p>
+
+<ul>
+<li>
+<strong>&lt;key&gt;</strong>: Enter the name of the setting.</li>
+<li>
+<strong>&lt;value&gt;</strong>: Enter the value for this setting.</li>
+</ul>
+
+<p><a name="Config-Other" aria-hidden="true"></a></p>
+
+<h4>Other configuration settings</h4>
+<table>
+ <thead>
+ <tr>
+ <th style="text-align:left;"><strong>Setting</strong></th>
+ <th colspan="2" style="text-align:left;"><strong>Function</strong></th>
+ </tr>
+ </thead>
+ <tbody>
+<tr>
+<td>
+<strong>Architecture</strong> </td>
+<td colspan="2">Choose which architecture to target. This setting defaults to <strong>ARM64</strong> for iOS and can’t be changed.</td>
+</tr>
+<tr>
+<td><strong>Active Input Handling</strong></td>
+<td colspan="2"> Choose how to handle input from users. </td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Input Manager (old)</strong></td>
+<td> Use the default <a href="class-InputManager.html">Input</a> window. </td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Input System Package (New)</strong></td>
+<td> Use the newer <a href="../ScriptReference/Input.html">Input</a> system. To try the new Input System, install the <a href="https://github.com/Unity-Technologies/InputSystem">InputSystem package</a>.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Both</strong></td>
+<td> Use both systems side by side. </td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="ShaderVariantLoading" aria-hidden="true"></a></p>
+
+<h3>Shader Variant Loading</h3>
+
+<p>Use these settings to control how much memory <span class="tooltip"><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> use at runtime.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Default chunk size (MB)</strong></td>
+	<td style="text-align:left;">Sets the maximum size of compressed shader variant data chunks Unity stores in your built application for all platforms. The default is <code>16</code>. For more information, refer to <a href="shader-loading.html#dynamicloading">Shader loading</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Default chunk count</strong></td>
+	<td style="text-align:left;">Sets the default limit on how many decompressed chunks Unity keeps in memory on all platforms. The default is <code>0</code>, which means there’s no limit.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Override</strong></td>
+	<td style="text-align:left;">Enables overriding <strong>Default chunk size</strong> and <strong>Default chunk count</strong> for this build target.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Chunk size (MB)</strong></td>
+	<td style="text-align:left;">Overrides the value of <strong>Default chunk size (MB)</strong> on this build target.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Chunk count</strong></td>
+	<td style="text-align:left;">Overrides the value of <strong>Default chunk count</strong> on this build target.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="ScriptCompilation" aria-hidden="true"></a></p>
+
+<h4>Script Compilation</h4>
+
+<figure>
+<img src="../uploads/Main/ProjectSettingsScriptCompilation.png" alt="Script compilation settings for the iOS platform">
+<figcaption>Script compilation settings for the iOS platform</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Scripting Define Symbols</strong></td>
+	<td style="text-align:left;">Sets custom compilation flags. <br><br> For more details, see <a href="PlatformDependentCompilation.html">Platform dependent compilation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Additional Compiler Arguments</strong></td>
+	<td style="text-align:left;">Adds entries to this list to pass additional arguments to the Roslyn compiler. Use one new entry for each additional argument.<br>To create a new entry, click <strong>Add</strong> (<strong>+</strong>). To remove an entry, click <strong>Remove</strong> (<strong>-</strong>).<br><br>When you have added all desired arguments, click <strong>Apply</strong> to include your additional arguments in future compilations. Click <strong>Revert</strong> to reset this list to the most recent applied state.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Suppress Common Warnings</strong></td>
+	<td style="text-align:left;">Indicates whether to display the C# warnings <a href="https://docs.microsoft.com/en-us/dotnet/csharp/misc/cs0169">CS0169</a> and <a href="https://docs.microsoft.com/en-us/dotnet/csharp/misc/CS0649">CS0649</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Allow ‘unsafe’ Code</strong></td>
+	<td style="text-align:left;">Enables support for compiling <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/unsafe">‘unsafe’ C# code</a> in a pre-defined assembly (for example, <code>Assembly-CSharp.dll</code>). <br>For Assembly Definition Files (<code>.asmdef</code>), click on one of your <code>.asmdef</code> files and enable the option in the Inspector window that appears.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Use Deterministic Compilation</strong></td>
+	<td style="text-align:left;">Indicates whether to prevent compilation with the -deterministic C# flag. With this setting enabled, compiled assemblies are byte-for-byte identical each time they are compiled.<br><br>For more information, see Microsoft’s <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/deterministic-compiler-option">deterministic compiler option</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Enable Roslyn Analyzers</strong></td>
+	<td style="text-align:left;">Indicates whether to compile user-written <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> without Roslyn analyzer DLLs that might be present in your project.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Optimization" aria-hidden="true"></a></p>
+
+<h3>Optimization</h3>
+
+<figure>
+<img src="../uploads/Main/PlayerSetiOSOther-Optimization.png" alt="Optimization settings for iOS platforms">
+<figcaption>Optimization settings for iOS platforms</figcaption>
+</figure>
+<table>
+ <thead>
+ <tr>
+ <th colspan="2" style="text-align:left;"><strong>Setting</strong></th>
+ <th style="text-align:left;"><strong>Function</strong></th>
+ </tr>
+ </thead>
+ <tbody>
+<tr>
+<td colspan="2"><strong>Prebake Collision Meshes</strong></td>
+<td>Adds collision data to <a href="class-Mesh.html">Meshes</a> at build time. </td>
+</tr>
+<tr>
+<td colspan="2"><strong>Keep Loaded Shaders Alive</strong></td>
+<td>Indicates whether to prevent shaders from being unloaded. <br><br>For more information, see <a href="shader-loading.html">Shader Loading</a>. </td>
+</tr>
+<tr>
+<td colspan="2"><strong>Preloaded Assets</strong></td>
+<td>Sets an array of Assets for the player to load on startup. <br>To add new Assets, increase the value of the <strong>Size</strong> property and then set a reference to the Asset to load in the new <strong>Element</strong> box that appears.</td>
+</tr>
+<tr>
+<td colspan="2">
+<strong>AOT compilation options</strong> </td>
+<td>Additional options for Ahead of Time (AOT) compilation. This helps <a href="iphone-playerSizeOptimization.html">optimize the size of the built iOS player</a>.</td>
+</tr>
+<tr>
+<td colspan="2">
+<strong>Strip Engine Code</strong> </td>
+<td>Enable this option if you want the Unity Linker tool to remove code for Unity Engine features that your Project doesn’t use. This setting is only available with the <a href="IL2CPP.html">IL2CPP scripting backend</a>.<br><br>Most apps don’t use every available DLL. This option strips out DLLs that your app doesn’t use to reduce the size of the built Player. If your app is using one or more classes that would normally be stripped out under your current settings, Unity displays a debug message when you try to build the app.</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Managed Stripping Level</strong></td>
+<td>Chooses how aggressively Unity strips unused managed (C#) code. The options are <strong>Minimal</strong>, <strong>Low</strong>, <strong>Medium</strong>, and <strong>High</strong>. <br>When Unity builds your app, the Unity Linker process can strip unused code from the managed DLLs your Project uses. Stripping code can make the resulting executable significantly smaller, but can sometimes accidentally remove code that’s in use. <br><br>For more information about these options and bytecode stripping with IL2CPP, refer to <a href="../ScriptReference/ManagedStrippingLevel.html">ManagedStrippingLevel</a>.</td>
+</tr>
+<tr>
+<td style="text-align:left;" colspan="2">
+<a name="scriptCallOpt" aria-hidden="true"></a><strong>Script Call Optimization</strong>
+</td>
+<td style="text-align:left;">Choose how to optionally disable exception handling for a speed boost at run time. For more information, see <a href="iphone-iOS-Optimization.html">iOS Optimization</a>.</td>
+</tr>
+<tr>
+<td style="text-align:left;"></td>
+<td style="text-align:left;"><em>Slow and Safe</em></td>
+<td style="text-align:left;">Use full exception handling (with some performance impact on the device when using the Mono scripting backend).</td>
+</tr>
+<tr>
+<td style="text-align:left;"></td>
+<td style="text-align:left;"><em>Fast but no Exceptions</em></td>
+<td style="text-align:left;">No data provided for exceptions on the device (the app runs faster when using the Mono scripting backend).<br><strong>Note</strong>: Using this option with the <em>IL2CPP</em> scripting backend doesn’t impact performance, but it might help avoid undefined behavior on release builds.</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Vertex Compression</strong></td>
+<td>Sets vertex compression per channel. This affects all the meshes in your project. <br>Typically, Vertex Compression is used to reduce the size of mesh data in memory, reduce file size, and improve GPU performance. <br><br>For more information on how to configure vertex compression and limitations of this setting, refe to <a href="mesh-compression.html">Compressing mesh data</a>. </td>
+</tr>
+<tr>
+<td colspan="2"><strong>Optimize Mesh Data</strong></td>
+<td>Enable this option to strip unused vertex attributes from the mesh used in a build. This option reduces the amount of data in the mesh, which can help reduce build size, loading times, and runtime memory usage. <br><br> <strong>Warning:</strong> If you have this setting enabled, you should remember to not change material or shader settings at runtime. <br><br> For more information, refer to <a href="../ScriptReference/PlayerSettings-stripUnusedMeshComponents.html">PlayerSettings.stripUnusedMeshComponents</a>.</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Texture MipMap Stripping</strong></td>
+<td>Enables mipmap stripping for all platforms. This strips unused mipmaps from Textures at build time. Unity determines unused mipmaps by comparing the value of the mipmap against the <strong>Quality Settings</strong> for the current platform. If a mipmap value is excluded from every <strong>Quality Setting</strong> for the current platform, then Unity strips those mipmaps from the build at build time. If <a href="../ScriptReference/QualitySettings-masterTextureLimit.html">QualitySettings.masterTextureLimit</a> is set to a mipmap value that has been stripped, Unity will set the value to the closest mipmap value that has not been stripped.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Logging" aria-hidden="true"></a></p>
+
+<h3>Logging</h3>
+
+<p>Select what type of logging to allow in specific contexts.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetPCOther-Logging.png" alt="Logging settings for iOS platforms">
+<figcaption>Logging settings for iOS platforms</figcaption>
+</figure>
+
+<p>Select your preferred stack trace method by enabling the option that corresponds to each Log Type (<strong>Error</strong>, <strong>Assert</strong>, <strong>Warning</strong>, <strong>Log</strong>, and <strong>Exception</strong>) based on the type of logging you require. For more information, refer to <a href="StackTrace.html">stack trace logging</a>. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">No logs are ever recorded.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ScriptOnly</strong></td>
+	<td style="text-align:left;">Logs only when running scripts.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Full</strong></td>
+	<td style="text-align:left;">Logs all the time.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Legacy" aria-hidden="true"></a></p>
+
+<h3>Legacy</h3>
+
+<p>Enable the <strong>Clamp BlendShapes (Deprecated)</strong> option to clamp the range of Blend Shape weights in <a href="class-SkinnedMeshRenderer.html">SkinnedMeshRenderers</a>. This option has been deprecated and should no longer be used.</p>
+
+<p><span class="search-words">PlayerSettingsiOS</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ios-environment-setup.html"></a></span><div class="tip">iOS environment setup</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ios-developing.html"></a></span><div class="tip">Developing for iOS</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

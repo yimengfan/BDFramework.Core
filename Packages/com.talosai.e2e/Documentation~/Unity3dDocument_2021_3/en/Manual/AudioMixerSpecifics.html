@@ -1,0 +1,324 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Specifics on the Audio Mixer window</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AudioMixerSpecifics.html">English</a></li>
+<li><a href="/cn/current/Manual/AudioMixerSpecifics.html">中文</a></li>
+<li><a href="/ja/current/Manual/AudioMixerSpecifics.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AudioMixerSpecifics.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AudioMixerSpecifics.html">English</a></li>
+<li><a href="/cn/current/Manual/AudioMixerSpecifics.html">中文</a></li>
+<li><a href="/ja/current/Manual/AudioMixerSpecifics.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AudioMixerSpecifics.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Audio.html">Audio</a></li>
+<li><a href="AudioMixer.html">Audio Mixer</a></li>
+<li>Specifics on the Audio Mixer window</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AudioMixerOverview.html"></a></span><div class="tip">An overview of the concepts and Audio Mixer</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AudioMixerInspectors.html"></a></span><div class="tip">AudioGroup Inspector</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Specifics on the Audio Mixer window</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>Mixers panel</h2>
+
+<p>The Mixers panel displays a complete list of all Audio Mixers in the project. Select the Audio Mixers in the Mixers panel to quickly switch between them. You can also route one Audio Mixer into the AudioGroup of another Audio Mixer from this panel. </p>
+
+<p>Select <strong>+</strong> in the top right of the panel to create a new Audio Mixer in the project.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerCreate.png" alt="">
+</figure>
+
+<h3>Route Audio Mixers into other Audio Mixers</h3>
+
+<p>Unity supports the use of multiple Audio Mixers within a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> at once. By default, each Audio Mixer outputs the audio signal directly to the AudioListener.</p>
+
+<p>You can choose to route the audio output of an Audio Mixer into an AudioGroup of another Audio Mixer. This allows for flexible and dynamic routing hierarchies at game runtime.</p>
+
+<p>You can route an Audio Mixer into another AudioGroup through either of the following methods:</p>
+
+<ul>
+<li>From the Mixers panel in the Editor.</li>
+<li>Dynamically at runtime through the <a href="../ScriptReference/Audio.AudioMixer.html">AudioMixer API</a>.</li>
+</ul>
+
+<p>To change the output of an Audio Mixer within the Editor:</p>
+
+<ol>
+<li>Select an Audio Mixer within the Mixers panel.</li>
+<li>Drag the Audio Mixer over the top of another Audio Mixer.</li>
+<li>In the dialog that appears, select the AudioGroup of the Audio Mixer you want to route into.</li>
+<li>The panel displays the parenting relationship of the Audio Mixers. It also displays the target AudioGroup next to the Audio Mixer’s name.</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/AudioMixerRouting.png" alt="">
+</figure>
+
+<h2>Hierarchy panel</h2>
+
+<p>The Hierarchy view is where you define the sound categories of an Audio Mixer and the mixing structure. You can define your own custom categories that AudioSources can connect to and play through.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerHierarchyPanel.png" alt="">
+</figure>
+
+<h3>Add and configure AudioGroups within the Hierarchy</h3>
+
+<p>You can add and modify the topology of an Audio Mixer within the AudioGroup Hierarchy panel.</p>
+
+<p>To add a new AudioGroup to the hierarchy, do either of the following:</p>
+
+<ul>
+<li>Right-click on an existing AudioGroup (there must be at least one in an Audio Mixer), and select <strong>Add child group</strong> or <strong>Add sibling group</strong>.</li>
+<li>Select an AudioGroup to add a child to, and select <strong>+</strong> in the top right of the panel. This adds a new group to the Audio Mixer under the selected one.</li>
+</ul>
+
+<p>To change the topology of an Audio Mixer:</p>
+
+<ol>
+<li>Select an AudioGroup in the panel.</li>
+<li>Drag it over the top of another AudioGroup.</li>
+</ol>
+
+<p>This parents the target AudioGroup above the one selected.</p>
+
+<p>To delete an AudioGroup (including its children), do either of the following:</p>
+
+<ul>
+<li>Select the group you want to delete, and press the Delete key.</li>
+<li>Right-click the group you want to delete, and select <strong>Remove Group (and children)</strong>.</li>
+</ul>
+
+<p>To duplicate an AudioGroup and make it a sibling:</p>
+
+<ol>
+<li>Right-click the AudioGroup you want to duplicate.</li>
+<li>Select <strong>Duplicate Group (and children)</strong>.</li>
+</ol>
+
+<p>This duplicates the group and child groups exactly, including effects contained within the groups.</p>
+
+<p>To rename an AudioGroup:</p>
+
+<ol>
+<li>Right-click the group.</li>
+<li>Select <strong>Rename</strong>.</li>
+</ol>
+
+<h2>AudioGroup view</h2>
+
+<figure>
+<img src="../uploads/Main/AudioMixerAudioGroupView.png" alt="">
+</figure>
+
+<p>The AudioGroup view displays a flat arrangement of the AudioGroups in the Audio Mixer. This arrangement is organized horizontally within the view. The current view selection dictates the groups shown in the AudioGroup view.</p>
+
+<p>Each AudioGroup within the view is represented as a vertical “strip”. The layout and look and feel of the strip is common to Digital Audio Workstations and other audio editing packages. This layout facilitates the transition of audio engineers from a music and video background, and is a parallel for audio hardware integration.</p>
+
+<p>The strip is made up of a title bar, followed by a vertical VU meter, which represents the current audio levels through that AudioGroup. Beside the VU meter is a volume selector that allows you to input the AudioGroups attenuation along the same scale as the VU meter, which is represented in dB levels.</p>
+
+<p>Below the VU meter are three buttons with the following functionality:</p>
+
+<ul>
+<li>
+<strong>Solo</strong> - This toggle switches between hearing the entire mix or only the AudioSources that play into children of the AudioGroup being Soloed.</li>
+<li>
+<strong>Mute</strong> - This toggle includes the current AudioGroup in the audible mix or excludes it from being heard in the global mix.</li>
+<li>
+<strong>Bypass</strong> - This toggle bypasses or enables all the effects in the AudioGroup.</li>
+</ul>
+
+<p>The AudioGroup also contains a list of DSP Effect Units and the Attenuation Units in the AudioGroup. The attenuation can be applied anywhere in the Effect Unit chain in an AudioGroup and allows you to decide exactly where you apply the volume adjustment. This is useful for non-linear effects and Send and Receive Units.</p>
+
+<p>Each Effect Unit slot displays the name of the Effect unit that is being applied. The circle on the left side of the effect is a toggle to enable or bypass that individual effect. If you right-click the effect and select <strong>Allow Wet Mixing</strong>, the colored bar on the bottom of the screen becomes active. This colored bar denotes the amount of wet signal that passes through the effect. </p>
+
+<p>To refine the order of effects, drag an effect up and down the audiogroup. You can also drag effects across AudioGroups to move the effect to another AudioGroup.</p>
+
+<p>To add new Effect Units, right-click on an existing effect to add it before or after it, or select <strong>Add..</strong> at the bottom of the strip.</p>
+
+<h2>Snapshot panel</h2>
+
+<p>In the Snapshot panel, you can create, switch between, and tweak different Snapshots in the Audio Mixer. There is always at least one snapshot active. Selection of a snapshot within the Snapshot panel indicates that further edits of the Audio Mixer are edits to that snapshot.</p>
+
+<p>Snapshots defined in the Snapshot panel also display as sub-assets of the Audio Mixer. This allows you to access the snapshots elsewhere in the editor and within <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerSnapshotPanel1.png" alt="">
+</figure>
+
+<figure>
+<img src="../uploads/Main/AudioMixerSnapshotPanel2.png" alt="">
+</figure>
+
+<p>You can also define a Start Snapshot. A Start Snapshot has a star icon to its right on the snapshot list. The Start Snapshot is the snapshot that the Audio Mixer initializes to when it loads. For example, when the scene starts.</p>
+
+<p>To create a new Snapshot:</p>
+
+<ol>
+<li>Select the <strong>+</strong> at the top right of the panel.</li>
+<li>Enter a name for the new snapshot.</li>
+</ol>
+
+<p>To define a different Start Snapshot:</p>
+
+<ol>
+<li>Right-click a Snapshot.</li>
+<li>Select <strong>Set as Start Snapshot</strong>.</li>
+</ol>
+
+<h2>Views panel</h2>
+
+<p>Views allow you to create groups of visible AudioGroups in the Audio Mixer. With views, you can create perspectives of interest into the Audio Mixer, instead of always being presented with the full hierarchy. Views are only for workflow optimization and don’t affect runtime setup or performance.</p>
+
+<p>Like the Snapshot panel, there is always one view selected and shown in the AudioGroup View. By default, all AudioGroups are visible in the default view. The eye icons in the Hierarchy panel control what is contained in a view.</p>
+
+<p>To add a new view to the list of views;</p>
+
+<ol>
+<li>Select the <strong>+</strong> at the top right of the Views panel.</li>
+<li>Enter a name for the new view.</li>
+</ol>
+
+<p>To change the current view, select one from the list of views in the Views panel.</p>
+
+<p>To remove a view:</p>
+
+<ol>
+<li>Right-click on the view you want to remove.</li>
+<li>Select <strong>Delete</strong>.</li>
+</ol>
+
+<p>To duplicate a view with all of the current view settings:</p>
+
+<ol>
+<li>Right-click on the view you want to duplicate.</li>
+<li>Select <strong>Duplicate</strong>.</li>
+</ol>
+
+<h3>The eye icon of an AudioGroup</h3>
+
+<p>Each AudioGroup in the Hierarchy panel has a small eye icon to the left of the group. This icon serves two purposes:</p>
+
+<ul>
+<li>Select the eye icon to toggle this AudioGroup’s visibility in the currently selected View.</li>
+<li>Right-click on the eye icon to select from a range of colors to tag this AudioGroup with. Select a color other than <strong>No Colour</strong> to create a small color tag to the left of the eye icon and a color tag under the AudioGroup’s name in the AudioGroup view. These color indicators visually group different concepts and collections of AudioGroups in the Audio Mixer.</li>
+</ul>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AudioMixerOverview.html"></a></span><div class="tip">An overview of the concepts and Audio Mixer</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AudioMixerInspectors.html"></a></span><div class="tip">AudioGroup Inspector</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

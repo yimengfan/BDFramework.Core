@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Shader variant stripping</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/shader-variant-stripping.html">English</a></li>
+<li><a href="/cn/current/Manual/shader-variant-stripping.html">中文</a></li>
+<li><a href="/ja/current/Manual/shader-variant-stripping.html">日本語</a></li>
+<li><a href="/kr/current/Manual/shader-variant-stripping.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/shader-variant-stripping.html">English</a></li>
+<li><a href="/cn/current/Manual/shader-variant-stripping.html">中文</a></li>
+<li><a href="/ja/current/Manual/shader-variant-stripping.html">日本語</a></li>
+<li><a href="/kr/current/Manual/shader-variant-stripping.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="ShadersOverview.html">Shaders core concepts</a></li>
+<li><a href="shader-variants-and-keywords.html">Branching, variants, and keywords</a></li>
+<li>Shader variant stripping</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="shader-keywords-material-inspector.html"></a></span><div class="tip">Using shader keywords with the material Inspector</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="shader-variant-collections.html"></a></span><div class="tip">Shader variant collections</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Shader variant stripping</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can prevent <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about shader-variants.html">shader variants</a><span class="tooltiptext">A verion of a shader program that Unity generates according to a specific combination of shader keywords and their status. A Shader object can contain multiple shader variants. <a href="shader-variants.html" href="shader-variants.html">shader variants</a><span class="tooltiptext">A verion of a shader program that Unity generates according to a specific combination of shader keywords and their status. A Shader object can contain multiple shader variants. <a href="shader-variants.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shadervariant" aria-label="Go to glossary anchor for Shadervariant">Glossary</a></span></span></span> from being compiled. This is called <strong>stripping</strong>. Stripping unneeded variants can greatly reduce build times, file size, <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#Shadervariant" aria-label="Go to glossary anchor for Shadervariant">Glossary</a></span></span></span> from being compiled. This is called <strong>stripping</strong>. Stripping unneeded variants can greatly reduce build times, file size, <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> loading times, and runtime memory usage. In larger projects, or projects with complex shaders, this is a very important consideration.</p>
+
+<p>If you strip a shader variant that a Material needs at runtime, Unity tries to choose a similar shader variant that’s available. To avoid this, use the following approaches:</p>
+
+<ul>
+<li>If you use a <code>shader_feature</code> keyword, don’t use the keyword to change which code branch executes at runtime.</li>
+<li>
+<a href="shader-how-many-variants.html">Check what shader variants you have</a> to help you see which shader variants and keyword combinations Materials need at runtime.</li>
+<li>Add shaders to the <strong>Always Included Shaders</strong> list in <a href="class-GraphicsSettings.html">Graphics settings</a>.</li>
+</ul>
+
+<h2>Limiting shader variants when you declare shader keywords</h2>
+
+<p>The way that you declare shader keywords can limit the number of variants that they produce:</p>
+
+<ul>
+<li>Use <code>shader_feature</code> instead of <code>multi_compile</code> where possible - see <a href="shader-conditionals.html">conditionals in shaders</a>.</li>
+<li>Ensure that you don’t define unused keywords with <code>multi_compile</code>.</li>
+</ul>
+
+<p>For information on declaring keywords in hand-coded shaders, see <a href="SL-MultipleProgramVariants.html">Declaring and using shader keywords in HLSL</a>. For information on declaring keywords in Shader Graph, see <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@latest?subfolder=/manual/Blackboard.html">Shader Graph: Blackboard</a>.</p>
+
+<h3>Indicate which shader keywords affect which shader stage</h3>
+
+<p>When you <a href="SL-MultipleProgramVariants-declare.md">declare a keyword</a>, Unity assumes all stages of the shader contain conditional code for that keyword.</p>
+
+<p>You can add the following suffixes to indicate that only certain stages contain conditional code for a keyword, so that Unity doesn’t generate unneeded shader variants.</p>
+
+<ul>
+<li><code>_vertex</code></li>
+<li><code>_fragment</code></li>
+<li><code>_hull</code></li>
+<li><code>_domain</code></li>
+<li><code>_geometry</code></li>
+</ul>
+
+<p>For example, use <code>#pragma shader_feature_fragment RED GREEN BLUE</code> to indicate that you use the 3 keywords to create conditional code in the fragment stage only.</p>
+
+<p>These suffixes might behave differently or have no effect, depending on the <a href="../ScriptReference/Rendering.GraphicsDeviceType.html">graphics API</a>. For example:</p>
+
+<ul>
+<li>The suffixes have no effect on OpenGL, OpenGL ES or Vulkan.</li>
+<li>The <code>_geometry</code> and <code>_raytracing</code> suffixes have no effect on Metal. Metal treats <code>_vertex</code>, <code>_hull</code> and <code>_domain</code> as a single stage.</li>
+</ul>
+
+<h3>Use preprocessor macros to limit variants by platform</h3>
+
+<p>In Unity 2021.3 and above, you can create conditional shader code using a <a href="SL-BuiltinMacros.html">target platform preprocessor macro</a>, so you can limit variants on platforms with limited memory.</p>
+
+<p>The code sample does the following:</p>
+
+<ul>
+<li>If you build for a <a href="SL-BuiltinMacros.html"><code>SHADER_API_DESKTOP</code> platform</a>, Unity builds variants for every possible keyword combination.</li>
+<li>If you build for another platform, Unity builds only variants for keyword combinations the Materials in your build use.</li>
+</ul>
+
+<pre><code>#ifdef SHADER_API_DESKTOP
+   #pragma multi_compile _ RED GREEN BLUE WHITE
+#else
+   #pragma shader_feature RED GREEN BLUE WHITE
+#endif
+</code></pre>
+
+<p>You can use target platform preprocessor macros to select between <code>shader_feature</code> and <code>multi_compile</code>. For more information on when to use each type of conditional, see <a href="shader-conditionals.html">Shader Conditionals</a>.</p>
+
+<h3>Create user-controlled quality settings</h3>
+
+<p>When you build for console and mobile platforms that have limited memory, you can limit shader variants by only allowing users to switch between a small number of quality settings.</p>
+
+<p>For example, if you use the keywords <code>DYNAMIC_LIGHTING</code>, <code>SOFT_SHADOWS</code> and <code>HIGH_QUALITY_LIGHTMAPS</code>, you can create the following:</p>
+
+<ul>
+<li>A ‘low quality’ setting that turns on <code>DYNAMIC_LIGHTING</code>.</li>
+<li>A ‘high quality’ setting that turns on <code>DYNAMIC_LIGHTING</code>, <code>SOFT_SHADOWS</code> and <code>HIGH_QUALITY_LIGHTMAPS</code>.</li>
+</ul>
+
+<p>This means Unity won’t create shader variants for <code>DYNAMIC_LIGHTING</code> when it’s off, or the many different combinations of the 3 keywords being on and off.</p>
+
+<p>You can use <a href="SL-BuiltinMacros.html">target platform preprocessor macros</a> to conditionally create fewer quality settings and fewer variants on platforms with limited memory. For example the following code sample will allow users to switch between 8 permutations of settings on <code>SHADER_API_DESKTOP</code> platforms, but only 2 on <code>SHADER_API_MOBILE</code> platforms.</p>
+
+<pre><code>#if SHADER_API_DESKTOP
+   #pragma multi_compile SHADOWS_LOW SHADOWS_HIGH
+   #pragma multi_compile REFLECTIONS_LOW REFLECTIONS_HIGH
+   #pragma multi_compile CAUSTICS_LOW CAUSTICS_HIGH
+#elif SHADER_API_MOBILE
+   #pragma multi_compile QUALITY_LOW QUALITY_HIGH
+   #pragma shader_feature CAUSTICS // Uses shader_feature, so Unity strips variants that use CAUSTICS if there are no Materials that use the keyword at build time.
+#endif
+</code></pre>
+
+<h2>Stripping shader variants in the Editor UI</h2>
+
+<p>There are several places in the Unity Editor <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> where you can configure shader stripping:</p>
+
+<ul>
+<li><p>In the <a href="class-GraphicsSettings.html#stripping">Graphics Settings window</a>, configure the settings in the <strong>Shader stripping</strong> section:</p></li>
+<li><p>Ensure that no unneeded shaders are included in the <strong>Always-included shaders</strong> setting.</p></li>
+<li><p>Strip variants relating to GPU instancing, lightmapping, and fog.</p></li>
+<li><p>In the Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>, if it is not important that your Tier settings are different, ensure that they are identical to each other. For more information, see <a href="graphics-tiers.html">Graphics tiers</a>.</p></li>
+<li><p>In the Universal Render Pipeline (URP), disable unused features in the URP Asset. For more information, see <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.1/manual/shader-stripping.html">Shader stripping</a>.</p></li>
+</ul>
+
+<p>If you use the Universal Render Pipeline you can also do the following:</p>
+
+<ul>
+<li>In the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.1/manual/universalrp-asset.html">Universal Render Pipeline Asset</a>, disable rendering any features your project doesn’t use.</li>
+<li>Enable <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.1/manual/shader-stripping.html">shader stripping</a>.</li>
+</ul>
+
+<p>If you use the High Definition Render Pipeline you can also do the following:</p>
+
+<ul>
+<li>In the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@12.1/manual/HDRP-Asset.html">High Definition Render Pipeline Asset</a>, disable any rendering features your project doesn’t use.</li>
+<li>In the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@12.1/manual/Default-Settings-Window.html#miscellaneous">Miscellaneous section of the HDRP Global Settings Window</a>, disable <strong>Runtime Debug Shaders</strong>.</li>
+</ul>
+
+<h2>Stripping shader variants using Editor scripts</h2>
+
+<p>For shader variants that you can’t strip in other ways, you can use the following APIs in an Editor script to perform build-time stripping:</p>
+
+<ul>
+<li>
+<a href="../ScriptReference/Build.IPreprocessShaders.OnProcessShader.html">IPreprocessShaders.OnProcessShader</a>: receive a callback before Unity compiles a graphics shader Pass into a build.</li>
+<li>
+<a href="../ScriptReference/Build.IPreprocessComputeShaders.OnProcessComputeShader.html">IPreprocessComputeShaders.OnProcessComputeShader</a>: receive a callback before Unity compiles a compute shader into a build.</li>
+</ul>
+
+<p>For more information on this subject, see the Unity blog post <a href="https://blogs.unity3d.com/2018/05/14/stripping-scriptable-shader-variants/">Stripping scriptable shader variants</a>
+</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="shader-keywords-material-inspector.html"></a></span><div class="tip">Using shader keywords with the material Inspector</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="shader-variant-collections.html"></a></span><div class="tip">Shader variant collections</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

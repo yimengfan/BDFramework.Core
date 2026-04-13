@@ -1,0 +1,399 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: pragma directives in HLSL</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-PragmaDirectives.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-PragmaDirectives.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-PragmaDirectives.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-PragmaDirectives.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-PragmaDirectives.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-PragmaDirectives.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-PragmaDirectives.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-PragmaDirectives.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-writing.html">Writing shaders</a></li>
+<li><a href="SL-ShaderPrograms.html">HLSL in Unity</a></li>
+<li><a href="shader-preprocessor-directives.html">Preprocessor directives in HLSL</a></li>
+<li>pragma directives in HLSL</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="shader-include-directives.html"></a></span><div class="tip">include and include_with_pragmas directives in HLSL</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-ShaderCompileTargets.html"></a></span><div class="tip">Targeting shader models and GPU features in HLSL</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>pragma directives in HLSL</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>In HLSL, <code>#pragma</code> directives are a type of <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about shader-preprocessor-directives.html">preprocessor directive</a>. They provide additional information to the <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="shader-preprocessor-directives.html">preprocessor directive</a>. They provide additional information to the <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> compiler that isn’t covered by other types of preprocessor directive.</p>
+
+<p><a name="using-pragma-directives" aria-hidden="true"></a></p>
+
+<h2>Using pragma directives</h2>
+
+<p>You can put <code>#pragma</code> directives anywhere in your HLSL code, but it is a common convention to put them at the start, like this:</p>
+
+<pre><code>#pragma target 3.0
+#pragma exclude_renderers vulkan
+#pragma vertex vert
+#pragma fragment frag
+
+// The rest of your HLSL code goes here
+
+</code></pre>
+
+<h2>Limitations</h2>
+
+<p>There are some limitations around the use of <code>#pragma</code> directives:</p>
+
+<ul>
+<li>You can use <code>#pragma</code>directives inside conditional (<code>#if</code>) directives if the expression depends only on:
+
+<ul>
+<li>Any custom <code>#define</code> directives in your own code</li>
+<li>The following platform keywords: <code>SHADER_API_MOBILE</code>, <code>SHADER_API_DESKTOP</code>, <code>UNITY_NO_RGBM</code>, <code>UNITY_USE_NATIVE_HDR</code>, <code>UNITY_FRAMEBUFFER_FETCH_AVAILABLE</code>, <code>UNITY_NO_CUBEMAP_ARRAY</code>
+</li>
+<li>The <code>UNITY_VERSION</code> macro</li>
+</ul>
+</li>
+<li>You can only use Unity-specific <code>#pragma</code> directives in <code>.shader</code> files, and in files that you include with the <code>#include_with_pragmas</code> directive. Unity does not support them in files that you include with the <code>#include</code> directive; the compiler ignores them.</li>
+<li>You can only use standard HLSL <code>#pragma</code> directives in files that you include with the <code>#include</code> directive. Unity does not support them in <code>.shader</code> files, or in files that you include with an <code>#include_with_pragmas</code> directive; the compiler ignores them.</li>
+</ul>
+
+<p>
+<strong>Note:</strong> If a shader file uses <code>#include</code> to import a file that contains an <code>#include_with_pragmas</code> directive, Unity ignores the <code>#pragma</code> directives in the file the <code>#include_with_pragmas</code> directive references.</p>
+
+<h2>List of supported pragma directives</h2>
+
+<p>Unity supports all <code>#pragma</code> directives that are part of standard HLSL, as long as these directives are in regular include files. For more information on these directives, see the HLSL documentation: <a href="https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-appendix-pre-pragma">pragma Directive</a>.</p>
+
+<p>In addition, Unity supports the following Unity-specific <code>#pragma</code> directives:</p>
+
+<h3>Surface Shaders</h3>
+
+<p>If you are writing a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-SurfaceShaders.html">Surface Shader</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html" href="SL-SurfaceShaders.html">Surface Shader</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SurfaceShader" aria-label="Go to glossary anchor for SurfaceShader">Glossary</a></span></span></span>, use this directive to tell the compiler which function to use as the <strong>surface function</strong>, and pass data to that function.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Statement</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>#pragma surface &lt;surface function&gt; &lt;lighting model&gt; &lt;optional parameters&gt;</code></td>
+	<td style="text-align:left;">Compile the function with the given name as the surface shader, so that it works with the given lighting model. For more information, see <a href="SL-SurfaceShaders.html">Surface Shaders</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Shader stages</h3>
+
+<p>If you are writing a regular graphics shader, use these directives to tell the compiler which functions to use for different shader stages. The <code>#pragma vertex</code> and <code>#pragma fragment</code> directives are required, but other stages are optional.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Statement</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>#pragma vertex &lt;name&gt;</code></td>
+	<td style="text-align:left;">Compile the function with the given name as the vertex shader. Replace &lt;name&gt; with the function name. This directive is required in regular graphics shaders.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>#pragma fragment &lt;name&gt;</code></td>
+	<td style="text-align:left;">Compile the function with the given name as the fragment shader. Replace &lt;name&gt; with the function name. This directive is required in regular graphics shaders.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>#pragma geometry &lt;name&gt;</code></td>
+	<td style="text-align:left;">Compile the function with the given name as the geometry shader. Replace &lt;name&gt; with the function name. This option automatically turns on <code>#pragma require geometry</code>; for more information, see <a href="SL-ShaderCompileTargets.html">Targeting shader models and GPU features in HLSL</a>.<br><br><strong>Note</strong>: Metal does not support geometry shaders.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>#pragma hull &lt;name&gt;</code></td>
+	<td style="text-align:left;">Compile the function with the given name as the DirectX 11 hull shader. Replace &lt;name&gt; with the function name. This automatically adds <code>#pragma require tessellation</code>; for more information, see <a href="SL-ShaderCompileTargets.html">Targeting shader models and GPU features in HLSL</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>#pragma domain &lt;name&gt;</code></td>
+	<td style="text-align:left;">Compile the function with the given name as the DirectX 11 domain shader. Replace &lt;name&gt; with the function name. This option automatically turns on <code>#pragma require tessellation</code>; for more information, see <a href="SL-ShaderCompileTargets.html">Targeting shader models and GPU features in HLSL</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Shader variants and keywords</h3>
+
+<p>Use these directives to tell the shader compiler how to handle <a href="shader-variants-and-keywords.html">shader variants and keywords</a>. For more information, see <a href="SL-MultipleProgramVariants.html">Declaring and using shader keywords in HLSL</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Directive</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>#pragma multi_compile &lt;keywords&gt;</code></td>
+	<td style="text-align:left;">Declares a collection of keywords. The compiler includes all of the keywords in the build.<br><br>You can use suffixes such as <code>_local</code> to set additional options.<br><br>For more information and a list of supported suffixes, see <a href="SL-MultipleProgramVariants.html">Declaring and using shader keywords in HLSL</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>#pragma shader_feature &lt;keywords&gt;</code></td>
+	<td style="text-align:left;">Declares a collection of keywords. The compiler excludes unused keywords from the build.<br><br>You can use suffixes such as <code>_local</code> to set additional options.<br><br>For more information and a list of supported suffixes, see <a href="SL-MultipleProgramVariants.html">Declaring and using shader keywords in HLSL</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>#pragma hardware_tier_variants &lt;values&gt;</code></td>
+	<td style="text-align:left;">Built-in Render Pipeline only: Add keywords for <strong>graphics tiers</strong> when compiling for a given graphics API. For more information, see <a href="graphics-tiers.html">Graphics tiers</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>#pragma skip_variants &lt;list of keywords&gt;</code></td>
+	<td style="text-align:left;">Strip specified keywords.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>GPU requirements and shader model support</h3>
+
+<p>Use these directives to tell the compiler that your shader requires specific GPU features.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Statement</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>#pragma target &lt;value&gt;</code></td>
+	<td style="text-align:left;">The minimum shader model that this shader program is compatible with. Replace &lt;value&gt; with a valid value. For a list of valid values, see <a href="SL-ShaderCompileTargets.html">Shader compilation: Targeting shader models and GPU features in HLSL</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>#pragma require &lt;value&gt;</code></td>
+	<td style="text-align:left;">The minimum GPU features that this shader is compatible with. Replace &lt;value&gt; with a valid value, or multiple valid values separated by a space. For a list of valid values, see <a href="SL-ShaderCompileTargets.html">Shader compilation: Targeting shader models and GPU features in HLSL</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Graphics APIs</h3>
+
+<p>Use these directives to tell Unity to include or exclude code for a given graphics API.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Statement</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>#pragma only_renderers &lt;value&gt;</code></td>
+	<td style="text-align:left;">Compile this shader program only for given graphics APIs. Replace &lt;values&gt; with a space-delimited list of valid values. For more information and a list of valid values, refer to <a href="SL-ShaderCompilationAPIs.html">Targeting graphics APIs and platforms in HLSL</a>.<br><br>For example, <code>#pragma only_renderers glcore</code> only compiles for the desktop OpenGL. Like the ES 3 target, this also scales up to contain all desktop OpenGL versions, where basic shaders will support OpenGL 2.x while shaders requiring shader model 5.0 features require OpenGL 4.2+.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>#pragma exclude_renderers &lt;value&gt;</code></td>
+	<td style="text-align:left;">Do not compile this shader program for given graphics APIs. Replace &lt;value&gt; with a space-delimited list of valid values. For more information and a list of valid values, refer to <a href="SL-ShaderCompilationAPIs.html">Targeting graphics APIs and platforms in HLSL</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Other pragma directives</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Statement</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>#pragma instancing_options &lt;options&gt;</code></td>
+	<td style="text-align:left;">Enable GPU instancing in this shader, with given options. For more information, see <a href="GPUInstancing.html">GPU instancing</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>#pragma once</code></td>
+	<td style="text-align:left;">Put this directive in a file to ensure that the compiler includes the file only once in a shader program.<br><br><strong>Note:</strong> Unity only supports this directive when the <a href="shader-compilation.html#preprocessor">Caching Shader Preprocessor</a> is enabled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>#pragma enable_d3d11_debug_symbols</code></td>
+	<td style="text-align:left;">Generates shader debug symbols for supported graphics APIs, and disables optimizations for all graphics APIs. Use this for debugging shader code in an external tool.<br><br>Unity generates debug symbols for Vulkan, DirectX 11 and 12, and supported console platforms.<br><br><strong>Warning:</strong> Using this results in an increased file size and reduced shader performance. When you have finished debugging your shaders and you are ready to make a final build of your application, remove this line from your shader source code and recompile the shaders.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>#pragma skip_optimizations &lt;value&gt;</code></td>
+	<td style="text-align:left;">Forces optimizations off for given graphics APIs. Replace &lt;values&gt; with a space-delimited list of valid values. For a list of valid values, see <a href="SL-ShaderCompilationAPIs.html">Targeting graphics APIs and platforms in HLSL</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>#pragma hlslcc_bytecode_disassembly</code></td>
+	<td style="text-align:left;">Embed disassembled HLSLcc bytecode into a translated shader.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>#pragma disable_fastmath</code></td>
+	<td style="text-align:left;">Enable precise IEEE 754 rules involving NaN handling. This currently only affects the Metal platform.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>#pragma editor_sync_compilation</code></td>
+	<td style="text-align:left;">Force synchronous compilation. This affects the Unity Editor only. For more information, see <a href="AsynchronousShaderCompilation.html">Asynchronous Shader compilation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>#pragma enable_cbuffer</code></td>
+	<td style="text-align:left;">Emit <code>cbuffer(name)</code> when using <code>CBUFFER_START(name)</code> and <code>CBUFFER_END</code> macros from HLSLSupport even if the current platform does not support constant buffers.</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="shader-include-directives.html"></a></span><div class="tip">include and include_with_pragmas directives in HLSL</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-ShaderCompileTargets.html"></a></span><div class="tip">Targeting shader models and GPU features in HLSL</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

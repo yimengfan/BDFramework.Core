@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Build your WebGL application</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="platforms" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/webgl-building.html">English</a></li>
+<li><a href="/cn/current/Manual/webgl-building.html">中文</a></li>
+<li><a href="/ja/current/Manual/webgl-building.html">日本語</a></li>
+<li><a href="/kr/current/Manual/webgl-building.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/webgl-building.html">English</a></li>
+<li><a href="/cn/current/Manual/webgl-building.html">中文</a></li>
+<li><a href="/ja/current/Manual/webgl-building.html">日本語</a></li>
+<li><a href="/kr/current/Manual/webgl-building.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="webgl.html">WebGL</a></li>
+<li><a href="webgl-building-distribution.html">Building and distributing a WebGL project</a></li>
+<li>Build your WebGL application</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="web-build-settings.html"></a></span><div class="tip">WebGL Build Settings</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="webgl-assetbundles.html"></a></span><div class="tip">Reduce load times with AssetBundles</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Build your WebGL application</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To create a build for WebGL, go to <strong>File &gt; Build Settings</strong> from Unity’s main menu. In the Platform list, select <strong>WebGL</strong> and then click <strong>Switch Platform</strong>.
+For Build Settings, refer to <a href="web-build-settings.html">WebGL Build Settings</a>.</p>
+
+<p>When you have configured the Build Settings, choose from the following two options:</p>
+
+<ul>
+<li>
+<strong>Build</strong> builds your application into a Player.</li>
+<li>
+<strong>Build and Run</strong> builds your application in a Player, and opens that Player on your target platform.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/WebGLBuilding-BuildPlayerOptions.png" alt="Build Settings Window">
+<figcaption>Build Settings Window</figcaption>
+</figure>
+
+<h2>Build folder structure</h2>
+
+<p>The <code>Build</code> folder has the following files, where <code>[ExampleBuild]</code> represents the name of the target build folder.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">File name</th>
+	<th style="text-align:left;">Contains</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>[ExampleBuild].loader.js</code></td>
+	<td style="text-align:left;">The JavaScript code that the web page needs to load the Unity content.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>[ExampleBuild].framework.js</code></td>
+	<td style="text-align:left;">JavaScript runtime and <span class="tooltip"><strong>plug-ins</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Plugins.html" href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>[ExampleBuild].wasm</code></td>
+	<td style="text-align:left;">WebAssembly binary.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>[ExampleBuild].mem</code></td>
+	<td style="text-align:left;">A binary image to initialize the heap memory for your Player. Unity only generates this file for multithreaded WebAssembly builds.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>[ExampleBuild].data</code></td>
+	<td style="text-align:left;">Asset data and <span class="tooltip"><strong>Scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>[ExampleBuild].symbols.json</code></td>
+	<td style="text-align:left;">Debug symbol names necessary to troubleshoot an error stack trace. This file is only generated for Release builds when you enable the Debug Symbols option (<strong>File</strong> &gt; <strong>Build Settings</strong> &gt; <strong>Player Settings</strong>.)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>[ExampleBuild].jpg</code></td>
+	<td style="text-align:left;">A background image, which displays while the build is loading. This file is only generated when a Background Image is available in Player Settings (<strong>File</strong> &gt; <strong>Build Settings</strong> &gt; <strong>Player Settings</strong> &gt; <strong>Splash Image</strong>). For more information, refer to <a href="class-PlayerSettingsSplashScreen.html">Splash Screen</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>If you enable a <strong><span class="tooltip"><strong>Compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> Method</strong> for your build, Unity identifies the extension that corresponds with the compression method and adds this extension to the names of the files inside the Build sub folder. If you enable <strong>Decompression Fallback</strong>, Unity appends the extension <code>.unityweb</code> to the build file names. Otherwise, Unity appends the extension <code>.gz</code> for the Gzip compression method, or <code>.br</code> for the Brotli compression method.
+For more information, refer to <a href="webgl-deploying.html">Compressed builds and server configuration</a>.</p>
+
+<p>If you enable <strong>Name Files As Hashes</strong> in the <strong><span class="tooltip"><strong>Player Settings</strong><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html" href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span></strong>, Unity uses the hash of the file content for each file in the build folder instead of the default file name. The Name File as Hashes option lets you upload updated versions of the game builds into the same folder on the server, and only upload the files which have changed between build iterations.</p>
+
+<p>
+<strong>Note</strong>: If you open a Player directly from the file system, it might not work in some browsers due to security restrictions applied to local file URLs.</p>
+
+<h2>Deep profiling support</h2>
+
+<p>Enable the <strong>Deep Profiling Support</strong> setting to make the Unity <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> profile every function call in your application. For more information, refer to the documentation on <a href="ProfilerWindow.html#deep-profiling">Deep Profiling</a>.</p>
+
+<p><strong>Enable exceptions</strong></p>
+
+<ol>
+<li>
+<p>Open <strong>Publishing Settings</strong> to access <strong>Enable Exceptions</strong>, which help you specify how to handle unexpected code behavior (such as errors) at runtime. following options are available:</p>
+
+<ul>
+<li>
+<strong>None</strong>: Select this if you don’t need any exception support. This gives the best performance and smallest builds. With this option, any exception thrown causes your content to stop with an error in that setting.</li>
+<li>
+<strong>Explicitly Thrown Exceptions Only</strong> (default): Select this to capture exceptions that are explicitly specified from a <code>throw</code> statement in your <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> and to also ensure <code>finally</code> blocks are called. <strong>Note:</strong> This option makes the generated JavaScript code from your scripts longer and slower; however, it might only be an issue if scripts are the main bottleneck in your project.</li>
+<li>
+<strong>Full Without Stacktrace</strong>: Select this option to capture:
+
+<ul>
+<li>Exceptions which are explicitly specified from <code>throw</code> statements in your scripts (the same as in the <strong>Explicitly Thrown Exceptions Only</strong> option)</li>
+<li>Null References</li>
+<li>Out of Bounds Array accesses</li>
+</ul>
+</li>
+<li>
+<strong>Full With Stacktrace</strong>: This option is similar to the option above but it also captures Stack traces. Unity generates these exceptions by embedding checks for them in the code, so this option decreases performance and increases browser memory usage. Only use this for debugging, and always test in a 64-bit browser.</li>
+</ul>
+</li>
+<li><p>Select <strong>Publishing Settings</strong> to access <strong>Data Caching</strong>.</p></li>
+</ol>
+
+<h2>Data caching</h2>
+
+<p>This enables the browser to cache the main data files into the IndexedDB database. To access <strong>Data Caching</strong>, go to <strong>Publishing Settings</strong> via <strong>File</strong> &gt; <strong>Build Settings</strong> &gt; <strong>Player Settings</strong> &gt; <strong>WebGL</strong>. </p>
+
+<p>Using the default browser HTTP cache doesn’t guarantee that the browser caches a particular response. This is because the browser HTTP cache has limited space, and the browser might not be able to cache large files.</p>
+
+<p>To improve your loading speed, <code>IndexedDB</code> allows you to cache files above the browser limit. When you cache more files, you increase the chance that downloaded content is available on the user’s machine during the next run of the build.</p>
+
+<p>Data Caching caches the <code>.data</code> files in the <code>IndexedDB cache</code> for HTTP responses. To cache <code>AssetBundles</code>, you need to enable Data Caching and override <code>unityInstance.Module.cacheControl()</code>.
+To do this, make sure <code>Module.cacheControl(url)</code> returns <code>must-revalidate</code> for the requested AssetBundle URL. For example, you can override the <code>unityInstance.Module.cacheControl()</code> function in the fulfillment callback of the Promise that createUnityInstance() returns.
+For information on <code>createUnityInstance()</code>, refer to <a href="webgl-deploying.html">Compressed builds and server configuration</a>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="webgl-deploying.html">Compressed builds and server configuration</a></li>
+<li><a href="class-PlayerSettingsWebGL.html">WebGL Player Settings</a></li>
+<li>
+<a href="class-TextureImporterOverride.html#texture-compression-support-platforms">Supported texture formats</a>
+<!-- area:platforms -->
+</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="web-build-settings.html"></a></span><div class="tip">WebGL Build Settings</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="webgl-assetbundles.html"></a></span><div class="tip">Reduce load times with AssetBundles</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

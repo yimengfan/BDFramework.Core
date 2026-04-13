@@ -1,0 +1,500 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Video file compatibility</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/VideoSources-FileCompatibility.html">English</a></li>
+<li><a href="/cn/current/Manual/VideoSources-FileCompatibility.html">中文</a></li>
+<li><a href="/ja/current/Manual/VideoSources-FileCompatibility.html">日本語</a></li>
+<li><a href="/kr/current/Manual/VideoSources-FileCompatibility.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/VideoSources-FileCompatibility.html">English</a></li>
+<li><a href="/cn/current/Manual/VideoSources-FileCompatibility.html">中文</a></li>
+<li><a href="/ja/current/Manual/VideoSources-FileCompatibility.html">日本語</a></li>
+<li><a href="/kr/current/Manual/VideoSources-FileCompatibility.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Video.html">Video and cutscenes</a></li>
+<li><a href="video-sources.html">Video sources</a></li>
+<li>Video file compatibility</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="VideoSources-VideoFiles.html"></a></span><div class="tip">Understanding video files</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="video-transcoding.html"></a></span><div class="tip">Transcoding video files</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Video file compatibility</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can import many video file formats into Unity. Unity stores imported video files as <a href="class-VideoClip.html">VideoClip</a> assets.</p>
+
+<p>For Unity to preview video files, the files must be compatible with the platform where you run the Unity Editor. Your files must also be compatible with the target build platforms. Unity provides options for transcoding files to commonly supported formats, but you can also manage compatibility yourself. See <a href="#CompatibilityWithTargetPlatforms">Compatibility with target platforms</a> below for more information.</p>
+
+<p><a name="CompatibilityWithEditorPlatforms" aria-hidden="true"></a></p>
+
+<h2>Compatibility with Editor platforms</h2>
+
+<p>Video source files must use a format that your Editor platform supports. Each platform supports different video file formats.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Extension</th>
+	<th style="text-align:left;">Windows</th>
+	<th style="text-align:left;">macOS</th>
+	<th style="text-align:left;">Linux</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">.asf</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;">.avi</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;">.dv</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;">.m4v</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;">.mov</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;">.mp4</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;">.mpg</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;">.mpeg</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;">.ogv</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;">X</td>
+</tr>
+<tr>
+	<td style="text-align:left;">.vp8</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;">X</td>
+</tr>
+<tr>
+	<td style="text-align:left;">.webm</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;">X</td>
+</tr>
+<tr>
+	<td style="text-align:left;">.wmv</td>
+	<td style="text-align:left;">X</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+</tbody>
+</table>
+
+<p>The optimal supported video codec for most platforms is H.264. However, the optimal encoding for Linux is a .webm container with VP8 for video and Vorbis for audio.</p>
+
+<ul>
+<li>For video tracks, <a href="https://en.wikipedia.org/wiki/VP8">VP8</a>.</li>
+<li>For audio, <a href="https://en.wikipedia.org/wiki/Vorbis">Vorbis</a>.</li>
+</ul>
+
+<p>For information about codec support, see the official platform documentation for your Editor. See the links below for codec compatibility for Windows and macOS:</p>
+
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/windows/desktop/medfound/supported-media-formats-in-media-foundation">Windows codec compatibility</a></li>
+<li><a href="https://developer.apple.com/library/content/documentation/MacOSX/Conceptual/OSX_Technology_Overview/MediaLayer/MediaLayer.html">macOS codec compatibility</a></li>
+</ul>
+
+<h3>WebM videos - Supported video and audio codecs <a name="supported-video-audio" aria-hidden="true"></a>
+</h3>
+
+<p>Unity usually only supports the import of WebM videos with VP8 (video) and Vorbis (audio) codecs. However, you can use the <code>StreamingAssets</code> folder to add WebM videos with the other codecs to the project. When you use this folder, the Editor doesn’t interpret the file itself, instead the Editor imports the raw file into the build. For more information about this folder, refer to <a href="StreamingAssets.html">Include additional files in a build</a>.</p>
+
+<p>You can then use code to assign the raw file to the VideoPlayer component (refer to <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Video.VideoPlayer-url.html">VideoPlayer.url</a>). This allows the target platform to read the file directly and bypass the Editor’s support limitations. However, the imported video clip isn’t visible in the Editor and you can’t drag the asset onto a Video Player in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="../ScriptReference/Video.VideoPlayer-url.html">VideoPlayer.url</a>). This allows the target platform to read the file directly and bypass the Editor’s support limitations. However, the imported video clip isn’t visible in the Editor and you can’t drag the asset onto a Video Player in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<p>When you use a video file in this way, it unlocks the following target platform capabilities:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Platform</strong></th>
+	<th style="text-align:left;"><strong>Supported video codecs</strong></th>
+	<th style="text-align:left;"><strong>Supported audio codecs</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Android</td>
+	<td style="text-align:left;">Supports the video codecs that WebM files support on Android. Refer to the Android documentation on <a href="https://developer.android.com/media/platform/supported-formats">Supported media formats</a>.</td>
+	<td style="text-align:left;">Supports the audio codecs that WebM files support on Android. Refer to the Android documentation on <a href="https://developer.android.com/media/platform/supported-formats">Supported media formats</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Nintendo Switch</td>
+	<td style="text-align:left;">VP8, VP9</td>
+	<td style="text-align:left;">Vorbis</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Web</td>
+	<td style="text-align:left;">VP8, VP9</td>
+	<td style="text-align:left;">Vorbis, Opus</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Video Clip Importer</h3>
+
+<p>The <a href="class-VideoClip.html#VideoClipImporterProperties">Video Clip Importer</a> can transcode video files that you import into Unity. This is useful when your videos use a codec that the Editor platform supports, but the files aren’t compatible with your target platform.</p>
+
+<h3>Using unsupported video files in the Editor</h3>
+
+<p>To use video files that are compatible with your target platforms, but not your Editor platform, set them up as <a href="StreamingAssets.html">streaming assets</a>. For example, you might want to use the VP9 codec for an Android build, even though the Editor only supports VP8.</p>
+
+<p>To set video files up as streaming assets, place them in the <code>StreamingAssets</code> folder of your project. Use the URL property to point the <a href="class-VideoPlayer.html">Video Player</a> component to streaming assets.</p>
+
+<p>You can also use <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Application-streamingAssetsPath.html">Application.streamingAssetsPath</a> to access platform-specific paths to streaming assets via <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html" href="../ScriptReference/Application-streamingAssetsPath.html">Application.streamingAssetsPath</a> to access platform-specific paths to streaming assets via <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>. You can’t preview these paths in the Editor.</p>
+
+<p>If you want to have placeholder versions that are compatible with your Editor but use a different version for your target platform, you can include both versions in your project, use Editor-compatible versions as placeholders, and decide which version to use at run time.</p>
+
+<p>The example below demonstrates how to use different video URLs for different platforms. For more information, see the documentation on <a href="PlatformDependentCompilation.html">Platform-dependent compilation</a>.</p>
+
+<pre><code>void SetupMovieFile(VideoPlayer vp)
+{
+#if UNITY_EDITOR || UNITY_LINUX
+vp.url = pathToMyVp8File;
+#elif UNITY_ANDROID
+vp.url = pathToMyVp9File;
+#elif UNITY_STANDALONE_WIN
+vp.url = pathToMyWmvFile;
+#else
+vp.url = pathToMyMp4File;
+#endif
+}
+</code></pre>
+
+<p><a name="CompatibilityWithTargetPlatforms" aria-hidden="true"></a></p>
+
+<h2>Compatibility with target platforms</h2>
+
+<p>The <a href="class-VideoPlayer.html">Video Player</a> component uses the native audio and video decoding libraries of your Editor platform to play video files in the Editor. You must confirm that the files also meet the requirements for the target platform.</p>
+
+<h3>Encoding recommendations</h3>
+
+<ul>
+<li><p>The best natively supported video codec for hardware acceleration is <a href="https://en.wikipedia.org/wiki/H.264/MPEG-4_AVC">H.264</a>
+</p></li>
+<li><p>When cross-platform support is a high priority, <a href="https://en.wikipedia.org/wiki/VP8">VP8</a> is a good choice. It’s widely supported and has a comprehensive feature set, but it consumes more resources than hardware-accelerated codecs such as H.264.</p></li>
+<li><p>
+<a href="https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding">H.265</a> is available on devices that support it. See <a href="#H265Compatibility">H.265 Compatibility</a> below, for more information.</p></li>
+<li><p>Android supports VP8 using native libraries, so VP8 might also be hardware-assisted on some Android devices.</p></li>
+<li><p>The Unity Editor supports the .ogv format, but it isn’t widely supported on other platforms. Transcode .ogv files into .mp4 (<a href="https://en.wikipedia.org/wiki/H.264/MPEG-4_AVC">H.264</a>) or .webm (<a href="https://en.wikipedia.org/wiki/VP8">VP8</a>) depending on the target platform.</p></li>
+</ul>
+
+<h4>Key encoding values</h4>
+
+<p>The table below lists key values to look for in your encoding parameters:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Parameter</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Video Codec</strong></td>
+	<td style="text-align:left;">
+<a href="https://en.wikipedia.org/wiki/H.264/MPEG-4_AVC">H.264</a>, <a href="https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding">H.265</a> or <a href="https://en.wikipedia.org/wiki/VP8">VP8</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Resolution</strong></td>
+	<td style="text-align:left;">The resolution of your display. For example: 1280 × 720.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Profile</strong></td>
+	<td style="text-align:left;">The profile is a set of capabilities and constraints, often specified by the vendor, such as Baseline or Main. Applies to H.264/H.265.See <a href="https://en.wikipedia.org/wiki/H.264/MPEG-4_AVC#Profiles">H.264</a> or <a href="https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding#Profiles">H.265</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Profile Level</strong></td>
+	<td style="text-align:left;">Applies for H.264/H.265. Within a given profile, the level specifies performance requirements, for example, Baseline 3.1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Audio Codec</strong></td>
+	<td style="text-align:left;">
+<a href="https://en.wikipedia.org/wiki/Advanced_Audio_Coding">AAC</a> (for mp4 videos using H.264/H.265) or <a href="https://en.wikipedia.org/wiki/Vorbis">Vorbis</a> (for webm videos using VP8).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Audio Channels</strong></td>
+	<td style="text-align:left;">Dependent on the platform. Refer to the developer guide for your platform. For example, the article on <a href="https://developer.android.com/guide/topics/media/media-formats">Supported media formats</a> for Android.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Encoding VideoClips with an external program</h3>
+
+<p>If you use videos that the target system definitely supports, you can leave the <a href="class-VideoClip.html#VideoClipImporterProperties">Video Clip Importer’s</a> transcoding options disabled. If disabled, Unity doesn’t modify the files. You can manage encoding with an external program, which allows for finer control.</p>
+
+<h3>Compatibility notes</h3>
+
+<p>This section provides useful information about video compatibility, and links to external resources.</p>
+
+<h4>Vendor recommendations for media support</h4>
+
+<p>Follow vendor recommendations for codec support. On older mobile platforms, codec choices are limited . You might need to inspect and convert or re-encode videos that you intend to include in a game running on multiple devices.</p>
+
+<ul>
+<li>
+<strong>Android:</strong> <a href="https://developer.android.com/guide/topics/media/media-formats.html#recommendations">Supported Media Formats</a>
+</li>
+<li>
+<strong>Windows:</strong> <a href="https://docs.microsoft.com/en-us/windows/desktop/medfound/supported-media-formats-in-media-foundation">Supported Media Formats</a>, <a href="https://docs.microsoft.com/en-us/windows/desktop/medfound/h-265---hevc-video-decoder#format-constraints">H.265</a>
+</li>
+<li>
+<strong>iPhone:</strong> <a href="http://www.apple.com/iphone/compare/">Compare iPhone Models</a>
+</li>
+<li>
+<strong>UWP:</strong> <a href="https://docs.microsoft.com/en-us/windows/uwp/audio-video-camera/supported-codecs">Supported Codecs</a>
+</li>
+</ul>
+
+<p><a name="H265Compatibility" aria-hidden="true"></a></p>
+
+<h4>H.265 compatibility</h4>
+
+<p>The table below provides platform-specific requirements and information for the H.265 codec.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Platform</th>
+	<th style="text-align:left;">Requirements</th>
+	<th style="text-align:left;">Encoding/Decoding</th>
+	<th style="text-align:left;">Notes</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>macOS</strong></td>
+	<td style="text-align:left;">SDK 10.13+</td>
+	<td style="text-align:left;">
+<strong>Hardware encoding:</strong> 6th Generation Intel Core processor <br><br><strong>Software encoding:</strong> All Macs <br><br> <strong>Hardware decoding:</strong> 6th Generation Intel Core processor <br><br><strong>Software decoding:</strong> All Macs</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Windows</strong></td>
+	<td style="text-align:left;">Windows 10 + HEVC extensions</td>
+	<td style="text-align:left;">
+<a href="https://docs.microsoft.com/en-us/windows/desktop/medfound/h-265---hevc-video-encoder">Encoder</a><br><br><a href="https://docs.microsoft.com/en-us/windows/desktop/medfound/h-265---hevc-video-decoder">Decoder</a>
+</td>
+	<td style="text-align:left;">
+<a href="https://www.microsoft.com/en-ca/p/hevc-video-extensions-from-device-manufacturer/9n4wgh0z6vhq">HEVC extension (Hardware only)</a><br><br><a href="https://www.microsoft.com/en-ca/p/hevc-video-extensions/9nmzlz57r3t7/0010">HEVC extension (Hardware + software support)</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>iOS</strong></td>
+	<td style="text-align:left;">SDK 11.0+</td>
+	<td style="text-align:left;">
+<strong>Hardware decoding:</strong> A9 Chip <br><br><strong>Software decoding:</strong> All iOS Devices</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>tvOS</strong></td>
+	<td style="text-align:left;">SDK 11.0+</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UWP</strong></td>
+	<td style="text-align:left;"><a href="https://docs.microsoft.com/en-us/windows/uwp/audio-video-camera/supported-codecs">Windows 10+</a></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">If a device lists support for H.265, that might not apply to all devices within the device family.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Android</strong></td>
+	<td style="text-align:left;"><a href="https://developer.android.com/guide/topics/media/media-formats">5.0+</a></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+</tbody>
+</table>
+
+<p>The optimal supported video codec for most platforms is H.264. However, the optimal encoding for Linux is a .webm container with VP8 for video and Vorbis for audio.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="video-sources-compatibility-target-platforms">Video file compatibility with target platforms</a></li>
+<li><a href="video-encoding-compatibility">Video encoding compatibility</a></li>
+<li><a href="video-transcoding.html">Transcoding video files</a></li>
+<li><a href="VideoSources-VideoFiles.html">Understand video files</a></li>
+<li><a href="VideoTransparency.html">Video transparency support</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="VideoSources-VideoFiles.html"></a></span><div class="tip">Understanding video files</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="video-transcoding.html"></a></span><div class="tip">Transcoding video files</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

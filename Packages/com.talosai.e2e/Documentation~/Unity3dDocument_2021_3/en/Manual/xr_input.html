@@ -1,0 +1,923 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Unity XR Input</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xr_input.html">English</a></li>
+<li><a href="/cn/current/Manual/xr_input.html">中文</a></li>
+<li><a href="/ja/current/Manual/xr_input.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xr_input.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xr_input.html">English</a></li>
+<li><a href="/cn/current/Manual/xr_input.html">中文</a></li>
+<li><a href="/ja/current/Manual/xr_input.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xr_input.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Input.html">Input</a></li>
+<li>Unity XR Input</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="MobileKeyboard.html"></a></span><div class="tip">Mobile Keyboard</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Unity2D.html"></a></span><div class="tip">2D game development</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Unity XR Input</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This section of the Unity User Manual provides information about all of the Unity-supported input devices for <span class="tooltip"><strong>virtual reality</strong><span class="tooltiptext">Virtual Reality (VR) immerses users in an artificial 3D world of realistic images and sounds, using a headset and motion tracking. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VROverview.html" href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#VirtualReality" aria-label="Go to glossary anchor for VirtualReality">Glossary</a></span></span></span>, <span class="tooltip"><strong>augmented reality</strong><span class="tooltiptext">Augmented Reality (AR) uses computer graphics or video composited on top of a live video feed to augment the view and create interaction with real and virtual objects. <a href="AROverview.html" href="Glossary.html#VirtualReality" aria-label="Go to glossary anchor for VirtualReality">Glossary</a></span></span></span>, <span class="tooltip"><strong>augmented reality</strong><span class="tooltiptext">Augmented Reality (AR) uses computer graphics or video composited on top of a live video feed to augment the view and create interaction with real and virtual objects. <a href="AROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AugmentedReality" aria-label="Go to glossary anchor for AugmentedReality">Glossary</a></span></span></span>, and Windows <span class="tooltip"><strong>Mixed Reality</strong><span class="tooltiptext">Mixed Reality (MR) combines its own virtual environment with the user’s real-world environment and allows them to interact with each other.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MixedReality" aria-label="Go to glossary anchor for MixedReality">Glossary</a></span></span></span> applications. This page covers the following topics:</p>
+
+<ul>
+<li><a href="#XRInputMappings">XR input mappings</a></li>
+<li><a href="#AccessingInputDevices">Accessing input devices</a></li>
+<li><a href="#AccessingInputFeatures">Accessing input features on an input device</a></li>
+<li><a href="#XRInputLegacySystem">Accessing XR input via the legacy input system</a></li>
+<li><a href="#Haptics">Haptics</a></li>
+</ul>
+
+<p>XR platforms have a rich variety of input features that you can take advantage of when you design user interactions. Your application can use specific data that references positions, rotations, touch, buttons, joysticks, and finger sensors. However, access to these input features can vary a lot between platforms. For instance, there are small differences between the Vive and the Oculus Rift, but a VR-enabled desktop platform and a mobile platform like Daydream differ a lot more.</p>
+
+<p>Unity provides a C# struct called <a href="../ScriptReference/XR.InputFeatureUsage.html">InputFeatureUsage</a>, which defines a standard set of physical device controls (such as buttons and triggers) to access user input on any platform. These help you identify input types by name. See <a href="../ScriptReference/XR.CommonUsages.html">XR.Input.CommonUsages</a> for a definition of each <code>InputFeatureUsage</code>.</p>
+
+<p>Each <code>InputFeatureUsage</code> corresponds to a common input action or type. For example, Unity defines the <code>InputFeatureUsage</code> called <code>trigger</code> as a single-axis input that the index finger controls, regardless of which <span class="tooltip"><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html" href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> platform you use. You can use <code>InputFeatureUsage</code> to get the <code>trigger</code> state using its name, so you don’t need to set up an axis (or a button on some XR platforms) for the conventional Unity Input system.</p>
+
+<p><a name="XRInputMappings" aria-hidden="true"></a></p>
+
+<h2>XR input mappings</h2>
+
+<p>The following table lists the standard controller <code>InputFeatureUsage</code> names and how they map to the controllers of popular XR systems:</p>
+<div class="wide-table">
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>InputFeatureUsage</strong></th>
+	<th style="text-align:left;"><strong>Feature type</strong></th>
+	<th style="text-align:left;">
+<strong>Legacy input index</strong> (left controller/right controller)</th>
+	<th style="text-align:left;"><strong>WMR</strong></th>
+	<th style="text-align:left;"><strong>Oculus</strong></th>
+	<th style="text-align:left;"><strong>GearVR</strong></th>
+	<th style="text-align:left;"><strong>Daydream</strong></th>
+	<th style="text-align:left;"><strong>OpenVR (Full)</strong></th>
+	<th style="text-align:left;"><strong>Vive</strong></th>
+	<th style="text-align:left;"><strong>Oculus via OpenVR</strong></th>
+	<th style="text-align:left;"><strong>WMR via OpenVR</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.CommonUsages-primary2DAxis.html">primary2DAxis</a></td>
+	<td style="text-align:left;">2D axis</td>
+	<td style="text-align:left;">[(1,2)/(4,5)]</td>
+	<td style="text-align:left;">Touchpad</td>
+	<td style="text-align:left;">Joystick</td>
+	<td style="text-align:left;">Touchpad</td>
+	<td style="text-align:left;">Touchpad</td>
+	<td style="text-align:left;">Trackpad/Joystick</td>
+	<td style="text-align:left;">Trackpad</td>
+	<td style="text-align:left;">Joystick</td>
+	<td style="text-align:left;">Joystick</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.CommonUsages-trigger.html">trigger</a></td>
+	<td style="text-align:left;">Axis</td>
+	<td style="text-align:left;">[9/10]</td>
+	<td style="text-align:left;">Trigger</td>
+	<td style="text-align:left;">Trigger</td>
+	<td style="text-align:left;">Trigger</td>
+	<td style="text-align:left;">Trigger</td>
+	<td style="text-align:left;">Trigger</td>
+	<td style="text-align:left;">Trigger</td>
+	<td style="text-align:left;">Trigger</td>
+	<td style="text-align:left;">Trigger</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.CommonUsages-grip.html">grip</a></td>
+	<td style="text-align:left;">Axis</td>
+	<td style="text-align:left;">[11/12]</td>
+	<td style="text-align:left;">Grip</td>
+	<td style="text-align:left;">Grip</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Bumper</td>
+	<td style="text-align:left;">Grip</td>
+	<td style="text-align:left;">Grip</td>
+	<td style="text-align:left;">Grip</td>
+	<td style="text-align:left;">Grip</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.CommonUsages-secondary2DAxis.html">secondary2DAxis</a></td>
+	<td style="text-align:left;">2D axis</td>
+	<td style="text-align:left;">[(17,18)/(19,20)]</td>
+	<td style="text-align:left;">Joystick</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Touchpad</td>
+</tr>
+<tr>
+	<td style="text-align:left;">secondary2DAxisClick</td>
+	<td style="text-align:left;">Button</td>
+	<td style="text-align:left;">[18/19]</td>
+	<td style="text-align:left;">Joystick - Click</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.CommonUsages-primaryButton.html">primaryButton</a></td>
+	<td style="text-align:left;">Button</td>
+	<td style="text-align:left;">[2/0]</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">[X/A] - Press</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">App</td>
+	<td style="text-align:left;">Primary</td>
+	<td style="text-align:left;">Primary (sandwich button)(1)</td>
+	<td style="text-align:left;">Primary (Y/B)</td>
+	<td style="text-align:left;">Menu</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.CommonUsages-primaryTouch.html">primaryTouch</a></td>
+	<td style="text-align:left;">Button</td>
+	<td style="text-align:left;">[12/10]</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">[X/A] - Touch</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.CommonUsages-secondaryButton.html">secondaryButton</a></td>
+	<td style="text-align:left;">Button</td>
+	<td style="text-align:left;">[3/1]</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">[Y/B] - Press</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Alternate</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Alternate (X/A)</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.CommonUsages-secondaryTouch.html">secondaryTouch</a></td>
+	<td style="text-align:left;">Button</td>
+	<td style="text-align:left;">[13/11]</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">[Y/B] - Touch</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.CommonUsages-gripButton.html">gripButton</a></td>
+	<td style="text-align:left;">Button</td>
+	<td style="text-align:left;">[4/5]</td>
+	<td style="text-align:left;">Grip - Press</td>
+	<td style="text-align:left;">Grip - Press</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Grip - Press</td>
+	<td style="text-align:left;">Grip - Press</td>
+	<td style="text-align:left;">Grip - Press</td>
+	<td style="text-align:left;">Grip - Press</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.CommonUsages-triggerButton.html">triggerButton</a></td>
+	<td style="text-align:left;">Button</td>
+	<td style="text-align:left;">[14/15]</td>
+	<td style="text-align:left;">Trigger - Press</td>
+	<td style="text-align:left;">Trigger - Press</td>
+	<td style="text-align:left;">Trigger - Press</td>
+	<td style="text-align:left;">Trigger - Press</td>
+	<td style="text-align:left;">Trigger - Press</td>
+	<td style="text-align:left;">Trigger - Press</td>
+	<td style="text-align:left;">Trigger - Touch</td>
+	<td style="text-align:left;">Trigger - Press</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.CommonUsages-menuButton.html">menuButton</a></td>
+	<td style="text-align:left;">Button</td>
+	<td style="text-align:left;">[6/7]</td>
+	<td style="text-align:left;">Menu</td>
+	<td style="text-align:left;">Start (left controller only)</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.CommonUsages-primary2DAxisClick.html">primary2DAxisClick</a></td>
+	<td style="text-align:left;">Button</td>
+	<td style="text-align:left;">[8/9]</td>
+	<td style="text-align:left;">Touchpad - Click</td>
+	<td style="text-align:left;">Thumbstick - Press</td>
+	<td style="text-align:left;">Touchpad - Press</td>
+	<td style="text-align:left;">Touchpad - Press</td>
+	<td style="text-align:left;">Trackpad/Joystick - Press</td>
+	<td style="text-align:left;">Trackpad - Press</td>
+	<td style="text-align:left;">Joystick - Press</td>
+	<td style="text-align:left;">Touchpad - Press</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.CommonUsages-primary2DAxisTouch.html">primary2DAxisTouch</a></td>
+	<td style="text-align:left;">Button</td>
+	<td style="text-align:left;">[16/17]</td>
+	<td style="text-align:left;">Touchpad - Touch</td>
+	<td style="text-align:left;">Thumbstick - Touch</td>
+	<td style="text-align:left;">Touchpad - Touch</td>
+	<td style="text-align:left;">Touchpad - Touch</td>
+	<td style="text-align:left;">Trackpad/Joystick - Touch</td>
+	<td style="text-align:left;">Trackpad - Touch</td>
+	<td style="text-align:left;">Joystick - Touch</td>
+	<td style="text-align:left;">Touchpad - Touch</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.CommonUsages-batteryLevel.html">batteryLevel</a></td>
+	<td style="text-align:left;">Axis</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Battery level</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.CommonUsages-userPresence.html">userPresence</a></td>
+	<td style="text-align:left;">Button</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">User presence</td>
+	<td style="text-align:left;">User presence</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>(1) Sandwich button refers to the Vive menu button. This button is mapped to primaryButton, rather than menuButton, in order to better handle cross-platform applications.</p>
+
+<p>See <a href="../ScriptReference/XR.CommonUsages.html">XR.Input.CommonUsages</a> for a definition of each <code>InputFeatureUsage</code>.</p>
+
+<p><a name="AccessingInputDevices" aria-hidden="true"></a></p>
+
+<h2>Accessing input devices</h2>
+
+<p>An <a href="../ScriptReference/XR.InputDevice.html">InputDevice</a> represents any physical device, such as a controller, mobile phone, or headset. It can contain information about device tracking, buttons, joysticks, and other input controls. For more information on the <code>InputDevice</code> API, see documentation on <a href="../ScriptReference/XR.InputDevice.html">InputDevice</a>.</p>
+
+<p>Use the <a href="../ScriptReference/XR.InputDevices.html">XR.InputDevices</a> class to access input devices that are currently connected to the XR system. To get a list of all connected devices, use <a href="../ScriptReference/XR.InputDevices.GetDevices.html">InputDevices.GetDevices</a>:</p>
+
+<pre><code>var inputDevices = new List&lt;UnityEngine.XR.InputDevice&gt;();
+UnityEngine.XR.InputDevices.GetDevices(inputDevices);
+
+foreach (var device in inputDevices)
+{
+    Debug.Log(string.Format(&quot;Device found with name '{0}' and role '{1}'&quot;, device.name, device.role.ToString()));
+}
+</code></pre>
+
+<p>An input device remains valid across frames until the XR system disconnects it. Use the <a href="../ScriptReference/XR.InputDevice-isValid.html">InputDevice.IsValid</a> property to determine whether an <code>InputDevice</code> still represents an active controller.</p>
+
+<p>You can access input devices by:</p>
+
+<ul>
+<li>Characteristics</li>
+<li>Role</li>
+<li>XR node</li>
+</ul>
+
+<h3>Accessing input devices by characteristics</h3>
+
+<p>Device characteristics describe what a device is capable of, or what it’s used for (for example, whether it is head-mounted). The <a href="../ScriptReference/XR.InputDeviceCharacteristics.html">InputDeviceCharacteristics</a> is a series of flags you can add to your code to search for devices that fit a certain specification. You can filter devices by the following characteristics:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Device</strong></th>
+	<th style="text-align:left;"><strong>Characteristic</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.InputDeviceCharacteristics.HeadMounted.html">HeadMounted</a></td>
+	<td style="text-align:left;">The device is attached to the user’s head. It has device tracking and center eye tracking. This flag is most commonly used to identify head-mounted displays (HMDs).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/XR.InputDeviceCharacteristics.Camera.html">Camera</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="../ScriptReference/XR.InputDeviceCharacteristics.Camera.html">Camera</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">The device has camera tracking.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.InputDeviceCharacteristics.HeldInHand.html">HeldInHand</a></td>
+	<td style="text-align:left;">The user holds the device in their hand.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.InputDeviceCharacteristics.HandTracking.html">HandTracking</a></td>
+	<td style="text-align:left;">The device represents a physically-tracked hand. It has device tracking, and might contain hand and bone data.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.InputDeviceCharacteristics.EyeTracking.html">EyeTracking</a></td>
+	<td style="text-align:left;">The device can perform eye tracking and has an <a href="../ScriptReference/XR.CommonUsages-eyesData.html">EyesData</a> feature.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.InputDeviceCharacteristics.TrackedDevice.html">TrackedDevice</a></td>
+	<td style="text-align:left;">The device can be tracked in 3D space. It has device tracking.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.InputDeviceCharacteristics.Controller.html">Controller</a></td>
+	<td style="text-align:left;">The device has input data for buttons and axes, and can be used as a controller.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.InputDeviceCharacteristics.TrackingReference.html">TrackingReference</a></td>
+	<td style="text-align:left;">The device represents a static tracking reference object. It has device tracking, but that tracking data shouldn’t change.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.InputDeviceCharacteristics.Left.html">Left</a></td>
+	<td style="text-align:left;">Use this characteristic in combination with the HeldInHand or HandTracking characteristics to identify the device as associated with the left hand.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.InputDeviceCharacteristics.Right.html">Right</a></td>
+	<td style="text-align:left;">Use this characteristic in combination with the HeldInHand or HandTracking characteristics to identify the device as associated with the right hand.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.InputDeviceCharacteristics.Simulated6DOF.html">Simulated6DOF</a></td>
+	<td style="text-align:left;">The device reports 6DOF data, but only has 3DOF sensors. Unity simulates the positional data.</td>
+</tr>
+</tbody>
+</table>
+
+<p>The underlying XR SDK reports these characteristics. You can look them up with <a href="../ScriptReference/XR.InputDevice-characteristics.html">InputDevice.Characteristics</a>. A device can, and often should, have multiple characteristics that you can filter and access with bit flags.</p>
+
+<p>
+<a href="../ScriptReference/XR.InputDevices.GetDevicesWithCharacteristics.html">InputDevices.GetDevicesWithCharacteristics</a> provides a way to search for all devices with a given set of characteristics. For example, you can search for Left, HeldInHand, Controller InputDevices available in the system with the following code:</p>
+
+<pre><code>var leftHandedControllers = new List&lt;UnityEngine.XR.InputDevice&gt;();
+var desiredCharacteristics = UnityEngine.XR.InputDeviceCharacteristics.HeldInHand | UnityEngine.XR.InputDeviceCharacteristics.Left | UnityEngine.XR.InputDeviceCharacteristics.Controller;
+UnityEngine.XR.InputDevices.GetDevicesWithCharacteristics(desiredCharacteristics, leftHandedControllers);
+
+foreach (var device in leftHandedControllers)
+{
+    Debug.Log(string.Format(&quot;Device name '{0}' has characteristics '{1}'&quot;, device.name, device.characteristics.ToString()));
+}
+</code></pre>
+
+<p>Devices this function finds contain at least the characteristics specified, but might contain additional characteristics. For example, to find a left handed controller you can look for InputDeviceCharacteristic.Left only, and not InputDeviceCharacteristic.Controller.</p>
+
+<h3>Accessing input devices by role</h3>
+
+<p>A device role describes the general function of an input device. Use the <a href="../ScriptReference/XR.InputDeviceRole.html">InputDeviceRole</a> enumeration to specify a device role. The defined roles are:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Role</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.InputDeviceRole.GameController.html">GameController</a></td>
+	<td style="text-align:left;">A console-style <span class="tooltip"><strong>game controller</strong><span class="tooltiptext">A device to control objects and characters in a game.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#gamecontroller" aria-label="Go to glossary anchor for gamecontroller">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.InputDeviceRole.Generic.html">Generic</a></td>
+	<td style="text-align:left;">A device that represents the core XR device, such as a head-mounted display or mobile device.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.InputDeviceRole.HardwareTracker.html">HardwareTracker</a></td>
+	<td style="text-align:left;">A tracking device.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.InputDeviceRole.LeftHanded.html">LeftHanded</a></td>
+	<td style="text-align:left;">A device associated with the user’s left hand.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.InputDeviceRole.RightHanded.html">RightHanded</a></td>
+	<td style="text-align:left;">A device associated with the user’s right hand.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.InputDeviceRole.TrackingReference.html">TrackingReference</a></td>
+	<td style="text-align:left;">A device that tracks other devices, such as an Oculus tracking camera.</td>
+</tr>
+</tbody>
+</table>
+
+<p>The underlying XR SDK reports these roles, but different providers might organize their device roles differently. Additionally, a user can switch hands, so the role assignment might not match the hand in which the user holds the input device. For example, a user must set up the Daydream controller as right or left-handed, but can choose to hold the controller in their opposite hand.</p>
+
+<p>
+<a href="../ScriptReference/XR.InputDevices.GetDevicesWithRole.html">GetDevicesWithRole</a> provides a list of any devices with a specific <code>InputDeviceRole</code>. For example, you can use <code>InputDeviceRole.GameController</code> to get any connected <code>GameController</code> devices:</p>
+
+<pre><code>var gameControllers = new List&lt;UnityEngine.XR.InputDevice&gt;();
+UnityEngine.XR.InputDevices.GetDevicesWithRole(UnityEngine.XR.InputDeviceRole.GameController, gameControllers);
+
+foreach (var device in gameControllers)
+{
+    Debug.Log(string.Format(&quot;Device name '{0}' has role '{1}'&quot;, device.name, device.role.ToString()));
+}
+</code></pre>
+
+<h3>Accessing input devices by XR node</h3>
+
+<p>XR nodes represent the physical points of reference in the XR system (for example, the user’s head position, their right and left hands, or a tracking reference such as an Oculus camera). </p>
+
+<p>The <a href="../ScriptReference/XR.XRNode.html">XRNode</a> enumeration defines the following nodes:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>XR node</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.XRNode.CenterEye.html">CenterEye</a></td>
+	<td style="text-align:left;">A point midway between the pupils of the user’s eyes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.XRNode.GameController.html">GameController</a></td>
+	<td style="text-align:left;">A console-style game controller. Your app can have multiple game controller devices.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.XRNode.HardwareTracker.html">HardwareTracker</a></td>
+	<td style="text-align:left;">A hardware tracking device, typically attached to the user or a physical item. Multiple hardware tracker nodes can exist.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.XRNode.Head.html">Head</a></td>
+	<td style="text-align:left;">The center point of the user’s head, as calculated by the XR system.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.XRNode.LeftEye.html">LeftEye</a></td>
+	<td style="text-align:left;">The user’s left eye.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.XRNode.LeftHand.html">LeftHand</a></td>
+	<td style="text-align:left;">The user’s left hand.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.XRNode.RightEye.html">RightEye</a></td>
+	<td style="text-align:left;">The user’s right eye.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.XRNode.RightHand.html">RightHand</a></td>
+	<td style="text-align:left;">The user’s right hand.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/XR.XRNode.TrackingReference.html">TrackingReference</a></td>
+	<td style="text-align:left;">A tracking reference point, such as the Oculus camera. Multiple tracking reference nodes can exist.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Use <a href="../ScriptReference/XR.InputDevices.GetDevicesAtXRNode.html">InputDevices.GetDevicesAtXRNode</a> to get a list of devices associated with a specific <code>XRNode</code>. The following example demonstrates how to get a left-handed controller:</p>
+
+<pre><code>var leftHandDevices = new List&lt;UnityEngine.XR.InputDevice&gt;();
+UnityEngine.XR.InputDevices.GetDevicesAtXRNode(UnityEngine.XR.XRNode.LeftHand, leftHandDevices);
+
+if(leftHandDevices.Count == 1)
+{
+    UnityEngine.XR.InputDevice device = leftHandDevices[0];
+    Debug.Log(string.Format(&quot;Device name '{0}' with role '{1}'&quot;, device.name, device.role.ToString()));
+}
+else if(leftHandDevices.Count &gt; 1)
+{
+    Debug.Log(&quot;Found more than one left hand!&quot;);
+}
+</code></pre>
+
+<h3>Listening for device connections and disconnections</h3>
+
+<p>Input devices are consistent from frame to frame, but can connect or disconnect at any time. To avoid repeatedly checking if a device is connected to the platform, use <a href="../ScriptReference/XR.InputDevices-deviceConnected.html">InputDevices.deviceConnected</a> and <a href="../ScriptReference/XR.InputDevices-deviceDisconnected.html">InputDevices.deviceDisconnected</a> to notify your application when a device connects or disconnects. These also provide you with a reference to the newly connected input device.</p>
+
+<p>Since you can retain these references over multiple frames, a device might disconnect, or is otherwise no longer available. To check if a device’s inputs are still available, use <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/XR.InputDevice-isValid.html">InputDevice.isValid</a>. <span class="tooltip"><strong>Scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html" href="../ScriptReference/XR.InputDevice-isValid.html">InputDevice.isValid</a>. <span class="tooltip"><strong>Scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> that access input devices should check this at the start of each frame before they attempt to use that device.</p>
+
+<p><a name="AccessingInputFeatures" aria-hidden="true"></a></p>
+
+<h2>Accessing input features on an input device</h2>
+
+<p>You can read an input feature, such as the state of a trigger button, from a specific <a href="../ScriptReference/XR.InputDevice.html">InputDevice</a>. For example, to read the state of the right trigger, follow these steps:</p>
+
+<ol>
+<li>Use <a href="../ScriptReference/XR.InputDeviceRole.RightHanded.html">InputDeviceRole.RightHanded</a> or <a href="../ScriptReference/XR.XRNode.RightHand.html">XRNode.RightHand</a> to get an instance of the right-handed device.</li>
+<li>Once you have the correct device, use the <a href="../ScriptReference/XR.InputDevice.TryGetFeatureValue.html">InputDevice.TryGetFeatureValue</a> method to access the current state.</li>
+</ol>
+
+<p>
+<code>TryGetFeatureValue()</code> attempts to access the current value of a feature, and returns:</p>
+
+<ul>
+<li>true if it successfully retrieves the specified feature value</li>
+<li>false if the current device doesn’t support the specified feature, or the device is invalid (that is, the controller is no longer active)</li>
+</ul>
+
+<p>To get a particular button, touch input, or joystick axis value, use the <a href="../ScriptReference/XR.CommonUsages.html">CommonUsages</a> class. <code>CommonUsages</code> includes each <code>InputFeatureUsage</code> in the <a href="#XRInputMappings">XR input mapping table</a>, as well as tracking features like position and rotation. The following code example uses <a href="../ScriptReference/XR.CommonUsages-triggerButton.html">CommonUsages.triggerButton</a> to detect whether the user is currently pressing the trigger button on a particular <code>InputDevice</code> instance:</p>
+
+<pre><code>bool triggerValue;
+if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out triggerValue) &amp;&amp; triggerValue)
+{
+    Debug.Log(&quot;Trigger button is pressed.&quot;);
+}
+</code></pre>
+
+<p>You can also use the <a href="../ScriptReference/XR.InputDevice.TryGetFeatureUsages.html">InputDevice.TryGetFeatureUsages</a> method to get a list of every <code>InputFeatureUsage</code> that a device provides. This function returns a list of <a href="../ScriptReference/XR.InputFeatureUsage.html">InputFeatureUsage</a> items, which have a type and a name property that describes the feature. The following example enumerates all of the Boolean features that a given input device provides:</p>
+
+<pre><code>var inputFeatures = new List&lt;UnityEngine.XR.InputFeatureUsage&gt;();
+if (device.TryGetFeatureUsages(inputFeatures))
+{
+    foreach (var feature in inputFeatures)
+    {
+        if (feature.type == typeof(bool))
+        {
+            bool featureValue;
+            if (device.TryGetFeatureValue(feature.As&lt;bool&gt;(), out featureValue))
+            {
+                Debug.Log(string.Format(&quot;Bool feature {0}'s value is {1}&quot;, feature.name, featureValue.ToString()));
+            }
+        }
+    }
+}
+</code></pre>
+
+<h3>Example for primaryButton</h3>
+
+<p>Different controller configurations provide access to different features. For example, you might have multiple controllers on one system, different controllers on different systems, or different buttons on the same controllers with different SDKs. This diversity makes it more complicated to support input from a range of XR systems. The Unity <code>InputFeatureUsage</code> API helps you get input that isn’t platform-dependent.</p>
+
+<p>The following example accesses the <code>InputFeatureUsage</code> called <code>primaryButton</code>, no matter which controller or input device provides it. The example includes a class that scans the available devices for the <code>primaryButton</code> as they connect. The class monitors the value of the feature on any connected device and, if the value changes, the class dispatches a <a href="../ScriptReference/Events.UnityEvent.html">UnityEvent</a>.</p>
+
+<p>To use this class, add it as a component to any <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. For example:</p>
+
+<pre><code>using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.XR;
+
+[System.Serializable]
+public class PrimaryButtonEvent : UnityEvent&lt;bool&gt; { }
+
+public class PrimaryButtonWatcher : MonoBehaviour
+{
+    public PrimaryButtonEvent primaryButtonPress;
+
+    private bool lastButtonState = false;
+    private List&lt;InputDevice&gt; devicesWithPrimaryButton;
+
+    private void Awake()
+    {
+        if (primaryButtonPress == null)
+        {
+            primaryButtonPress = new PrimaryButtonEvent();
+        }
+
+        devicesWithPrimaryButton = new List&lt;InputDevice&gt;();
+    }
+
+    void OnEnable()
+    {
+        List&lt;InputDevice&gt; allDevices = new List&lt;InputDevice&gt;();
+        InputDevices.GetDevices(allDevices);
+        foreach(InputDevice device in allDevices)
+            InputDevices_deviceConnected(device);
+
+        InputDevices.deviceConnected += InputDevices_deviceConnected;
+        InputDevices.deviceDisconnected += InputDevices_deviceDisconnected;
+    }
+
+    private void OnDisable()
+    {
+        InputDevices.deviceConnected -= InputDevices_deviceConnected;
+        InputDevices.deviceDisconnected -= InputDevices_deviceDisconnected;
+        devicesWithPrimaryButton.Clear();
+    }
+
+    private void InputDevices_deviceConnected(InputDevice device)
+    {
+        bool discardedValue;
+        if (device.TryGetFeatureValue(CommonUsages.primaryButton, out discardedValue))
+        {
+            devicesWithPrimaryButton.Add(device); // Add any devices that have a primary button.
+        }
+    }
+
+    private void InputDevices_deviceDisconnected(InputDevice device)
+    {
+        if (devicesWithPrimaryButton.Contains(device))
+            devicesWithPrimaryButton.Remove(device);
+    }
+
+    void Update()
+    {
+        bool tempState = false;
+        foreach (var device in devicesWithPrimaryButton)
+        {
+            bool primaryButtonState = false;
+            tempState = device.TryGetFeatureValue(CommonUsages.primaryButton, out primaryButtonState) // did get a value
+                        &amp;&amp; primaryButtonState // the value we got
+                        || tempState; // cumulative result from other controllers
+        }
+
+        if (tempState != lastButtonState) // Button state changed since last frame
+        {
+            primaryButtonPress.Invoke(tempState);
+            lastButtonState = tempState;
+        }
+    }
+}
+</code></pre>
+
+<p>The following <code>PrimaryReactor</code> class uses the <code>PrimaryButtonWatcher</code> to detect when you press a primary button and, in response to a press, rotates its parent GameObject. To use this class, add it to a visible GameObject, such as a Cube, and drag the <code>PrimaryButtonWatcher</code> reference to the <strong>Watcher</strong> property.</p>
+
+<pre><code>using System.Collections;
+using UnityEngine;
+
+public class PrimaryReactor : MonoBehaviour
+{
+    public PrimaryButtonWatcher watcher;
+    public bool IsPressed = false; // used to display button state in the Unity Inspector window
+    public Vector3 rotationAngle = new Vector3(45, 45, 45);
+    public float rotationDuration = 0.25f; // seconds
+    private Quaternion offRotation;
+    private Quaternion onRotation;
+    private Coroutine rotator;
+
+    void Start()
+    {
+        watcher.primaryButtonPress.AddListener(onPrimaryButtonEvent);
+        offRotation = this.transform.rotation;
+        onRotation = Quaternion.Euler(rotationAngle) * offRotation;
+    }
+
+    public void onPrimaryButtonEvent(bool pressed)
+    {
+        IsPressed = pressed;
+        if (rotator != null)
+            StopCoroutine(rotator);
+        if (pressed)
+            rotator = StartCoroutine(AnimateRotation(this.transform.rotation, onRotation));
+        else
+            rotator = StartCoroutine(AnimateRotation(this.transform.rotation, offRotation));
+    }
+
+    private IEnumerator AnimateRotation(Quaternion fromRotation, Quaternion toRotation)
+    {
+        float t = 0;
+        while (t &lt; rotationDuration)
+        {
+            transform.rotation = Quaternion.Lerp(fromRotation, toRotation, t / rotationDuration);
+            t += Time.deltaTime;
+            yield return null;
+        }
+    }
+}
+</code></pre>
+
+<h3>Accessing hand-tracking data</h3>
+
+<p>InputDevices support hand-tracking devices. A hand-tracking device always:</p>
+
+<ul>
+<li>has the <a href="../ScriptReference/XR.InputDeviceCharacteristics.HandTracking.html">HandTracking </a>characteristic</li>
+<li>contains a <a href="../ScriptReference/XR.CommonUsages-handData.html">CommonUsages.HandData</a> usage of the <a href="../ScriptReference/XR.Hand.html">Hand</a> type</li>
+</ul>
+
+<p>Hand-tracking data consists of a Hand object and a series of up to 21 Bone input features. Each <a href="../ScriptReference/XR.Bone.html">Bone</a> has a position and orientation, as well as references to both its parent and any child bones in the hierarchy. The Hand object can get either the root bone, or a list of bones for each individual finger.</p>
+
+<p>When <a href="../ScriptReference/XR.Hand.TryGetRootBone.html">Hand.TryGetRootBone</a> gets the root bone, it retrieves an object that represents a bone located just above the wrist. You can also get a list of bones that represents each individual finger. Calling <a href="../ScriptReference/XR.Hand.TryGetFingerBones.html">Hand.TryGetFingerBones</a> returns a list, from knuckle to tip, of the bones that represents that finger.</p>
+
+<h3>Accessing eye-tracking data</h3>
+
+<p>Input devices support eye-tracking devices, as well as hand-tracking devices. Eye-tracking consists of the left and right eye positions, the location in 3D space where the user is looking, and the amount that each individual eye is blinking. Its data type is <a href="../ScriptReference/XR.Eyes.html">Eyes</a>. To retrieve it from a device, use <a href="../ScriptReference/XR.CommonUsages-eyesData.html">CommonUsages.eyesData</a>. </p>
+
+<h3>XRInputSubsystem and InputDevice association</h3>
+
+<p>Unity provides two input systems: the legacy input system, and the <a href="https://discussions.unity.com/t/xr-plugins-and-subsystems/746800">XR plugin architecture</a> introduced in 2019.2. In the new setup, each InputDevice is associated with an <a href="../ScriptReference/XR.XRInputSubsystem.html">XRInputSubsystem</a>. These subsystem objects control global input behavior that isn’t associated with any specific input device (for example, managing the tracking origin, or recentering tracked devices).</p>
+
+<p>Each InputDevice contains a reference to its associated subsystem. This reference is null if the device comes from an integrated platform. You can also get all active XRInputSubsystem objects with <a href="../ScriptReference/SubsystemManager.GetInstances.html">SubsystemManager.GetInstances&lt;XRInputSubsystem&gt;</a>, and each XRInputSubsystem can get its devices with <a href="../ScriptReference/XR.XRInputSubsystem.TryGetInputDevices.html">XRInputSubsystem.TryGetInputDevices</a>.</p>
+
+<p>You can use the Input Subsystem to recenter devices with <a href="../ScriptReference/XR.XRInputSubsystem.html">UnityEngine.XR.XRInputSubsystem</a>. Recenter sets the current position of the HMD as the new origin for all devices. It returns false for devices that can’t be recentered, or if the platform doesn’t support recentering.</p>
+
+<p>To retrieve the tracking boundary, use <a href="../ScriptReference/XR.XRInputSubsystem.TryGetBoundaryPoints.html">TryGetBoundaryPoints</a>. This consists of a series of clockwise-ordered 3D points, where the y-value is at floor level, and they mark out the user-specified ‘safe zone’ to place content and interactions. You can listen for changes to this boundary with <a href="../ScriptReference/XR.XRInputSubsystem-boundaryChanged.html">XRInputSubsystem.boundaryChanged</a>.</p>
+
+<p>The XRInputSubsystem is also responsible for the tracking origin mode, which provides context for where the origin of the tracking world is. Unity supports the following tracking origin modes:</p>
+
+<ul>
+<li>
+<a href="../ScriptReference/XR.TrackingOriginModeFlags.Device.html">Device</a>: The origin’s location is at the first known location of the primary display device; often an HMD or a phone.</li>
+<li>
+<a href="../ScriptReference/XR.TrackingOriginModeFlags.Floor.html">Floor</a>: The origin’s location is at a known location on the floor.</li>
+<li>
+<a href="../ScriptReference/XR.TrackingOriginModeFlags.TrackingReference.html">Tracking Reference</a>: The origin’s location is on an InputDevice with the TrackingReference characteristic set.</li>
+<li>
+<a href="../ScriptReference/XR.TrackingOriginModeFlags.Unknown.html">Unknown</a>: The type of tracking origin is unknown. This can be because of a system failure or lack of tracking origin-mode support.</li>
+</ul>
+
+<p>There are three APIs you can use to manage the tracking origin mode:</p>
+
+<ul>
+<li>
+<a href="../ScriptReference/XR.XRInputSubsystem.TrySetTrackingOriginMode.html">XRInputSubsystem.TrySetTrackingOriginMode</a> sets the tracking origin mode</li>
+<li>
+<a href="../ScriptReference/XR.XRInputSubsystem.GetTrackingOriginMode.html">XRInputSubystem.GetTrackingOriginMode</a> retrieves the tracking origin mode</li>
+<li>
+<a href="../ScriptReference/XR.XRInputSubsystem.GetSupportedTrackingOriginModes.html">XRInputSubsystem.GetSupportedTrackingOriginModes</a> retrieves all tracking origin modes that the SDK supports</li>
+</ul>
+
+<p><a name="XRInputLegacySystem" aria-hidden="true"></a></p>
+
+<h2>XR input through the legacy input system</h2>
+
+<p>You can still use the legacy input system, consisting of <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Input.html">Input</a> and <a href="../ScriptReference/XR.InputTracking.html">XR.InputTracking</a>, to retrieve XR input features. To do this, use the appropriate legacy input indices from the <a href="#XRInputMappings">XR input mappings table</a> on this page. In the <strong>Input</strong> section of the <span class="tooltip"><strong>Player Settings</strong><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html" href="../ScriptReference/Input.html">Input</a> and <a href="../ScriptReference/XR.InputTracking.html">XR.InputTracking</a>, to retrieve XR input features. To do this, use the appropriate legacy input indices from the <a href="#XRInputMappings">XR input mappings table</a> on this page. In the <strong>Input</strong> section of the <span class="tooltip"><strong>Player Settings</strong><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span> (menu: <strong>Edit</strong> &gt; <span class="tooltip"><strong>Project Settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a href="comp-ManagerGroup.html" href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span> (menu: <strong>Edit</strong> &gt; <span class="tooltip"><strong>Project Settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span> &gt; <strong>Input</strong>), create an axis mapping to add the appropriate mapping from input name to axis index for the platform device’s feature. To retrieve the button or axis value, use <a href="../ScriptReference/Input.GetAxis.html">Input.GetAxis</a> or <a href="../ScriptReference/Input.GetButton.html">Input.GetButton</a> and pass in the now-mapped axis or button name.</p>
+
+<p>For more information about how to use the button and joystick axes, see documentation on the <a href="class-InputManager.html">InputManager</a>.</p>
+
+<p><a name="Haptics" aria-hidden="true"></a></p>
+
+<h2>Haptics</h2>
+
+<p>You can send haptic events to an <a href="../ScriptReference/XR.InputDevice.html">InputDevice</a>. Haptics take on the form of an impulse, with an amplitude and duration.</p>
+
+<p>Not all platforms support all types of haptics, but you can query a device for haptic capabilities. The following example gets an input device for the right hand, checks to see if the device is capable of haptics, and then plays back an impulse if it’s capable:</p>
+
+<pre><code>List&lt;UnityEngine.XR.InputDevice&gt; devices = new List&lt;UnityEngine.XR.InputDevice&gt;(); 
+
+UnityEngine.XR.InputDevices.GetDevicesWithRole(UnityEngine.XR.InputDeviceRole.RightHanded, devices);
+
+foreach (var device in devices)
+{
+    UnityEngine.XR.HapticCapabilities capabilities;
+    if (device.TryGetHapticCapabilities(out capabilities))
+    {
+            if (capabilities.supportsImpulse)
+            {
+                uint channel = 0;
+                float amplitude = 0.5f;
+                float duration = 1.0f;
+                device.SendHapticImpulse(channel, amplitude, duration);
+            }
+    }
+}
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="MobileKeyboard.html"></a></span><div class="tip">Mobile Keyboard</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Unity2D.html"></a></span><div class="tip">2D game development</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

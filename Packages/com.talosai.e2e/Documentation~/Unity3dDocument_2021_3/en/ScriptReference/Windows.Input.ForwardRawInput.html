@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Windows.Input.ForwardRawInput</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">
+                  <a href="Windows.Input.html">Input</a>.ForwardRawInput</h1>
+                <div class="clear">
+                </div>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public static void <span class="sig-kw">ForwardRawInput</span>(IntPtr <span class="sig-kw">rawInputHeaderIndices</span>,
+IntPtr <span class="sig-kw">rawInputDataIndices</span>,
+uint <span class="sig-kw">indicesCount</span>,
+IntPtr <span class="sig-kw">rawInputData</span>,
+uint <span class="sig-kw">rawInputDataSize</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public static void <span class="sig-kw">ForwardRawInput</span>(uint* <span class="sig-kw">rawInputHeaderIndices</span>,
+uint* <span class="sig-kw">rawInputDataIndices</span>,
+uint <span class="sig-kw">indicesCount</span>,
+byte* <span class="sig-kw">rawInputData</span>,
+uint <span class="sig-kw">rawInputDataSize</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">rawInputHeaderIndices</td>
+                    <td class="desc">Pointer to array of indices that specify the byte offsets of RAWINPUTHEADER structures in rawInputData.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">rawInputDataIndices</td>
+                    <td class="desc">Pointer to array of indices that specify the byte offsets of RAWINPUT::data field in rawInputData.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">indicesCount</td>
+                    <td class="desc">Number of RAWINPUT events.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">rawInputData</td>
+                    <td class="desc">Pointer to byte array containing RAWINPUT events.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">rawInputDataSize</td>
+                    <td class="desc">RawInputData array size in bytes.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Forwards raw input events to Unity.</p>
+              </div>
+              <div class="subsection">
+        <p>On Windows, only one window per process can be registered to receive raw input events. This method allows you to forward raw input events to Unity if you overwrote Unity's raw input registration and you are receiving events instead.<br /><br />The example below demonstrates how you can process raw input events yourself and optionally forward them to Unity.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using AOT;
+using <a href="Rendering.VirtualTexturing.System.html">System</a>;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using UnityEngine;<br /><br />public class InputRedirector : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+    const ushort HID_USAGE_PAGE_GENERIC = 0x01;
+    const ushort HID_USAGE_GENERIC_MOUSE = 0x02;
+    const ushort HID_USAGE_GENERIC_KEYBOARD = 0x06;
+    const uint WM_INPUT = 0x00FF;
+    const uint RID_INPUT = 0x10000003;
+    const int ERROR_INSUFFICIENT_BUFFER = 122;<br /><br />    const int RIM_TYPEMOUSE = 0;
+    const int RIM_TYPEKEYBOARD = 1;
+    const ushort kSpaceScanCode = 0x39;<br /><br />    struct WNDCLASSEXW
+    {
+        public int cbSize;
+        public int style;
+        public IntPtr lpfnWndProc;
+        public int cbClsExtra;
+        public int cbWndExtra;
+        public IntPtr hInstance;
+        public IntPtr hIcon;
+        public IntPtr hCursor;
+        public IntPtr hbrBackground;
+        [MarshalAs(UnmanagedType.LPWStr)]
+        public string lpszMenuName;
+        [MarshalAs(UnmanagedType.LPWStr)]
+        public string lpszClassName;
+        public IntPtr hIconSm;
+    }<br /><br />    struct RAWINPUTDEVICE
+    {
+        public ushort usUsagePage;
+        public ushort usUsage;
+        public uint dwFlags;
+        public IntPtr hwndTarget;
+    }<br /><br />    struct RAWINPUTHEADER
+    {
+        public uint dwType;
+        public int dwSize;
+        public IntPtr hDevice;
+        public IntPtr wParam;
+    }<br /><br />    struct RAWKEYBOARD
+    {
+        public ushort MakeCode;
+        public RawKeyboardFlags <a href="Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics.Flags.html">Flags</a>;
+        public ushort Reserved;
+        public ushort VKey;
+        public uint <a href="VersionControl.Message.html">Message</a>;
+        public uint ExtraInformation;
+    }<br /><br />    [<a href="Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics.Flags.html">Flags</a>]
+    enum RawKeyboardFlags : ushort
+    {
+        RI_KEY_MAKE = 0,
+        RI_KEY_BREAK = 1,
+        RI_KEY_E0 = 2,
+        RI_KEY_E1 = 4,
+        RI_KEY_TERMSRV_SET_LED = 8,
+        RI_KEY_TERMSRV_SHADOW = 0x10,
+    }<br /><br />
+    [DllImport("kernel32.dll", SetLastError = true)]
+    static extern IntPtr GetModuleHandleW([MarshalAs(UnmanagedType.LPWStr)] string lpModuleName);<br /><br />    [DllImport("kernel32.dll")]
+    static extern IntPtr GetCurrentProcess();<br /><br />    [DllImport("kernel32.dll", SetLastError = true)]
+    static extern bool IsWow64Process(IntPtr hProcess, out bool Wow64Process);<br /><br />    [DllImport("user32.dll", SetLastError = true)]
+    [return : MarshalAs(UnmanagedType.U2)]
+    static extern ushort RegisterClassExW([In] ref WNDCLASSEXW lpwcx);<br /><br />    [DllImport("user32.dll", SetLastError = true)]
+    static extern bool UnregisterClassW(IntPtr windowClass, IntPtr hInstance);<br /><br />    [DllImport("user32.dll", SetLastError = true)]
+    static extern IntPtr CreateWindowExW(uint dwExStyle, IntPtr windowClass, [MarshalAs(UnmanagedType.LPWStr)] string lpWindowName,
+        uint dwStyle, int x, int y, int nWidth, int nHeight, IntPtr hWndParent, IntPtr hMenu, IntPtr hInstance, IntPtr pvParam);<br /><br />    [DllImport("user32.dll", SetLastError = true)]
+    static extern bool DestroyWindow(IntPtr hWnd);<br /><br />    [DllImport("user32.dll")]
+    static extern IntPtr DefWindowProcW(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam);<br /><br />    [DllImport("User32.dll", SetLastError = true)]
+    static extern bool RegisterRawInputDevices([In][MarshalAs(UnmanagedType.LPArray)] RAWINPUTDEVICE[] pRawInputDevices, int uiNumDevices, int cbSize);<br /><br />    [DllImport("User32.dll", SetLastError = true)]
+    static extern int GetRegisteredRawInputDevices([In][Out][MarshalAs(UnmanagedType.LPArray)] RAWINPUTDEVICE[] pRawInputDevices, ref int puiNumDevices, int cbSize);<br /><br />    [DllImport("User32.dll", SetLastError = true)]
+    static extern int GetRawInputData(IntPtr hRawInput, uint uiCommand, [MarshalAs(UnmanagedType.LPArray)] byte[] pData, ref int pcbSize, int cbSizeHeader);<br /><br />    [DllImport("User32.dll", SetLastError = true)]
+    static extern int GetRawInputBuffer([MarshalAs(UnmanagedType.LPArray)] byte[] pData, ref int pcbSize, int cbSizeHeader);<br /><br />    delegate IntPtr WndProcDelegate(IntPtr window, uint message, IntPtr wParam, IntPtr lParam);<br /><br />    static readonly WndProcDelegate s_WndProc = WndProc;
+    static readonly int kRawInputHeaderSize = Marshal.SizeOf&lt;RAWINPUTHEADER&gt;();
+    static readonly int kRawInputDeviceSize = Marshal.SizeOf&lt;RAWINPUTDEVICE&gt;();
+    static readonly bool kIsWow64 = IsWow64();<br /><br />    static IntPtr s_HInstance = GetModuleHandleW(null);
+    static byte[] s_RawInputBuffer = new byte[8192];
+    static bool s_RedirectingInputToUnity = true;<br /><br />    static byte[] s_RawInputEvents = new byte[8192];
+    static int[] s_RawInputHeaderIndices = new int[100];
+    static int[] s_RawInputDataIndices = new int[100];<br /><br />    IntPtr m_WindowClass;
+    IntPtr m_Hwnd;
+    <a href="GUIStyle.html">GUIStyle</a> m_TextStyle;<br /><br />    const int m_DeviceCount = 2;
+    readonly RAWINPUTDEVICE[] m_Devices;
+    RAWINPUTDEVICE[] m_QueryDevices;<br /><br />    public InputRedirector()
+    {
+        m_Devices = new RAWINPUTDEVICE[m_DeviceCount];
+        m_QueryDevices = new RAWINPUTDEVICE[m_DeviceCount];
+    }<br /><br />    private void RegisterRawInputDevices()
+    {
+        <a href="Debug.Log.html">Debug.Log</a>("Registering raw input devices");<br /><br />        ref RAWINPUTDEVICE mouse = ref m_Devices[0];
+        mouse.usUsagePage = HID_USAGE_PAGE_GENERIC;
+        mouse.usUsage = HID_USAGE_GENERIC_MOUSE;
+        mouse.hwndTarget = m_Hwnd;<br /><br />        ref RAWINPUTDEVICE keyboard = ref m_Devices[1];
+        keyboard.usUsagePage = HID_USAGE_PAGE_GENERIC;
+        keyboard.usUsage = HID_USAGE_GENERIC_KEYBOARD;
+        keyboard.hwndTarget = m_Hwnd;<br /><br />        if (!RegisterRawInputDevices(m_Devices, m_DeviceCount, kRawInputDeviceSize))
+            throw new Win32Exception(Marshal.GetLastWin32Error(), "Failed to register mouse and keyboard for Raw <a href="Input.html">Input</a>.");
+    }<br /><br />    void Awake()
+    {
+        m_WindowClass = RegisterWindowClass();
+        m_Hwnd = CreateWindowExW(0, m_WindowClass, "Raw <a href="Input.html">Input</a> Redirection Window", 0, 0, 0, 0, 0, IntPtr.Zero, IntPtr.Zero, s_HInstance, IntPtr.Zero);
+        if (m_Hwnd == null)
+            throw new Win32Exception(Marshal.GetLastWin32Error(), "Failed to create raw input redirection window.");<br /><br />        RegisterRawInputDevices();
+    }<br /><br />    void <a href="PlayerLoop.Update.html">Update</a>()
+    {
+        int numberOfDevices = 0;
+        GetRegisteredRawInputDevices(null, ref numberOfDevices, kRawInputDeviceSize);<br /><br />        if (m_QueryDevices.Length &lt; numberOfDevices)
+            Array.Resize(ref m_QueryDevices, numberOfDevices);<br /><br />        if (GetRegisteredRawInputDevices(m_QueryDevices, ref numberOfDevices, kRawInputDeviceSize) == -1)
+        {
+            var error = Marshal.GetLastWin32Error();
+            <a href="Debug.LogError.html">Debug.LogError</a>("GetRegisteredRawInputDevices failed: " + new Win32Exception(error).<a href="VersionControl.Message.html">Message</a>);
+        }
+        else
+        {
+            for (int i = 0; i &lt; numberOfDevices; i++)
+            {
+                if (m_QueryDevices[i].usUsage == HID_USAGE_GENERIC_MOUSE || m_QueryDevices[i].usUsage == HID_USAGE_GENERIC_KEYBOARD)
+                {
+                    if (m_QueryDevices[i].hwndTarget != m_Hwnd)
+                    {
+                        RegisterRawInputDevices();
+                        break;
+                    }
+                }
+            }
+        }
+    }<br /><br />    void OnDestroy()
+    {
+        if (!DestroyWindow(m_Hwnd))
+            throw new Win32Exception(Marshal.GetLastWin32Error(), "Failed to destroy raw input redirection window class.");<br /><br />        if (!UnregisterClassW(m_WindowClass, s_HInstance))
+            throw new Win32Exception(Marshal.GetLastWin32Error(), "Failed to unregister raw input redirection window class.");
+    }<br /><br />    void OnGUI()
+    {
+        if (m_TextStyle == null)
+        {
+            m_TextStyle = new <a href="GUIStyle.html">GUIStyle</a>(GUI.skin.label);
+            m_TextStyle.fontSize = 24;
+        }<br /><br />        <a href="GUI.Label.html">GUI.Label</a>(new <a href="Rect.html">Rect</a>(100, 10, 500, 30), $"Redirecting input to Unity: {s_RedirectingInputToUnity}", m_TextStyle);
+    }<br /><br />    [MonoPInvokeCallback(typeof(WndProcDelegate))]
+    static IntPtr WndProc(IntPtr window, uint message, IntPtr wParam, IntPtr lParam)
+    {
+        try
+        {
+            if (message == WM_INPUT)
+                ProcessRawInputMessage(lParam);<br /><br />            return DefWindowProcW(window, message, wParam, lParam);
+        }
+        catch (Exception e)
+        {
+            // Never let exception escape to native code as that will crash the app
+            <a href="Debug.LogException.html">Debug.LogException</a>(e);
+            return IntPtr.Zero;
+        }
+    }<br /><br />    static void ProcessRawInputMessage(IntPtr lParam)
+    {
+        int rawInputEventCount = 0;
+        int rawInputEventsSize = 0;<br /><br />        // First, process the message we received
+        int sizeofRawInputBuffer = s_RawInputBuffer.Length;
+        int result = GetRawInputData(lParam, RID_INPUT, s_RawInputBuffer, ref sizeofRawInputBuffer, kRawInputHeaderSize);
+        if (result == -1)
+        {
+            var errorCode = Marshal.GetLastWin32Error();
+            <a href="Debug.LogError.html">Debug.LogError</a>($"Failed to get raw input data: {new Win32Exception(errorCode).<a href="VersionControl.Message.html">Message</a>}");
+            return;
+        }<br /><br />        CopyEventFromRawInputBuffer(0, kRawInputHeaderSize, ref rawInputEventCount, ref rawInputEventsSize);<br /><br />        // Next, drain the raw input message queue so they don't keep getting
+        // pumped one at a time through PeekMessage/DispatchMessage as that is
+        // too slow with high input polling rate devices
+        while (true)
+        {
+            var rawInputCount = GetRawInputBuffer(s_RawInputBuffer, ref sizeofRawInputBuffer, kRawInputHeaderSize);
+            if (rawInputCount == 0)
+                break;<br /><br />            if (rawInputCount == -1)
+            {
+                var errorCode = Marshal.GetLastWin32Error();
+                <a href="Debug.LogError.html">Debug.LogError</a>($"Failed to get raw input buffer: {new Win32Exception(errorCode).<a href="VersionControl.Message.html">Message</a>}");
+                break;
+            }<br /><br />            int offset = 0;
+            for (int i = 0; i &lt; rawInputCount; i++)
+            {
+                var rawInputDataOffset = kRawInputHeaderSize;<br /><br />                if (kIsWow64)
+                {
+                    // RAWINPUTHEADER is 16 bytes on 32-bit, but 24 bytes on 64-bit. Since this data is memcpy-ed from the kernel,
+                    // we need to adjust the data pointer by 8 bytes if we're in a 32-bit process but 64-bit kernel.
+                    // We only need to do this with data coming from GetRawInputBuffer as GetRawInputData fixes up the single
+                    // event it returns.
+                    rawInputDataOffset += rawInputDataOffset;
+                }<br /><br />                offset += CopyEventFromRawInputBuffer(offset, rawInputDataOffset, ref rawInputEventCount, ref rawInputEventsSize);
+            }
+        }<br /><br />        // Finally, dispatch the events to Unity
+        if (s_RedirectingInputToUnity)
+        {
+            unsafe
+            {
+                fixed(int* rawInputHeaderIndices = s_RawInputHeaderIndices)
+                {
+                    fixed(int* rawInputDataIndices = s_RawInputDataIndices)
+                    {
+                        fixed(byte* rawInputData = s_RawInputEvents)
+                        {
+                            UnityEngine.Windows.Input.ForwardRawInput((uint*)rawInputHeaderIndices, (uint*)rawInputDataIndices, (uint)rawInputEventCount, rawInputData, (uint)rawInputEventsSize);
+                        }
+                    }
+                }
+            }
+        }
+    }<br /><br />    private static int CopyEventFromRawInputBuffer(int offset, int dataOffset, ref int rawInputEventCount, ref int rawInputEventsSize)
+    {
+        RAWINPUTHEADER header;
+        unsafe
+        {
+            fixed(byte* rawInputBufferPtr = s_RawInputBuffer)
+            header = *(RAWINPUTHEADER*)(rawInputBufferPtr + offset);
+        }<br /><br />        if (header.dwType == RIM_TYPEKEYBOARD)
+        {
+            unsafe
+            {
+                fixed(byte* rawInputBufferPtr = s_RawInputBuffer)
+                {
+                    var keyboard = *(RAWKEYBOARD*)(rawInputBufferPtr + dataOffset);<br /><br />                    // Releasing space key will toggle whether we forward events to Unity
+                    bool keyPressed = (keyboard.Flags &amp; RawKeyboardFlags.RI_KEY_BREAK) == 0;
+                    if (!keyPressed &amp;&amp; keyboard.MakeCode == kSpaceScanCode)
+                        s_RedirectingInputToUnity = !s_RedirectingInputToUnity;
+                }
+            }
+        }<br /><br />        if (rawInputEventsSize + header.dwSize &gt; s_RawInputEvents.Length)
+            Array.Resize(ref s_RawInputEvents, Math.Max(rawInputEventsSize + header.dwSize, 2 * s_RawInputEvents.Length));<br /><br />        if (rawInputEventCount == s_RawInputHeaderIndices.Length)
+        {
+            Array.Resize(ref s_RawInputHeaderIndices, 2 * s_RawInputHeaderIndices.Length);
+            Array.Resize(ref s_RawInputDataIndices, 2 * s_RawInputHeaderIndices.Length);
+        }<br /><br />        s_RawInputHeaderIndices[rawInputEventCount] = rawInputEventsSize;
+        s_RawInputDataIndices[rawInputEventCount] = rawInputEventsSize + dataOffset;
+        Array.Copy(s_RawInputBuffer, offset, s_RawInputEvents, rawInputEventsSize, header.dwSize);<br /><br />        rawInputEventCount++;
+        rawInputEventsSize += header.dwSize;
+        return header.dwSize;
+    }<br /><br />    static IntPtr RegisterWindowClass()
+    {
+        var wndClass = new WNDCLASSEXW();
+        wndClass.cbSize = Marshal.SizeOf&lt;WNDCLASSEXW&gt;();
+        wndClass.lpfnWndProc = Marshal.GetFunctionPointerForDelegate(s_WndProc);
+        wndClass.hInstance = s_HInstance;
+        wndClass.lpszClassName = "RawInputRedirector";<br /><br />        var registeredClass = RegisterClassExW(ref wndClass);
+        if (registeredClass == 0)
+            throw new Win32Exception(Marshal.GetLastWin32Error(), "Failed to register the window class.");<br /><br />        return new IntPtr(registeredClass);
+    }<br /><br />    private static bool IsWow64()
+    {
+        if (IntPtr.Size == 8)
+            return false;<br /><br />        if (!IsWow64Process(GetCurrentProcess(), out bool isWow64))
+            throw new Win32Exception(Marshal.GetLastWin32Error(), "Failed to figure out whether we're running under WOW64.");<br /><br />        return isWow64;
+    }<br /><br />#endif // UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+}
+</pre>
+      </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

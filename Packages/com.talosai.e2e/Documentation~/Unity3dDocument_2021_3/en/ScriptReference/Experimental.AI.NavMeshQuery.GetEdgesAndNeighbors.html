@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Experimental.AI.NavMeshQuery.GetEdgesAndNeighbors</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <div class="message message-error mb20">
+                  <b>Experimental</b>: this API is experimental and might be changed or removed in the future.</div>
+                <h1 class="heading inherit">
+                  <a href="Experimental.AI.NavMeshQuery.html">NavMeshQuery</a>.GetEdgesAndNeighbors</h1>
+                <div class="clear">
+                </div>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public <a href="Experimental.AI.PathQueryStatus.html">Experimental.AI.PathQueryStatus</a> <span class="sig-kw">GetEdgesAndNeighbors</span>(<a href="Experimental.AI.PolygonId.html">Experimental.AI.PolygonId</a> <span class="sig-kw">node</span>,
+NativeSlice&lt;Vector3&gt; <span class="sig-kw">edgeVertices</span>,
+NativeSlice&lt;PolygonId&gt; <span class="sig-kw">neighbors</span>,
+NativeSlice&lt;byte&gt; <span class="sig-kw">edgeIndices</span>,
+out int <span class="sig-kw">verticesCount</span>,
+out int <span class="sig-kw">neighborsCount</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">node</td>
+                    <td class="desc">Identifier of a node from a NavMesh surface, <a href="../Manual/class-NavMeshLink.html">NavMeshLink</a> or <a href="../Manual/nav-CreateOffMeshLink.html">Off-mesh Link</a> for which the vertices and neighbors need to be retrieved.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">edgeVertices</td>
+                    <td class="desc">The result buffer that contains the world positions describing the geometry of the input navigation <code class="mono">node</code>. It can have zero capacity.<br />
+<a href="Experimental.AI.NavMeshPolyTypes.Ground.html">Polygonal</a> nodes of the NavMesh have a minimum of 3 and a maximum of 6 vertices.<br />
+<a href="Experimental.AI.NavMeshPolyTypes.OffMeshConnection.html">OffMeshConnection</a> nodes are always represented by 4 vertices, regardless of their width.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">neighbors</td>
+                    <td class="desc">The result buffer that holds the identifiers of all the navigation nodes immediately reachable from the given <code class="mono">node</code>. It can have zero capacity.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">edgeIndices</td>
+                    <td class="desc">The helper result buffer that maps each neighbor node to an edge of the given <code class="mono">node</code>.  It can have zero capacity.<br />
+The index of an element in <code class="mono">edgeIndices</code> is also an index in the <code class="mono">neighbors</code> array and the value of that <code class="mono">edgeIndices</code> element is an index in the <code class="mono">edgeVertices</code> array.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">verticesCount</td>
+                    <td class="desc">The total number of vertices that describe the geometry of the input <code class="mono">node</code>. This is independent of the capacity of the <code class="mono">vertices</code> result buffer.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">neighborsCount</td>
+                    <td class="desc">The total number of navigation nodes the input <code class="mono">node</code> connects to. This is independent of the capacity of the result buffers (<code class="mono">neighbors</code> and <code class="mono">edgeIndices</code>).</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Returns</h3>
+                <p>
+                  <strong>PathQueryStatus</strong>
+        
+          <code class="varname">Success</code> if Unity can evaluate the neighbors and vertices of the specified node, regardless of the result. The <code class="mono">verticesCount</code> and <code class="mono">neighborsCount</code> are always valid in this case.<br />
+<code class="varname">Failure</code> if Unity can not use the <code class="mono">node</code> identifier to retrieve the neighbors or geometry information. Unity does not modify any of the five result parameters (<code class="mono">edgeVertices</code>, <code class="mono">neighbors</code>, <code class="mono">edgeIndices</code>, <code class="mono">verticesCount</code> or <code class="mono">neighborsCount</code>) in this case.<br />
+<code class="varname">InvalidParam</code> is part of the returned flags if the specified navigation node is not <a href="Experimental.AI.NavMeshQuery.IsValid.html">valid</a> in the query's NavMeshWorld.<br />
+<code class="varname">BufferTooSmall</code> is part of the PathQueryStatus flags, that Unity returns from this function, when any of the result buffers you provide are not large enough to hold all the neighbor nodes the input <code class="mono">node</code> connects to or all of its edge vertices.
+      </p>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Retrieves the vertices of a given <code class="mono">node</code> and the <a href="Experimental.AI.PolygonId.html">identifiers</a> of all the navigation nodes to which it connects.</p>
+              </div>
+              <div class="subsection">
+        <p>A <a href="Experimental.AI.NavMeshPolyTypes.Ground.html">polygon</a> of a NavMesh surface connects to all other neighboring polygons with which it shares an edge as well as all the <a href="Experimental.AI.NavMeshPolyTypes.OffMeshConnection.html">OffMeshLinks or NavMeshLinks</a> that leave from anywhere on its surface. The polygon does not connect to other polygons with which it shares only a vertex.<br />
+Each point returned in the <code class="mono">edgeVertices</code> array represents the start of a <code class="mono">node</code>'s edge and the subsequent element in the array is the end point of that edge. All vertices form a closed polygonal line. The last and first elements define the last edge.<br />
+<br />
+An <a href="Experimental.AI.NavMeshPolyTypes.OffMeshConnection.html">off-mesh link</a> connects to all the NavMesh polygons that each end of the link intersects with, regardless of whether the link is unidirectional.<br />
+For link nodes the returned <code class="mono">edgeVertices</code> array contains two pairs of points at indices [0]-[1] and [2]-[3] that define the end points of the start and end edges of the link, in this order. These are the world positions established at the moment when the link is instantiated in the NavMesh world. For nodes added through <a href="../Manual/nav-CreateOffMeshLink.html">Off-mesh Link</a>  components the pairs contain the same value in both of their elements.<br />
+<br />
+A node from the <code class="mono">neighbors</code> array lies at the edge returned in <code class="mono">edgeIndices</code> at the same index.<br />
+If both the given <code class="mono">node</code> and its neighbor are NavMesh <a href="Experimental.AI.NavMeshPolyTypes.Ground.html">polygons</a>, then the corresponding <code class="mono">edgeIndices</code> value represents the index of the polygon edge that leads from <code class="mono">node</code> to the neighbor.  E.g. <code class="mono">edgeVertices[edgeIndices[2]]</code> represents the start point of the edge that is common between <code class="mono">node</code> and the <code class="mono">neighbors[2]</code> node, and <code class="mono">edgeVertices[edgeIndices[2] + 1]</code> is the end point of that edge.<br />
+A NavMesh polygon can have a maximum of 6 edges. This means the <code class="mono">edgeIndices</code> value corresponding to a polygon-polygon connection is between 0 and 5, inclusive. An edge usually connects only the two polygons that share it, but edges that sit at a tile border can connect one polygon in the first tile to multiple polygons in the second tile. In this case, <code class="mono">edgeIndices</code> report the same value for all of those neighbors.<br />
+If either the given <code class="mono">node</code> or the <code class="varname">neighbor</code> is a <a href="Experimental.AI.NavMeshPolyTypes.OffMeshConnection.html">link</a>, then the corresponding <code class="mono">edgeIndices</code> value represents the side on the link where the connection is made: 0 for <a href="AI.NavMeshLinkData-startPosition.html">start</a> and 2 for <a href="AI.NavMeshLinkData-endPosition.html">end</a>. When the <code class="mono">node</code> is a polygon and the <code class="varname">neighbor</code> is a link the value acts only as information about the side of the link where the two nodes connect and should not be used as an index in the <code class="mono">edgeVertices</code> array.<br />
+When the <code class="mono">neighbors</code> and <code class="mono">edgeIndices</code> buffers both have positive capacity, they must be the same size, otherwise you will encounter an <code class="mono">ArgumentException</code> when this method executes in the Editor.<br />
+<br />
+You can set any of the buffers to have zero capacity for the cases when you do not need the results.<br />
+<br />
+The returned <code class="mono">verticesCount</code> and <code class="mono">neighborsCount</code> values express the number of elements that comprise the result in the output buffers of sufficient size. Buffers that are not large enough are still filled with valid nodes up to their full capacity.<br />
+<br />
+The five result parameters (<code class="mono">edgeVertices</code>, <code class="mono">neighbors</code>, <code class="mono">edgeIndices</code>, <code class="mono">verticesCount</code> and <code class="mono">neighborsCount</code>) do not act as input and do not change the internal navigation data in any way. Unity only modifies them in the case when the operation returns a <code class="varname">Success</code> status.<br />
+<br />
+Additional resources: <a href="Experimental.AI.NavMeshQuery.GetPolygonType.html">NavMeshQuery.GetPolygonType</a>, <a href="Experimental.AI.NavMeshQuery.GetPortalPoints.html">NavMeshQuery.GetPortalPoints</a>.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using Unity.Collections;
+using UnityEngine;
+using UnityEngine.Experimental.AI;<br /><br />public class NavMeshNodeEdgesDrawer : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    void <a href="PlayerLoop.Update.html">Update</a>()
+    {
+        var query = new <a href="Experimental.AI.NavMeshQuery.html">NavMeshQuery</a>(<a href="Experimental.AI.NavMeshWorld.GetDefaultWorld.html">NavMeshWorld.GetDefaultWorld</a>(), <a href="Unity.Collections.Allocator.Temp.html">Allocator.Temp</a>);
+        var vertices = new NativeArray&lt;<a href="Vector3.html">Vector3</a>&gt;(6, <a href="Unity.Collections.Allocator.Temp.html">Allocator.Temp</a>);
+        var neighbors = new NativeArray&lt;<a href="Experimental.AI.PolygonId.html">PolygonId</a>&gt;(10, <a href="Unity.Collections.Allocator.Temp.html">Allocator.Temp</a>);
+        var edgeIndices = new NativeArray&lt;byte&gt;(neighbors.Length, <a href="Unity.Collections.Allocator.Temp.html">Allocator.Temp</a>);
+        int totalVertices;
+        int totalNeighbors;<br /><br />        var location = query.MapLocation(transform.position, <a href="Vector3-one.html">Vector3.one</a>, 0);<br /><br />        var queryStatus = query.GetEdgesAndNeighbors(
+            location.polygon, vertices, neighbors, edgeIndices,
+            out totalVertices, out totalNeighbors);<br /><br />        var color = (queryStatus &amp; <a href="Experimental.AI.PathQueryStatus.Success.html">PathQueryStatus.Success</a>) != 0 ? <a href="Color-green.html">Color.green</a> : <a href="Color-red.html">Color.red</a>;
+        <a href="Debug.DrawLine.html">Debug.DrawLine</a>(transform.position - <a href="Vector3-up.html">Vector3.up</a>, transform.position + <a href="Vector3-up.html">Vector3.up</a>, color);<br /><br />        for (int i = 0, j = totalVertices - 1; i &lt; totalVertices; j = i++)
+        {
+            <a href="Debug.DrawLine.html">Debug.DrawLine</a>(vertices[i], vertices[j], <a href="Color-grey.html">Color.grey</a>);
+        }<br /><br />        for (var i = 0; i &lt; totalNeighbors; i++)
+        {
+            if (query.GetPolygonType(neighbors[i]) == <a href="Experimental.AI.NavMeshPolyTypes.OffMeshConnection.html">NavMeshPolyTypes.OffMeshConnection</a>)
+            {
+                // The link neighbor is not connected through any of the polygon's edges.
+                // Call GetEdgesAndNeighbors() on this specific neighbor in order to retrieve its edges.
+                continue;
+            }<br /><br />            var start = edgeIndices[i];
+            var end = (start + 1) % totalVertices;
+            var neighborColor = <a href="Color.Lerp.html">Color.Lerp</a>(<a href="Color-yellow.html">Color.yellow</a>, <a href="Color-magenta.html">Color.magenta</a>, 1f * start / (totalVertices - 1));
+            <a href="Debug.DrawLine.html">Debug.DrawLine</a>(vertices[start], vertices[end], neighborColor);
+        }<br /><br />        query.Dispose();
+        vertices.Dispose();
+        neighbors.Dispose();
+        edgeIndices.Dispose();
+    }
+}
+</pre>
+      </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

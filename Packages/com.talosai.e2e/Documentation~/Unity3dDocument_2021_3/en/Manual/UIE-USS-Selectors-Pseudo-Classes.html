@@ -1,0 +1,295 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Pseudo-classes</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-USS-Selectors-Pseudo-Classes.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-USS-Selectors-Pseudo-Classes.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-USS-Selectors-Pseudo-Classes.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-USS-Selectors-Pseudo-Classes.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-USS-Selectors-Pseudo-Classes.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-USS-Selectors-Pseudo-Classes.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-USS-Selectors-Pseudo-Classes.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-USS-Selectors-Pseudo-Classes.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-USS.html">Style UI</a></li>
+<li><a href="UIE-USS-Selectors.html">USS selectors</a></li>
+<li>Pseudo-classes</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-USS-Selectors-list.html"></a></span><div class="tip">Selector lists</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-uss-selector-precedence.html"></a></span><div class="tip">Selector precedence</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Pseudo-classes</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A pseudo-class narrows a selector’s scope so it only matches elements when they enter a specific state.</p>
+
+<p>Append a pseudo-class to a simple selector to match specific elements when they’re in a specific state. For example, the following USS rule uses the <code>:hover</code> pseudo-class to change the color of <code>Button</code> elements when a user hovers the pointer over them.</p>
+
+<pre><code class="lang-css">Button:hover {
+    background-color: palegreen;
+}
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/uss-selectors-pseudo-hover.png" alt="">
+</figure>
+
+<h2>Supported pseudo-classes</h2>
+
+<p>The following table lists supported pseudo-classes. You can’t extend pseudo-classes or create custom ones.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Pseudo-class</th>
+	<th style="text-align:left;">Matches an element when</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>:hover</code></td>
+	<td style="text-align:left;">The cursor is positioned over the element.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>:active</code></td>
+	<td style="text-align:left;">A user interacts with the element.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>:inactive</code></td>
+	<td style="text-align:left;">A user stops to interact with the element.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>:focus</code></td>
+	<td style="text-align:left;">The element has focus.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>:selected</code></td>
+	<td style="text-align:left;">USS doesn’t support this pseudo-state. Use <code>:checked</code> instead.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>:disabled</code></td>
+	<td style="text-align:left;">The element is in a disabled state.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>:enabled</code></td>
+	<td style="text-align:left;">The element is in an enabled state.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>:checked</code></td>
+	<td style="text-align:left;">The element is a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-uxml-element-Toggle.html">Toggle</a><span class="tooltiptext">A checkbox that allows the user to switch an option on or off. <a href="UIE-uxml-element-Toggle.html" href="UIE-uxml-element-Toggle.html">Toggle</a><span class="tooltiptext">A checkbox that allows the user to switch an option on or off. <a href="UIE-uxml-element-Toggle.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toggle" aria-label="Go to glossary anchor for Toggle">Glossary</a></span></span></span> or <a href="UIE-uxml-element-RadioButton.html">RadioButton</a> element and it’s selected.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>:root</code></td>
+	<td style="text-align:left;">The element is the highest-level element in the <span class="tooltip"><strong>visual tree</strong><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualtree" aria-label="Go to glossary anchor for Visualtree">Glossary</a></span></span></span> that has the stylesheet applied.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Chain pseudo-classes</h2>
+
+<p>You can chain pseudo-classes together to apply the same style for multiple concurrent states. For example, the following USS rule chains the <code>:checked</code> and <code>:hover</code> pseudo-classes together to change the color of checked <code>Toggle</code> elements when a user hovers the pointer over them.</p>
+
+<pre><code class="lang-css">Toggle:checked:hover {
+  background-color: yellow;
+}
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/uss-selectors-pseudo-chained-match.png" alt="">
+</figure>
+
+<p>When the toggle is checked, but the pointer isn’t hovering over it, the selector no longer matches.</p>
+
+<figure>
+<img src="../uploads/Main/uss-selectors-pseudo-chained-nomatch.png" alt="">
+</figure>
+
+<p><a name="root-pseudo-class" aria-hidden="true"></a></p>
+
+<h2>The root pseudo-class</h2>
+
+<p>The <code>:root</code> pseudo-class matches the highest-level element that the stylesheet is applied to.</p>
+
+<h3>Set default values with the root pseudo-class</h3>
+
+<p>You can use the <code>:root</code> pseudo-class to set default style values for inherited styles across elements. To see which USS properties are inherited, refer to the <a href="UIE-USS-Properties-Reference.html">USS properties reference</a>.</p>
+
+<p>For example, the following USS rule sets a default font. If you apply the stylesheet to the root element in the visual tree, any element that doesn’t get its font from a more specific style rule uses that font.</p>
+
+<pre><code class="lang-css">:root {
+  -unity-font: url(&quot;../Resources/fonts/OpenSans-Regular.ttf&quot;);
+}
+</code></pre>
+
+<h3>Use custom properties with the root pseudo-class</h3>
+
+<p>A common use for the <code>:root</code> pseudo-class is to declare “global” <a href="UIE-USS-CustomProperties.html">variables (custom properties)</a>, that other style rules can use instead of specific values. For example, you can define a custom property for a color and use it in other rules:</p>
+
+<pre><code class="lang-css">:root {
+  --my-color: #ff0000;
+}
+
+Button {
+  background-color: var(--my-color);
+}
+</code></pre>
+
+<h3>The root pseudo-class matching</h3>
+
+<p>In CSS, the <code>:root</code> pseudo-class matches the root element, which is <code>&lt;HTML&gt;</code>. In USS, it can be the root element or any other element in the visual tree. It doesn’t match other elements or the child elements of that element. </p>
+
+<p>For example, if you have the following hierarchy:</p>
+
+<pre><code class="lang-csharp">var myElement = new VisualElement();
+var myElementChild = new VisualElement();
+myElement.Add(myElementChild);
+
+var myOtherElement = new VisualElement();
+</code></pre>
+
+<p>If you add the stylesheet to <code>myElement</code>:</p>
+
+<pre><code class="lang-csharp">myElement.stylesheets.Add(myStyleSheet);
+</code></pre>
+
+<p>The <code>:root</code> selector matches <code>myElement</code> but not <code>myElementChild</code> and <code>myOtherElement</code>.</p>
+
+<p>If you add explicitly the stylesheet to <code>myElementChild</code> and <code>myOtherElement</code>:</p>
+
+<pre><code class="lang-csharp">myElementChild.stylesheets.Add(myStyleSheet);
+myOtherElement.stylesheets.Add(myStyleSheet);
+</code></pre>
+
+<p>In this case, the <code>:root</code> selector matches <code>myElement</code>, <code>myElementChild</code>, and <code>myOtherElement</code>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-USS-WritingStyleSheets.html">Best practices for USS</a></li>
+<li><a href="UIE-USS-Properties-Reference.html">USS properties reference</a></li>
+<li><a href="UIE-USS-CustomProperties.html">USS custom properties</a></li>
+<li><a href="UIE-uxml-element-Toggle.html#style-a-toggle">Style a Toggle</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-USS-Selectors-list.html"></a></span><div class="tip">Selector lists</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-uss-selector-precedence.html"></a></span><div class="tip">Selector precedence</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

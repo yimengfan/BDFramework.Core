@@ -1,0 +1,744 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: System requirements for Unity 2021 LTS</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/system-requirements.html">English</a></li>
+<li><a href="/cn/current/Manual/system-requirements.html">中文</a></li>
+<li><a href="/ja/current/Manual/system-requirements.html">日本語</a></li>
+<li><a href="/kr/current/Manual/system-requirements.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/system-requirements.html">English</a></li>
+<li><a href="/cn/current/Manual/system-requirements.html">中文</a></li>
+<li><a href="/ja/current/Manual/system-requirements.html">日本語</a></li>
+<li><a href="/kr/current/Manual/system-requirements.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="GettingStartedInstallingUnity.html">Installing Unity</a></li>
+<li>System requirements for Unity 2021 LTS</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="GettingStartedInstallingUnity.html"></a></span><div class="tip">Installing Unity</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="install-unity-with-installers.html"></a></span><div class="tip">Install Unity using installer files</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>System requirements for Unity 2021 LTS</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page outlines the system requirements you need to run Unity 2021 LTS on all supported platforms.</p>
+
+<ul>
+<li><p><a href="#editor">Unity Editor system requirements</a></p></li>
+<li><p><a href="#limitations">Unity Editor platform limitations</a></p></li>
+<li>
+<a href="#player">Unity Player system requirements</a>:
+
+<ul>
+<li><p><a href="#mobile">Mobile</a></p></li>
+<li><p><span class="tooltip"><a href="#console">Console</a><span class="tooltiptext">Abbreviation of <strong>game console</strong><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#console" aria-label="Go to glossary anchor for console">Glossary</a></span></span></span></p></li>
+<li><p><a href="#desktop">Desktop</a></p></li>
+<li><p><a href="#server">Server platform</a></p></li>
+<li><p><a href="#web">Web platform</a></p></li>
+<li>
+<a href="#xr">XR platform</a>
+
+<ul>
+<li><p><a href="#oculus">Oculus</a></p></li>
+<li><p><a href="#openxr">OpenXR</a></p></li>
+<li><p><a href="#wmr">Windows Mixed Reality</a></p></li>
+<li><p><a href="#arcore">Google ARCore</a></p></li>
+<li><p><a href="#arkit">Apple ARKit</a></p></li>
+</ul>
+</li>
+<li><p><a href="#embedded">Embedded systems</a></p></li>
+</ul>
+</li>
+</ul>
+
+<p><a name="editor" aria-hidden="true"></a></p>
+
+<h2>Unity Editor system requirements</h2>
+
+<p>This section lists the hardware and software requirements to run the Unity Editor. Actual performance and rendering quality might vary depending on the complexity of your project.</p>
+
+<p>For all operating systems, the Unity Editor is supported on workstations or laptop form factors running without emulation, container, or compatibility layer.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Operating system</strong></th>
+	<th style="text-align:left;"><strong>Operating system version</strong></th>
+	<th style="text-align:left;"><strong>CPU</strong></th>
+	<th style="text-align:left;"><strong>Graphics API</strong></th>
+	<th style="text-align:left;"><strong>Additional requirements</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Windows</strong></td>
+	<td style="text-align:left;">Windows 7 (SP1+), Windows 10 and Windows 11, 64-bit versions only.</td>
+	<td style="text-align:left;">X64 architecture with SSE2 instruction set support.</td>
+	<td style="text-align:left;">DX10, DX11, and DX12-capable GPUs.</td>
+	<td style="text-align:left;">Hardware vendor officially supported drivers.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MacOS</strong></td>
+	<td style="text-align:left;">High Sierra 10.13+ (Intel processors) <br>Big Sur 11.0 (Apple silicon-based processors).</td>
+	<td style="text-align:left;">X64 architecture with SSE2 instruction set support (Intel processors) <br>Apple M1 or above (Apple silicon-based processors).</td>
+	<td style="text-align:left;">Metal-capable Intel and AMD GPUs.</td>
+	<td style="text-align:left;">Apple officially supported drivers (Intel processor) <br> Rosetta 2 is required for Apple silicon devices running on either Apple silicon or Intel versions of the Unity Editor.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Linux</strong></td>
+	<td style="text-align:left;">Ubuntu 20.04, Ubuntu 18.04, and CentOS 7.</td>
+	<td style="text-align:left;">X64 architecture with SSE2 instruction set support.</td>
+	<td style="text-align:left;">OpenGL 3.2+ or Vulkan-capable, Nvidia and AMD GPUs.</td>
+	<td style="text-align:left;">Gnome desktop environment running on top of X11 windowing system, Nvidia official proprietary graphics driver, or AMD Mesa graphics driver. Other configuration and user environment as provided stock with the supported distribution (Kernel, Compositor, etc.)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note</strong>: Microsoft support for Windows 7 ended January 14, 2020.</p>
+
+<h3>RAM recommendations for the Unity Editor</h3>
+
+<p>To run the Unity Editor on Windows, macOS, or Linux, a minimum of 8 GB RAM is recommended.</p>
+
+<p>However, the amount of RAM required to load and run your project depends on your project’s size and complexity. Larger and more complex projects require additional RAM.</p>
+
+<p><a name="limitations" aria-hidden="true"></a></p>
+
+<h3>Unity Editor platform limitations</h3>
+
+<h4>Apple</h4>
+
+<p>On macOS, secondary Editor windows only maximize, and don’t enter full screen mode.</p>
+
+<h4>Apple silicon devices</h4>
+
+<ul>
+<li>The native Apple silicon Editor doesn’t support the CPU <span class="tooltip"><strong>lightmapper</strong><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmapper" aria-label="Go to glossary anchor for Lightmapper">Glossary</a></span></span></span> or import from SketchUp.</li>
+</ul>
+
+<p><a name="linux" aria-hidden="true"></a></p>
+
+<h4>Linux</h4>
+
+<p>The Linux Editor has the following limitations:</p>
+
+<ul>
+<li>Video importing is limited to the VP8 video format.</li>
+<li>File systems are case sensitive.</li>
+<li>If the Editor generates a <code>Pipe error !</code> message, you must increase the maximum open file limit in your current Editor session. For example, run <code>ulimit -n 4096</code> in the terminal before launching the Editor. For more information, refer to the <a href="linux-editor-troubleshooting.html">Troubleshooting Linux Editor issues</a> page.</li>
+</ul>
+
+<p><a name="player" aria-hidden="true"></a></p>
+
+<h2>Unity Player system requirements</h2>
+
+<p>This section lists the minimum requirements to build and run the Unity Player. Actual performance and rendering quality might vary depending on the complexity of your project.</p>
+
+<p><a name="mobile" aria-hidden="true"></a></p>
+
+<h3>Mobile</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Operating system</strong></th>
+	<th style="text-align:left;"><strong>Operating system version</strong></th>
+	<th style="text-align:left;"><strong>CPU</strong></th>
+	<th style="text-align:left;"><strong>Graphics API</strong></th>
+	<th style="text-align:left;"><strong>Additional requirements</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Android</strong></td>
+	<td style="text-align:left;">5.1 (API 22)+ <br>Customized versions of Android must include all supported Google standard APIs.</td>
+	<td style="text-align:left;">ARMv7 with Neon Support (32-bit) or ARM64.</td>
+	<td style="text-align:left;">OpenGL ES 2.0+, 3.0+, Vulkan<br><strong>Note</strong>: OpenGL ES 2.0 support is deprecated.</td>
+	<td style="text-align:left;">- 1GB+ RAM <br> - Supported hardware devices must meet or exceed Google’s Android Compatibility Definition (<a href="https://source.android.com/compatibility/9/android-9-cdd.html">Version 9.0</a>) limited to the following Device Types: <br>    1. Handheld (Section 2.2) <br>    2. Television (Section 2.3)<br>    3. Tablets (Section 2.6)<br> - Hardware must be running Android OS natively. With the exception of Android for Chrome OS, Android within a container or emulator isn’t supported.<br> - For development: Android SDK (10/API 29), Android NDK (r21d) and OpenJDK, which are installed by default with <a href="android-sdksetup.html">Unity Hub</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ChromeOS</strong></td>
+	<td style="text-align:left;">R89+ on stable release channel (Android API 28+)</td>
+	<td style="text-align:left;">ARMv7, ARM64, x86, and x86_64</td>
+	<td style="text-align:left;">OpenGL ES 2.0+, 3.0+, Vulkan<br><strong>Note</strong>: OpenGL ES 2.0 support is deprecated.</td>
+	<td style="text-align:left;">- Support for ChromeOS devices launched after 2019, such as Chromebooks, Chromebases, Chromeboxes, and tablets that can run Android apps and are within their <a href="https://support.google.com/chrome/a/answer/6220366?hl=en">Auto Update Expiration date</a>.<br> - Support for script debugging and profiling using <a href="https://developer.android.com/tools/adb">Android Debug Bridge (adb)</a> over WiFi or Ethernet only.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>iOS/iPadOS</strong></td>
+	<td style="text-align:left;">12+</td>
+	<td style="text-align:left;">A7 SoC+</td>
+	<td style="text-align:left;">Metal</td>
+	<td style="text-align:left;">For development and debugging: refer to the Apple documentation on <a href="https://developer.apple.com/support/xcode/">XCode support</a>.<br><br>For App Store submission: refer to Apple’s <a href="https://developer.apple.com/app-store/submitting/">submission guidelines</a> for the required Xcode version.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>tvOS</strong></td>
+	<td style="text-align:left;">12+</td>
+	<td style="text-align:left;">A8 SoC+</td>
+	<td style="text-align:left;">Metal</td>
+	<td style="text-align:left;">Apple TV 4th generation+</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="console" aria-hidden="true"></a></p>
+
+<h3>Console</h3>
+
+<p>For information on PlayStation®4 (including PS VR), PlayStation®5 (including PS VR2), Xbox One, Xbox Series X|S, and Nintendo Switch™, refer to the <a href="https://unity.com/solutions/console">Game Development For Console Platforms</a> page. To build on console platforms, only Windows versions of Unity are supported. For specific requirements on any additional platform specific software needed, please refer to the developer documentation on the platform holders website, or contact your platform representative directly for further information.</p>
+
+<p>For specific system requirements of the Unity Editor, refer to the version of Unity you’re using on the <a href="https://unity3d.com/get-unity/download">Unity downloads page</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Platform</strong></th>
+	<th style="text-align:left;"><strong>Operating system</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Nintendo Switch™</strong></td>
+	<td style="text-align:left;">Microsoft Windows 10 Pro (64-bit) English or Japanese version</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Xbox Series X|S</strong></td>
+	<td style="text-align:left;">Windows 10 64-bit (Version 1709 or higher): Home, Professional, and Enterprise</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Xbox One</strong></td>
+	<td style="text-align:left;">Windows 10 64-bit (Version 1709 or higher): Home, Professional, and Enterprise</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PlayStation®4 (including PS VR)</strong></td>
+	<td style="text-align:left;">Windows 10 Pro 64-bit (x64) Version 22H2</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PlayStation®5 (including PS VR2)</strong></td>
+	<td style="text-align:left;">Windows 10 Pro 64-bit (x64) Version 22H2</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="desktop" aria-hidden="true"></a></p>
+
+<h3>Desktop</h3>
+
+<p>For all operating systems, the Unity Player is supported on workstations, laptop or tablet form factors, running without emulation, container or compatibility layer.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Operating system</strong></th>
+	<th style="text-align:left;"><strong>Operating system version</strong></th>
+	<th style="text-align:left;"><strong>CPU</strong></th>
+	<th style="text-align:left;"><strong>Graphics API</strong></th>
+	<th style="text-align:left;"><strong>Additional requirements</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Windows</strong></td>
+	<td style="text-align:left;">Windows 7 (SP1+), Windows 10 and Windows 11</td>
+	<td style="text-align:left;">x86, x64 architecture with SSE2 instruction set support.</td>
+	<td style="text-align:left;">DX10, DX11, DX12 capable.</td>
+	<td style="text-align:left;">Hardware vendor officially supported drivers.<br>For development: IL2CPP scripting backend requires Visual Studio 2015 with C++ Tools component or later and Windows 10+ SDK.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Universal Windows Platform</strong></td>
+	<td style="text-align:left;">Windows 10+, Xbox One, Xbox Series X|S, HoloLens</td>
+	<td style="text-align:left;">x86, x64 architecture with SSE2 instruction set support, ARM, ARM64.</td>
+	<td style="text-align:left;">DX10, DX11, DX12 capable GPUs.</td>
+	<td style="text-align:left;">Hardware vendor officially supported drivers.<br> For development: Windows 10+ (64-bit), Visual Studio 2015 with C++ Tools component or later and Windows 10+ SDK.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>macOS</strong></td>
+	<td style="text-align:left;">High Sierra 10.13+</td>
+	<td style="text-align:left;">Apple Silicon, x64 architecture with SSE2.</td>
+	<td style="text-align:left;">Metal capable Intel and AMD GPUs.</td>
+	<td style="text-align:left;">Apple officially supported drivers.<br>For development: IL2CPP scripting backend requires Xcode. Targeting Apple Silicon with IL2CPP scripting backend requires macOS Catalina 10.15.4 and Xcode 12.2 or newer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Linux</strong></td>
+	<td style="text-align:left;">Ubuntu 20.04, Ubuntu 18.04, and CentOS 7</td>
+	<td style="text-align:left;">x64 architecture with SSE2 instruction set support.</td>
+	<td style="text-align:left;">OpenGL 3.2+, Vulkan capable.</td>
+	<td style="text-align:left;">Gnome desktop environment running on top of X11 windowing system<br>Other configuration and user environment as provided stock with the supported distribution (such as Kernel or Compositor)<br> Nvidia and AMD GPUs using Nvidia official proprietary graphics driver or AMD Mesa graphics driver.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note</strong>: Microsoft support for Windows 7 ended January 14, 2020.</p>
+
+<p><a name="server" aria-hidden="true"></a></p>
+
+<h3>Server platform</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Operating system</strong></th>
+	<th style="text-align:left;"><strong>Operating system version</strong></th>
+	<th style="text-align:left;"><strong>CPU</strong></th>
+	<th style="text-align:left;"><strong>GPU</strong></th>
+	<th style="text-align:left;"><strong>Additional requirements</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Windows</strong></td>
+	<td style="text-align:left;">Windows 7 (SP1+), Windows 10 and Windows 11, running on workstation and rack form factors, without emulation or compatibility layer.</td>
+	<td style="text-align:left;">x86, x64 architecture with SSE2 instruction set support.</td>
+	<td style="text-align:left;">No explicit GPU support.</td>
+	<td style="text-align:left;">Hardware vendor officially supported drivers.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>macOS</strong></td>
+	<td style="text-align:left;">High Sierra 10.13+ running on workstation and rack form factors, without emulation or compatibility layer.</td>
+	<td style="text-align:left;">x64 architecture with SSE2 instruction set support.</td>
+	<td style="text-align:left;">No explicit GPU support.</td>
+	<td style="text-align:left;">Hardware vendor officially supported drivers.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Linux</strong></td>
+	<td style="text-align:left;">Ubuntu 20.04, Ubuntu 18.04, and CentOS 7, running on workstation and rack form factors, without emulation or compatibility layer.</td>
+	<td style="text-align:left;">x64 architecture with SSE2 instruction set support.</td>
+	<td style="text-align:left;">No explicit GPU support.</td>
+	<td style="text-align:left;">Hardware vendor officially supported drivers.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note</strong>: Microsoft support for Windows 7 ended January 14, 2020.</p>
+
+<p><a name="web" aria-hidden="true"></a></p>
+
+<h3>Web platform</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Operating system running browsers</strong></th>
+	<th style="text-align:left;"><strong>Hardware</strong></th>
+	<th style="text-align:left;"><strong>Additional requirements</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Windows, macOS, and Linux</strong></td>
+	<td style="text-align:left;">Workstation and laptop form factors.</td>
+	<td style="text-align:left;">Versions of Chrome, Firefox, Safari or Edge (Chromium-based) that are:<br>- WebGL 1.0 or 2.0 capable<br>- HTML 5 standards compliant<br>- 64-bit<br>- WebAssembly capable<br><strong>Note</strong>: WebGL 1.0 support is deprecated.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Android and iOS</strong></td>
+	<td style="text-align:left;">Android or iOS device</td>
+	<td style="text-align:left;">Browser requirements: <br> - iOS Safari 15 and newer<br> - Chrome 58 and newer</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="xr" aria-hidden="true"></a></p>
+
+<h2>XR platform system requirements</h2>
+
+<p>To enable XR and properly configure your Unity project, follow the steps outlined in the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html">XR</a><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a href="XR.html" href="XR.html">XR</a><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> section of this manual.</p>
+
+<p><a name="oculus" aria-hidden="true"></a></p>
+
+<h3>Meta XR devices</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Hardware</strong></th>
+	<th style="text-align:left;"><strong>Rift/Rift S</strong></th>
+	<th style="text-align:left;"><strong>Quest 1</strong></th>
+	<th style="text-align:left;"><strong>Quest 2</strong></th>
+	<th style="text-align:left;"><strong>Quest Pro</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Operating system version</strong></td>
+	<td style="text-align:left;">Windows 10+</td>
+	<td style="text-align:left;" colspan="2">Android</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CPU</strong></td>
+	<td style="text-align:left;"><a href="https://support.oculus.com/248749509016567/?locale=en_US">Refer to Oculus recommended specifications.</a></td>
+	<td style="text-align:left;">ARM 64-bit (Snapdragon 835)</td>
+	<td style="text-align:left;">ARM 64-bit (Snapdragon XR2)</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GPU</strong></td>
+	<td style="text-align:left;"><a href="https://support.oculus.com/248749509016567/?locale=en_US">Refer to Oculus recommended specifications.</a></td>
+	<td style="text-align:left;">NVIDIA GTX 1050Ti/AMD Radeon RX 470 or greater</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Graphics API</strong></td>
+	<td style="text-align:left;">DX11</td>
+	<td style="text-align:left;">OpenGL ES 3.0, Vulkan</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Quest software version</strong></td>
+	<td style="text-align:left;">NA</td>
+	<td style="text-align:left;">v50 or earlier</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="openxr" aria-hidden="true"></a></p>
+
+<h3>OpenXR</h3>
+
+<p>Refer to the <a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@latest/index.html">OpenXR Plugin</a> documentation for a list of compatible runtimes.</p>
+
+<p><a name="wmr" aria-hidden="true"></a></p>
+
+<h3>Windows Mixed Reality</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Hardware</strong></th>
+	<th style="text-align:left;"><strong>WMR Immersive (VR)</strong></th>
+	<th style="text-align:left;"><strong>HoloLens</strong></th>
+	<th style="text-align:left;"><strong>HoloLens 2</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Operating system version</strong></td>
+	<td style="text-align:left;">Windows 10 RS4+</td>
+	<td style="text-align:left;" colspan="2">Embedded Windows 10+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CPU</strong></td>
+	<td style="text-align:left;">Intel 64-bit</td>
+	<td style="text-align:left;">Intel Atom</td>
+	<td style="text-align:left;">ARM 64-bit <br>(Snapdragon 850)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Graphics API</strong></td>
+	<td style="text-align:left;" colspan="3">DX11</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="magic" aria-hidden="true"></a></p>
+
+<h3>Magic Leap</h3>
+
+<p>
+<strong>Note:</strong> Magic Leap is not supported in Unity 2021.3. To develop for the Magic Leap 1, use Unity 2020.3. To develop for the Magic Leap 2, use Unity 2022.3 or later.</p>
+
+<p><a name="arcore" aria-hidden="true"></a></p>
+
+<h3>Google ARCore</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Operating system</strong></th>
+	<th style="text-align:left;"><strong>Android phones</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Operating system version</strong></td>
+	<td style="text-align:left;">Refer to Google’s list of <a href="https://developers.google.com/ar/devices">ARCore-supported devices</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CPU</strong></td>
+	<td style="text-align:left;">ARM 32-bit and 64-bit</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Graphics API</strong></td>
+	<td style="text-align:left;">OpenGL ES 3.0+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Latest supported SDK version</strong></td>
+	<td style="text-align:left;">ARCore 1.24</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="arkit" aria-hidden="true"></a></p>
+
+<h3>Apple ARKit</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Operating system</strong></th>
+	<th style="text-align:left;"><strong>iPhone and iPad</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Operating system version</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> 12</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CPU</strong></td>
+	<td style="text-align:left;">A9+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Graphics API</strong></td>
+	<td style="text-align:left;">Metal</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Latest supported SDK version</strong></td>
+	<td style="text-align:left;">ARKit 5</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Additional requirements</strong></td>
+	<td style="text-align:left;">You must use Xcode 12.5 or later when compiling an iOS Player that includes the ARKit XR Plugin.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="embedded" aria-hidden="true"></a></p>
+
+<h3>Embedded systems</h3>
+
+<p>Support for embedded platforms such as Embedded Linux and QNX is available on request for a wide variety of chipsets as part of Unity Industry, including Linux on ARM based chipsets and additional APIs for Android Automotive. Support for specific embedded configurations is available through Unity’s <a href="https://unity.com/products/compare-plans/embedded">Embedded systems support plans</a>.</p>
+
+<p>The following table lists the recommended system requirements for Unity on embedded systems.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Operating system</strong></th>
+	<th style="text-align:left;"><strong>RAM</strong></th>
+	<th style="text-align:left;"><strong>CPU</strong></th>
+	<th style="text-align:left;"><strong>GPU</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Embedded Linux</td>
+	<td style="text-align:left;">1GB+</td>
+	<td style="text-align:left;">Dualcore x64, ARM64</td>
+	<td style="text-align:left;">OpenGL ES 3 or Vulkan 1.1 Capable</td>
+</tr>
+<tr>
+	<td style="text-align:left;">QNX</td>
+	<td style="text-align:left;">1GB+</td>
+	<td style="text-align:left;">Dualcore x64, ARM64</td>
+	<td style="text-align:left;">OpenGL ES 3</td>
+</tr>
+</tbody>
+</table>
+
+<p>Android (Automotive) system requirements are the same as Android under <a href="#mobile">Mobile</a>.</p>
+<!-- area:none -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="GettingStartedInstallingUnity.html"></a></span><div class="tip">Installing Unity</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="install-unity-with-installers.html"></a></span><div class="tip">Install Unity using installer files</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

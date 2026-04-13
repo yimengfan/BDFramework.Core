@@ -1,0 +1,551 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Shortcuts Manager</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ShortcutsManager.html">English</a></li>
+<li><a href="/cn/current/Manual/ShortcutsManager.html">中文</a></li>
+<li><a href="/ja/current/Manual/ShortcutsManager.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ShortcutsManager.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ShortcutsManager.html">English</a></li>
+<li><a href="/cn/current/Manual/ShortcutsManager.html">中文</a></li>
+<li><a href="/ja/current/Manual/ShortcutsManager.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ShortcutsManager.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="EditorFeatures.html">Editor Features</a></li>
+<li>Shortcuts Manager</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Preferences.html"></a></span><div class="tip">Preferences</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="BuildSettings.html"></a></span><div class="tip">Build Settings</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Shortcuts Manager</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Shortcuts manager lets you view and manage keyboard shortcuts in Unity.</p>
+
+<p>A shortcut is any key, or combination of keys, that is bound to a Unity command. A command is an action that is executed in the Editor. For example, the <strong>R</strong> key is bound to the command that activates the <strong>Scale</strong> tool in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view.</p>
+
+<p>You access the Shortcuts Manager from Unity’s main menu:</p>
+
+<ul>
+<li>On Windows and Linux, select <strong>Edit &gt; Shortcuts</strong>.</li>
+<li>On macOS, select <strong>Unity &gt; Shortcuts</strong>.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/ShortcutManager.png" alt="The Shortcuts Manager">
+<figcaption>The Shortcuts Manager</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>A</strong></td>
+	<td style="text-align:left;">
+<strong>Profile drop-down menu:</strong> Allows you to manage, and switch between, different shortcut profiles. See <a href="#ShortcutProfiles">Shortcut Profiles</a> for details.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>B</strong></td>
+	<td style="text-align:left;">
+<strong>Key map:</strong> Shows you which keys are assigned to commands, and the commands they are assigned to. See <a href="#KeyMap">The key map</a> for details. You can also use the key map to <a href="#ManagingShortcuts">manage shortcuts</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>C</strong></td>
+	<td style="text-align:left;">
+<strong>Category list:</strong> Commands are sorted into categories, which appear in the <strong>Category</strong> list. When you select a category, its commands appear in the <strong>Command</strong> list on the right.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>D</strong></td>
+	<td style="text-align:left;">
+<strong>Command</strong> and <strong>Shortcut list:</strong> Lists all commands in the selected Category and their assigned shortcuts. See <a href="#CommandList">The Command list</a> for details. You can also use the Command list to <a href="#ManagingShortcuts">manage shortcuts</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Assigning shortcuts to global vs. contextual commands</h3>
+
+<p>Unity commands can be global or contextual.</p>
+
+<p>Global commands are always available. For example, by default the command to Undo an action is assigned to the <strong>Ctrl/Cmd + Z</strong> shortcut. Using that shortcut always undoes the last action, regardless of which windows are open and which tools are active.</p>
+
+<p>Contextual commands only work when you use a particular view or set of tools. For example, by default the square bracket keys <strong>[</strong> and <strong>]</strong> are assigned to one set of commands in the <span class="tooltip"><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> tool and another set in the Grid Painting tool. When you press either of those keys, Unity executes the command for whichever tool is active.</p>
+
+<p>Normally, you assign a shortcut to one global command, or one or more contextual commands <em>from different contexts</em>. Other multi-command combinations (for example, two global commands, or two contextual commands <em>from the same context</em>) create conflicts that you need to manage. For information about shortcut conflicts and how to manage them, see <a href="#ShortcutConflicts">Shortcut conflicts</a>.</p>
+
+<p>Unity also has a few special global commands that can share shortcuts with other global commands without creating conflicts. For example the <strong>Q</strong>, <strong>W</strong>, and <strong>E</strong> keys are assigned to the View, Move, and Rotate tools respectively, but when you activate <strong>Flythrough</strong> mode, you use these keys to move down, forward, and up.</p>
+
+<p><a name="KeyMap" aria-hidden="true"></a></p>
+
+<h3>The key map</h3>
+
+<p>This section explains how to use the key map to view shortcut assignments. For information on using the key map to add, remove, and modify shortcuts, see <a href="#ManagingShortcuts">Managing shortcuts</a>.</p>
+
+<p>The key map shows you which keys and key combinations are assigned to commands.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><img src="../uploads/Main/ShortcutManagerGlobalKey.png" alt=""></td>
+	<td style="text-align:left;">Pink keys are assigned to global commands.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><img src="../uploads/Main/ShortcutManagerContextKey.png" alt=""></td>
+	<td style="text-align:left;">Blue keys are assigned to contextual commands.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><img src="../uploads/Main/ShortcutManagerUnassignedKey.png" alt=""></td>
+	<td style="text-align:left;">White keys are not assigned to any commands.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><img src="../uploads/Main/ShortcutManagerGreyKey.png" alt=""></td>
+	<td style="text-align:left;">Grey keys are special keys that cannot be assigned to commands.<br><br>For example, modifier keys such as <strong>Shift</strong> and <strong>Ctrl/Cmd</strong>, or utility keys such as <strong>Return</strong> and <strong>Esc</strong>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Selecting modifier keys such as <strong>Shift</strong>, <strong>Ctrl/Cmd</strong>, and <strong>Alt</strong> updates the key map to show which combinations of shortcuts and modifiers are assigned to commands. Active modifier keys turn blue in the key map.</p>
+
+<figure>
+<img src="../uploads/Main/ShortCutManagerModifiers.png" alt="Activating modifier keys changes the key map to show how key combinations are assigned">
+<figcaption>Activating modifier keys changes the key map to show how key combinations are assigned</figcaption>
+</figure>
+
+<p>
+<strong>Tip:</strong> To temporarily activate modifier keys in the key map, hold them down on your keyboard.</p>
+
+<p>To see which commands a particular key is assigned to, hover your mouse pointer over a shortcut key. The tooltip lists the commands the key is assigned to.</p>
+
+<figure>
+<img src="../uploads/Main/ShortcutManagerHover.png" alt="The A key is assigned to the 3D Viewport’s Fly Mode Left command.">
+<figcaption>The <strong>A</strong> key is assigned to the 3D Viewport’s Fly Mode Left command.</figcaption>
+</figure>
+
+<p>For key combinations, activate the modifier keys by holding them down on your keyboard, or clicking them on the key map, and then hover your mouse pointer over a shortcut key.</p>
+
+<figure>
+<img src="../uploads/Main/ShortcutManagerHoverMod.png" alt="The Ctrl/Cmd + A key combination is assigned to the Edit &gt; Select All command">
+<figcaption>The <strong>Ctrl/Cmd + A</strong> key combination is assigned to the <strong>Edit &gt; Select All</strong> command</figcaption>
+</figure>
+
+<p>You can assign a single shortcut to more than one command. As long as Unity can’t execute the commands at the same time, the shortcut works transparently. However, if you map a shortcut to multiple commands that can be executed at the same time, you create a conflict. To find out about conflicts and how to manage them, see <a href="#ShortcutConflicts">Shortcut conflicts</a> below.</p>
+
+<p><a name="CommandList" aria-hidden="true"></a></p>
+
+<h3>The Command list</h3>
+
+<p>This section explains how to use the <strong>Command</strong> list to view shortcut assignments. For information about using the <strong>Command</strong> list to add, remove, and modify shortcuts, see <a href="#ManagingShortcuts">Managing shortcuts</a>.</p>
+
+<p>The <strong>Command</strong> list shows you which shortcuts are assigned to specific commands. Choose a category from the <strong>Category</strong> list to display its commands and shortcuts in the <strong>Command</strong> list.</p>
+
+<figure>
+<img src="../uploads/Main/ShortcutManagerLists.png" alt="">
+</figure>
+
+<p>You can also search the <strong>Command</strong> list using the search box. As you type a search term, the <strong>Command</strong> list automatically narrows its scope to commands that match the search term.</p>
+
+<p>If you search a specific category, you can switch between results in the selected category and results in the <strong>All Unity Commands</strong> category by setting the scope in the <strong>Search</strong> row.</p>
+
+<figure>
+<img src="../uploads/Main/ShortcutManagerSearch.png" alt="">
+</figure>
+
+<p><a name="ManagingShortcuts" aria-hidden="true"></a></p>
+
+<h2>Managing shortcuts</h2>
+
+<p>The Shortcuts Manager provides several ways of assigning, modifying, unassigning, and resetting shortcuts.</p>
+
+<p>You assign or modify shortcuts by doing one of the following:</p>
+
+<ul>
+<li><p><a href="#AssignKeyMap">Dragging and dropping commands from the Command list onto the key map.</a></p></li>
+<li><p><a href="#AssignCommandList">Typing shortcuts in the Command list.</a></p></li>
+</ul>
+
+<p>You unassign or reset shortcuts by doing one of the following:</p>
+
+<ul>
+<li><p><a href="#UnassignKeyMap">Using the context menus in the key map or the Command list.</a></p></li>
+<li><p><a href="#UnassignCommandList">Deleting shortcut assignments directly in the Command list.</a></p></li>
+</ul>
+
+<h3>Assigning shortcuts to commands</h3>
+
+<p>You assign shortcuts to commands using the key map or the <strong>Command</strong> list.</p>
+
+<p>
+<a name="AssignKeyMap" aria-hidden="true"></a>
+<strong>To assign a shortcut using the key map:</strong>
+</p>
+
+<ol>
+<li><p>Click any modifier keys you want to include in the shortcut (for example, <strong>Shift</strong> or <strong>Ctrl/Cmd</strong>).</p></li>
+<li><p>Drag and drop the command from the <strong>Command</strong> list onto the main shortcut key.<br><br>As you hover over the key map, the cursor changes to indicate which assignments are possible.<br><br><img src="../uploads/Main/ShortcutManagerDnDAssign.png" alt="">
+</p></li>
+</ol>
+
+<p>
+<a name="AssignCommandList" aria-hidden="true"></a>
+<strong>To assign a shortcut from the Command list:</strong>
+</p>
+
+<ol>
+<li><p>Double-click the command in the list to edit its shortcut field.</p></li>
+<li><p>With the cursor in the shortcut field, press the keys for the shortcut on your keyboard, as you would normally.<br><br><img src="../uploads/Main/ShortcutManagerListAssign.png" alt=""><br>Make sure you hold down any modifier keys you want to include in the shortcut (<strong>Shift</strong> or <strong>Alt/Option</strong>, for example).</p></li>
+</ol>
+
+<p>If the shortcut is already assigned to a command, the new assignment creates a conflict. For information about managing conflicts, see <a href="#ShortcutConflicts">Shortcut conflicts</a>.</p>
+
+<h3>Unassigning and resetting shortcuts</h3>
+
+<p>Use the key map or the <strong>Command</strong> list to remove a command’s assigned shortcut or reset a modified shortcut to its default mapping.</p>
+
+<p>
+<strong>Note:</strong> Unity stores default shortcut assignments in the Default profile. See <a href="#ShortcutProfiles">Shortcut Profiles</a> for details.</p>
+
+<p>
+<a name="UnassignKeyMap" aria-hidden="true"></a>
+<strong>To unassign or reset a shortcut from the key map:</strong>
+</p>
+
+<ol>
+<li><p>Right-click the shortcut key you want to unassign or reset.<br><br>If you are unassigning/resetting a key combination, click any included modifier keys (<strong>Shift</strong> or <strong>Ctrl/Cmd</strong>, for example) before right-clicking the shortcut key.</p></li>
+<li>
+<p>From the context menu:</p>
+
+<ul>
+<li><p>Select <strong>[COMMAND] &gt; Reset to default</strong> to re-assign the default shortcut to the command.</p></li>
+<li><p>Select <strong>[COMMAND] &gt; Remove shortcut</strong> to unassign the shortcut from the command.</p></li>
+</ul>
+</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/ShortcutManagerUnassignKeyMap.png" alt="">
+</figure>
+
+<p>
+<a name="UnassignCommandList" aria-hidden="true"></a>
+<strong>To unassign or reset a shortcut from the Command list:</strong>
+</p>
+
+<ol>
+<li><p>Right-click the command of the shortcut you want to unassign or reset.</p></li>
+<li>
+<p>From the context menu:</p>
+
+<ul>
+<li>Choose <strong>[COMMAND] &gt; Reset to default</strong> to re-assign the default shortcut to the command.</li>
+<li>Choose <strong>[COMMAND] &gt; Remove shortcut</strong> to unassign the shortcut from the command.</li>
+</ul>
+</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/ShortcutMangerUnassignList.png" alt="">
+</figure>
+
+<p>Alternatively:</p>
+
+<ul>
+<li>Double-click a command of the shortcut you want to unassign, and press the <strong>Return/Enter</strong> key to delete the shortcut from the shortcut field.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/ShortcutManagerListUnassign.png" alt="">
+</figure>
+
+<p><a name="ShortcutConflicts" aria-hidden="true"></a></p>
+
+<h2>Shortcut conflicts</h2>
+
+<p>You can assign the same shortcut to more than one command, provided the commands cannot be executed at the same time. For example, a single shortcut might be assigned to a command in the <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> and another command in the Animation window. Because the two windows cannot have focus at the same time, there’s no ambiguity about which command Unity executes when you use the shortcut.</p>
+
+<p>Assigning a shortcut to two commands that <em>can</em> be executed at the same time creates a conflict. For example, you create a conflict when you assign a single shortcut to:</p>
+
+<ul>
+<li><p>One or more contextual commands <em>from the same context</em>.</p></li>
+<li><p>More than one global command.</p></li>
+<li><p>A combination of global and contextual commands.</p></li>
+</ul>
+
+<p>The Shortcuts manager gives you options for handling conflicts when you create new shortcut assignments, and when you use a shortcut that is assigned to conflicting commands.</p>
+
+<h3>Viewing conflicts in the Shortcuts Manager</h3>
+
+<p>Commands with shortcut conflicts appear with a “caution” icon in the <strong>Command</strong> list.</p>
+
+<figure>
+<img src="../uploads/Main/ShortcutManagerConflictCat.png" alt="">
+</figure>
+
+<p>You can get a complete list of commands with conflicting shortcuts by selecting the <strong>Binding Conflicts</strong> category in the <strong>Category</strong> list.</p>
+
+<figure>
+<img src="../uploads/Main/ShortctManagerBindingConflicts.png" alt="">
+</figure>
+
+<h3>Managing conflicts when creating shortcuts</h3>
+
+<p>Assigning a shortcut to two conflicting commands opens the <strong>Binding conflict</strong> dialog.</p>
+
+<figure>
+<img src="../uploads/Main/ShortcutManagerDlgBindingConflict.png" alt="">
+</figure>
+
+<ul>
+<li><p>Choose <strong>Create Conflict</strong> to assign the shortcut to the command, in addition to any existing command assignments.<br><br>Unity adds all of the shortcut’s assigned commands to the shortcut to the <strong>Binding Conflicts</strong> category.</p></li>
+<li><p>Choose <strong>Reassign</strong> to reassign the shortcut to the conflicting command. This clears any other command assignments.</p></li>
+<li><p>Choose <strong>Cancel</strong> to exit without taking any action.</p></li>
+</ul>
+
+<h3>Managing conflicts when using shortcuts</h3>
+
+<p>When you’re working in Unity, using a shortcut that is assigned to conflicting commands opens the Shortcut Conflict dialog.</p>
+
+<figure>
+<img src="../uploads/Main/ShortcutManagerDlgShortcutConflict.png" alt="">
+</figure>
+
+<ul>
+<li><p>Choose a command from the list and click the <strong>Perform Selected</strong> button to execute the command.<br><br>Enable the <strong>Rebind to selected command</strong> option before executing the command to clear any other assignments so that the shortcut is assigned to the selected command only. This is equivalent to deleting the other assignments.</p></li>
+<li><p>Choose <strong>Resolve Conflict</strong> to open the Shortcuts Manager, where you can modify the shortcuts to eliminate the conflict.</p></li>
+<li><p>Choose <strong>Cancel</strong> to exit without taking any action.</p></li>
+</ul>
+
+<p><a name="ShortcutProfiles" aria-hidden="true"></a></p>
+
+<h2>Shortcut profiles</h2>
+
+<p>Shortcuts are stored in profiles. Each profile is a complete set of Unity shortcuts that you can modify to suit your needs. You can create as many profiles as you like, and switch between them as needed. You can add, remove, or modify shortcuts in any active profile except the Default profile (see below). Changes to the active profile are immediate. Unity saves them automatically, and does not prompt you to accept or reject them.</p>
+
+<p>Unity stores Shortcut profiles outside of the Project, in the Unity preferences directory:</p>
+
+<ul>
+<li><p>On Windows: <code>%APPDATA%/Unity\Editor-5.x\Preferences\shortcuts</code>
+</p></li>
+<li><p>On macOS: <code>~/Library/Preferences/Unity/Editor-5.x/shortcuts</code>
+</p></li>
+<li><p>On Linux: <code>~/.config/unity3d/Preferences/Editor-5.x/shortcuts</code>
+</p></li>
+</ul>
+
+<p>This means any profiles you create are available in all of your Projects.</p>
+
+<p>
+<strong>Upgrading:</strong> When you upgrade from an older version of Unity, Unity migrates any shortcuts you had configured in the Preferences to a new shortcut profile called UserProfile.</p>
+
+<h3>Managing shortcut profiles</h3>
+
+<p>You manage profiles from the profile drop-down menu at the top of the Shortcuts Manager:</p>
+
+<figure>
+<img src="../uploads/Main/ShortcutManagerProfileMenu.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>A</strong></td>
+	<td style="text-align:left;">
+<strong>Profile list:</strong> Lists all available profiles. Choose one to make it the active profile</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>B</strong></td>
+	<td style="text-align:left;">
+<strong>Profile options:</strong> Options for creating a new profile or renaming or deleting the active profile.</td>
+</tr>
+</tbody>
+</table>
+
+<h4>Default shortcut profile</h4>
+
+<p>Unity has a Default profile with the “factory” shortcut settings. When you create a new profile, Unity copies the Default profile.</p>
+
+<p>You cannot modify the Default profile. If you try to modify it, Unity automatically creates a copy (called <em>Default copy</em>), makes the copy the active profile, and applies your change to that copy.</p>
+
+<h2>Bypassing the Shortcuts Manager for custom tools</h2>
+
+<p>When you select a key or key combination on your keyboard, Unity generates a keyboard event and sends that event to the active view. If the active view can use the event, for example to trigger an action, it does so. If not, the event is sent to the Shortcuts Manager, and Unity executes the command that the shortcut is assigned to.</p>
+
+<p>When developing custom tools, you can intercept keyboard events programmatically before they reach the Shortcuts Manager. For example, you might want a custom tool to react to a key press in a more complex way than you can configure using the Shortcuts Manager.</p>
+
+<p>How you intercept keyboard events depends on the system you use to create the interface for your custom tools.</p>
+
+<p>If you are using the <a href="https://docs.unity3d.com/Manual/GUIScriptingGuide.html">IMGUI</a> system, see the following Scripting Reference topics:</p>
+
+<ul>
+<li><a href="https://docs.unity3d.com/ScriptReference/Event-current.html">Event.current</a></li>
+</ul>
+
+<p>If you are using the <a href="https://docs.unity3d.com/Manual/UIElements.html">UI Elements</a> system, see the following Scripting Reference topics:</p>
+
+<ul>
+<li><p><a href="https://docs.unity3d.com/ScriptReference/UIElements.KeyDownEvent.html">KeyDownEvent</a></p></li>
+<li><p><a href="https://docs.unity3d.com/ScriptReference/UIElements.CallbackEventHandler.RegisterCallback.html">CallbackEventHandler.RegisterCallback</a></p></li>
+<li><p><a href="https://docs.unity3d.com/ScriptReference/UIElements.CallbackEventHandler.HandleEvent.html">CallbackEventHandler.HandleEvent</a></p></li>
+</ul>
+
+<p><a name="UserDefinedShortcuts" aria-hidden="true"></a></p>
+
+<h2>User-defined shortcuts</h2>
+
+<p>As well as modifying shortcuts from the Shortcuts Manager, you can use the classes in the UnityEditor.ShortcutManagement namespace to define custom shortcuts in other places, such as <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> and packages. For example, you use the <a href="../ScriptReference/ShortcutManagement.ShortcutAttribute.html">ShortcutAttribute</a> and <a href="../ScriptReference/ShortcutManagement.ClutchShortcutAttribute.html">ClutchShortcutAttribute</a> attributes to create new shortcuts.</p>
+
+<p>When Unity loads the commands and shortcuts from another source, it:</p>
+
+<ul>
+<li><p>Adds any new commands in the main menu to the <strong>All Unity Commands</strong> category in the <strong>Command</strong> list, so you can then use the Shortcuts Manager to create shortcuts for them.</p></li>
+<li><p>Adds custom command categories to the <strong>Category</strong> list.</p></li>
+<li><p>Adds custom keyboard shortcuts to the shortcuts database, so they appear in all shortcut profiles.</p></li>
+<li><p>Shows any <a href="#ShortcutConflicts">conflicts</a> between the custom shortcuts and shortcuts in the current profile in the <strong>Shortcut Conflicts</strong> category in the <strong>Command</strong> list.</p></li>
+</ul>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Preferences.html"></a></span><div class="tip">Preferences</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="BuildSettings.html"></a></span><div class="tip">Build Settings</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

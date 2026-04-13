@@ -1,0 +1,862 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Texture types</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/TextureTypes.html">English</a></li>
+<li><a href="/cn/current/Manual/TextureTypes.html">中文</a></li>
+<li><a href="/ja/current/Manual/TextureTypes.html">日本語</a></li>
+<li><a href="/kr/current/Manual/TextureTypes.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/TextureTypes.html">English</a></li>
+<li><a href="/cn/current/Manual/TextureTypes.html">中文</a></li>
+<li><a href="/ja/current/Manual/TextureTypes.html">日本語</a></li>
+<li><a href="/kr/current/Manual/TextureTypes.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Textures.html">Textures</a></li>
+<li><a href="ImportingTextures.html">Importing Textures</a></li>
+<li>Texture types</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-TextureImporter.html"></a></span><div class="tip">Texture Import Settings</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="texture-compression-formats.html"></a></span><div class="tip">Texture formats</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Texture types</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can import different <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Textures.html">Texture</a><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a href="class-TextureImporter.html" href="Textures.html">Texture</a><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a href="class-TextureImporter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#texture" aria-label="Go to glossary anchor for texture">Glossary</a></span></span></span> types into the Unity Editor via the <a href="class-TextureImporter.html">Texture Importer</a>.</p>
+
+<p>Below are the properties available to configure the various Texture types in Unity in the Texture <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window. Scroll down or select from the list below to find details of the Texture type you wish to learn about.</p>
+
+<p>
+<strong>Texture types</strong>:
+ * <a href="#Default">Default</a>
+ * <a href="#NormalMap">Normal map</a>
+ * <a href="#Editor">Editor GUI and Legacy GUI</a>
+ * <a href="#Sprite">Sprite (2D and UI)</a>
+ * <a href="#Cursor">Cursor</a>
+ * <a href="#Cookie">Cookie</a>
+ * <a href="#Lightmap">Lightmap</a>
+ * <a href="#SingleChannel">Single Channel</a>
+</p>
+
+<p><a name="Default" aria-hidden="true"></a></p>
+
+<h2>Default</h2>
+
+<p>
+<strong>Default</strong> is the most common Texture type used for all Textures. It provides access to most of the properties for Texture importing. With this Texture type, you can also change the <strong>Texture Shape</strong> property to define the <a href="class-TextureImporter.html#textureshape">Texture Shape</a>.</p>
+
+<figure>
+<img src="../uploads/Main/TextureTypes-Default-0.png" alt="Settings for the Default Texture Type">
+<figcaption>Settings for the Default Texture Type</figcaption>
+</figure>
+
+<p>When you choose the <strong>Default</strong> Texture type, the following properties are available (click the links for detailed information on each property):</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>sRGB (Color Texture)</strong></td>
+	<td style="text-align:left;">Enable this property to specify that the Texture is stored in gamma space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#sRGB" href="class-TextureImporter.html#sRGB">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha Source</strong></td>
+	<td style="text-align:left;">Specify how the alpha channel of the Texture is generated. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AlphaSrc" href="class-TextureImporter.html#AlphaSrc">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha is Transparency</strong></td>
+	<td style="text-align:left;">Enable this property to dilate the color and avoid filtering artifacts on the edges if the alpha channel you specify is Transparency. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AlphaTrans" href="class-TextureImporter.html#AlphaTrans">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Remove Matte (PSD)</strong></td>
+	<td style="text-align:left;">Enable special processing for Photoshop files that use transparency (blending color pixels with white). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#Cursor" href="class-TextureImporter.html#Cursor">More info</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Ignore PNG file gamma</strong></td>
+	<td style="text-align:left;">Enable this property to ignore the Gamma attribute in PNG files. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#PSD" href="class-TextureImporter.html#PSD">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Non Power of 2</strong></td>
+	<td style="text-align:left;">If the Texture has a non-power of two (NPOT) dimension size, this defines a scaling behavior at import time. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#NPOT" href="class-TextureImporter.html#NPOT">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Read/Write Enabled</strong></td>
+	<td style="text-align:left;">Enable this to access the Texture data from <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> using <a href="../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> methods. <a href="class-TextureImporter.html#ReadWrite" href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> using <a href="../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> methods. <a href="class-TextureImporter.html#ReadWrite">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Virtual Texture Only</strong></td>
+	<td style="text-align:left;">Enable this texture to use it solely in combination with a Texture Stack for Virtual Texturing. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#VTO" href="class-TextureImporter.html#VTO">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Streaming Mip Maps</strong></td>
+	<td style="text-align:left;">Enable this checkbox to use <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about TextureStreaming.html">Mip Map Streaming</a> on this Texture. <a href="class-TextureImporter.html#Streaming" href="TextureStreaming.html">Mip Map Streaming</a> on this Texture. <a href="class-TextureImporter.html#Streaming">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Generate Mip Maps</strong></td>
+	<td style="text-align:left;">Check this box to enable mipmap generation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#GenerateMipMaps" href="class-TextureImporter.html#GenerateMipMaps">More info</a>.<br><br>This property is enabled by default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Wrap Mode</strong></td>
+	<td style="text-align:left;">Select how the Texture behaves when tiled. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#WrapMode" href="class-TextureImporter.html#WrapMode">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Filter Mode</strong></td>
+	<td style="text-align:left;">Select how the Texture is filtered when it gets stretched by 3D transformations. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#FilterMode" href="class-TextureImporter.html#FilterMode">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Aniso Level</strong></td>
+	<td style="text-align:left;">Increases Texture quality when viewing the Texture at a steep angle. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AnisoLevel" href="class-TextureImporter.html#AnisoLevel">More info</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>In addition, you can use the <a href="class-TextureImporter.html#platform">Platform-specific overrides</a> panel to set default options and their overrides for a specific platforms. </p>
+
+<p><a name="NormalMap" aria-hidden="true"></a></p>
+
+<h2>Normal map</h2>
+
+<p>Select <span class="tooltip"><strong>Normal map</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normalmap" aria-label="Go to glossary anchor for Normalmap">Glossary</a></span></span></span> to turn the color channels into a format suitable for real-time normal mapping. With this Texture type, you can also change the <strong>Texture Shape</strong> property to define the <a href="class-TextureImporter.html#textureshape">Texture Shape</a>.</p>
+
+<figure>
+<img src="../uploads/Main/TextureTypes-NormalMap-1.png" alt="Settings for the Normal map Texture Type">
+<figcaption>Settings for the Normal map Texture Type</figcaption>
+</figure>
+
+<p>When you choose the <strong>Normal map</strong> Texture type, you can set the following additional properties:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Create from Grayscale</strong></td>
+	<td style="text-align:left;">Enable this property to create the Normal Map from a grayscale <span class="tooltip"><strong>heightmap</strong><span class="tooltiptext">A greyscale Texture that stores height data for an object. Each pixel stores the height difference perpendicular to the face that pixel represents.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Heightmap" aria-label="Go to glossary anchor for Heightmap">Glossary</a></span></span></span>. When enabled, the <strong>Bumpiness</strong> and <strong>Filtering</strong> options become available. This option is disabled by default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Bumpiness</strong></td>
+	<td style="text-align:left;">Control the amount of bumpiness. A low bumpiness value means that even sharp contrast in the heightmap is translated to gentle angles and bumps. A high value creates exaggerated bumps and very high-contrast lighting responses to the bumps. This option is only visible if <strong>Create from Grayscale</strong> is checked.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Filtering</strong></td>
+	<td style="text-align:left;">Determine how the bumpiness is calculated: <br><br>- <strong>Smooth</strong> generates Normal Maps with standard (forward differences) algorithms. <br>- <strong>Sharp</strong> generates Normal Maps that are sharper than Standard. This is also known as a Sobel filter.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Ignore PNG file gamma</strong></td>
+	<td style="text-align:left;">Enable this property to ignore the Gamma attribute in PNG files. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#PSD" href="class-TextureImporter.html#PSD">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Non Power of 2</strong></td>
+	<td style="text-align:left;">If the Texture has a non-power of two (NPOT) dimension size, this defines a scaling behavior at import time. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#NPOT" href="class-TextureImporter.html#NPOT">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Read/Write Enabled</strong></td>
+	<td style="text-align:left;">Enable this to access the Texture data from scripts using <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> methods. <a href="class-TextureImporter.html#ReadWrite" href="../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> methods. <a href="class-TextureImporter.html#ReadWrite">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Virtual Texture Only</strong></td>
+	<td style="text-align:left;">Enable this texture to use it solely in combination with a Texture Stack for Virtual Texturing. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#VTO" href="class-TextureImporter.html#VTO">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Streaming Mip Maps</strong></td>
+	<td style="text-align:left;">Enable this checkbox to use <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about TextureStreaming.html">Mip Map Streaming</a> on this Texture. <a href="class-TextureImporter.html#Streaming" href="TextureStreaming.html">Mip Map Streaming</a> on this Texture. <a href="class-TextureImporter.html#Streaming">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Generate Mip Maps</strong></td>
+	<td style="text-align:left;">Check this box to enable mipmap generation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#GenerateMipMaps" href="class-TextureImporter.html#GenerateMipMaps">More info</a>.<br><br>This property is enabled by default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Wrap Mode</strong></td>
+	<td style="text-align:left;">Select how the Texture behaves when tiled. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#WrapMode" href="class-TextureImporter.html#WrapMode">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Filter Mode</strong></td>
+	<td style="text-align:left;">Select how the Texture is filtered when it gets stretched by 3D transformations. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#FilterMode" href="class-TextureImporter.html#FilterMode">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Aniso Level</strong></td>
+	<td style="text-align:left;">Increases Texture quality when viewing the Texture at a steep angle. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AnisoLevel" href="class-TextureImporter.html#AnisoLevel">More info</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>In addition, you can use the <a href="class-TextureImporter.html#platform">Platform-specific overrides</a> panel to set default options and their overrides for a specific platforms. </p>
+
+<p><a name="Editor" aria-hidden="true"></a></p>
+
+<h2>Editor GUI and Legacy GUI</h2>
+
+<p>Select <strong>Editor GUI and Legacy GUI</strong> if you are using the Texture on any HUD or GUI controls. The <strong>Texture Shape</strong> property is always set to <strong>2D</strong> for this Texture Type. For more information, see the documentation on <a href="class-TextureImporter.html#textureshape">Texture Shapes</a>.</p>
+
+<figure>
+<img src="../uploads/Main/TextureTypes-Editor-2.png" alt="Settings for the Editor GUI and Legacy GUI Texture Type">
+<figcaption>Settings for the Editor GUI and Legacy GUI Texture Type</figcaption>
+</figure>
+
+<p>When you choose the <strong>Editor GUI and Legacy GUI</strong> Texture type, you can set the following additional properties:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Alpha Source</strong></td>
+	<td style="text-align:left;">Specify how the alpha channel of the Texture is generated. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AlphaSrc" href="class-TextureImporter.html#AlphaSrc">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha is Transparency</strong></td>
+	<td style="text-align:left;">Enable this property to dilate the color and avoid filtering artifacts on the edges if the alpha channel you specify is Transparency. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AlphaTrans" href="class-TextureImporter.html#AlphaTrans">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Remove Matte (PSD)</strong></td>
+	<td style="text-align:left;">Enable special processing for Photoshop files that use transparency (blending color pixels with white). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#Cursor" href="class-TextureImporter.html#Cursor">More info</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Ignore PNG file gamma</strong></td>
+	<td style="text-align:left;">Enable this property to ignore the Gamma attribute in PNG files. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#PSD" href="class-TextureImporter.html#PSD">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Non Power of 2</strong></td>
+	<td style="text-align:left;">If the Texture has a non-power of two (NPOT) dimension size, this defines a scaling behavior at import time. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#NPOT" href="class-TextureImporter.html#NPOT">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Read/Write Enabled</strong></td>
+	<td style="text-align:left;">Enable this to access the Texture data from scripts using <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> methods. <a href="class-TextureImporter.html#ReadWrite" href="../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> methods. <a href="class-TextureImporter.html#ReadWrite">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Generate Mip Maps</strong></td>
+	<td style="text-align:left;">Check this box to enable mipmap generation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#GenerateMipMaps" href="class-TextureImporter.html#GenerateMipMaps">More info</a>.<br><br>This property is disabled by default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Wrap Mode</strong></td>
+	<td style="text-align:left;">Select how the Texture behaves when tiled. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#WrapMode" href="class-TextureImporter.html#WrapMode">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Filter Mode</strong></td>
+	<td style="text-align:left;">Select how the Texture is filtered when it gets stretched by 3D transformations. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#FilterMode" href="class-TextureImporter.html#FilterMode">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Aniso Level</strong></td>
+	<td style="text-align:left;">Increases Texture quality when viewing the Texture at a steep angle. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AnisoLevel" href="class-TextureImporter.html#AnisoLevel">More info</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>In addition, you can use the <a href="class-TextureImporter.html#platform">Platform-specific overrides</a> panel to set default options and their overrides for a specific platforms. </p>
+
+<p><a name="Sprite" aria-hidden="true"></a></p>
+
+<h2>Sprite (2D and UI)</h2>
+
+<p>Select <strong>Sprite (2D and UI)</strong> if you are using the Texture in a 2D game as a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html">Sprite</a><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html" href="Sprites.html">Sprite</a><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span>. The <strong>Texture Shape</strong> property is always set to <strong>2D</strong> for this Texture Type. For more information, see the documentation on <a href="class-TextureImporter.html#textureshape">Texture Shapes</a>.</p>
+
+<figure>
+<img src="../uploads/Main/TextureTypes-Sprite-3.png" alt="Settings for the Sprite (2D and UI) Texture Type">
+<figcaption>Settings for the Sprite (2D and UI) Texture Type</figcaption>
+</figure>
+
+<p>When you choose the <strong>Sprite (2D and UI)</strong> Texture type, you can set the following additional properties:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="SpriteMode" aria-hidden="true"></a><strong>Sprite Mode</strong>
+</td>
+	<td style="text-align:left;">Specify how to extract the Sprite graphic from the image. The default for this option is <strong>Single</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Single</strong></td>
+	<td style="text-align:left;">Use the Sprite image as is. You can clip and edit the image in the <a href="SpriteEditor.html">Sprite Editor</a> to refine it further, but Unity treats the Sprite generated from the imported Texture as a single Asset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Multiple</strong></td>
+	<td style="text-align:left;">Choose this value if your image has several elements in the same image. You can then define the location of the elements in the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SpriteEditor.html">Sprite Editor</a> so that Unity knows how to split the image into different sub-Assets. For example, you can create animation frames from a single sheet with multiple poses, create <span class="tooltip"><a href="Tilemap-TileAsset.html">Tiles</a><span class="tooltiptext">A simple class that allows a sprite to be rendered on a Tilemap. <a href="Tilemap-ScriptableTiles-Tile.html" href="SpriteEditor.html">Sprite Editor</a> so that Unity knows how to split the image into different sub-Assets. For example, you can create animation frames from a single sheet with multiple poses, create <span class="tooltip"><a href="Tilemap-TileAsset.html">Tiles</a><span class="tooltiptext">A simple class that allows a sprite to be rendered on a Tilemap. <a href="Tilemap-ScriptableTiles-Tile.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Tile" aria-label="Go to glossary anchor for Tile">Glossary</a></span></span></span> from a single Tilesheet, or create the different parts of a character.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Polygon</strong></td>
+	<td style="text-align:left;">Choose this value to clip the Sprite Texture according to the <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> defined in the Sprite Editor’s <a href="SpriteOutlineEditor.html">Sprite Custom Outline</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Packing Tag</strong></td>
+	<td style="text-align:left;">Specify (by name) the <span class="tooltip"><strong>Sprite Atlas</strong><span class="tooltiptext">A texture that is composed of several smaller textures. Also referred to as a texture atlas, image sprite, sprite sheet or packed texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-SpriteAtlas.html" href="class-SpriteAtlas.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#spriteatlas" aria-label="Go to glossary anchor for spriteatlas">Glossary</a></span></span></span> which you want to pack this Texture into. This property is visible only when you enable the <a href="SpritePacker.html">Legacy Sprite Packer</a> in your Project.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Pixels Per Unit</strong></td>
+	<td style="text-align:left;">The number of <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> of width/height in the Sprite image that correspond to one distance unit in world space.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Mesh Type</strong></td>
+	<td style="text-align:left;">Define the Mesh type for the Sprite you want Unity to generate. The default for this option is <strong>Tight</strong>.<br><br><strong>Note:</strong> This property is only available for the <strong>Single</strong> and <strong>Multiple</strong> <a href="#SpriteMode">Sprite Modes</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Full Rect</strong></td>
+	<td style="text-align:left;">Choose this value to create a <span class="tooltip"><strong>quad</strong><span class="tooltiptext">A primitive object that resembles a plane but its edges are only one unit long, it uses only 4 vertices, and the surface is oriented in the XY plane of the local coordinate space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PrimitiveObjects.html" href="PrimitiveObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Quad" aria-label="Go to glossary anchor for Quad">Glossary</a></span></span></span> (four-sided polygon) to map the Sprite onto.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Tight</strong></td>
+	<td style="text-align:left;">Choose this value to generate a Mesh based on pixel alpha value. The Mesh that Unity generates generally follows the shape of the Sprite. <br><br><strong>Note:</strong> Any Sprite that is smaller than 32x32 uses <strong>Full Rect</strong>, even when <strong>Tight</strong> is specified.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><span class="tooltip"><strong>Extrude Edges</strong><span class="tooltiptext">A Texture property that enables you to define how much area to leave around a sprite in a generated mesh.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ExtrudeEdges" aria-label="Go to glossary anchor for ExtrudeEdges">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Use the slider to determine how much area to leave around the Sprite in the generated Mesh.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Pivot</strong></td>
+	<td style="text-align:left;">The location in the image where the Sprite’s local coordinate system originates. Choose one of the pre-set options, or select <strong>Custom</strong> to set your own Pivot location in <strong>X</strong> and <strong>Y</strong>.<br><br><strong>Note:</strong> This property is only available for the <strong>Single</strong> <a href="#SpriteMode">Sprite Mode</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Generate Physics Shape</strong></td>
+	<td style="text-align:left;">When this is enabled and you have not defined a <a href="CustomPhysicsShape.html">Custom Physics Shape</a> for this Sprite, Unity generates a default Physics Shape from the outline of the Sprite.<br><br><strong>Note:</strong> This property is only available for the <strong>Single</strong> and <strong>Multiple</strong> <a href="#SpriteMode">Sprite Modes</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Sprite Editor</strong></td>
+	<td style="text-align:left;">Click this button to define how you want Unity to separate the elements on an image with <a href="#SpriteMode">Multiple</a> elements (to create sub-Assets) or refine the shape, size, and pivot position of a <a href="#SpriteMode">Polygon</a> shape.<br><br><strong>Note:</strong> You need to install the <a href="https://docs.unity3d.com/Packages/com.unity.2d.sprite@latest">2D Sprite</a> package in order to use the <a href="SpriteEditor.html">Sprite Editor</a>. For information about how to find and install packages in the Unity Package Manager, see <a href="upm-ui-find.html">Finding packages</a> and <a href="upm-ui-install.html">Installing from the registry</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>sRGB (Color Texture)</strong></td>
+	<td style="text-align:left;">Enable this property to specify that the Texture is stored in gamma space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#sRGB" href="class-TextureImporter.html#sRGB">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Alpha Source</strong></td>
+	<td style="text-align:left;">Specify how the alpha channel of the Texture is generated. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AlphaSrc" href="class-TextureImporter.html#AlphaSrc">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Alpha is Transparency</strong></td>
+	<td style="text-align:left;">Enable this property to dilate the color and avoid filtering artifacts on the edges if the alpha channel you specify is Transparency. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AlphaTrans" href="class-TextureImporter.html#AlphaTrans">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Remove Matte (PSD)</strong></td>
+	<td style="text-align:left;">Enable special processing for Photoshop files that use transparency (blending color pixels with white). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#Cursor" href="class-TextureImporter.html#Cursor">More info</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Ignore PNG file gamma</strong></td>
+	<td style="text-align:left;">Enable this property to ignore the Gamma attribute in PNG files. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#PSD" href="class-TextureImporter.html#PSD">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Read/Write Enabled</strong></td>
+	<td style="text-align:left;">Enable this to access the Texture data from scripts using <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> methods. <a href="class-TextureImporter.html#ReadWrite" href="../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> methods. <a href="class-TextureImporter.html#ReadWrite">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Generate Mip Maps</strong></td>
+	<td style="text-align:left;">Check this box to enable mipmap generation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#GenerateMipMaps" href="class-TextureImporter.html#GenerateMipMaps">More info</a>.<br><br>This property is disabled by default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Wrap Mode</strong></td>
+	<td style="text-align:left;">Select how the Texture behaves when tiled. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#WrapMode" href="class-TextureImporter.html#WrapMode">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Filter Mode</strong></td>
+	<td style="text-align:left;">Select how the Texture is filtered when it gets stretched by 3D transformations. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#FilterMode" href="class-TextureImporter.html#FilterMode">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Aniso Level</strong></td>
+	<td style="text-align:left;">Increases Texture quality when viewing the Texture at a steep angle. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AnisoLevel" href="class-TextureImporter.html#AnisoLevel">More info</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>In addition, you can use the <a href="class-TextureImporter.html#platform">Platform-specific overrides</a> panel to set default options and their overrides for a specific platforms. </p>
+
+<p><a name="Cursor" aria-hidden="true"></a></p>
+
+<h2>Cursor</h2>
+
+<p>Select <strong>Cursor</strong> to use the Texture as a custom cursor. The <strong>Texture Shape</strong> property is always set to <strong>2D</strong> for this Texture Type. For more information, see the documentation on <a href="class-TextureImporter.html#textureshape">Texture Shapes</a>.</p>
+
+<figure>
+<img src="../uploads/Main/TextureTypes-Cursor-4.png" alt="Settings for the Cursor Texture Type">
+<figcaption>Settings for the Cursor Texture Type</figcaption>
+</figure>
+
+<p>When you choose the <strong>Cursor</strong> Texture type, you can set the following additional properties:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Alpha Source</strong></td>
+	<td style="text-align:left;">Specify how the alpha channel of the Texture is generated. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AlphaSrc" href="class-TextureImporter.html#AlphaSrc">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha is Transparency</strong></td>
+	<td style="text-align:left;">Enable this property to dilate the color and avoid filtering artifacts on the edges if the alpha channel you specify is Transparency. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AlphaTrans" href="class-TextureImporter.html#AlphaTrans">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Remove Matte (PSD)</strong></td>
+	<td style="text-align:left;">Enable special processing for Photoshop files that use transparency (blending color pixels with white). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#Cursor" href="class-TextureImporter.html#Cursor">More info</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Ignore PNG file gamma</strong></td>
+	<td style="text-align:left;">Enable this property to ignore the Gamma attribute in PNG files. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#PSD" href="class-TextureImporter.html#PSD">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Non Power of 2</strong></td>
+	<td style="text-align:left;">If the Texture has a non-power of two (NPOT) dimension size, this defines a scaling behavior at import time. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#NPOT" href="class-TextureImporter.html#NPOT">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Read/Write Enabled</strong></td>
+	<td style="text-align:left;">Enable this to access the Texture data from scripts using <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> methods. <a href="class-TextureImporter.html#ReadWrite" href="../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> methods. <a href="class-TextureImporter.html#ReadWrite">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Generate Mip Maps</strong></td>
+	<td style="text-align:left;">Check this box to enable mipmap generation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#GenerateMipMaps" href="class-TextureImporter.html#GenerateMipMaps">More info</a>.<br><br>This property is disabled by default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Wrap Mode</strong></td>
+	<td style="text-align:left;">Select how the Texture behaves when tiled. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#WrapMode" href="class-TextureImporter.html#WrapMode">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Filter Mode</strong></td>
+	<td style="text-align:left;">Select how the Texture is filtered when it gets stretched by 3D transformations. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#FilterMode" href="class-TextureImporter.html#FilterMode">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Aniso Level</strong></td>
+	<td style="text-align:left;">Increases Texture quality when viewing the Texture at a steep angle. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AnisoLevel" href="class-TextureImporter.html#AnisoLevel">More info</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>In addition, you can use the <a href="class-TextureImporter.html#platform">Platform-specific overrides</a> panel to set default options and their overrides for a specific platforms. </p>
+
+<p><a name="Cookie" aria-hidden="true"></a></p>
+
+<h2>Cookie</h2>
+
+<p>Select <strong>Cookie</strong> to set your Texture up with the basic parameters used for cookies in the Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>. With this Texture type, Unity updates the <a href="class-TextureImporter.html#textureshape">Texture Shapes</a> property automatically based on the selected <strong>Light Type</strong>:</p>
+
+<ul>
+<li>
+<strong>Directional</strong> and <strong>Spotlight</strong> cookies are always 2D Textures (the <strong>2D</strong> shape type).</li>
+<li>
+<strong>Point</strong> Light cookies must be <span class="tooltip"><strong>cubemaps</strong><span class="tooltiptext">A collection of six square textures that can represent the reflections in an environment or the skybox drawn behind your geometry. The six squares form the faces of an imaginary cube that surrounds an object; each face represents the view along the directions of the world axes (up, down, left, right, forward and back). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Cubemap.html" href="class-Cubemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Cubemap" aria-label="Go to glossary anchor for Cubemap">Glossary</a></span></span></span> (the <strong>Cube</strong> shape type).</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/TextureTypes-Cookie-5.png" alt="Settings for the Cookie Texture Type">
+<figcaption>Settings for the Cookie Texture Type</figcaption>
+</figure>
+
+<p>When you choose the <strong>Cookie</strong> Texture type, you can set the following additional properties:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Light Type</strong></td>
+	<td style="text-align:left;">Define the type of Light that the cookie is applied to.<br><br>Note that you must create your source texture with an appropriate layout: cookies for Point Lights must be laid out as cubemaps, and cookies for Directional Lights and Spot Lights must be laid out as regular 2D Textures.<br><br>If you apply a cookie to a Directional Light, you can use a cookie configured for a Directional Light, or a cookie configured for a Spot Light. A Directional Light using a cookie configured for a Directional Light repeats the cookie in a tiled pattern all over the scene. A Directional Light using a cookie configured for a Spot Light projects the cookie just once in the direct path of the “beam” of the light. This is the only case where the position of a Directional Light is important.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Spotlight</strong></td>
+	<td style="text-align:left;">With this type of Light, you want the edges of your Cookie Texture to be solid black to get the proper effect, so Unity sets the <a href="class-TextureImporter.html#WrapMode">Wrap Mode</a> to <strong>Clamp</strong> by default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Directional</strong></td>
+	<td style="text-align:left;">With this type of Light, this Texture tiles, so Unity sets the <a href="class-TextureImporter.html#WrapMode">Wrap Mode</a> to <strong>Repeat</strong> by default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Point</strong></td>
+	<td style="text-align:left;">When you choose this type of Light, you can also customize the <a href="class-TextureImporter.html#textureshape">Cube shape</a>-specific</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Alpha Source</strong></td>
+	<td style="text-align:left;">Specify how the alpha channel of the Texture is generated. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AlphaSrc" href="class-TextureImporter.html#AlphaSrc">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Alpha is Transparency</strong></td>
+	<td style="text-align:left;">Enable this property to dilate the color and avoid filtering artifacts on the edges if the alpha channel you specify is Transparency. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AlphaTrans" href="class-TextureImporter.html#AlphaTrans">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Remove Matte (PSD)</strong></td>
+	<td style="text-align:left;">Enable special processing for Photoshop files that use transparency (blending color pixels with white). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#Cursor" href="class-TextureImporter.html#Cursor">More info</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Ignore PNG file gamma</strong></td>
+	<td style="text-align:left;">Enable this property to ignore the Gamma attribute in PNG files. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#PSD" href="class-TextureImporter.html#PSD">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Non Power of 2</strong></td>
+	<td style="text-align:left;">If the Texture has a non-power of two (NPOT) dimension size, this defines a scaling behavior at import time. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#NPOT" href="class-TextureImporter.html#NPOT">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Read/Write Enabled</strong></td>
+	<td style="text-align:left;">Enable this to access the Texture data from scripts using <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> methods. <a href="class-TextureImporter.html#ReadWrite" href="../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> methods. <a href="class-TextureImporter.html#ReadWrite">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Generate Mip Maps</strong></td>
+	<td style="text-align:left;">Check this box to enable mipmap generation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#GenerateMipMaps" href="class-TextureImporter.html#GenerateMipMaps">More info</a>.<br><br>This property does not change when switching to the <strong>Cookie</strong> Texture type.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Wrap Mode</strong></td>
+	<td style="text-align:left;">Select how the Texture behaves when tiled. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#WrapMode" href="class-TextureImporter.html#WrapMode">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Filter Mode</strong></td>
+	<td style="text-align:left;">Select how the Texture is filtered when it gets stretched by 3D transformations. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#FilterMode" href="class-TextureImporter.html#FilterMode">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Aniso Level</strong></td>
+	<td style="text-align:left;">Increases Texture quality when viewing the Texture at a steep angle. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AnisoLevel" href="class-TextureImporter.html#AnisoLevel">More info</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>In addition, you can use the <a href="class-TextureImporter.html#platform">Platform-specific overrides</a> panel to set default options and their overrides for a specific platforms. </p>
+
+<p><a name="Lightmap" aria-hidden="true"></a></p>
+
+<h2>Lightmap</h2>
+
+<p>Select <span class="tooltip"><strong>Lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> if you are using the Texture as a <a href="class-LightmapParameters.html">Lightmap</a>. This option enables encoding into a specific format (RGBM or dLDR, depending on the platform) and a <span class="tooltip"><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a href="PostProcessingOverview.html" href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> if you are using the Texture as a <a href="class-LightmapParameters.html">Lightmap</a>. This option enables encoding into a specific format (RGBM or dLDR, depending on the platform) and a <span class="tooltip"><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a href="PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span> step on Texture data (a push-pull dilation pass). The <strong>Texture Shape</strong> property is always set to <strong>2D</strong> for this Texture Type. For more information, see the documentation on <a href="class-TextureImporter.html#textureshape">Texture Shapes</a>.</p>
+
+<figure>
+<img src="../uploads/Main/TextureTypes-Lightmap-6.png" alt="Settings for the Lightmap Texture Type">
+<figcaption>Settings for the Lightmap Texture Type</figcaption>
+</figure>
+
+<p>When you choose the <strong>Lightmap</strong> Texture type, you can set the following additional properties:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Ignore PNG file gamma</strong></td>
+	<td style="text-align:left;">Enable this property to ignore the Gamma attribute in PNG files. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#PSD" href="class-TextureImporter.html#PSD">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Non Power of 2</strong></td>
+	<td style="text-align:left;">If the Texture has a non-power of two (NPOT) dimension size, this defines a scaling behavior at import time. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#NPOT" href="class-TextureImporter.html#NPOT">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Read/Write Enabled</strong></td>
+	<td style="text-align:left;">Enable this to access the Texture data from scripts using <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> methods. <a href="class-TextureImporter.html#ReadWrite" href="../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> methods. <a href="class-TextureImporter.html#ReadWrite">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Streaming Mip Maps</strong></td>
+	<td style="text-align:left;">Enable this checkbox to use <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about TextureStreaming.html">Mip Map Streaming</a> on this Texture. <a href="class-TextureImporter.html#Streaming" href="TextureStreaming.html">Mip Map Streaming</a> on this Texture. <a href="class-TextureImporter.html#Streaming">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Generate Mip Maps</strong></td>
+	<td style="text-align:left;">Check this box to enable mipmap generation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#GenerateMipMaps" href="class-TextureImporter.html#GenerateMipMaps">More info</a>.<br><br>This property does not change when switching to the <strong>Lightmap</strong> Texture type.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Wrap Mode</strong></td>
+	<td style="text-align:left;">Select how the Texture behaves when tiled. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#WrapMode" href="class-TextureImporter.html#WrapMode">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Filter Mode</strong></td>
+	<td style="text-align:left;">Select how the Texture is filtered when it gets stretched by 3D transformations. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#FilterMode" href="class-TextureImporter.html#FilterMode">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Aniso Level</strong></td>
+	<td style="text-align:left;">Increases Texture quality when viewing the Texture at a steep angle. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AnisoLevel" href="class-TextureImporter.html#AnisoLevel">More info</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>In addition, you can use the <a href="class-TextureImporter.html#platform">Platform-specific overrides</a> panel to set default options and their overrides for a specific platforms. </p>
+
+<p><a name="SingleChannel" aria-hidden="true"></a></p>
+
+<h2>Single Channel</h2>
+
+<p>Select <strong>Single Channel</strong> if you only need one channel in the Texture. With this Texture type, you can also change the <strong>Texture Shape</strong> property to define the <a href="class-TextureImporter.html#textureshape">Texture Shape</a>.</p>
+
+<figure>
+<img src="../uploads/Main/TextureTypes-SingleChannel-7.png" alt="Settings for the Single Channel Texture Type">
+<figcaption>Settings for the Single Channel Texture Type</figcaption>
+</figure>
+
+<p>When you choose the <strong>Single Channel</strong> Texture type, you can set the following additional properties:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="Channel" aria-hidden="true"></a><strong>Channel</strong>
+</td>
+	<td style="text-align:left;">Specify whether you want Unity to treat the Texture as an <strong>Alpha</strong> or <strong>Red</strong> channel.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Alpha</strong></td>
+	<td style="text-align:left;">Use the alpha channel. This setting does not allow <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Red</strong></td>
+	<td style="text-align:left;">Use the red color component.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Alpha Source</strong></td>
+	<td style="text-align:left;">Specify how the alpha channel of the Texture is generated. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AlphaSrc" href="class-TextureImporter.html#AlphaSrc">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Alpha is Transparency</strong></td>
+	<td style="text-align:left;">Enable this property to dilate the color and avoid filtering artifacts on the edges if the alpha channel you specify is Transparency. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AlphaTrans" href="class-TextureImporter.html#AlphaTrans">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Remove Matte (PSD)</strong></td>
+	<td style="text-align:left;">Enable special processing for Photoshop files that use transparency (blending color pixels with white). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#Cursor" href="class-TextureImporter.html#Cursor">More info</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Ignore PNG file gamma</strong></td>
+	<td style="text-align:left;">Enable this property to ignore the Gamma attribute in PNG files. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#PSD" href="class-TextureImporter.html#PSD">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Non Power of 2</strong></td>
+	<td style="text-align:left;">If the Texture has a non-power of two (NPOT) dimension size, this defines a scaling behavior at import time. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#NPOT" href="class-TextureImporter.html#NPOT">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Read/Write Enabled</strong></td>
+	<td style="text-align:left;">Enable this to access the Texture data from scripts using <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> methods. <a href="class-TextureImporter.html#ReadWrite" href="../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> methods. <a href="class-TextureImporter.html#ReadWrite">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Streaming Mip Maps</strong></td>
+	<td style="text-align:left;">Enable this checkbox to use <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about TextureStreaming.html">Mip Map Streaming</a> on this Texture. <a href="class-TextureImporter.html#Streaming" href="TextureStreaming.html">Mip Map Streaming</a> on this Texture. <a href="class-TextureImporter.html#Streaming">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Generate Mip Maps</strong></td>
+	<td style="text-align:left;">Check this box to enable mipmap generation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#GenerateMipMaps" href="class-TextureImporter.html#GenerateMipMaps">More info</a>.<br><br>This property does not change when switching to the <strong>Single Channel</strong> Texture type.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Wrap Mode</strong></td>
+	<td style="text-align:left;">Select how the Texture behaves when tiled. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#WrapMode" href="class-TextureImporter.html#WrapMode">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Filter Mode</strong></td>
+	<td style="text-align:left;">Select how the Texture is filtered when it gets stretched by 3D transformations. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#FilterMode" href="class-TextureImporter.html#FilterMode">More info</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Aniso Level</strong></td>
+	<td style="text-align:left;">Increases Texture quality when viewing the Texture at a steep angle. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html#AnisoLevel" href="class-TextureImporter.html#AnisoLevel">More info</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>In addition, you can use the <a href="class-TextureImporter.html#platform">Platform-specific overrides</a> panel to set default options and their overrides for a specific platforms. </p>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-TextureImporter.html"></a></span><div class="tip">Texture Import Settings</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="texture-compression-formats.html"></a></span><div class="tip">Texture formats</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

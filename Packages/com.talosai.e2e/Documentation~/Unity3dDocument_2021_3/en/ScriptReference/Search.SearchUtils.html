@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: SearchUtils</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">SearchUtils</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEditor.Search</p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Provides various utility functions that are used by <a href="Search.SearchProvider.html">SearchProvider</a>.</p>
+              </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using <a href="Rendering.VirtualTexturing.System.html">System</a>;
+using System.Collections;
+using System.Globalization;
+using System.Linq;
+using UnityEditor.Search;
+using <a href="UnityEditor.html">UnityEditor</a>;
+using UnityEngine;
+
+/// &lt;summary&gt;
+/// Custom provider showing how to implement a custom Query Engine supporting a Spatial search filter.
+/// &lt;/summary&gt;
+public static class SpatialProvider
+{
+    internal static string type = "spl";
+    internal static string displayName = "Spatial";
+
+    static <a href="GameObject.html">GameObject</a>[] s_GameObjects;
+    static <a href="Search.QueryEngine.html">QueryEngine</a>&lt;<a href="GameObject.html">GameObject</a>&gt; s_QueryEngine;
+
+    [SearchItemProvider]
+    internal static <a href="Search.SearchProvider.html">SearchProvider</a> CreateProvider()
+    {
+        return new <a href="Search.SearchProvider.html">SearchProvider</a>(type, displayName)
+        {
+            active = false,
+            filterId = "spl:",
+            onEnable = OnEnable,
+            fetchItems = (context, items, provider) =&gt; SearchItems(context, provider),
+            fetchLabel = FetchLabel,
+            fetchDescription = FetchDescription,
+            fetchThumbnail = FetchThumbnail,
+            fetchPreview = FetchPreview,
+            trackSelection = TrackSelection,
+            isExplicitProvider = false,
+        };
+    }
+
+    static void OnEnable()
+    {
+        s_GameObjects = <a href="Search.SearchUtils.FetchGameObjects.html">SearchUtils.FetchGameObjects</a>().ToArray();
+        s_QueryEngine = new <a href="Search.QueryEngine.html">QueryEngine</a>&lt;<a href="GameObject.html">GameObject</a>&gt;();
+
+        // Id supports all operators
+        s_QueryEngine.AddFilter("id", go =&gt; go.GetInstanceID());
+        // Name supports only :, = and !=
+        s_QueryEngine.AddFilter("n", go =&gt; go.name, new[] {":", "=", "!="});
+
+        // Add distance filtering. Does not support :.
+        s_QueryEngine.AddFilter("dist", DistanceHandler, DistanceParamHandler, new[] {"=", "!=", "&lt;", "&gt;", "&lt;=", "&gt;="});
+    }
+
+
+    static IEnumerator SearchItems(<a href="Search.SearchContext.html">SearchContext</a> context, <a href="Search.SearchProvider.html">SearchProvider</a> provider)
+    {
+        var query = s_QueryEngine.Parse(context.searchQuery);
+        if (!query.valid)
+            yield break;
+
+        var filteredObjects = query.Apply(s_GameObjects);
+        foreach (var filteredObject in filteredObjects)
+        {
+            yield return provider.CreateItem(filteredObject.GetInstanceID().ToString(), null, null, null, filteredObject.GetInstanceID());
+        }
+    }
+
+
+    static string FetchLabel(<a href="Search.SearchItem.html">SearchItem</a> item, <a href="Search.SearchContext.html">SearchContext</a> context)
+    {
+        if (item.label != null)
+            return item.label;
+
+        var go = ObjectFromItem(item);
+        if (!go)
+            return item.id;
+
+        var transformPath = <a href="Search.SearchUtils.GetTransformPath.html">SearchUtils.GetTransformPath</a>(go.transform);
+        var components = go.GetComponents&lt;<a href="Component.html">Component</a>&gt;();
+        if (components.Length &gt; 2 &amp;&amp; components[1] &amp;&amp; components[components.Length - 1])
+            item.label = $"{transformPath} ({components[1].GetType().Name}..{components[components.Length - 1].GetType().Name})";
+        else if (components.Length &gt; 1 &amp;&amp; components[1])
+            item.label = $"{transformPath} ({components[1].GetType().Name})";
+        else
+            item.label = $"{transformPath} ({item.id})";
+
+        return item.label;
+    }
+
+
+    static string FetchDescription(<a href="Search.SearchItem.html">SearchItem</a> item, <a href="Search.SearchContext.html">SearchContext</a> context)
+    {
+        var go = ObjectFromItem(item);
+        return (item.description = <a href="Search.SearchUtils.GetHierarchyPath.html">SearchUtils.GetHierarchyPath</a>(go));
+    }
+
+
+    static <a href="Texture2D.html">Texture2D</a> FetchThumbnail(<a href="Search.SearchItem.html">SearchItem</a> item, <a href="Search.SearchContext.html">SearchContext</a> context)
+    {
+        var obj = ObjectFromItem(item);
+        if (obj == null)
+            return null;
+
+        return item.thumbnail = GetThumbnailForGameObject(obj);
+    }
+
+    static <a href="Texture2D.html">Texture2D</a> FetchPreview(<a href="Search.SearchItem.html">SearchItem</a> item, <a href="Search.SearchContext.html">SearchContext</a> context, <a href="Vector2.html">Vector2</a> size, <a href="Search.FetchPreviewOptions.html">FetchPreviewOptions</a> options)
+    {
+        var obj = ObjectFromItem(item);
+        if (obj == null)
+            return item.thumbnail;
+
+        var assetPath = <a href="Search.SearchUtils.GetHierarchyAssetPath.html">SearchUtils.GetHierarchyAssetPath</a>(obj, true);
+        if (string.IsNullOrEmpty(assetPath))
+            return item.thumbnail;
+
+        if (options.HasFlag(<a href="Search.FetchPreviewOptions.Large.html">FetchPreviewOptions.Large</a>))
+        {
+            if (<a href="AssetPreview.GetAssetPreview.html">AssetPreview.GetAssetPreview</a>(obj) is <a href="Texture2D.html">Texture2D</a> tex)
+                return tex;
+        }
+        return GetAssetPreviewFromPath(assetPath, size, options);
+    }
+
+
+    static void TrackSelection(<a href="Search.SearchItem.html">SearchItem</a> item, <a href="Search.SearchContext.html">SearchContext</a> context)
+    {
+        var obj = ObjectFromItem(item);
+        if (obj)
+            <a href="Selection-activeGameObject.html">Selection.activeGameObject</a> = obj;
+        if (<a href="SceneView-lastActiveSceneView.html">SceneView.lastActiveSceneView</a> != null)
+            SceneView.lastActiveSceneView.FrameSelected();
+    }
+
+    static float DistanceHandler(<a href="GameObject.html">GameObject</a> go, <a href="Vector3.html">Vector3</a> p)
+    {
+        return (go.transform.position - p).magnitude;
+    }
+
+    static <a href="Vector3.html">Vector3</a> DistanceParamHandler(string param)
+    {
+        if (param == "selection")
+        {
+            var centerPoint = Selection.gameObjects.Select(go =&gt; go.transform.position).Aggregate((v1, v2) =&gt; v1 + v2);
+            centerPoint /= Selection.gameObjects.Length;
+            return centerPoint;
+        }
+
+        if (param.StartsWith("[") &amp;&amp; param.EndsWith("]"))
+        {
+            param = param.Trim('[', ']');
+            var vectorTokens = param.Split(',');
+            var vectorValues = vectorTokens.Select(token =&gt; float.Parse(token, CultureInfo.InvariantCulture.NumberFormat)).ToList();
+            while (vectorValues.Count &lt; 3)
+                vectorValues.Add(0f);
+            return new <a href="Vector3.html">Vector3</a>(vectorValues[0], vectorValues[1], vectorValues[2]);
+        }
+
+        var obj = s_GameObjects.FirstOrDefault(go =&gt; go.name == param);
+        if (!obj)
+            return <a href="Vector3-zero.html">Vector3.zero</a>;
+        return obj.transform.position;
+    }
+
+    static <a href="GameObject.html">GameObject</a> ObjectFromItem(<a href="Search.SearchItem.html">SearchItem</a> item)
+    {
+        var instanceID = Convert.ToInt32(item.id);
+        var obj = <a href="EditorUtility.InstanceIDToObject.html">EditorUtility.InstanceIDToObject</a>(instanceID) as <a href="GameObject.html">GameObject</a>;
+        return obj;
+    }
+
+    static <a href="Texture2D.html">Texture2D</a> GetThumbnailForGameObject(<a href="GameObject.html">GameObject</a> go)
+    {
+        var thumbnail = <a href="PrefabUtility.GetIconForGameObject.html">PrefabUtility.GetIconForGameObject</a>(go);
+        if (thumbnail)
+            return thumbnail;
+        return <a href="EditorGUIUtility.ObjectContent.html">EditorGUIUtility.ObjectContent</a>(go, go.GetType()).image as <a href="Texture2D.html">Texture2D</a>;
+    }
+
+    static <a href="Texture2D.html">Texture2D</a> GetAssetPreviewFromPath(string path, <a href="Vector2.html">Vector2</a> previewSize, <a href="Search.FetchPreviewOptions.html">FetchPreviewOptions</a> previewOptions)
+    {
+        var obj = <a href="AssetDatabase.LoadAssetAtPath.html">AssetDatabase.LoadAssetAtPath</a>&lt;UnityEngine.Object&gt;(path);
+        if (obj == null)
+            return null;
+        var preview = <a href="AssetPreview.GetAssetPreview.html">AssetPreview.GetAssetPreview</a>(obj);
+        if (preview == null || previewOptions.HasFlag(<a href="Search.FetchPreviewOptions.Large.html">FetchPreviewOptions.Large</a>))
+        {
+            var largePreview = <a href="AssetPreview.GetMiniThumbnail.html">AssetPreview.GetMiniThumbnail</a>(obj);
+            if (preview == null || (largePreview != null &amp;&amp; largePreview.width &gt; preview.width))
+                preview = largePreview;
+        }
+        return preview;
+    }
+}
+
+</pre>
+      </div>
+              <div class="subsection">
+                <h3>Static Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Search.SearchUtils-entrySeparators.html">entrySeparators</a></td><td class="desc">Separators used to split an entry into indexable tokens.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Search.SearchUtils.FetchGameObjects.html">FetchGameObjects</a></td><td class="desc">Utility function to fetch all the game objects in a particular scene.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchUtils.FindShiftLeftVariations.html">FindShiftLeftVariations</a></td><td class="desc">Extract all variations on a word. As an example: the word hello would have the following variations: h, he, hel, hell, hello.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchUtils.GetAssetPath.html">GetAssetPath</a></td><td class="desc">Returns the asset path of a search item if any.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchUtils.GetHierarchyAssetPath.html">GetHierarchyAssetPath</a></td><td class="desc">Get the path of the scene (or prefab) containing a GameObject.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchUtils.GetHierarchyPath.html">GetHierarchyPath</a></td><td class="desc">Get the hierarchy path of a GameObject including the scene name if includeScene is set to true.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchUtils.GetObjectPath.html">GetObjectPath</a></td><td class="desc">Get the path of a Unity Object. If it is a GameObject or a Component it is the . Else it is the asset name.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchUtils.GetTransformPath.html">GetTransformPath</a></td><td class="desc">Format the pretty name of a Transform component by appending all the parent hierarchy names.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchUtils.MatchSearchGroups.html">MatchSearchGroups</a></td><td class="desc">Helper function to match a string against the SearchContext. This will try to match the search query against each token of content (similar to the AddComponent menu workflow).</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchUtils.SelectMultipleItems.html">SelectMultipleItems</a></td><td class="desc">Select and ping multiple objects in the Project Browser.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchUtils.SplitCamelCase.html">SplitCamelCase</a></td><td class="desc">Tokenize a string each capital letter.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchUtils.SplitEntryComponents.html">SplitEntryComponents</a></td><td class="desc">Split an entry according to a specified list of separators.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchUtils.SplitFileEntryComponents.html">SplitFileEntryComponents</a></td><td class="desc">Split a file entry according to a list of separators and find all the variations on the entry name.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,704 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Animation tab</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-AnimationClip.html">English</a></li>
+<li><a href="/cn/current/Manual/class-AnimationClip.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-AnimationClip.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-AnimationClip.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-AnimationClip.html">English</a></li>
+<li><a href="/cn/current/Manual/class-AnimationClip.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-AnimationClip.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-AnimationClip.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="models.html">Models</a></li>
+<li><a href="models-importing.html">Importing models into Unity</a></li>
+<li><a href="class-FBXImporter.html">Model Import Settings window</a></li>
+<li>Animation tab</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-HumanTemplate.html"></a></span><div class="tip">Human Template window</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AnimationEulerCurveImport.html"></a></span><div class="tip">Euler curve resampling</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Animation tab</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/AnimationClip.html' title='Go to AnimationClip page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Animation Clips</strong> are the smallest building blocks of animation in Unity. They represent an isolated piece of motion, such as RunLeft, Jump, or Crawl, and can be manipulated and combined in various ways to produce lively end results (see <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationStateMachines.html">Animation State Machines</a><span class="tooltiptext">A graph within an Animator Controller that controls the interaction of Animation States. Each state references an Animation Blend Tree or a single Animation Clip. <a href="AnimationStateMachines.html" href="AnimationStateMachines.html">Animation State Machines</a><span class="tooltiptext">A graph within an Animator Controller that controls the interaction of Animation States. Each state references an Animation Blend Tree or a single Animation Clip. <a href="AnimationStateMachines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AnimationStateMachine" aria-label="Go to glossary anchor for AnimationStateMachine">Glossary</a></span></span></span>, <span class="tooltip"><a href="class-AnimatorController.html">Animator Controller</a><span class="tooltiptext">Controls animation through Animation Layers with Animation State Machines and Animation Blend Trees, controlled by Animation Parameters. The same Animator Controller can be referenced by multiple models with Animator components. <a href="class-AnimatorController.html" href="Glossary.html#AnimationStateMachine" aria-label="Go to glossary anchor for AnimationStateMachine">Glossary</a></span></span></span>, <span class="tooltip"><a href="class-AnimatorController.html">Animator Controller</a><span class="tooltiptext">Controls animation through Animation Layers with Animation State Machines and Animation Blend Trees, controlled by Animation Parameters. The same Animator Controller can be referenced by multiple models with Animator components. <a href="class-AnimatorController.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorController" aria-label="Go to glossary anchor for AnimatorController">Glossary</a></span></span></span>, or <a href="class-BlendTree.html">Blend Trees</a>).
+You can select Animation Clips from imported FBX data.</p>
+
+<p>When you click on the model containing animation clips, these properties appear:</p>
+
+<figure>
+<img src="../uploads/Main/classAnimationClip-Inspector.png" alt="The Animation Clip Inspector">
+<figcaption>The Animation Clip Inspector</figcaption>
+</figure>
+
+<p>There are five areas on the <strong>Animation</strong> tab of the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window:</p>
+
+<p>
+<strong>(A)</strong> <a href="#AssetProperties">Asset-specific properties</a>. These settings define import options for the entire Asset.</p>
+
+<p>
+<strong>(B)</strong> <a href="#ClipSelectionList">Clip selection list</a>. You can select any item from this list to display its properties and preview its animation. You can also <a href="Splittinganimations.html">define new clips</a>.</p>
+
+<p>
+<strong>(C)</strong> <a href="#ClipProperties">Clip-specific properties</a>. These settings define import options for the selected <strong>Animation Clip</strong>.</p>
+
+<p>
+<strong>(D)</strong> <a href="#AllClipProperties">Clip properties</a>. These settings define import options for all Animation clips.</p>
+
+<p>
+<strong>(E)</strong> <a href="#AnimationPreview">Animation preview</a>. You can playback the animation and select specific frames here.</p>
+
+<p><a name="AssetProperties" aria-hidden="true"></a></p>
+
+<h2>Asset-specific properties</h2>
+
+<figure>
+<img src="../uploads/Main/classAnimationClip-Inspector_Asset.png" alt="Import options for the entire Asset">
+<figcaption>Import options for the entire Asset</figcaption>
+</figure>
+
+<p>These properties apply to all animation clips and constraints defined within this Asset:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Import Constraints</strong></td>
+	<td style="text-align:left;">Import <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Constraints.html">constraints</a><span class="tooltiptext">Settings on Joint components which limit movement or rotation. The type and number of constraints vary depending on the type of Joint. <a href="Joints2D.html#constraints" href="Constraints.html">constraints</a><span class="tooltiptext">Settings on Joint components which limit movement or rotation. The type and number of constraints vary depending on the type of Joint. <a href="Joints2D.html#constraints">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Constraints" aria-label="Go to glossary anchor for Constraints">Glossary</a></span></span></span> from this asset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Import Animation</strong></td>
+	<td style="text-align:left;">Import animation from this asset. <br><br><strong><em>Note:</em></strong> If disabled, all other options on this page are hidden and no animation is imported.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Bake Animations</strong></td>
+	<td style="text-align:left;">Bake animations created using IK or Simulation to forward kinematic keyframes. <br><br>Only available for Autodesk® Maya®, Autodesk® 3ds Max® and Cinema 4D files.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Resample Curves</strong></td>
+	<td style="text-align:left;">Resample animation curves as Quaternion values and generate a new Quaternion keyframe for every frame in the animation. <br><br>This option only appears if the import file contains Euler curves. This option is enabled by default.<br><br>Disable this option to <a href="AnimationEulerCurveImport.html">keep animation curves as they were originally authored</a>. You should only disable this option if there are interpolation issues in the resampled animation when compared with your original animation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Anim. Compression</strong></td>
+	<td style="text-align:left;">The type of <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> to use when importing the animation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Off</strong></td>
+	<td style="text-align:left;">Disable <span class="tooltip"><strong>animation compression</strong><span class="tooltiptext">The method of compressing animation data to significantly reduce file sizes without causing a noticeable reduction in motion quality. Animation compression is a trade off between saving on memory and image quality. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html#AssetProperties" href="class-AnimationClip.html#AssetProperties">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#animationcompression" aria-label="Go to glossary anchor for animationcompression">Glossary</a></span></span></span>. This means that Unity doesn’t reduce <span class="tooltip"><strong>keyframe</strong><span class="tooltiptext">A frame that marks the start or end point of a transition in an animation. Frames in between the keyframes are called inbetweens.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#keyframe" aria-label="Go to glossary anchor for keyframe">Glossary</a></span></span></span> count on import. Disabling animation compression leads to the highest precision animations, but slower performance and bigger file and runtime memory size. It is generally not advisable to use this option - if you need higher precision animation, you should enable keyframe reduction and lower allowed <strong>Animation Compression Error</strong> values instead.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Keyframe Reduction</strong><span class="tooltiptext">A process that removes redundant keyframes. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html#AssetProperties" href="class-AnimationClip.html#AssetProperties">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#KeyframeReduction" aria-label="Go to glossary anchor for KeyframeReduction">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Reduce redundant keyframes on import. If enabled, the Inspector displays <strong>Animation Compression Errors</strong> options. This affects both file size (runtime memory) and how curves are evaluated.<br><br>Applies to <strong>Legacy</strong>, <strong>Generic</strong>, and <strong>Humanoid</strong> <a href="FBXImporter-Rig.html">Animation Type</a> rigs.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Keyframe Reduction and Compression</strong></td>
+	<td style="text-align:left;">Reduce keyframes on import and compress keyframes when storing animations in files. This affects only file size: the runtime memory size is the same as <strong>Keyframe Reduction</strong>. If enabled, the Inspector displays <strong>Animation Compression Errors</strong> options.<br><br>Only for <strong>Legacy</strong> <a href="FBXImporter-Rig.html">Animation Type</a> rigs.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Optimal</strong></td>
+	<td style="text-align:left;">Let Unity decide how to compress, either by keyframe reduction or by using dense format. If enabled, the Inspector displays <strong>Animation Compression Errors</strong> options.<br><br>Only for <strong>Generic</strong> and <strong>Humanoid</strong> <a href="FBXImporter-Rig.html">Animation Type</a> rigs.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Animation Compression Errors</strong></td>
+	<td style="text-align:left;">Only available when <strong>Keyframe Reduction</strong> or <strong>Optimal</strong> compression is enabled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Rotation Error</strong></td>
+	<td style="text-align:left;">Set the error tolerance (as an angle in degrees) for rotation curve compression. Unity uses this to determine whether or not it can remove a key on a rotation curve. <br><br>This represents the minimum angle between the original rotation value and the reduced value:<br><br><code>Angle(value, reduced) &lt; RotationError</code>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Position Error</strong></td>
+	<td style="text-align:left;">Set the error tolerance (as a percentage) for position curve compression. Unity uses this to determine whether or not it can remove a key on a position curve. For more information, see <a href="#tolerance">Setting error tolerance for key reduction on position and scale curves</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Scale Error</strong></td>
+	<td style="text-align:left;">Set the error tolerance (as a percentage) for scale curve compression. Unity uses this to determine whether or not it can remove a key on a scale curve. For more information, see <a href="#tolerance">Setting error tolerance for key reduction on position and scale curves</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Animated Custom Properties</strong></td>
+	<td style="text-align:left;">Import any FBX properties that you designated as custom user properties. <br><br>Unity only supports a small subset of properties when importing FBX files (such as translation, rotation, scale and visibility). However, you can treat standard FBX properties like user properties by naming them in your importer script via the <a href="../ScriptReference/ModelImporter-extraUserProperties.html">extraUserProperties</a> member. During import, Unity then passes any named properties to <a href="../ScriptReference/AssetPostprocessor.OnPostprocessGameObjectWithUserProperties.html">the Asset postprocessor</a> just like ‘real’ user properties.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="tolerance" aria-hidden="true"> </a></p>
+
+<h3>Setting error tolerance for key reduction on position and scale curves</h3>
+
+<p>Set the error tolerance percentage to determine whether or not Unity can remove a key on a position or scale curve as a strategy for animation compression.</p>
+
+<p>When you set the <strong>Anim. Compression</strong> property to “Keyframe Reduction” or “Optimal”, Unity compares the original curve to what the curve looks like after removing a specific keyframe and applies this test:</p>
+
+<pre><code>OriginalValue - ReducedValue &gt; OriginalValue * percentageOfError
+</code></pre>
+
+<p>Unity removes a keyframe if the delta between the original value and the reduced value is less than the original value multiplied by the error tolerance percentage.</p>
+
+<p>Note that the Unity compares the distances between the three curve components (that is, it compares <code>distance(x,y,z)</code> ), and also per component ( <code>distance(x)</code>, <code>distance(y)</code>, and then <code>distance(z)</code> ).</p>
+
+<p>This example demonstrates how Unity evaluates a reduction on the y-axis using an error tolerance of 10%:</p>
+
+<figure>
+<img src="../uploads/Main/classAnimationClip-tolerance_Ex1.png" alt="Define a position error of 10% on a simple animation of a translation on the y-axis">
+<figcaption>Define a position error of 10% on a simple animation of a translation on the y-axis</figcaption>
+</figure>
+
+<p>Keyframe A has a value of 11.2:</p>
+
+<figure>
+<img src="../uploads/Main/classAnimationClip-tolerance_Ex2.png" alt="Keyframe A has a value of 11.2">
+<figcaption>Keyframe A has a value of 11.2</figcaption>
+</figure>
+
+<p>Keyframe B has a value of 11.1:</p>
+
+<figure>
+<img src="../uploads/Main/classAnimationClip-tolerance_Ex3.png" alt="Keyframe B has a value of 11.1">
+<figcaption>Keyframe B has a value of 11.1</figcaption>
+</figure>
+
+<p>The resulting reduced curve looks like this:</p>
+
+<figure>
+<img src="../uploads/Main/classAnimationClip-tolerance_Ex4.png" alt="The resulting reduced curve">
+<figcaption>The resulting reduced curve</figcaption>
+</figure>
+
+<p>
+<strong>Keyframe A is not reduced</strong> because:</p>
+
+<ul>
+<li>The distance between the original and reduced value is <code>D = 11.2 - 10 = 1.2</code>.</li>
+<li>The error margin is <code>E = 10% * 11.2 = 1.12</code>
+</li>
+<li><strong>D &gt; E</strong></li>
+</ul>
+
+<p>
+<strong>Keyframe B is reduced</strong> because <code>11.1 - 10 &lt; 10% * 11.1</code>:</p>
+
+<ul>
+<li>The distance between the original and reduced value is <code>D = 11.1 - 10 = 1.11</code>
+</li>
+<li>The error margin is <code>E = 10% * 11.1 = 1.11</code>
+</li>
+<li><strong>D = E</strong></li>
+</ul>
+
+<p>Note that this method has a limitation when using high values that vary only slightly. Moving the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> 1000 units away results in essentially the same animation but located far from 0.</p>
+
+<figure>
+<img src="../uploads/Main/classAnimationClip-tolerance_Ex5.png" alt="High values with small variance">
+<figcaption>High values with small variance</figcaption>
+</figure>
+
+<p>In this case, both keyframes are reduced.</p>
+
+<p>
+<strong>Keyframe A is reduced</strong> because:</p>
+
+<ul>
+<li>The distance between the original and reduced value is <code>D = 1011.2 - 1010 = 1.2</code>
+</li>
+<li>The error margin is <code>E = 10% * 1011.2 = 101.12</code>
+</li>
+</ul>
+
+<p>
+<strong>Keyframe B is reduced</strong> because <code>11.1 - 10 &lt; 10% * 11.1</code>:</p>
+
+<ul>
+<li>The distance between the original and reduced value is <code>D = 11.1 - 10 = 1.11</code>
+</li>
+<li>The error margin is <code>E = 10% * 1011.1 = 101.11</code>
+</li>
+</ul>
+
+<p>Higher values require a much larger difference between the original and reduced values for keyframes to remain in the reduced curve. Keyframe A has a value of 1100 and is discarded; keyframe B has a value of 1112 and remains:</p>
+
+<figure>
+<img src="../uploads/Main/classAnimationClip-tolerance_Ex6.png" alt="Higher values require a much larger difference">
+<figcaption>Higher values require a much larger difference</figcaption>
+</figure>
+
+<p><a name="ClipSelectionList" aria-hidden="true"> </a></p>
+
+<h2>Clip selection list</h2>
+
+<figure>
+<img src="../uploads/Main/classAnimationClip-Inspector_Selection.png" alt="List of clips defined in this file">
+<figcaption>List of clips defined in this file</figcaption>
+</figure>
+
+<p>You can perform these tasks in this area of the <strong>Animation</strong> tab:</p>
+
+<ul>
+<li>Select a clip from the list to <a href="#ClipProperties">display its clip-specific properties</a>.</li>
+<li>Play a selected clip in the <a href="#AnimationPreview">clip preview pane</a>.</li>
+<li>
+<a href="Splittinganimations.html">Create a new clip</a> for this file with the add (<code>+</code>) button.</li>
+<li>Remove the selected clip definition with the delete (<code>-</code>) button.</li>
+</ul>
+
+<p>
+<strong>Warning:</strong> If you manually change any properties of the imported clips, Unity will not import new animation clips when the source Asset changes. For example, if you create a new clip or change a clip’s timing on the <strong>Animation</strong> tab, that clip list will not change even if you add clips to the FBX file outside of Unity. Unity will ignore the new animation clips.</p>
+
+<p><a name="ClipProperties" aria-hidden="true"> </a></p>
+
+<h2>Clip-specific properties</h2>
+
+<figure>
+<img src="../uploads/Main/classAnimationClip-Inspector_Clip.png" alt="Import options for the selected Animation clip">
+<figcaption>Import options for the selected Animation clip</figcaption>
+</figure>
+
+<p>This area of the <strong>Animation</strong> tab displays these features:</p>
+
+<p>
+<strong>(A)</strong> The editable name of the selected clip.</p>
+
+<p>
+<strong>(B)</strong> The animation clip timeline.</p>
+
+<p>
+<strong>(C)</strong> Clip properties to control looping, <span class="tooltip"><strong>root motion</strong><span class="tooltiptext">Motion of character’s root node, whether it’s controlled by the animation itself or externally. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RootMotion.html" href="RootMotion.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#RootMotion" aria-label="Go to glossary anchor for RootMotion">Glossary</a></span></span></span> extraction, curves, events and <span class="tooltip"><strong>Avatar</strong><span class="tooltiptext">An interface for retargeting animation from one rig to another. <a href="ConfiguringtheAvatar.html" href="Glossary.html#RootMotion" aria-label="Go to glossary anchor for RootMotion">Glossary</a></span></span></span> extraction, curves, events and <span class="tooltip"><strong>Avatar</strong><span class="tooltiptext">An interface for retargeting animation from one rig to another. <a href="ConfiguringtheAvatar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Avatar" aria-label="Go to glossary anchor for Avatar">Glossary</a></span></span></span> masks.</p>
+
+<p>You can set these properties separately for each animation clip defined within this asset:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong><em>Area A</em></strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<img src="../uploads/Main/classAnimationClip-Name.png" alt="The name of the source take"><br><strong>Take name</strong>
+</td>
+	<td style="text-align:left;">The name of the source take in the source file. Source files contain a set of source takes that are created in external 3D applications such as Motionbuilder or Autodesk® Maya®.<br><br>You can import source takes as individual Animation clips. You can also <a href="Splittinganimations.html">create Animation clips from a subset of frames</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong><em>Area B</em></strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><img src="../uploads/Main/classAnimationClip-Timeline.png" alt="The timeline editor"></td>
+	<td style="text-align:left;">Drag the start and end indicators on the animation timeline to define frame ranges for each clip.<br><br>Creating clips is essentially defining the start and end points for segments of animation. <a href="LoopingAnimationClips.html">To define a looping clip</a>, trim the start and end points so that the first and last frames match as best as possible. You can also zoom and scroll the timeline to be more precise.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Start</strong></td>
+	<td style="text-align:left;">Start frame of the clip.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>End</strong></td>
+	<td style="text-align:left;">End frame of the clip.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong><em>Area C</em></strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Loop Time</strong></td>
+	<td style="text-align:left;">Play the animation clip through and restart when the end is reached.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Loop Pose</strong></td>
+	<td style="text-align:left;">Loop the motion seamlessly.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Cycle Offset</strong></td>
+	<td style="text-align:left;">Offset to the cycle of a looping animation, if it starts at a different time.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong>Root Transform Rotation</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Bake into Pose</strong></td>
+	<td style="text-align:left;">Bake root rotation into the movement of the bones. Disable to store as root motion.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Based Upon</strong></td>
+	<td style="text-align:left;">Basis of root rotation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Original</strong></td>
+	<td style="text-align:left;">Keep the original rotation from the source file.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Root Node Rotation</strong></td>
+	<td style="text-align:left;">Use the rotation of the root node. <br><br>Only available for the <strong>Generic</strong> <a href="FBXImporter-Rig.html">Animation Type</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Body Orientation</strong></td>
+	<td style="text-align:left;">Keep the upper body pointing forward.<br><br>Only available for the <strong>Humanoid</strong> <a href="FBXImporter-Rig.html">Animation Type</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Offset</strong></td>
+	<td style="text-align:left;">Offset to the root rotation (in degrees).</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong>Root Transform Position (Y)</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Bake into Pose</strong></td>
+	<td style="text-align:left;">Bake vertical root motion into the movement of the bones. Disable to store as root motion.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Based Upon (at Start)</strong></td>
+	<td style="text-align:left;">Basis of vertical root position.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Original</strong></td>
+	<td style="text-align:left;">Keep the vertical position from the source file.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Root Node Position</strong></td>
+	<td style="text-align:left;">Use the vertical root position.<br><br>Only available for the <strong>Generic</strong> <a href="FBXImporter-Rig.html">Animation Type</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Center of Mass</strong><span class="tooltiptext">Represents the average position of all mass in a Rigidbody for the purposes of physics calculations. By default it is computed from all colliders belonging to the Rigidbody, but can be modified via script. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Rigidbody-centerOfMass.html" href="../ScriptReference/Rigidbody-centerOfMass.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#CenterofMass" aria-label="Go to glossary anchor for CenterofMass">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Keep center of mass aligned with the root transform position.<br><br>Only available for the <strong>Humanoid</strong> <a href="FBXImporter-Rig.html">Animation Type</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Feet</strong></td>
+	<td style="text-align:left;">Keep feet aligned with the root transform position.<br><br>Only available for the <strong>Humanoid</strong> <a href="FBXImporter-Rig.html">Animation Type</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Offset</strong></td>
+	<td style="text-align:left;">Offset to the vertical root position.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong>Root Transform Position (XZ)</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Bake into Pose</strong></td>
+	<td style="text-align:left;">Bake horizontal root motion into the movement of the bones. Disable to store as root motion.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Based Upon</strong></td>
+	<td style="text-align:left;">Basis of horizontal root position.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Original</strong></td>
+	<td style="text-align:left;">Keep the horizontal position from the source file.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Root Node Position</strong></td>
+	<td style="text-align:left;">Use the horizontal root transform position.<br><br>Only available for the <strong>Generic</strong> <a href="FBXImporter-Rig.html">Animation Type</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Center of Mass</strong></td>
+	<td style="text-align:left;">Keep aligned with the root transform position.<br><br>Only available for the <strong>Humanoid</strong> <a href="FBXImporter-Rig.html">Animation Type</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Offset</strong></td>
+	<td style="text-align:left;">Offset to the horizontal root position.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Mirror</strong></td>
+	<td style="text-align:left;">Mirror left and right in this clip. <br><br>Only appears if the <a href="FBXImporter-Rig.html">Animation Type</a> is set to <strong>Humanoid</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Additive Reference Pose</strong></td>
+	<td style="text-align:left;">Enable to set frame for the reference pose used as the base for the <a href="AnimationLayers.html">additive animation layer</a>. A blue marker becomes visible in the timeline editor: <br><img src="../uploads/Main/AnimationAdditiveReferencePoseTimelineMarker.png" alt="">
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Pose Frame</strong></td>
+	<td style="text-align:left;">Enter a frame number to use as the reference pose. You can also drag the blue marker in the timeline to update this value. <br><br>Only available if <strong>Additive Reference Pose</strong> is enabled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Curves</strong></td>
+	<td style="text-align:left;">Expand this section to manage <a href="AnimationCurvesOnImportedClips.html">animation curves for this animation clip</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Events</strong></td>
+	<td style="text-align:left;">Expand this section to manage <a href="script-AnimationWindowEvent.html">animation events for this animation clip</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><span class="tooltip"><strong>Mask</strong><span class="tooltiptext">Can refer to a Sprite Mask, a UI Mask, or a Layer Mask <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about script-Mask.html" href="script-Mask.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mask" aria-label="Go to glossary anchor for Mask">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Expand this section to manage Avatar <a href="class-AvatarMask.html">masking for this animation clip</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="AllClipProperties" aria-hidden="true"> </a></p>
+
+<h2>Properties for all clips</h2>
+
+<p>These expandable properties apply to all Animation clips being imported.</p>
+
+<figure>
+<img src="../uploads/Main/classAnimationClip-Inspector_AllClips.png" alt="Import options for all Animation clips">
+<figcaption>Import options for all Animation clips</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Motion</strong></td>
+	<td style="text-align:left;">Expand this section to manage <a href="AnimationRootMotionNodeOnImportedClips.html">the root motion node for all imported clips</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Import Messages</strong></td>
+	<td style="text-align:left;">Expand this section to see detailed <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #ImportMessages">information about how your animation was imported</a>, including an optional <em><span class="tooltip"><strong>Retargeting</strong><span class="tooltiptext">Applying animations created for one model to another. <a href="Retargeting.html" href="#ImportMessages">information about how your animation was imported</a>, including an optional <em><span class="tooltip"><strong>Retargeting</strong><span class="tooltiptext">Applying animations created for one model to another. <a href="Retargeting.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Retargeting" aria-label="Go to glossary anchor for Retargeting">Glossary</a></span></span></span> Quality Report</em>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="ImportMessages" aria-hidden="true"></a></p>
+
+<h2>Animation import warnings</h2>
+
+<p>If any problems occur during the animation import process, a warning appears at the top of the Animations Import inspector:</p>
+
+<figure>
+<img src="../uploads/Main/AnimationWarningBox.png" alt="Animation import warning messages">
+<figcaption>Animation import warning messages</figcaption>
+</figure>
+
+<p>The warnings do not necessarily mean your animation has not imported or doesn’t work. It may just mean that the imported animation looks slightly different from the source animation.</p>
+
+<p>To see more information, expand the <strong>Import Messages</strong> section:</p>
+
+<figure>
+<img src="../uploads/Main/AnimationWarningSection.png" alt="Animation import warning messages">
+<figcaption>Animation import warning messages</figcaption>
+</figure>
+
+<p>In this case, Unity has provided a <strong>Generate Retargeting Quality Report</strong> option which you can enable to see more specific information on the retargeting problems.</p>
+
+<p>Other warning details you may see include the following:</p>
+
+<ul>
+<li>Default bone length found in this file is different from the one found in the source avatar.</li>
+<li>Inbetween bone default rotation found in this file is different from the one found in the source avatar.</li>
+<li>Source avatar hierarchy doesn’t match one found in this model.</li>
+<li>This animation has translation animation that will be discarded.</li>
+<li><span class="tooltip"><strong>Humanoid animation</strong><span class="tooltiptext">An animation using humanoid skeletons. Humanoid models generally have the same basic structure, representing the major articulate parts of the body, head and limbs. This makes it easy to map animations from one humanoid skeleton to another, allowing retargeting and inverse kinematics. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ConfiguringtheAvatar.html" href="ConfiguringtheAvatar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Humanoidanimation" aria-label="Go to glossary anchor for Humanoidanimation">Glossary</a></span></span></span> has inbetween transforms and rotation that will be discarded.</li>
+<li>This animation has scale animation that will be discarded.</li>
+</ul>
+
+<p>These messages indicate that some data present in your original file was omitted when Unity imported and converted your animation to its own internal format. These warnings essentially tell you that the retargeted animation may not exactly match the source animation.</p>
+
+<p>
+<strong>Note:</strong> Unity does not support pre- and post-extrapolate modes (also known as pre- and post-infinity modes) other than <strong>constant</strong>, and converts these to <strong>constant</strong> when imported.</p>
+
+<p><a name="AnimationPreview" aria-hidden="true"></a></p>
+
+<h2>Animation preview</h2>
+
+<figure>
+<img src="../uploads/Main/classAnimationClip-Inspector_Preview.png" alt="Animation clip preview">
+<figcaption>Animation clip preview</figcaption>
+</figure>
+
+<p>The preview area of the <strong>Animation</strong> tab provides these features:</p>
+
+<p>
+<strong>(A)</strong> The name of the selected clip.</p>
+
+<p>
+<strong>(B)</strong> The <a href="Unity2D.html">2D</a> preview mode button (switches between orthographic and perspective camera).</p>
+
+<p>
+<strong>(C)</strong> The pivot and mass center display button (switches between displaying and hiding the gizmos).</p>
+
+<p>
+<strong>(D)</strong> The Avatar selector (change which GameObject will preview the action).</p>
+
+<p>
+<strong>(E)</strong> The play/pause button.</p>
+
+<p>
+<strong>(F)</strong> The playback head on the preview timeline (allows scrubbing back and forth).</p>
+
+<p>
+<strong>(G)</strong> The animation preview speed slider (move left to slow down; right to speed up).</p>
+
+<p>
+<strong>(H)</strong> The playback status indicator (displays the location of the playback in seconds, percentage, and frame number).</p>
+
+<p>
+<strong>(I)</strong> The <span class="tooltip"><strong>Tag</strong><span class="tooltiptext">A reference word which you can assign to one or more GameObjects to help you identify GameObjects for scripting purposes. For example, you might define and “Edible” Tag for any item the player can eat in your game. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Tags.html" href="Tags.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Tag" aria-label="Go to glossary anchor for Tag">Glossary</a></span></span></span> bar, where you can define and apply <a href="Tags.html">Tags</a> to your clip.</p>
+
+<p>
+<strong>(J)</strong> The <a href="AssetBundlesIntro.html">AssetBundles</a> bar, where you can <a href="AssetBundles-Workflow.html">define AssetBundles and Variants</a>.</p>
+
+<hr>
+<!-- area:authoring -->
+
+<p><span class="search-words">AnimationClip</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-HumanTemplate.html"></a></span><div class="tip">Human Template window</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AnimationEulerCurveImport.html"></a></span><div class="tip">Euler curve resampling</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

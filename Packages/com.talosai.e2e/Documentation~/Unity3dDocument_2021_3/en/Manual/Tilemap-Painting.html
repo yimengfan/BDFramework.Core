@@ -1,0 +1,403 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Painting on Tilemaps</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Tilemap-Painting.html">English</a></li>
+<li><a href="/cn/current/Manual/Tilemap-Painting.html">中文</a></li>
+<li><a href="/ja/current/Manual/Tilemap-Painting.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Tilemap-Painting.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Tilemap-Painting.html">English</a></li>
+<li><a href="/cn/current/Manual/Tilemap-Painting.html">中文</a></li>
+<li><a href="/ja/current/Manual/Tilemap-Painting.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Tilemap-Painting.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Unity2D.html">2D game development</a></li>
+<li><a href="Tilemap.html">Tilemaps</a></li>
+<li><a href="Tilemap-workflow.html">Tilemap workflow</a></li>
+<li>Painting on Tilemaps</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Tilemap-Palette.html"></a></span><div class="tip">Creating a Tile Palette</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="TilemapPainting-SelectionTool.html"></a></span><div class="tip">Select Tool</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Painting on Tilemaps</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The following details the steps and tools for painting <strong>Tiles</strong> on a <strong>Tilemap</strong>. However, if you are painting an <a href="Tilemap-Isometric.html">Isometric Tilemap</a>, refer to <a href="Tilemap-Isometric-Palette.html">Creating a Tile Palette for an Isometric Tilemap</a> for specific steps and information.</p>
+
+<p>To begin painting Tiles, select the Tilemap you want to paint on from the <strong>Active Tilemap</strong> drop-down menu in the <strong>Tilemap Palette</strong> window. Tilemaps created in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>’s hierarchy are automatically added to the drop-down menu. Only the currently selected <strong>Active Tilemap</strong> is affected by the <strong>Tile Palette</strong> painting tools.</p>
+
+<figure>
+<img src="../uploads/Main/ActiveTilemap_highlight.png" alt="The Active Tilemap">
+<figcaption>The Active Tilemap</figcaption>
+</figure>
+
+<p>Tilemap painting tools are found in a row at the top of the <strong>Tile Palette</strong> window. These tools can also be used to edit the <a href="Tilemap-Palette.html">Tile Palette</a> itself.</p>
+
+<figure>
+<img src="../uploads/Main/TilePalette_ToolRow.png" alt="Tool Row">
+<figcaption>Tool Row</figcaption>
+</figure>
+
+<h2>Painting Tool Shortcuts</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Tool</th>
+	<th style="text-align:left;">Shortcut Key</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<img src="../uploads/Main/SelectTool.png" alt=""> <a href="#Select">Select Tool</a>
+</td>
+	<td style="text-align:left;">S</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<img src="../uploads/Main/MoveTool.png" alt=""> <a href="#Move">Move Tool</a>
+</td>
+	<td style="text-align:left;">M</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<img src="../uploads/Main/BrushTool.png" alt=""> <a href="#Brush">Paintbrush Tool</a>
+</td>
+	<td style="text-align:left;">B</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<img src="../uploads/Main/PaintboxTool.png" alt=""> <a href="#Rec">Box Fill Tool</a>
+</td>
+	<td style="text-align:left;">U</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<img src="../uploads/Main/EyedropTool.png" alt=""><a href="#Picker">Picker Tool</a>
+</td>
+	<td style="text-align:left;">I<br>While using the <strong>Brush Tool</strong> or <strong>Box Fill Tool</strong>, hold <strong>Ctrl</strong> (<strong>Command</strong> on macOS) to temporarily switch to this Tool.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<img src="../uploads/Main/EraserTool.png" alt=""> <a href="#Eraser">Eraser Tool</a>
+</td>
+	<td style="text-align:left;">D<br>While using the <strong>Brush Tool</strong> or <strong>Box Fill Tool</strong>, hold <strong>Shift</strong> to temporarily switch to this Tool.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<img src="../uploads/Main/PaintBucketTool.png" alt=""> <a href="#Fill">Flood Fill Tool</a>
+</td>
+	<td style="text-align:left;">G</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Select Tool<a name="Select" aria-hidden="true"></a>
+</h3>
+
+<p>Use the <strong>Select Tool</strong> to select a Tile on the Active Tilemap or hold and drag over multiple Tiles to select more at once. The property details of selected Tiles are shown in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> Window. See the <a href="TilemapPainting-SelectionTool.html">Select Tool</a> page for more information about the <a href="https://docs.unity3d.com/Manual/TilemapPainting-SelectionTool.html#GridSelect">Grid Selection Properties</a> and examples of the different <a href="https://docs.unity3d.com/Manual/TilemapPainting-SelectionTool.html#Modify">Modify Tilemap</a> options available.</p>
+
+<figure>
+<img src="../uploads/Main/SelectTile_inspector.png" alt="Selecting a Tile on the Tilemap with the Select Tool">
+<figcaption>Selecting a Tile on the Tilemap with the <strong>Select Tool</strong></figcaption>
+</figure>
+
+<p>After selecting Tiles with the Select Tool, you can use the <strong><a href="#Move">Move Tool</a></strong> to move selected Tiles to a different position on the Tilemap.</p>
+
+<h3>Move Tool<a name="Move" aria-hidden="true"></a>
+</h3>
+
+<p>Use the <strong>Move Tool</strong> to move the Select Tool’s Tile selection (the Move Tool cannot select Tiles itself). Hold and drag selected Tiles to another position on the Tilemap.</p>
+
+<figure>
+<img src="../uploads/Main/TilePalette_MoveTool.png" alt="">
+</figure>
+
+<h3>Paintbrush Tool<a name="Brush" aria-hidden="true"></a>
+</h3>
+
+<p>Use the <strong>Paintbrush Tool</strong> to select a Tile in the Tilemap Palette, or hold and drag over multiple Tiles to select more at once. Then click on any location on the Tilemap in the Scene to begin painting with your selected Tiles. Hold Shift while using the <strong>Paintbrush Tool</strong> to switch to the <strong><a href="#Eraser">Erase Tool</a></strong>.</p>
+
+<figure>
+<img src="../uploads/Main/TilePalette_PaintTool.png" alt="">
+</figure>
+
+<p>To select and paint with Tiles that are already on the Tilemap instead of the <strong>Tilemap Palette</strong>, hold <strong>Ctrl</strong> as you select Tiles on the Tilemap with the <strong>Paintbrush Tool</strong>. This briefly switches it to the <strong><a href="#Picker">Picker Tool</a></strong> to select the Tiles for painting.</p>
+
+<h3>Box Fill Tool<a name="Rec" aria-hidden="true"></a>
+</h3>
+
+<p>Use the <strong>Box Fill Tool</strong> to select a Tile in the Tilemap Palette, or hold and drag over multiple Tiles to select more at once. Selections made with the other painting tools are also valid. Hold and drag the <strong>Box Fill Tool</strong> over the Tilemap to draw a rectangular shape which fills with the selected Tile(s.)</p>
+
+<figure>
+<img src="../uploads/Main/TilePalette_FillBox.png" alt="">
+</figure>
+
+<h3>Picker Tool<a name="Picker" aria-hidden="true"></a>
+</h3>
+
+<p>Use the <strong>Picker Tool</strong> to pick a Tile from the Tilemap or Tilemap palette; hold and drag over multiple Tiles to select more at once. The active tool switches to the <strong>Paintbrush Tool</strong> once a selection is made, to allow you to paint immediately on the Tilemap with the selected Tile(s).</p>
+
+<figure>
+<img src="../uploads/Main/Tilemap_PickerTool.png" alt="">
+</figure>
+
+<h3>Eraser Tool<a name="Eraser" aria-hidden="true"></a>
+</h3>
+
+<p>Use the <strong>Eraser Tool</strong> to erase Tiles from the Tilemap by selecting them while the tool is enabled. To erase a larger area at once, hold and drag the Eraser Tool to the desired size in the Tilemap Palette, then paint over Tiles you want to delete on the Tilemap.</p>
+
+<figure>
+<img src="../uploads/Main/TilePalette_Erase.png" alt="">
+</figure>
+
+<h3>Flood Fill Tool<a name="Fill" aria-hidden="true"></a>
+</h3>
+
+<p>The <strong>Flood Fill Tool</strong> is used to fill a contiguous area of empty cells or identical Tiles with the selected Tile. Select the Tile to use as the Flood Fill by selecting it from the Tilemap Palette. This tool cannot be used with multiple Tiles.</p>
+
+<figure>
+<img src="../uploads/Main/TilePalette_FillTool.png" alt="">
+</figure>
+
+<h2>Tilemap Focus mode</h2>
+
+<p>Use the Tilemap Focus mode to focus on a specific Tilemap or Grid <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, and fade out other GameObjects in the Scene. This is useful when working with mutilple Tilemap layers to avoid confusion and clutter.</p>
+
+<p>First select the target Tilemap from the <strong>Active Target</strong> dropdown in the <strong>Tilemap Palette</strong> window or from the <strong>Hierarchy</strong> window. The Tilmap Focus On dropdown menu is found at the bottom right of the <span class="tooltip"><strong>Scene View</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/TilePalette_FocusTilemap.png" alt="">
+</figure>
+
+<p>Select the <strong>Focus On</strong> target from the options in the dropdown menu:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Target</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">No target is selected.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Tilemap</strong><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Tilemap.html" href="class-Tilemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Tilemap" aria-label="Go to glossary anchor for Tilemap">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">The selected Tilemap GameObject is focused. All other GameObjects are faded. Select this option to focus solely on a single Tilemap layer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Grid</strong></td>
+	<td style="text-align:left;">The parent Grid GameObject and all its children is focused. All other GameObjects are faded. Select this option to focus on the entire Tilemap with all layers as a whole.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Active Brush inspector</h2>
+
+<figure>
+<img src="../uploads/Main/ActiveBrush_inspector.png" alt="Active Brush inspector window.">
+<figcaption>Active Brush inspector window.</figcaption>
+</figure>
+
+<p>The Active Brush Inspector is at the bottom of the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Tilemap-Palette.html">Tile Palette</a> window. It allows you to change the current active Brush and its properties. This is minimized by default. To expand it, drag the bottom <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html" href="Tilemap-Palette.html">Tile Palette</a> window. It allows you to change the current active Brush and its properties. This is minimized by default. To expand it, drag the bottom <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> upwards.</p>
+
+<figure>
+<img src="../uploads/Main/AB_defaultbrush.png" alt="The Active Brush drop-down menu, with Default selected.">
+<figcaption>The Active Brush drop-down menu, with ‘Default’ selected.</figcaption>
+</figure>
+
+<p>Use the drop-down menu to change the active Brush from the Default Brush to other Brushes you have in the project, such as <a href="https://docs.unity3d.com/Manual/Tilemap-ScriptableBrushes.html">Scriptable Brushes</a>.</p>
+
+<h2>Brush preview and other shortcuts</h2>
+
+<figure>
+<img src="../uploads/Main/TilePalette_BrushPreview.png" alt="Brush preview: Visual preview of picked Tile at the cursor">
+<figcaption>Brush preview: Visual preview of picked Tile at the cursor</figcaption>
+</figure>
+
+<p>When painting the Tilemap in the Scene view with the active Brush, a preview of the picked Tile(s) is shown at the cursor location. This is the <strong>Brush preview</strong> that helps you to visualize the placement of the Tiles before painting. Brush previews with multiple Tiles may look different when the cursor hovers over neighboring rows or columns. This is more pronounced on <a href="Tilemap-Hexagonal.html">Hexagonal Tilemaps</a>.</p>
+
+<p>The following shortcuts allow you to change the orientation or z-position of the picked Tile, which is visually reflected in the Brush preview.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Shortcut Key</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">[</td>
+	<td style="text-align:left;">Rotate the active Brush clockwise.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">]</td>
+	<td style="text-align:left;">Rotate the active Brush anti-clockwise.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Shift + [</td>
+	<td style="text-align:left;">Flip the active Brush along the x-axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Shift + ]</td>
+	<td style="text-align:left;">Flip the active Brush along the y-axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">- (Available when <strong>Can Change Z Position</strong> is enabled)</td>
+	<td style="text-align:left;">Increase the z-position of the active Brush. This is only available when <strong>Can Change Z Position</strong> is enabled for the active Brush.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">= (Available when <strong>Can Change Z Position</strong> is enabled)</td>
+	<td style="text-align:left;">Decrease the z-position of the active Brush. This is only available when <strong>Can Change Z Position</strong> is enabled for the active Brush.</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<ul>
+<li><span class="page-history">Updated Fill Tool name to Flood Fill Tool in Unity <a href="https://docs.unity3d.com/2020.2/Documentation/Manual/30_search.html?q=newin20202">2020.2</a> <span class="search-words">NewIn20202</span></span></li>
+<li><span class="page-edit">2020–01–07</span></li>
+<li><span class="page-history">Updated Select Tool functionality in Unity <a href="https://docs.unity3d.com/2020.1/Documentation/Manual/30_search.html?q=newin20201">2020.1</a> <span class="search-words">NewIn20201</span></span></li>
+<li><span class="page-history">Z position editor added in Unity <a href="https://docs.unity3d.com/2018.2/Documentation/Manual/30_search.html?q=newin20183">2018.2</a> <span class="search-words">NewIn20182</span></span></li>
+<li><span class="page-history">Tilemaps added in <a href="https://docs.unity3d.com/2017.2/Documentation/Manual/30_search.html?q=newin20172">2017.2</a> <span class="search-words">NewIn20172</span></span></li>
+</ul>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Tilemap-Palette.html"></a></span><div class="tip">Creating a Tile Palette</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="TilemapPainting-SelectionTool.html"></a></span><div class="tip">Select Tool</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

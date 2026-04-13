@@ -1,0 +1,419 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Creating a Tile Palette</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Tilemap-Palette.html">English</a></li>
+<li><a href="/cn/current/Manual/Tilemap-Palette.html">中文</a></li>
+<li><a href="/ja/current/Manual/Tilemap-Palette.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Tilemap-Palette.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Tilemap-Palette.html">English</a></li>
+<li><a href="/cn/current/Manual/Tilemap-Palette.html">中文</a></li>
+<li><a href="/ja/current/Manual/Tilemap-Palette.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Tilemap-Palette.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Unity2D.html">2D game development</a></li>
+<li><a href="Tilemap.html">Tilemaps</a></li>
+<li><a href="Tilemap-workflow.html">Tilemap workflow</a></li>
+<li>Creating a Tile Palette</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Tilemap-CreatingTiles.html"></a></span><div class="tip">Creating Tiles</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Tilemap-Painting.html"></a></span><div class="tip">Painting on Tilemaps</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Creating a Tile Palette</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Place a selection of Tiles onto <strong>Tile Palettes</strong> so that you can pick Tiles from the Palette to <a href="Tilemap-Painting.html">paint on Tilemaps</a>. To create a <strong>Tile Palette</strong>, open the <strong>Tile Palette</strong> window by going to <strong>Window &gt; 2D &gt; Tile Palette</strong>. If you do not have this option, then the <strong>2D Tilemap Editor</strong> package may not be installed. If so, download the <strong>2D Tilemap Editor</strong> package from the <a href="Packages.html">Package Manager</a>.</p>
+
+<p>The Tile Palette window is empty by default. Select the <strong>New Palette</strong> drop-down menu to open a list of Tile Palettes available in the Project, or for the option to create a new Palette. Select the <strong>Create New Palette</strong> option to create a new Palette.</p>
+
+<p>
+<img src="../uploads/Main/2D_Tile_Palette_CreateNew.png" alt=""><br>Select the Create New Palette option from the drop-down menu.</p>
+
+<p>After selecting the option to create a new Tile Palette, the <strong>Create New Palette</strong> dialog box becomes available. It contains the different property settings and options available when creating a new Palette:</p>
+
+<p>
+<img src="../uploads/Main/TilePalette_Options.png" alt=""><br>Create New Palette options.</p>
+
+<p>
+<img src="../uploads/Main/TilePalette_Grid.png" alt=""><br>With expanded Grid options.</p>
+
+<h2>Create New Palette properties</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;">Provide a name for the created Tile Palette Asset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Grid</strong></td>
+	<td style="text-align:left;">Select the <a href="class-Grid.html">Grid</a> layout the created Tile Palette will be used to paint on.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Rectangle</td>
+	<td style="text-align:left;">Select this if creating a Palette for the default rectangular <span class="tooltip"><strong>Tilemap</strong><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Tilemap.html" href="class-Tilemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Tilemap" aria-label="Go to glossary anchor for Tilemap">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Hexagon</td>
+	<td style="text-align:left;">Select this when creating a Palette for a <a href="Tilemap-Hexagonal.html">Hexagonal Tilemap</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Isometric</td>
+	<td style="text-align:left;">Select this when creating a Palette for a <a href="Tilemap-Isometric.html">Isometric Tilemap</a>. Refer to <a href="Tilemap-Isometric-Palette.html">Creating a Tile Palette for an Isometric Tilemap</a> for more information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Isometric Z as Y</strong></td>
+	<td style="text-align:left;">Select this when creating a Palette for a <a href="Tilemap-Isometric.html">Isometric Z as Y Tilemap</a>. Refer to <a href="Tilemap-Isometric-Palette.html">Creating a Tile Palette for an Isometric Tilemap</a> for more information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">     * Hexagon Type (only available when the Hexagon Grid type is selected)</td>
+	<td style="text-align:left;">Select the type of Hexagonal Tilemap that the Palette will be used to paint on. Refer to the documentation on <a href="Tilemap-Hexagonal.html">Hexagonal Tilemaps</a> for more information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Cell Size</strong></td>
+	<td style="text-align:left;">The size of a cell that the Tiles are painted on.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Automatic</td>
+	<td style="text-align:left;">The Cell Size is automatically set in <span class="tooltip"><strong>Unity units</strong><span class="tooltiptext">The unit size used in Unity projects. By default, 1 Unity unit is 1 meter. To use a different scale, set the Scale Factor in the Import Settings when importing assets.<br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Unityunit" aria-label="Go to glossary anchor for Unityunit">Glossary</a></span></span></span> and based on the size of the <span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html" href="Glossary.html#Unityunit" aria-label="Go to glossary anchor for Unityunit">Glossary</a></span></span></span> and based on the size of the <span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> used to create the Tile Assets. If there are multiple Tiles, the Cell Size is adjusted to match the first Tile from the bottom left of the Palette, so that it fits exactly on a cell.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Manual</td>
+	<td style="text-align:left;">Select this option to input custom size values.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Sort Mode</strong></td>
+	<td style="text-align:left;">Determines the <a href="../ScriptReference/TransparencySortMode.html">transparency sort mode</a> of Renderers in the Tile Palette.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Default</td>
+	<td style="text-align:left;">The default transparency Sort Mode. This mode is determined by the <strong>Graphics Settings</strong> of the project.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Orthographic</td>
+	<td style="text-align:left;">Select this mode to sort Renderers based on the perpendicular distance from the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> to a Renderer in the Tile Palette.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Perspective</td>
+	<td style="text-align:left;">Select this mode to sort Renderers based on the direct distance from the camera to a Renderer in the Tile Palette.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Custom Axis Sort</td>
+	<td style="text-align:left;">Select this mode to sort objects based on their distance along a custom axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Sort Axis</strong></td>
+	<td style="text-align:left;">Set the XYZ values for the sorting axis, if the <strong>Sort Mode</strong> is set to Custom Axis Sort.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Name the newly created Palette and select the desired settings, then select the Create button. Select the folder to save the Palette Asset file into when prompted. The newly created Palette is automatically loaded in the Tile Palette window.</p>
+
+<p>
+<img src="../uploads/Main/2D-TilePalette-blank.png" alt=""><br>A blank Tile Palette</p>
+
+<p>Drag and drop <strong>Textures </strong>or <strong>Sprites</strong> from the <strong>Assets</strong> folder onto the Tile Palette, and choose where to save the new <a href="Tilemap-TileAsset.html">Tile Assets</a> when prompted. New Tile Assets are generated in the selected save location, and the Tiles are placed on the grid of the active Tile Palette window.</p>
+
+<figure>
+<img src="../uploads/Main/Tilemap-CreatingTiles-4.png" alt="">
+</figure>
+
+<p>Use the following shortcuts and actions to navigate the Palette window and began picking Tiles to <a href="">paint on the Tilemap</a> in the Editor window.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Shortcut/Action</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Click on a Tile</strong></td>
+	<td style="text-align:left;">Selects the Tile</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Select and drag the mouse over multiple Tiles</strong></td>
+	<td style="text-align:left;">Selects multiple Tiles</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alt + Left button and drag</strong></td>
+	<td style="text-align:left;">Pan</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Click the wheel button and drag</strong></td>
+	<td style="text-align:left;">Pan</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rotate the wheel button</strong></td>
+	<td style="text-align:left;">Zoom in/out</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Active Brush inspector</h2>
+
+<p>The Active Brush <span class="tooltip"><strong>inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> is at the bottom of the Tile Palette window. You can use it to change the current active Brush and its properties. This is minimized by default. To expand it, drag the bottom <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html" href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> is at the bottom of the Tile Palette window. You can use it to change the current active Brush and its properties. This is minimized by default. To expand it, drag the bottom <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> upwards.</p>
+
+<p>
+<img src="../uploads/Main/DefaultBrush_highlight.png" alt=""><br>Brush drop-down menu highlighted.</p>
+
+<p>Use the <strong>Brush</strong> drop-down menu to change the active Brush from the ‘Default Brush’ to other Brushes, such as <a href="Tilemap-ScriptableBrushes.html">Scriptable Brushes</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Script</strong></td>
+	<td style="text-align:left;">Displays the currently assigned script Asset that provides a fixed set of APIs for Tilemap painting. The default is the <a href="Tilemap-ScriptableBrushes-GridBrushBase.html">GridBrush</a>. Users may use or create their own <a href="Tilemap-ScriptableBrushes.html">Scriptable Brushes</a> which become available from the drop-down menu. The Script property updates to reflect the current active Brush.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Flood Fill Contiguous Only</strong></td>
+	<td style="text-align:left;">Enable this property to have the <a href="Tilemap-Painting.html#Fill">Flood Fill tool</a> only affect Tiles on a Tilemap which are both the same as the targeted Tile and are contiguous to each other from the targeted position. When disabled, Flood Fill will change all Tiles which are the same as the targeted Tile on a Tilemap regardless of their position. This only affects the Default Brush.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Lock Z Position</strong></td>
+	<td style="text-align:left;">Enable this property to change the z-position of the active Brush. Disable to prevent any changes to the current z-position of the active Brush.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Z Position</strong></td>
+	<td style="text-align:left;">Only available when Can Change Z Position is enabled. Enter the desired z-axis value (only whole numbers) for this Brush when painting Tiles, which also adjusts the relative heights of Tiles on a <a href="Tilemap-Isometric-CreateIso.html">Z as Y Isometric Tilemap</a> . Refer to <a href="Tilemap-Isometric-Palette.html">Adjusting the Tile height in the Palette</a> for more information.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Editing the Tile Palette</h2>
+
+<p>The tools for picking and painting with Tiles can also be used to edit the Tile Palette directly, allowing you to move and manipulate the Tiles currently placed on the Tile Palette. Select the Palette you want to edit from the ‘Palette’ drop-down menu, then click <strong>Edit</strong> to unlock the Palette for editing.</p>
+
+<figure>
+<img src="../uploads/Main/Edit_highlighted.png" alt="">
+</figure>
+
+<p>Refer to the documentation on <a href="Tilemap-Painting.html">Painting on Tilemaps</a> for the shortcuts and functions of the Palette tools which are available for editing the Palette as well.</p>
+
+<h2>Creating Palette Assets from existing Grid Prefabs</h2>
+
+<p>You can convert an existing <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html">Prefab</a><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html" href="Prefabs.html">Prefab</a><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> to a Palette Asset, so that you can use it in the Tile Palette window. To do this, the Prefab must not already be a Palette Asset, and it must have a Grid component on its topmost <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> to a Palette Asset, so that you can use it in the Tile Palette window. To do this, the Prefab must not already be a Palette Asset, and it must have a Grid component on its topmost <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/ActiveBrush_toolbar.png" alt="The Tile Palette toolbar">
+<figcaption>The Tile Palette toolbar</figcaption>
+</figure>
+
+<p>To convert a Prefab, drag and drop it onto the Tile Palette toolbar (highlighted in the image above). The Editor automatically converts it to a Palette Asset, and adds a Grid Palette Asset. The new Palette Asset has the same name as its source, and you can select it from the Palette drop-down menu.</p>
+
+<h2>Tile Palette Gizmos</h2>
+
+<figure>
+<img src="../uploads/Main/TilePalette_gizmos.png" alt="">
+</figure>
+
+<p>The Tile Palette can display icons (<span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GizmosMenu.html">Gizmos</a><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a href="GizmosMenu.html#GizmosIcons" href="GizmosMenu.html">Gizmos</a><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a href="GizmosMenu.html#GizmosIcons">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Gizmo" aria-label="Go to glossary anchor for Gizmo">Glossary</a></span></span></span>) over the current Palette Asset, to help you visualize specific criteria. For example, you can add a Gizmo that displays a special icon for Tiles that contain no Sprites.</p>
+
+<p>To display the default Unity and the Palette Asset’s Gizmos on the Tile Palette, enable the Gizmos toggle (highlighted in the image above). The Tile Palette immediately displays any component with <a href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnDrawGizmos.html">MonoBehaviour.OnDrawGizmos()</a> in the Palette Asset.</p>
+
+<p>To add a component with DrawGizmo to the Palette Asset:</p>
+
+<ol>
+<li><p>Select the Palette Asset in the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>.</p></li>
+<li><p>Open the Palette Asset in <a href="EditingInPrefabMode.html">Prefab Mode</a>.</p></li>
+<li><p>Add the component while in Prefab Mode.</p></li>
+<li><p>Save the Asset while in Prefab Mode.</p></li>
+<li><p>Exit Prefab Mode.</p></li>
+</ol>
+
+<h2>Tile Palette contextual menu</h2>
+
+<figure>
+<img src="../uploads/Main/TilePalette_ContextualMenu.png" alt="">
+</figure>
+
+<p>Right-click on the Tile Palette toolbar to bring up a contextual menu listing several actions you can use to select and locate objects that the Tile Palette interacts with. The available actions are listed below:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Action</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Select Paint Target</strong></td>
+	<td style="text-align:left;">Selects the GameObject in the Hierarchy window that is the current Active Tilemap in the Tile Palette.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Select Palette Prefab</strong></td>
+	<td style="text-align:left;">Selects the Palette Prefab Asset in the Project window that is currently active in the Tile Palette.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Select Tile Asset</strong></td>
+	<td style="text-align:left;">Selects the currently selected Tile Asset in the Project window.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Unlock/Lock Palette Editing</strong></td>
+	<td style="text-align:left;">Unlocks or locks the Tile Palette for editing.</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<ul>
+<li><span class="page-history">Added Flood Fill Tool contiguous setting and Tile Palette contextual menu for <a href="https://docs.unity3d.com/2020.2/Documentation/Manual/30_search.html?q=newin20202">2020.2</a> <span class="search-words">NewIn20202</span></span></li>
+<li><span class="page-history">Page content and screenshots updated for <a href="https://docs.unity3d.com/2020.1/Documentation/Manual/30_search.html?q=newin20201">2020.1</a> <span class="search-words">NewIn20201</span></span></li>
+<li><span class="page-history">Tilemaps added in <a href="https://docs.unity3d.com/2017.2/Documentation/Manual/30_search.html?q=newin20172">2017.2</a> <span class="search-words">NewIn20172</span></span></li>
+</ul>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Tilemap-CreatingTiles.html"></a></span><div class="tip">Creating Tiles</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Tilemap-Painting.html"></a></span><div class="tip">Painting on Tilemaps</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

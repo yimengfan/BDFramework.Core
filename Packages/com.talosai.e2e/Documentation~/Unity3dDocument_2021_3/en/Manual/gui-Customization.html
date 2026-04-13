@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Customize your IMGUI Controls</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/gui-Customization.html">English</a></li>
+<li><a href="/cn/current/Manual/gui-Customization.html">中文</a></li>
+<li><a href="/ja/current/Manual/gui-Customization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/gui-Customization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/gui-Customization.html">English</a></li>
+<li><a href="/cn/current/Manual/gui-Customization.html">中文</a></li>
+<li><a href="/ja/current/Manual/gui-Customization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/gui-Customization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="GUIScriptingGuide.html">Immediate Mode GUI (IMGUI)</a></li>
+<li>Customize your IMGUI Controls</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="gui-Controls.html"></a></span><div class="tip">IMGUI Controls</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="gui-Layout.html"></a></span><div class="tip">IMGUI Layout Modes</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Customize your IMGUI Controls</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Although Unity’s IMGUI system is mainly intended for creating developer tools and debugging interfaces, you can still customize and style them in many ways. In Unity’s IMGUI system, you can fine-tune the appearance of your Controls with many details. Control appearances are dictated with <strong>GUIStyles</strong>. By default, when you create a Control without defining a GUIStyle, Unity’s default GUIStyle is applied. This style is internal in Unity and can be used in published games for quick prototyping, or if you choose not to stylize your Controls.</p>
+
+<p>When you have a large number of different GUIStyles to work with, you can define them all within a single <strong>GUISkin</strong>. A GUISkin is no more than a collection of GUIStyles.</p>
+
+<h2>How Styles change the look of your GUI Controls</h2>
+
+<p>GUIStyles are designed to mimic Cascading Style Sheets (CSS) for web browsers. Many different CSS methodologies have been adapted, including differentiation of individual state properties for styling, and separation between the content and the appearance.</p>
+
+<p>Where the Control defines the content, the Style defines the appearance. This allows you to create combinations like a functional <span class="tooltip"><strong>Toggle</strong><span class="tooltiptext">A checkbox that allows the user to switch an option on or off. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-uxml-element-Toggle.html" href="UIE-uxml-element-Toggle.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toggle" aria-label="Go to glossary anchor for Toggle">Glossary</a></span></span></span> which looks like a normal <strong>Button</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/gsg-ToggleStyles.png" alt="Two Toggle Controls styled differently">
+<figcaption>Two Toggle Controls styled differently</figcaption>
+</figure>
+
+<h2>The difference between Skins and Styles</h2>
+
+<p>As stated earlier, GUISkins are a collection of GUIStyles. Styles define the appearance of a GUI Control. You do not have to use a Skin if you want to use a Style.</p>
+
+<figure>
+<img src="../uploads/Main/GuiStyleInspector.png" alt="A single GUIStyle shown in the Inspector">
+<figcaption>A single GUIStyle shown in the Inspector</figcaption>
+</figure>
+
+<p>
+<img src="../uploads/Main/Inspector-GUISkin.png" alt="">
+<em>A single GUISkin shown in the Inspector - observe that it contains multiple GUIStyles</em> </p>
+
+<h2>Working with Styles</h2>
+
+<p>All GUI Control functions have an optional last parameter: the GUIStyle to use for displaying the Control. If this is omitted, Unity’s default GUIStyle will be used. This works internally by applying the name of the control type as a string, so <strong>GUI.Button()</strong> uses the “button” style, <strong>GUI.Toggle()</strong> uses the “toggle” style, etc. You can override the default GUIStyle for a control by specifying it as the last parameter.</p>
+
+<pre><code class="lang-cs">/* Override the default Control Style with a different style in the UnityGUI default Styles */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour {
+                    
+    void OnGUI () {
+        // Make a label that uses the &quot;box&quot; GUIStyle.
+        GUI.Label (new Rect (0,0,200,100), &quot;Hi - I'm a label looking like a box&quot;, &quot;box&quot;);
+    
+        // Make a button that uses the &quot;toggle&quot; GUIStyle
+        GUI.Button (new Rect (10,140,180,20), &quot;This is a button&quot;, &quot;toggle&quot;);
+    }
+
+}
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-DifferentDefaultStyles.png" alt="The controls created by the code example above">
+<figcaption>The controls created by the code example above</figcaption>
+</figure>
+
+<h3>Making a public variable GUIStyle</h3>
+
+<p>When you declare a public GUIStyle variable, all elements of the Style will show up in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>. You can edit all of the different values there.</p>
+
+<pre><code class="lang-cs">/* Overriding the default Control Style with one you've defined yourself */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour {
+                    
+    public GUIStyle customButton;
+    
+    void OnGUI () {
+        // Make a button. We pass in the GUIStyle defined above as the style to use
+        GUI.Button (new Rect (10,10,150,20), &quot;I am a Custom Button&quot;, customButton);
+    }
+    
+}
+</code></pre>
+
+<h3>Changing the different style elements</h3>
+
+<p>When you have declared a GUIStyle, you can modify that style in the Inspector. There are a great number of States you can define, and apply to any type of Control.</p>
+
+<figure>
+<img src="../uploads/Main/ModifyingStyleInInspector.png" alt="Styles are modified on a per-script, per-GameObject basis">
+<figcaption>Styles are modified on a per-script, per-GameObject basis</figcaption>
+</figure>
+
+<p>Any Control State must be assigned a <strong>Background</strong> Color before the specified <strong>Text Color</strong> will be applied.</p>
+
+<p>For more information about individual GUIStyles, please read the <a href="class-GUIStyle.html">GUIStyle Component Reference page</a>.</p>
+
+<h2>Working with Skins</h2>
+
+<p>For more complicated GUI systems, it makes sense to keep a collection of styles in one place. This is what a GUISkin does. A GUISkin contains multiple different Styles, essentially providing a complete face-lift to all GUI Controls. </p>
+
+<h3>Creating a new GUISkin</h3>
+
+<p>To create a GUISkin, select <strong>Assets-&gt;Create-&gt;GUI Skin</strong> from the menu bar. This will create a GUI Skin in your Project Folder. Select it to see all GUIStyles defined by the Skin in the Inspector.</p>
+
+<h3>Applying the skin to a GUI</h3>
+
+<p>To use a skin you’ve created, assign it to <strong>GUI.skin</strong> in your <strong>OnGUI()</strong> function.</p>
+
+<pre><code class="lang-cs">/* Make a property containing a reference to the skin you want to use */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour {
+                    
+    public GUISkin mySkin;
+    
+    void OnGUI () {
+        // Assign the skin to be the one currently used.
+        GUI.skin = mySkin;
+    
+        // Make a button. This will get the default &quot;button&quot; style from the skin assigned to mySkin.
+        GUI.Button (new Rect (10,10,150,20), &quot;Skinned Button&quot;);
+    }
+        
+}
+</code></pre>
+
+<p>You can switch skins as much as you like throughout a single <strong>OnGUI()</strong> call.</p>
+
+<pre><code class="lang-cs">/* Example of switching skins in the same OnGUI() call */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour {
+                    
+    public GUISkin mySkin;
+    private bool toggle = true;
+    
+    void OnGUI () {
+        // Assign the skin to be the one currently used.
+        GUI.skin = mySkin;
+    
+        // Make a toggle. This will get the &quot;button&quot; style from the skin assigned to mySkin.
+        toggle = GUI.Toggle (new Rect (10,10,150,20), toggle, &quot;Skinned Button&quot;, &quot;button&quot;);
+    
+        // Assign the currently skin to be Unity's default.
+        GUI.skin = null;
+    
+        // Make a button. This will get the default &quot;button&quot; style from the built-in skin.
+        GUI.Button (new Rect (10,35,150,20), &quot;Built-in Button&quot;);
+    }
+        
+}
+</code></pre>
+
+<h3>Changing GUI Font Size</h3>
+
+<p>This example will show you how to dynamically change the font size through code. </p>
+
+<p>First create a new project in Unity. Then make a C# script called Fontsize.cs and paste the following code in:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using System.Collections;
+    
+public class Fontsize : MonoBehaviour
+{
+    void OnGUI ()
+    {
+        //Set the GUIStyle style to be label
+        GUIStyle style = GUI.skin.GetStyle (&quot;label&quot;);
+        
+        //Set the style font size to increase and decrease over time
+        style.fontSize = (int)(20.0f + 10.0f * Mathf.Sin (Time.time));
+        
+        //Create a label and display with the current settings
+        GUI.Label (new Rect (10, 10, 200, 80), &quot;Hello World!&quot;);
+    }
+        
+}
+</code></pre>
+
+<p>Save the script and attach it to an empty <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, click play to see the font loop through increasing and decreasing in size over time. You may notice that the font does not smoothly change size, this is becauses there is not an infinite number of font sizes.</p>
+
+<p>This specific example requires that the default font (Arial) is loaded and marked as dynamic. You cannot change the size of any font that is not marked as dynamic.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="gui-Controls.html"></a></span><div class="tip">IMGUI Controls</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="gui-Layout.html"></a></span><div class="tip">IMGUI Layout Modes</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

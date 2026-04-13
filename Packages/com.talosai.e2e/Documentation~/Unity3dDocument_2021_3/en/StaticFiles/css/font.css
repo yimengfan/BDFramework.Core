@@ -1,0 +1,20 @@
+@font-face {
+ font-family: 'avalon';
+ src: url('//unity3d.com/unity-fonts/avalon/Avalon-Book-webfont.eot');
+ src: url('//unity3d.com/unity-fonts/avalon/Avalon-Book-webfont.eot?#iefix') format('embedded-opentype'),
+      url('//unity3d.com/unity-fonts/avalon/Avalon-Book-webfont.woff') format('woff'),
+      url('//unity3d.com/unity-fonts/avalon/Avalon-Book-webfont.ttf') format('truetype'),
+      url('//unity3d.com/unity-fonts/avalon/Avalon-Book-webfont.svg#avalon') format('svg');
+ font-weight: normal;
+ font-style: normal;
+}
+@font-face {
+ font-family: 'avalonbold';
+ src: url('//unity3d.com/unity-fonts/avalon/Avalon-Bold-webfont.eot');
+ src: url('//unity3d.com/unity-fonts/avalon/Avalon-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+      url('//unity3d.com/unity-fonts/avalon/Avalon-Bold-webfont.woff') format('woff'),
+      url('//unity3d.com/unity-fonts/avalon/Avalon-Bold-webfont.ttf') format('truetype'),
+      url('//unity3d.com/unity-fonts/avalon/Avalon-Bold-webfont.svg#avalonbold') format('svg');
+ font-weight: normal;
+ font-style: normal;
+}

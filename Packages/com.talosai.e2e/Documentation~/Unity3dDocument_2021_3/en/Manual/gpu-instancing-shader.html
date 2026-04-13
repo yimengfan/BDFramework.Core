@@ -1,0 +1,453 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Creating shaders that support GPU instancing</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/gpu-instancing-shader.html">English</a></li>
+<li><a href="/cn/current/Manual/gpu-instancing-shader.html">中文</a></li>
+<li><a href="/ja/current/Manual/gpu-instancing-shader.html">日本語</a></li>
+<li><a href="/kr/current/Manual/gpu-instancing-shader.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/gpu-instancing-shader.html">English</a></li>
+<li><a href="/cn/current/Manual/gpu-instancing-shader.html">中文</a></li>
+<li><a href="/ja/current/Manual/gpu-instancing-shader.html">日本語</a></li>
+<li><a href="/kr/current/Manual/gpu-instancing-shader.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="graphics-performance-profiling.html">Graphics performance and profiling</a></li>
+<li><a href="optimizing-draw-calls.html">Optimizing draw calls</a></li>
+<li><a href="GPUInstancing.html">GPU instancing</a></li>
+<li>Creating shaders that support GPU instancing</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="GPUInstancing.html"></a></span><div class="tip">GPU instancing</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="DrawCallBatching.html"></a></span><div class="tip">Draw call batching</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h2>Creating shaders that support GPU instancing</h2>
+
+<p>This page contains information on how to add GPU instancing support to a custom Unity <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>. It first explains the shader keywords, variables, and functions custom Unity shaders require to support GPU instancing. Then it includes examples of how to add per-instance data to both <span class="tooltip"><strong>surface shaders</strong><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>. It first explains the shader keywords, variables, and functions custom Unity shaders require to support GPU instancing. Then it includes examples of how to add per-instance data to both <span class="tooltip"><strong>surface shaders</strong><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SurfaceShader" aria-label="Go to glossary anchor for SurfaceShader">Glossary</a></span></span></span> and vertex/fragment shaders.</p>
+
+<h3>Render pipeline compatibility</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span></strong></th>
+	<th style="text-align:left;"><strong>Universal Render Pipeline (URP)</strong></th>
+	<th style="text-align:left;"><strong>High Definition Render Pipeline (HDRP)</strong></th>
+	<th style="text-align:left;"><strong>Custom Scriptable Render Pipeline (SRP)</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Custom GPU instanced shaders</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Shader modifications</h3>
+
+<p>This section contains information about shader additions that relate to GPU instancing.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Addition</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>#pragma multi_compile_instancing</code></td>
+	<td style="text-align:left;">Generates instancing variants. This is required for fragment and <span class="tooltip"><strong>vertex shaders</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-ShaderPrograms.html" href="SL-ShaderPrograms.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span>. It is optional for Surface Shaders.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="pragma-instancing_options" aria-hidden="true"></a><code>#pragma instancing_options</code>
+</td>
+	<td style="text-align:left;">Specifies options that Unity uses for instances. For information on the option switches available, see <a href="#instancing_options-switches"><code>#pragma instancing_options</code></a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>UNITY_VERTEX_INPUT_INSTANCE_ID</code></td>
+	<td style="text-align:left;">Defines an instance ID in the vertex shader input/output structure. To use this macro, enable the INSTANCING_ON shader keyword. Otherwise, Unity doesn’t set up the instance ID.<br>To access the instance ID, use <code>vertexInput.instanceID</code> inside an #ifdef INSTANCING_ON block. If you don’t use this block, variants fail to compile.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>UNITY_INSTANCING_BUFFER_START(bufferName)</code></td>
+	<td style="text-align:left;">Declares the start of a per-instance constant buffer named <code>bufferName</code>. Use this macro with <code>UNITY_INSTANCING_BUFFER_END</code> to wrap declarations of the properties that you want to be unique to each instance. Declare properties inside the buffer using <code>UNITY_DEFINE_INSTANCED_PROP</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>UNITY_INSTANCING_BUFFER_END(bufferName)</code></td>
+	<td style="text-align:left;">Declares the end of a per-instance constant buffer named <code>bufferName</code>. Use this macro with <code>UNITY_INSTANCING_BUFFER_START</code> to wrap declarations of the properties that you want to be unique to each instance. Declare properties inside the buffer using <code>UNITY_DEFINE_INSTANCED_PROP</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>UNITY_DEFINE_INSTANCED_PROP(type, propertyName)</code></td>
+	<td style="text-align:left;">Defines a per-instance shader property with the specified type and name. In the examples below, the <code>_Color</code> property is unique.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>UNITY_SETUP_INSTANCE_ID(v);</code></td>
+	<td style="text-align:left;">Allows shader functions to access the instance ID. For vertex shaders, this macro is required at the beginning. For fragment shaders, this addition is optional. For an example, see <a href="#vertex-and-fragment-shader">Vertex and fragment shader</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>UNITY_TRANSFER_INSTANCE_ID(v, o);</code></td>
+	<td style="text-align:left;">Copies the instance ID from the input structure to the output structure in the vertex shader. Use this macro if you need to access per-instance data in the fragment shader.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>UNITY_ACCESS_INSTANCED_PROP(bufferName, propertyName)</code></td>
+	<td style="text-align:left;">Accesses a per-instance shader property in an instancing constant buffer. Unity uses the instance ID to index into the instance data array. <code>bufferName</code> must match the name of the constant buffer that contains the specified property. This macro compiles differently for INSTANCING_ON and non-instancing variants.</td>
+</tr>
+</tbody>
+</table>
+
+<p>When you use multiple per-instance properties, you don’t need to fill all of them in <code>MaterialPropertyBlock</code> objects. Also, if one instance lacks a property, Unity takes the default value from the referenced material. If the material doesn’t have a default value for the property, Unity sets the value to 0. Don’t put non-instanced properties in the <code>MaterialPropertyBlock</code>, because this disables instancing. Instead, create different materials for them.</p>
+
+<p><a name="instancing_options-switches" aria-hidden="true"></a></p>
+
+<h3>Instancing_options switches</h3>
+
+<p>The <span class="externalcitation">[#pragma instancing_options]</span>(#pragma-instancing_options) directive can use the following switches:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Switch</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<code>forcemaxcount:batchSize</code> and <code>maxcount:batchSize</code>
+</td>
+	<td style="text-align:left;">On most platforms, Unity automatically calculates the instancing data array size. It divides the maximum constant buffer size on the target device with the size of the structure that contains all per-instance properties. Generally, you don’t need to worry about the batch size. However, some platforms require a fixed array size. To specify the batch size for those platforms, use the <code>maxcount</code> option. Other platforms ignore this option. If you want to force a batch size for all platforms, use <code>forcemaxcount</code>. This is useful when, for example, your project uses DrawMeshInstanced to issue draw calls with 256 instanced <span class="tooltip"><strong>sprites</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span>. The default value for the two options is 500.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>assumeuniformscaling</code></td>
+	<td style="text-align:left;">Instructs Unity to assume that all the instances have uniform scalings (the same scale for all X, Y, and Z axes).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>nolodfade</code></td>
+	<td style="text-align:left;">Makes Unity not apply GPU instancing to <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LevelOfDetail.html">LOD</a><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a href="LevelOfDetail.html" href="LevelOfDetail.html">LOD</a><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a href="LevelOfDetail.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LOD" aria-label="Go to glossary anchor for LOD">Glossary</a></span></span></span> fade values.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>nolightprobe</code></td>
+	<td style="text-align:left;">Prevents Unity from applying GPU instancing to <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html">Light Probe</a><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html" href="LightProbes.html">Light Probe</a><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span> values and their occlusion data. Setting this option to <code>ON</code> can improve performance if your project doesn’t contain <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span> values and their occlusion data. Setting this option to <code>ON</code> can improve performance if your project doesn’t contain <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> that use both GPU instancing and Light Probes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>nolightmap</code></td>
+	<td style="text-align:left;">Prevents Unity from applying GPU instancing to <span class="tooltip"><strong>lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> atlas information values. Setting this option to <code>ON</code> can improve performance if your project doesn’t contain GameObjects that use both GPU instancing and lightmaps.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>procedural:FunctionName</code></td>
+	<td style="text-align:left;">Generates an additional variant for use with <a href="Graphics.DrawMeshInstancedIndirect">Graphics.DrawMeshInstancedIndirect</a>.At the beginning of the vertex shader stage, Unity calls the function specified after the colon. To set up the instance data manually, add per-instance data to this function in the same way you would normally add per-instance data to a shader. Unity also calls this function at the beginning of a fragment shader if any of the fetched instance properties are included in the fragment shader.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Using shader variants with GPU instancing</h3>
+
+<p>Unity generates Surface shaders with instancing <a href="SL-MultipleProgramVariants.html">variants</a> by default, unless you specify <code>noinstancing</code> in the <code>#pragma</code> directive. Unity ignores uses of #pragma multi_compile_instancing in a surface shader.</p>
+
+<p>Unity’s Standard and StandardSpecular shaders have instancing support by default, but with no per-instance properties other than the transform. </p>
+
+<p>If your <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> contains no GameObjects with GPU instancing enabled, then Unity strips instancing shader variants. To override the stripping behaviour:</p>
+
+<ol>
+<li>Open Project Settings (menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong>).</li>
+<li>Go to <strong>Graphics</strong>.</li>
+<li>In the <strong>Shader Stripping</strong> section, set <strong>Instancing Variants</strong> to <strong>Keep All</strong>.</li>
+</ol>
+
+<h3>Adding per-instance properties to GPU instancing shaders</h3>
+
+<p>By default, Unity GPU instances GameObjects with different <a href="class-Transform.html">Transforms</a> in each instanced draw call. To add more variation to the instances, modify the shader to add per-instance properties such as color. You can do this both in surface shaders and in vertex/fragment shaders.</p>
+
+<p>Custom shaders don’t need per-instance data, but they do require an instance ID because world matrices need one to function correctly. Surface shaders automatically set up an instance ID, but custom vertex and fragment shaders don’t. To set up the ID for custom vertex and fragment shaders, use UNITY_SETUP_INSTANCE_ID at the beginning of the shader. For an example of how to do this, see <a href="#vertex-and-fragment-shader">Vertex and fragment shader</a>.</p>
+
+<p>When you declare an instanced property, Unity gathers all the property values from the MaterialPropertyBlock objects set on GameObjects into a single draw call. For an example of how to use MaterialPropertyBlock objects to set per-instance data at runtime, see <a href="#changing-per-instanced-data-at-runtime">Changing per-instance data at runtime</a>.</p>
+
+<p>When adding per-instance data to multi-pass shaders, keep the following in mind:</p>
+
+<ul>
+<li>If a multi-pass shader has more than two passes, Unity only instances the first pass. This is because Unity renders later passes together for each object, which forces material changes.</li>
+<li>If you use the Forward <span class="tooltip"><strong>rendering path</strong><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingPaths.html" href="RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderingPath" aria-label="Go to glossary anchor for RenderingPath">Glossary</a></span></span></span> in the Built-in Render Pipeline, Unity can’t efficiently instance objects that are affected by multiple lights. Unity can only use instancing effectively for the base pass, not for additional passes. For more information about lighting passes, see documentation on <a href="RenderTech-ForwardRendering.html">Forward Rendering and Pass Tags</a>.</li>
+</ul>
+
+<h4>Surface shader example</h4>
+
+<p>The following example demonstrates how to create an instanced Surface Shader with different color values for each instance.</p>
+
+<pre><code>Shader &quot;Custom/InstancedColorSurfaceShader&quot; 
+{
+    Properties 
+    {
+        _Color (&quot;Color&quot;, Color) = (1,1,1,1)
+        _MainTex (&quot;Albedo (RGB)&quot;, 2D) = &quot;white&quot; {}
+        _Glossiness (&quot;Smoothness&quot;, Range(0,1)) = 0.5
+        _Metallic (&quot;Metallic&quot;, Range(0,1)) = 0.0
+    }
+
+    SubShader
+    {
+        Tags { &quot;RenderType&quot;=&quot;Opaque&quot; }
+        LOD 200
+        CGPROGRAM
+        // Uses the physically based standard lighting model with shadows enabled for all light types.
+        #pragma surface surf Standard fullforwardshadows
+        // Use Shader model 3.0 target
+        #pragma target 3.0
+        sampler2D _MainTex;
+        struct Input 
+        {
+            float2 uv_MainTex;
+        };
+        half _Glossiness;
+        half _Metallic;
+        UNITY_INSTANCING_BUFFER_START(Props)
+           UNITY_DEFINE_INSTANCED_PROP(fixed4, _Color)
+        UNITY_INSTANCING_BUFFER_END(Props)
+        void surf (Input IN, inout SurfaceOutputStandard o) {
+            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
+            o.Albedo = c.rgb;
+            o.Metallic = _Metallic;
+            o.Smoothness = _Glossiness;
+            o.Alpha = c.a;
+        }
+        ENDCG
+    }
+    FallBack &quot;Diffuse&quot;
+}
+</code></pre>
+
+<p><a name="vertex-and-fragment-shader" aria-hidden="true"></a></p>
+
+<h4>Vertex and fragment shader example</h4>
+
+<p>The following example demonstrates how to create an instanced vertex and fragment shader with different color values for each instance. Unlike the surface shader, when you create the vertex and fragment shader you must use UNITY_SETUP_INSTANCE_ID to manually set up an instance ID.</p>
+
+<pre><code>Shader &quot;Custom/SimplestInstancedShader&quot;
+{
+    Properties
+    {
+        _Color (&quot;Color&quot;, Color) = (1, 1, 1, 1)
+    }
+
+    SubShader
+    {
+        Tags { &quot;RenderType&quot;=&quot;Opaque&quot; }
+        LOD 100
+
+        Pass
+        {
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma multi_compile_instancing
+            #include &quot;UnityCG.cginc&quot;
+
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
+            };
+
+            struct v2f
+            {
+                float4 vertex : SV_POSITION;
+                UNITY_VERTEX_INPUT_INSTANCE_ID // use this to access instanced properties in the fragment shader.
+            };
+
+            UNITY_INSTANCING_BUFFER_START(Props)
+                UNITY_DEFINE_INSTANCED_PROP(float4, _Color)
+            UNITY_INSTANCING_BUFFER_END(Props)
+
+            v2f vert(appdata v)
+            {
+                v2f o;
+
+                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_TRANSFER_INSTANCE_ID(v, o);
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                return o;
+            }
+
+            fixed4 frag(v2f i) : SV_Target
+            {
+                UNITY_SETUP_INSTANCE_ID(i);
+                return UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+
+<p><a name="changing-per-instanced-data-at-runtime" aria-hidden="true"></a></p>
+
+<h4>Changing per-instance data at runtime example</h4>
+
+<p>The following example demonstrates how to use MaterialPropertyBlock objects to set per-instance data for a group of GameObjects at runtime. It sets the <code>_Color</code> property from the above shader examples to a random color.</p>
+
+<p>
+<strong>Important</strong>: MaterialPropertyBlocks break SRP Batcher compatibility. For more information, see <a href="GPUInstancing.html#requirements-and-compatibility">GPU instancing: Requirements and Compatibility</a>.</p>
+
+<pre><code>using UnityEngine;
+
+public class MaterialPropertyBlockExample : MonoBehaviour
+{
+    public GameObject[] objects;
+
+    void Start()
+    {
+        MaterialPropertyBlock props = new MaterialPropertyBlock();
+        MeshRenderer renderer;
+
+        foreach (GameObject obj in objects)
+        {
+            float r = Random.Range(0.0f, 1.0f);
+            float g = Random.Range(0.0f, 1.0f);
+            float b = Random.Range(0.0f, 1.0f);
+            props.SetColor(&quot;_Color&quot;, new Color(r, g, b));
+
+            renderer = obj.GetComponent&lt;MeshRenderer&gt;();
+            renderer.SetPropertyBlock(props);
+        }
+    }
+}
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="GPUInstancing.html"></a></span><div class="tip">GPU instancing</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="DrawCallBatching.html"></a></span><div class="tip">Draw call batching</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

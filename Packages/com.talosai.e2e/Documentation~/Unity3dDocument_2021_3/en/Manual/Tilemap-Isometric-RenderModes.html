@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Tilemap Renderer Modes</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Tilemap-Isometric-RenderModes.html">English</a></li>
+<li><a href="/cn/current/Manual/Tilemap-Isometric-RenderModes.html">中文</a></li>
+<li><a href="/ja/current/Manual/Tilemap-Isometric-RenderModes.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Tilemap-Isometric-RenderModes.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Tilemap-Isometric-RenderModes.html">English</a></li>
+<li><a href="/cn/current/Manual/Tilemap-Isometric-RenderModes.html">中文</a></li>
+<li><a href="/ja/current/Manual/Tilemap-Isometric-RenderModes.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Tilemap-Isometric-RenderModes.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Unity2D.html">2D game development</a></li>
+<li><a href="Tilemap.html">Tilemaps</a></li>
+<li><a href="Tilemap-Isometric.html">Isometric Tilemaps</a></li>
+<li>Tilemap Renderer Modes</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Tilemap-Isometric-Palette.html"></a></span><div class="tip">Creating a Tile Palette for an Isometric Tilemap</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Tilemap-Isometric-ScriptableBrushes.html"></a></span><div class="tip">Scriptable Brushes</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Tilemap Renderer Modes</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <strong>Tilemap Renderer</strong> component renders the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Tilemap.html">Tilemap</a><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a href="class-Tilemap.html" href="class-Tilemap.html">Tilemap</a><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a href="class-Tilemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Tilemap" aria-label="Go to glossary anchor for Tilemap">Glossary</a></span></span></span> in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Tilemap" aria-label="Go to glossary anchor for Tilemap">Glossary</a></span></span></span> in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. Unity creates Tilemaps with the Tilemap Renderer attached by default. The Tilemap Renderer can:</p>
+
+<ul>
+<li><a href="#batch">Render in batches with <strong>Chunk Mode</strong></a></li>
+<li><a href="#individual">Render individually with <strong>Individual Mode</strong></a></li>
+</ul>
+
+<p>The Render Mode affects the sorting of Tilemap <span class="tooltip"><strong>Sprites</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> when rendered.</p>
+
+<p><a name="batch" aria-hidden="true"></a></p>
+
+<h2>Rendering in batches with Chunk Mode</h2>
+
+<p>
+<a name="Chunk" aria-hidden="true"></a><strong>Chunk Mode</strong> is the default rendering mode of the Tilemap Renderer:</p>
+
+<figure>
+<img src="../uploads/Main/2D_IsoTilemap_9.png" alt="">
+</figure>
+
+<p>When set to <strong>Chunk Mode</strong>, the Tilemap Renderer handles Sprites on a Tilemap in batches and renders them together. They’re treated as a single sort item when sorted in the <a href="2DSorting.html">2D Transparent Queue</a>. While this reduces draw calls, other renderers can’t render between any part of the Tilemap, preventing other rendered Sprites from interweaving with Tilemap Sprites.</p>
+
+<h3>Using the Sprite Atlas for Sorting (Chunk Mode only)</h3>
+
+<p>In <strong>Chunk Mode</strong>, the Tilemap Renderer isn’t able to sort Tiles from multiple textures individually and doesn’t render the tile sprites consistently (refer to the <a href="#chunkExample">example below</a>).</p>
+
+<figure>
+<img src="../uploads/Main/2D_IsoTilemap_10.png" alt="">
+</figure>
+
+<p>Pack all the individual Sprites that make up the Tilemap into a single <a href="https://docs.unity3d.com/Manual/SpriteAtlas.html">Sprite Atlas</a> to solve this issue. To do this:</p>
+
+<ol>
+<li><p>Create a <span class="tooltip"><strong>Sprite Atlas</strong><span class="tooltiptext">A texture that is composed of several smaller textures. Also referred to as a texture atlas, image sprite, sprite sheet or packed texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-SpriteAtlas.html" href="class-SpriteAtlas.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#spriteatlas" aria-label="Go to glossary anchor for spriteatlas">Glossary</a></span></span></span> from the Assets menu (go to: <strong>Atlas &gt; Create &gt; Sprite Atlas</strong>).</p></li>
+<li><p>Add the Sprites to the Sprite Atlas by dragging them to the <strong>Objects for Packing</strong> list in the Atlas’ <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window.
+<img src="../uploads/Main/2D_IsoTilemap_11.png" alt="">
+</p></li>
+<li><p>Click <strong>Pack Preview</strong>. Unity packs the Sprites into the Sprite Atlas during Play mode, and correctly sorts and renders them. This is only visible in the Editor during Play mode.
+<img src="../uploads/Main/2D_IsoTilemap_12.png" alt="label">
+</p></li>
+</ol>
+
+<p><a name="individual" aria-hidden="true"></a></p>
+
+<h3>Rendering individually with Individual Mode</h3>
+
+<figure>
+<img src="../uploads/Main/2D_IsoTilemap_13.png" alt="">
+</figure>
+
+<p>In <strong>Individual Mode</strong>, the Tilemap Renderer sorts and renders the Sprites on a Tilemap with consideration of other Renderers in the Scene, such as the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-SpriteRenderer.html">Sprite Renderers</a><span class="tooltiptext">A component that lets you display images as Sprites for use in both 2D and 3D scenes. <a href="class-SpriteRenderer.html" href="class-SpriteRenderer.html">Sprite Renderers</a><span class="tooltiptext">A component that lets you display images as Sprites for use in both 2D and 3D scenes. <a href="class-SpriteRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#SpriteRenderer" aria-label="Go to glossary anchor for SpriteRenderer">Glossary</a></span></span></span> and <span class="tooltip"><a href="class-MeshRenderer.html">Mesh Renderers</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html" href="Glossary.html#SpriteRenderer" aria-label="Go to glossary anchor for SpriteRenderer">Glossary</a></span></span></span> and <span class="tooltip"><a href="class-MeshRenderer.html">Mesh Renderers</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span>. Use this mode if other Renderers interact with Sprites and objects on the Tilemap.</p>
+
+<p>In this mode, the Tilemap Renderer sorts sprites based on their position on the Tilemap and the sorting properties set in the Tilemap Renderer. For example, this allows a character sprite to go in-between obstacle sprites (refer to the example below).</p>
+
+<figure>
+<img src="../uploads/Main/2D_IsoTilemap_14.png" alt="In Individual Mode, the character can be rendered behind the tower Sprites, and also appear above the ground Sprites.">
+<figcaption>In Individual Mode, the character can be rendered behind the tower Sprites, and also appear above the ground Sprites.</figcaption>
+</figure>
+
+<p>
+<a name="chunkExample" aria-hidden="true"></a>
+Using the same example in <strong>Chunk Mode</strong>, character sprites might get hidden behind ground sprites:</p>
+
+<figure>
+<img src="../uploads/Main/2D_IsoTilemap_15.png" alt="The same Scene rendered in Chunk Mode.">
+<figcaption>The same Scene rendered in <strong>Chunk Mode</strong>.</figcaption>
+</figure>
+
+<p>Using <strong>Individual Mode</strong> might reduce performance as there is more overhead when rendering each sprite individually on the Tilemap.</p>
+
+<h3>Custom Axis Sorting Mode for a Z as Y Tilemap in Individual Mode<a name="CustomAxis" aria-hidden="true"></a>
+</h3>
+
+<p>To sort and render tile sprites on an <strong>Isometric Z as Y</strong> Tilemap, set the Transparency Sort Axis to a <strong>Custom Axis</strong>. To do this:</p>
+
+<ol>
+<li>Set the Tilemap Renderer component <strong>Mode</strong> to <strong>Individual</strong>.</li>
+<li>Navigate to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Graphics</strong>.</li>
+<li>Set <strong>Transparency Sort Mode</strong> to <strong>Custom Axis</strong>.</li>
+<li>Set the <strong>Transparency Sort Axis</strong> Y-value to 1 and the Z-value to –0.26.</li>
+</ol>
+
+<p>Refer to the page on <a href="Tilemap-Isometric-CreateIso.html">Creating an Isometric Tilemap</a> for more information about the <strong>Transparency Sort Axis</strong> settings.</p>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Tilemap-Isometric-Palette.html"></a></span><div class="tip">Creating a Tile Palette for an Isometric Tilemap</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Tilemap-Isometric-ScriptableBrushes.html"></a></span><div class="tip">Scriptable Brushes</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

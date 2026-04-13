@@ -1,0 +1,353 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Panel Settings properties reference</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Runtime-Panel-Settings.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Runtime-Panel-Settings.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Runtime-Panel-Settings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Runtime-Panel-Settings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Runtime-Panel-Settings.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Runtime-Panel-Settings.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Runtime-Panel-Settings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Runtime-Panel-Settings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-support-for-runtime-ui.html">Support for runtime UI</a></li>
+<li>Panel Settings properties reference</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-render-runtime-ui.html"></a></span><div class="tip">Render UI in the Game view</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Runtime-Event-System.html"></a></span><div class="tip">Runtime UI event system</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Panel Settings properties reference</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The following tables describe the Panel Settings asset properties:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;" colspan="2"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Theme Style Sheet</strong></td>
+	<td style="text-align:left;" colspan="2">Apply a default <a href="UIE-tss.html">TSS file</a> to every UIDocument that the panel renders.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Text Settings</strong></td>
+	<td style="text-align:left;" colspan="2">Set the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-text-setting-asset.html">Panel Text Settings</a> asset for this panel. If this asset isn’t set, <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html" href="UIE-text-setting-asset.html">Panel Text Settings</a> asset for this panel. If this asset isn’t set, <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit automatically creates one with the default settings.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Target Texture</strong></td>
+	<td style="text-align:left;" colspan="2">Set the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html">render texture</a><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a href="class-RenderTexture.html" href="class-RenderTexture.html">render texture</a><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span> for the panel.<br><br>For a 3D game, display UI on 3D geometry in the scene.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Target Display</strong></td>
+	<td style="text-align:left;" colspan="2">Set the display for the panel. Only set this if the target texture isn’t set, as the target texture takes precedence over the target display.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Sort Order</strong></td>
+	<td style="text-align:left;" colspan="2">Set the order that the UI System draws panels in if the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> uses more than one panel. Panels with higher <strong>Sort Order</strong> values are drawn on top of panels with lower values.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale Mode</strong></td>
+	<td style="text-align:left;" colspan="2">Set <a href="#scale-mode-parameters">how the panel’s UI scales</a> when the screen size changes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale Mode Parameters</strong></td>
+	<td style="text-align:left;" colspan="2">Display <a href="#scale-mode-parameters">different properties</a> depending on the <strong>Scale Mode</strong> setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="dynamic-atlas-setting" aria-hidden="true"></a><strong>Dynamic Atlas Settings</strong>
+</td>
+	<td style="text-align:left;" colspan="2">Specify the settings that the dynamic atlas system uses.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Min Atlas Size</strong></td>
+	<td style="text-align:left;">Set the minimum size (width/height) of the atlas texture, in <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Max Atlas Size</strong></td>
+	<td style="text-align:left;">Set the maximum size (width/height) of the atlas texture, in pixels.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Max Sub Texture Size</strong></td>
+	<td style="text-align:left;">Set the maximum size (width/height) of a texture that can be added to the atlas.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Active Filters</strong></td>
+	<td style="text-align:left;">Set the <a href="#active-filters">filters</a> that the dynamic atlas system uses to exclude textures from the texture atlas.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<a name="scale-mode-parameters" aria-hidden="true"></a> </p>
+
+<h2>Scale Mode parameters</h2>
+
+<p>The following table describes the parameters for each scale mode:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Scale Mode</strong></th>
+	<th style="text-align:left;"><strong>Scale Mode Parameters</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Constant Pixel Size</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Set elements to stay the same size, in pixels, regardless of screen size.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Scale</strong></td>
+	<td style="text-align:left;">Multiply element sizes by this value. Must be greater than 0.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Constant Physical Size</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Set elements stay the same physical size regardless of screen size and resolution.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Reference DPI</strong></td>
+	<td style="text-align:left;">Set the <strong>Reference DPI</strong> value to the screen density that your UI was designed for. When the system renders your UI, it tries to find the actual DPI value of the screen, and compares it to the <strong>Reference DPI</strong>. If they’re different, the system scales the UI accordingly.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Fallback DPI</strong></td>
+	<td style="text-align:left;">Use this value if the UI system can’t determine the screen DPI.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale with Screen Size</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Set elements to grow or shrink depending on the screen size.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Screen Match Mode</strong></td>
+	<td style="text-align:left;">Set how to scale elements when the screen resolution is different from the <strong>Reference Resolution</strong>:<br><br><ul>
+<li>
+<strong>Match Width or Height</strong>: Scale the canvas area with the width or the height as reference, or a linear interpolation between the width and the height.</li>
+<li>
+<strong>Shrink</strong>: Crop the canvas area either horizontally or vertically, so the size of the canvas is smaller than the reference. </li>
+<li>
+<strong>Expand</strong>: Expand the canvas area either horizontally or vertically, so the size of the canvas is larger than the reference.</li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Reference Resolution</strong></td>
+	<td style="text-align:left;">Set the resolution that this panel’s UI is designed for. If the screen resolution is larger than the reference resolution, the UI scales up. If it’s smaller, the UI scales down. How the UI scales depends on the <strong>Screen Match Mode</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Screen Match Mode Parameters</strong></td>
+	<td style="text-align:left;">When <strong>Screen Match Mode</strong> is set to <strong>Match Width or Height</strong>, the <strong>Match</strong> value controls whether the UI system scales the UI to match the screen width, the screen height, or a mix of the two. <br><br>For example, if the value is <code>0</code>, it matches the width; if the value is <code>1</code>, it matches the height; if the value is <code>0.4</code>, it linearly interpolates between width and height by <code>40%</code>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="active-filters" aria-hidden="true"></a></p>
+
+<h2>Active Filters</h2>
+
+<p>You can apply more than one filter at a time. The following table describes each active filter. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Filter</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Nothing</strong></td>
+	<td style="text-align:left;">Disable all the filters.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Everything</strong></td>
+	<td style="text-align:left;">Apply all the filters.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Readability</strong></td>
+	<td style="text-align:left;">Exclude textures that <a href="../ScriptReference/Texture-isReadable.html"><code>Texture2D.isReadable</code></a> is set to <code>true</code>. <br> Unity can’t automatically update the dynamic atlas when you add a texture through APIs like <a href="../ScriptReference/Texture2D.SetPixels.html"><code>Texture2D.SetPixels</code></a>. You can use <a href="../ScriptReference/UIElements.RuntimePanelUtils.SetTextureDirty.html"><code>RuntimePanelUtils.SetTextureDirty</code></a> to force the atlas to update its content for a given texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Size</strong></td>
+	<td style="text-align:left;">Exclude textures that are larger than the <strong>Max Sub Texture Size</strong> setting. <br>Large textures can saturate the atlas quickly. If you don’t want to add large textures to the atlas, select this filter and adjust <strong>Max Sub Texture Size</strong> to fit your needs. By default, textures larger than <code>64x64</code> aren’t allowed into the atlas.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Format</strong></td>
+	<td style="text-align:left;">Store sRGB-encoded data with 8-bits per channel precision, and excludes sub-textures that would lose precision or be truncated when added to the atlas, such as an R16G16B16A16_FLOAT texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color Space</strong></td>
+	<td style="text-align:left;">Exclude R8G8B8A8_UNORM content when the project is in a linear color space. <br>In a linear color space, the format of the <a href="../ScriptReference/RenderTexture.html"><code>RenderTexture</code></a> of the dynamic atlas is R8G8B8A8_SRGB. The data stored in the <a href="../ScriptReference/RenderTexture.html"><code>RenderTexture</code></a> is sRGB-encoded. When read from, it’s linearized, and when written to, it’s encoded to sRGB. Because of the limited precision of the format, R8G8B8A8_UNORM content stored in the atlas could cause banding to occur.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Filter Mode</strong></td>
+	<td style="text-align:left;">Exclude textures for which the sub-texture filter mode, such as Point or Bilinear, doesn’t match the atlas filter mode. This prevents the mismatch between the sub-texture filter mode and the atlas filter mode. The mismatch could cause unexpected blurriness or blockiness.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-get-started-with-runtime-ui.html">Get started with runtime UI</a></li>
+<li><a href="UIE-render-runtime-ui.html">Render UI in the Game view</a></li>
+<li><a href="UIE-Runtime-Event-System.html">Runtime event system</a></li>
+<li><a href="UIE-faq-event-and-input-system.html">FAQ for input and event systems with UI Toolkit</a></li>
+<li><a href="UIE-performance-consideration-runtime.html">Performance consideration for runtime UI</a></li>
+<li><a href="../ScriptReference/UIElements.PanelSettings.html"><code>PanelSettings</code></a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-render-runtime-ui.html"></a></span><div class="tip">Render UI in the Game view</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Runtime-Event-System.html"></a></span><div class="tip">Runtime UI event system</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

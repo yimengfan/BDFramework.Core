@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Animation from external sources</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AnimationsImport.html">English</a></li>
+<li><a href="/cn/current/Manual/AnimationsImport.html">中文</a></li>
+<li><a href="/ja/current/Manual/AnimationsImport.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AnimationsImport.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AnimationsImport.html">English</a></li>
+<li><a href="/cn/current/Manual/AnimationsImport.html">中文</a></li>
+<li><a href="/ja/current/Manual/AnimationsImport.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AnimationsImport.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AnimationSection.html">Animation</a></li>
+<li><a href="AnimationClips.html">Animation Clips</a></li>
+<li>Animation from external sources</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AnimationClips.html"></a></span><div class="tip">Animation Clips</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AvatarCreationandSetup.html"></a></span><div class="tip">Humanoid Avatars</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Animation from external sources</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Animation from external sources is imported into Unity in the same way as regular 3D files. These files, whether they’re generic FBX files or native formats from 3D software such as Autodesk® Maya®, Cinema 4D, Autodesk® 3ds Max®, or Blender™, can contain animation data in the form of a linear recording of the movements of objects within the file.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationSelectingImportedClip.png" alt="An imported FBX 3D Asset containing an animation titled Run">
+<figcaption>An imported FBX 3D Asset containing an animation titled ‘Run’</figcaption>
+</figure>
+
+<p>In some cases, the object to be animated (for example, a character) and its animations are in the same file. In other cases, the animations may exist in a separate file from the object to be animated.</p>
+
+<p>It may be that animations are specific to a particular model, and cannot be re-used on other models. For example, a giant octopus end-boss in your game might have a unique arrangement of limbs and bones, and its own set of animations.</p>
+
+<p>In other situations, it may be that you have a library of animations which are to be used on various different models in your <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. For example, a number of different humanoid characters might all use the same walk and run animations. In these situations, it’s common to have a simple placeholder model in your animation files for the purposes of previewing them. Alternatively, it is possible to use animation files even if they have no geometry at all, just the animation data.</p>
+
+<p>When importing multiple animations, the animations can each exist as separate files within your project folder, or you can extract multiple <span class="tooltip"><strong>animation clips</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html" href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> from a single FBX file if exported as takes from Motion builder or with a plugin / script for Autodesk® Maya®, Autodesk® 3ds Max® or other 3D packages. You might want to do this if your file contains multiple separate animations arranged on a single timeline. For example, a long motion captured timeline might contain the animation for a few different jump motions, and you may want to cut out certain sections of this to use as individual clips and discard the rest. Unity provides animation cutting tools to achieve this when you import all animations in one timeline by allowing you to select the frame range for each clip.</p>
+
+<h2>Import animation files</h2>
+
+<p>Before any animation can be used in Unity, it must first be imported into your project. Unity can import native Autodesk® Maya® (.mb or .ma), Autodesk® 3ds Max® (.max), and Blender™ (.blend), and also generic FBX files which <a href="3D-formats.html">can be exported from most animation packages</a>. Note that importing from .blend files requires a local installation of Blender™.</p>
+
+<p>For more information, see <a href="ImportingAssets.html">Importing</a>.</p>
+
+<h2>View and copy data from imported animation files</h2>
+
+<p>You can view the <span class="tooltip"><strong>keyframes</strong><span class="tooltiptext">A frame that marks the start or end point of a transition in an animation. Frames in between the keyframes are called inbetweens.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#keyframe" aria-label="Go to glossary anchor for keyframe">Glossary</a></span></span></span> and curves of imported animation clips in the Animation window. If these imported clips have many bones with many keyframes, the amount of animation data can be overwhelming. For example, the following image shows bones and keyframes for a run animation:</p>
+
+<figure>
+<img src="../uploads/Main/AnimationViewingImportedCurves.jpg" alt="">
+</figure>
+
+<p>To limit the animation data being displayed, select only the bones you are interested in examining. The Animation window displays only the keyframes or curves for the selected bones.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationViewingImportedCurvesSelected.png" alt="Limit the view to only the selected bones or properties">
+<figcaption>Limit the view to only the selected bones or properties</figcaption>
+</figure>
+
+<p>When viewing imported Animation keyframes, the Animation window provides a read-only view of the animation data. You cannot edit this data, but you can edit a copy of the Animation data by copying and pasting keyframes into a new Animation clip. To create a copy of Animation data from a read only FBX file, follow these steps:</p>
+
+<ol>
+<li>In the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, select the FBX file with the animation data that you want to copy.</li>
+<li>In the Animation window, select the properties to limit the amount of animation data being displayed.</li>
+<li>Select the keyframes that you want to copy.</li>
+<li>Press <strong>Ctrl+C</strong> (Mac OS: <strong>Cmd+C</strong>) to copy the selected keyframes.</li>
+<li>Create a new empty Animation Clip for the <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> where you want to paste the copied keyframes. Consult <a href="animeditor-CreatingANewAnimationClip.html">Creating a new Animation Clip</a>.</li>
+<li>Press <strong>Ctrl-V</strong> (Mac OS: <strong>Cmd+V</strong>) to paste the copied keyframes.</li>
+</ol>
+
+<p>For best results, the GameObject where you are pasting should have the same hierarchy and properties as the animation data you are copying. For example, if you are copying properties for chest and head movement from an FBX file, the GameObject should have chest and head properties.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationSelectingKeysOnImportedClip.png" alt="Selected keyframes from an imported clip.">
+<figcaption>Selected keyframes from an imported clip.</figcaption>
+</figure>
+
+<p>If the GameObject does not have the same properties, the animation data is copied, but the properties are drawn in yellow. Hovering over the name of the property displays the message “The GameObject or Component are missing.”</p>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AnimationClips.html"></a></span><div class="tip">Animation Clips</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AvatarCreationandSetup.html"></a></span><div class="tip">Humanoid Avatars</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

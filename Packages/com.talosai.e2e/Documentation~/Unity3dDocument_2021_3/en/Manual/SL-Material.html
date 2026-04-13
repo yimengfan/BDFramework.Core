@@ -1,0 +1,324 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: ShaderLab: legacy lighting</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-Material.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-Material.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-Material.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-Material.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-Material.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-Material.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-Material.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-Material.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-writing.html">Writing shaders</a></li>
+<li><a href="SL-Reference.html">ShaderLab</a></li>
+<li><a href="shader-shaderlab-commands.html">ShaderLab: commands</a></li>
+<li><a href="shader-shaderlab-legacy.html">ShaderLab legacy functionality</a></li>
+<li>ShaderLab: legacy lighting</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-Fog.html"></a></span><div class="tip">ShaderLab: legacy fog</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-AlphaTest.html"></a></span><div class="tip">ShaderLab: legacy alpha testing</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>ShaderLab: legacy lighting</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Note</strong>: The <span class="tooltip"><strong>ShaderLab</strong><span class="tooltiptext">Unity’s language for defining the structure of Shader objects. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-Shader.html" href="SL-Shader.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span> functionality on this page is legacy, and is documented for backwards compatibility only. If your <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span> functionality on this page is legacy, and is documented for backwards compatibility only. If your <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> source file includes HLSL code, Unity ignores these commands completely. If your shader source file does not include HLSL code, Unity compiles these commands into regular shader programs on import.</p>
+
+<h2>Render pipeline compatibility</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature name</strong></th>
+	<th style="text-align:left;"><strong>Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span></strong></th>
+	<th style="text-align:left;"><strong>Universal Render Pipeline (URP)</strong></th>
+	<th style="text-align:left;"><strong>High Definition Render Pipeline (HDRP)</strong></th>
+	<th style="text-align:left;"><strong>Custom SRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Legacy lighting</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Overview</h2>
+
+<p>The material and lighting parameters are used to control the built-in vertex lighting. Vertex lighting is the standard Direct3D/OpenGL lighting model that is computed for each vertex. <strong>Lighting on</strong> turns it on. Lighting is affected by <span class="tooltip"><strong>Material</strong><span class="tooltiptext">An asset that defines how a surface should be rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Material.html" href="class-Material.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span> block, <strong>ColorMaterial</strong> and <strong>SeparateSpecular</strong> commands.</p>
+
+<p>Vertex Coloring &amp; Lighting is the first effect to be calculated for any rendered geometry. It operates on the vertex level, and calculates the base color that is used before textures are applied.</p>
+
+<h2>Syntax</h2>
+
+<p>The top level commands control whether to use fixed function lighting or not, and some configuration options. The main setup is in the <strong>Material Block</strong>, detailed further below.</p>
+
+<h3>Color</h3>
+
+<pre><code>    Color color
+</code></pre>
+
+<p>Sets the object to a solid color. A color is either four RGBA values in parenthesis, or a color property name in square brackets.</p>
+
+<h3>Material</h3>
+
+<pre><code>    Material {Material Block}
+</code></pre>
+
+<p>The Material block is used to define the material properties of the object.</p>
+
+<h3>Lighting</h3>
+
+<pre><code>    Lighting On | Off
+</code></pre>
+
+<p>For the settings defined in the Material block to have any effect, you must enable Lighting with the <em>Lighting On</em> command. If lighting is off instead, the color is taken straight from the <em>Color</em> command.</p>
+
+<h3>SeparateSpecular</h3>
+
+<pre><code>    SeparateSpecular On | Off
+</code></pre>
+
+<p>This command makes specular lighting be added to the end of the shader pass, so specular lighting is unaffected by texturing. Only has effect when <em>Lighting On</em> is used.</p>
+
+<h3>ColorMaterial</h3>
+
+<pre><code>    ColorMaterial AmbientAndDiffuse | Emission
+</code></pre>
+
+<p>Makes per-vertex color be used instead of the colors set in the material. <strong>AmbientAndDiffuse</strong> replaces Ambient and Diffuse values of the material; <strong>Emission</strong> replaces Emission value of the material.</p>
+
+<h3>Material Block</h3>
+
+<p>This contains settings for how the material reacts to the light. Any of these properties can be left out, in which case they default to black (i.e. have no effect).</p>
+
+<p>
+<strong>Diffuse color:</strong> The diffuse color component. This is an object’s base color.</p>
+
+<p>
+<strong>Ambient color:</strong> The ambient color component. This is the color the object has when it’s hit by the <span class="tooltip"><strong>ambient light</strong><span class="tooltiptext">Light that doesn’t come from any specific direction, and contributes equal light in all directions to the Scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about lighting-window.html" href="lighting-window.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Ambientlight" aria-label="Go to glossary anchor for Ambientlight">Glossary</a></span></span></span> set in the <a href="lighting-window.html">Lighting Window</a>.</p>
+
+<p>
+<strong><span class="tooltip"><strong>Specular color</strong><span class="tooltiptext">The color of a specular highlight.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#specularcolor" aria-label="Go to glossary anchor for specularcolor">Glossary</a></span></span></span>:</strong> The color of the object’s specular highlight.</p>
+
+<p>
+<strong>Shininess number:</strong> The sharpness of the highlight, between 0 and 1. At 0 you get a huge highlight that looks a lot like diffuse lighting, at 1 you get a tiny speck.</p>
+
+<p>
+<strong>Emission color:</strong> The color of the object when it is not hit by any light.</p>
+
+<p>The full color of lights hitting the object is:</p>
+
+<p>
+<strong>Ambient</strong> * <a href="lighting-window.html">Lighting Window’s Ambient Intensity setting</a> +
+ (Light Color * <strong>Diffuse</strong> + Light Color * <strong>Specular</strong>) + <strong>Emission</strong>
+</p>
+
+<p>The light parts of the equation (within parenthesis) is repeated for all lights that hit the object.</p>
+
+<p>Typically you want to keep the Diffuse and Ambient colors the same (all built-in shaders do this).</p>
+
+<h2>Examples</h2>
+
+<p>Always render object in pure red:</p>
+
+<pre><code>Shader &quot;Solid Red&quot; {
+    SubShader {
+        Pass { Color (1,0,0,0) }
+    }
+}
+</code></pre>
+
+<p>Basic Shader that colors the object white and applies vertex lighting:</p>
+
+<pre><code>Shader &quot;VertexLit White&quot; {
+    SubShader {
+        Pass {
+            Material {
+                Diffuse (1,1,1,1)
+                Ambient (1,1,1,1)
+            }
+            Lighting On
+        }
+    }
+}
+</code></pre>
+
+<p>An extended version that adds material color as a property visible in Material <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>:</p>
+
+<pre><code>Shader &quot;VertexLit Simple&quot; {
+    Properties {
+        _Color (&quot;Main Color&quot;, COLOR) = (1,1,1,1)
+    }
+    SubShader {
+        Pass {
+            Material {
+                Diffuse [_Color]
+                Ambient [_Color]
+            }
+            Lighting On
+        }
+    }
+}
+</code></pre>
+
+<p>And finally, a full fledged vertex-lit shader (see also <a href="SL-SetTexture.html">SetTexture</a> reference page):</p>
+
+<pre><code>Shader &quot;VertexLit&quot; {
+    Properties {
+        _Color (&quot;Main Color&quot;, Color) = (1,1,1,0)
+        _SpecColor (&quot;Spec Color&quot;, Color) = (1,1,1,1)
+        _Emission (&quot;Emmisive Color&quot;, Color) = (0,0,0,0)
+        _Shininess (&quot;Shininess&quot;, Range (0.01, 1)) = 0.7
+        _MainTex (&quot;Base (RGB)&quot;, 2D) = &quot;white&quot; {}
+    }
+    SubShader {
+        Pass {
+            Material {
+                Diffuse [_Color]
+                Ambient [_Color]
+                Shininess [_Shininess]
+                Specular [_SpecColor]
+                Emission [_Emission]
+            }
+            Lighting On
+            SeparateSpecular On
+            SetTexture [_MainTex] {
+                Combine texture * primary DOUBLE, texture * primary
+            }
+        }
+    }
+}
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-Fog.html"></a></span><div class="tip">ShaderLab: legacy fog</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-AlphaTest.html"></a></span><div class="tip">ShaderLab: legacy alpha testing</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

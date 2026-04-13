@@ -1,0 +1,384 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Server configuration code samples</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/webgl-server-configuration-code-samples.html">English</a></li>
+<li><a href="/cn/current/Manual/webgl-server-configuration-code-samples.html">中文</a></li>
+<li><a href="/ja/current/Manual/webgl-server-configuration-code-samples.html">日本語</a></li>
+<li><a href="/kr/current/Manual/webgl-server-configuration-code-samples.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/webgl-server-configuration-code-samples.html">English</a></li>
+<li><a href="/cn/current/Manual/webgl-server-configuration-code-samples.html">中文</a></li>
+<li><a href="/ja/current/Manual/webgl-server-configuration-code-samples.html">日本語</a></li>
+<li><a href="/kr/current/Manual/webgl-server-configuration-code-samples.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="webgl.html">WebGL</a></li>
+<li><a href="webgl-building-distribution.html">Building and distributing a WebGL project</a></li>
+<li>Server configuration code samples</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="webgl-deploying.html"></a></span><div class="tip">Compressed builds and server configuration</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Windows.html"></a></span><div class="tip">Windows</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Server configuration code samples</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>These code samples show how to configure your server when working with <span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span>. The following samples apply to Nginx, Apache, and IIS servers. </p>
+
+<p>For further information on WebGL server configuration, refer to <a href="webgl-deploying.html">WebGL: Compressed builds and server configuration</a>.</p>
+
+<h2>Server configuration for WebGL builds (Nginx)</h2>
+
+<pre><code>http {
+# ...
+
+server {
+# Add the following config within http server configuration
+# ...
+ 
+# On-disk Brotli-precompressed data files should be served with compression enabled:
+location ~ .+\.(data|symbols\.json)\.br$ {
+    # Because this file is already pre-compressed on disk, disable the on-demand compression on it.
+    # Otherwise nginx would attempt double compression.
+    gzip off;
+    add_header Content-Encoding br;
+    default_type application/octet-stream;
+}
+
+# On-disk Brotli-precompressed JavaScript code files:
+location ~ .+\.js\.br$ {
+    gzip off; # Do not attempt dynamic gzip compression on an already compressed file
+    add_header Content-Encoding br;
+    default_type application/javascript;
+}
+
+# On-disk Brotli-precompressed WebAssembly files:
+location ~ .+\.wasm\.br$ {
+    gzip off; # Do not attempt dynamic gzip compression on an already compressed file
+    add_header Content-Encoding br;
+    # Enable streaming WebAssembly compilation by specifying the correct MIME type for
+    # Wasm files.
+    default_type application/wasm;
+}
+
+# On-disk gzip-precompressed data files should be served with compression enabled:
+location ~ .+\.(data|symbols\.json)\.gz$ {
+    gzip off; # Do not attempt dynamic gzip compression on an already compressed file
+    add_header Content-Encoding gzip;
+    default_type application/gzip;
+}
+
+# On-disk gzip-precompressed JavaScript code files:
+location ~ .+\.js\.gz$ {
+    gzip off; # Do not attempt dynamic gzip compression on an already compressed file
+    add_header Content-Encoding gzip; # The correct MIME type here would be application/octet-stream, but due to Safari bug https://bugs.webkit.org/show_bug.cgi?id=247421, it's preferable to use MIME Type application/gzip instead.
+    default_type application/javascript;
+}
+
+# On-disk gzip-precompressed WebAssembly files:
+location ~ .+\.wasm\.gz$ {
+    gzip off; # Do not attempt dynamic gzip compression on an already compressed file
+    add_header Content-Encoding gzip;
+    # Enable streaming WebAssembly compilation by specifying the correct MIME type for
+    # Wasm files.
+    default_type application/wasm;
+}
+}
+}
+</code></pre>
+
+<h2>Server configuration for WebGL builds (Apache)</h2>
+
+<p>You can configure WebGL builds in Apache using one of the two methods: Virtual Host in <code>httpd.conf</code>, or <code>.htaccess</code>. The recommended best practice is to configure a virtual host in Apache’s <code>httpd.conf</code>, if you have access to that configuration.</p>
+
+<p><strong>To configure WebGL builds using the Virtual Host in <code>httpd.conf</code> method:</strong></p>
+
+<pre><code>&lt;Directory /var/www/html/root/path/to/your/unity/content/&gt;
+&lt;IfModule mod_mime.c&gt;
+RemoveType .gz
+AddEncoding gzip .gz
+# The correct MIME type for .data.gz would be application/octet-stream, but due to Safari bug https://bugs.webkit.org/show_bug.cgi?id=247421, it is preferable to use MIME Type application/gzip instead.
+#AddType application/octet-stream .data.gz
+AddType application/gzip .data.gz
+AddType application/wasm .wasm.gz
+AddType application/javascript .js.gz
+AddType application/octet-stream .symbols.json.gz
+
+RemoveType .br
+AddEncoding br .br
+AddType application/octet-stream .data.br
+AddType application/wasm .wasm.br
+AddType application/javascript .js.br
+AddType application/octet-stream .symbols.json.br
+
+&lt;/IfModule&gt;
+&lt;/Directory&gt;
+</code></pre>
+
+<p><strong>To configure WebGL builds using the <code>.htaccess</code> method:</strong></p>
+
+<p>If you’re unable to modify <code>httpd.conf</code>, for example, due to unavailable admin rights to your web hosting, but your Apache supports <code>.htaccess</code>, then you can configure <code>.htaccess</code> in the following way:</p>
+
+<pre><code class="lang-apacheconf"># This configuration file should be uploaded to the server as &quot;&lt;Application Folder&gt;/Build/.htaccess&quot;
+# NOTE: &quot;mod_mime&quot; Apache module must be enabled for this configuration to work.
+&lt;IfModule mod_mime.c&gt;
+
+# The following lines are required for builds without decompression fallback, compressed with gzip
+RemoveType .gz
+AddEncoding gzip .gz
+AddType application/gzip .data.gz # The correct MIME type here would be application/octet-stream, but due to Safari bug https://bugs.webkit.org/show_bug.cgi?id=247421, it's preferable to use MIME Type application/gzip instead.
+AddType application/wasm .wasm.gz
+AddType application/javascript .js.gz
+AddType application/octet-stream .symbols.json.gz
+
+# The following lines are required for builds without decompression fallback, compressed with Brotli
+RemoveType .br
+RemoveLanguage .br
+AddEncoding br .br
+AddType application/octet-stream .data.br
+AddType application/wasm .wasm.br
+AddType application/javascript .js.br
+AddType application/octet-stream .symbols.json.br
+
+# The following line improves loading performance for uncompressed builds
+AddType application/wasm .wasm
+
+# Uncomment the following line to improve loading performance for gzip-compressed builds with decompression fallback
+# AddEncoding gzip .unityweb
+
+# Uncomment the following line to improve loading performance for brotli-compressed builds with decompression fallback
+# AddEncoding br .unityweb
+
+&lt;/IfModule&gt;
+</code></pre>
+
+<h2>Server configuration for compressed WebGL builds without decompression fallback (IIS)</h2>
+
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!--
+ The following server configuration can be used for compressed WebGL builds without decompression fallback.
+ This configuration file should be uploaded to the server as &quot;&lt;Application Folder&gt;/Build/web.config&quot;.
+
+NOTE: To host compressed WebGL builds without decompression fallback, you need to install the &quot;URL Rewrite&quot; IIS module on the server.
+Otherwise, IIS will throw an exception when using this configuration file.
+This module is available at https://www.iis.net/downloads/microsoft/url-rewrite.
+--&gt;
+
+
+&lt;configuration&gt;
+ &lt;system.webServer&gt;
+   &lt;!--
+     Compressed Unity builds without decompression fallback can't be properly hosted on a server which
+     has static compression enabled because this might result in the build files being compressed twice.
+     The following line disables static server compression.
+   --&gt;
+   &lt;urlCompression doStaticCompression=&quot;false&quot; /&gt;
+   &lt;!-- To host compressed Unity builds, the correct mimeType should be set for the compressed build files. --&gt;
+   &lt;staticContent&gt;
+     &lt;!--
+       NOTE: IIS will throw an exception if a mimeType is specified multiple times for the same extension.
+       To avoid possible conflicts with configurations that are already on the server, you should remove the mimeType for the corresponding extension using the &lt;remove&gt; element,
+       before adding mimeType using the &lt;mimeMap&gt; element.
+     --&gt;
+     &lt;!-- The following lines are required for builds compressed with gzip, which don't include decompression fallback. --&gt;
+     &lt;remove fileExtension=&quot;.data.gz&quot; /&gt;
+     &lt;mimeMap fileExtension=&quot;.data.gz&quot; mimeType=&quot;application/gzip&quot; /&gt;&lt;!-- The correct MIME type here would be application/octet-stream, but due to Safari bug https://bugs.webkit.org/show_bug.cgi?id=247421, it's preferable to use MIME Type application/gzip instead. --&gt;
+     &lt;remove fileExtension=&quot;.wasm.gz&quot; /&gt;
+     &lt;mimeMap fileExtension=&quot;.wasm.gz&quot; mimeType=&quot;application/wasm&quot; /&gt;
+     &lt;remove fileExtension=&quot;.js.gz&quot; /&gt;
+     &lt;mimeMap fileExtension=&quot;.js.gz&quot; mimeType=&quot;application/javascript&quot; /&gt;
+     &lt;remove fileExtension=&quot;.symbols.json.gz&quot; /&gt;
+     &lt;mimeMap fileExtension=&quot;.symbols.json.gz&quot; mimeType=&quot;application/octet-stream&quot; /&gt;
+     &lt;!-- The following lines are required for builds compressed with Brotli, which don't include decompression fallback. --&gt;
+     &lt;remove fileExtension=&quot;.data.br&quot; /&gt;
+     &lt;mimeMap fileExtension=&quot;.data.br&quot; mimeType=&quot;application/octet-stream&quot; /&gt;
+     &lt;remove fileExtension=&quot;.wasm.br&quot; /&gt;
+     &lt;mimeMap fileExtension=&quot;.wasm.br&quot; mimeType=&quot;application/wasm&quot; /&gt;
+     &lt;remove fileExtension=&quot;.js.br&quot; /&gt;
+     &lt;mimeMap fileExtension=&quot;.js.br&quot; mimeType=&quot;application/javascript&quot; /&gt;
+     &lt;remove fileExtension=&quot;.symbols.json.br&quot; /&gt;
+     &lt;mimeMap fileExtension=&quot;.symbols.json.br&quot; mimeType=&quot;application/octet-stream&quot; /&gt;
+   &lt;/staticContent&gt;
+
+   &lt;!--
+     Hosting compressed Unity builds without decompression fallback relies on native browser decompression,
+     therefore a proper &quot;Content-Encoding&quot; response header should be added for the compressed build files.
+     NOTE: IIS will throw an exception if the following section is used without the &quot;URL Rewrite&quot; module installed.
+     Download the &quot;URL Rewrite&quot; module from https://www.iis.net/downloads/microsoft/url-rewrite
+   --&gt;
+   &lt;rewrite&gt;
+     &lt;outboundRules&gt;
+       &lt;!--
+         NOTE: IIS will throw an exception if the same rule name is used multiple times.
+         To avoid possible conflicts with configurations that are already on the server, you should remove the mimeType for the corresponding extension using the &lt;remove&gt; element,
+       before adding mimeType using the &lt;mimeMap&gt; element.
+       --&gt;
+       &lt;!-- The following section is required for builds compressed with gzip, which don't include decompression fallback. --&gt;
+       &lt;remove name=&quot;Append gzip Content-Encoding header&quot; /&gt;
+       &lt;rule name=&quot;Append gzip Content-Encoding header&quot;&gt;
+         &lt;match serverVariable=&quot;RESPONSE_Content-Encoding&quot; pattern=&quot;.*&quot; /&gt;
+         &lt;conditions&gt;
+           &lt;add input=&quot;{REQUEST_FILENAME}&quot; pattern=&quot;\.gz$&quot; /&gt;
+         &lt;/conditions&gt;
+         &lt;action type=&quot;Rewrite&quot; value=&quot;gzip&quot; /&gt;
+       &lt;/rule&gt;
+       &lt;!-- The following section is required for builds compressed with Brotli, which don't include decompression fallback. --&gt;
+       &lt;remove name=&quot;Append brotli Content-Encoding header&quot; /&gt;
+       &lt;rule name=&quot;Append brotli Content-Encoding header&quot;&gt;
+         &lt;match serverVariable=&quot;RESPONSE_Content-Encoding&quot; pattern=&quot;.*&quot; /&gt;
+         &lt;conditions&gt;
+           &lt;add input=&quot;{REQUEST_FILENAME}&quot; pattern=&quot;\.br$&quot; /&gt;
+         &lt;/conditions&gt;
+         &lt;action type=&quot;Rewrite&quot; value=&quot;br&quot; /&gt;
+       &lt;/rule&gt;
+     &lt;/outboundRules&gt;
+   &lt;/rewrite&gt;
+ &lt;/system.webServer&gt;
+&lt;/configuration&gt;
+</code></pre>
+
+<h2>Server configuration for uncompressed WebGL builds (IIS)</h2>
+
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!--
+ The following server configuration can be used for uncompressed WebGL builds.
+ This configuration file should be uploaded to the server as &quot;&lt;Application Folder&gt;/Build/web.config&quot;
+--&gt;
+&lt;configuration&gt;
+ &lt;system.webServer&gt;
+   &lt;!--
+     IIS does not provide default handlers for .data and .wasm files (and in some cases .json files),
+     therefore these files won’t be served unless their mimeType is explicitly specified.
+   --&gt;
+   &lt;staticContent&gt;
+     &lt;!--
+       NOTE: IIS will throw an exception if a mimeType is specified multiple times for the same extension.
+       To avoid possible conflicts with configurations that are already on the server, you should remove the mimeType for the corresponding extension using the &lt;remove&gt; element,
+       before adding mimeType using the &lt;mimeMap&gt; element.
+     --&gt;
+     &lt;remove fileExtension=&quot;.data&quot; /&gt;
+     &lt;mimeMap fileExtension=&quot;.data&quot; mimeType=&quot;application/octet-stream&quot; /&gt;
+     &lt;remove fileExtension=&quot;.wasm&quot; /&gt;
+     &lt;mimeMap fileExtension=&quot;.wasm&quot; mimeType=&quot;application/wasm&quot; /&gt;
+     &lt;remove fileExtension=&quot;.symbols.json&quot; /&gt;
+     &lt;mimeMap fileExtension=&quot;.symbols.json&quot; mimeType=&quot;application/octet-stream&quot; /&gt;
+   &lt;/staticContent&gt;
+ &lt;/system.webServer&gt;
+&lt;/configuration&gt;
+</code></pre>
+
+<hr>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="webgl-deploying.html"></a></span><div class="tip">Compressed builds and server configuration</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Windows.html"></a></span><div class="tip">Windows</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

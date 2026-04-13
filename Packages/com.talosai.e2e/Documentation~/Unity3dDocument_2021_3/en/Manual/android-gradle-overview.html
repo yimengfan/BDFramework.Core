@@ -1,0 +1,399 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Gradle for Android</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/android-gradle-overview.html">English</a></li>
+<li><a href="/cn/current/Manual/android-gradle-overview.html">中文</a></li>
+<li><a href="/ja/current/Manual/android-gradle-overview.html">日本語</a></li>
+<li><a href="/kr/current/Manual/android-gradle-overview.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/android-gradle-overview.html">English</a></li>
+<li><a href="/cn/current/Manual/android-gradle-overview.html">中文</a></li>
+<li><a href="/ja/current/Manual/android-gradle-overview.html">日本語</a></li>
+<li><a href="/kr/current/Manual/android-gradle-overview.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="android.html">Android</a></li>
+<li><a href="android-introducing.html">Introducing Android</a></li>
+<li>Gradle for Android</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="android-requirements-and-compatibility.html"></a></span><div class="tip">Android requirements and compatibility</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="android-manifest.html"></a></span><div class="tip">Android App Manifest</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Gradle for Android</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Gradle is a build system that automates a number of build processes and prevents many common build errors. Unity uses <strong>Gradle</strong> for all Android builds. You can either build the output package (.apk, .aab) in Unity, or export a Gradle project from Unity, and then build it with an external tool such as Android Studio.</p>
+
+<p>For more information about:</p>
+
+<ul>
+<li>Gradle: Refer to the <a href="https://docs.gradle.org/current/userguide/userguide.html#getting-started">Gradle user manual</a> and <a href="https://developer.android.com/reference/tools/gradle-api">Android Gradle plugin documentation</a>.</li>
+<li>Exporting a Unity project as a Gradle project: Refer to <a href="android-export-process.html">Exporting an Android Project</a>.</li>
+<li>Building an output package (.apk): Refer to Unity documentation on <a href="android-BuildProcess.html">Building apps for Android</a> and Android developer documentation on<a href="https://developer.android.com/studio/build/index.html"> configuring your build</a>.</li>
+<li>Building an output package (.aab): Refer to Unity documentation on <a href="play-asset-delivery.html">Play Asset Delivery</a> and Android developer documentation on<a href="https://developer.android.com/guide/app-bundle/"> Android app bundles</a>.</li>
+</ul>
+
+<h2>Version compatibility</h2>
+
+<p>The following table shows compatibility between Gradle version and Unity version.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Unity version</th>
+	<th style="text-align:left;">Gradle version</th>
+	<th style="text-align:left;">Android Gradle plug-in version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">2021.3.41f1+</td>
+	<td style="text-align:left;">7.5.1</td>
+	<td style="text-align:left;">7.4.2</td>
+</tr>
+<tr>
+	<td style="text-align:left;">2021.3.37f1 - 2021.3.40f1</td>
+	<td style="text-align:left;">6.7.1</td>
+	<td style="text-align:left;">4.2.2</td>
+</tr>
+<tr>
+	<td style="text-align:left;">2021.2.0b4 - 2021.3.36f1</td>
+	<td style="text-align:left;">6.1.1</td>
+	<td style="text-align:left;">4.0.1</td>
+</tr>
+</tbody>
+</table>
+
+<p>Refer to the Gradle and Android Gradle plug-in versions for other Unity releases: <a href="https://docs.unity3d.com/6000.0/Documentation/Manual/android-gradle-overview.html">6000.0</a>, <a href="https://docs.unity3d.com/2022.3/Documentation/Manual/android-gradle-overview.html">2022.3</a> and <a href="https://docs.unity3d.com/2020.3/Documentation/Manual/android-gradle-overview.html">2020.3</a>
+</p>
+
+<p>If you want to use a custom Gradle or Android Gradle plugin version, it’s important to know the version compatibility between Gradle and the Android Gradle plugin. For information on this, refer to <a href="https://developer.android.com/studio/releases/gradle-plugin?buildsystem=ndk-build#updating-gradle">Update Gradle</a>.</p>
+
+<p><a name="gradle-project-files" aria-hidden="true"></a></p>
+
+<h2>Gradle project files</h2>
+
+<p>Gradle project files configure different aspects of your application, such as which modules to include and how to build them.</p>
+
+<p>The following table lists the Gradle project files that exist for Unity projects and describes the purpose of each one.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Gradle project file</strong></th>
+	<th style="text-align:left;"><strong>Purpose</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Main Manifest</strong></td>
+	<td style="text-align:left;">This file contains important metadata about your Android application. For more information about the responsibilities of the Main/Unity Library Manifest, refer to <a href="android-library-manifest.html">Unity Library Manifest</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Unity Launcher Manifest</strong></td>
+	<td style="text-align:left;">This file contains important metadata about your Android application’s launcher. For more information about the responsibilities of the Unity Launcher Manifest, refer to <a href="android-launcher-manifest.html">Unity Launcher Manifest</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Main Gradle</strong></td>
+	<td style="text-align:left;">This file contains information on how to build your Android application as a library.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Launcher Gradle</strong></td>
+	<td style="text-align:left;">This file contains instructions on how to build your Android application.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Base Gradle</strong></td>
+	<td style="text-align:left;">This file contains configuration that is shared between all other templates and Gradle projects.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Gradle Properties</strong></td>
+	<td style="text-align:left;">This file contains configuration settings for the Gradle build environment. This includes:- The JVM (Java Virtual Machine) memory configuration.- A property to allow Gradle to build using multiple JVMs.- A property for choosing the tool to do the minification.- A property to not compress native libs when building an app bundle.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Proguard</strong></td>
+	<td style="text-align:left;">This file contains configuration settings for the minification process. If minification removes some Java code which should be kept, you should add a rule to keep that code in this file.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="gradle-project-structure" aria-hidden="true"></a></p>
+
+<h2>Gradle project structure</h2>
+
+<p>If you export your Unity project as a Gradle project, Unity creates a Gradle project with two modules:</p>
+
+<ul>
+<li>
+<a name="unity-library" aria-hidden="true"></a>UnityLibrary module: Contains the Unity runtime and project data. This module is a library that you can integrate into any other Gradle project. You can use it to embed Unity into existing Android applications.</li>
+<li>
+<a name="launcher-module" aria-hidden="true"></a>Launcher module: Contains the application’s name and all of its icons. This is a simple Android application module that launches Unity. You can replace it with your own application.</li>
+</ul>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>File</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>launcher</code></td>
+	<td style="text-align:left;">A directory that contains the <a href="#launcher-module">launcher module</a> and everything related to it.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">  <code>src</code>
+</td>
+	<td style="text-align:left;">A standard Android Gradle project directory that contains the launcher module’s source code and resources. Unity places the source code and resources in the <code>main</code> subdirectory.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    <code>main</code>
+</td>
+	<td style="text-align:left;">A standard Android Gradle project directory that contains the launcher module’s source code and resources. Unity only supports the main source set. For more information about source sets, refer to <a href="https://developer.android.com/studio/build/build-variants#sourcesets">Create source sets</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">      <code>res</code>
+</td>
+	<td style="text-align:left;">A standard Android Gradle project directory that contains resources to include in the final application. The resources are application icons, text that the application accesses at runtime, and application style descriptions. <br><br>To specify the resources in this directory, set application icons and the project name in the <a href="class-PlayerSettingsAndroid.html">Android Player Settings</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">      <code>AndroidManifest.xml</code>
+</td>
+	<td style="text-align:left;">A standard Android Gradle project file that Unity merges into the final <a href="android-manifest.html">Android App Manifest</a>. It contains settings specific to the launcher module. <br><br><strong>Important</strong>: If multiple manifest files specify different values for the same setting, the manifest merging process fails and you must fix it manually. You can specify rules for the manifest merger to automatically decide how to solve merge conflicts. For information on how to do this, refer to <a href="https://developer.android.com/studio/build/manage-manifests">Manage manifest files</a>. <br><br>For information on how to influence the contents of this file, refer to <a href="overriding-android-manifest.html">Override the Android App Manifest</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">  <code>build.gradle</code>
+</td>
+	<td style="text-align:left;">A standard Gradle project build.gradle file that describes how to build the launcher module and includes a list of dependencies to include in the build. In Unity, the launcher module depends on the <a href="#unity-library">unityLibrary</a> module which means unityLibrary is built and included in the final result when building the launcher module. <br><br>To influence the contents of this file, provide a custom <a href="class-PlayerSettingsAndroid.html#Publishing">Launcher Gradle Template</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>unityLibrary</code></td>
+	<td style="text-align:left;">A directory that contains the <a href="#unity-library">unityLibrary module</a> and everything related to it.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">  <code>libs</code>
+</td>
+	<td style="text-align:left;">A common Android Gradle project directory that stores <a href="AndroidAARPlugins.html">Android Archive</a> (.aar) and <a href="AndroidJARPlugins.html">Java Archive</a> (.jar) plug-ins for the unityLibrary module. <br><br>For exported Unity projects, this contains the <code>unity-classes.jar</code> and all .jar and .aar plugins in the Unity project. <br><br><strong>Note</strong>: This directory does not contain <a href="AndroidAARPlugins.html">Android Library Projects</a> plug-ins. Instead, Unity copies these into the Gradle project as separate modules.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    <code>unity-classes.jar</code>
+</td>
+	<td style="text-align:left;">A Unity-specific java plugin that contains java code that the Unity engine uses.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">  <code>src</code>
+</td>
+	<td style="text-align:left;">A standard Android Gradle project directory that contains the unityLibrary module’s source code and resources. Unity places the source code and resources in the <code>main</code> subdirectory.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    <code>main</code>
+</td>
+	<td style="text-align:left;">A standard Android Gradle project directory that contains the unityLibrary module’s source code and resources. Unity only supports the main source set. For more information about source sets, refer to <a href="https://developer.android.com/studio/build/build-variants#sourcesets">Create source sets</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">      <code>assets</code>
+</td>
+	<td style="text-align:left;">A standard Android Gradle directory that contains project assets. Unity places the Unity project’s resources in the <code>bin</code> subdirectory.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <code>bin</code>
+</td>
+	<td style="text-align:left;">A standard Android Gradle project directory that Unity adds all of the Unity project’s resources to.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">      <code>java</code>
+</td>
+	<td style="text-align:left;">A standard Android Gradle project directory that contains uncompiled java source files for the unityLibrary module. Unity only uses this directory to store the UnityPlayerActivity source file. For information on how to extend UnityPlayerActivity, refer to <a href="AndroidUnityPlayerActivity.html">Extending the UnityPlayerActivity Java Code</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">      <code>jniLibs</code>
+</td>
+	<td style="text-align:left;">A standard Android Gradle project directory that contains native code libraries that the unityLibrary module uses. Unity places the <code>libil2cpp</code>, <code>libmain</code>, and <code>libunity</code> Unity engine libraries in this directory. Unity also places any <a href="AndroidNativePlugins.html">Native (C++) plug-ins</a> in this directory.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">      <code>jniStaticLibs</code>
+</td>
+	<td style="text-align:left;">A standard Android project directory that contains <code>baselib.a</code> library that the unityLibrary module uses to create <code>libil2cpp.so</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">      <code>res</code>
+</td>
+	<td style="text-align:left;">A standard Android Gradle project directory that contains resources to include in the final application. For exported Unity projects, the <code>res</code> directory for the unityLibrary module only contains style descriptions that the unityLibrary module uses.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">      <code>AndroidManifest.xml</code>
+</td>
+	<td style="text-align:left;">A standard Android Gradle project file that Unity merges into the final <a href="android-manifest.html">Android App Manifest</a>. It contains settings specific to the unityLibrary module. <br><br>To influence the contents of this file, provide a custom <a href="class-PlayerSettingsAndroid.html#Publishing">Custom Main Manifest</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">  <code>symbols</code>
+</td>
+	<td style="text-align:left;">A directory that Unity adds if you choose to generate symbol files for your application through the <a href="android-build-settings.html#debug-symbols">Create symbols.zip</a> build setting. This directory includes files containing debug metadata and the symbol table section for Unity libraries. You can set the directory path in Android Studio to resolve function names during debugging.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">  <code>build.gradle</code>
+</td>
+	<td style="text-align:left;">A standard Gradle project build.gradle file that describes how to build the unityLibrary module and includes a list of dependencies to include in the build. In Unity, the unityLibrary module depends on all of the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PluginsForAndroid.html">plug-ins</a><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a href="Plugins.html" href="PluginsForAndroid.html">plug-ins</a><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> in the Unity project. <br><br>To influence the contents of this file, provide a custom <a href="class-PlayerSettingsAndroid.html#Publishing">Main Gradle Template</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">  <code>proguard-unity.txt</code>
+</td>
+	<td style="text-align:left;">A Unity-specific file that contains ProGuard configurations for Unity java code (code in unity-classes.jar plugin). Configurations are effective when Minification is enabled in <span class="tooltip"><strong>Player settings</strong><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html" href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span> (or if it is enabled by manually modifying gradle build files).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>build.gradle</code></td>
+	<td style="text-align:left;">The base Gradle file that affects all modules in the Gradle project. It specifies which Android Gradle Plugin version to use and locations of java plugins. The locations are a combination of online repositories and java plugins inside of this project. To influence the contents of this file, provide a custom <a href="class-PlayerSettingsAndroid.html#Publishing">Base Gradle Template</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>proguard-user.txt</code></td>
+	<td style="text-align:left;">This is a Unity project specific file which contains ProGuard configurations for the project’s java code and 3rd party java plug-ins. Just like <code>ProGuard-unity.txt</code> Gradle uses it if you enable minification. <br><br>To create this file, enable <strong>Custom Proguard File</strong> in the <a href="class-PlayerSettingsAndroid.html#Publishing">Android Player Settings</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>gradle.properties</code></td>
+	<td style="text-align:left;">A standard Gradle project file that configures how to build the application. This file contains the following properties specific to Unity:<br><br>• <strong>unityStreamingAssets</strong>: Indicates the names of assets inside the <a href="StreamingAssets.html">Streaming Assets</a> directory. Unity specifies that these assets should be in the final application and Gradle shouldn’t compress them.<br>• <strong>unityTemplateVersion</strong>: Specifies the version of the Gradle template file that Unity uses. If your project’s Gradle template version differs from the specified one, Unity throws an error to inform you to update your Gradle files and build your project in an empty folder.<br>• <strong>unityProjectPath</strong>: Specifies the path to your Unity project.<br><br>For information on the Gradle properties this file can contain, refer to <a href="https://developer.android.com/studio/build#properties-files">Gradle property files</a>.<br><br>To influence the contents of this file, provide a custom <a href="class-PlayerSettingsAndroid.html#Publishing">Gradle Properties Template</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>local.properties</code></td>
+	<td style="text-align:left;">A standard Android Gradle project file that configures the environment of the build system. Unity specifies the path to SDK and NDK here so that by default, the exported Gradle project uses the same SDK and NDK that the Unity Editor used. <br><br>For information on the properties this file can contain, refer to <a href="https://developer.android.com/studio/build#properties-files">Gradle property files</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>settings.gradle</code></td>
+	<td style="text-align:left;">A standard Android Gradle project file that specifies all of the modules that make up this Android Gradle project. In projects that Unity exports, this usually only specifies the <strong>launcher</strong> and <strong>unityLibrary</strong> modules. However, if the Unity project uses <a href="play-asset-delivery.html">Play Asset Delivery</a>, each asset pack is a separate module, so this file lists them too. <br><br>To influence the contents of this file, copy the <code>settingsTemplate.gradle</code> file in the <code>PlaybackEngines/AndroidPlayer/Tools/GradleTemplates/</code>directory into <code>Assets/Plugins/Android</code> in your Unity project. You can then append your custom modifications to this file.</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="android-requirements-and-compatibility.html"></a></span><div class="tip">Android requirements and compatibility</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="android-manifest.html"></a></span><div class="tip">Android App Manifest</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

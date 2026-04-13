@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Resolution and conflict</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-conflicts.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-conflicts.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-conflicts.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-conflicts.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-conflicts.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-conflicts.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-conflicts.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-conflicts.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li><a href="Packages.html">Unity's Package Manager</a></li>
+<li>Resolution and conflict</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-scoped.html"></a></span><div class="tip">Scoped registries</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-conflicts-auto.html"></a></span><div class="tip">Lock files</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Resolution and conflict</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>When you add a package to a <span class="tooltip"><strong>project manifest</strong><span class="tooltiptext">Each Unity project has a <em>project manifest</em>, which acts as an entry point for the Package Manager. This file must be available in the <code>&lt;project&gt;/Packages</code> directory. The Package Manager uses it to configure many things, including a list of dependencies for that project, as well as any package repository to query for packages. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-manifestPrj.html" href="upm-manifestPrj.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Projectmanifest" aria-label="Go to glossary anchor for Projectmanifest">Glossary</a></span></span></span>, Unity considers that package a <a href="upm-dependencies.html">dependency</a> of the project (a direct dependency). However, a package can also have dependencies on other packages, which create <span class="tooltip"><strong>indirect dependencies</strong><span class="tooltiptext">An <strong>indirect</strong>, or transitive dependency occurs when your project requests a package which itself “depends on” another package. For example, if your project depends on the <code>alembic@1.0.7</code> package which in turn depends on the <code>timeline@1.0.0</code> package, then your project has an direct dependency on Alembic and an indirect dependency on Timeline. <a href="upm-dependencies.html" href="Glossary.html#Projectmanifest" aria-label="Go to glossary anchor for Projectmanifest">Glossary</a></span></span></span>, Unity considers that package a <a href="upm-dependencies.html">dependency</a> of the project (a direct dependency). However, a package can also have dependencies on other packages, which create <span class="tooltip"><strong>indirect dependencies</strong><span class="tooltiptext">An <strong>indirect</strong>, or transitive dependency occurs when your project requests a package which itself “depends on” another package. For example, if your project depends on the <code>alembic@1.0.7</code> package which in turn depends on the <code>timeline@1.0.0</code> package, then your project has an direct dependency on Alembic and an indirect dependency on Timeline. <a href="upm-dependencies.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Indirectdependency" aria-label="Go to glossary anchor for Indirectdependency">Glossary</a></span></span></span> in any projects that require that package. </p>
+
+<p>Since most projects require more than one package in order to develop games and apps, the Package Manager has to evaluate all the requested package versions to retrieve from the registry (whether direct or indirect), and decide which among those package versions to install. To do this, it computes the set of packages that satisfies all <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-dependencies.html">direct and indirect dependencies</a> in the project, starting with the project dependencies and recursively exploring each indirect dependency, collecting all the dependency information, then picking a set of packages that satisfies the dependency requirements without any conflict. For example, this dependency graph represents a project with four <span class="tooltip"><strong>direct dependencies</strong><span class="tooltiptext">A <strong>direct</strong> dependency occurs when your project “requests” a specific package version. To create a direct dependency, you add that package and version to the <strong>dependencies</strong> property in your project manifest (expressed in the form <code>package_name@package_version</code>). <a href="upm-dependencies.html" href="upm-dependencies.html">direct and indirect dependencies</a> in the project, starting with the project dependencies and recursively exploring each indirect dependency, collecting all the dependency information, then picking a set of packages that satisfies the dependency requirements without any conflict. For example, this dependency graph represents a project with four <span class="tooltip"><strong>direct dependencies</strong><span class="tooltiptext">A <strong>direct</strong> dependency occurs when your project “requests” a specific package version. To create a direct dependency, you add that package and version to the <strong>dependencies</strong> property in your project manifest (expressed in the form <code>package_name@package_version</code>). <a href="upm-dependencies.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Directdependency" aria-label="Go to glossary anchor for Directdependency">Glossary</a></span></span></span> and all of their indirect dependencies:</p>
+
+<figure>
+<img src="../uploads/Main/upm-conflicts.svg" alt="A graph of direct and indirect package dependencies for a project">
+<figcaption>A graph of direct and indirect package dependencies for a project</figcaption>
+</figure>
+
+<p>In this example:</p>
+
+<ul>
+<li>The light blue nodes represent the project’s direct dependencies.</li>
+<li>The dark blue nodes show the same package and version as indirect dependencies in this project.</li>
+<li>The red nodes show two different versions of the same package, which is a conflict.</li>
+</ul>
+
+<p>
+<strong>Note</strong>: Only package dependencies declared with versions need to be resolved. The Package Manager selects packages installed from other <a href="upm-concepts.html#Sources">sources</a>, such as <span class="tooltip"><a href="upm-embed.html">embedded packages</a><span class="tooltiptext"><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Embeddedpackage" aria-label="Go to glossary anchor for Embeddedpackage">Glossary</a></span></span></span>, and dependencies declared with <a href="upm-localpath.html">local paths</a>, <a href="upm-git.html">Git URLs</a>, and <a href="pack-build.html">built-in</a> packages over version-based dependencies.</p>
+
+<h2>Choosing the best solution</h2>
+
+<p>Depending on the set of packages defined in the project manifest, it could take a long time to evaluate all possible package combinations: a project could potentially depend on hundreds of packages, each of which depend on hundreds of other packages, most requiring different versions. </p>
+
+<h3>Lock files and resolutionStrategy</h3>
+
+<p>To provide the most efficient solution, the Package Manager prioritizes package versions that it previously used by tracking them in a <a href="upm-conflicts-auto.html">lock file</a>. This guarantees that subsequent dependency resolution using the same inputs results in the same outputs. It also minimizes time-consuming operations such as downloading, extracting, or copying packages.</p>
+
+<p>Sometimes, the Package Manager cannot find a solution that only includes locked packages. In this case, the Package Manager uses the solution with the least risky upgrades, preferring patch upgrades over minor or major upgrades, and minor upgrades over major upgrades by default. However, you can customize how aggressive you want the Package Manager to be when considering a higher version with the <a href="upm-manifestPrj.html#resolutionStrategy">resolutionStrategy</a> property.</p>
+
+<h2>Example</h2>
+
+<p>In this example, there are multiple versions of the following packages requested:</p>
+
+<ul>
+<li>
+<code>burst@1.2.2</code> (twice) and <code>burst@1.3.0-preview.3</code>
+</li>
+<li>
+<code>collections@0.5.1-preview.11</code> and <code>collections@0.5.2-preview.8</code>
+</li>
+<li>
+<code>jobs@0.2.4-preview.11</code> (twice) and <code>jobs@0.2.5-preview.20</code>
+</li>
+</ul>
+
+<p>Using the set of <a href="upm-dependencies.html">direct and indirect dependencies</a>, the Package Manager selects the highest version of the burst package (<code>burst@1.3.0-preview.3</code>), which satisfies the <code>collections@0.5.2-preview.8</code> package’s dependency:</p>
+
+<figure>
+<img src="../uploads/Main/upm-resolution.svg" alt="In the dependency graph, the blue nodes indicate which versions the Package Manager selected">
+<figcaption>In the dependency graph, the blue nodes indicate which versions the Package Manager selected</figcaption>
+</figure>
+
+<p><br></p>
+
+<hr>
+
+<p><br></p>
+
+<ul>
+<li><span class="page-history">New package dependency solver (SAT) added in Unity <a href="https://docs.unity3d.com/2019.4/Documentation/Manual/30_search.html?q=newin20194">2019.4</a> <span class="search-words">NewIn20194</span></span></li>
+</ul>
+
+<p><br></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-scoped.html"></a></span><div class="tip">Scoped registries</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-conflicts-auto.html"></a></span><div class="tip">Lock files</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,2207 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Packages by keywords </title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/pack-keys.html">English</a></li>
+<li><a href="/cn/current/Manual/pack-keys.html">中文</a></li>
+<li><a href="/ja/current/Manual/pack-keys.html">日本語</a></li>
+<li><a href="/kr/current/Manual/pack-keys.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/pack-keys.html">English</a></li>
+<li><a href="/cn/current/Manual/pack-keys.html">中文</a></li>
+<li><a href="/ja/current/Manual/pack-keys.html">日本語</a></li>
+<li><a href="/kr/current/Manual/pack-keys.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li>Packages by keywords </li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="pack-exp.html"></a></span><div class="tip">Experimental packages</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Packages.html"></a></span><div class="tip">Unity's Package Manager</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Packages by keywords</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<span class="notooltips"></span> </p>
+
+<p>Packages contain the following keywords: </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Keyword:</strong></th>
+	<th style="text-align:left;"><strong>Matching packages:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<a name="2d" aria-hidden="true"></a> <strong>2d</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.sprite@1.0/manual/index.html" target="_blank">2D Sprite</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.2d.tilemap@1.0/manual/index.html" target="_blank">2D Tilemap Editor</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="2D" aria-hidden="true"></a> <strong>2D</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.pixel-perfect@5.1/manual/index.html" target="_blank">2D Pixel Perfect</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="3d" aria-hidden="true"></a> <strong>3d</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="abc" aria-hidden="true"></a> <strong>abc</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.formats.alembic@2.4/manual/index.html" target="_blank">Alembic</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="adapt" aria-hidden="true"></a> <strong>adapt</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="adaptive" aria-hidden="true"></a> <strong>adaptive</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@5.1/manual/index.html" target="_blank">Adaptive Performance</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="ads" aria-hidden="true"></a> <strong>ads</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.ads@4.12/manual/index.html" target="_blank">Advertisement Legacy</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="aim" aria-hidden="true"></a> <strong>aim</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="alembic" aria-hidden="true"></a> <strong>alembic</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.formats.alembic@2.4/manual/index.html" target="_blank">Alembic</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Android" aria-hidden="true"></a> <strong>Android</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.mobile.android-logcat@1.4/manual/index.html" target="_blank">Android Logcat</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.mobile.notifications@2.4/manual/index.html" target="_blank">Mobile Notifications</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="animation" aria-hidden="true"></a> <strong>animation</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.animation@7.2/manual/index.html" target="_blank">2D Animation</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.formats.alembic@2.4/manual/index.html" target="_blank">Alembic</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.formats.fbx@5.1/manual/index.html" target="_blank">FBX Exporter</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.recorder@3.0/manual/index.html" target="_blank">Recorder</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.timeline@1.8/manual/index.html" target="_blank">Timeline</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Animation" aria-hidden="true"></a> <strong>Animation</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.2/manual/index.html" target="_blank">Animation Rigging</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="AOV" aria-hidden="true"></a> <strong>AOV</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.recorder@3.0/manual/index.html" target="_blank">Recorder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="ap" aria-hidden="true"></a> <strong>ap</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@5.1/manual/index.html" target="_blank">Adaptive Performance</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="api" aria-hidden="true"></a> <strong>api</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.microsoft.gdk@1.4/manual/index.html" target="_blank">Microsoft GDK API</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@1.0/manual/index.html" target="_blank">Unity Profiling Core API</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="app_update" aria-hidden="true"></a> <strong>app update</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="ar" aria-hidden="true"></a> <strong>ar</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.2/manual/index.html" target="_blank">AR Foundation</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.arkit@5.2/manual/index.html" target="_blank">Apple ARKit XR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.arcore@5.2/manual/index.html" target="_blank">Google ARCore XR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.magicleap@6.4/manual/index.html" target="_blank">Magic Leap XR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.management@4.5/manual/index.html" target="_blank">XR Plugin Management</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="arcore" aria-hidden="true"></a> <strong>arcore</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.arcore@5.2/manual/index.html" target="_blank">Google ARCore XR Plugin</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="arkit" aria-hidden="true"></a> <strong>arkit</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.arkit@5.2/manual/index.html" target="_blank">Apple ARKit XR Plugin</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="arsimulation" aria-hidden="true"></a> <strong>arsimulation</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.2/manual/index.html" target="_blank">AR Foundation</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Art" aria-hidden="true"></a> <strong>Art</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.aseprite@1.1/manual/index.html" target="_blank">2D Aseprite Importer</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Aseprite" aria-hidden="true"></a> <strong>Aseprite</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.aseprite@1.1/manual/index.html" target="_blank">2D Aseprite Importer</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="asset" aria-hidden="true"></a> <strong>asset</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.addressables@1.28/manual/index.html" target="_blank">Addressables</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="assetbundles" aria-hidden="true"></a> <strong>assetbundles</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.addressables@1.28/manual/index.html" target="_blank">Addressables</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.scriptablebuildpipeline@2.2/manual/index.html" target="_blank">Scriptable Build Pipeline</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="assetimporter" aria-hidden="true"></a> <strong>assetimporter</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.aseprite@1.1/manual/index.html" target="_blank">2D Aseprite Importer</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.2d.psdimporter@6.1/manual/index.html" target="_blank">2D PSD Importer</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="augmented" aria-hidden="true"></a> <strong>augmented</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.2/manual/index.html" target="_blank">AR Foundation</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.arkit@5.2/manual/index.html" target="_blank">Apple ARKit XR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.arcore@5.2/manual/index.html" target="_blank">Google ARCore XR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.magicleap@6.4/manual/index.html" target="_blank">Magic Leap XR Plugin</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="backup" aria-hidden="true"></a> <strong>backup</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.9/manual/index.html" target="_blank">Unity Version Control</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="blender" aria-hidden="true"></a> <strong>blender</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="block" aria-hidden="true"></a> <strong>block</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="boost" aria-hidden="true"></a> <strong>boost</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@5.1/manual/index.html" target="_blank">Adaptive Performance</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Brush" aria-hidden="true"></a> <strong>Brush</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.terrain-tools@4.0/manual/index.html" target="_blank">Terrain Tools</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="build" aria-hidden="true"></a> <strong>build</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.scriptablebuildpipeline@2.2/manual/index.html" target="_blank">Scriptable Build Pipeline</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.management@4.5/manual/index.html" target="_blank">XR Plugin Management</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="bundle" aria-hidden="true"></a> <strong>bundle</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.addressables@1.28/manual/index.html" target="_blank">Addressables</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.scriptablebuildpipeline@2.2/manual/index.html" target="_blank">Scriptable Build Pipeline</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="bundles" aria-hidden="true"></a> <strong>bundles</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.addressables@1.28/manual/index.html" target="_blank">Addressables</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.scriptablebuildpipeline@2.2/manual/index.html" target="_blank">Scriptable Build Pipeline</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="cache" aria-hidden="true"></a> <strong>cache</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.scriptablebuildpipeline@2.2/manual/index.html" target="_blank">Scriptable Build Pipeline</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="camera" aria-hidden="true"></a> <strong>camera</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Canvas" aria-hidden="true"></a> <strong>Canvas</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.ugui@1.0/manual/index.html" target="_blank">Unity UI</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="capture" aria-hidden="true"></a> <strong>capture</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.recorder@3.0/manual/index.html" target="_blank">Recorder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="cinemachine" aria-hidden="true"></a> <strong>cinemachine</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="cinematic" aria-hidden="true"></a> <strong>cinematic</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="cinematography" aria-hidden="true"></a> <strong>cinematography</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="clay" aria-hidden="true"></a> <strong>clay</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.polybrush@1.1/manual/index.html" target="_blank">Polybrush</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="clearshot" aria-hidden="true"></a> <strong>clearshot</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="clip" aria-hidden="true"></a> <strong>clip</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.recorder@3.0/manual/index.html" target="_blank">Recorder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="cloth" aria-hidden="true"></a> <strong>cloth</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.formats.alembic@2.4/manual/index.html" target="_blank">Alembic</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="cloud" aria-hidden="true"></a> <strong>cloud</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.9/manual/index.html" target="_blank">Unity Version Control</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="cluster" aria-hidden="true"></a> <strong>cluster</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@5.1/manual/index.html" target="_blank">Adaptive Performance</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="clusterinfo" aria-hidden="true"></a> <strong>clusterinfo</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@5.1/manual/index.html" target="_blank">Adaptive Performance</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="collab" aria-hidden="true"></a> <strong>collab</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.9/manual/index.html" target="_blank">Unity Version Control</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="collaborate" aria-hidden="true"></a> <strong>collaborate</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.9/manual/index.html" target="_blank">Unity Version Control</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="collaboration" aria-hidden="true"></a> <strong>collaboration</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.9/manual/index.html" target="_blank">Unity Version Control</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="collections" aria-hidden="true"></a> <strong>collections</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collections@1.5/manual/index.html" target="_blank">Collections</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="collision" aria-hidden="true"></a> <strong>collision</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="compose" aria-hidden="true"></a> <strong>compose</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="composition" aria-hidden="true"></a> <strong>composition</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="conditional" aria-hidden="true"></a> <strong>conditional</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="conditions" aria-hidden="true"></a> <strong>conditions</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="config" aria-hidden="true"></a> <strong>config</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="configuration" aria-hidden="true"></a> <strong>configuration</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="connect" aria-hidden="true"></a> <strong>connect</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.connect.share@4.2/manual/index.html" target="_blank">WebGL Publisher</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Constraints" aria-hidden="true"></a> <strong>Constraints</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.2/manual/index.html" target="_blank">Animation Rigging</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="continuous_delivery" aria-hidden="true"></a> <strong>continuous delivery</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="control" aria-hidden="true"></a> <strong>control</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.9/manual/index.html" target="_blank">Unity Version Control</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="core" aria-hidden="true"></a> <strong>core</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.2/manual/index.html" target="_blank">AR Foundation</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@5.1/manual/index.html" target="_blank">Adaptive Performance</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.arcore@5.2/manual/index.html" target="_blank">Google ARCore XR Plugin</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="coroutine" aria-hidden="true"></a> <strong>coroutine</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.editorcoroutines@1.0/manual/index.html" target="_blank">Editor Coroutines</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="coroutines" aria-hidden="true"></a> <strong>coroutines</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.editorcoroutines@1.0/manual/index.html" target="_blank">Editor Coroutines</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="coverage" aria-hidden="true"></a> <strong>coverage</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.testtools.codecoverage@1.2/manual/index.html" target="_blank">Code Coverage</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="cross-compilation" aria-hidden="true"></a> <strong>cross-compilation</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.toolchain.macos-x86_64-linux-x86_64@2.0/manual/index.html" target="_blank">Toolchain MacOS Linux x64</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.toolchain.win-x86_64-linux-x86_64@2.0/manual/index.html" target="_blank">Toolchain Win Linux x64</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="cube" aria-hidden="true"></a> <strong>cube</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="cutscene" aria-hidden="true"></a> <strong>cutscene</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="darwin" aria-hidden="true"></a> <strong>darwin</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.toolchain.macos-x86_64-linux-x86_64@2.0/manual/index.html" target="_blank">Toolchain MacOS Linux x64</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="deploy" aria-hidden="true"></a> <strong>deploy</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="design" aria-hidden="true"></a> <strong>design</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="devops" aria-hidden="true"></a> <strong>devops</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.9/manual/index.html" target="_blank">Unity Version Control</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="dolly" aria-hidden="true"></a> <strong>dolly</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="dots" aria-hidden="true"></a> <strong>dots</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collections@1.5/manual/index.html" target="_blank">Collections</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="editor" aria-hidden="true"></a> <strong>editor</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.editorcoroutines@1.0/manual/index.html" target="_blank">Editor Coroutines</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.timeline@1.8/manual/index.html" target="_blank">Timeline</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="effect" aria-hidden="true"></a> <strong>effect</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.visualeffectgraph@12.1/manual/index.html" target="_blank">Visual Effect Graph</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="events" aria-hidden="true"></a> <strong>events</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@1.15/manual/index.html" target="_blank">Input System</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="experiment" aria-hidden="true"></a> <strong>experiment</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="experimentation" aria-hidden="true"></a> <strong>experimentation</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="facial" aria-hidden="true"></a> <strong>facial</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.formats.alembic@2.4/manual/index.html" target="_blank">Alembic</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="fbx" aria-hidden="true"></a> <strong>fbx</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.formats.fbx@5.1/manual/index.html" target="_blank">FBX Exporter</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="feature_flagging" aria-hidden="true"></a> <strong>feature flagging</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Filter" aria-hidden="true"></a> <strong>Filter</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.terrain-tools@4.0/manual/index.html" target="_blank">Terrain Tools</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="firebase" aria-hidden="true"></a> <strong>firebase</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="follow" aria-hidden="true"></a> <strong>follow</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="foundation" aria-hidden="true"></a> <strong>foundation</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.2/manual/index.html" target="_blank">AR Foundation</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="fps" aria-hidden="true"></a> <strong>fps</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="framing" aria-hidden="true"></a> <strong>framing</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="freelook" aria-hidden="true"></a> <strong>freelook</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="GameObjects" aria-hidden="true"></a> <strong>GameObjects</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.multiplayer.tools@1.1/manual/index.html" target="_blank">Multiplayer Tools</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="gamepad" aria-hidden="true"></a> <strong>gamepad</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@1.15/manual/index.html" target="_blank">Input System</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="gdk" aria-hidden="true"></a> <strong>gdk</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.microsoft.gdk@1.4/manual/index.html" target="_blank">Microsoft GDK API</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.microsoft.gdk.tools@1.4/manual/index.html" target="_blank">Microsoft GDK Tools</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="geometry" aria-hidden="true"></a> <strong>geometry</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="graph" aria-hidden="true"></a> <strong>graph</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.visualeffectgraph@12.1/manual/index.html" target="_blank">Visual Effect Graph</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="graphics" aria-hidden="true"></a> <strong>graphics</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@12.1/manual/index.html" target="_blank">High Definition RP</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.1/manual/index.html" target="_blank">Universal RP</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="graybox" aria-hidden="true"></a> <strong>graybox</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="greybox" aria-hidden="true"></a> <strong>greybox</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="hand" aria-hidden="true"></a> <strong>hand</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.hands@1.6/manual/index.html" target="_blank">XR Hands</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="handheld" aria-hidden="true"></a> <strong>handheld</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="hands" aria-hidden="true"></a> <strong>hands</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.hands@1.6/manual/index.html" target="_blank">XR Hands</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="iap" aria-hidden="true"></a> <strong>iap</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/2021.3/Documentation/Manual/UnityIAP.html" target="_blank">In-App Purchasing</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="images" aria-hidden="true"></a> <strong>images</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.recorder@3.0/manual/index.html" target="_blank">Recorder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="impulse" aria-hidden="true"></a> <strong>impulse</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="indexer" aria-hidden="true"></a> <strong>indexer</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@5.1/manual/index.html" target="_blank">Adaptive Performance</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="input" aria-hidden="true"></a> <strong>input</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@1.15/manual/index.html" target="_blank">Input System</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="interaction" aria-hidden="true"></a> <strong>interaction</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.2/manual/index.html" target="_blank">XR Interaction Toolkit</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="iOS" aria-hidden="true"></a> <strong>iOS</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.mobile.notifications@2.4/manual/index.html" target="_blank">Mobile Notifications</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="keyboard" aria-hidden="true"></a> <strong>keyboard</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@1.15/manual/index.html" target="_blank">Input System</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="language" aria-hidden="true"></a> <strong>language</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/index.html" target="_blank">Localization</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="layer" aria-hidden="true"></a> <strong>layer</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.recorder@3.0/manual/index.html" target="_blank">Recorder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="lens" aria-hidden="true"></a> <strong>lens</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="level" aria-hidden="true"></a> <strong>level</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="linux" aria-hidden="true"></a> <strong>linux</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.sysroot@2.0/manual/index.html" target="_blank">Sysroot Base</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.sysroot.linux-x86_64@2.0/manual/index.html" target="_blank">Sysroot Linux x64</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.toolchain.linux-x86_64@2.0/manual/index.html" target="_blank">Toolchain Linux x64</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.toolchain.macos-x86_64-linux-x86_64@2.0/manual/index.html" target="_blank">Toolchain MacOS Linux x64</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.toolchain.win-x86_64-linux-x86_64@2.0/manual/index.html" target="_blank">Toolchain Win Linux x64</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="live_capture" aria-hidden="true"></a> <strong>live capture</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.live-capture@3.0/manual/index.html" target="_blank">Live Capture</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="locale" aria-hidden="true"></a> <strong>locale</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/index.html" target="_blank">Localization</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="localization" aria-hidden="true"></a> <strong>localization</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/index.html" target="_blank">Localization</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Logcat" aria-hidden="true"></a> <strong>Logcat</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.mobile.android-logcat@1.4/manual/index.html" target="_blank">Android Logcat</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="macos" aria-hidden="true"></a> <strong>macos</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.toolchain.macos-x86_64-linux-x86_64@2.0/manual/index.html" target="_blank">Toolchain MacOS Linux x64</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="magicleap" aria-hidden="true"></a> <strong>magicleap</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.magicleap@6.4/manual/index.html" target="_blank">Magic Leap XR Plugin</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="management" aria-hidden="true"></a> <strong>management</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.management@4.5/manual/index.html" target="_blank">XR Plugin Management</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Mask" aria-hidden="true"></a> <strong>Mask</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.terrain-tools@4.0/manual/index.html" target="_blank">Terrain Tools</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="max" aria-hidden="true"></a> <strong>max</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.formats.fbx@5.1/manual/index.html" target="_blank">FBX Exporter</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="maya" aria-hidden="true"></a> <strong>maya</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.formats.fbx@5.1/manual/index.html" target="_blank">FBX Exporter</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="mesh" aria-hidden="true"></a> <strong>mesh</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="microsoft" aria-hidden="true"></a> <strong>microsoft</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.microsoft.gdk@1.4/manual/index.html" target="_blank">Microsoft GDK API</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.microsoft.gdk.tools@1.4/manual/index.html" target="_blank">Microsoft GDK Tools</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="mobile" aria-hidden="true"></a> <strong>mobile</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.1/manual/index.html" target="_blank">Universal RP</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Mobile" aria-hidden="true"></a> <strong>Mobile</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.mobile.android-logcat@1.4/manual/index.html" target="_blank">Android Logcat</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.mobile.notifications@2.4/manual/index.html" target="_blank">Mobile Notifications</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="model" aria-hidden="true"></a> <strong>model</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="modeling" aria-hidden="true"></a> <strong>modeling</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.formats.fbx@5.1/manual/index.html" target="_blank">FBX Exporter</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.polybrush@1.1/manual/index.html" target="_blank">Polybrush</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="mouse" aria-hidden="true"></a> <strong>mouse</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@1.15/manual/index.html" target="_blank">Input System</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Multiplayer" aria-hidden="true"></a> <strong>Multiplayer</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.multiplayer.tools@1.1/manual/index.html" target="_blank">Multiplayer Tools</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Netcode" aria-hidden="true"></a> <strong>Netcode</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.multiplayer.tools@1.1/manual/index.html" target="_blank">Multiplayer Tools</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="noise" aria-hidden="true"></a> <strong>noise</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Noise" aria-hidden="true"></a> <strong>Noise</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.terrain-tools@4.0/manual/index.html" target="_blank">Terrain Tools</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Notifications" aria-hidden="true"></a> <strong>Notifications</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.mobile.notifications@2.4/manual/index.html" target="_blank">Mobile Notifications</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="obj" aria-hidden="true"></a> <strong>obj</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="oculus" aria-hidden="true"></a> <strong>oculus</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.oculus@3.4/manual/index.html" target="_blank">Oculus XR Plugin</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="opencover" aria-hidden="true"></a> <strong>opencover</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.testtools.codecoverage@1.2/manual/index.html" target="_blank">Code Coverage</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="openxr" aria-hidden="true"></a> <strong>openxr</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.15/manual/index.html" target="_blank">OpenXR Plugin</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="orbit" aria-hidden="true"></a> <strong>orbit</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="override" aria-hidden="true"></a> <strong>override</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="parameter" aria-hidden="true"></a> <strong>parameter</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="particles" aria-hidden="true"></a> <strong>particles</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.visualeffectgraph@12.1/manual/index.html" target="_blank">Visual Effect Graph</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="pass" aria-hidden="true"></a> <strong>pass</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.recorder@3.0/manual/index.html" target="_blank">Recorder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="perfect" aria-hidden="true"></a> <strong>perfect</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.pixel-perfect@5.1/manual/index.html" target="_blank">2D Pixel Perfect</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="performance" aria-hidden="true"></a> <strong>performance</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@12.1/manual/index.html" target="_blank">High Definition RP</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.1/manual/index.html" target="_blank">Universal RP</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="pipeline" aria-hidden="true"></a> <strong>pipeline</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@12.1/manual/index.html" target="_blank">High Definition RP</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.1/manual/index.html" target="_blank">Universal RP</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Pixel" aria-hidden="true"></a> <strong>Pixel</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.aseprite@1.1/manual/index.html" target="_blank">2D Aseprite Importer</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="pixel" aria-hidden="true"></a> <strong>pixel</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.pixel-perfect@5.1/manual/index.html" target="_blank">2D Pixel Perfect</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="plastic" aria-hidden="true"></a> <strong>plastic</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.9/manual/index.html" target="_blank">Unity Version Control</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="plasticscm" aria-hidden="true"></a> <strong>plasticscm</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.9/manual/index.html" target="_blank">Unity Version Control</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="plugin" aria-hidden="true"></a> <strong>plugin</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.management@4.5/manual/index.html" target="_blank">XR Plugin Management</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="probuilder" aria-hidden="true"></a> <strong>probuilder</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="profiler" aria-hidden="true"></a> <strong>profiler</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@1.0/manual/index.html" target="_blank">Unity Profiling Core API</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="profiles" aria-hidden="true"></a> <strong>profiles</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@5.1/manual/index.html" target="_blank">Adaptive Performance</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="profiling" aria-hidden="true"></a> <strong>profiling</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@1.0/manual/index.html" target="_blank">Unity Profiling Core API</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="prototype" aria-hidden="true"></a> <strong>prototype</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="provider" aria-hidden="true"></a> <strong>provider</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@5.1/manual/index.html" target="_blank">Adaptive Performance</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="psdimporter" aria-hidden="true"></a> <strong>psdimporter</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.psdimporter@6.1/manual/index.html" target="_blank">2D PSD Importer</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="purchasing" aria-hidden="true"></a> <strong>purchasing</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/2021.3/Documentation/Manual/UnityIAP.html" target="_blank">In-App Purchasing</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="push" aria-hidden="true"></a> <strong>push</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.polybrush@1.1/manual/index.html" target="_blank">Polybrush</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="quest" aria-hidden="true"></a> <strong>quest</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.oculus@3.4/manual/index.html" target="_blank">Oculus XR Plugin</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="reality" aria-hidden="true"></a> <strong>reality</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.2/manual/index.html" target="_blank">AR Foundation</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.arkit@5.2/manual/index.html" target="_blank">Apple ARKit XR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.arcore@5.2/manual/index.html" target="_blank">Google ARCore XR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.magicleap@6.4/manual/index.html" target="_blank">Magic Leap XR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.15/manual/index.html" target="_blank">OpenXR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.hands@1.6/manual/index.html" target="_blank">XR Hands</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="recorder" aria-hidden="true"></a> <strong>recorder</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.recorder@3.0/manual/index.html" target="_blank">Recorder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="recording" aria-hidden="true"></a> <strong>recording</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.recorder@3.0/manual/index.html" target="_blank">Recorder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="remote" aria-hidden="true"></a> <strong>remote</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="remote_config" aria-hidden="true"></a> <strong>remote config</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="remote_settings" aria-hidden="true"></a> <strong>remote settings</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="render" aria-hidden="true"></a> <strong>render</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@12.1/manual/index.html" target="_blank">High Definition RP</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.1/manual/index.html" target="_blank">Universal RP</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="rendering" aria-hidden="true"></a> <strong>rendering</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@12.1/manual/index.html" target="_blank">High Definition RP</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.1/manual/index.html" target="_blank">Universal RP</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="resources" aria-hidden="true"></a> <strong>resources</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.addressables@1.28/manual/index.html" target="_blank">Addressables</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="rift" aria-hidden="true"></a> <strong>rift</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.oculus@3.4/manual/index.html" target="_blank">Oculus XR Plugin</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="rig" aria-hidden="true"></a> <strong>rig</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Rigging" aria-hidden="true"></a> <strong>Rigging</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.2/manual/index.html" target="_blank">Animation Rigging</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="roll-out" aria-hidden="true"></a> <strong>roll-out</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="rules" aria-hidden="true"></a> <strong>rules</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="samsung" aria-hidden="true"></a> <strong>samsung</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@5.1/manual/index.html" target="_blank">Adaptive Performance</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="scaler" aria-hidden="true"></a> <strong>scaler</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@5.1/manual/index.html" target="_blank">Adaptive Performance</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="sculpting" aria-hidden="true"></a> <strong>sculpting</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.polybrush@1.1/manual/index.html" target="_blank">Polybrush</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="SDF" aria-hidden="true"></a> <strong>SDF</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.textmeshpro@3.0/manual/index.html" target="_blank">TextMeshPro</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="sdk" aria-hidden="true"></a> <strong>sdk</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.management@4.5/manual/index.html" target="_blank">XR Plugin Management</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="segment" aria-hidden="true"></a> <strong>segment</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="segmentation" aria-hidden="true"></a> <strong>segmentation</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="segmenting" aria-hidden="true"></a> <strong>segmenting</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="server" aria-hidden="true"></a> <strong>server</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.scriptablebuildpipeline@2.2/manual/index.html" target="_blank">Scriptable Build Pipeline</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="settings" aria-hidden="true"></a> <strong>settings</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="shape" aria-hidden="true"></a> <strong>shape</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.spriteshape@7.1/manual/index.html" target="_blank">2D SpriteShape</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="share" aria-hidden="true"></a> <strong>share</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.connect.share@4.2/manual/index.html" target="_blank">WebGL Publisher</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="simulation" aria-hidden="true"></a> <strong>simulation</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.formats.alembic@2.4/manual/index.html" target="_blank">Alembic</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="smartsprite" aria-hidden="true"></a> <strong>smartsprite</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.spriteshape@7.1/manual/index.html" target="_blank">2D SpriteShape</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="source" aria-hidden="true"></a> <strong>source</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.9/manual/index.html" target="_blank">Unity Version Control</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="spline" aria-hidden="true"></a> <strong>spline</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.spriteshape@7.1/manual/index.html" target="_blank">2D SpriteShape</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="sprite" aria-hidden="true"></a> <strong>sprite</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.sprite@1.0/manual/index.html" target="_blank">2D Sprite</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="sprite_editor_window" aria-hidden="true"></a> <strong>sprite editor window</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.sprite@1.0/manual/index.html" target="_blank">2D Sprite</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="spriteshape" aria-hidden="true"></a> <strong>spriteshape</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.spriteshape@7.1/manual/index.html" target="_blank">2D SpriteShape</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="staged_rollouts" aria-hidden="true"></a> <strong>staged rollouts</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="subsystem" aria-hidden="true"></a> <strong>subsystem</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.2/manual/index.html" target="_blank">AR Foundation</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@5.1/manual/index.html" target="_blank">Adaptive Performance</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.hands@1.6/manual/index.html" target="_blank">XR Hands</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="sysroot" aria-hidden="true"></a> <strong>sysroot</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.sysroot@2.0/manual/index.html" target="_blank">Sysroot Base</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.sysroot.linux-x86_64@2.0/manual/index.html" target="_blank">Sysroot Linux x64</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="tailor" aria-hidden="true"></a> <strong>tailor</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="target" aria-hidden="true"></a> <strong>target</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="targeting" aria-hidden="true"></a> <strong>targeting</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="team" aria-hidden="true"></a> <strong>team</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.9/manual/index.html" target="_blank">Unity Version Control</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="teams" aria-hidden="true"></a> <strong>teams</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.9/manual/index.html" target="_blank">Unity Version Control</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="terrain" aria-hidden="true"></a> <strong>terrain</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.polybrush@1.1/manual/index.html" target="_blank">Polybrush</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Terrain" aria-hidden="true"></a> <strong>Terrain</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.terrain-tools@4.0/manual/index.html" target="_blank">Terrain Tools</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="terrain2d" aria-hidden="true"></a> <strong>terrain2d</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.spriteshape@7.1/manual/index.html" target="_blank">2D SpriteShape</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="test" aria-hidden="true"></a> <strong>test</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.testtools.codecoverage@1.2/manual/index.html" target="_blank">Code Coverage</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Test" aria-hidden="true"></a> <strong>Test</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.test-framework@1.4/manual/index.html" target="_blank">Test Framework</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="TestFramework" aria-hidden="true"></a> <strong>TestFramework</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.test-framework@1.4/manual/index.html" target="_blank">Test Framework</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="testing" aria-hidden="true"></a> <strong>testing</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.testtools.codecoverage@1.2/manual/index.html" target="_blank">Code Coverage</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Text" aria-hidden="true"></a> <strong>Text</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.textmeshpro@3.0/manual/index.html" target="_blank">TextMeshPro</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="TextMesh_Pro" aria-hidden="true"></a> <strong>TextMesh Pro</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.textmeshpro@3.0/manual/index.html" target="_blank">TextMeshPro</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="TextMeshPro" aria-hidden="true"></a> <strong>TextMeshPro</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.textmeshpro@3.0/manual/index.html" target="_blank">TextMeshPro</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Tilemap" aria-hidden="true"></a> <strong>Tilemap</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.2d.tilemap@1.0/manual/index.html" target="_blank">2D Tilemap Editor</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="timeline" aria-hidden="true"></a> <strong>timeline</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.timeline@1.8/manual/index.html" target="_blank">Timeline</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="TMP" aria-hidden="true"></a> <strong>TMP</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.textmeshpro@3.0/manual/index.html" target="_blank">TextMeshPro</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Toolbox" aria-hidden="true"></a> <strong>Toolbox</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.terrain-tools@4.0/manual/index.html" target="_blank">Terrain Tools</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="toolchain" aria-hidden="true"></a> <strong>toolchain</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.toolchain.linux-x86_64@2.0/manual/index.html" target="_blank">Toolchain Linux x64</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.toolchain.macos-x86_64-linux-x86_64@2.0/manual/index.html" target="_blank">Toolchain MacOS Linux x64</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.toolchain.win-x86_64-linux-x86_64@2.0/manual/index.html" target="_blank">Toolchain Win Linux x64</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="toolkit" aria-hidden="true"></a> <strong>toolkit</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.2/manual/index.html" target="_blank">XR Interaction Toolkit</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="tools" aria-hidden="true"></a> <strong>tools</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.microsoft.gdk.tools@1.4/manual/index.html" target="_blank">Microsoft GDK Tools</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.timeline@1.8/manual/index.html" target="_blank">Timeline</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Tools" aria-hidden="true"></a> <strong>Tools</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.multiplayer.tools@1.1/manual/index.html" target="_blank">Multiplayer Tools</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="touch" aria-hidden="true"></a> <strong>touch</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@1.15/manual/index.html" target="_blank">Input System</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="track" aria-hidden="true"></a> <strong>track</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html" target="_blank">Cinemachine</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="tracking" aria-hidden="true"></a> <strong>tracking</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.hands@1.6/manual/index.html" target="_blank">XR Hands</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="tune" aria-hidden="true"></a> <strong>tune</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="tutorials" aria-hidden="true"></a> <strong>tutorials</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.learn.iet-framework.authoring@1.5/manual/index.html" target="_blank">Tutorial Authoring Tools</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.learn.iet-framework@5.0/manual/index.html" target="_blank">Tutorial Framework</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="ugui" aria-hidden="true"></a> <strong>ugui</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.ugui@1.0/manual/index.html" target="_blank">Unity UI</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="UI" aria-hidden="true"></a> <strong>UI</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.ugui@1.0/manual/index.html" target="_blank">Unity UI</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="unity" aria-hidden="true"></a> <strong>unity</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.ads@4.12/manual/index.html" target="_blank">Advertisement Legacy</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.collections@1.5/manual/index.html" target="_blank">Collections</a> <br><a href="https://docs.unity3d.com/2021.3/Documentation/Manual/UnityIAP.html" target="_blank">In-App Purchasing</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.mathematics@1.3/manual/index.html" target="_blank">Mathematics</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.recorder@3.0/manual/index.html" target="_blank">Recorder</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.sysroot@2.0/manual/index.html" target="_blank">Sysroot Base</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.sysroot.linux-x86_64@2.0/manual/index.html" target="_blank">Sysroot Linux x64</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.timeline@1.8/manual/index.html" target="_blank">Timeline</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Unity_UI" aria-hidden="true"></a> <strong>Unity UI</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.ugui@1.0/manual/index.html" target="_blank">Unity UI</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="utilities" aria-hidden="true"></a> <strong>utilities</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.2/manual/index.html" target="_blank">AR Foundation</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@5.1/manual/index.html" target="_blank">Adaptive Performance</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="utility" aria-hidden="true"></a> <strong>utility</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.2/manual/index.html" target="_blank">AR Foundation</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@5.1/manual/index.html" target="_blank">Adaptive Performance</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="uvcs" aria-hidden="true"></a> <strong>uvcs</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.9/manual/index.html" target="_blank">Unity Version Control</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="variants" aria-hidden="true"></a> <strong>variants</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="variation" aria-hidden="true"></a> <strong>variation</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.remote-config@4.2/manual/index.html" target="_blank">Remote Config</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="vcam" aria-hidden="true"></a> <strong>vcam</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.live-capture@3.0/manual/index.html" target="_blank">Live Capture</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="vcs" aria-hidden="true"></a> <strong>vcs</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.9/manual/index.html" target="_blank">Unity Version Control</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="version" aria-hidden="true"></a> <strong>version</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.9/manual/index.html" target="_blank">Unity Version Control</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="vfx" aria-hidden="true"></a> <strong>vfx</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.visualeffectgraph@12.1/manual/index.html" target="_blank">Visual Effect Graph</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="video" aria-hidden="true"></a> <strong>video</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.recorder@3.0/manual/index.html" target="_blank">Recorder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="virtual" aria-hidden="true"></a> <strong>virtual</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.oculus@3.4/manual/index.html" target="_blank">Oculus XR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.hands@1.6/manual/index.html" target="_blank">XR Hands</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="virtual_camera" aria-hidden="true"></a> <strong>virtual camera</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.live-capture@3.0/manual/index.html" target="_blank">Live Capture</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="virtual_production" aria-hidden="true"></a> <strong>virtual production</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.live-capture@3.0/manual/index.html" target="_blank">Live Capture</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="visualeffect" aria-hidden="true"></a> <strong>visualeffect</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.visualeffectgraph@12.1/manual/index.html" target="_blank">Visual Effect Graph</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="vr" aria-hidden="true"></a> <strong>vr</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@1.15/manual/index.html" target="_blank">Input System</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.oculus@3.4/manual/index.html" target="_blank">Oculus XR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.hands@1.6/manual/index.html" target="_blank">XR Hands</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.management@4.5/manual/index.html" target="_blank">XR Plugin Management</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="VR" aria-hidden="true"></a> <strong>VR</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.2/manual/index.html" target="_blank">XR Interaction Toolkit</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="vrr" aria-hidden="true"></a> <strong>vrr</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@5.1/manual/index.html" target="_blank">Adaptive Performance</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="webgl" aria-hidden="true"></a> <strong>webgl</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.connect.share@4.2/manual/index.html" target="_blank">WebGL Publisher</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="whitebox" aria-hidden="true"></a> <strong>whitebox</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.probuilder@5.2/manual/index.html" target="_blank">ProBuilder</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="windows" aria-hidden="true"></a> <strong>windows</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.toolchain.win-x86_64-linux-x86_64@2.0/manual/index.html" target="_blank">Toolchain Win Linux x64</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="workflow" aria-hidden="true"></a> <strong>workflow</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.microsoft.gdk.tools@1.4/manual/index.html" target="_blank">Microsoft GDK Tools</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="xr" aria-hidden="true"></a> <strong>xr</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.2/manual/index.html" target="_blank">AR Foundation</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.arkit@5.2/manual/index.html" target="_blank">Apple ARKit XR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.arcore@5.2/manual/index.html" target="_blank">Google ARCore XR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@1.15/manual/index.html" target="_blank">Input System</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.magicleap@6.4/manual/index.html" target="_blank">Magic Leap XR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.oculus@3.4/manual/index.html" target="_blank">Oculus XR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.15/manual/index.html" target="_blank">OpenXR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.hands@1.6/manual/index.html" target="_blank">XR Hands</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.management@4.5/manual/index.html" target="_blank">XR Plugin Management</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="XR" aria-hidden="true"></a> <strong>XR</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.2/manual/index.html" target="_blank">XR Interaction Toolkit</a> <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="xreditorsubsystem" aria-hidden="true"></a> <strong>xreditorsubsystem</strong>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.2/manual/index.html" target="_blank">AR Foundation</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.magicleap@6.4/manual/index.html" target="_blank">Magic Leap XR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.oculus@3.4/manual/index.html" target="_blank">Oculus XR Plugin</a> <br><a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.15/manual/index.html" target="_blank">OpenXR Plugin</a> <br>
+</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="pack-exp.html"></a></span><div class="tip">Experimental packages</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Packages.html"></a></span><div class="tip">Unity's Package Manager</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

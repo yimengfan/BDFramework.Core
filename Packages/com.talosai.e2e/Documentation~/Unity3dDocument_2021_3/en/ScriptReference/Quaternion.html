@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Quaternion</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">Quaternion</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">struct in
+          UnityEngine</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Implemented in:<a href="UnityEngine.CoreModule.html" class="cl">UnityEngine.CoreModule</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <a aria-label="go to usermanual page" href='../Manual/class-Quaternion.html' title='Go to Quaternion Component in the Manual' class='switch-link gray-btn sbtn left show'>Switch to Manual</a>
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Quaternions are used to represent rotations.</p>
+              </div>
+              <div class="subsection">
+        <p>A quaternion is a four-tuple of real numbers {x,y,z,w}. A quaternion is a mathematically convenient alternative to the euler angle representation. You can interpolate a quaternion without experiencing gimbal lock. You can also use a quaternion to concatenate a series of rotations into a single representation.<br /><br />Unity internally uses Quaternions to represent all rotations.<br /><br />In most cases, you can use existing rotations from methods such as <a href="Transform-localRotation.html">Transform.localRotation</a> or <a href="Transform-rotation.html">Transform.rotation</a> to construct new rotations. For example, use existing rotations to smoothly interpolate between two rotations.
+The most used Quaternion functions are as follows: 
+<a href="Quaternion.LookRotation.html">Quaternion.LookRotation</a>, <a href="Quaternion.Angle.html">Quaternion.Angle</a>, <a href="Quaternion.Euler.html">Quaternion.Euler</a>, <a href="Quaternion.Slerp.html">Quaternion.Slerp</a>, <a href="Quaternion.FromToRotation.html">Quaternion.FromToRotation</a>, and <a href="Quaternion-identity.html">Quaternion.identity</a>.<br /><br />You can use the Quaternion.operator * to rotate one rotation by another, or to rotate a vector by a rotation.<br /><br />Note that Unity expects Quaternions to be normalized.</p>
+      </div>
+              <div class="subsection">
+                <h3>Static Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Quaternion-identity.html">identity</a></td><td class="desc">The identity rotation (Read Only).</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Quaternion-eulerAngles.html">eulerAngles</a></td><td class="desc">Returns or sets the euler angle representation of the rotation in degrees.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion-normalized.html">normalized</a></td><td class="desc">Returns this quaternion with a magnitude of 1 (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.Index_operator.html">this[int]</a></td><td class="desc">Access the x, y, z, w components using [0], [1], [2], [3] respectively.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion-w.html">w</a></td><td class="desc">W component of the Quaternion. Do not directly modify quaternions.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion-x.html">x</a></td><td class="desc">X component of the Quaternion. Don't modify this directly unless you know quaternions inside out.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion-y.html">y</a></td><td class="desc">Y component of the Quaternion. Don't modify this directly unless you know quaternions inside out.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion-z.html">z</a></td><td class="desc">Z component of the Quaternion. Don't modify this directly unless you know quaternions inside out.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Constructors</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Constructor</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Quaternion-ctor.html">Quaternion</a></td><td class="desc">Constructs new Quaternion with given x,y,z,w components.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Public Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Quaternion.Set.html">Set</a></td><td class="desc">Set x, y, z and w components of an existing Quaternion.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.SetFromToRotation.html">SetFromToRotation</a></td><td class="desc">Creates a rotation which rotates from fromDirection to toDirection.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.SetLookRotation.html">SetLookRotation</a></td><td class="desc">Creates a rotation with the specified forward and upwards directions.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.ToAngleAxis.html">ToAngleAxis</a></td><td class="desc">Converts a rotation to angle-axis representation (angles in degrees).</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.ToString.html">ToString</a></td><td class="desc">Returns a formatted string for this quaternion.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Quaternion.Angle.html">Angle</a></td><td class="desc">Returns the angle in degrees between two rotations a and b. The resulting angle ranges from 0 to 180.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.AngleAxis.html">AngleAxis</a></td><td class="desc">Creates a rotation which rotates angle degrees around axis.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.Dot.html">Dot</a></td><td class="desc">The dot product between two rotations.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.Euler.html">Euler</a></td><td class="desc">Returns a rotation that rotates z degrees around the z axis, x degrees around the x axis, and y degrees around the y axis; applied in that order.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.FromToRotation.html">FromToRotation</a></td><td class="desc">Creates a rotation from fromDirection to toDirection.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.Inverse.html">Inverse</a></td><td class="desc">Returns the Inverse of rotation.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.Lerp.html">Lerp</a></td><td class="desc">Interpolates between a and b by t and normalizes the result afterwards.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.LerpUnclamped.html">LerpUnclamped</a></td><td class="desc">Interpolates between a and b by t and normalizes the result afterwards. The parameter t is not clamped.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.LookRotation.html">LookRotation</a></td><td class="desc">Creates a rotation with the specified forward and upwards directions.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.Normalize.html">Normalize</a></td><td class="desc">Converts this quaternion to a quaternion with the same orientation but with a magnitude of 1.0.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.RotateTowards.html">RotateTowards</a></td><td class="desc">Rotates a rotation from towards to.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.Slerp.html">Slerp</a></td><td class="desc">Spherically linear interpolates between unit quaternions a and b by a ratio of t.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.SlerpUnclamped.html">SlerpUnclamped</a></td><td class="desc">Spherically linear interpolates between unit quaternions a and b by t.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Operators</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Operator</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Quaternion-operator_multiply.html">operator *</a></td><td class="desc">Combines rotations lhs and rhs.</td></tr>
+      <tr><td class="lbl"><a href="Quaternion-operator_eq.html">operator ==</a></td><td class="desc">Are two quaternions equal to each other?</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

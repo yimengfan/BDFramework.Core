@@ -1,0 +1,217 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Graphics performance fundamentals</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/OptimizingGraphicsPerformance.html">English</a></li>
+<li><a href="/cn/current/Manual/OptimizingGraphicsPerformance.html">中文</a></li>
+<li><a href="/ja/current/Manual/OptimizingGraphicsPerformance.html">日本語</a></li>
+<li><a href="/kr/current/Manual/OptimizingGraphicsPerformance.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/OptimizingGraphicsPerformance.html">English</a></li>
+<li><a href="/cn/current/Manual/OptimizingGraphicsPerformance.html">中文</a></li>
+<li><a href="/ja/current/Manual/OptimizingGraphicsPerformance.html">日本語</a></li>
+<li><a href="/kr/current/Manual/OptimizingGraphicsPerformance.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="graphics-performance-profiling.html">Graphics performance and profiling</a></li>
+<li>Graphics performance fundamentals</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="graphics-performance-profiling.html"></a></span><div class="tip">Graphics performance and profiling</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="optimizing-draw-calls.html"></a></span><div class="tip">Optimizing draw calls</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Graphics performance fundamentals</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page contains some simple guidelines for optimzing rendering performance in your application.</p>
+
+<h2>Before you begin: locate and understand the problem</h2>
+
+<p>Before you make any changes, you must profile your application to identify the cause of the problem. If you attempt to solve a performance problem before you understand its cause, you might waste your time or make the problem worse. Additionally, rendering-related performance problems can occur on the CPU or the GPU. Strategies for fixing these problems are quite different, so it’s important to understand where your problem is before taking any action.</p>
+
+<p>The following article on the Unity Learn site is a comprehensive introduction to graphics performance, and contains information on identifying and fixing problems: <a href="https://learn.unity.com/tutorial/fixing-performance-problems-2019-3">Fixing performance problems</a>. If you are not yet familiar with this subject, read the article before following any of the advice on this page.</p>
+
+<p><a name="CPU-optimization" aria-hidden="true"></a></p>
+
+<h2>Reducing the CPU cost of rendering</h2>
+
+<p>Usually, the greatest contributor to CPU rendering time is the cost of sending rendering commands to the GPU. Rendering commands include draw calls (commands to draw geometry), and commands to change the settings on the GPU before drawing the geometry. If this is the case, consider these options:</p>
+
+<ul>
+<li>You can reduce the number of objects that Unity renders.
+
+<ul>
+<li>Consider reducing the overall number of objects in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>: for example, use a <span class="tooltip"><a href="skyboxes.html">skybox</a><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a href="class-Skybox.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>: for example, use a <span class="tooltip"><a href="skyboxes.html">skybox</a><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a href="class-Skybox.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skybox" aria-label="Go to glossary anchor for Skybox">Glossary</a></span></span></span> to create the effect of distant geometry.</li>
+<li>Perform more rigorous culling, so that Unity draws fewer objects. Consider using <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about OcclusionCulling.html">occlusion culling</a><span class="tooltiptext">A process that disables rendering GameObjects that are hidden (occluded) from the view of the camera. <a href="OcclusionCulling.html" href="OcclusionCulling.html">occlusion culling</a><span class="tooltiptext">A process that disables rendering GameObjects that are hidden (occluded) from the view of the camera. <a href="OcclusionCulling.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Occlusionculling" aria-label="Go to glossary anchor for Occlusionculling">Glossary</a></span></span></span> to prevent Unity from drawing objects that are hidden behind other objects, reducing the far clip plane of a <span class="tooltip"><a href="class-Camera.html">Camera</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="Glossary.html#Occlusionculling" aria-label="Go to glossary anchor for Occlusionculling">Glossary</a></span></span></span> to prevent Unity from drawing objects that are hidden behind other objects, reducing the far clip plane of a <span class="tooltip"><a href="class-Camera.html">Camera</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> so that more distant objects fall outside its frustum, or, for a more fine-grained approach, putting objects into <a href="Layers.html">separate layers</a> and setting up per-layer cull distances with <a href="../ScriptReference/Camera-layerCullDistances.html">Camera.layerCullDistances</a>.</li>
+</ul>
+</li>
+<li>You can reduce the number of times that Unity renders each object.
+
+<ul>
+<li>Use <a href="Lightmappers.html">lightmapping</a> to “bake” (pre-compute) lighting and shadows where appropriate. This increases build time, runtime memory usage and storage space, but can improve runtime performance.</li>
+<li>If your application uses <span class="tooltip"><strong>Forward rendering</strong><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderTech-ForwardRendering.html" href="RenderTech-ForwardRendering.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ForwardRendering" aria-label="Go to glossary anchor for ForwardRendering">Glossary</a></span></span></span>, reduce the number of per-pixel real-time lights that affect objects. For more information, see <a href="RenderTech-ForwardRendering.html">Forward rendering path</a>.</li>
+<li>Real-time shadows can be very resource-intensive, so use them sparingly and efficiently. For more information, see <a href="ShadowPerformance.html">Shadow troubleshooting: Shadow performance</a>.</li>
+<li>If your application uses <span class="tooltip"><strong>Reflection Probes</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ReflectionProbe.html" href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span>, ensure that you optimize their usage. For more information, see <a href="RefProbePerformance.html">Reflection Probe performance</a>
+</li>
+</ul>
+</li>
+<li>You can reduce the amount of work that Unity must do to prepare and send rendering commands, usually by sending them to the GPU in more efficient “batches”. There are a few different ways to achieve this: for more information, see <a href="optimizing-draw-calls.html">Optimizing draw calls</a>.</li>
+</ul>
+
+<p>Many of these approaches will also reduce the work required on the GPU; for example, reducing the overall number of objects that Unity renders in a frame will result in a reduced workload for both the CPU and the GPU.</p>
+
+<h2>Reducing the GPU cost of rendering</h2>
+
+<p>There are three main reasons why the GPU might fail to complete its work in time to render a frame.</p>
+
+<p>If an application is limited by fill rate, the GPU is trying to draw more <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> per frame than it can handle. If this is the case, consider these options:</p>
+
+<ul>
+<li>Identify and reduce overdraw in your application. The most common contributors to overdraw are overlapping transparent elements, such as <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>, particles and <span class="tooltip"><strong>sprites</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html" href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>, particles and <span class="tooltip"><strong>sprites</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span>. In the Unity Editor, use the <a href="ViewModes.html">Overdraw Draw mode</a> to identify areas where this is a problem.</li>
+<li>Reduce the execution cost of fragment shaders. For information about <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> performance, see the <a href="SL-ShaderPerformance.html">Shader Performance</a> page.</li>
+<li>If you’re using Unity’s built-in shaders, pick ones from the <strong>Mobile</strong> or <strong>Unlit</strong> categories. They work on non-mobile platforms as well, but are simplified and approximated versions of the more complex shaders.</li>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DynamicResolution.html">Dynamic Resolution</a><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets, to reduce workload on the GPU. <a href="DynamicResolution.html" href="DynamicResolution.html">Dynamic Resolution</a><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets, to reduce workload on the GPU. <a href="DynamicResolution.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#dynamicresolution" aria-label="Go to glossary anchor for dynamicresolution">Glossary</a></span></span></span> is a Unity feature that allows you to dynamically scale individual render targets.</li>
+</ul>
+
+<p>If an application is limited by memory bandwidth, the GPU is trying to read and write more data to its dedicated memory than it can handle in a frame. This usually means that that there are too many or textures, or that textures are too large. If this is the case, consider these options:</p>
+
+<ul>
+<li>Enable <a href="class-TextureImporter.html">mipmaps</a> for textures whose distance from the camera varies at runtime (for example, most textures used in a 3D scene). This increases memory usage and storage space for these textures, but can improve runtime GPU performance.</li>
+<li>Use suitable <a href="class-TextureImporter.html">compression formats</a> to decrease the size of your textures in memory. This can result in faster load times, a smaller memory footprint, and improved GPU rendering performance. Compressed textures only use a fraction of the memory bandwidth needed for uncompressed textures.</li>
+</ul>
+
+<p>If an appliction is limited by vertex processing, this means that the GPU is trying to process more vertices than it can handle in a frame. If this is the case, consider these options:</p>
+
+<ul>
+<li>Reduce the execution cost of <span class="tooltip"><strong>vertex shaders</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-ShaderPrograms.html" href="SL-ShaderPrograms.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span>. For information about shader performance, see the <a href="SL-ShaderPerformance.html">Shader Performance</a> page.</li>
+<li>Optimize your geometry: don’t use any more triangles than necessary, and try to keep the number of UV mapping seams and hard edges (doubled-up vertices) as low as possible. For more information, see <a href="ModelingOptimizedCharacters.html">Creating models for optimal performance</a>.</li>
+<li>Use the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LevelOfDetail.html">Level Of Detail</a><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a href="LevelOfDetail.html" href="LevelOfDetail.html">Level Of Detail</a><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a href="LevelOfDetail.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#levelofdetail" aria-label="Go to glossary anchor for levelofdetail">Glossary</a></span></span></span> system.</li>
+</ul>
+
+<h2>Reducing the frequency of rendering</h2>
+
+<p>Sometimes, it might benefit your application to reduce the rendering frame rate. This doesn’t reduce the CPU or GPU cost of rendering a single frame, but it reduces the frequency with which Unity does so without affecting the frequency of other operations (such as script execution).</p>
+
+<p>You can reduce the rendering frame rate for parts of your application, or for the whole application. Reducing the rendering frame rate to prevents unnecessary power usage, prolongs battery life, and prevent device temperature from rising to a point where the CPU frequency may be throttled. This is particularly useful on handheld devices.</p>
+
+<p>If profiling reveals that rendering consumes a significant proportion of the resources for your application, consider which parts of your application might benefit from this. Common use cases include menus or pause screens, turn based games where the game is awaiting input, and applications where the content is mostly static, such as automotive UI.</p>
+
+<p>To prevent input lag, you can temporarily increase the rendering frame rate for the duration of the input so that it still feels responsive.</p>
+
+<p>To adjust the rendering frame rate, use the <a href="../ScriptReference/Rendering.OnDemandRendering.html">OnDemandRendering</a> API. The API works particularly well with the <a href="https://docs.unity3d.com/Packages/com.unity.mobile.adaptiveperformance@latest">Adaptive Performance package</a>.</p>
+
+<p>
+<em>Note:</em> <span class="tooltip"><strong>VR</strong><span class="tooltiptext">Virtual Reality <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VROverview.html" href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VR" aria-label="Go to glossary anchor for VR">Glossary</a></span></span></span> applications don’t support On Demand Rendering. Not rendering every frame causes the visuals to be out of sync with head movement and might increase the risk of motion sickness.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="graphics-performance-profiling.html"></a></span><div class="tip">Graphics performance and profiling</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="optimizing-draw-calls.html"></a></span><div class="tip">Optimizing draw calls</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

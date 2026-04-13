@@ -1,0 +1,227 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Cameras and depth textures</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-CameraDepthTexture.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-CameraDepthTexture.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-CameraDepthTexture.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-CameraDepthTexture.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-CameraDepthTexture.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-CameraDepthTexture.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-CameraDepthTexture.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-CameraDepthTexture.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="CamerasOverview.html">Cameras</a></li>
+<li>Cameras and depth textures</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="PhysicalCameras.html"></a></span><div class="tip">Using Physical Cameras</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="CameraTricks.html"></a></span><div class="tip">Camera Tricks</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Cameras and depth textures</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Camera.html">Camera</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="class-Camera.html">Camera</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> can generate a depth, depth+normals, or motion vector texture. This is a minimalistic G-buffer texture that can be used for <span class="tooltip"><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a href="PostProcessingOverview.html" href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> can generate a depth, depth+normals, or motion vector texture. This is a minimalistic G-buffer texture that can be used for <span class="tooltip"><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a href="PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span> effects or to implement custom lighting models (e.g. light pre-pass). </p>
+
+<p>These are mostly used by effects; for example, <a href="PostProcessingOverview.html">post-processing effects</a> often use depth information.</p>
+
+<p>Pixel values in the depth texture range between 0 and 1, with a non-linear distribution. Precision is usually 32 or 16 bits, depending on configuration and platform used. When reading from the Depth Texture, a high precision value in a range between 0 and 1 is returned. If you need to get distance from the Camera, or an otherwise linear 0–1 value, compute that manually using <a href="SL-BuiltinMacros.html">helper macros</a>.</p>
+
+<p>Depth Textures are supported on most modern hardware and graphics APIs. Special requirements are listed below:</p>
+
+<ul>
+<li>Direct3D 11+ (Windows), OpenGL 3+ (Mac/Linux), OpenGL ES 3.0+ (iOS), Metal (iOS), and popular consoles support depth textures.</li>
+<li>OpenGL ES 2.0 (Android) requires <a href="http://www.khronos.org/registry/gles/extensions/OES/OES_depth_texture.txt">GL_OES_depth_texture</a> extension to be present.</li>
+<li><span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span> requires <a href="https://www.khronos.org/registry/webgl/extensions/WEBGL_depth_texture">WEBGL_depth_texture</a> extension.</li>
+</ul>
+
+<p>The Camera’s depth Texture mode can be enabled using <a href="../ScriptReference/Camera-depthTextureMode.html">Camera.depthTextureMode</a> variable from script. It is also possible to build similar textures yourself, using <a href="SL-ShaderReplacement.html">Shader Replacement</a> feature.</p>
+
+<p>There are three possible depth texture modes:</p>
+
+<ul>
+<li>
+<strong>DepthTextureMode.Depth</strong>: a depth texture.</li>
+<li>
+<strong>DepthTextureMode.DepthNormals</strong>: depth and view space normals packed into one texture.</li>
+<li>
+<strong>DepthTextureMode.MotionVectors</strong>: per-pixel screen space motion of each screen texel for the current frame. Packed into a RG16 texture.</li>
+</ul>
+
+<p>These are flags, so it is possible to specify any combination of the above textures.</p>
+
+<h2>DepthTextureMode.Depth texture</h2>
+
+<p>This builds a screen-sized depth texture.</p>
+
+<p>Depth texture is rendered using the same <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> passes as used for shadow caster rendering (<code>ShadowCaster</code> pass type). So by extension, if a shader does not support shadow casting (i.e. there’s no shadow caster pass in the shader or any of the fallbacks), then objects using that shader will not show up in the depth texture.</p>
+
+<ul>
+<li>Make your shader <a href="SL-Fallback.html">fallback</a> to some other shader that has a shadow casting pass, or</li>
+<li>If you’re using <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-SurfaceShaders.html">surface shaders</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html" href="SL-SurfaceShaders.html">surface shaders</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SurfaceShader" aria-label="Go to glossary anchor for SurfaceShader">Glossary</a></span></span></span>, adding an <code>addshadow</code> directive will make them generate a shadow pass too.</li>
+</ul>
+
+<p>Note that only “opaque” objects (that which have their materials and shaders setup to use <a href="SL-SubShaderTags.html">render queue</a> &lt;= 2500) are rendered into the depth texture.</p>
+
+<h2>DepthTextureMode.DepthNormals texture</h2>
+
+<p>This builds a screen-sized 32 bit (8 bit/channel) texture, where view space normals are encoded into R&amp;G channels, and depth is encoded in B&amp;A channels. Normals are encoded using Stereographic projection, and depth is 16 bit value packed into two 8 bit channels.</p>
+
+<p>
+<a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-BuiltinIncludes.html"><code>UnityCG.cginc</code> include file</a> has a helper function <code>DecodeDepthNormal</code> to decode depth and normal from the encoded <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a href="ShadowPerformance.html" href="SL-BuiltinIncludes.html"><code>UnityCG.cginc</code> include file</a> has a helper function <code>DecodeDepthNormal</code> to decode depth and normal from the encoded <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> value. Returned depth is in 0..1 range.</p>
+
+<p>For examples on how to use the depth and normals texture, please refer to <a href="SL-ShaderReplacement.html">Replacing shaders at runtime</a> or <span class="tooltip"><strong>Ambient Occlusion</strong><span class="tooltiptext">A method to approximate how much ambient light (light not coming from a specific direction) can hit a point on a surface.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Ambientocclusion" aria-label="Go to glossary anchor for Ambientocclusion">Glossary</a></span></span></span> in <a href="PostProcessingOverview.html">Post-processing and full-screen effects</a>.</p>
+
+<h2>DepthTextureMode.MotionVectors texture</h2>
+
+<p>This builds a screen-sized RG16 (16-bit float/channel) texture, where screen space pixel motion is encoded into the R&amp;G channels. The pixel motion is encoded in screen UV space.</p>
+
+<p>When sampling from this texture motion from the encoded pixel is returned in a range of –1..1. This will be the UV offset from the last frame to the current frame. </p>
+
+<h2>Tips &amp; Tricks</h2>
+
+<p>
+<a href="class-Camera.html">Camera inspector</a> indicates when a camera is rendering a depth or a depth+normals texture.</p>
+
+<p>The way that depth textures are requested from the Camera (<a href="../ScriptReference/Camera-depthTextureMode.html">Camera.depthTextureMode</a>) might mean that after you disable an effect that needed them, the Camera might still continue rendering them. If there are multiple effects present on a Camera, where each of them needs the depth texture, there’s no good way to automatically disable depth texture rendering if you disable the individual effects.</p>
+
+<p>When implementing complex Shaders or Image Effects, keep <a href="SL-PlatformDifferences.html">Rendering Differences Between Platforms</a> in mind. In particular, using depth texture in an Image Effect often needs special handling on Direct3D + Anti-Aliasing.</p>
+
+<p>In some cases, the depth texture might come directly from the native Z buffer. If you see artifacts in your depth texture, make sure that the shaders that use it <strong>do not</strong> write into the Z buffer (use <a href="SL-ZWrite.html">ZWrite Off</a>).</p>
+
+<h2>Shader variables</h2>
+
+<p>Depth textures are available for sampling in shaders as global shader properties. By declaring a sampler called <code>_CameraDepthTexture</code> you will be able to sample the main depth texture for the camera.</p>
+
+<p>
+<code>_CameraDepthTexture</code> always refers to the camera’s primary depth
+texture. By contrast, you can use <code>_LastCameraDepthTexture</code> to refer to the last depth texture rendered by any camera. This could be useful for example if you render a half-resolution depth texture in script using a secondary camera and want to make it available to a post-process shader.</p>
+
+<p>The motion vectors texture (when enabled) is available in Shaders as a global Shader property. By declaring a sampler called ‘_CameraMotionVectorsTexture’ you can sample the Texture for the currently rendering Camera. </p>
+
+<h2>Under the hood</h2>
+
+<p>Depth textures can come directly from the actual <span class="tooltip"><strong>depth buffer</strong><span class="tooltiptext">A memory store that holds the z-value depth of each pixel in an image, where the z-value is the depth for each rendered pixel from the projection plane. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#depthbuffer" aria-label="Go to glossary anchor for depthbuffer">Glossary</a></span></span></span>,
+or be rendered in a separate pass, depending on the rendering
+path used and the hardware. Typically when using Deferred
+Shading or Legacy Deferred Lighting <span class="tooltip"><strong>rendering paths</strong><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingPaths.html" href="RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderingPath" aria-label="Go to glossary anchor for RenderingPath">Glossary</a></span></span></span>, the depth textures come “for free” since they are a product of the
+G-buffer rendering anyway.</p>
+
+<p>When the DepthNormals texture is rendered in a separate pass, this is done through <a href="SL-ShaderReplacement.html">Shader Replacement</a>. Hence it is important to have correct “<strong>RenderType</strong>” tag in your shaders.</p>
+
+<p>When enabled, the MotionVectors texture always comes from a extra render pass. Unity will render moving <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> into this buffer, and construct their motion from the last frame to the current frame. </p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="PhysicalCameras.html"></a></span><div class="tip">Using Physical Cameras</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="CameraTricks.html"></a></span><div class="tip">Camera Tricks</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

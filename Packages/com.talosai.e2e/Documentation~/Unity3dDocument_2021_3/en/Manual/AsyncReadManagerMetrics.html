@@ -1,0 +1,279 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Asset loading metrics</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="scripting" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AsyncReadManagerMetrics.html">English</a></li>
+<li><a href="/cn/current/Manual/AsyncReadManagerMetrics.html">中文</a></li>
+<li><a href="/ja/current/Manual/AsyncReadManagerMetrics.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AsyncReadManagerMetrics.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AsyncReadManagerMetrics.html">English</a></li>
+<li><a href="/cn/current/Manual/AsyncReadManagerMetrics.html">中文</a></li>
+<li><a href="/ja/current/Manual/AsyncReadManagerMetrics.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AsyncReadManagerMetrics.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li>Asset loading metrics</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="BestPracticeUnderstandingPerformanceInUnity8.html"></a></span><div class="tip">Special optimizations</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetWorkflow.html"></a></span><div class="tip">Asset Workflow</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Asset loading metrics</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use the <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics.html">AsyncReadManagerMetrics</a> class to monitor runtime asset loading and file reading performance. This class records data about all the file read operations managed by the <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManager.html">AsyncReadManager</a>. </p>
+
+<p>The Unity Engine uses the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManager.html">AsyncReadManager</a> to read most files at runtime. The files loaded with the AsyncReadManager include AssetBundles, Addressables and Resources. In addition, you can load files from <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html" href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManager.html">AsyncReadManager</a> to read most files at runtime. The files loaded with the AsyncReadManager include AssetBundles, Addressables and Resources. In addition, you can load files from <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> using <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManager.Read.html">AsyncReadManager.Read</a>. </p>
+
+<p>The <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics.html">AsyncReadManagerMetrics</a> class allows you to enable metrics collection and retrieve the recorded metrics data. You can also filter and summarize the recorded data to help your analysis. This metrics information can help you identify problem areas involving asset loading as well as measure the impact that your changes have on asset loading performance. </p>
+
+<p>The <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics.html">AsyncReadManagerMetrics</a> class is <em>only</em> available in <span class="tooltip"><strong>development builds</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a href="https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview" href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics.html">AsyncReadManagerMetrics</a> class is <em>only</em> available in <span class="tooltip"><strong>development builds</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a href="https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DevelopmentBuild" aria-label="Go to glossary anchor for DevelopmentBuild">Glossary</a></span></span></span>. You must guard any calls to the AsyncReadManagerMetrics APIs inside an #if preprocessor directive using the <code>ENABLE_PROFILER</code> symbol. The <code>ENABLE_PROFILER</code> symbol is only defined for development builds, so this allows your scripts to compile in builds where the metrics are unavailable. For backwards compatibility, you can also use the <code>UNITY_2020_2_OR_NEWER</code> symbol to remove the metrics code from earlier versions of Unity. For example:</p>
+
+<pre><code class="lang-cs">#if ENABLE_PROFILER &amp;&amp; UNITY_2020_2_OR_NEWER
+    AsyncReadManagerMetrics.StartCollectingMetrics();
+#endif
+</code></pre>
+
+<h2>Enabling metric collection</h2>
+
+<p>You must enable metrics collection before any data is recorded. Enable metrics collection with one of the following methods:</p>
+
+<ul>
+<li>Calling <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics.StartCollectingMetrics.html">AsyncReadManagerMetrics.StartCollectingMetrics</a>
+</li>
+<li>Passing <strong>-enable-file-read-metrics</strong> as a command line argument when launching your application</li>
+</ul>
+
+<p>
+<strong>Note:</strong> you can pass <strong>-enable-file-read-metrics</strong> when launching the Unity Editor application to enable collection on entering Play mode. However, the Editor loads some categories of assets, such as textures, itself and does not reload them when you enter Playmode. To get a full picture of your file IO metrics, you must collect data from a development build of your application.</p>
+
+<h2>Getting metric data</h2>
+
+<p>Retrieve the metrics collected by the <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics.html">AsyncReadManagerMetrics</a> class by calling <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics.GetMetrics.html">GetMetrics</a>. Pass an <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics.Flags.html">AsyncReadManagerMetrics.Flags</a> to this function to specify whether or not to clear the metrics after retrieval. Clear the metrics to remove all the completed (including cancelled and failed) reads from the stored metrics. Clearing doesn’t affect any queued or in-process operations; you can access the metrics for unfinished operations by calling <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics.GetMetrics.html">GetMetrics</a> again after they complete. By clearing the metrics regularly, you can avoid rereading the same data and also reduce the data overhead of the system. </p>
+
+<pre><code class="lang-cs">#if ENABLE_PROFILER &amp;&amp; UNITY_2020_2_OR_NEWER
+    AsyncReadManagerRequestMetric[] metrics 
+        = AsyncReadManagerMetrics.GetMetrics(AsyncReadManagerMetrics.Flags.ClearOnRead);
+#endif
+
+</code></pre>
+
+<p>Where possible, the metric data includes context information about a read operation. This information includes the <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AssetLoadingSubsystem.html">AssetLoadingSubsystem</a> that requested the read, the <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerRequestMetric.AssetName.html">AssetName</a>, and the <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerRequestMetric.AssetTypeId.html">AssetTypeID</a>. When the AsyncReadManager doesn’t have access to this information, the value for these metrics fields is <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AssetLoadingSubsystem.Other.html">Other</a>, empty, and zero, respectively. </p>
+
+<p>
+<strong>Note:</strong> The Asset TypeIDs currently known to be supported are shown in the table below. For other TypeIDs that may appear, please see <a href="ClassIDReference.html">YAML Class ID Reference</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">TypeID</th>
+	<th style="text-align:left;">Type Name</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">28</td>
+	<td style="text-align:left;">Texture2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;">117</td>
+	<td style="text-align:left;">Texture3D</td>
+</tr>
+<tr>
+	<td style="text-align:left;">89</td>
+	<td style="text-align:left;"><span class="tooltip"><strong>CubeMap</strong><span class="tooltiptext">A collection of six square textures that can represent the reflections in an environment or the skybox drawn behind your geometry. The six squares form the faces of an imaginary cube that surrounds an object; each face represents the view along the directions of the world axes (up, down, left, right, forward and back). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Cubemap.html" href="class-Cubemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Cubemap" aria-label="Go to glossary anchor for Cubemap">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;">43</td>
+	<td style="text-align:left;">Mesh</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Getting summarized data</h2>
+
+<p>You can get a summary of the AsyncReadManager metrics with the following methods:</p>
+
+<ul>
+<li>
+<a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics.GetCurrentSummaryMetrics.html">GetCurrentSummaryMetrics</a> – returns a summary of all the metrics collected since the last time you cleared the metric store.</li>
+<li>
+<a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics.GetSummaryOfMetrics.html">GetSummaryOfMetrics</a> – returns a summary of the metrics in an array of <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerRequestMetric.html">AsyncReadManagerRequestMetric</a>, which you can get by calling <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics.GetMetrics.html">GetMetrics</a>.</li>
+</ul>
+
+<p>For example:</p>
+
+<pre><code class="lang-cs">#if ENABLE_PROFILER &amp;&amp; UNITY_2020_2_OR_NEWER
+    AsyncReadManagerSummaryMetrics summaryOfMetrics 
+        = AsyncReadManagerMetrics.GetCurrentSummaryMetrics(AsyncReadManagerMetrics.Flags.ClearOnRead);
+#endif
+</code></pre>
+
+<p>Or:</p>
+
+<pre><code class="lang-cs">#if ENABLE_PROFILER &amp;&amp; UNITY_2020_2_OR_NEWER
+    AsyncReadManagerRequestMetric[] metrics 
+        = AsyncReadManagerMetrics.GetMetrics(AsyncReadManagerMetrics.Flags.ClearOnRead);
+    AsyncReadManagerSummaryMetrics summaryOfMetrics 
+        = AsyncReadManagerMetrics.GetSummaryOfMetrics(metrics);
+#endif
+</code></pre>
+
+<p>Summary data for the metrics includes statistics such as:</p>
+
+<ul>
+<li>Average bandwidth</li>
+<li>Average read size</li>
+<li>Asset type with longest load time</li>
+<li>Number of reads</li>
+<li>Number of requests</li>
+<li>Total bytes read</li>
+</ul>
+
+<p>(See <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerSummaryMetrics.html">AsyncReadManagerSummaryMetrics</a> for a complete list.)</p>
+
+<p>By default, the summarized statistics include all read operations, including those that are queued or in-progress. You can use a filter to limit the summary to those operations you are specifically interested in. For example, you could use a filter to limit the summarized statistics to completed read operations for texture assets. </p>
+
+<p>
+<strong>Note:</strong> Calculating the summary statistics does require processing resources. To prevent these calculations from changing the measurements you are recording, you can collect the metrics first and only get the summary after the operations you are analyzing have finished. </p>
+
+<h3>Summary filters</h3>
+
+<p>Use <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetricsFilters.html">AsyncReadManagerMetricsFilters</a> with either of these methods to specify what types of data to summarize. Any metrics that do not match a filter are excluded from the summary. You can filter with the following categories:</p>
+
+<ul>
+<li>Asset type (by <a href="ClassIDReference.html">YAML ID</a>)</li>
+<li>
+<a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.ProcessingState.html">Processing state</a> (whether the read operation is queued, reading, completed, and so on)</li>
+<li>
+<a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.FileReadType.html">Read type</a> (async or sync)</li>
+<li>
+<a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.Priority.html">Priority</a> (high or low)</li>
+<li>Subsystem (<a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AssetLoadingSubsystem.html">AssetLoadingSubsystem</a>)</li>
+</ul>
+
+<p>You can set multiple categories for the same filter. A read operation must match all categories for the metrics of that operation to be included in the summary. For example, you can specify values for both the <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.ProcessingState.html">ProcessingState</a> and the <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AssetLoadingSubsystem.html">Subsystem</a> of a filter to summarize only operations in the designated processing states initiated by the designated subsytems.</p>
+
+<p>You can also specify multiple values for a category. In this case, a read operation can match any value you specify for a category for its metrics to be included in the summary. For example, you can specify both <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Unity.IO.LowLevel.Unsafe.AssetLoadingSubsystem.Mesh.html">Mesh</a><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html" href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AssetLoadingSubsystem.Mesh.html">Mesh</a><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> and <span class="tooltip"><a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AssetLoadingSubsystem.Texture.html">Texture</a><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a href="class-TextureImporter.html" href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> and <span class="tooltip"><a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AssetLoadingSubsystem.Texture.html">Texture</a><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a href="class-TextureImporter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#texture" aria-label="Go to glossary anchor for texture">Glossary</a></span></span></span> for the <a href="../ScriptReference/Unity.IO.LowLevel.Unsafe.AssetLoadingSubsystem.html">Subsystem</a> category to summarize operations for both Mesh and Texture assets. </p>
+<!-- area:scripting -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="BestPracticeUnderstandingPerformanceInUnity8.html"></a></span><div class="tip">Special optimizations</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetWorkflow.html"></a></span><div class="tip">Asset Workflow</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

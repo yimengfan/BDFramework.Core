@@ -1,0 +1,321 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Lights</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Light.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Light.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Light.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Light.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Light.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Light.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Light.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Light.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="LightingOverview.html">Lighting</a></li>
+<li><a href="lighting-light-sources.html">Light sources</a></li>
+<li>Lights</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="lighting-light-sources.html"></a></span><div class="tip">Light sources</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Lighting.html"></a></span><div class="tip">Types of light</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Lights</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/Light.html' title='Go to Light page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity displays different properties in the Light <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> depending on the <span class="tooltip"><a href="render-pipelines.html">render pipeline</a><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html" href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> depending on the <span class="tooltip"><a href="render-pipelines.html">render pipeline</a><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> that your Project uses.</p>
+
+<h2>Properties</h2>
+
+<ul>
+<li>If your Project uses the <a href="universal-render-pipeline.html">Universal Render Pipeline (URP)</a>, see the <a href="http://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest?subfolder=/manual/lighting.html">URP package documentation</a>.</li>
+<li>If your Project uses the <a href="high-definition-render-pipeline.html">High Definition Render Pipeline (HDRP)</a>, see the <a href="http://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Light-Component.html">HDRP package documentation</a>.</li>
+<li>If your Project uses the <a href="built-in-render-pipeline.html">Built-in Render Pipeline</a>, Unity displays the following properties:</li>
+</ul>
+
+<h3>Light settings</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property:</th>
+	<th style="text-align:left;">Function:</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Type</strong></td>
+	<td style="text-align:left;">The current type of light. Possible values are <strong>Directional</strong>, <strong>Point</strong>, <strong>Spot</strong> and <strong>Area</strong> (Rectangle or Disc light). For information on these values, see <a href="Lighting.html">Types of Light</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Range</strong></td>
+	<td style="text-align:left;">Define how far the light emitted from the center of the object travels (<strong>Point</strong> and <strong>Spot</strong> lights only).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spot Angle</strong></td>
+	<td style="text-align:left;">Define the angle (in degrees) at the base of a spot light’s cone (<strong>Spot</strong> light only).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color</strong></td>
+	<td style="text-align:left;">Use the color picker to set the color of the emitted light.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Mode</strong></td>
+	<td style="text-align:left;">Specify the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightModes.html">Light Mode</a>. Possible modes are <strong>Realtime</strong>, <strong>Mixed</strong> and <strong>Baked</strong>. For information on these values, see <span class="tooltip"><a href="LightModes.html">Light Modes</a><span class="tooltiptext">A Light property that defines the use of the Light. Can be set to Realtime, Baked and Mixed. <a href="LightModes.html" href="LightModes.html">Light Mode</a>. Possible modes are <strong>Realtime</strong>, <strong>Mixed</strong> and <strong>Baked</strong>. For information on these values, see <span class="tooltip"><a href="LightModes.html">Light Modes</a><span class="tooltiptext">A Light property that defines the use of the Light. Can be set to Realtime, Baked and Mixed. <a href="LightModes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightMode" aria-label="Go to glossary anchor for LightMode">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Intensity</strong></td>
+	<td style="text-align:left;">Set the brightness of the light. The default value for a <strong>Directional</strong> light is 0.5. The default value for a <strong>Point</strong>, <strong>Spot</strong> or <strong>Area</strong> (Rectangle or Disc)light is 1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Indirect Multiplier</strong></td>
+	<td style="text-align:left;">Use this value to vary the intensity of indirect light. If you set <strong>Indirect Multiplier</strong> to a value lower than <strong>1,</strong> the bounced light becomes dimmer with every bounce. A value higher than <strong>1</strong> makes light brighter with each bounce. This is useful, for example, when a dark surface in shadow (such as the interior of a cave) needs to be brighter to make detail visible. If you want to use <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about realtime-gi-using-enlighten.html">Enlighten Realtime Global Illumination</a><span class="tooltiptext">A lighting system by Geomerics used in Unity for lightmapping and for Enlighten Realtime Global Illumination. <a href="https://www.siliconstudio.co.jp/en/products-service/enlighten/" href="realtime-gi-using-enlighten.html">Enlighten Realtime Global Illumination</a><span class="tooltiptext">A lighting system by Geomerics used in Unity for lightmapping and for Enlighten Realtime Global Illumination. <a href="https://www.siliconstudio.co.jp/en/products-service/enlighten/">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#EnlightenRealtimeGlobalIllumination" aria-label="Go to glossary anchor for EnlightenRealtimeGlobalIllumination">Glossary</a></span></span></span>, but want to limit a single real-time Light so that it only emits direct light, set its <strong>Indirect Multiplier</strong> to <strong>0</strong>.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Shadows</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property:</th>
+	<th style="text-align:left;">Function:</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Shadow Type</strong></td>
+	<td style="text-align:left;">Determine whether this Light casts Hard Shadows, Soft Shadows, or no shadows at all. <strong>Hard Shadows</strong> produces shadows with a sharp edge. Hard shadows aren’t realistic compared to <strong>Soft Shadows</strong> but they involve less processing, and are acceptable for many purposes. Soft shadows also tend to reduce the “blocky” aliasing effect from the shadow map.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Baked Shadow Angle</td>
+	<td style="text-align:left;">If <strong>Mode</strong> is set to <strong>Baked</strong> or <strong>Mixed</strong>, <strong>Type</strong> is set to <strong>Directional</strong>, and <strong>Shadow Type</strong> is set to <strong>Soft Shadows</strong>, this property adds some artificial softening to the edges of shadows and gives them a more natural look.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Baked Shadow Radius</td>
+	<td style="text-align:left;">If <strong>Mode</strong> is set to <strong>Baked</strong> or <strong>Mixed</strong>, <strong>Type</strong> is set to <strong>Point</strong> or <strong>Spot</strong> ,and <strong>Shadow Type</strong> is set to <strong>Soft Shadows</strong>, this property adds some artificial softening to the edges of shadows and gives them a more natural look.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Realtime Shadows</td>
+	<td style="text-align:left;">These properties are available when <strong>Mode</strong> is set to <strong>Realtime</strong> or <strong>Mixed</strong>, and <strong>Shadow Type</strong> is set to <strong>Hard Shadows</strong> or <strong>Soft Shadows</strong>. Use these properties to control real-time shadow rendering settings.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        Strength</td>
+	<td style="text-align:left;">Use the slider to control how dark the shadows cast by this Light are, represented by a value between 0 and 1. This is set to 1 by default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        Resolution</td>
+	<td style="text-align:left;">Control the rendered resolution of shadow maps. A higher resolution increases the fidelity of shadows, but requires more GPU time and memory usage.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        Bias</td>
+	<td style="text-align:left;">Use the slider to control the distance at which shadows are pushed away from the light, defined as a value between 0 and 2. This is useful for avoiding false self-shadowing artifacts. See Shadow mapping and the bias property for more information. This is set to 0.05 by default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        Normal Bias</td>
+	<td style="text-align:left;">Use the slider to control distance at which the shadow casting surfaces are shrunk along the surface normal, defined as a value between 0 and 3. This is useful for avoiding false self-shadowing artifacts. See <a href="https://docs.unity3d.com/Manual/ShadowPerformance.html">Shadow troubleshooting</a> for more information. This is set to 0.05 by default.<br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        Near Plane</td>
+	<td style="text-align:left;">Use the slider to control the value for the near clip plane when rendering shadows, defined as a value between 0.1 and 10. This value is clamped to 0.1 units or 1% of the light’s <strong>Range</strong> property, whichever is lower. This is set to 0.2 by default.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Additional settings</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property:</th>
+	<th style="text-align:left;">Function:</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Cookie</strong></td>
+	<td style="text-align:left;">Specify a Texture mask through which shadows are cast (for example, to create silhouettes, or patterned illumination for the Light). For more information, see <a href="Cookies.html">Cookies</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Draw Halo</strong></td>
+	<td style="text-align:left;">Tick this box to draw a spherical <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Halo.html">Halo</a><span class="tooltiptext">The glowing light areas around light sources, used to give the impression of small dust particles in the air. <a href="class-Halo.html" href="class-Halo.html">Halo</a><span class="tooltiptext">The glowing light areas around light sources, used to give the impression of small dust particles in the air. <a href="class-Halo.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Halo" aria-label="Go to glossary anchor for Halo">Glossary</a></span></span></span> of light with a diameter equal to the <strong>Range</strong> value. You can also use the Halo component to achieve this. Note that the Halo component is drawn in addition to the halo from the Light component, and that the Halo component’s <strong>Size</strong> parameter determines its radius, not its diameter.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Flare</strong></td>
+	<td style="text-align:left;">If you want to set a <a href="class-Flare.html">Flare</a> to be rendered at the Light’s position, place an Asset in this field to be used as its source.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Render Mode</strong></td>
+	<td style="text-align:left;">Use this drop-down to set the rendering priority of the selected Light. This can affect lighting fidelity and performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Auto</td>
+	<td style="text-align:left;">The rendering method is determined at run time, depending on the brightness of nearby lights and the current <a href="class-QualitySettings.html">Quality</a> settings.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Important</td>
+	<td style="text-align:left;">The light is always rendered at per-pixel quality. Use <strong>Important</strong> mode only for the most noticeable visual effects (for example, the headlights of a player’s car).</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    Not Important</td>
+	<td style="text-align:left;">The light is always rendered in a faster, vertex/object light mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Culling Mask</strong><span class="tooltiptext">Allows you to include or omit objects to be rendered by a Camera, by Layer.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#CullingMask" aria-label="Go to glossary anchor for CullingMask">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Use this to selectively exclude groups of objects from being affected by the Light. For more information, see <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Layers.html">Layers</a><span class="tooltiptext">Layers in Unity can be used to selectively opt groups of GameObjects in or out of certain processes or calculations. This includes camera rendering, lighting, physics collisions, or custom calculations in your own code. <a href="Layers.html" href="Layers.html">Layers</a><span class="tooltiptext">Layers in Unity can be used to selectively opt groups of GameObjects in or out of certain processes or calculations. This includes camera rendering, lighting, physics collisions, or custom calculations in your own code. <a href="Layers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Layer" aria-label="Go to glossary anchor for Layer">Glossary</a></span></span></span>.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Details</h2>
+
+<p>If you create a Texture that contains an alpha channel and assign it to the <strong>Cookie</strong> variable of the light, the cookie is projected from the light. The cookie’s alpha mask modulates the light’s brightness, creating light and dark spots on surfaces. This is a great way to add complexity or atmosphere to a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<p>
+<a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Built-inShaderGuide.html">VertexLit</a> <span class="tooltip"><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Built-inShaderGuide.html">VertexLit</a> <span class="tooltip"><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> can’t display Cookies or Shadows.</p>
+
+<h2>Hints</h2>
+
+<ul>
+<li>
+<strong>Spot</strong> lights with cookies can be extremely effective for creating the effect of light coming in from a window.</li>
+<li>Low-intensity point lights are good for providing depth to a Scene.</li>
+<li>For maximum performance, use a <a href="Built-inShaderGuide.html">VertexLit</a> shader. This shader only does per-vertex lighting, giving a much higher throughput on low-end cards.</li>
+</ul>
+<!-- area:graphics -->
+
+<p><span class="search-words">Light</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="lighting-light-sources.html"></a></span><div class="tip">Light sources</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Lighting.html"></a></span><div class="tip">Types of light</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,589 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Best practices for managing elements</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-best-practices-for-managing-elements.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-best-practices-for-managing-elements.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-best-practices-for-managing-elements.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-best-practices-for-managing-elements.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-best-practices-for-managing-elements.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-best-practices-for-managing-elements.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-best-practices-for-managing-elements.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-best-practices-for-managing-elements.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-structure-ui.html">Structure UI</a></li>
+<li>Best practices for managing elements</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-custom-tag-name-and-attributes.html"></a></span><div class="tip">Customize UXML tag names and attributes</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-encapsulate-uxml-with-logic.html"></a></span><div class="tip">Encapsulate UXML documents with logic</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Best practices for managing elements</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page describes the best practices for managing elements in the <span class="tooltip"><strong>visual tree</strong><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualtree" aria-label="Go to glossary anchor for Visualtree">Glossary</a></span></span></span>.</p>
+
+<h2>Pool recurring elements</h2>
+
+<p>Elements pooling is to keep hold of elements that you might recreate later on, rather than creating elements with <code>new()</code> every time and letting go of them.</p>
+
+<p>It’s important to be fully in control of all elements that you pool and make sure you reset them properly before you return them to the pool. Otherwise, the pooling system can become unstable and troublesome. For example, it’s impossible to clean up an element if you pool elements while registering event callbacks or setting an internal non-serialized state at the same time.</p>
+
+<h2>Keep the number of visible elements low</h2>
+
+<p>To keep the number of <span class="tooltip"><strong>visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span> low, use <a href="UIE-uxml-element-ListView.html">ListView</a> when possible. <a href="UIE-uxml-element-ListView.html">ListView</a> pools elements and recycles elements as the user scrolls.</p>
+
+<p>Alternatively, you can implement your own pool and recycle mechanism similar to the <a href="UIE-uxml-element-ListView.html">ListView</a>, and use the following to manage the visible area:</p>
+
+<ul>
+<li>To observe the size of a container, use <a href="../ScriptReference/UIElements.GeometryChangedEvent.html"><code>GeometryChangedEvent</code></a>
+</li>
+<li>To compute the size of children, use the <a href="../ScriptReference/UIElements.VisualElement-layout.html"><code>VisualElement.layout</code></a> property</li>
+</ul>
+
+<p><a name="different-approaches-to-hiding-an-element" aria-hidden="true"></a></p>
+
+<h2>Different approaches to hiding an element</h2>
+
+<p>When you use <a href="../ScriptReference/UIElements.VisualElement.RemoveFromHierarchy.html"><code>VisualElement.RemoveFromHierarchy()</code></a> to remove an element from the hierarchy and eliminate references to it, the element is garbage collected. This reduces the CPU and GPU cost to zero and frees a significant amount of memory. However, it’s a slow and costly operation to recreate elements and reload them in a hierarchy. To avoid this, you can pre-create the elements in a hierarchy, use <a href="UIE-USS-Properties-Reference.html">USS style</a> properties to hide them, and only display them when necessary. While applying styles is generally faster, it can lead to increased memory usage if you create a large number of elements simultaneously.</p>
+
+<p>The following describes the different approaches to hiding elements and the consequences on processors and memory usage.</p>
+
+<h3>Hide with USS style <code>visibility: hidden;</code>
+</h3>
+
+<p>With this approach, the descendants can override the <code>visibility</code> style. </p>
+
+<h4>Single-frame cost</h4>
+
+<p>The following table describes the different aspects of single-frame cost when you hide or display a visual element with the <code>visibility</code> style:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Aspect</th>
+	<th style="text-align:left;"><code>visibility: hidden;</code></th>
+	<th style="text-align:left;"><code>visibility: visible;</code></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Styles</strong></td>
+	<td style="text-align:left;">Evaluated for the element and descendants to propagate the visibility.</td>
+	<td style="text-align:left;">Evaluated for it and the descendants, to propagate the visibility.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Layout data</strong></td>
+	<td style="text-align:left;">Preserved</td>
+	<td style="text-align:left;">None</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rendering commands</strong></td>
+	<td style="text-align:left;">Removed and deallocated</td>
+	<td style="text-align:left;">Recreated and reinserted into the chain of commands.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Meshes</strong></td>
+	<td style="text-align:left;">Scheduled for deallocation.</td>
+	<td style="text-align:left;">Re-tessellated</td>
+</tr>
+</tbody>
+</table>
+
+<h4>Per-frame behavior</h4>
+
+<p>The following table describes the per-frame behavior for CPU and GPU when you hide a visual element with the <code>visibility</code> style:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Processor</th>
+	<th style="text-align:left;">Aspect</th>
+	<th style="text-align:left;">Per-frame behavior</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>CPU</strong></td>
+	<td style="text-align:left;"><strong>Styles</strong></td>
+	<td style="text-align:left;">Fully evaluated to the element and its descendants.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Layout data</strong></td>
+	<td style="text-align:left;">Updated</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Tessellation</strong></td>
+	<td style="text-align:left;">Minimal impact that only involves <span class="tooltip"><strong>stencil masking meshes</strong><span class="tooltiptext">Overflow hidden with either rounded corners or vector image background.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Stencilmaskingmeshes" aria-label="Go to glossary anchor for Stencilmaskingmeshes">Glossary</a></span></span></span>, if applicable.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Rendering commands</strong></td>
+	<td style="text-align:left;">No commands to draw regular visible geometry. However, stencil masking meshes are still rendered to push or pop from the stencil, ensuring potential visible descendants are masked.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GPU</strong></td>
+	<td style="text-align:left;"><strong>Meshes</strong></td>
+	<td style="text-align:left;">Vertex and fragment shading on stencil masking meshes.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Hide with USS style <code>opacity: 0;</code>
+</h3>
+
+<p>With this approach, the GPU usage can be high if the content is in the <span class="tooltip"><strong>Viewport</strong><span class="tooltiptext">The user’s visible area of an app on their screen.<br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Viewport" aria-label="Go to glossary anchor for Viewport">Glossary</a></span></span></span>, as the fragment <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#Viewport" aria-label="Go to glossary anchor for Viewport">Glossary</a></span></span></span>, as the fragment <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> processes all elements, potentially leading to significant overdraw.</p>
+
+<h4>Single-frame cost</h4>
+
+<p>The following table describes the single-frame cost when you hide or display a visual element with the <code>opacity</code> style:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Action</th>
+	<th style="text-align:left;">Single-frame cost</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>opacity: 0;</code></td>
+	<td style="text-align:left;">The first time when you set the <code>opacity</code> to a value other than <code>1</code>, the <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit renderer modifies the vertices to accelerate the application of the opacity on GPU. This triggers a one-time, minimal CPU cost. While typically negligible, this cost might become noticeable if the element has a large number of descendants or if there are many vertices to modify. This cost is not incurred again unless the element is removed from the visual tree and re-added.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>opacity: 1;</code></td>
+	<td style="text-align:left;">None</td>
+</tr>
+</tbody>
+</table>
+
+<h4>Per-frame behavior</h4>
+
+<p>The following table describes the per-frame behavior for CPU and GPU when you hide a visual element with the <code>opacity</code> style:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Processor</th>
+	<th style="text-align:left;">Aspect</th>
+	<th style="text-align:left;">Per-frame behavior</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>CPU</strong></td>
+	<td style="text-align:left;"><strong>Styles</strong></td>
+	<td style="text-align:left;">Fully evaluated to the element and its descendants.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Tessellation</strong></td>
+	<td style="text-align:left;">Operates normally and responds to changes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Rendering commands</strong></td>
+	<td style="text-align:left;">Executed</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GPU</strong></td>
+	<td style="text-align:left;"><strong>Meshes</strong></td>
+	<td style="text-align:left;">The <span class="tooltip"><strong>vertex shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-ShaderPrograms.html" href="SL-ShaderPrograms.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span> operates as though the <code>visibility</code> is set to <code>1</code>. Similarly, the fragment shader also functions as if the <code>visibility</code> is <code>1</code>. This can be detrimental in GPU-bound projects as it can lead to overdraw.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Hide with USS style <code>display: none;</code>
+</h3>
+
+<p>With this approach, the element behaves like it is removed from the layout tree, which might potentially affect the layout of other elements.</p>
+
+<h4>Single-frame cost</h4>
+
+<p>The following table describes the different aspects of single-frame cost when you hide or display a visual element with the <code>display</code> style:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Aspect</th>
+	<th style="text-align:left;"><code>display: none;</code></th>
+	<th style="text-align:left;"><code>display: flex;</code></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Layout data</strong></td>
+	<td style="text-align:left;">Might recompute the layout of other elements.</td>
+	<td style="text-align:left;">Pending layout changes are processed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rendering commands/Meshes</strong></td>
+	<td style="text-align:left;">Regenerated for elements affected by the layout change.</td>
+	<td style="text-align:left;"><ul>
+<li>Regenerated for elements affected by the layout change.</li>
+<li>Pending changes are processed.</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+
+<h4>Per-frame behavior</h4>
+
+<p>The following table describes the per-frame behavior of the CPU when you hide a visual element with the <code>display</code> style. Note that there’s no GPU cost.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Aspect</th>
+	<th style="text-align:left;">Per-frame behavior</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Layout data</strong></td>
+	<td style="text-align:left;">Preserved but can become invalidated and not being updated.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rendering commands</strong></td>
+	<td style="text-align:left;">Although retained, they can be skipped during execution. The way they are skipped is very cheap but not entirely free. The cost is proportional to the number of commands.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Meshes</strong></td>
+	<td style="text-align:left;">Retained but can become invalidated and not being updated.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Translate outside of the Viewport</h3>
+
+<p>You can use <code>translate: -5000px -5000px;</code> combined with <a href="../ScriptReference/UIElements.UsageHints.DynamicTransform.html"><code>DynamicTransform</code></a> usage hints to move the elements out of the Viewport. The geometry remains fully active, resulting in minimal CPU usage when you bring back the element on the screen. However, the GPU continues to process the vertices, which might be acceptable depending on the scenario.</p>
+
+<h4>Single-frame cost</h4>
+
+<p>The transform is computed and uploaded into GPU memory, which is generally fast.</p>
+
+<h4>Per-frame behavior</h4>
+
+<p>The following table describes the per-frame behavior for CPU and GPU when you hide a visual element by translating it outside of the Viewport:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Processor</th>
+	<th style="text-align:left;">Aspect</th>
+	<th style="text-align:left;">Per-frame behavior</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>CPU</strong></td>
+	<td style="text-align:left;"><strong>Styles</strong></td>
+	<td style="text-align:left;">Updated</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Layout date</strong></td>
+	<td style="text-align:left;">Updated</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Draw calls</strong></td>
+	<td style="text-align:left;">Executed</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GPU</strong></td>
+	<td style="text-align:left;"><strong>Meshes</strong></td>
+	<td style="text-align:left;">Vertices are shaded.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Remove from the hierarchy</h3>
+
+<p>When you use the <a href="../ScriptReference/UIElements.VisualElement.RemoveFromHierarchy.html"><code>VisualElement.RemoveFromHierarchy()</code></a> method to remove the element from the hierarchy, you free up CPU and GPU memories, thereby eliminating any computing costs.</p>
+
+<h4>Single-frame cost</h4>
+
+<p>The following table describes the single-frame cost when you hide or display a visual element by removing it from the hierarchy:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Aspect</th>
+	<th style="text-align:left;">Remove</th>
+	<th style="text-align:left;">Add</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Styles</strong></td>
+	<td style="text-align:left;">None</td>
+	<td style="text-align:left;">Updated for the subtree.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Layout</strong></td>
+	<td style="text-align:left;">None</td>
+	<td style="text-align:left;">Recomputed for the subtree and possibly other elements.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rendering commands/meshes</strong></td>
+	<td style="text-align:left;">Regenerated for elements affected by the layout change.</td>
+	<td style="text-align:left;"><ul>
+<li>Regenerated for elements affected by the layout change.</li>
+<li>Pending changes are processed.</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+
+<h3>Memory usage after being hidden</h3>
+
+<p>The following table summarizes the memory usage after the element is hidden with different approaches:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Processor</th>
+	<th style="text-align:left;">Aspect</th>
+	<th style="text-align:left;"><code>visibility:hidden;</code></th>
+	<th style="text-align:left;"><code>opacity:0;</code></th>
+	<th style="text-align:left;"><code>display:None;</code></th>
+	<th style="text-align:left;">Translated out of Viewport</th>
+	<th style="text-align:left;">Removed from the hierarchy</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>CPU</strong></td>
+	<td style="text-align:left;"><strong>Styles</strong></td>
+	<td style="text-align:left;">Retained</td>
+	<td style="text-align:left;">Retained</td>
+	<td style="text-align:left;">Retained</td>
+	<td style="text-align:left;">Retained</td>
+	<td style="text-align:left;">Freed</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Layout</strong></td>
+	<td style="text-align:left;">Retained</td>
+	<td style="text-align:left;">Retained</td>
+	<td style="text-align:left;">Retained</td>
+	<td style="text-align:left;">Retained</td>
+	<td style="text-align:left;">Retained<a href="#fn:1" id="fnref:1" title="see footnote" class="footnote">[1]</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Rendering commands/meshes</strong></td>
+	<td style="text-align:left;">Freed</td>
+	<td style="text-align:left;">Retained</td>
+	<td style="text-align:left;">Retained</td>
+	<td style="text-align:left;">Retained</td>
+	<td style="text-align:left;">Freed</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GPU</strong></td>
+	<td style="text-align:left;"><strong>Meshes</strong></td>
+	<td style="text-align:left;">Freed</td>
+	<td style="text-align:left;">Retained</td>
+	<td style="text-align:left;">Retained</td>
+	<td style="text-align:left;">Retained</td>
+	<td style="text-align:left;">Freed</td>
+</tr>
+</tbody>
+</table>
+
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>The layout memory is retained because it remains reserved for the element. When the VisualElement is garbage collected, the layout memory is returned to the pool, making it available for use by other elements. <a href="#fnref:1" title="return to article" class="reversefootnote"> ↩</a>
+</p>
+</li>
+
+</ol>
+</div>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-custom-tag-name-and-attributes.html"></a></span><div class="tip">Customize UXML tag names and attributes</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-encapsulate-uxml-with-logic.html"></a></span><div class="tip">Encapsulate UXML documents with logic</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

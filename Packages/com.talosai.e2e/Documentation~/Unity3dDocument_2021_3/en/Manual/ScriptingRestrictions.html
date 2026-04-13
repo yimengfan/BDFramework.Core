@@ -1,0 +1,329 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Scripting restrictions</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ScriptingRestrictions.html">English</a></li>
+<li><a href="/cn/current/Manual/ScriptingRestrictions.html">中文</a></li>
+<li><a href="/ja/current/Manual/ScriptingRestrictions.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ScriptingRestrictions.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ScriptingRestrictions.html">English</a></li>
+<li><a href="/cn/current/Manual/ScriptingRestrictions.html">中文</a></li>
+<li><a href="/ja/current/Manual/ScriptingRestrictions.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ScriptingRestrictions.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="unity-architecture.html">Unity architecture</a></li>
+<li><a href="scripting-backends.html">Scripting backends</a></li>
+<li>Scripting restrictions</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="IL2CPP-managed-stack-traces.html"></a></span><div class="tip">Managed stack traces with IL2CPP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ManagedCodeStripping.html"></a></span><div class="tip">Managed code stripping</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Scripting restrictions</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity provides a common scripting API and experience across all platforms it supports. However, some platforms have inherent restrictions. To help you understand these restrictions, the following table describes which restrictions apply to each platform and <span class="tooltip"><strong>scripting backend</strong><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about scripting-backends.html" href="scripting-backends.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScriptingBackend" aria-label="Go to glossary anchor for ScriptingBackend">Glossary</a></span></span></span>:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Platform (scripting backend)</strong></th>
+	<th style="text-align:left;"><strong>Ahead-of-time compile</strong></th>
+	<th style="text-align:left;"><strong>Supports threads</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Android (IL2CPP)</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Android (Mono)</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> (IL2CPP)</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Standalone (IL2CPP)</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Standalone (Mono)</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Universal Windows Platform (IL2CPP)</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span> (IL2CPP)</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="AOT" aria-hidden="true"></a></p>
+
+<h2>Ahead-of-time compile (AOT)</h2>
+
+<p>Some platforms don’t allow runtime code generation. Any managed code which depends upon just-in-time (JIT) compilation on the target device will fail. Instead, you must compile all the managed code ahead-of-time (AOT). Often, this distinction doesn’t matter, but in a few specific cases, AOT platforms require additional consideration.</p>
+
+<h3>Reflection</h3>
+
+<p>Unity supports reflection on AOT platforms. However, if this compiler can’t infer that the code is used via reflection the code might not exist at runtime. For more information, refer to <a href="ManagedCodeStripping.html">Managed Code Stripping</a>.</p>
+
+<h3>System.Reflection.Emit</h3>
+
+<p>An AOT platform cannot implement any of the methods in the <code>System.Reflection.Emit</code> namespace.</p>
+
+<h3>Serialization</h3>
+
+<p>AOT platforms might encounter issues with serialization and deserialization because of the use of reflection. If a type or method is only used via reflection as part of serialization or deserialization, the AOT compiler cannot detect that it needs to generate the code needs for the type or method.</p>
+
+<h3>Generic virtual methods</h3>
+
+<p>If you use generic methods, the compiler must do some additional work to expand your written code to the code executed on the device. For example, you need different code for <code>List</code> with an <code>int</code> or a <code>double</code>. If you use virtual methods, where the behavior is determined at runtime rather than compile time, the compiler can easily require runtime code generation in places where it is not entirely obvious from the source code.</p>
+
+<p>The following code example works exactly as expected on a JIT platform (it prints “Message value: Zero” to the console once):</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+using System;
+
+public class AOTProblemExample : MonoBehaviour, IReceiver
+{
+    public enum AnyEnum 
+    {
+        Zero,
+        One,
+    }
+
+    void Start() 
+    {
+        // Subtle trigger: The type of manager *must* be
+        // IManager, not Manager, to trigger the AOT problem.
+        IManager manager = new Manager();
+        manager.SendMessage(this, AnyEnum.Zero);
+    }
+
+    public void OnMessage&lt;T&gt;(T value) 
+    {
+        Debug.LogFormat(&quot;Message value: {0}&quot;, value);
+    }
+}
+
+public class Manager : IManager 
+{
+    public void SendMessage&lt;T&gt;(IReceiver target, T value) {
+        target.OnMessage(value);
+    }
+}
+
+public interface IReceiver
+{
+    void OnMessage&lt;T&gt;(T value);
+}
+
+public interface IManager 
+{
+    void SendMessage&lt;T&gt;(IReceiver target, T value);
+}
+</code></pre>
+
+<p>However, when you execute this code on an AOT platform with the <span class="tooltip"><strong>IL2CPP</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html" href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> scripting backend, this exception occurs:</p>
+
+<pre><code>ExecutionEngineException: Attempting to call method 'AOTProblemExample::OnMessage&lt;AOTProblemExample+AnyEnum&gt;' for which no ahead of time (AOT) code was generated.
+  at Manager.SendMessage[T] (IReceiver target, .T value) [0x00000] in &lt;filename unknown&gt;:0 
+  at AOTProblemExample.Start () [0x00000] in &lt;filename unknown&gt;:0 
+</code></pre>
+
+<p>Likewise, the Mono scripting backend provides this similar exception:</p>
+
+<pre><code>  ExecutionEngineException: Attempting to JIT compile method 'Manager:SendMessage&lt;AOTProblemExample/AnyEnum&gt; (IReceiver,AOTProblemExample/AnyEnum)' while running with --aot-only.
+  at AOTProblemExample.Start () [0x00000] in &lt;filename unknown&gt;:0 
+</code></pre>
+
+<p>The AOT compiler does not recognize that it should generate code for the generic method <code>OnMessage</code> with a <code>T</code> of <code>AnyEnum</code>, so it continues, skipping this method. When that method is called, and the runtime can’t find the proper code to execute, it returns this error message.</p>
+
+<p>To work around an AOT issue like this, you can force the compiler to generate the proper code. To do this, add the following example method to the <code>AOTProblemExample</code> class:</p>
+
+<pre><code class="lang-csharp">public void UsedOnlyForAOTCodeGeneration() 
+{
+    // IL2CPP needs only this line.
+    OnMessage(AnyEnum.Zero);
+
+    // Mono also needs this line. Note that we are
+    // calling directly on the Manager, not the IManager interface.
+    new Manager().SendMessage(null, AnyEnum.Zero);
+
+    // Include an exception so we can be sure to know if this method is ever called.
+    throw new InvalidOperationException(&quot;This method is used for AOT code generation only. Do not call it at runtime.&quot;);
+}
+</code></pre>
+
+<p>When the compiler encounters the explicit call to <code>OnMessage</code> with a <code>T</code> of <code>AnyEnum</code>, it generates the proper code for the runtime to execute. The method <code>UsedOnlyForAOTCodeGeneration</code> does not need to be called; it just needs to exist for the compiler to recognize it.</p>
+
+<h3>Calling managed methods from native code</h3>
+
+<p>Managed methods that need to be marshaled to a C function pointer so that they can be called from native code have a few restrictions on AOT platforms:</p>
+
+<ul>
+<li>The managed method must be a static method</li>
+<li>The managed method must have the <code>[MonoPInvokeCallback]</code> attribute</li>
+</ul>
+
+<p><a name="threads" aria-hidden="true"></a></p>
+
+<h2>No threads</h2>
+
+<p>Some platforms do not support the use of threads, so any managed code that uses the <code>System.Threading</code> namespace fails at runtime. Also, some parts of the .NET class libraries implicitly depend upon threads. An often-used example is the <code>System.Timers.Timer</code> class, which depends on support for threads.</p>
+
+<h2>Exception filters</h2>
+
+<p>IL2CPP supports exception filters, however the execution order filter statements and catch blocks is different because IL2CPP uses C++ exceptions to implement managed exceptions. This will not be noticeable unless a filter blocks writes to a field.</p>
+
+<h2>MarshalAs and FieldOffset attributes</h2>
+
+<p>IL2CPP does not support reflection of the <code>MarshalAs</code> and <code>FieldOffset</code> attributes at runtime. It does support these attributes at compile time. You should use these for proper <a href="https://docs.microsoft.com/en-us/dotnet/framework/interop/marshaling-data-with-platform-invoke">platform invoke marshaling</a>.</p>
+
+<h2>The dynamic keyword</h2>
+
+<p>IL2CPP does not support the C# <code>dynamic</code> keyword. This keyword requires JIT compilation, which is not possible with IL2CPP.</p>
+
+<h2>Marshal.Prelink</h2>
+
+<p>IL2CPP doesn’t support the <code>Marshal.Prelink</code> or <code>Marshal.PrelinkAll</code> API methods.</p>
+
+<h2>System.Diagnostics.Process API</h2>
+
+<p>IL2CPP doesn’t support the <code>System.Diagnostics.Process</code> API methods. For cases where this is required on desktop platforms, use the Mono scripting backend.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="IL2CPP-managed-stack-traces.html"></a></span><div class="tip">Managed stack traces with IL2CPP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ManagedCodeStripping.html"></a></span><div class="tip">Managed code stripping</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

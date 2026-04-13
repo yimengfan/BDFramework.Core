@@ -1,0 +1,563 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Introduction to USS built-in variables</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-USS-UnityVariables.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-USS-UnityVariables.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-USS-UnityVariables.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-USS-UnityVariables.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-USS-UnityVariables.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-USS-UnityVariables.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-USS-UnityVariables.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-USS-UnityVariables.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-USS.html">Style UI</a></li>
+<li><a href="UIE-USS-variables.html">USS custom properties (variables)</a></li>
+<li>Introduction to USS built-in variables</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-USS-CustomProperties.html"></a></span><div class="tip">Create USS variables</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-uss-built-in-variable-reference.html"></a></span><div class="tip">USS built-in variable references</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Introduction to USS built-in variables</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>USS built-in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-USS-CustomProperties.html">variables</a> specify default values for Editor and runtime <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html" href="UIE-USS-CustomProperties.html">variables</a> specify default values for Editor and runtime <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>. You can use these variables in your own USS to match your custom interfaces with Unity style.</p>
+
+<p>The name of each built-in variable indicates how and where the variable is used. A variable name consists of one or more parts, separated by hyphens. Each part consists of one or more words separated by underscores.</p>
+
+<p><code>--unity-{group}-{role_and_control}-{sub_element}-{pseudo_state_sequence}</code></p>
+
+<p>Each part of the name shows the types of USS rules that use the variable.</p>
+
+<ul>
+<li>
+<a href="#group"><strong>Group</strong></a>: The kind of data the variable represents.</li>
+<li>
+<a href="#role-and-control"><strong>Role/Control</strong></a>: A conceptual grouping for the elements the variable affects.</li>
+<li>
+<a href="#sub-element"><strong>Sub-Element</strong></a>: An element or control the variable affects.</li>
+<li>
+<a href="#pseudo-state-sequence"><strong>Pseudo States</strong></a>: Lists the states Unity uses the variable for.</li>
+</ul>
+
+<p>For example, the following variable name:</p>
+
+<p><code>--unity-colors-button-text-hover</code></p>
+
+<p>Provides the following information about how Unity uses the variable:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"><strong>Value</strong></th>
+	<th style="text-align:left;"><strong>Meaning</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Group</strong></td>
+	<td style="text-align:left;"><code>colors</code></td>
+	<td style="text-align:left;">Represents color data.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Role/Control</strong></td>
+	<td style="text-align:left;"><code>button</code></td>
+	<td style="text-align:left;">Affects buttons.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Sub-Element</strong></td>
+	<td style="text-align:left;"><code>text</code></td>
+	<td style="text-align:left;">Affects text. Its <code>group</code> is <code>colors</code>, so it affects text color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Pseudo-States</strong></td>
+	<td style="text-align:left;"><code>hover</code></td>
+	<td style="text-align:left;">Applies to elements when the mouse pointer hovers over them.</td>
+</tr>
+</tbody>
+</table>
+
+<p>This USS built-in variable changes the color of button text when a user hovers over the button.</p>
+
+<p><a name="group" aria-hidden="true"></a></p>
+
+<h2>Group</h2>
+
+<p>The group specifies what kind of data the variable represents. Each group has several possible <a href="#sub-element">sub-elements</a>.</p>
+
+<p>The variable names have the following groups:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Group</strong></th>
+	<th style="text-align:left;"><strong>Used for</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>colors</code></td>
+	<td style="text-align:left;">Color properties, such as <code>background-color</code> and <code>border-color</code>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>metrics</code></td>
+	<td style="text-align:left;">Properties that control dimensions and shapes. For example, <code>border-radius</code>, <code>border-width</code>, <code>margin</code>, and <code>padding</code>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>icons</code></td>
+	<td style="text-align:left;">Standard Unity icon images</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="role-and-control" aria-hidden="true"></a></p>
+
+<h2>Role and Control</h2>
+
+<p>Roles and controls are two ways of grouping elements conceptually.</p>
+
+<ul>
+<li>
+<strong>Role</strong> refers to a group of elements that have the same purpose, regardless of what type each element is. For example, the <code>error</code> role includes all elements that display error messages to users.</li>
+<li>
+<strong>Control</strong> refers to a group of elements of the same type, regardless of what they do. For example, <code>buttons</code> includes all buttons in the Editor.</li>
+</ul>
+
+<p>Each variable has either a role or a control.</p>
+
+<p>The variable names have the following roles and controls:</p>
+
+<p><strong>Roles</strong></p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Role</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>default</code></td>
+	<td style="text-align:left;">Default style settings such as text color, background, and margin.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>alternated_rows</code></td>
+	<td style="text-align:left;">Elements that display tabular data with alternating row colors. For example, list items in a list view.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>error</code></td>
+	<td style="text-align:left;">Elements that communicate error states to users.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>highlight</code></td>
+	<td style="text-align:left;">Highlighted parts of the UI. For example, text selections, or selected items in tree views.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>link</code></td>
+	<td style="text-align:left;">Parts of the UI (typically text) that are clickable links. This is the un-clicked state.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>play_mode</code></td>
+	<td style="text-align:left;">Elements displayed when the Editor is in Play mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>visited_link</code></td>
+	<td style="text-align:left;">Parts of the UI, typically text, that are clickable links that a user has already clicked.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>warning</code></td>
+	<td style="text-align:left;">Elements that communicate a warning message to users.</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Controls</strong></p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Control</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>app_toolbar</code></td>
+	<td style="text-align:left;">The main Unity <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>app_toolbar_button</code></td>
+	<td style="text-align:left;">Buttons in the main Unity toolbar</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>box</code></td>
+	<td style="text-align:left;">Boxes used to group elements in the Editor UI</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>button</code></td>
+	<td style="text-align:left;">Buttons in the UI, except for toolbars</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>dropdown</code></td>
+	<td style="text-align:left;">Dropdown lists or menus</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>helpbox</code></td>
+	<td style="text-align:left;">Boxes used to display help information</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>input_field</code></td>
+	<td style="text-align:left;">Fields used to input text or numeric values</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>label</code></td>
+	<td style="text-align:left;">Text labels in the Editor UI</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>object_field</code></td>
+	<td style="text-align:left;">Fields used for object values. For example, property values for a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> or Asset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>popup</code></td>
+	<td style="text-align:left;">Popup menu and other popup controls</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>preview</code></td>
+	<td style="text-align:left;">Views used to display previews. For example, of Assets such as meshes and textures.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>scrollbar_groove</code></td>
+	<td style="text-align:left;">The background element of a scrollbar in which users drag the scrollbar thumb</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>scrollbar_thumb</code></td>
+	<td style="text-align:left;">The draggable handle element in a scrollbar</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>slider_groove</code></td>
+	<td style="text-align:left;">The background element of a slider in which users drag the slider thumb</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>slider_thumb</code></td>
+	<td style="text-align:left;">The draggable handle element in a slider</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>slider_thumb_halo</code></td>
+	<td style="text-align:left;">An overlay displayed around the slider thumb when the user drags it</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>tab</code></td>
+	<td style="text-align:left;">Tab items in tab controls</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>toolbar</code></td>
+	<td style="text-align:left;">Any Editor toolbar except for the main Unity toolbar (<code>app_toolbar</code>)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>toolbar_button</code></td>
+	<td style="text-align:left;">Buttons in an Editor toolbar</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>window</code></td>
+	<td style="text-align:left;">Editor windows</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="sub-element" aria-hidden="true"></a></p>
+
+<h2>Sub-Element</h2>
+
+<p>The sub-element is the part of an element that the variable affects. Together with a variable’s <code>group</code>, the sub-element shows what kind of data the variable represents.</p>
+
+<p>For example, when you see a variable name with the <code>colors</code> group and the <code>text</code> sub-element, it means Unity uses the variable in styles that affect text color.</p>
+
+<p>The variable names have the following sub-elements:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Group</strong></th>
+	<th style="text-align:left;"><strong>Sub-element</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="3"><code>colors</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>background</code></td>
+	<td style="text-align:left;">An element’s background color</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>border</code></td>
+	<td style="text-align:left;">An element’s outer border color</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>border_accent</code></td>
+	<td style="text-align:left;">An element’s inner border color. For example, <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> windows have a two-tone border</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>text</code></td>
+	<td style="text-align:left;">Text color for elements that display text</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><code>metrics</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>margin_{left, top, right, bottom}</code></td>
+	<td style="text-align:left;">An element’s margin values</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>padding_{left, top, right, bottom}</code></td>
+	<td style="text-align:left;">An element’s padding values</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>border_{left, top, right, bottom}_width</code></td>
+	<td style="text-align:left;">An element’s border width values</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>border_{left_top, left_bottom, right_top, right_bottom}_radius</code></td>
+	<td style="text-align:left;">An element’s border radius values values</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>width, height</code></td>
+	<td style="text-align:left;">An element’s width and height values</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="pseudo-state-sequence" aria-hidden="true"></a></p>
+
+<h2>Pseudo-States</h2>
+
+<p>The pseudo-state sequence is a list of UI states that Unity uses a variable for.</p>
+
+<p>For example, when you see a variable name with the <code>hover</code> pseudo state, it means Unity uses the variable in styles that affect elements when a user hovers the pointer over them.</p>
+
+<p>For example: <code>--unity-colors-toolbar_button-text-hover</code>.</p>
+
+<p>A variable name can have more than one pseudo-state. Multiple pseudo states appear in alphabetical order, separated by underscores <code>_</code>.</p>
+
+<p>For example: <code>--unity-colors-toolbar_button-text-focus_selected</code>.</p>
+
+<p>Unity variable names can have any combination of the following pseudo-states:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Pseudo-state</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">(none)</td>
+	<td style="text-align:left;">Normal state</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>checked</code></td>
+	<td style="text-align:left;">A checkbox-type control is checked</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>disabled</code></td>
+	<td style="text-align:left;">A control is disabled</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>focus</code></td>
+	<td style="text-align:left;">A control has focus</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>hover</code></td>
+	<td style="text-align:left;">A user hovers over a control</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>inactive</code></td>
+	<td style="text-align:left;">A control doesn’t have focus</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>pressed</code></td>
+	<td style="text-align:left;">A control is pressed</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>selected</code></td>
+	<td style="text-align:left;">A control is selected</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-USS-CustomProperties.html">Create USS variables</a></li>
+<li><a href="UIE-uss-built-in-variable-reference.html">USS built-in variable reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-USS-CustomProperties.html"></a></span><div class="tip">Create USS variables</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-uss-built-in-variable-reference.html"></a></span><div class="tip">USS built-in variable references</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

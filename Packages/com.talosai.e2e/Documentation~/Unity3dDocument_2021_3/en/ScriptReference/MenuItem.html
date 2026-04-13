@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: MenuItem</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">MenuItem</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEditor</p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>The <code class="mono">MenuItem</code> attribute allows you to add menu items to the main menu and Inspector window context menus.</p>
+              </div>
+              <div class="subsection">
+        <p>The <code class="mono">MenuItem</code> attribute turns any static function into a menu command. Only static functions can use the <code class="mono">MenuItem</code> attribute.<br /><br />To create a hotkey, use the following special characters: <strong>%</strong> (ctrl on Windows and Linux, cmd on macOS), <strong>^</strong> (ctrl on Windows, Linux, and macOS), <strong>#</strong> (shift), <strong>&amp;</strong> (alt). If no special modifier key combinations are required, the key can be given after an underscore. For example, to create a menu with the hotkey Shift+Alt+G, use <code class="tt">"MyMenu/Do Something #&amp;g"</code>. To create a menu with hotkey <strong>G</strong> and no key modifiers pressed, use <code class="tt">"MyMenu/Do Something _g"</code>. Hotkey text must be preceded by a space character. &amp;lt;tt&amp;gt;"MyMenu/Do_g"&amp;lt;/tt&amp;gt; won't be interpreted as hotkey, while &amp;lt;tt&amp;gt;"MyMenu/Do _g"&amp;lt;/tt&amp;gt; will.<br /><br />Some special keyboard keys are supported as hotkeys. For example, "#LEFT" would map to Shift-Left. The keys supported like this are: LEFT, RIGHT, UP, DOWN, F1 .. F12, HOME, END, PGUP, PGDN, INS, DEL, TAB, and SPACE.<br /><br />When adding menu items to the "GameObject/" menu to create custom GameObjects, be sure to
+call <a href="GameObjectUtility.SetParentAndAlign.html">GameObjectUtility.SetParentAndAlign</a> to ensure that the new GameObject is reparented
+correctly in the case of a context click (see example below). Your function should also call
+<a href="Undo.RegisterCreatedObjectUndo.html">Undo.RegisterCreatedObjectUndo</a> to make the creation undoable and set <a href="Selection-activeObject.html">Selection.activeObject</a>
+to the newly created object. Also note that in order for a menu item in "GameObject/" to be
+propagated to the hierarchy Create dropdown and hierarchy context menu, it must be grouped
+with the other GameObject creation menu items. This can be achieved by setting its priority
+to 10 (see example below). Note that for legacy purposes MenuItems in "GameObject/Create Other"
+with no explicit priority set will receive a priority of 10 instead of the default 1000 -
+we encourage using a more descriptive category name than "Create Other" and explicitly
+setting the priority to 10.<br /><br />It is possible to add menu items to the Unity Editor's built-in menus. For example, like so: <code class="tt">"GameObject/Do Something"</code>. Because the Assets menu is used for the context menu in the Project window, any menu items added to the Assets menu will be displayed in the Project window context menu as well.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using <a href="UnityEditor.html">UnityEditor</a>;
+using UnityEngine;
+public class MenuTest : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    // Add a menu item named "Do Something" to MyMenu in the menu bar.
+    [<a href="MenuItem.html">MenuItem</a>("MyMenu/Do Something")]
+    static void DoSomething()
+    {
+        <a href="Debug.Log.html">Debug.Log</a>("Doing Something...");
+    }<br /><br />    // Add a menu item named "Log Selected <a href="Transform.html">Transform</a> Name" to MyMenu in the menu bar.
+    // We want this to be validated menu item: an item that is only enabled if specific conditions are met.
+    // To achieve this, we use a second function below to validate the menu item.
+    // so it will only be enabled if we have a transform selected.
+    [<a href="MenuItem.html">MenuItem</a>("MyMenu/Log Selected <a href="Transform.html">Transform</a> Name")]
+    static void LogSelectedTransformName()
+    {
+        <a href="Debug.Log.html">Debug.Log</a>("Selected <a href="Transform.html">Transform</a> is on " + Selection.activeTransform.gameObject.name + ".");
+    }<br /><br />    // Validate the menu item defined by the function above.
+    // The "Log Selected <a href="Transform.html">Transform</a> Name" menu item is disabled if this function returns false.
+    // We tell the <a href="Editor.html">Editor</a> that this is a validation function by decorating it with a <a href="MenuItem.html">MenuItem</a> attribute
+    // and passing true as the second parameter.
+    // This invokes the <a href="MenuItem.html">MenuItem</a>(string itemName, bool isValidateFunction) attribute constructor
+    // resulting in the function being treated as the validator for "Log Selected <a href="Transform.html">Transform</a> Name" menu item.
+    [<a href="MenuItem.html">MenuItem</a>("MyMenu/Log Selected <a href="Transform.html">Transform</a> Name", true)]
+    static bool ValidateLogSelectedTransformName()
+    {
+        // Return false if no transform is selected.
+        return <a href="Selection-activeTransform.html">Selection.activeTransform</a> != null;
+    }<br /><br />    // Add a menu item named "Do Something with a Shortcut Key" to MyMenu in the menu bar
+    // and give it a shortcut (ctrl-g on Windows, cmd-g on macOS).
+    [<a href="MenuItem.html">MenuItem</a>("MyMenu/Do Something with a Shortcut Key %g")]
+    static void DoSomethingWithAShortcutKey()
+    {
+        <a href="Debug.Log.html">Debug.Log</a>("Doing something with a Shortcut Key...");
+    }<br /><br />    // Add a menu item called "Double Mass" to a <a href="Rigidbody.html">Rigidbody</a>'s context menu.
+    [<a href="MenuItem.html">MenuItem</a>("CONTEXT/<a href="Rigidbody.html">Rigidbody</a>/Double Mass")]
+    static void DoubleMass(<a href="MenuCommand.html">MenuCommand</a> command)
+    {
+        <a href="Rigidbody.html">Rigidbody</a> body = (<a href="Rigidbody.html">Rigidbody</a>)command.context;
+        body.mass = body.mass * 2;
+        <a href="Debug.Log.html">Debug.Log</a>("Doubled <a href="Rigidbody.html">Rigidbody</a>'s Mass to " + body.mass + " from Context <a href="Menu.html">Menu</a>.");
+    }<br /><br />    // Add a menu item to create custom GameObjects.
+    // <a href="Progress.Priority.html">Priority</a> 10 ensures it is grouped with the other menu items of the same kind
+    // and propagated to the hierarchy dropdown and hierarchy context menus.
+    [<a href="MenuItem.html">MenuItem</a>("<a href="GameObject.html">GameObject</a>/MyCategory/Custom Game Object", false, 10)]
+    static void CreateCustomGameObject(<a href="MenuCommand.html">MenuCommand</a> menuCommand)
+    {
+        // Create a custom game object
+        <a href="GameObject.html">GameObject</a> go = new <a href="GameObject.html">GameObject</a>("Custom Game Object");
+        // Ensure it gets reparented if this was a context click (otherwise does nothing)
+        <a href="GameObjectUtility.SetParentAndAlign.html">GameObjectUtility.SetParentAndAlign</a>(go, menuCommand.context as <a href="GameObject.html">GameObject</a>);
+        // Register the creation in the undo system
+        <a href="Undo.RegisterCreatedObjectUndo.html">Undo.RegisterCreatedObjectUndo</a>(go, "Create " + go.name);
+        <a href="Selection-activeObject.html">Selection.activeObject</a> = go;
+    }
+}
+</pre>
+      </div>
+              <div class="subsection">
+                <h3>Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="MenuItem-editorModes.html">editorModes</a></td><td class="desc">Specifies the Editor modes that the item is displayed for. If you don't specify any Editor modes, the item is only displayed for the default mode.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Constructors</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Constructor</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="MenuItem-ctor.html">MenuItem</a></td><td class="desc">Creates a menu item and invokes the static function that follows it when the menu item is selected.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

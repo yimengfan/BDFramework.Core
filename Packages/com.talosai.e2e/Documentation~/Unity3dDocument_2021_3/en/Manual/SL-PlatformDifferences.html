@@ -1,0 +1,433 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Writing shaders for different graphics APIs</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-PlatformDifferences.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-PlatformDifferences.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-PlatformDifferences.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-PlatformDifferences.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-PlatformDifferences.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-PlatformDifferences.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-PlatformDifferences.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-PlatformDifferences.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-writing.html">Writing shaders</a></li>
+<li>Writing shaders for different graphics APIs</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-SurfaceShaderOptimize.html"></a></span><div class="tip">Optimize Surface Shaders</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="shader-performance-debugging.html"></a></span><div class="tip">Understanding shader performance</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Writing shaders for different graphics APIs</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>In some cases, there are differences in how graphics rendering behaves between different graphics APIs. Most of the time the Unity Editor hides the differences, but there are some situations where the Editor cannot do this for you. These situations, and the actions you need to take if they occur, are listed below.</p>
+
+<h2>Render Texture coordinates</h2>
+
+<p>Vertical Texture coordinate conventions differ between two types of platforms: Direct3D-like and OpenGL-like.</p>
+
+<ul>
+<li>
+<strong>Direct3D-like</strong>: The coordinate is 0 at the top and increases downward. This applies to Direct3D, Metal and consoles.</li>
+<li>
+<strong>OpenGL-like</strong>: The coordinate is 0 at the bottom and increases upward. This applies to OpenGL and OpenGL ES.</li>
+</ul>
+
+<p>This difference tends not to have any effect on your project, other than when rendering into a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html">Render Texture</a><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a href="class-RenderTexture.html" href="class-RenderTexture.html">Render Texture</a><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span>. When rendering into a Texture on a Direct3D-like platform, Unity internally flips rendering upside down. This makes the conventions match between platforms, with the OpenGL-like platform convention the standard. </p>
+
+<p>Image Effects and rendering in UV space are two common cases in the <span class="tooltip"><strong>Shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> where you need to take action to ensure that the different coordinate conventions do not create problems in your project.</p>
+
+<h3>Image Effects</h3>
+
+<p>When you use <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest">Image Effects</a> and anti-aliasing, the resulting source Texture for an Image Effect is not flipped to match the OpenGL-like platform convention. In this case, Unity renders to the screen to get anti-aliasing and then resolves rendering into a Render Texture for further processing with an Image Effect.</p>
+
+<p>If your Image Effect is a simple one that processes one Render Texture at a time, <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Graphics.Blit.html">Graphics.Blit</a> deals with the inconsistent coordinates. However, if you’re processing more than one <a href="class-RenderTexture.html">Render Texture</a> together in your <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest">Image Effect</a>, the Render Textures are likely to come out at different vertical orientations in Direct3D-like platforms and when you use anti-aliasing. To standardize the coordinates, you need to manually “flip” the screen Texture upside down in your <span class="tooltip"><strong>Vertex Shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a href="SL-ShaderPrograms.html" href="../ScriptReference/Graphics.Blit.html">Graphics.Blit</a> deals with the inconsistent coordinates. However, if you’re processing more than one <a href="class-RenderTexture.html">Render Texture</a> together in your <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest">Image Effect</a>, the Render Textures are likely to come out at different vertical orientations in Direct3D-like platforms and when you use anti-aliasing. To standardize the coordinates, you need to manually “flip” the screen Texture upside down in your <span class="tooltip"><strong>Vertex Shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a href="SL-ShaderPrograms.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span> so that it matches the OpenGL-like coordinate standard.</p>
+
+<p>The following code sample demonstrates how to do this:</p>
+
+<pre><code>// Flip sampling of the Texture: 
+// The main Texture
+// texel size will have negative Y).
+
+#if UNITY_UV_STARTS_AT_TOP
+if (_MainTex_TexelSize.y &lt; 0)
+        uv.y = 1-uv.y;
+#endif
+
+</code></pre>
+
+<p>A similar situation occurs with <a href="SL-GrabPass.html">GrabPass</a>. The resulting render Texture might not actually be turned upside down on Direct3D-like (non-OpenGL-like) platforms. If your Shader code samples GrabPass Textures, use the <code>ComputeGrabScreenPos</code> function from the <a href="SL-BuiltinFunctions.html">UnityCG include</a> file.</p>
+
+<h3>Rendering in UV space</h3>
+
+<p>When rendering in Texture coordinate (UV) space for special effects or tools, you might need to adjust your Shaders so that rendering is consistent between Direct3D-like and OpenGL-like systems. You also might need to adjust your rendering between rendering into the screen and rendering into a Texture. Adjust these by flipping the Direct3D-like projection upside down so its coordinates match the OpenGL-like projection coordinates.</p>
+
+<p>The <a href="SL-UnityShaderVariables.html">built-in variable</a> <code>ProjectionParams.x</code> contains a <code>+1</code> or <code>–1</code> value. <code>-1</code> indicates a projection has been flipped upside down to match OpenGL-like projection coordinates, while <code>+1</code> indicates it hasn’t been flipped.
+You can check this value in your Shaders and then perform different actions. The example below checks if a projection has been flipped and, if so, flips and then returns the UV coordinates to match.</p>
+
+<pre><code>float4 vert(float2 uv : TEXCOORD0) : SV_POSITION
+{
+    float4 pos;
+    pos.xy = uv;
+    // This example is rendering with upside-down flipped projection,
+    // so flip the vertical UV coordinate too
+    if (_ProjectionParams.x &lt; 0)
+        pos.y = 1 - pos.y;
+    pos.z = 0;
+    pos.w = 1;
+    return pos;
+}
+</code></pre>
+
+<h2>Clip space coordinates</h2>
+
+<p>Similar to Texture coordinates, the clip space coordinates (also known as post-projection space coordinates) differ between Direct3D-like and OpenGL-like platforms:</p>
+
+<ul>
+<li><p>
+<strong>Direct3D-like</strong>: The clip space depth goes from +1.0 at the near plane to 0.0 at the far plane. This applies to Direct3D, Metal and consoles.</p></li>
+<li><p>
+<strong>OpenGL-like</strong>: The clip space depth goes from –1.0 at the near plane to +1.0 at the far plane. This applies to OpenGL and OpenGL ES.</p></li>
+</ul>
+
+<p>Inside Shader code, you can use the <code>UNITY_NEAR_CLIP_VALUE</code> <a href="SL-BuiltinMacros.html">built-in macro</a> to get the near plane value based on the platform.</p>
+
+<p>Inside script code, use <a href="../ScriptReference/GL.GetGPUProjectionMatrix.html">GL.GetGPUProjectionMatrix</a> to convert from Unity’s coordinate system (which follows OpenGL-like conventions) to Direct3D-like coordinates if that is what the platform expects.</p>
+
+<h2>Precision of Shader computations</h2>
+
+<p>To avoid precision issues, make sure that you test your Shaders on the target platforms. The GPUs in mobile devices and PCs differ in how they treat floating point types. PC GPUs treat all floating point types (float, half and fixed) as the same - they do all calculations using full 32-bit precision, while many mobile device GPUs do not do this.</p>
+
+<p>For more information, refer to <a href="SL-Use16BitPrecisionInShaders.html">Use 16-bit precision in shaders</a>.</p>
+
+<h2>Shader data types support</h2>
+
+<p>Some Metal devices don’t support the 16-bit <code>half</code> data type. On these devices, Unity shaders represent <code>half</code> as a 32-bit <code>float</code>. Similarly, Unity shaders represent the <code>real</code> data type as a <code>half</code> on mobile devices and as a <code>float</code> on desktop platforms. This section of the documentation is relevant if you want to use the <code>half</code> data type and want to deploy your application to a device that doesn’t support <code>half</code>.</p>
+
+<p>Using <code>half</code> in the correct places can speed up operations, save memory, and save battery power on mobile devices. It’s best practice to use <code>half</code> for values that don’t need high precision and use the information in this section of the documentation to make sure your code handles devices that don’t support <code>half</code>.</p>
+
+<p>For more information about shader data types and the precision they support, refer to <a href="SL-DataTypesAndPrecision.html">Shader data types and precision</a>.</p>
+
+<h2>Const declarations in Shaders</h2>
+
+<p>Use of <code>const</code> differs between Microsoft HLSL (see <a href="http://msdn.microsoft.com">msdn.microsoft.com</a>) and OpenGL’s GLSL (see <a href="https://en.wikipedia.org/wiki/OpenGL_Shading_Language">Wikipedia</a>) Shader language.</p>
+
+<ul>
+<li><p>Microsoft’s HLSL <code>const</code> has much the same meaning as it does in C# and C++ in that the variable declared is read-only within its scope but can be initialized in any way.</p></li>
+<li><p>OpenGL’s GLSL <code>const</code> means that the variable is effectively a compile time constant, and so it must be initialized with compile time constraints (either literal values or calculations on other <code>const</code>s).</p></li>
+</ul>
+
+<p>It is best to follow the OpenGL’s GLSL semantics and only declare a variable as <code>const</code> when it is truly invariant. Avoid initializing a <code>const</code> variable with some other <span class="tooltip"><strong>mutable</strong><span class="tooltiptext">You can change the contents of a mutable package. This is the opposite of <strong>immutable</strong>. Only <strong>Local package</strong><strong>s</strong> and <strong>Embedded package</strong><strong>s</strong> are mutable.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mutable" aria-label="Go to glossary anchor for Mutable">Glossary</a></span></span></span> values (for example, as a local variable in a function). This also works in Microsoft’s HLSL, so using <code>const</code> in this way avoids confusing errors on some platforms.</p>
+
+<p><a name="cbuffers" aria-hidden="true"></a></p>
+
+<h2>Using buffers with GPU buffers</h2>
+
+<p>If you use buffers to declare variables in your shader, then set values using the data from a GPU <a href="../ScriptReference/ComputeBuffer.html">compute buffer</a> or <a href="../ScriptReference/GraphicsBuffer.html">graphics buffer</a>, the data layouts might not match depending on the graphics API. This means you might overwrite data or set variables to the wrong values.</p>
+
+<p>For example if you use <code>cbuffer</code> or Unity’s <a href="SL-BuiltinMacros.html#cbuffer">constant buffer macro</a>, depending on the constant buffer’s data layout and the graphics API, a <code>float3</code> might become a <code>float4</code>, or a <code>float</code> might become a <code>float2</code>.</p>
+
+<p>You can do the following to make sure all graphics APIs compile a buffer with the same data layout:</p>
+
+<ul>
+<li>Use <code>float4</code> and <code>float4x4</code> instead of <code>float3</code> and <code>float3x3</code>, because <code>float4</code> variables are the same size on all graphics APIs, while <code>float3</code> variables can become a different size on some graphics APIs.</li>
+<li>Declare variables in decreasing size order, for example <code>float4</code> then <code>float2</code> then <code>float</code>, so all graphics APIs structure the data in the same way.</li>
+</ul>
+
+<p>For example:</p>
+
+<pre><code>cbuffer myConstantBuffer { 
+    float4x4 matWorld;
+    float4 vObjectPosition; // Uses a float4 instead of a float3
+    float arrayIndex;
+}
+</code></pre>
+
+<h2>Semantics used by Shaders</h2>
+
+<p>To get Shaders working on all platforms, some Shader values should use these semantics:</p>
+
+<ul>
+<li><p>
+<strong>Vertex Shader output (clip space) position</strong>: <code>SV_POSITION</code>. Sometimes Shaders use POSITION semantics to get Shaders working on all platforms. Note that this does not not work on Sony PS4 or with tessellation.</p></li>
+<li><p>
+<strong>Fragment Shader output color</strong>: <code>SV_Target</code>. Sometimes Shaders use <code>COLOR</code> or <code>COLOR0</code> to get Shaders working on all platforms. Note that this does not work on Sony PS4.</p></li>
+</ul>
+
+<p>When rendering Meshes as Points, output <code>PSIZE</code> semantics from the vertex Shader (for example, set it to 1). Some platforms, such as OpenGL ES or Metal, treat point size as “undefined” when it’s not written to from the Shader.</p>
+
+<p>See documentation on <a href="SL-ShaderSemantics.html">Shader semantics</a> for more details.</p>
+
+<h2>Direct3D Shader compiler syntax</h2>
+
+<p>Direct3D platforms use Microsoft’s <a href="shader-compilation.html">HLSL Shader compiler</a>. The HLSL compiler is stricter than other compilers about various subtle Shader errors. For example, it doesn’t accept function output values that aren’t initialized properly.</p>
+
+<p>The most common situations that you might run into using this are:</p>
+
+<ul>
+<li>A <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-SurfaceShaders.html">Surface Shader</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html" href="SL-SurfaceShaders.html">Surface Shader</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SurfaceShader" aria-label="Go to glossary anchor for SurfaceShader">Glossary</a></span></span></span> vertex modifier that has an <code>out</code> parameter. In a surface shader, initialize the output like this:</li>
+</ul>
+
+<pre><code>  void vert (inout appdata_full v, out Input o) 
+      {
+        **UNITY_INITIALIZE_OUTPUT(Input,o);**
+        // ...
+      }
+</code></pre>
+
+<ul>
+<li><p>Partially initialized values. For example, a function returns <code>float4</code> but the code only sets the <code>.xyz</code> values of it. Set all values or change to <code>float3</code> if you only need three values.</p></li>
+<li><p>Using <code>tex2D</code> in the Vertex Shader. This is not valid, because UV derivatives don’t exist in the vertex Shader. You need to sample an explicit mip level instead; for example, use <code>tex2Dlod</code> (<code>tex, float4(uv,0,0)</code>). You also need to add <code>#pragma target 3.0</code> as <code>tex2Dlod</code> is a Shader model 3.0 feature.</p></li>
+</ul>
+
+<h2>DirectX 11 (DX11) HLSL syntax in Shaders</h2>
+
+<p>Some parts of the <a href="SL-SurfaceShaders.html">Surface Shader</a> compilation pipeline do not understand DirectX 11-specific HLSL (Microsoft’s shader language) syntax. </p>
+
+<p>If you’re using HLSL features like <code>StructuredBuffers</code>, <code>RWTextures</code> and other non-DirectX 9 syntax, wrap them in a DirectX X11-only preprocessor macro as shown in the example below.</p>
+
+<pre><code>#ifdef SHADER_API_D3D11
+// DirectX11-specific code, for example
+StructuredBuffer&lt;float4&gt; myColors;
+RWTexture2D&lt;float4&gt; myRandomWriteTexture;
+#endif
+</code></pre>
+
+<p><a name="using-shader-framebuffer-fetch" aria-hidden="true"></a></p>
+
+<h2>Provide fragment color as input</h2>
+
+<p>Some GPUs (most notably PowerVR-based ones on iOS) allow you to do a form of programmable blending by providing current fragment color as input to the Fragment Shader (refer to <code>EXT_shader_framebuffer_fetch</code> on <a href="https://www.khronos.org/registry/gles/extensions/EXT/EXT_shader_framebuffer_fetch.txt">khronos.org</a>). This process is sometimes called framebuffer fetch.</p>
+
+<p>To do this, use the <code>inout</code> color argument when you write a fragment shader. For example:</p>
+
+<pre><code class="lang-hlsl">HLSLPROGRAM
+// only compile Shader for platforms that can potentially
+// do it (currently gles,gles3,metal)
+#pragma only_renderers framebufferfetch
+
+void frag (v2f i, inout half4 ocol : SV_Target)
+{
+    // ocol can be read (current framebuffer color)
+    // and written into (will change color to that one)
+    // ...
+}
+ENDHLSL
+</code></pre>
+
+<h2>The Depth (Z) direction in Shaders</h2>
+
+<p>Depth (Z) direction differs on different Shader platforms.</p>
+
+<p><strong>DirectX 11, DirectX 12, Metal: Reversed direction</strong></p>
+
+<ul>
+<li><p>The depth (Z) buffer is 1.0 at the near plane, decreasing to 0.0 at the far plane.</p></li>
+<li><p>Clip space range is [near,0] (meaning the near plane distance at the near plane, decreasing to 0.0 at the far plane).</p></li>
+</ul>
+
+<p><strong>Other platforms: Traditional direction</strong></p>
+
+<ul>
+<li><p>The depth (Z) buffer value is 0.0 at the near plane and 1.0 at the far plane.</p></li>
+<li>Clip space depends on the specific platform:
+
+<ul>
+<li>On Direct3D-like platforms, the range is [0,far] (meaning 0.0 at the near plane, increasing to the far plane distance at the far plane).</li>
+<li>On OpenGL-like platforms, the range is [-near,far] (meaning minus the near plane distance at the near plane, increasing to the far plane distance at the far plane).</li>
+</ul>
+</li>
+</ul>
+
+<p>Note that reversed direction depth (Z), combined with a floating point <span class="tooltip"><strong>depth buffer</strong><span class="tooltiptext">A memory store that holds the z-value depth of each pixel in an image, where the z-value is the depth for each rendered pixel from the projection plane. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#depthbuffer" aria-label="Go to glossary anchor for depthbuffer">Glossary</a></span></span></span>, significantly improves depth buffer precision against the traditional direction. The advantages of this are less conflict for Z coordinates and better shadows, especially when using small near planes and large far planes.</p>
+
+<p>So, when you use Shaders from platforms with the depth (Z) reversed:</p>
+
+<ul>
+<li>UNITY_REVERSED_Z is defined.</li>
+<li>
+<code>_CameraDepth</code> Texture texture range is 1 (near) to 0 (far).</li>
+<li>Clip space range is within “near” (near) to 0 (far).</li>
+</ul>
+
+<p>However, the following macros and functions automatically work out any differences in depth (Z) directions:</p>
+
+<ul>
+<li><code>Linear01Depth(float z)</code></li>
+<li><code>LinearEyeDepth(float z)</code></li>
+<li>UNITY_CALC_FOG_FACTOR(coord)</li>
+</ul>
+
+<h3>Fetching the depth Buffer</h3>
+
+<p>If you are fetching the depth (Z) buffer value manually, you might want to check the buffer direction. The following is an example of this:</p>
+
+<pre><code>float z = tex2D(_CameraDepthTexture, uv);
+#if defined(UNITY_REVERSED_Z)
+    z = 1.0f - z;
+#endif
+</code></pre>
+
+<h3>Using clip space</h3>
+
+<p>If you are using clip space (Z) depth manually, you might also want to abstract platform differences by using the following macro:</p>
+
+<p><code>float clipSpaceRange01 = UNITY_Z_0_FAR_FROM_CLIPSPACE(rawClipSpace);</code></p>
+
+<p>
+<strong>Note</strong>: This macro does not alter clip space on OpenGL or OpenGL ES platforms, so it returns within “-near”1 (near) to far (far) on these platforms. </p>
+
+<h3>Projection matrices</h3>
+
+<p>
+<a href="../ScriptReference/GL.GetGPUProjectionMatrix.html">GL.GetGPUProjectionMatrix()</a> returns a z-reverted matrix if you are on a platform where the depth (Z) is reversed.
+However, if you’re composing from projection matrices manually (for example, for custom shadows or depth rendering), you need to revert depth (Z) direction yourself where it applies via script. </p>
+
+<p>An example of this is below: </p>
+
+<pre><code>var shadowProjection = Matrix4x4.Ortho(...); //shadow camera projection matrix
+var shadowViewMat = ...     //shadow camera view matrix
+var shadowSpaceMatrix = ... //from clip to shadowMap texture space
+    
+//'m_shadowCamera.projectionMatrix' is implicitly reversed 
+//when the engine calculates device projection matrix from the camera projection
+m_shadowCamera.projectionMatrix = shadowProjection; 
+
+//'shadowProjection' is manually flipped before being concatenated to 'm_shadowMatrix'
+//because it is seen as any other matrix to a Shader.
+if(SystemInfo.usesReversedZBuffer) 
+{
+    shadowProjection[2, 0] = -shadowProjection[2, 0];
+    shadowProjection[2, 1] = -shadowProjection[2, 1];
+    shadowProjection[2, 2] = -shadowProjection[2, 2];
+    shadowProjection[2, 3] = -shadowProjection[2, 3];
+}
+    m_shadowMatrix = shadowSpaceMatrix * shadowProjection * shadowViewMat;
+</code></pre>
+
+<h3>Depth (Z) bias</h3>
+
+<p>Unity automatically deals with depth (Z) bias to ensure it matches Unity’s depth (Z) direction. However, if you are using a native code rendering plugin, you need to negate (reverse) depth (Z) bias in your C or C++ code.</p>
+
+<h4>Tools to check for depth (Z) direction</h4>
+
+<ul>
+<li>Use <a href="../ScriptReference/SystemInfo-usesReversedZBuffer.html">SystemInfo.usesReversedZBuffer</a> to find out if you are on a platform using reversed depth (Z).</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-SurfaceShaderOptimize.html"></a></span><div class="tip">Optimize Surface Shaders</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="shader-performance-debugging.html"></a></span><div class="tip">Understanding shader performance</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

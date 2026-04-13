@@ -1,0 +1,452 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Upgrading to Unity 2019 LTS</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UpgradeGuide2019LTS.html">English</a></li>
+<li><a href="/cn/current/Manual/UpgradeGuide2019LTS.html">中文</a></li>
+<li><a href="/ja/current/Manual/UpgradeGuide2019LTS.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UpgradeGuide2019LTS.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UpgradeGuide2019LTS.html">English</a></li>
+<li><a href="/cn/current/Manual/UpgradeGuide2019LTS.html">中文</a></li>
+<li><a href="/ja/current/Manual/UpgradeGuide2019LTS.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UpgradeGuide2019LTS.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="UpgradeGuides.html">Upgrading Unity</a></li>
+<li>Upgrading to Unity 2019 LTS</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UpgradeGuide2020LTS.html"></a></span><div class="tip">Upgrading to Unity 2020 LTS</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UsingTheEditor.html"></a></span><div class="tip">Unity's interface</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Upgrading to Unity 2019 LTS</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<a name="TopOfPage" aria-hidden="true"></a>
+<strong>Note</strong>: Follow the advice in this section in release order. For example, if you need to upgrade your project from 2019 to 2021, read the 2020 upgrade guides to see if there are any changes that you need to make before you read the 2021 upgrade guides.</p>
+
+<p>This page lists changes in the Unity 2019 versions which might affect existing projects when you upgrade from any Unity 2018 version to 2019 LTS.</p>
+
+<p>Note that <strong>2019 LTS</strong> is also known as <strong>2019.4</strong>.</p>
+
+<h3>Page outline</h3>
+
+<ul>
+<li><a href="#URP">Lightweight Render Pipeline (LWRP) becomes Universal Render Pipeline (URP)</a></li>
+<li><a href="#ShaderUtil">ShaderUtil update</a></li>
+<li><a href="#AnimationJobs">Animation C# Jobs</a></li>
+<li><a href="#SRP">Scripting Render Pipeline (SRP) API changes</a></li>
+<li><a href="#Addressables">Addressables</a></li>
+<li><a href="#NewImport">New Asset Import Pipeline</a></li>
+<li><a href="#Tilemap">Tilemap Editor is now a Package</a></li>
+<li><a href="#SpriteTooling">SpriteTooling is now a Package</a></li>
+<li><a href="#UnityUI">Unity UI is now a Package</a></li>
+<li><a href="#UIElements">UI Elements is now a standard feature and not experimental</a></li>
+<li><a href="#NET">.NET 3.5 Equivalent Scripting Runtime Removal</a></li>
+<li><a href="#Lighting">Lighting Improvements</a></li>
+<li><a href="#CompatibilityAttribute">UnityAPICompatibilityVersionAttribute constructor change</a></li>
+<li><a href="#SystemRequirements">Changed System Requirements</a></li>
+<li><a href="#Multiplayer">Multiplayer (UNet) High level API has moved to a package</a></li>
+<li><a href="#UNITY_ADS">UNITY_ADS compiler directive removed</a></li>
+</ul>
+
+<hr>
+
+<p><a name="URP" aria-hidden="true"></a></p>
+
+<h3>Lightweight Render Pipeline (LWRP) becomes Universal Render Pipeline (URP)</h3>
+
+<p>The Lightweight <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> (LWRP) is now the Universal Render Pipeline (URP) in Unity 2019.3 and later.</p>
+
+<p>If your Project uses LWRP, you will need to upgrade your Project to use URP. For a step by step guide to the upgrade process, see the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/manual/upgrade-lwrp-to-urp.html">LWRP to URP upgrade guide</a>.</p>
+
+<p><a href="#TopOfPage">Back to top</a></p>
+
+<p><a name="ShaderUtil" aria-hidden="true"></a></p>
+
+<h3>ShaderUtil update</h3>
+
+<p>
+<code>ShaderUtil.ClearShaderErrors()</code> is replaced by <code>ShaderUtil.ClearShaderMessages()</code> for naming consistency and is now marked as obsolete. Your existing Project <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> are automatically upgraded when you open them in Unity 2019.4.</p>
+
+<p><a href="#TopOfPage">Back to top</a></p>
+
+<p><a name="AnimationJobs" aria-hidden="true"></a></p>
+
+<h3>Animation C# Jobs</h3>
+
+<p>Animation C# jobs are moving out of experimental namespace from UnityEngine.Experimental.Animations to UnityEngine.Animations.</p>
+
+<p>Unity 2019.4 automatically updates most of your scripts except for scripts with the following Animator jobs extension methods:</p>
+
+<ul>
+<li>BindStreamTransform</li>
+<li>BindStreamProperty</li>
+<li>BindCustomStreamProperty</li>
+<li>BindSceneTransform</li>
+<li>BindSceneProperty</li>
+<li>OpenAnimationStream</li>
+<li>CloseAnimationStream</li>
+<li>ResolveAllStreamHandles</li>
+<li>ResolveAllSceneHandles</li>
+</ul>
+
+<p>You have to manually add using <code>UnityEngine.Animations;</code> statements to those scripts.</p>
+
+<p><a href="#TopOfPage">Back to top</a></p>
+
+<p><a name="SRP" aria-hidden="true"></a></p>
+
+<h3>Scripting Render Pipeline (SRP) API changes</h3>
+
+<p>The undocumented <code>RenderPipeline.beginCameraRendering</code> and <code>RenderPipeline.beginFrameRendering</code> events have been removed. You should replace these with events from the <code>RenderPipelineManager</code> class.</p>
+
+<p>The RenderPipeline static protected functions <code>BeginFrameRendering</code> and <code>BeginCameraRendering</code> have been removed. You must replace these with the signature that takes a <code>ScriptableRenderContext</code> in a parameter. Additionally there are now <code>EndCameraRendering</code> and <code>EndFrameRendering</code> methods that you must call as well.</p>
+
+<p><a href="#TopOfPage">Back to top</a></p>
+
+<p><a name="Addressables" aria-hidden="true"></a></p>
+
+<h3>Addressables</h3>
+
+<p>
+<code>AsyncLoad</code> is now obsolete. Use <a href="../ScriptReference/AssetBundle.LoadAssetAsync.html">Async.LoadAssetAsync</a> instead.</p>
+
+<p><a href="#TopOfPage">Back to top</a></p>
+
+<p><a name="NewImport" aria-hidden="true"></a></p>
+
+<h3>New Asset Import Pipeline</h3>
+
+<p>The new Asset Import Pipeline is available with Unity 2019.3 and later. If you have an existing project, you can upgrade to the new Asset Import Pipeline using the <strong>Project Settings Window</strong> in the Editor:</p>
+
+<figure>
+<img src="../uploads/Main/upgrade2019-assetpipe01.png" alt="">
+</figure>
+
+<figure>
+<img src="../uploads/Main/upgrade2019-assetpipe02.png" alt="">
+</figure>
+
+<p>Selecting <strong>Version 2</strong> will tell the editor you now want to use the new Asset Import Pipeline together with this project, and restarting your project will re-import it using the new Asset Import Pipeline code. This essentially has the same effect as deleting your Library folder, but without deleting it. When switching to use Asset Import Pipeline V2, the Import Results from the original Asset Import Pipeline are not deleted as V2 creates its own folder structure to store its Import Results.
+Projects that you’ve created in Unity 2019.2 or older will still use their original Asset Import Pipeline by default. When opening such a project in Unity 2019.3 for the first time, you’ll get an option to upgrade to the new Asset Import Pipeline. If you decline, your project will continue using the original Asset Import Pipeline. Furthermore, the selected version is stored in the EditorSettings.asset file of your project, so it can be version controlled.</p>
+
+<figure>
+<img src="../uploads/Main/upgrade2019-assetpipe03.png" alt="">
+</figure>
+
+<h4>New Projects created with the new Asset Import Pipeline</h4>
+
+<p>When creating a new Project with Unity 2019.3 or newer, the new Asset Import Pipeline has become the new default way to work. All new projects you create will be using it.</p>
+
+<h4>Behaviour changes to the New Asset Import Pipeline</h4>
+
+<p>
+<strong>Multiple versions of the same asset are cached in the Library folder</strong> <br>
+Up until Unity 2019.2 (with the original Asset Import Pipeline), the Library folder was comprised of the GUIDs of Assets being their filename. Thus, switching from a platform to another platform would invalidate the Import Result in the <strong>Library</strong> folder, causing it to be re-imported every time you switch platforms.</p>
+
+<figure>
+<img src="../uploads/Main/upgrade2019-assetpipe04.png" alt="">
+</figure>
+
+<h4>Asset Import Pipeline V1</h4>
+
+<p>If you had to switch back and forth between platforms multiple times per day, this could easily take up hours, depending on your project size.
+Some of you have figured out workarounds for this, such as having a copy of your project per platform on your machine, but that doesn’t scale very well.
+With the new Asset Import Pipeline, we’ve removed the GUID to File Name mapping. Since dependencies for a particular Asset are tracked, we are able to Hash them all together to create a revision for the Import Result of an Asset. This allows us to have multiple revisions per Asset, which then means that we are no longer bound by a GUID to File Name mapping. Not having this requirement allows us to have Import Results which work across different configurations. For Fast Platform Switching, we could have an Import Result per platform, so that when you switch platforms back and forth the Import Result is already there, thus making the platform switch many orders of magnitude faster than with the Asset Import Pipeline V1.</p>
+
+<figure>
+<img src="../uploads/Main/upgrade2019-assetpipe05.png" alt="">
+</figure>
+
+<h4>Asset Import Pipeline V2</h4>
+
+<p>
+<strong>Caching and the Unity Accelerator</strong> <br>
+Most of the importers have had significant work done to them in order to improve their determinsm and have a positive effect on caching. This means that if the Unity Accelerator is used, the import result will be uploaded to a centralized storage where other machines can connect to and benefit from the work done for the same Asset on a different machine. Assets with dynamic dependencies can be cached now (e.g. nested prefabs, shaders, etc.). For a more comprehensive list of Importers and their associated files, check out the new AssetDatabase Manual page</p>
+
+<p>
+<strong>Caching of Scripted Importers:</strong> <br>
+ScriptedImporters and importers with registered dependencies were not cached with the old Asset Import Pipeline.</p>
+
+<blockquote>
+<p><em>Old Behaviour</em></p>
+
+<blockquote>
+<p>With the old Asset Import Pipeline, the switching of platforms invalidated all imports as the Import Result was GUID based, thus switching a platform would overwrite the import result every time.</p>
+</blockquote>
+
+<p><em>New Behaviour</em></p>
+
+<blockquote>
+<p>In the new Asset Import Pipeline, switching platforms does not invalidate imports as the File on disk representing the import result is a hash of its own contents, thus ensuring that when switching platform the contents are different and result in a new file, thus keeping both versions of the Import Result around and simply switching between one or another, without having to import anything.</p>
+</blockquote>
+</blockquote>
+
+<h4>Number of Calls to OnPostProcessAllAssets</h4>
+
+<p>In the old Asset Import Pipeline, the number of calls to the <code>OnPostProcessAllAssets</code> function was non-deterministic. Meaning that this function could be called once, or multiple times, for the same changes. With the new Asset Import Pipeline, there will be a single call to <code>OnPostProcessAllAssets</code> for detected Script changes (.cs files), and one for non-script changes (think .png, .fbx, .wav files).</p>
+
+<h4>Synchronous Script Compilation</h4>
+
+<p>In the old Asset Import Pipeline, one could trigger a compilation and chain going into play mode while a compilation was happening. This was a big time saver in certain situations, having non-synchronous compilation could lead to non-deterministic results. With the new Asset Import Pipeline, this has been changed so that the Asset Import Pipeline drives the majority of Script Compilation, and as such it requires a deterministic approach, thus locking up the editor until Script Compilation completes.</p>
+
+<p><a href="#TopOfPage">Back to top</a></p>
+
+<p><a name="Tilemap" aria-hidden="true"></a></p>
+
+<h3>Tilemap Editor is now a Package</h3>
+
+<p>The <span class="tooltip"><strong>Tilemap</strong><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Tilemap.html" href="class-Tilemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Tilemap" aria-label="Go to glossary anchor for Tilemap">Glossary</a></span></span></span> Editor is now a package. This package is automatically installed in new Unity Projects created with the 2D Project template. For more information on installing a package see <a href="upm-ui-actions.html">Adding and removing packages</a>.</p>
+
+<p>All public classes have been moved to the UnityEditor.Tilemaps namespace. Unity compiles your scripts that reference these classes into the “Unity.2D.Tilemap.Editor” Assembly Definition Asset. These are:</p>
+
+<ul>
+<li>GridBrush</li>
+<li>GridBrushEditorBase</li>
+<li>GridBrushEditor</li>
+<li>GridSelection</li>
+</ul>
+
+<p>Unity will attempt to update the relevant Tilemap <code>using</code> statements in your scripts but please check and change if needed.</p>
+
+<p>If you are referencing the Tilemap Tooling classes with scripts which are part of an Assembly Definition, you should add the “Unity.2D.Tilemap.Editor” Assembly Definition as an Assembly Definition Reference under your Assembly Definition. Unity may have set this automatically for you but please change it if it hasn’t.</p>
+
+<figure>
+<img src="../uploads/Main/upgrade20192-tilemap.png" alt="Assembly definition for the Tilemap Editor">
+<figcaption>Assembly definition for the Tilemap Editor</figcaption>
+</figure>
+
+<p>If you have precompiled assemblies referencing the Tilemap Tooling classes from a previous version of Unity, you will encounter issues when using them due to these changes. If possible, please update and recompile these assemblies against the new Tilemap Tooling assemblies.</p>
+
+<p>If you have precompiled assemblies referencing the Tilemap Tooling classes from a previous version of Unity, you need to update and recompile these assemblies to reference the new Tilemap Tooling assemblies.</p>
+
+<p>Examples of these issues when importing the precompiled assembly are (as errors in the Console window):</p>
+
+<p>Failed to extract {Class in Precompiled Assembly} class of base type UnityEditor.GridBrush when inspecting {Precompiled Assembly}
+Unloading broken assembly {Precompiled Assembly}, this assembly can cause crashes in the runtime</p>
+
+<p>These errors can be caused by inheriting from one of the Tilemap Tooling classes such as the GridBrush.</p>
+
+<p>Examples of these issues when using the precompiled assembly are (as errors in the Console window):</p>
+
+<pre><code>TypeLoadException: Could not resolve type with token 01000011 (from typeref, class/assembly UnityEditor.GridBrush, UnityEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null)
+Error: Could not load signature of {Method in Precompiled Assembly) due to: Could not resolve type with token 01000011 (from typeref, class/assembly UnityEditor.GridBrush, UnityEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null) assembly:UnityEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null type:UnityEditor.GridBrush member:(null) signature:&lt;none&gt;
+</code></pre>
+
+<p>These errors can be caused by creating or calling one of the methods of the Tilemap Tooling classes such as the GridBrush.</p>
+
+<p><a href="#TopOfPage">Back to top</a></p>
+
+<p><a name="SpriteTooling" aria-hidden="true"></a></p>
+
+<h3>SpriteTooling is now a Package</h3>
+
+<p>Sprite Tooling (Sprite Editor Window) is now a package. For more information on installing a package see <a href="upm-ui-actions.html">Adding and removing packages</a>.</p>
+
+<ul>
+<li>This package is not added to a new Unity Project by default, unless the new Project is created with the 2D Project template.</li>
+<li>This package will be added to pre-existing Unity Projects (2019.1 and prior) when upgraded to Unity 2019.1. You can remove this package If your project doesn’t use 2D Sprites and doesn’t require the use of <span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> Tooling.</li>
+<li>As part of converting the Sprite Tooling to a Package, the Experimental namespaces has been removed. If your project has scripts which reference classes related to Sprite Tooling, please ensure that they are using the correct namespace after the upgrade, eg. adding “using UnityEditor.U2D.Sprites” if required.</li>
+<li>If you are referencing the Sprite classes with scripts which are part of an Assembly Definition, you need to add the “Unity.2D.Sprite.Editor” Assembly Definition as an Assembly Definition Reference under your Assembly Definition.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/upgrade20192-sprite.png" alt="Assembly definition for the Sprite Tooling">
+<figcaption>Assembly definition for the Sprite Tooling</figcaption>
+</figure>
+
+<p><a href="#TopOfPage">Back to top</a></p>
+
+<p><a name="UnityUI" aria-hidden="true"></a></p>
+
+<h3>Unity UI is now a Package</h3>
+
+<p>Unity UI (UGUI) is now a package, com.unity.ugui. You can access it from the Package Manager (menu: Window &gt; Package Manager).</p>
+
+<p>Unity <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> is a core package that ships with Unity. You do not need to install it in new Projects.
+When you upgrade existing Unity Projects, created with version 2019.2b1 and earlier, to Unity 2019.2, this package is added automatically.
+Assembly definitions automatically get a reference to the uGUI assembly.
+If you install Unity 2019.2 overtop of an older version of Unity, make sure that the GUISystem folder, located in \Editor\Data\UnityExtensions\Unity is removed. Otherwise you might get class redefinition errors.
+The Unity UI source code is no longer published to BitBucket because Unity provides it with the package.
+The Unity UI API documentation is no longer in the main Scripting API reference. You can access it from the Scripting API section of the Unity UI package documentation.</p>
+
+<p><a href="#TopOfPage">Back to top</a></p>
+
+<p><a name="UIElements" aria-hidden="true"></a></p>
+
+<h3>UI Elements is now a standard feature and not experimental</h3>
+
+<p>See the <a href="https://docs.google.com/document/d/1mdMtTQVUkzQi7UIBXf1Eg1FzP7krmLVXCt-NwXm1APQ/">UI Elements 2019.1 upgrade guide</a> for more information.</p>
+
+<p><a href="#TopOfPage">Back to top</a></p>
+
+<p><a name="NET" aria-hidden="true"></a></p>
+
+<h3>.NET 3.5 Equivalent Scripting Runtime Removal</h3>
+
+<p>The .NET 3.5 Equivalent option for Scripting Runtime Version has been removed. Projects are automatically migrated to use the .NET 4.x Equivalent option when opened in 2019.2.</p>
+
+<p><a href="#TopOfPage">Back to top</a></p>
+
+<p><a name="Lighting" aria-hidden="true"></a></p>
+
+<h3>Lighting Improvements</h3>
+
+<p>Prior to 2019.1 Indirect Intensity slider only affected <span class="tooltip"><strong>lightmaps</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> when using the Progressive <span class="tooltip"><strong>Lightmapper</strong><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a href="Lightmapping.html" href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> when using the Progressive <span class="tooltip"><strong>Lightmapper</strong><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Lightmapper" aria-label="Go to glossary anchor for Lightmapper">Glossary</a></span></span></span>. For Enlighten, it was applied to both <span class="tooltip"><strong>light probes</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html" href="Glossary.html#Lightmapper" aria-label="Go to glossary anchor for Lightmapper">Glossary</a></span></span></span>. For Enlighten, it was applied to both <span class="tooltip"><strong>light probes</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span> and light maps. Now all backends apply Indirect Intensity value to both lightmaps and light probes.
+Upon baking the lighting again, you might notice that the probes will appear brighter if the Indirect Intensity value was modified.
+It is best to Clear Baked Data prior to baking lightmaps again after the upgrade.</p>
+
+<figure>
+<img src="../uploads/Main/upGuideLighting01.png" alt="">
+</figure>
+
+<p><a href="#TopOfPage">Back to top</a></p>
+
+<p><a name="CompatibilityAttribute" aria-hidden="true"></a></p>
+
+<h3>UnityAPICompatibilityVersionAttribute constructor change</h3>
+
+<p>The constructor that takes a single string is now obsolete. See the <a href="../ScriptReference/UnityAPICompatibilityVersionAttribute-ctor.html">documentation</a> for information on the supported overloads.</p>
+
+<p><a href="#TopOfPage">Back to top</a></p>
+
+<p><a name="SystemRequirements" aria-hidden="true"></a></p>
+
+<h3>Changed System Requirements</h3>
+
+<p>Projects made with Unity 2019 LTS require versions macOS 10.12 or Ubuntu 16.04 or later.</p>
+
+<p><a href="#TopOfPage">Back to top</a></p>
+
+<p><a name="Multiplayer" aria-hidden="true"></a></p>
+
+<h3>Multiplayer (UNet) High level API has moved to a package</h3>
+
+<p>The multiplayer <span class="tooltip"><strong>high level API</strong><span class="tooltiptext">A system for building multiplayer capabilities for Unity games. It is built on top of the lower level transport real-time communication layer, and handles many of the common tasks that are required for multiplayer games. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UNet" href="UNet">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#HighLevelAPI" aria-label="Go to glossary anchor for HighLevelAPI">Glossary</a></span></span></span> has been moved from an extension to a package. This doesn’t affect the NetworkTransport class (the low level API). All dependencies which were in the Unity engine have been moved to the package. This means the high level API is now independent except for some hooks into the <span class="tooltip"><strong>profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a href="Profiler.html" href="Glossary.html#HighLevelAPI" aria-label="Go to glossary anchor for HighLevelAPI">Glossary</a></span></span></span> has been moved from an extension to a package. This doesn’t affect the NetworkTransport class (the low level API). All dependencies which were in the Unity engine have been moved to the package. This means the high level API is now independent except for some hooks into the <span class="tooltip"><strong>profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> which couldn’t be migrated at this time.</p>
+
+<p>Older Projects containing the high level API will have the package automatically added to prevent compiler errors. This does not happen for new Projects and you can add it if required from the Package Manager window. See the multiplayer high level API <a href="https://docs.unity3d.com/Packages/com.unity.multiplayer-hlapi@latest/index.html?subfolder=/api">documentation</a>.</p>
+
+<p><a href="#TopOfPage">Back to top</a></p>
+
+<p><a name="UNITY_ADS" aria-hidden="true"></a></p>
+
+<h3>The UNITY_ADS directive was removed</h3>
+
+<p>As of 2019.4, Unity no automatically defines <code>UNITY_ADS</code>. You need to either stop using <code>UNITY_ADS</code> in your scripts, or create a new custom global #define for it. See the <a href="PlatformDependentCompilation.html#GlobalCustomDefines">Platform Dependent Compilation</a> page for guidance on how to create a new custom global #define.</p>
+<!-- area:none -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UpgradeGuide2020LTS.html"></a></span><div class="tip">Upgrading to Unity 2020 LTS</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UsingTheEditor.html"></a></span><div class="tip">Unity's interface</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

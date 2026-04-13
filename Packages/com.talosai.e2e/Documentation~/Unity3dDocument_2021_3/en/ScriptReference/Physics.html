@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Physics</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">Physics</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEngine</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Implemented in:<a href="UnityEngine.PhysicsModule.html" class="cl">UnityEngine.PhysicsModule</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Global physics properties and helper methods.</p>
+              </div>
+              <div class="subsection">
+                <h3>Static Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Physics.AllLayers.html">AllLayers</a></td><td class="desc">Layer mask constant to select all layers.</td></tr>
+      <tr><td class="lbl"><a href="Physics-autoSimulation.html">autoSimulation</a></td><td class="desc">Sets whether the physics should be simulated automatically or not.</td></tr>
+      <tr><td class="lbl"><a href="Physics-autoSyncTransforms.html">autoSyncTransforms</a></td><td class="desc">Whether or not to automatically sync transform changes with the physics system whenever a Transform component changes.</td></tr>
+      <tr><td class="lbl"><a href="Physics-bounceThreshold.html">bounceThreshold</a></td><td class="desc">Two colliding objects with a relative velocity below this will not bounce (default 2). Must be positive.</td></tr>
+      <tr><td class="lbl"><a href="Physics-clothGravity.html">clothGravity</a></td><td class="desc">Cloth Gravity setting.
+Set gravity for all cloth components.</td></tr>
+      <tr><td class="lbl"><a href="Physics-defaultContactOffset.html">defaultContactOffset</a></td><td class="desc">The default contact offset of the newly created colliders.</td></tr>
+      <tr><td class="lbl"><a href="Physics-defaultMaxAngularSpeed.html">defaultMaxAngularSpeed</a></td><td class="desc">Default maximum angular speed of the dynamic Rigidbody, in radians (default 50).</td></tr>
+      <tr><td class="lbl"><a href="Physics-defaultMaxDepenetrationVelocity.html">defaultMaxDepenetrationVelocity</a></td><td class="desc">The maximum default velocity needed to move a Rigidbody's collider out of another collider's surface penetration. Must be positive.</td></tr>
+      <tr><td class="lbl"><a href="Physics-defaultPhysicsScene.html">defaultPhysicsScene</a></td><td class="desc">The PhysicsScene automatically created when Unity starts.</td></tr>
+      <tr><td class="lbl"><a href="Physics.DefaultRaycastLayers.html">DefaultRaycastLayers</a></td><td class="desc">Layer mask constant to select default raycast layers.</td></tr>
+      <tr><td class="lbl"><a href="Physics-defaultSolverIterations.html">defaultSolverIterations</a></td><td class="desc">The defaultSolverIterations determines how accurately Rigidbody joints and collision contacts are resolved. (default 6). Must be positive.</td></tr>
+      <tr><td class="lbl"><a href="Physics-defaultSolverVelocityIterations.html">defaultSolverVelocityIterations</a></td><td class="desc">The defaultSolverVelocityIterations affects how accurately the Rigidbody joints and collision contacts are resolved. (default 1). Must be positive.</td></tr>
+      <tr><td class="lbl"><a href="Physics-gravity.html">gravity</a></td><td class="desc">The gravity applied to all rigid bodies in the Scene.</td></tr>
+      <tr><td class="lbl"><a href="Physics.IgnoreRaycastLayer.html">IgnoreRaycastLayer</a></td><td class="desc">Layer mask constant to select ignore raycast layer.</td></tr>
+      <tr><td class="lbl"><a href="Physics-improvedPatchFriction.html">improvedPatchFriction</a></td><td class="desc">Enables an improved patch friction mode that guarantees static and dynamic friction do not exceed analytical results.</td></tr>
+      <tr><td class="lbl"><a href="Physics-interCollisionDistance.html">interCollisionDistance</a></td><td class="desc">Sets the minimum separation distance for cloth inter-collision.</td></tr>
+      <tr><td class="lbl"><a href="Physics-interCollisionStiffness.html">interCollisionStiffness</a></td><td class="desc">Sets the cloth inter-collision stiffness.</td></tr>
+      <tr><td class="lbl"><a href="Physics-queriesHitBackfaces.html">queriesHitBackfaces</a></td><td class="desc">Whether physics queries should hit back-face triangles.</td></tr>
+      <tr><td class="lbl"><a href="Physics-queriesHitTriggers.html">queriesHitTriggers</a></td><td class="desc">Specifies whether queries (raycasts, spherecasts, overlap tests, etc.) hit Triggers by default.</td></tr>
+      <tr><td class="lbl"><a href="Physics-reuseCollisionCallbacks.html">reuseCollisionCallbacks</a></td><td class="desc">Determines whether the garbage collector should reuse only a single instance of a Collision type for all collision callbacks.</td></tr>
+      <tr><td class="lbl"><a href="Physics-sleepThreshold.html">sleepThreshold</a></td><td class="desc">The mass-normalized energy threshold, below which objects start going to sleep.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Physics.BakeMesh.html">BakeMesh</a></td><td class="desc">Prepares the Mesh for use with a MeshCollider.</td></tr>
+      <tr><td class="lbl"><a href="Physics.BoxCast.html">BoxCast</a></td><td class="desc">Casts the box along a ray and returns detailed information on what was hit.</td></tr>
+      <tr><td class="lbl"><a href="Physics.BoxCastAll.html">BoxCastAll</a></td><td class="desc">Like Physics.BoxCast, but returns all hits.</td></tr>
+      <tr><td class="lbl"><a href="Physics.BoxCastNonAlloc.html">BoxCastNonAlloc</a></td><td class="desc">Cast the box along the direction, and store hits in the provided buffer.</td></tr>
+      <tr><td class="lbl"><a href="Physics.CapsuleCast.html">CapsuleCast</a></td><td class="desc">Casts a capsule against all colliders in the Scene and returns detailed information on what was hit.</td></tr>
+      <tr><td class="lbl"><a href="Physics.CapsuleCastAll.html">CapsuleCastAll</a></td><td class="desc">Like Physics.CapsuleCast, but this function will return all hits the capsule sweep intersects.</td></tr>
+      <tr><td class="lbl"><a href="Physics.CapsuleCastNonAlloc.html">CapsuleCastNonAlloc</a></td><td class="desc">Casts a capsule against all colliders in the Scene and returns detailed information on what was hit into the buffer.</td></tr>
+      <tr><td class="lbl"><a href="Physics.CheckBox.html">CheckBox</a></td><td class="desc">Check whether the given box overlaps with other colliders or not.</td></tr>
+      <tr><td class="lbl"><a href="Physics.CheckCapsule.html">CheckCapsule</a></td><td class="desc">Checks if any colliders overlap a capsule-shaped volume in world space.</td></tr>
+      <tr><td class="lbl"><a href="Physics.CheckSphere.html">CheckSphere</a></td><td class="desc">Returns true if there are any colliders overlapping the sphere defined by position and radius in world coordinates.</td></tr>
+      <tr><td class="lbl"><a href="Physics.ClosestPoint.html">ClosestPoint</a></td><td class="desc">Returns a point on the given collider that is closest to the specified location.</td></tr>
+      <tr><td class="lbl"><a href="Physics.ComputePenetration.html">ComputePenetration</a></td><td class="desc">Compute the minimal translation required to separate the given colliders apart at specified poses.</td></tr>
+      <tr><td class="lbl"><a href="Physics.GetIgnoreCollision.html">GetIgnoreCollision</a></td><td class="desc">Checks whether the collision detection system will ignore all collisions/triggers between collider1 and collider2 or not.</td></tr>
+      <tr><td class="lbl"><a href="Physics.GetIgnoreLayerCollision.html">GetIgnoreLayerCollision</a></td><td class="desc">Are collisions between layer1 and layer2 being ignored?</td></tr>
+      <tr><td class="lbl"><a href="Physics.IgnoreCollision.html">IgnoreCollision</a></td><td class="desc">Makes the collision detection system ignore all collisions between collider1 and collider2.</td></tr>
+      <tr><td class="lbl"><a href="Physics.IgnoreLayerCollision.html">IgnoreLayerCollision</a></td><td class="desc">Makes the collision detection system ignore all collisions between any collider in layer1 and any collider in layer2.Note that IgnoreLayerCollision will reset the trigger state of affected colliders, so you might receive OnTriggerExit and OnTriggerEnter messages in response to calling this.</td></tr>
+      <tr><td class="lbl"><a href="Physics.Linecast.html">Linecast</a></td><td class="desc">Returns true if there is any collider intersecting the line between start and end.</td></tr>
+      <tr><td class="lbl"><a href="Physics.OverlapBox.html">OverlapBox</a></td><td class="desc">Find all colliders touching or inside of the given box.</td></tr>
+      <tr><td class="lbl"><a href="Physics.OverlapBoxNonAlloc.html">OverlapBoxNonAlloc</a></td><td class="desc">Find all colliders touching or inside of the given box, and store them into the buffer.</td></tr>
+      <tr><td class="lbl"><a href="Physics.OverlapCapsule.html">OverlapCapsule</a></td><td class="desc">Check the given capsule against the physics world and return all overlapping colliders.</td></tr>
+      <tr><td class="lbl"><a href="Physics.OverlapCapsuleNonAlloc.html">OverlapCapsuleNonAlloc</a></td><td class="desc">Check the given capsule against the physics world and return all overlapping colliders in the user-provided buffer.</td></tr>
+      <tr><td class="lbl"><a href="Physics.OverlapSphere.html">OverlapSphere</a></td><td class="desc">Computes and stores colliders touching or inside the sphere.</td></tr>
+      <tr><td class="lbl"><a href="Physics.OverlapSphereNonAlloc.html">OverlapSphereNonAlloc</a></td><td class="desc">Computes and stores colliders touching or inside the sphere into the provided buffer.</td></tr>
+      <tr><td class="lbl"><a href="Physics.Raycast.html">Raycast</a></td><td class="desc">Casts a ray, from point origin, in direction direction, of length maxDistance, against all colliders in the Scene.</td></tr>
+      <tr><td class="lbl"><a href="Physics.RaycastAll.html">RaycastAll</a></td><td class="desc">Casts a ray through the Scene and returns all hits. Note that order of the results is undefined.</td></tr>
+      <tr><td class="lbl"><a href="Physics.RaycastNonAlloc.html">RaycastNonAlloc</a></td><td class="desc">Cast a ray through the Scene and store the hits into the buffer.</td></tr>
+      <tr><td class="lbl"><a href="Physics.RebuildBroadphaseRegions.html">RebuildBroadphaseRegions</a></td><td class="desc">Rebuild the broadphase interest regions as well as set the world boundaries.</td></tr>
+      <tr><td class="lbl"><a href="Physics.Simulate.html">Simulate</a></td><td class="desc">Simulate physics in the Scene.</td></tr>
+      <tr><td class="lbl"><a href="Physics.SphereCast.html">SphereCast</a></td><td class="desc">Casts a sphere along a ray and returns detailed information on what was hit.</td></tr>
+      <tr><td class="lbl"><a href="Physics.SphereCastAll.html">SphereCastAll</a></td><td class="desc">Like Physics.SphereCast, but this function will return all hits the sphere sweep intersects.</td></tr>
+      <tr><td class="lbl"><a href="Physics.SphereCastNonAlloc.html">SphereCastNonAlloc</a></td><td class="desc">Cast sphere along the direction and store the results into buffer.</td></tr>
+      <tr><td class="lbl"><a href="Physics.SyncTransforms.html">SyncTransforms</a></td><td class="desc">Apply Transform changes to the physics engine.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Events</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Event</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Physics.ContactModifyEvent.html">ContactModifyEvent</a></td><td class="desc">Subscribe to this event to be able to customize the collision response for contact pairs.</td></tr>
+      <tr><td class="lbl"><a href="Physics.ContactModifyEventCCD.html">ContactModifyEventCCD</a></td><td class="desc">Subscribe to this event to be able to customize the collision response of CCD generated contact pairs.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

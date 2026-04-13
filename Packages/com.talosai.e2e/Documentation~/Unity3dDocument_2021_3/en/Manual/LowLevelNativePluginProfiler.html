@@ -1,0 +1,440 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Low-level native plug-in Profiler API</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/LowLevelNativePluginProfiler.html">English</a></li>
+<li><a href="/cn/current/Manual/LowLevelNativePluginProfiler.html">中文</a></li>
+<li><a href="/ja/current/Manual/LowLevelNativePluginProfiler.html">日本語</a></li>
+<li><a href="/kr/current/Manual/LowLevelNativePluginProfiler.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/LowLevelNativePluginProfiler.html">English</a></li>
+<li><a href="/cn/current/Manual/LowLevelNativePluginProfiler.html">中文</a></li>
+<li><a href="/ja/current/Manual/LowLevelNativePluginProfiler.html">日本語</a></li>
+<li><a href="/kr/current/Manual/LowLevelNativePluginProfiler.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="Profiler.html">Profiler overview</a></li>
+<li>Low-level native plug-in Profiler API</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Profiler-customizing-details-view.html"></a></span><div class="tip">Creating a custom module details panel</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="performance-profiling-tools.html"></a></span><div class="tip">Profiling tools</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Low-level native plug-in Profiler API</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Manual/Profiler.html">Unity Profiler</a> is a tool that you can use to analyze and improve the performance of your application. The <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a href="Profiler.html" href="https://docs.unity3d.com/Manual/Profiler.html">Unity Profiler</a> is a tool that you can use to analyze and improve the performance of your application. The <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> carries out <a href="https://docs.unity3d.com/Manual/ProfilerCPU.html">frame time analysis</a> of function calls in native Unity code and managed code in your application. You can use the <a href="https://docs.unity3d.com/ScriptReference/Unity.Profiling.ProfilerMarker.html">ProfilerMarker API</a> to insert timing markers into your own code to get a better understanding of the performance of specific areas of your application.</p>
+
+<p>You can use the low-level <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Manual/NativePlugins.html">native plug-in</a><span class="tooltiptext">A platform-specific native code library that is created outside of Unity for use in Unity. Allows you can access features like OS calls and third-party code libraries that would otherwise not be available to Unity. <a href="Plugins.html" href="https://docs.unity3d.com/Manual/NativePlugins.html">native plug-in</a><span class="tooltiptext">A platform-specific native code library that is created outside of Unity for use in Unity. Allows you can access features like OS calls and third-party code libraries that would otherwise not be available to Unity. <a href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Nativeplug-in" aria-label="Go to glossary anchor for Nativeplug-in">Glossary</a></span></span></span> profiler API to extend the Profiler and profile the performance of native <span class="tooltip"><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a href="Plugins.html" href="Glossary.html#Nativeplug-in" aria-label="Go to glossary anchor for Nativeplug-in">Glossary</a></span></span></span> profiler API to extend the Profiler and profile the performance of native <span class="tooltip"><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> code, or to prepare profiling data to send to third-party profiling tools such as <span class="tooltip"><strong>Razor</strong><span class="tooltiptext">A CPU/GPU chip set used in Playstation® hardware. <a href="BestPracticeUnderstandingPerformanceInUnity1" href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> code, or to prepare profiling data to send to third-party profiling tools such as <span class="tooltip"><strong>Razor</strong><span class="tooltiptext">A CPU/GPU chip set used in Playstation® hardware. <a href="BestPracticeUnderstandingPerformanceInUnity1">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Razor" aria-label="Go to glossary anchor for Razor">Glossary</a></span></span></span> (PS4), PIX (Xbox, Windows), Chrome Tracing, ETW, ITT, Vtune, or Telemetry. The low-level native plug-in Profiler APIs provide the following interfaces for communication between the Unity Profiler and external tooling:</p>
+
+<ul>
+<li>
+<strong>IUnityProfiler</strong>: Use this interface to add instrumentation events to the Unity Profiler from C/C++ native plug-in code.</li>
+<li>
+<strong>IUnityProfilerCallbacks</strong>: Use this interface to intercept Unity Profiler events and store or redirect them to other tools.</li>
+</ul>
+
+<h2>IUnityProfiler API</h2>
+
+<p>Use the IUnityProfiler plug-in API to add instrumentation to the C/C++ code of your native plug-ins.</p>
+
+<p>The plug-in API is represented by IUnityProfiler interface, which is declared in the <code>IUnityProfiler.h</code> header. Unity stores the header in the <code>&lt;UnityInstallPath&gt;\Editor\Data\PluginAPI</code> folder of your Unity installation. (On macOS, right-click on the Unity application, and select <strong>Show Package Contents</strong>. The header is in <code>Contents\PluginAPI</code>).</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Method</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>CreateMarker</code></td>
+	<td style="text-align:left;">Creates a <span class="tooltip"><strong>Profiler marker</strong><span class="tooltiptext">Placed in code to describe a CPU or GPU event that is then displayed in the Unity Profiler window. Added to Unity code by default, or you can use <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.profiling.core@latest/index.html?subfolder=/manual/profilermarker-guide.html">ProfilerMarker API</a> to add your own custom markers. <a href="profiler-markers.html" href="https://docs.unity3d.com/Packages/com.unity.profiling.core@latest/index.html?subfolder=/manual/profilermarker-guide.html">ProfilerMarker API</a> to add your own custom markers. <a href="profiler-markers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profilermarker" aria-label="Go to glossary anchor for Profilermarker">Glossary</a></span></span></span> which represents a named instrumentation scope, which you can then use to generate instrumentation samples.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>SetMarkerMetadataName</code></td>
+	<td style="text-align:left;">Specifies custom parameter names which can be passed along with an instrumentation sample for a Profiler marker.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>BeginSample</code></td>
+	<td style="text-align:left;">Begins an instrumentation section of a code named after the Profiler marker.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>EndSample</code></td>
+	<td style="text-align:left;">Ends an instrumentation section.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>EmitEvent</code></td>
+	<td style="text-align:left;">Emits generic events with metadata.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>IsEnabled</code></td>
+	<td style="text-align:left;">Returns 1 if the Profiler is capturing the data.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>IsAvailable</code></td>
+	<td style="text-align:left;">Returns 1 for Editor or Development Players where the Profiler is available, and 0 for Release Players.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>RegisterThread</code></td>
+	<td style="text-align:left;">Registers the current thread under the specified name.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>UnregisterThread</code></td>
+	<td style="text-align:left;">Unregisters the current thread from Profiler.
+</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Usage example</h3>
+
+<p>This example generates Profiler events that are then shown in the Profiler Window.</p>
+
+<pre><code class="lang-csharp">#include &lt;IUnityInterface.h&gt;
+#include &lt;IUnityProfiler.h&gt;
+
+static IUnityProfiler* s_UnityProfiler = NULL;
+static const UnityProfilerMarkerDesc* s_MyPluginMarker = NULL;
+static bool s_IsDevelopmentBuild = false;
+
+static void MyPluginWorkMethod()
+{
+    if (s_IsDevelopmentBuild)
+        s_UnityProfiler-&gt;BeginSample(s_MyPluginMarker);
+
+    // Code I want to see in Unity Profiler as &quot;MyPluginMethod&quot;.
+    // ...
+
+    if (s_IsDevelopmentBuild)
+        s_UnityProfiler-&gt;EndSample(s_MyPluginMarker);
+}
+
+extern &quot;C&quot; void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API UnityPluginLoad(IUnityInterfaces* unityInterfaces)
+{
+    s_UnityProfiler = unityInterfaces-&gt;Get&lt;IUnityProfiler&gt;();
+    if (s_UnityProfiler == NULL)
+        return;
+    s_IsDevelopmentBuild = s_UnityProfiler-&gt;IsAvailable() != 0;
+    s_UnityProfiler-&gt;CreateMarker(&amp;s_MyPluginMarker, &quot;MyPluginMethod&quot;, kUnityProfilerCategoryOther, kUnityProfilerMarkerFlagDefault, 0);
+}
+
+extern &quot;C&quot; void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API UnityPluginUnload()
+{
+    s_UnityProfiler  = NULL;
+}
+</code></pre>
+
+<h2>IUnityProfilerCallbacks API callbacks</h2>
+
+<p>The native Profiler plug-in API provides an interface between Unity’s subsystems and third-party profiling APIs so you can use an external profiling tool to profile your Unity application. The IUnityProfilerCallbacks header exposes the API, which Unity stores in the <code>&lt;UnityInstallPath&gt;\Editor\Data\PluginAPI</code> folder of your Unity installation. (On macOS, right-click on the Unity application, and select <strong>Show Package Contents</strong>. The header is in <code>Contents\PluginAPI</code>).</p>
+
+<p>The following Unity Profiler features help capture instrumentation data so you can analyze the performance of your application.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Profiler feature</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Categories</strong></td>
+	<td style="text-align:left;">Unity groups profile data into categories (such as Rendering, Scripting and Animation), and assigns a color to each category. Color-coded categories help you visually distinguish the types of data in the Profiler window. The Profiler native plug-in API retrieves these colors so you can use them in an external profiling tool.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Usage flags</strong></td>
+	<td style="text-align:left;">Usage flags act as a filter that reduce the amount of data that Unity sends to an external profiling tool. You can use usage flags to remove unnecessary information from the profiling data before Unity sends it to the external tool. The Profiler applies the following usage flags to event markers so that you can filter the data:<br><br><strong>Availability flags</strong>that flag whether a marker is available in the Unity Editor, a development player, or a release player.<br><br><strong>Verbosity levels</strong> that correlate to the type of the task you are doing in the Editor, and the level of information that task requires (for example, internal, debug, or user level).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Frame events</strong></td>
+	<td style="text-align:left;">You can use the Profiler native plug-in API to perform frame-time analysis in an external profiling tool.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Thread profiling</strong></td>
+	<td style="text-align:left;">Unity does a significant amount of work on threads (for example, the main thread, render thread and job system worker thread). You can use the Profiler native plug-in API to enable profiling on any thread.</td>
+</tr>
+</tbody>
+</table>
+
+<p>To use the instrumentation data that the Unity Profiler generates in an external profiler, you can use these minimal set of callbacks in your C/C++ plug-in code that integrates the third-party profiler:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Callback</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>RegisterCreateCategoryCallback</code></td>
+	<td style="text-align:left;">Registers a <code>IUnityProfilerCreateCategoryCallback</code> callback to get the <span class="tooltip"><strong>Profiler category</strong><span class="tooltiptext">Identifies the workload data for a Unity subsystem (for example, Rendering, Scripting and Animation categories). Unity applies color-coding to categories to visually distinguish between the types of data in the <strong>Profiler</strong> window.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profilercategory" aria-label="Go to glossary anchor for Profilercategory">Glossary</a></span></span></span> name and color whenever Unity creates a category.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>RegisterCreateMarkerCallback</code></td>
+	<td style="text-align:left;">Registers a <code>IUnityProfilerCreateMarkerCallback</code> callback which is called whenever Unity creates a marker. Use it to get the name, Profiler category, and usage flags of a marker. The const <code>UnityProfilerMarkerDesc* markerDesc</code> parameter of the callback function represents a persistent pointer to the marker description which you can use to filter markers in <code>RegisterMarkerEventCallback</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>RegisterMarkerEventCallback</code></td>
+	<td style="text-align:left;">Registers a IUnityProfilerMarkerEventCallback callback that Unity invokes when single-shot, scoped, memory allocation, or garbage collection events happen. You can then use this callback to invoke the relevant functions in an external profiling tool. <strong>Note:</strong> Unity represents memory allocation events with the GC.Alloc marker, and garbage collection events with the GC.Collect markers.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>RegisterFrameCallback</code></td>
+	<td style="text-align:left;">Encapsulates samples into logical frames so external profiling tools that don’t use frames can use these samples. Also registers a callback that the Unity Profiler runs when Unity starts the next logical CPU frame.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>RegisterCreateThreadCallback</code></td>
+	<td style="text-align:left;">Registers a callback to get the internal thread name whenever Unity registers a thread for profiling.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Usage example</h3>
+
+<p>This example shows you how to pass Unity Profiler events to another profiler which has push/pop semantics. It provides two functions:</p>
+
+<ul>
+<li>
+<code>void MyProfilerPushMarker(const char* name)</code> - pushes a named marker.</li>
+<li>
+<code>void MyProfilerPopMarker()</code> - pops instrumentation marker.</li>
+</ul>
+
+<p>The following example provides the minimal implementation required to pass begin and end instrumentation events from the Unity Profiler to the external profiler:</p>
+
+<pre><code class="lang-csharp">#include &lt;IUnityInterface.h&gt;
+#include &lt;IUnityProfilerCallbacks.h&gt;
+
+static IUnityProfilerCallbacks* s_UnityProfilerCallbacks = NULL;
+
+static void UNITY_INTERFACE_API MyProfilerEventCallback(const UnityProfilerMarkerDesc* markerDesc, UnityProfilerMarkerEventType eventType, unsigned short eventDataCount, const UnityProfilerMarkerData* eventData, void* userData)
+{
+    switch (eventType)
+    {
+        case kUnityProfilerMarkerEventTypeBegin:
+        {
+            MyProfilerPushMarker(markerDesc-&gt;name);
+            break;
+        }
+        case kUnityProfilerMarkerEventTypeEnd:
+        {
+            MyProfilerPopMarker();
+            break;
+        }
+    }
+}
+
+static void UNITY_INTERFACE_API MyProfilerCreateMarkerCallback(const UnityProfilerMarkerDesc* markerDesc, void* userData)
+{
+    s_UnityProfilerCallbacks-&gt;RegisterMarkerEventCallback(markerDesc, MyProfilerEventCallback, NULL);
+}
+
+extern &quot;C&quot; void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API UnityPluginLoad(IUnityInterfaces* unityInterfaces)
+{
+    s_UnityProfilerCallbacks = unityInterfaces-&gt;Get&lt;IUnityProfilerCallbacks&gt;();
+    s_UnityProfilerCallbacks-&gt;RegisterCreateMarkerCallback(&amp;MyProfilerCreateMarkerCallback, NULL);
+}
+
+extern &quot;C&quot; void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API UnityPluginUnload()
+{
+    s_UnityProfilerCallbacks-&gt;UnregisterCreateMarkerCallback(&amp;MyProfilerCreateMarkerCallback, NULL);
+    s_UnityProfilerCallbacks-&gt;UnregisterMarkerEventCallback(NULL, &amp;MyProfilerEventCallback, NULL);
+}
+</code></pre>
+
+<p>
+<strong>Note:</strong> To unregister the given callback from all markers, run <code>UnregisterEventCallback</code> with the first parameter set to <code>null</code>.</p>
+
+<h4>UnitySystracePlugin example</h4>
+
+<p>You can register and unregister marker callbacks dynamically, once every frame. The following example minimizes profiling overhead by enabling and disabling callbacks, depending on a third party profile state.</p>
+
+<pre><code class="lang-csharp">| static void UNITY_INTERFACE_API SystraceFrameCallback(void* userData)
+{
+    bool isCapturing = ATrace_isEnabled();
+    if (isCapturing != s_isCapturing)
+    {
+        s_isCapturing = isCapturing;
+        if (isCapturing)
+        {
+            s_UnityProfilerCallbacks-&gt;
+              RegisterCreateMarkerCallback(SystraceCreateEventCallback, NULL);
+        }
+        else
+        {
+            s_UnityProfilerCallbacks-&gt;
+              UnregisterCreateMarkerCallback(SystraceCreateEventCallback, NULL);
+            s_UnityProfilerCallbacks-&gt;
+              UnregisterMarkerEventCallback(NULL, SystraceEventCallback, NULL);
+        }
+    }
+}
+</code></pre>
+
+<p>
+<strong>Note:</strong> To unregister the given callback from all markers, run <code>UnregisterEventCallback</code> with the first parameter set to <code>null</code>.</p>
+
+<h3>Special markers</h3>
+
+<p>Unity has the following special markers that contain useful metadata:</p>
+
+<ul>
+<li>Profiler.DefaultMarker</li>
+<li>GC.Alloc</li>
+</ul>
+
+<h4>Profiler.DefaultMarker</h4>
+
+<p>The <code>Profiler.DefaultMarker</code> is a marker that Unity reserves for <a href="https://docs.unity3d.com/ScriptReference/Profiling.Profiler.BeginSample.html">Profiler.BeginSample</a> and <a href="https://docs.unity3d.com/ScriptReference/Profiling.Profiler.EndSample.html">Profiler.EndSample</a> events.</p>
+
+<p>In the example above, <code>kUnityProfilerMarkerEventTypeBegin eventType</code> corresponds to the <code>Profiler.BeginSample</code> event and has the following data:</p>
+
+<ul>
+<li>Int32: The <code>UnityEngine.Object</code> instance ID. This is 0 if the object is not specified.</li>
+<li>UInt16 array: The UTF16 string that is passed to <code>Profiler.BeginSample</code>. The size is in bytes.</li>
+<li>UInt32: The category index.</li>
+</ul>
+
+<h4>GC.Alloc</h4>
+
+<p>
+<code>GC.Alloc</code> is a marker that corresponds to garbage collection allocation. It has the following data:</p>
+
+<ul>
+<li>Int64: The size of the allocation.</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Profiler-customizing-details-view.html"></a></span><div class="tip">Creating a custom module details panel</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="performance-profiling-tools.html"></a></span><div class="tip">Profiling tools</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

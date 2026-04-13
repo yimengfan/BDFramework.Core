@@ -1,0 +1,597 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: New in Unity 2021 LTS</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/WhatsNew2021LTS.html">English</a></li>
+<li><a href="/cn/current/Manual/WhatsNew2021LTS.html">中文</a></li>
+<li><a href="/ja/current/Manual/WhatsNew2021LTS.html">日本語</a></li>
+<li><a href="/kr/current/Manual/WhatsNew2021LTS.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/WhatsNew2021LTS.html">English</a></li>
+<li><a href="/cn/current/Manual/WhatsNew2021LTS.html">中文</a></li>
+<li><a href="/ja/current/Manual/WhatsNew2021LTS.html">日本語</a></li>
+<li><a href="/kr/current/Manual/WhatsNew2021LTS.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul><li>New in Unity 2021 LTS</li></ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="TermsOfUse.html"></a></span><div class="tip">Trademarks and terms of use</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="PackagesList.html"></a></span><div class="tip">Packages and feature sets</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>New in Unity 2021 LTS</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>Long-term Support (LTS)</h2>
+
+<p>Unity 2021.3 is an LTS release. Unity 2021.3 contains features released in 2021.1 and 2021.2. LTS releases are supported for two years for Personal and Pro plan subscribers. Enterprise and Industry plan subscribers receive extended LTS support for three years. Refer to <a href="https://unity.com/releases/lts-vs-tech-stream">Long Term Support (LTS) + Tech Stream</a> to learn more.</p>
+
+<h2>Release Notes</h2>
+
+<p>To find out more about the new features, changes, and improvements to Unity 2021 releases, refer to:</p>
+
+<ul>
+<li><a href="https://unity3d.com/unity/whats-new/2021.3.0">2021.3 Release Notes</a></li>
+<li><a href="https://unity3d.com/unity/whats-new/2021.2.0">2021.2 Release Notes</a></li>
+<li><a href="https://unity3d.com/unity/whats-new/2021.1">2021.1 Release Notes</a></li>
+</ul>
+
+<p>To find the release notes for other releases, refer to the <a href="https://unity.com/releases/editor/archive">Unity download archive</a>.</p>
+
+<h2>Upgrade guides</h2>
+
+<p>If you are upgrading existing projects from an earlier version of Unity, read the Upgrade Guides for information about how your project might be affected. Here are the LTS specific upgrade guides:</p>
+
+<ul>
+<li><a href="UpgradeGuide2021LTS.html">Upgrading to 2021 LTS</a></li>
+<li><a href="UpgradeGuide2020LTS.html">Upgrading to 2020 LTS</a></li>
+<li><a href="UpgradeGuide2019LTS.html">Upgrading to 2019 LTS</a></li>
+</ul>
+
+<h1>What’s new</h1>
+
+<p>See what’s changed in Unity 2021 LTS since 2020 LTS and view the documentation for the affected areas.</p>
+
+<h3>What’s New page outline</h3>
+
+<ul>
+<li><a href="#Editor">Editor and workflow</a></li>
+<li><a href="#Programming">Programming workflows</a></li>
+<li><a href="#Platforms">Platforms</a></li>
+<li><a href="#Cinematics">Cinematics</a></li>
+<li><a href="#HDRP">High Definition Render Pipeline (HDRP)</a></li>
+<li><a href="#URP">Universal Render Pipeline</a></li>
+<li><a href="#SRP">Scriptable Render Pipeline</a></li>
+<li><a href="#Authoring">Authoring tools</a></li>
+<li><a href="#2D">2D</a></li>
+</ul>
+
+<p><a name="Editor" aria-hidden="true"></a></p>
+
+<h2>Editor and workflow</h2>
+
+<h3><a href="Quickstart2D.html">2D game development quickstart guide</a></h3>
+
+<p>The 2D game development quickstart guide has been released, which provides a workflow for developing a 2D game in Unity. This quickstart guide helps you decide what game perspective and art style you want your game to have, set up your Unity project, and create a 2D game.</p>
+
+<h3><a href="Quickstart3D.html">3D game development quickstart guide</a></h3>
+
+<p>The 3D game development quickstart guide has been released, which provides a workflow for developing a 3D game in Unity. This quickstart guide helps you set up your Unity project, and create a 3D game. </p>
+
+<h3><a href="overlays.html">Overlays in Scene view</a></h3>
+
+<p>The <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view now contains overlays for artist-driven context-based tools and customizable floating <span class="tooltip"><strong>toolbars</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view now contains overlays for artist-driven context-based tools and customizable floating <span class="tooltip"><strong>toolbars</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> for Scene Tools (Move, rotate, scale, etc.), Component tools, Orientation, and Search. This system is extensible, so you can add custom tools and toolbars as overlays.</p>
+
+<h3>Quality of life and efficiency improvements</h3>
+
+<ul>
+<li>The <a href="class-Transform.html">Transform</a> component can now constrain scale proportions.</li>
+<li>Project assets have copy/cut/paste support. If you drag multiple objects from the Hierarchy into the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, it now produces multiple <span class="tooltip"><strong>Prefabs</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html" href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, it now produces multiple <span class="tooltip"><strong>Prefabs</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span>.</li>
+<li>You can preview complex Prefabs faster in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, and “revert to Prefab” works with multiselection.</li>
+<li>To maximize the Game view, you can now choose from the following options: Play Focused; Play Maximized; Play Unfocused.</li>
+<li>If you click on a material slot in the Renderer component, that material is highlighted in the <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>.</li>
+<li>The number field math expressions in the Inspector are more accurate. For example, <code>sqrt(9)</code> or *=2 that makes the value 2x larger across an entire selection. <code>ToString()</code> on various C# math types (for example Vector3) now prints two decimal digits by default.</li>
+</ul>
+
+<h3>Visual scripting improvements</h3>
+
+<p>When you open an empty graph editor window, this prompts guidance on how to create or load graphs. Icons are now more consistent with the Unity Editor. “Unit” is now named “Node,” and “Super Unit” is now “Sub-Graph”. New nodes are available to simplify access to Script graphs and State graphs.</p>
+
+<h3><a href="search-usage.html">Table view in Search</a></h3>
+
+<p>Use the new Table View to compare search results across multiple properties and sort items by name or description. You can now use Search to get more relevant items when you select a reference via the Asset Picker.</p>
+
+<h3><a href="FeatureSets.html">Feature sets</a></h3>
+
+<p>The Package Manager now contains feature sets which group together packages required for specific outcomes, like 2D game development or creating for mobile.</p>
+
+<h3>Apple silicon Editor</h3>
+
+<p>The Apple silicon Editor provides M1 Mac users with a native Unity Editor experience.</p>
+
+<h3>Improved asset workflows</h3>
+
+<h4><a href="ImportActivityWindow.html">Import Activity window</a></h4>
+
+<p>The Import Activity window shows what happens throughout the import process, for example, which assets you have imported/reimported, when it happened, and how long it took.</p>
+
+<h4><a href="BuildSettings.html">Faster asset import speeds</a></h4>
+
+<p>The Asset import speed is faster due to accelerated texture imports, <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> import optimizations, and new importing options, for example, the Force Fast Compressor asset import override.</p>
+
+<h3>Optimized build process</h3>
+
+<p>This release includes Scriptable Build Pipeline optimizations and Build Cache performance improvements to optimize the build process. The player code build pipeline for Windows, macOS, Android, and <span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span> now supports incremental C# script compilation. This will enable quicker build times when making small changes to your projects.</p>
+
+<h4><a href="BuildSettings.html">Faster build times with IL2CPP Code Generation</a></h4>
+
+<p>The <span class="tooltip"><strong>IL2CPP</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html" href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> Code Generation option in the Build Settings menu generates up to 50% less code. This enables faster IL2CPP build times and smaller executable files.</p>
+
+<p><a name="Programming" aria-hidden="true"></a></p>
+
+<h2>Programming workflows</h2>
+
+<p>Programming workflows now have performance improvements, for example:</p>
+
+<ul>
+<li>More aggressive inlining of functions improve the C# math performance.</li>
+<li>Async Read manager API can now be called from burst jobs, including APIs for async open, close, and cancel.</li>
+<li>Asset garbage collection code is now multithreaded.</li>
+<li>GUID hash generation is now 6x faster for common data patterns.</li>
+</ul>
+
+<p>This release features improvements for the profiling tool set, for example:</p>
+
+<ul>
+<li>There is greater <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> connectivity with tethered Android devices.</li>
+<li>The connection drop-down menu is now in a tree view that groups player connections into local, remote, and direct connection categories.</li>
+<li>There is better platform support for obtaining GPU timings of URP/HDRP code.</li>
+<li>New APIs now pass arbitrary data to the Profiler and visualize it as a custom profiler module. This enables exposure of performance metrics relevant to a game or any other systems in the Profiler window, and alternative visualizations of Profiler data to facilitate additional analysis.</li>
+<li>Memory module view in the Profiler Window has greater functionality.</li>
+</ul>
+
+<h3><a href="ScriptCompilationAssemblyDefinitionFiles.html">Multiple version support with Version Defines</a></h3>
+
+<p>You can now use Version Defines to include the latest API features and provide backwards compatibility for older versions of Unity and the API, all within a single code base.</p>
+
+<h3><a href="https://docs.unity3d.com/2020.2/Documentation/ScriptReference/Time-timeAsDouble.html">Build precise time-based functionality with <code>timeAsDouble</code></a></h3>
+
+<p>
+<code>Time.timeAsDouble</code> has introduced various <code>AsDouble</code> properties, which let you use double precision time in your project. This is especially useful for creators building long-running applications, such as dedicated game servers.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.testtools.codecoverage@1.0/manual/index.html">The Code Coverage package is out of preview</a></h3>
+
+<p>Use Unity’s Code Coverage package with <span class="tooltip"><strong>Test Runner</strong><span class="tooltiptext">The Test Framework package (formerly called the Test Runner) is a Unity tool that tests your code in both Edit mode and Play mode, and also on target platforms such as Standalone, Android, or iOS. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.test-framework@latest" href="https://docs.unity3d.com/Packages/com.unity.test-framework@latest">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TestRunner" aria-label="Go to glossary anchor for TestRunner">Glossary</a></span></span></span> to check for test coverage of your project’s code, including detailed HTML formatted reporting to find areas that are being missed by your current test suite.</p>
+
+<h3><a href="Profiler.html">Comprehensive memory profiling now included</a></h3>
+
+<p>The Memory Profiler package has been updated to ensure that all relevant data is reported for managed data types, including multi-dimensional arrays. Additionally, improvements have been made to texture and mesh memory reporting.</p>
+
+<h3><a href="Profiler.html">Unity now includes multiple Player profiling support</a></h3>
+
+<p>You can now run multiple Player instances on one machine, and connect Unity Profiler to a specific instance to get deep insight in how it’s performing, making you more productive with less hardware. Watch the <a href="https://www.youtube.com/watch?v=Mx7HlDGLTv0">Profile multiple players in 2021.1</a> video on YouTube to see it in action.</p>
+
+<h3><a href="com.unity.device-simulator.html">Test different platforms with Device Simulator</a></h3>
+
+<p>Device Simulator is now installed as part of the main Unity installation and you no longer need to add it as a package. Use Device Simulator to view how your game would appear on mobile devices.</p>
+
+<h3><a href="https://blogs.unity3d.com/2021/02/04/the-road-to-2021-visual-scripting-in-unity/">Create logic with visual scripting</a></h3>
+
+<p>Visual scripting is now included as a core feature, built directly into Unity. You can use this to create logic with visual, drag-and-drop graphs to supplement your code for faster prototyping and iteration. Visual scripting is also a great way to make existing <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> more accessible to create tools for use by non-programming team members.</p>
+
+<p><a name="Platforms" aria-hidden="true"></a></p>
+
+<h2>Platforms</h2>
+
+<h3>Screen APIs for display settings</h3>
+
+<p>New screen APIS to provide greater control over the display settings in games, enabling players with multiple monitors to select which monitor the game window should appear on:</p>
+
+<ul>
+<li><code>Screen.mainWindowPosition</code></li>
+<li><code>Screen.mainWindowDisplayInfo</code></li>
+<li><code>Screen.GetDisplayLayout()</code></li>
+<li><code>Screen.MoveMainWindowTo()</code></li>
+</ul>
+
+<h3><a href="android-ChromeOS-introducing.html">Support for Chrome OS within the Android Development environment</a></h3>
+
+<p>Unity now supports x86, x86–64, and Arm architectures for Chrome OS devices. Unity supports built-in input emulation but you can create your own input controls to take advantage of mouse and keyboard setups.</p>
+
+<h3><a href="play-asset-delivery.html">Android App Bundles</a></h3>
+
+<p>Unity now provides direct support for Android’s new expansion file format, Android App Bundle (AAB) for asset building. Using AAB, you can meet the Google Asset Delivery requirements to publish any new apps to Google Play.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@3.0/manual/index.html">Startup Boost in Adaptive Performance</a></h3>
+
+<p>Adaptive Performance can now prioritize CPU/GPU resources to help launch applications more quickly. It also adds integration with the Unity Profiler so you can profile Adaptive Performance more efficiently in regular workflows.</p>
+
+<h3><a href="android-thread-configuration.html">Android thread configuration</a></h3>
+
+<p>Android thread configuration gives your fine-grained control over how your applications run to maximize their performance on certain hardware. It now includes options for whether to optimize an application for energy-efficiency or high performance.</p>
+
+<h3><a href="webgl.html">WebGL improvements</a></h3>
+
+<p>WebGL improvements include:</p>
+
+<ul>
+<li>Emscripten 2.0.19, which gives faster build times and a smaller WebAssembly output for the WebGL target.</li>
+<li>Features for future support of the WebGL Player in mobile web browsers (iOS and Android), including gyroscope, accelerometer, gravity sensor, and attitude sensor values.</li>
+<li>Forward and rear-facing web <span class="tooltip"><strong>cameras</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>.</li>
+<li>You can now lock screen orientation for full-screen projects on Android browsers.</li>
+</ul>
+
+<h3><a href="webgl-audio.html">Compressed audio</a></h3>
+
+<p>Compressed audio support reduces the amount of memory the WebGL player uses in the browser for long-running background music and large audio files.</p>
+
+<h3><a href="texture-compression-formats.html">Compressed texture formats</a></h3>
+
+<p>You can now choose ASTC or ETC/ETC2 compressed <span class="tooltip"><strong>texture formats</strong><span class="tooltiptext">A file format for handling textures during real-time rendering by 3D graphics hardware, such as a graphics card or mobile device. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporterOverride.html" href="class-TextureImporterOverride.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TextureFormat" aria-label="Go to glossary anchor for TextureFormat">Glossary</a></span></span></span> to target mobile web browsers, as well as BC4/5/6/7 texture formats for higher quality compressed textures on desktop browsers.</p>
+
+<h3><a href="udp-sandbox-testing">UDP support in Play Mode</a></h3>
+
+<p>You can now test your game’s IAP purchase and consume methods for UDP in the Editor Play mode. The <a href="https://distribute.dashboard.unity.com/">Distribution Portal</a> includes a Getting Started guide with instructions and code samples to help you implement UDP.</p>
+
+<p><a name="Cinematics" aria-hidden="true"></a></p>
+
+<h2>Cinematics</h2>
+
+<h3><a href="SpriteEditor.html">Sprite Editor</a></h3>
+
+<p>Slicing options now let you slice <span class="tooltip"><strong>sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> sheets that contain continuous neighboring isometric tiles. This helps to speed up the process of preparing isometric <span class="tooltip"><strong>tilemaps</strong><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a href="class-Tilemap.html" href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> sheets that contain continuous neighboring isometric tiles. This helps to speed up the process of preparing isometric <span class="tooltip"><strong>tilemaps</strong><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a href="class-Tilemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Tilemap" aria-label="Go to glossary anchor for Tilemap">Glossary</a></span></span></span> if your art is contained in one single image.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.recorder@2.5/index.html">Recorder updates</a></h3>
+
+<p>Recorder is now a released package and includes new codec like Apple ProRes for better compatibility with graphics and quality of life updates to enhance your capturing experience.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.recorder@3.0/manual/index.html">Recorder package</a></h3>
+
+<p>The latest release of Recorder integrates Arbitrary Output Variable (AOV) recording, which is useful for creating separations in VFX and compositing. The Recorder package also includes integrated Path Tracing and Accumulation Motion Blur for more realistic rendering effects.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.formats.alembic@2.3/manual/index.html">Alembic package</a></h3>
+
+<p>The latest release of Alembic lets you stream an Alembic file from an arbitrary location, effectively bypassing import. </p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.cinemachine@2.8/manual/CinemachineImpulse.html">Cinemachine package</a></h3>
+
+<p>The simplified Cinemachine Impulse greatly reduces the complexity of setting up how cameras react to in-game events such as explosions. </p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.formats.fbx@4.0/manual/index.html">Easily interoperate between tools with FBX Exporter</a></h3>
+
+<p>FBX Exporter is now a released package. Export scene references for animation and interoperate with popular 3D modeling software like Maya and Max for efficient iteration. You can also record animation in the Editor, so you can export references and re-key animations.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.scripting.python@4.0/manual/index.html">Python for Unity</a></h3>
+
+<p>The latest version of Python for Unity comes with support for Python 3.7 and doesn’t require you to install Python. In-process Python is no longer reinitialized on domain reload. PySide sample is much simpler and runs in-process, and there’s limited virtual environment support.</p>
+
+<p><a name="HDRP" aria-hidden="true"></a></p>
+
+<h2>HDRP</h2>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@10.3/manual/Shadows-in-HDRP.html">HDRP Static Shadow caster and improvements</a></h3>
+
+<p>You can now cache a portion of non-directional shadow maps, which can result in performance improvements. HDRP renders dynamic shadow casters into their respective shadow maps for each frame.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@12.0/manual/Override-Volumetric-Clouds.html">Added procedural volumetric clouds in HDRP</a></h3>
+
+<p>In HDRP 12.0 you can change the default Volumetric Clouds settings to create different kinds of realistic clouds. For more advanced results, you now access more settings and import Texture maps for finer artistic control.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@13.0/manual/shared/lens-flare/lens-flare-component.html">Lens Flare</a></h3>
+
+<p>HDRP 12.0 includes a new system to create Lens Flares. You can attach a Lens Flare (SRP) component to any <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. To test the system, HDRP includes a lens flare sample that has presets and Textures. Each Lens Flare has optional multiple elements that you can control individually.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@13.0/manual/Dynamic-Resolution.html">New upsampling methods</a></h3>
+
+<p>You can now use the following upsampling methods in HDRP: </p>
+
+<ul>
+<li>
+<strong>Temporal Anti-Aliasing (TAA) Upscale</strong>: This upscale filter uses temporal integration to produce a sharp upscaled image without sacrificing visual quality at lower resolutions.</li>
+<li>
+<strong>NVIDIA’s Deep Learning Super Sampling (DLSS) v2.2</strong>: This upscale filter uses artificial intelligence to increase graphics performance and quality.</li>
+<li>
+<strong>AMD’s FidelityFX Super Resolution</strong>: This upscale filter uses a spatial super-resolution method that balances quality and performance. For more information, see <a href="https://www.amd.com/en/technologies/radeon-software-fidelityfx">AMD FidelityFX</a>.</li>
+</ul>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@12.0/manual/Ray-Tracing-Path-Tracing.html">Path tracer</a></h3>
+
+<p>HDRP 12.0 includes improvements to the Path tracer features. You can now use volumetric scattering in path-traced scenes instead of linear fog. This feature also offers hair, fabric, stacklit, and AxF Materials. It also includes better <span class="tooltip"><strong>HDRI</strong><span class="tooltiptext">high dynamic range image<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#HDRI" aria-label="Go to glossary anchor for HDRI">Glossary</a></span></span></span> sampling that improves the visual quality when you light a scene with an HDRI Sky.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@12.0/manual/Override-Cloud-Layer.html">Cloud layer system</a></h3>
+
+<p>HDRP includes a new Cloud Layer volume override that you can use to render a cloud Texture on top of the sky.</p>
+
+<h3>Additional Properties</h3>
+
+<p>From HDRP 12.0, More Options is now named Additional Properties. You can now access these properties in a new way: The cogwheel that was present in component headers is now an entry in the contextual menu. When you enable Show Additional Properties, Unity highlights the background of each additional property for a few seconds to show you where they are. </p>
+
+<h2>Density Volumes (Local Volumetric Fog)</h2>
+
+<p>HDRP 12.0 includes multiple improvements to Density Volume, which is now called Local Volumetric Fog. These improvements include:</p>
+
+<ul>
+<li>You can now use a RenderTexture or Custom <span class="tooltip"><strong>Render Texture</strong><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span> as a volume mask.</li>
+<li>You can also use colored volume masks and set higher-resolution volume masks (up to 256 cube) in the HDRP Asset.</li>
+<li>The Local Volumetric Fog blend distance has new linear or exponential settings.</li>
+</ul>
+
+<p>HDRP 12.0 also includes an improved 3D Texture atlas to support different 3D texture resolutions and RGBA 3D textures.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@12.0/manual/Decal.html">Improved UX for HDRP Decals</a></h3>
+
+<p>Improved the UX for the following HDRP Decals placement tools:</p>
+
+<ul>
+<li>The Pivot point tool</li>
+<li>UV manipulation</li>
+<li>Scale transform support</li>
+<li>Prefab support</li>
+<li>Changing the <span class="tooltip"><strong>gizmo</strong><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GizmosMenu.html#GizmosIcons" href="GizmosMenu.html#GizmosIcons">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Gizmo" aria-label="Go to glossary anchor for Gizmo">Glossary</a></span></span></span> color</li>
+<li>Editing multi-selection</li>
+</ul>
+
+<p><a name="URP" aria-hidden="true"></a></p>
+
+<h2>Universal Render Pipeline (URP)</h2>
+
+<p>The latest release of URP includes improvements to <span class="tooltip"><strong>Ambient Occlusion</strong><span class="tooltiptext">A method to approximate how much ambient light (light not coming from a specific direction) can hit a point on a surface.<br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Ambientocclusion" aria-label="Go to glossary anchor for Ambientocclusion">Glossary</a></span></span></span>, more robust tooling for converting from the Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html" href="Glossary.html#Ambientocclusion" aria-label="Go to glossary anchor for Ambientocclusion">Glossary</a></span></span></span>, more robust tooling for converting from the Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> to URP, and new packages samples. For more information on the latest changes to URP, see <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@13.0/manual/whats-new/urp-whats-new.html">What’s new in URP</a>.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@13.0/manual/whats-new/urp-whats-new.html#scene-debug-view-modes">Scene Debug View Modes</a></h3>
+
+<p>This release includes improvements to URP’s Scene Debug View Modes, including the new Render Pipeline Debug window which lets you inspect:</p>
+
+<ul>
+<li>The properties of materials being rendered.</li>
+<li>How the light interacts with these materials.</li>
+<li>How shadows and <span class="tooltip"><strong>LOD</strong><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LevelOfDetail.html" href="LevelOfDetail.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LOD" aria-label="Go to glossary anchor for LOD">Glossary</a></span></span></span> operations are performed to produce the final frame.</li>
+</ul>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@13.0/manual/whats-new/urp-whats-new.html#reflection-probe-blending-and-box-projection-support">Reflection probe blending and box projection</a></h3>
+
+<p>New settings for <span class="tooltip"><strong>reflection probe</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ReflectionProbe.html" href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span> blending and box projection enable better reflection quality using probes and bring URP closer to feature parity with the Built-In Render Pipeline.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@13.0/manual/whats-new/urp-whats-new.html#urp-deferred-rendering-path">URP Deferred Renderer</a></h3>
+
+<p>The URP Deferred Renderer performs light shading in screen space on a separate rendering pass after all the vertex and <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> <span class="tooltip"><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> <span class="tooltip"><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> have been rendered. <span class="tooltip"><strong>Deferred shading</strong><span class="tooltiptext">A rendering path in the Built-in Render Pipeline that places no limit on the number of Lights that can affect a GameObject. All Lights are evaluated per-pixel, which means that they all interact correctly with normal maps and so on. Additionally, all Lights can have cookies and shadows. <a href="RenderTech-DeferredShading.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> have been rendered. <span class="tooltip"><strong>Deferred shading</strong><span class="tooltiptext">A rendering path in the Built-in Render Pipeline that places no limit on the number of Lights that can affect a GameObject. All Lights are evaluated per-pixel, which means that they all interact correctly with normal maps and so on. Additionally, all Lights can have cookies and shadows. <a href="RenderTech-DeferredShading.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Deferredshading" aria-label="Go to glossary anchor for Deferredshading">Glossary</a></span></span></span> decouples scene geometry from lighting calculations, so the shading of each light is only computed for the visible pixels that it actually affects. This enables improved performance when rendering a large number of lights in a scene.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@13.0/manual/whats-new/urp-whats-new.html#urp-decal-system">Decal Renderer</a></h3>
+
+<p>The Decal Renderer lets you project decal materials into the surfaces of a scene. Decals wrap around meshes and interact with the scene’s lighting. Decals are useful for adding extra textural detail to scenes, and breaking up materials’ repetitiveness and detail patterns.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@13.0/manual/whats-new/urp-whats-new.html#depth-prepass-depth-priming-mode">Depth prepass</a></h3>
+
+<p>The depth prepass is a rendering pass in which all visible opaque meshes are rendered to populate the <span class="tooltip"><strong>depth buffer</strong><span class="tooltiptext">A memory store that holds the z-value depth of each pixel in an image, where the z-value is the depth for each rendered pixel from the projection plane. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#depthbuffer" aria-label="Go to glossary anchor for depthbuffer">Glossary</a></span></span></span> (without incurring fragment shading cost), which can be reused by subsequent passes. A depth prepass eliminates or significantly reduces geometry rendering overdraw; any subsequent color pass can reuse this depth buffer to produce one fragment shader invocation per pixel.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@13.0/manual/whats-new/urp-whats-new.html#light-layers">Light Layers</a></h3>
+
+<p>Light layers are specific rendering layers to allow the masking of certain lights in a scene to affect only specific meshes assigned to the same layer.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@13.0/manual/whats-new/urp-whats-new.html#urp-light-cookies">URP Light Cookies</a></h3>
+
+<p>URP Light Cookies enable masking or filtering outgoing lights intensity to produce patterned illumination. Use this feature to change the appearance, shape, and intensity of cast light for artistic effects, or to simulate complex lighting scenarios with minimal runtime performance impact.</p>
+
+<h3>AMD’s FidelityFX Super Resolution</h3>
+
+<p>This upscale filter uses a spatial super-resolution method that balances quality and performance.</p>
+
+<p><a name="SRP" aria-hidden="true"></a></p>
+
+<h2>Scriptable Render Pipeline (SRP)</h2>
+
+<p>The following new features are compatible with URP and HDRP.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@12.0/manual/light-anchor.html">Light Anchor</a></h3>
+
+<p>Use the Light Anchor feature to manipulate lights around a pivot point instead of in world space. This makes lighting for cinematics easier and more efficient. Various presets are available to quickly place lights around a character or any center of interest. This feature is also available for the Built-in Render Pipeline.</p>
+
+<h3><a href="https://docs.unity3d.com/2021.2/Documentation/Manual/realtime-gi-using-enlighten.html">Enlighten Realtime Global Illumination</a></h3>
+
+<p>This feature enables indirect lighting that responds to real time changes in light and material properties. Interactive visual feedback significantly reduces lighting design iteration times. </p>
+
+<p>There is now support for Enlighten Realtime <span class="tooltip"><strong>Global Illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span> in HDRP and the Built-In Render Pipeline, and added support for the URP. </p>
+
+<h3><a href="GPUProgressiveLightmapper.html">GPU Lightmapper tiling</a></h3>
+
+<p>The GPU Progressive <span class="tooltip"><strong>Lightmapper</strong><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmapper" aria-label="Go to glossary anchor for Lightmapper">Glossary</a></span></span></span>’s new lightmapper tiling feature breaks the baking process into manageable chunks that can fit in the available GPU memory at any time. This reduces GPU memory requirements and enables faster bakes.</p>
+
+<h3>SRP settings workflow improvements</h3>
+
+<p>Various <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>/UX improvements have been made to improve workflows and provide consistency between the SRP render pipelines. This includes aligning the light and camera components between URP and HDRP.</p>
+
+<p><a name="Authoring" aria-hidden="true"></a></p>
+
+<h2>Authoring tools</h2>
+
+<h2>Terrain tools</h2>
+
+<p>The <span class="tooltip"><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> tools now include the following features:</p>
+
+<ul>
+<li>New Terrain sculpting brushes to bridge, clone, noise, terrace, and twist terrain.</li>
+<li>Erosion heightmap-based tools (Hydraulic, Wind and Thermal).</li>
+<li>Material painting controls now have noise, and layer, based filters.</li>
+<li>General quality-of-life interface improvements to streamline Terrain authoring workflows with the Terrain Toolbox.</li>
+</ul>
+
+<p>You can paint mesh Terrain details like grass, bushes or rocks using HDRP. <a href="SpeedTree.html">SpeedTree</a> 8 vegetation is now supported for HDRP and URP, including support for animated vegetation using the SpeedTree wind system, created with Shader Graph. </p>
+
+<h3>Visual Effect Graph</h3>
+
+<p>You can now use any HDRP shader made with Shader Graph (for example: unlit, lit, hair, fabric) to render primitives in the Visual Effect Graph. This change replaces the Visual Effect target in Shader Graph which is consequently deprecated (but still supported) for HDRP. It also allows you to modify particles at the vertex level, enabling effects like birds with shader-animated flapping wings or wobbling particles like soap bubbles.</p>
+
+<h4><a href="https://docs.unity3d.com/Packages/com.unity.visualeffectgraph@12.0/manual/sdf-bake-tool-api.html">Signed Distance Field</a></h4>
+
+<p>The new Signed Distance Field Bake Tool lets you directly and quickly bake a static geometry in texture 3D as a signed distance field in the Editor.</p>
+
+<h4><a href="https://docs.unity3d.com/Packages/com.unity.visualeffectgraph@12.0/manual/visual-effect-bounds.html">Visual effect bounds</a></h4>
+
+<p>New bound helpers can help you set up your particles’ bounds to improve culling performance or prevent culling <span class="tooltip"><strong>particle systems</strong><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ParticleSystem.html" href="class-ParticleSystem.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#particlesystem" aria-label="Go to glossary anchor for particlesystem">Glossary</a></span></span></span> due to incorrect bounds.</p>
+
+<h4><a href="https://docs.unity3d.com/Packages/com.unity.visualeffectgraph@12.0/manual/Operator-SampleBuffer.html">Structured/graphics buffer</a></h4>
+
+<p>You can now pass data to the Visual Effect Graph using structured/graphics buffers. This is useful for complex simulations like adding hair or fluid movement, and for programmatically assigning dynamic data such as multiple enemy positions using the Visual Effect Graph.</p>
+
+<h3>Shader Graph</h3>
+
+<h4><a href="shader-keywords.html">Updated Shader keyword limits</a></h4>
+
+<p>The keyword limits for Shaders have effectively been removed. A more efficient API is now available for working with keywords, with a clear separation between global and local shader keywords.</p>
+
+<h4>Updated ShaderLab package Dependency syntax</h4>
+
+<p>The <span class="tooltip"><strong>ShaderLab</strong><span class="tooltiptext">Unity’s language for defining the structure of Shader objects. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-Shader.html" href="SL-Shader.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span> package Dependency feature extends the ShaderLab syntax and lets shader authors express the dependencies of shaders on packages..</p>
+
+<h4>Use the UI Toolkit to create runtime UI for games and applications</h4>
+
+<p>The UI Toolkit provides dedicated tools for visual authoring and debugging UI, renders beautiful and scalable text with TextMesh Pro, provides crisp-looking textureless rendering, and can be used alongside Unity UI (UGUI).</p>
+
+<p><a name="2D" aria-hidden="true"></a></p>
+
+<h2>2D</h2>
+
+<h3><a href="https://unity.com/unity/features/2dtools">Production-ready 2D tools</a></h3>
+
+<p>This release includes usability and stability improvements for 2D tools, with a focus on Sprite Swap workflows and 2D graphics.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@13.0/manual/Setup.html#2d-renderer-setup">2D Renderer improvements</a></h3>
+
+<p>The 2D Renderer now includes new SceneView Debug Modes with the following views: Mask, the Alpha channel, Overdraw, and mipmaps. The Sprite Mask feature now works correctly in <a href="https://docs.unity3d.com/Manual/ScriptableRenderPipeline.html">SRP</a>. To access it, go to <strong>Window</strong> &gt; <strong>Analysis</strong> &gt; <strong>Rendering Debugger</strong> &gt; <strong>Material Override</strong>.</p>
+
+<p>You can now customize the 2D Renderer with <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@13.0/manual/urp-renderer-feature.html">Renderer Features</a> which allow you to add custom passes.</p>
+
+<p>2D Lights are no longer experimental and are now integrated in the <a href="https://docs.unity3d.com/2021.2/Documentation/Manual/LightingExplorer.html">Light Explorer</a> window. 2D Shadows have been optimized to support rendering Shadows to a single channel, and per-light Shadow culling.</p>
+
+<p>2D Light Textures produced by the 2D Lights are now accessible in Shader Graph via the 2D Light Texture node. This allows various applications such as the creation of emissive materials for Sprites.</p>
+
+<p>VFX Graph now supports 2D Unlit Shaders. Note that the Visual Effect Renderer is not affected by 2D Lights.</p>
+
+<h3>New 2D URP template</h3>
+
+<p>The new 2D URP template includes all verified 2D tools, which are precompiled to improve the load times of new projects based on this template. This template also includes URP with a preconfigured 2D Renderer, and packages with their default settings optimized for a 2D project.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.2d.psdimporter@latest">UX improvements for 2D PSD Importer</a></h3>
+
+<p>The 2D PSD Importer has better control over the imported Photoshop layers, and Sprite name mapping. You can now flatten imported PSD layer groups in Unity, and the Importer can autogenerate physics shapes for the imported layers.</p>
+
+<h3><a href="https://docs.unity3d.com/Packages/com.unity.2d.animation@7.0/manual/SpriteVis.html">Set individual bone colors in the Sprite Visibility panel</a></h3>
+
+<p>This can help you to better differentiate between colors or to organize the bones according to color. The tooltips of the <span class="tooltip"><strong>Skinning</strong><span class="tooltiptext">The process of binding bone joints to the vertices of a character’s mesh or ‘skin’. Performed with an external tool, such as Blender or Autodesk Maya. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingHumanoidChars.html" href="UsingHumanoidChars.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skinning" aria-label="Go to glossary anchor for Skinning">Glossary</a></span></span></span> Editor’s tools now display their shortcuts, and a new tool has been added to see Sprite influences over bones.</p>
+
+<h3><a href="https://docs.unity3d.com/Manual/class-Tilemap.html">2D Tilemaps</a></h3>
+
+<p>You can now add new functionality to, or override the functions of, existing <a href="https://docs.unity3d.com/Manual/Tilemap-Palette.html">Tile Palette</a> buttons, allowing you to create custom tools for your Tilemaps. New APIs provide information about animated Tiles, or get a range of Tiles. You can also use the <code>TileChangeData</code> struct to set a Tile’s position and color and transform it all at once. </p>
+
+<h3>2D Physics</h3>
+
+<p>You can now read and write primitive physics shapes (Circles, Capsules, Polygons, and Edges) using a new unified shape group feature. This new API lets you add primitive shapes to a physics shape group or retrieve them from any <code>Collider2D</code> or all <code>Collider2D</code> attached to any <code>Rigidbody2D</code>. Additionally, you can write a shape group directly to a new <code>CustomCollider2D</code>, providing fast and direct access to the <code>Collider2D</code> internals. You can reproduce the characteristics of existing <code>Collider2D</code>, create new simple <code>Collider2Ds</code>, or even complex procedural <span class="tooltip"><strong>Colliders</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> with the <code>CustomCollider2D</code>.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="TermsOfUse.html"></a></span><div class="tip">Trademarks and terms of use</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="PackagesList.html"></a></span><div class="tip">Packages and feature sets</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

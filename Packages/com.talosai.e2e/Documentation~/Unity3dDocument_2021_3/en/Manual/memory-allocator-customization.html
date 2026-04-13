@@ -1,0 +1,469 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Customize allocators</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/memory-allocator-customization.html">English</a></li>
+<li><a href="/cn/current/Manual/memory-allocator-customization.html">中文</a></li>
+<li><a href="/ja/current/Manual/memory-allocator-customization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/memory-allocator-customization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/memory-allocator-customization.html">English</a></li>
+<li><a href="/cn/current/Manual/memory-allocator-customization.html">中文</a></li>
+<li><a href="/ja/current/Manual/memory-allocator-customization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/memory-allocator-customization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="performance-memory-overview.html">Memory in Unity</a></li>
+<li><a href="performance-native-allocators.html">Native memory</a></li>
+<li>Customize allocators</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-threadsafe-linear-allocator.html"></a></span><div class="tip">Thread-safe linear allocator</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Profiler.html"></a></span><div class="tip">Profiler overview</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Customize allocators</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<blockquote>
+<p>
+<strong>Note:</strong> Not all platforms support this feature. Refer to <a href="PlatformSpecific.html">platform specific</a> documentation for further information.</p>
+</blockquote>
+
+<p>To customize allocator settings you can either edit the configurable values through the <a href="#use-the-editor">Editor UI</a> or supply them as <a href="#use-command-line-arguments">command line arguments</a>.</p>
+
+<h2>Use the Editor<a name="use-the-editor" aria-hidden="true"></a>
+</h2>
+
+<ol>
+<li>Select <em>Project Settings</em> &gt; <em>Memory Settings</em>.</li>
+<li>Select the lock icon next to the value you want to edit.</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/Memory_Settings.png" alt="Project Settings &gt; Memory Settings, showing a selection of Player memory settings">
+<figcaption>Project Settings &gt; Memory Settings, showing a selection of Player memory settings</figcaption>
+</figure>
+
+<blockquote>
+<p>
+<strong>Note</strong>: Refer to the previous individual allocator sections to see the fields customizable through the Editor UI.</p>
+</blockquote>
+
+<h2>Use command line arguments<a name="use-command-line-arguments" aria-hidden="true"></a>
+</h2>
+
+<p>To find the name of the allocator parameters you want to change, check the list of allocator settings the Editor and players print when they start up.
+For example, to change the block size of the main heap allocators, use <code>-memorysetup-main-allocator-block-size=&lt;new_value&gt;</code>
+</p>
+
+<p>The allocator parameter names and their default values:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="3"><strong>Allocator</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Parameter name</strong></th>
+	<th style="text-align:left;"><strong>Default value</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="3">Main Allocators</td>
+	<td style="text-align:left;">The allocators Unity uses for most allocations.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">Main Allocator</td>
+	<td style="text-align:left;">The primary allocator Unity uses for most allocations.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Main Thread Block Size</td>
+	<td style="text-align:left;">Block size of dedicated main thread allocator.</td>
+	<td style="text-align:left;"><code>memorysetup-main-allocator-block-size</code></td>
+	<td style="text-align:left;"><code>16777216</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Shared Thread Block Size</td>
+	<td style="text-align:left;">Block size of shared thread allocator.</td>
+	<td style="text-align:left;"><code>memorysetup-thread-allocator-block-size</code></td>
+	<td style="text-align:left;"><code>16777216</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">Gfx Allocator</td>
+	<td style="text-align:left;">The allocator Unity uses for CPU allocations related to the Gfx system.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Main Thread Block Size</td>
+	<td style="text-align:left;">Block size of the dedicated main thread Gfx allocator.</td>
+	<td style="text-align:left;"><code>memorysetup-gfx-main-allocator-block-size</code></td>
+	<td style="text-align:left;"><code>16777216</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Shared Thread Block Size</td>
+	<td style="text-align:left;">Block size of the shared thread Gfx allocator.</td>
+	<td style="text-align:left;"><code>memorysetup-gfx-thread-allocator-block-size</code></td>
+	<td style="text-align:left;"><code>16777216</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="3">Other Allocators</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">File Cache Block Size</td>
+	<td style="text-align:left;">The file cache has its own allocator to avoid fragmentation. This is its block size.</td>
+	<td style="text-align:left;"><code>memorysetup-cache-allocator-block-size</code></td>
+	<td style="text-align:left;"><code>4194304</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Type Tree Block Size</td>
+	<td style="text-align:left;">The type treess have their own allocator to avoid fragmentation due to many small allocations. This is its block size.</td>
+	<td style="text-align:left;"><code>memorysetup-typetree-allocator-block-size</code></td>
+	<td style="text-align:left;"><code>2097152</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">Shared Bucket Allocator</td>
+	<td style="text-align:left;">The bucket allocator that is shared between the main allocators.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Bucket Allocator Granularity</td>
+	<td style="text-align:left;">Step size for buckets in the shared allocator.</td>
+	<td style="text-align:left;"><code>memorysetup-bucket-allocator-granularity</code></td>
+	<td style="text-align:left;"><code>16</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Bucket Allocator BucketCount</td>
+	<td style="text-align:left;">Number of bucket sizes.</td>
+	<td style="text-align:left;"><code>memorysetup-bucket-allocator-bucket-count</code></td>
+	<td style="text-align:left;"><code>8</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Bucket Allocator Block Size</td>
+	<td style="text-align:left;">Size of memory blocks used for buckets.</td>
+	<td style="text-align:left;"><code>memorysetup-bucket-allocator-block-size</code></td>
+	<td style="text-align:left;">
+<code>Editor: 8388608</code><br><code>Player: 4194304</code>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Bucket Allocator Block Count</td>
+	<td style="text-align:left;">Maximum number of blocks to be allocated.</td>
+	<td style="text-align:left;"><code>memorysetup-bucket-allocator-block-count</code></td>
+	<td style="text-align:left;">
+<code>Editor: 8</code><br><code>Player: 1</code>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3">Fast Per Thread Temporary Allocators</td>
+	<td style="text-align:left;">The Thread Local Storage (TLS) allocator that handles very short-lived allocations.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">Main Thread Block Size</td>
+	<td style="text-align:left;">The initial size for the main thread stack.</td>
+	<td style="text-align:left;"><code>memorysetup-temp-allocator-size-main</code></td>
+	<td style="text-align:left;">
+<code>Editor: 16777216</code><br><code>Player: 4194304</code>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">Job Worker Block Size</td>
+	<td style="text-align:left;">Size of each job worker in the Unity job system.</td>
+	<td style="text-align:left;"><code>memorysetup-temp-allocator-size-job-worker</code></td>
+	<td style="text-align:left;"><code>E262144</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">Background Job Worker Block Size</td>
+	<td style="text-align:left;">Size for each background worker.</td>
+	<td style="text-align:left;"><code>memorysetup-temp-allocator-size-background-worker</code></td>
+	<td style="text-align:left;"><code>32768</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">Preload Block Size</td>
+	<td style="text-align:left;">The preload manager stack size.</td>
+	<td style="text-align:left;"><code>memorysetup-temp-allocator-size-preload-manager</code></td>
+	<td style="text-align:left;">
+<code>Editor: 33554432</code><br><code>Player: 262144</code>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">Audio Worker Block Size</td>
+	<td style="text-align:left;">Each audio worker thread’s stack size.</td>
+	<td style="text-align:left;"><code>memorysetup-temp-allocator-size-audio-worker</code></td>
+	<td style="text-align:left;"><code>65536</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">Cloud Worker Block Size</td>
+	<td style="text-align:left;">Cloud worker threads stack size.</td>
+	<td style="text-align:left;"><code>memorysetup-temp-allocator-size-cloud-worker</code></td>
+	<td style="text-align:left;"><code>32768</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">Gfx Thread Blocksize</td>
+	<td style="text-align:left;">The main render threads stack size.</td>
+	<td style="text-align:left;"><code>memorysetup-temp-allocator-size-gfx</code></td>
+	<td style="text-align:left;"><code>262144</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">GI Baking Blocksize</td>
+	<td style="text-align:left;">Each GI worker thread’s stack size.</td>
+	<td style="text-align:left;"><code>memorysetup-temp-allocator-size-gi-baking-worker</code></td>
+	<td style="text-align:left;"><code>262144</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2"><span class="tooltip"><strong>NavMesh</strong><span class="tooltiptext">A mesh that Unity generates to approximate the walkable areas and obstacles in your environment for path finding and AI-controlled navigation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about nav-BuildingNavMesh.html" href="nav-BuildingNavMesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#NavMesh" aria-label="Go to glossary anchor for NavMesh">Glossary</a></span></span></span> Worker Block Size</td>
+	<td style="text-align:left;">Nav <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> worker threads stack size.</td>
+	<td style="text-align:left;"><code>memorysetup-temp-allocator-size-nav-mesh-worker</code></td>
+	<td style="text-align:left;"><code>65536</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3">Fast Thread Shared Temporary Allocators</td>
+	<td style="text-align:left;">Fast linear allocator for short lived allocations shared between threads.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">Job Allocator Block Size</td>
+	<td style="text-align:left;">The round robin linear thread allocator Unity mainly uses for the job worker threads.</td>
+	<td style="text-align:left;"><code>memorysetup-job-temp-allocator-block-size</code></td>
+	<td style="text-align:left;"><code>2097152</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">Background Job Allocator Block Size</td>
+	<td style="text-align:left;">The linear allocator for the background workers that allows longer lived allocations.</td>
+	<td style="text-align:left;"><code>memorysetup-job-temp-allocator-block-size-background</code></td>
+	<td style="text-align:left;"><code>21048576</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">Job Allocator Block Size on low memory platforms</td>
+	<td style="text-align:left;">Platforms with less than 2GB memory use this size for both the job workers and the background jobs.</td>
+	<td style="text-align:left;"><code>memorysetup-job-temp-allocator-reduction-small-platforms</code></td>
+	<td style="text-align:left;"><code>262144</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> Allocators</td>
+	<td style="text-align:left;">Allocators that Unity uses exclusively for the Profiler so that they don’t interfere with the application’s allocation patterns.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">Profiler Block Size</td>
+	<td style="text-align:left;">The block size for the main part of the Profiler.</td>
+	<td style="text-align:left;"><code>memorysetup-profiler-allocator-block-size</code></td>
+	<td style="text-align:left;"><code>16777216</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">Editor Profiler Block Size</td>
+	<td style="text-align:left;">Block size for the Editor part of the Profiler. This is not present on players.</td>
+	<td style="text-align:left;"><code>memorysetup-profiler-editor-allocator-block-size</code></td>
+	<td style="text-align:left;"><code>1048576</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;" colspan="2">Shared Profiler Bucket Allocator</td>
+	<td style="text-align:left;" colspan="3">Shared bucket allocator for the Profiler and Editor Profiler allocators.<br><br>Not present on low memory platforms.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Bucket Allocator Granularity</td>
+	<td style="text-align:left;">Step size for buckets in the shared allocator.</td>
+	<td style="text-align:left;"><code>memorysetup-profiler-bucket-allocator-granularity</code></td>
+	<td style="text-align:left;"><code>16</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Bucket Allocator BucketCount</td>
+	<td style="text-align:left;">Number of bucket sizes. For example, if the value is 4, the sizes are 16, 32, 48 and 64.</td>
+	<td style="text-align:left;"><code>memorysetup-profiler-bucket-allocator-bucket-count</code></td>
+	<td style="text-align:left;"><code>8</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Bucket Allocator Block Size</td>
+	<td style="text-align:left;">Size of memory blocks used for buckets.</td>
+	<td style="text-align:left;"><code>memorysetup-profiler-bucket-allocator-block-size</code></td>
+	<td style="text-align:left;">
+<code>Editor: 33554432</code><br><code>Player: 4194304</code>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Bucket Allocator Block Count</td>
+	<td style="text-align:left;">Maximum number of blocks to be allocated.</td>
+	<td style="text-align:left;"><code>memorysetup-profiler-bucket-allocator-block-count</code></td>
+	<td style="text-align:left;">
+<code>Editor: 8</code><br><code>Player: 1</code>
+</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>
+<strong>Tip</strong>: To ensure your settings improve performance, profile the application before and after making changes. For more information, refer to the <a href="Profiler.html">Profiler overview page</a> and the package documentation for the <a href="https://docs.unity3d.com/Packages/com.unity.performance.profile-analyzer@latest">Profiler Analyzer</a>. Profiler Analyzer enables multiframe comparison, which is especially useful for highlighting differences in allocator performance. You can also check the memory usage reports. They are available in the log when you close the Player or Editor. To find your log files, follow the instructions on the <a href="LogFiles.html">log files page</a>.</p>
+</blockquote>
+
+<h2>Storing and reading the settings</h2>
+
+<p>Unity stores allocator settings in <code>MemorySettings.asset</code>and these settings are applied during the build process. This means new settings take effect at every build.</p>
+
+<p>In the Editor, these settings are stored in the <code>ProjectSettings</code> folder and are updated every time Unity imports or changes <code>MemorySettings.asset</code>. New values for the Editor only take effect on the next Editor startup.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-threadsafe-linear-allocator.html"></a></span><div class="tip">Thread-safe linear allocator</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Profiler.html"></a></span><div class="tip">Profiler overview</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

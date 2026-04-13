@@ -1,0 +1,660 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: IMGUI Controls</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/gui-Controls.html">English</a></li>
+<li><a href="/cn/current/Manual/gui-Controls.html">中文</a></li>
+<li><a href="/ja/current/Manual/gui-Controls.html">日本語</a></li>
+<li><a href="/kr/current/Manual/gui-Controls.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/gui-Controls.html">English</a></li>
+<li><a href="/cn/current/Manual/gui-Controls.html">中文</a></li>
+<li><a href="/ja/current/Manual/gui-Controls.html">日本語</a></li>
+<li><a href="/kr/current/Manual/gui-Controls.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="GUIScriptingGuide.html">Immediate Mode GUI (IMGUI)</a></li>
+<li>IMGUI Controls</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="gui-Basics.html"></a></span><div class="tip">IMGUI Basics</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="gui-Customization.html"></a></span><div class="tip">Customize your IMGUI Controls</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>IMGUI Controls</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>IMGUI Control Types</h2>
+
+<p>There are a number of different IMGUI <strong>Controls</strong> that you can create. This section lists all of the available display and interactive Controls. There are other IMGUI functions that affect layout of Controls, which are described in the <a href="gui-Layout.html">Layout</a> section of the Guide.</p>
+
+<h3><a href="../ScriptReference/GUI.Label.html">Label</a></h3>
+
+<p>The <strong>Label</strong> is non-interactive. It is for display only. It cannot be clicked or otherwise moved. It is best for displaying information only.</p>
+
+<pre><code>/* GUI.Label example */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour 
+{
+                    
+    void OnGUI () 
+    {
+        GUI.Label (new Rect (25, 25, 100, 30), &quot;Label&quot;);
+    }
+
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-LabelExample.png" alt="The Label created by the example code">
+<figcaption>The Label created by the example code</figcaption>
+</figure>
+
+<h3><a href="../ScriptReference/GUI.Button.html">Button</a></h3>
+
+<p>The <strong>Button</strong> is a typical interactive button. It will respond a single time when clicked, no matter how long the mouse remains depressed. The response occurs as soon as the mouse button is released.</p>
+
+<h4>Basic Usage</h4>
+
+<p>In UnityGUI, Buttons will return <strong>true</strong> when they are clicked. To execute some code when a Button is clicked, you wrap the the GUI.Button function in an <strong>if</strong> statement. Inside the <strong>if</strong> statement is the code that will be executed when the Button is clicked.</p>
+
+<pre><code>/* GUI.Button example */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour 
+{
+                    
+    void OnGUI () 
+    {
+        if (GUI.Button (new Rect (25, 25, 100, 30), &quot;Button&quot;)) 
+        {
+            // This code is executed when the Button is clicked
+        }
+    }
+
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-ButtonExample.png" alt="The Button created by the example code">
+<figcaption>The Button created by the example code</figcaption>
+</figure>
+
+<h3><a href="../ScriptReference/GUI.RepeatButton.html">RepeatButton</a></h3>
+
+<p>
+<strong>RepeatButton</strong> is a variation of the regular <strong>Button</strong>. The difference is, <strong>RepeatButton</strong> will respond every frame that the mouse button remains depressed. This allows you to create click-and-hold functionality.</p>
+
+<h4>Basic Usage</h4>
+
+<p>In UnityGUI, RepeatButtons will return <strong>true</strong> for every frame that they are clicked. To execute some code while the Button is being clicked, you wrap the the GUI.RepeatButton function in an <strong>if</strong> statement. Inside the <strong>if</strong> statement is the code that will be executed while the RepeatButton remains clicked.</p>
+
+<pre><code>/* GUI.RepeatButton example */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour 
+{
+                    
+    void OnGUI () 
+    {
+        if (GUI.RepeatButton (new Rect (25, 25, 100, 30), &quot;RepeatButton&quot;)) 
+        {
+            // This code is executed every frame that the RepeatButton remains clicked
+        }
+    }
+
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-RepeatButtonExample.png" alt="The Repeat Button created by the example code">
+<figcaption>The Repeat Button created by the example code</figcaption>
+</figure>
+
+<h3><a href="../ScriptReference/GUI.TextField.html">TextField</a></h3>
+
+<p>The <strong>TextField</strong> Control is an interactive, editable single-line field containing a text string.</p>
+
+<h4>Basic Usage</h4>
+
+<p>The TextField will always display a string. You must provide the string to be displayed in the TextField. When edits are made to the string, the TextField function will return the edited string.</p>
+
+<pre><code>/* GUI.TextField example */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour 
+{
+                    
+    private string textFieldString = &quot;text field&quot;;
+    
+    void OnGUI () 
+    {
+        textFieldString = GUI.TextField (new Rect (25, 25, 100, 30), textFieldString);
+    }
+
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-TextFieldExample.png" alt="The TextField created by the example code">
+<figcaption>The TextField created by the example code</figcaption>
+</figure>
+
+<h3><a href="../ScriptReference/GUI.TextArea.html">TextArea</a></h3>
+
+<p>The <strong>TextArea</strong> Control is an interactive, editable multi-line area containing a text string.</p>
+
+<h4>Basic Usage</h4>
+
+<p>The TextArea will always display a string. You must provide the string to be displayed in the TextArea. When edits are made to the string, the TextArea function will return the edited string.</p>
+
+<pre><code>/* GUI.TextArea example */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour
+{
+                    
+    private string textAreaString = &quot;text area&quot;;
+    
+    void OnGUI ()
+    {
+        textAreaString = GUI.TextArea (new Rect (25, 25, 100, 30), textAreaString);
+    }
+
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-TextAreaExample.png" alt="The TextArea created by the example code">
+<figcaption>The TextArea created by the example code</figcaption>
+</figure>
+
+<h3><a href="../ScriptReference/GUI.Toggle.html">Toggle</a></h3>
+
+<p>The <span class="tooltip"><strong>Toggle</strong><span class="tooltiptext">A checkbox that allows the user to switch an option on or off. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-uxml-element-Toggle.html" href="UIE-uxml-element-Toggle.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toggle" aria-label="Go to glossary anchor for Toggle">Glossary</a></span></span></span> Control creates a checkbox with a persistent on/off state. The user can change the state by clicking on it.</p>
+
+<h4>Basic Usage</h4>
+
+<p>The Toggle on/off state is represented by a true/false boolean. You must provide the boolean as a parameter to make the Toggle represent the actual state. The Toggle function will return a new boolean value if it is clicked. In order to capture this interactivity, you must assign the boolean to accept the return value of the Toggle function.</p>
+
+<pre><code>/* GUI.Toggle example */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour 
+{
+    private bool toggleBool = true;
+    
+    void OnGUI () 
+    {
+        toggleBool = GUI.Toggle (new Rect (25, 25, 100, 30), toggleBool, &quot;Toggle&quot;);
+    }
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-ToggleExample.png" alt="The Toggle created by the example code">
+<figcaption>The Toggle created by the example code</figcaption>
+</figure>
+
+<h3><a href="../ScriptReference/GUI.Toolbar.html">Toolbar</a></h3>
+
+<p>The <span class="tooltip"><strong>Toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> Control is essentially a row of <strong>Buttons</strong>. Only one of the Buttons on the Toolbar can be active at a time, and it will remain active until a different Button is clicked. This behavior emulates the behavior of a typical Toolbar. You can define an arbitrary number of Buttons on the Toolbar.</p>
+
+<h4>Basic Usage</h4>
+
+<p>The active Button in the Toolbar is tracked through an integer. You must provide the integer as an argument in the function. To make the Toolbar interactive, you must assign the integer to the return value of the function. The number of elements in the content array that you provide will determine the number of Buttons that are shown in the Toolbar.</p>
+
+<pre><code>/* GUI.Toolbar example */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour 
+{
+                    
+    private int toolbarInt = 0;
+    private string[] toolbarStrings = {&quot;Toolbar1&quot;, &quot;Toolbar2&quot;, &quot;Toolbar3&quot;};
+    
+    void OnGUI () 
+    {
+        toolbarInt = GUI.Toolbar (new Rect (25, 25, 250, 30), toolbarInt, toolbarStrings);
+    }
+
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-ToolbarExample.png" alt="The Toolbar created by the example code">
+<figcaption>The Toolbar created by the example code</figcaption>
+</figure>
+
+<h3><a href="../ScriptReference/GUI.SelectionGrid.html">SelectionGrid</a></h3>
+
+<p>The <strong>SelectionGrid</strong> Control is a multi-row <strong>Toolbar</strong>. You can determine the number of columns and rows in the grid. Only one Button can be active at time.</p>
+
+<h4>Basic Usage</h4>
+
+<p>The active Button in the SelectionGrid is tracked through an integer. You must provide the integer as an argument in the function. To make the SelectionGrid interactive, you must assign the integer to the return value of the function. The number of elements in the content array that you provide will determine the number of Buttons that are shown in the SelectionGrid. You also can dictate the number of columns through the function arguments.</p>
+
+<pre><code>/* GUI.SelectionGrid example */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour 
+{
+                    
+    private int selectionGridInt = 0;
+    private string[] selectionStrings = {&quot;Grid 1&quot;, &quot;Grid 2&quot;, &quot;Grid 3&quot;, &quot;Grid 4&quot;};
+    
+    void OnGUI () 
+    {
+        selectionGridInt = GUI.SelectionGrid (new Rect (25, 25, 300, 60), selectionGridInt, selectionStrings, 2);
+    
+    }
+
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-SelectionGridExample.png" alt="The SelectionGrid created by the example code">
+<figcaption>The SelectionGrid created by the example code</figcaption>
+</figure>
+
+<h3><a href="../ScriptReference/GUI.HorizontalSlider.html">HorizontalSlider</a></h3>
+
+<p>The <strong>HorizontalSlider</strong> Control is a typical horizontal sliding knob that can be dragged to change a value between predetermined min and max values.</p>
+
+<h4>Basic Usage</h4>
+
+<p>The position of the Slider knob is stored as a float. To display the position of the knob, you provide that float as one of the arguments in the function. There are two additional values that determine the minimum and maximum values. If you want the slider knob to be adjustable, assign the slider value float to be the return value of the Slider function.</p>
+
+<pre><code>/* Horizontal Slider example */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour 
+{
+                    
+    private float hSliderValue = 0.0f;
+    
+    void OnGUI () 
+    {
+        hSliderValue = GUI.HorizontalSlider (new Rect (25, 25, 100, 30), hSliderValue, 0.0f, 10.0f);
+    }
+
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-HorizontalSliderExample.png" alt="The Horizontal Slider created by the example code">
+<figcaption>The Horizontal Slider created by the example code</figcaption>
+</figure>
+
+<h3><a href="../ScriptReference/GUI.VerticalSlider.html">VerticalSlider</a></h3>
+
+<p>The <strong>VerticalSlider</strong> Control is a typical vertical sliding knob that can be dragged to change a value between predetermined min and max values.</p>
+
+<h4>Basic Usage</h4>
+
+<p>The position of the Slider knob is stored as a float. To display the position of the knob, you provide that float as one of the arguments in the function. There are two additional values that determine the minimum and maximum values. If you want the slider knob to be adjustable, assign the slider value float to be the return value of the Slider function.</p>
+
+<pre><code>/* Vertical Slider example */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour 
+{
+                    
+    private float vSliderValue = 0.0f;
+    
+    void OnGUI () 
+    {
+        vSliderValue = GUI.VerticalSlider (new Rect (25, 25, 100, 30), vSliderValue, 10.0f, 0.0f);
+    }
+
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-VerticalSliderExample.png" alt="The Vertical Slider created by the example code">
+<figcaption>The Vertical Slider created by the example code</figcaption>
+</figure>
+
+<h3><a href="../ScriptReference/GUI.HorizontalScrollbar.html">HorizontalScrollbar</a></h3>
+
+<p>The <strong>HorizontalScrollbar</strong> Control is similar to a <strong>Slider</strong> Control, but visually similar to Scrolling elements for web browsers or word processors. This control is used to navigate the <span class="tooltip"><strong>ScrollView</strong><span class="tooltiptext">A UI Control which displays a large set of Controls in a viewable area that you can see by using a scrollbar. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-uxml-element-ScrollView.html" href="UIE-uxml-element-ScrollView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScrollView" aria-label="Go to glossary anchor for ScrollView">Glossary</a></span></span></span> Control.</p>
+
+<h4>Basic Usage</h4>
+
+<p>Horizontal Scrollbars are implemented identically to Horizontal Sliders with one exception: There is an additional argument which controls the width of the Scrollbar knob itself.</p>
+
+<pre><code>/* Horizontal Scrollbar example */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour 
+{
+    private float hScrollbarValue;
+    
+    void OnGUI () 
+    {
+        hScrollbarValue = GUI.HorizontalScrollbar (new Rect (25, 25, 100, 30), hScrollbarValue, 1.0f, 0.0f, 10.0f);
+    }
+
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-HorizontalScrollbarExample.png" alt="The Horizontal Scrollbar created by the example code">
+<figcaption>The Horizontal Scrollbar created by the example code</figcaption>
+</figure>
+
+<h3><a href="../ScriptReference/GUI.VerticalScrollbar.html">VerticalScrollbar</a></h3>
+
+<p>The <strong>VerticalScrollbar</strong> Control is similar to a <strong>Slider</strong> Control, but visually similar to Scrolling elements for web browsers or word processors. This control is used to navigate the <strong>ScrollView</strong> Control.</p>
+
+<h4>Basic Usage</h4>
+
+<p>Vertical Scrollbars are implemented identically to Vertical Sliders with one exception: There is an additional argument which controls the height of the Scrollbar knob itself.</p>
+
+<pre><code>/* Vertical Scrollbar example */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour
+{
+                    
+    private float vScrollbarValue;
+    
+    void OnGUI ()
+    {
+        vScrollbarValue = GUI. VerticalScrollbar (new Rect (25, 25, 100, 30), vScrollbarValue, 1.0f, 10.0f, 0.0f);
+    }
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-VerticalScrollbarExample.png" alt="The Vertical Scrollbar created by the example code">
+<figcaption>The Vertical Scrollbar created by the example code</figcaption>
+</figure>
+
+<h3><a href="../ScriptReference/GUI.BeginScrollView.html">ScrollView</a></h3>
+
+<p>
+<strong>ScrollViews</strong> are Controls that display a viewable area of a much larger set of Controls.</p>
+
+<h4>Basic Usage</h4>
+
+<p>ScrollViews require two <strong>Rects</strong> as arguments. The first <strong>Rect</strong> defines the location and size of the viewable ScrollView area on the screen. The second <strong>Rect</strong> defines the size of the space contained inside the viewable area. If the space inside the viewable area is larger than the viewable area, Scrollbars will appear as appropriate. You must also assign and provide a 2D Vector which stores the position of the viewable area that is displayed.</p>
+
+<pre><code>/* ScrollView example */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour 
+{
+                    
+    private Vector2 scrollViewVector = Vector2.zero;
+    private string innerText = &quot;I am inside the ScrollView&quot;;
+    
+    void OnGUI () 
+    {
+        // Begin the ScrollView
+        scrollViewVector = GUI.BeginScrollView (new Rect (25, 25, 100, 100), scrollViewVector, new Rect (0, 0, 400, 400));
+    
+        // Put something inside the ScrollView
+        innerText = GUI.TextArea (new Rect (0, 0, 400, 400), innerText);
+    
+        // End the ScrollView
+        GUI.EndScrollView();
+    }
+
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-ScrollViewExample.png" alt="The ScrollView created by the example code">
+<figcaption>The ScrollView created by the example code</figcaption>
+</figure>
+
+<h3><a href="../ScriptReference/GUI.Window.html">Window</a></h3>
+
+<p>
+<strong>Windows</strong> are drag-able containers of Controls. They can receive and lose focus when clicked. Because of this, they are implemented slightly differently from the other Controls. Each Window has an <strong>id</strong> number, and its contents are declared inside a separate function that is called when the Window has focus.</p>
+
+<h4>Basic Usage</h4>
+
+<p>Windows are the only Control that require an additional function to work properly. You must provide an <strong>id</strong> number and a function name to be executed for the Window. Inside the Window function, you create your actual behaviors or contained Controls.</p>
+
+<pre><code>/* Window example */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour 
+{
+                    
+    private Rect windowRect = new Rect (20, 20, 120, 50);
+    
+    void OnGUI ()
+    {
+        windowRect = GUI.Window (0, windowRect, WindowFunction, &quot;My Window&quot;);
+    }
+    
+    void WindowFunction (int windowID) 
+    {
+        // Draw any Controls inside the window here
+    }
+
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-WindowExample.png" alt="The Window created by the example code">
+<figcaption>The Window created by the example code</figcaption>
+</figure>
+
+<h3><a href="../ScriptReference/GUI-changed.html">GUI.changed</a></h3>
+
+<p>To detect if the user did any action in the GUI (clicked a button, dragged a slider, etc), read the <strong>GUI.changed</strong> value from your script. This gets set to true when the user has done something, making it easy to validate the user input. </p>
+
+<p>A common scenario would be for a Toolbar, where you want to change a specific value based on which Button in the Toolbar was clicked. You don’t want to assign the value in every call to <strong>OnGUI()</strong>, only when one of the Buttons has been clicked. </p>
+
+<pre><code>/* GUI.changed example */
+
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour
+{
+                    
+    private int selectedToolbar = 0;
+    private string[] toolbarStrings = {&quot;One&quot;, &quot;Two&quot;};
+    
+    void OnGUI () 
+    {
+        // Determine which button is active, whether it was clicked this frame or not
+        selectedToolbar = GUI.Toolbar (new Rect (50, 10, Screen.width - 100, 30), selectedToolbar, toolbarStrings);
+    
+        // If the user clicked a new Toolbar button this frame, we'll process their input
+        if (GUI.changed)
+        {
+            Debug.Log(&quot;The toolbar was clicked&quot;);
+    
+            if (0 == selectedToolbar)
+            {
+                Debug.Log(&quot;First button was clicked&quot;);
+            }
+            else
+            {
+                Debug.Log(&quot;Second button was clicked&quot;);
+            }
+        }
+    }
+
+}
+
+
+</code></pre>
+
+<p>
+<strong>GUI.changed</strong> will return true if any GUI Control placed before it was manipulated by the user.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="gui-Basics.html"></a></span><div class="tip">IMGUI Basics</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="gui-Customization.html"></a></span><div class="tip">Customize your IMGUI Controls</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

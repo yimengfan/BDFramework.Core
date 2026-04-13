@@ -1,0 +1,465 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Editing properties</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/EditingValueProperties.html">English</a></li>
+<li><a href="/cn/current/Manual/EditingValueProperties.html">中文</a></li>
+<li><a href="/ja/current/Manual/EditingValueProperties.html">日本語</a></li>
+<li><a href="/kr/current/Manual/EditingValueProperties.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/EditingValueProperties.html">English</a></li>
+<li><a href="/cn/current/Manual/EditingValueProperties.html">中文</a></li>
+<li><a href="/ja/current/Manual/EditingValueProperties.html">日本語</a></li>
+<li><a href="/kr/current/Manual/EditingValueProperties.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="UsingTheEditor.html">Unity's interface</a></li>
+<li>Editing properties</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="InspectorFocused.html"></a></span><div class="tip">Focused Inspectors</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Toolbar.html"></a></span><div class="tip">The Toolbar</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Editing properties</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Properties are settings and options for <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> components and Assets. You edit properties in an <a href="UsingTheInspector.html">Inspector window</a>.</p>
+
+<figure>
+<img src="../uploads/Main/PropertiesExample.png" alt="Light component showing various value and reference properties">
+<figcaption>Light component showing various value and reference properties</figcaption>
+</figure>
+
+<p>Properties fall into the following major categories:</p>
+
+<ul>
+<li>
+<strong>References:</strong> links to other GameObjects and Assets.</li>
+<li>
+<strong>Values:</strong> numbers, colors, on/off settings, text, and so on.</li>
+</ul>
+
+<h2>References</h2>
+
+<p>Reference properties take compatible Project Assets or GameObjects in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> as inputs. For example, the <span class="tooltip"><a href="class-MeshFilter.html">Mesh Filter</a><span class="tooltiptext">A mesh component that takes a mesh from your assets and passes it to the Mesh Renderer for rendering on the screen. <a href="class-MeshFilter.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> as inputs. For example, the <span class="tooltip"><a href="class-MeshFilter.html">Mesh Filter</a><span class="tooltiptext">A mesh component that takes a mesh from your assets and passes it to the Mesh Renderer for rendering on the screen. <a href="class-MeshFilter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#MeshFilter" aria-label="Go to glossary anchor for MeshFilter">Glossary</a></span></span></span> component refers to a <span class="tooltip"><a href="class-Mesh.html">Mesh</a><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html" href="Glossary.html#MeshFilter" aria-label="Go to glossary anchor for MeshFilter">Glossary</a></span></span></span> component refers to a <span class="tooltip"><a href="class-Mesh.html">Mesh</a><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> Asset somewhere in the Project.</p>
+
+<p>When you create a component, its reference properties are unassigned.</p>
+
+<figure>
+<img src="../uploads/Main/RefPropUnassigned.png" alt="">
+</figure>
+
+<p>You assign references to properties by <a href="#ref-assign-dnd">dragging and dropping</a> objects and Assets onto reference property fields, or using an <a href="#ref-assign-objectpicker">Object Picker window</a>.</p>
+
+<p>Some reference properties accept specific types of components (for example, <a href="class-Transform.html">Transform</a>). When you assign a GameObject to those properties, Unity locates the first component of the required type on the GameObject, and assigns it to the reference property. If the GameObject doesn’t have any components of the right type, you cannot assign the GameObject to the property.</p>
+
+<p><a name="ref-assign-dnd" aria-hidden="true"></a></p>
+
+<h3>Assigning references by dragging and dropping</h3>
+
+<p>To assign a reference to a property, drag and drop a compatible GameObject or Asset onto the property field in the Inspector.</p>
+
+<figure>
+<img src="../uploads/Main/inspector-refprop-dragdrop.png" alt="">
+</figure>
+
+<p><a name="ref-assign-objectpicker" aria-hidden="true"></a></p>
+
+<h3>Assigning references with the Object Picker window</h3>
+
+<p>Use the Object Picker window to find and select a reference object to assign.</p>
+
+<figure>
+<img src="../uploads/Main/inspector-refprop-picker.png" alt="">
+</figure>
+
+<ol>
+<li>Click the small circle icon to the right of the property in the Inspector to open an Object Picker window.</li>
+<li>Find the object or Asset you want to reference, and double click it to assign it to the property.</li>
+</ol>
+
+<h2>Values</h2>
+
+<p>You edit most value properties using simple controls. For example:</p>
+
+<p>
+<strong>Fields</strong> where you enter text and numeric values.</p>
+
+<figure>
+<img src="../uploads/Main/inspector-property-numeric.png" alt="">
+</figure>
+
+<p>You can type numeric values directly in a property field, or click and drag the property label to increase and decrease the value.</p>
+
+<figure>
+<img src="../uploads/Main/inspector-property-numeric-drag.png" alt="">
+</figure>
+
+<p>Some properties also have <strong>sliders</strong> for adjusting numeric values.</p>
+
+<figure>
+<img src="../uploads/Main/inspector-property-slider.png" alt="">
+</figure>
+
+<p>
+<strong>Check boxes</strong> where you toggle properties on and off.</p>
+
+<figure>
+<img src="../uploads/Main/inspector-property-checkbox.png" alt="">
+</figure>
+
+<p>
+<strong>Drop-downs</strong> and <strong>pop-ups</strong> where you choose one of multiple possible values.</p>
+
+<figure>
+<img src="../uploads/Main/inspector-property-popup.png" alt="">
+</figure>
+
+<p><a name="numeric-expressions" aria-hidden="true"></a></p>
+
+<h3>Numeric field expressions</h3>
+
+<p>Numeric field input controls also accept mathematical expressions, for example entering <code>2+3</code> into a field will
+result in value <code>5</code>. See <a href="../ScriptReference/ExpressionEvaluator.html">ExpressionEvaluator</a> C# class documentation for details on
+which expressions are supported.</p>
+
+<p>Numeric fields also support special functions that are useful when editing multiple selected objects at once:</p>
+
+<ul>
+<li>
+<code>L(a,b)</code> results in linear ramp between <code>a</code> and <code>b</code>. <br>
+ <img src="../uploads/Main/inspector-expr-L.png" alt=""> <br>
+ <em>Entering <code>L(-6,6)</code> into X coordinate distributes the ten selected capsules between –6 and 6.</em>
+</li>
+<li>
+<code>R(a,b)</code> results in a random value between <code>a</code> and <code>b</code>. <br>
+ <img src="../uploads/Main/inspector-expr-R.png" alt=""> <br>
+ <em>Entering <code>R(-2,2)</code> into Z coordinate sets the Z coordinate of the selected capsules to a random value between –2 and 2.</em>
+</li>
+<li>
+<code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code> expressions can be used to modify the current value, for example entering <code>*=2</code> makes all
+ the the field value twice as large. <br>
+ <img src="../uploads/Main/inspector-expr-assign.png" alt=""> <br>
+ <em>Entering <code>/=3</code> into Z coordinate makes all Z coordinates 3x smaller.</em>
+</li>
+</ul>
+
+<p>You can combine math expressions. For example, you could use the expression, <code>L(0,2*pi)</code>, which produces a
+linear distribution of values between 0 and 2pi radians, as the argument of a trigonometric function.
+To illustrate, the following example uses this linear ramp function as the argument to sine and cosine functions
+in order to distribute a set of selected objects in a circle: <br>
+<img src="../uploads/Main/inspector-expr-trig.png" alt=""> <br>
+<em>Entering <code>cos(L(0,2*pi))*5</code> into X and <code>sin(L(0,2*pi))*5</code> into Z coordinates places the ten selected capsules in a circle.</em>
+</p>
+
+<p>When writing <a href="editor-CustomEditors.html">custom inspectors</a>, all <a href="../ScriptReference/EditorGUI.PropertyField.html">EditorGUI.PropertyField</a>
+and <a href="../ScriptReference/EditorGUILayout.PropertyField.html">EditorGUILayout.PropertyField</a> controls automatically get support for the
+numeric expressions.</p>
+
+<p>Some GameObjects and Assets have more complex properties that you edit with specialized controls or dedicated editors. The rest of this section describes how to set these complex properties.</p>
+
+<p>
+<strong>Note</strong>: Constrain Proportions Scale does not support math expressions for multi-selection.</p>
+
+<p><a name="color-values" aria-hidden="true"></a></p>
+
+<h3>Color values</h3>
+
+<p>The Inspector window displays color properties as swatches.</p>
+
+<figure>
+<img src="../uploads/Main/inspector-property-color.png" alt="">
+</figure>
+
+<p>Click any swatch to open a color picker or an <span class="tooltip"><strong>HDR</strong><span class="tooltiptext">high dynamic range<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#HDR" aria-label="Go to glossary anchor for HDR">Glossary</a></span></span></span> color picker, depending on the context. For example, Unity displays the HDR Color Picker window when you edit the <strong>emission</strong> color property in the <a href="shader-StandardShader.html">standard shader</a>.</p>
+
+<figure>
+<img src="../uploads/Main/color-pickers.png" alt="The Unity Color Picker window (left) and HDR color picker (right)">
+<figcaption>The Unity Color Picker window (left) and HDR color picker (right)</figcaption>
+</figure>
+
+<p>You can also use the eyedropper tool to pick color values from anywhere on the screen.</p>
+
+<figure>
+<img src="../uploads/Main/inspector-property-color-eyedropper.png" alt="">
+</figure>
+
+<p>To pick a color, click the eyedropper button next to a color property, then click anywhere on the screen. Unity sets the color property to the color of the <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> you clicked.</p>
+
+<p>You can save the colors you set in reusable <a href="#swatch-libraries">swatch libraries</a> that you can share between projects.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Tip:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">On macOS, you can choose to use the system color picker instead of Unity’s built-in color picker. From the <a href="Preferences.html">Preferences</a> (menu: <strong>Unity &gt; Preferences</strong>) open the <strong>General</strong> panel and select <strong>macOS Color Picker</strong>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="gradient-values" aria-hidden="true"></a></p>
+
+<h3>Gradient values</h3>
+
+<p>A gradient is a visual representation of a color progression. They are useful for blending one color gradually into another, over space or time.</p>
+
+<p>In Unity, you set some gradients by setting two or more color properties.</p>
+
+<p>Other gradients provide dedicated editors to control the relative amount of each color.</p>
+
+<figure>
+<img src="../uploads/Main/inspector-gradient-editor.png" alt="The Particle System gradient editor">
+<figcaption>The Particle System gradient editor</figcaption>
+</figure>
+
+<p>A dedicated gradient editor shows the main colors, called <em>stops</em>, and all the intermediate shades between them in the gradient bar (1).</p>
+
+<p>Upward-pointing arrows along the bottom of the gradient bar represent color stops (2).</p>
+
+<ul>
+<li>Click a stop to select it. Unity displays its color value in the <strong>Color field</strong>.
+
+<ul>
+<li>Click the color swatch (3) to edit the color using a standard <a href="#color-values">color picker</a>.</li>
+<li>You can also use the eyedropper tool (4) to pick color values from anywhere on the screen. Click the eyedropper button then click anywhere on the screen. Unity sets the color property to the color of the pixel you clicked.</li>
+</ul>
+</li>
+<li>Click an empty area under the gradient bar to add a stop.</li>
+<li>Click and drag a stop to move it.</li>
+<li>To delete a stop, select it and use the <strong>Ctrl/Cmd + Delete</strong> shortcut.</li>
+</ul>
+
+<p>Downward-pointing arrows above the gradient bar represent alpha stops (5) that control the gradient’s transparency at a given point. You add and edit alpha stops the same way you edit color stops. When you select an alpha stop, the gradient editor displays an <strong>Alpha</strong> slider instead of the <strong>Color</strong> field.</p>
+
+<p>By default, a gradient has two stops set to 100% alpha, which makes the gradient fully opaque. You can edit a stop to adjust the transparency, and add additional stops as needed.</p>
+
+<p><a name="curves" aria-hidden="true"></a></p>
+
+<h3>Curves</h3>
+
+<p>A <strong>Curve</strong> is a line graph that shows the response (on the y axis) to the varying value of an input (on the x axis).</p>
+
+<figure>
+<img src="../uploads/Main/CurveEditor.png" alt="The Curve editor in the Animation window">
+<figcaption>The Curve editor in the Animation window</figcaption>
+</figure>
+
+<p>Unity uses curves in a variety of different contexts, especially in animation. Curve editors have a number of different options and tools. For details, see <a href="EditingCurves.html">Editing Curves</a>.</p>
+
+<h3>Bar sliders</h3>
+
+<p>A bar slider is a specialized control that lets you allocate a particular resource visually. For example, the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LODGroup.html">LOD Group component</a> uses a bar slider to define transitions between GameObject <span class="tooltip"><strong>LOD</strong><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a href="LevelOfDetail.html" href="class-LODGroup.html">LOD Group component</a> uses a bar slider to define transitions between GameObject <span class="tooltip"><strong>LOD</strong><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a href="LevelOfDetail.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LOD" aria-label="Go to glossary anchor for LOD">Glossary</a></span></span></span> levels.</p>
+
+<figure>
+<img src="../uploads/Main/LODGroup-SpeedTreeModels.png" alt="The LOD Group selection bar is a type of bar slider control">
+<figcaption>The LOD Group selection bar is a type of bar slider control</figcaption>
+</figure>
+
+<p>You adjust the relative values of each segment in the bar by dragging the segment edges. Some bar sliders also have draggable handles.</p>
+
+<h3>Arrays</h3>
+
+<p>When a script exposes an array as a public variable, the Inspector displays a control that lets you edit both the number of items in the array (<strong>Size</strong>) and the values or references within it.</p>
+
+<figure>
+<img src="../uploads/Main/ArrayInspector.png" alt="A script with a Vector3 array property">
+<figcaption>A script with a Vector3 array property</figcaption>
+</figure>
+
+<p>When you decrease the <strong>Size</strong> value, Unity removes values from the end of the array.
+When you increase the <strong>Size</strong> value, Unity copies the current last value into all the new elements it adds.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Tip:</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">To set up an array whose values are mostly the same, add the first element and then change the size to copy its value to subsequent elements.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="swatch-libraries" aria-hidden="true"></a></p>
+
+<h2>Creating swatch libraries</h2>
+
+<p>Use swatch libraries to reuse, save, and share colors, gradients, and <span class="tooltip"><strong>animation curves</strong><span class="tooltiptext">Allows you to add data to an imported clip so you can animate the timings of other items based on the state of an animator. For example, for a game set in icy conditions, you could use an extra animation curve to control the emission rate of a particle system to show the player’s condensing breath in the cold air. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationCurvesOnImportedClips.html" href="AnimationCurvesOnImportedClips.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationCurves" aria-label="Go to glossary anchor for AnimationCurves">Glossary</a></span></span></span>. You can save and choose swatches in the <a href="#color-values">Color Picker</a>, <a href="#gradient-values">Gradient Editor</a>, and <a href="#curves">Curve Editor</a>.</p>
+
+<figure>
+<img src="../uploads/Main/PresetLibrary.png" alt="Swatches section in the Unity Color Picker">
+<figcaption>Swatches section in the Unity Color Picker</figcaption>
+</figure>
+
+<p>A swatch library is a collection of swatches that you save in a file. The Swatches section displays a single library at a time.</p>
+
+<p>To save a swatch:</p>
+
+<ol>
+<li>Open the Color Picker, Gradient Editor, or Curve Editor. For example, select <strong>Main Camera</strong> in the <a href="Hierarchy.html">Hierarchy</a> window.</li>
+<li>In the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html">Inspector</a><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="UsingTheInspector.html">Inspector</a><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window, click <strong>Background Color</strong>.</li>
+<li>In the picker window, adjust the color, gradient, or curve to your liking.</li>
+<li>In <strong>Swatches</strong>, click the outlined box.</li>
+<li>If the view is in List mode, optionally type a name for the swatch.</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/SwatchSaving.png" alt="Example of saving a color while in the Grid view">
+<figcaption>Example of saving a color while in the Grid view</figcaption>
+</figure>
+
+<p>Drag and drop swatches to change their order. Right-click a swatch to move it to the top, replace it, rename it, or delete it. You can also delete a swatch by Alt/Option-clicking it.</p>
+
+<p>Use the drop-down menu in <strong>Swatches</strong> to:</p>
+
+<ul>
+<li>Choose <strong>List</strong> or <strong>Grid</strong> to change the view. The List view also displays the names of swatches.</li>
+<li>Choose a swatch library.</li>
+<li>Choose <strong>Create a Library</strong> to create a new swatch library and the location to save it in.</li>
+<li>Choose <strong>Reveal Current Library Location</strong> to view the current library in Windows Explorer/Mac OS Finder.</li>
+</ul>
+
+<p>By default, Unity saves swatch libraries in your user preferences. You can also save a swatch library in your Project. Unity saves Project swatch libraries in the <em>Editor</em> folder of the <em>Assets</em> folder. To share Project swatch libraries between users, or to include them in a package, add them to a revision control repository.</p>
+
+<p>To edit a Project swatch library:</p>
+
+<ol>
+<li>Select the swatch library in the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html">Project</a><span class="tooltiptext">In Unity, you use a project to design and develop a game. A project stores all of the files that are related to a game, such as the asset and Scene files. <a href="2Dor3D.html" href="ProjectView.html">Project</a><span class="tooltiptext">In Unity, you use a project to design and develop a game. A project stores all of the files that are related to a game, such as the asset and Scene files. <a href="2Dor3D.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Project" aria-label="Go to glossary anchor for Project">Glossary</a></span></span></span> window.</li>
+<li>In the <a href="UsingTheInspector.html">Inspector</a> window, click <strong>Edit</strong>.</li>
+</ol>
+
+<hr>
+
+<ul>
+<li><span class="page-history">Reorganized Inspector section pages in Unity 2020.1</span></li>
+</ul>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="InspectorFocused.html"></a></span><div class="tip">Focused Inspectors</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Toolbar.html"></a></span><div class="tip">The Toolbar</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

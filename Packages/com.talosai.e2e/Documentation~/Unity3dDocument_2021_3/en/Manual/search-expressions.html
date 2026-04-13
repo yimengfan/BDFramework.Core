@@ -1,0 +1,503 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Search expressions</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/search-expressions.html">English</a></li>
+<li><a href="/cn/current/Manual/search-expressions.html">中文</a></li>
+<li><a href="/ja/current/Manual/search-expressions.html">日本語</a></li>
+<li><a href="/kr/current/Manual/search-expressions.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/search-expressions.html">English</a></li>
+<li><a href="/cn/current/Manual/search-expressions.html">中文</a></li>
+<li><a href="/ja/current/Manual/search-expressions.html">日本語</a></li>
+<li><a href="/kr/current/Manual/search-expressions.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="search-overview.html">Unity Search</a></li>
+<li>Search expressions</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="search-additional-searchfilters.html"></a></span><div class="tip">Additional Search filters</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="search-expression-functions-ref.html"></a></span><div class="tip">Functions reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Search expressions</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Search expressions allow you to add to the search query language to express complex queries that cross-reference multiple providers, for example, to search for all objects in a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> that use a <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> that use a <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> that doesn’t compile.</p>
+
+<p>Search expressions can be chained together to transform or perform set manipulations on Search Items.</p>
+
+<h2>How to use search expressions</h2>
+
+<p>Enter a search expression in the <strong>Search</strong> window to return a result:</p>
+
+<figure>
+<img src="../uploads/Main/search-expression-tab.png" alt="">
+</figure>
+
+<h2>Create a search expression</h2>
+
+<p>A search expression starts with a root expression that can contain inner expressions.</p>
+
+<p>A simple query like <code>t:shader</code> is an expression. It returns all of the Search Items corresponding to shaders in your project.</p>
+
+<p>Use the search expression language to combine <em>multiple queries</em> into a single expression to create more flexible searches.</p>
+
+<p>Search expressions support the following:</p>
+
+<ul>
+<li>query: <code>t:shader</code>
+</li>
+<li>query with a nested expression: <code>t:prefab ref={t:texture}</code>
+</li>
+<li>function: <code>count{t:shader}</code>
+</li>
+<li>literal: <code>3</code> or <code>&quot;this is a string literal&quot;</code>
+</li>
+<li>property selector: <code>@path or @mesh</code> (any identifier beginning with <code>@</code> is assumed to be a selector that extracts a value from a Search Item. Selectors can find properties of an Object or be used to compute results dynamically)</li>
+</ul>
+
+<p>All search expressions return a set of Search Items (<code>IEnumerable&lt;SearchItem&gt;</code>). As a general guideline, the search expression language uses curly braces <code>{}</code> to denote a set of items. Even literal expressions such as <code>3</code> are evaluated internally as a set : <code>{3}</code>.</p>
+
+<p>Search expressions can be chained together to make more complex queries:</p>
+
+<ul>
+<li>
+<code>t:prefab ref={t:texture}</code>
+
+<ul>
+<li>The <code>t:texture</code> part of the query finds all textures in your project</li>
+<li>The <code>t:prefab ref=</code> part of the query runs a query for each texture returned in the t:texture set to see which <span class="tooltip"><strong>prefabs</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> refer to this texture.</li>
+</ul>
+</li>
+<li><p>
+<code>t:prefab ref={t:texture size&gt;4000}</code>: finds all prefabs in a project with texture size larger than 4000 bytes.</p></li>
+</ul>
+
+<p>This is the equivalent to:</p>
+
+<ul>
+<li><p>Running <code>t:texture size&gt;4000</code>to return a list of all 4K textures in the project (for example, <code>armor.png</code>, <code>treasure.png</code>).</p></li>
+<li><p>Running <code>t:prefab ref=&lt;one of the 4K textures&gt;</code> (for example, <code>t:prefab ref=armor.png</code> and then <code>t:prefab ref=treasure.png</code>).</p></li>
+<li><p>Aggregating all results and returning this as a single list of Search Items.</p></li>
+<li><p>
+<code>t:[shader, material, texture]</code>: finds all objects whose types are <code>shader</code>, <code>material</code>, or <code>texture</code>. Using a normal query it could be expressed as:</p></li>
+<li><p><code>t:shader or t:material or t:texture</code></p></li>
+</ul>
+
+<h2>Functions</h2>
+
+<p>Unity has a library of search expression functions to manipulate and transform sets of Search Items. Each of these functions can take multiple arguments and returns a set of items. Unity Search Expressions use curly braces to denote function calls.</p>
+
+<p>The complete list of all functions is <a href="search-expression-functions-ref.html">here</a>.</p>
+
+<p>Example: The function <a href="search-expression-functions-ref.html">count</a> counts the items of each set passed as parameters and returns a number.</p>
+
+<ul>
+<li>
+<code>count{t:shader}</code> : returns a set containing the number of shaders in the project. Example: <code>{34}</code>.</li>
+<li>
+<code>count{t:shader, t:texture}</code> : returns a set containing the number of shaders and textures in the project. Example: <code>{34, 2048}</code>.</li>
+</ul>
+
+<p>Functions can be chained together, similar to <a href="https://en.wikipedia.org/wiki/S-expression">s-expression</a> used in the <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">LISP</a> programming language.</p>
+
+<blockquote>
+<p>
+<strong>Note:</strong> There can only be a single root expression. </p>
+</blockquote>
+
+<p>Example of a chain of functions being evaluated, in order of operation:</p>
+
+<p>
+<code>print{&quot;path=@path&quot;, first{10, sort{t:texture, @size}}}</code>: <a href="search-expression-functions-ref.html">print</a> the path of the 10 smallest textures in the project</p>
+
+<ol>
+<li>
+<code>t:texture</code>: finds all texture in the project and then selects the size property.</li>
+<li>
+<code>sort{ t:texture, @size}</code>: sorts all these textures according to their size property.</li>
+<li>
+<code>first{10</code>: selects the first 10 sorted textures.</li>
+<li>
+<code>print{ &quot;path=@path&quot;</code>: prints this list in the console according to a format string where Unity Search extracts the path property of each resulting item <code>path=@path</code>.</li>
+</ol>
+
+<p>Functions can have multiple signatures (name of the method and the type and kind (value, reference, or output) of each of its formal parameters, similar to C#) and can support <strong>optional</strong> (parameters that don’t need to be passed to the function) and <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/params">variadic</a> (parameters that can take a variable number of arguments) parameters.</p>
+
+<h2>Literals in search expressions</h2>
+
+<p>Literals are actual words or numbers that you would like to search for or number amounts you want to retrieve, as opposed to the query string. For example, t:texture searches for Assets with texture in the type name (e.g.,Texture2D), but adding quotation marks to make it a literal, “t:texture” searches for an Asset named t:texture.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Expression</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="#number"><strong>Number</strong></a></td>
+	<td style="text-align:left;">A literal number (<code>1,2,3, and so on</code>)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#set"><strong>Set</strong></a></td>
+	<td style="text-align:left;">Square brackets (<code>[ ]</code>)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#string"><strong>String</strong></a></td>
+	<td style="text-align:left;">Single or double quotes (<code>''</code> or <code>&quot;&quot;</code>)</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="number" aria-hidden="true"></a></p>
+
+<h3>Number</h3>
+
+<p>Number literals can used as parameters to functions (such as <code>first</code>).</p>
+
+<p>
+<code>first{10, t:shader}</code> -&gt; <code>{the first 10 shaders return by the 't:shader' query}</code>
+</p>
+
+<p><a name="set" aria-hidden="true"></a></p>
+
+<h3>Set</h3>
+
+<p>Express a set of values using square brackets <code>[]</code>. A set can contain any type of expression, but the search expression parser will assume the elements of a set are literals instead of a search query.</p>
+
+<p>Example:</p>
+
+<p>
+<code>[t:shader, hello, 3]</code> -&gt; <code>[&quot;t:shader&quot;, &quot;hello&quot;, 3]</code>
+</p>
+
+<p>If using curly brackets (<code>{}</code>), the parser would treat this as three queries:</p>
+
+<p>
+<code>{t:shader, hello, 3}</code> -&gt; {&lt;run a query for t:shader&gt;, &lt;run a query for hello&gt;, &lt;run a query for 3&gt;}</p>
+
+<p><a name="string" aria-hidden="true"></a></p>
+
+<h3>String</h3>
+
+<p>String literals can be used as parameters for some functions (such as <code>format</code>). You can specify a string literal using single or double quotes:</p>
+
+<p>“hello” or ‘hello’</p>
+
+<p>The format function taking a format string as a parameter:</p>
+
+<p><code>format{t:texture, '@path (@size)'}</code></p>
+
+<h2>Property selectors and search item values</h2>
+
+<p>A selector is an identifier denoted using the <code>@</code> prefix. Use selectors to access the property of an item in order to compute, filter, or format. Selectors can map to <a href="https://docs.unity3d.com/ScriptReference/SerializedProperty.html">serialized</a> properties of a UnityEngine.Object or to a custom function to allow access to dynamic data.</p>
+
+<p>The base selectors that any Search Items supports are:</p>
+
+<ul>
+<li>
+<code>id</code>: Unique ID of this item according to its Search Provider.</li>
+<li>
+<code>value</code>: Internal value of an item. By default it is its ID, but functions can override the value of an item.</li>
+<li>
+<code>label</code>: item label as shown in the <strong>Search</strong> window</li>
+<li>
+<code>desc</code> or <code>description</code> : item description (second line of the <strong>Search</strong> window)</li>
+</ul>
+
+<p>Unity also defines generic selectors for a Search Item, for example:</p>
+
+<ul>
+<li>
+<code>@name</code>: UnityEngine.Object.name</li>
+<li>
+<code>@size</code>: File size on disk for an asset</li>
+<li>
+<code>@path</code>: Asset path</li>
+<li>
+<code>@extension</code>: Asset file extension</li>
+<li>
+<code>@provider</code>: Search Provider that has yielded this item</li>
+</ul>
+
+<p>To access specific properties of a Search Item in order to perform an operation, use selectors:</p>
+
+<ul>
+<li>
+<code>count{t={distinct{select{a:assets, @type}}}}</code>
+
+<ul>
+<li>
+<code>a:assets, @type</code> finds all of the assets in a project and selects the <code>type</code> property for those objects.</li>
+<li>
+<code>distinct</code> returns a list of all types that exist.</li>
+<li>
+<code>t={list of types}</code> returns the multiple lists of each asset of each type.</li>
+<li>
+<code>count</code> counts how many assets of each type are in your project.</li>
+</ul>
+</li>
+<li>
+<code>avg{@size,t:shader}</code>
+
+<ul>
+<li>
+<code>t:shader,  @size</code>: finds all the shaders and then selects the size property.</li>
+<li>
+<code>avg</code>: computes the average size for all shaders in your project.</li>
+</ul>
+</li>
+<li>
+<code>print{@value, count{t:texture, t:material}}</code>
+
+<ul>
+<li>This will print the count value extracted from the results of the count function in the <span class="tooltip"><strong>Console window</strong><span class="tooltiptext">A Unity Editor window that shows errors, warnings and other messages generated by Unity, or your own scripts. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Console.html" href="Console.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Consolewindow" aria-label="Go to glossary anchor for Consolewindow">Glossary</a></span></span></span>.</li>
+</ul>
+</li>
+</ul>
+
+<p>The <code>@#</code> selector finds serialized properties and material properties:</p>
+
+<ul>
+<li>
+<code>sort{t:texture, @#height}</code>: sorts all textures in order of their height serialized properties.</li>
+</ul>
+
+<p><a name="alias-usage" aria-hidden="true"></a></p>
+
+<h2>Name search expressions (alias)</h2>
+
+<p>You can name search expressions to make them easier to display in the <strong>Search</strong> window.</p>
+
+<p>For example, entering the expression <code>sort{count{t:audio, t:texture}, @value,desc}</code> in the <strong>Search</strong> window, it may be difficult to read which count corresponds to which type:</p>
+
+<figure>
+<img src="../uploads/Main/search-expression-alias1.png" alt="">
+</figure>
+
+<p>Using an alias: <code>sort{count{t:audio as Audio, t:texture as Texture}, desc}</code> yields a more readable result:</p>
+
+<figure>
+<img src="../uploads/Main/search-expression-alias2.png" alt="">
+</figure>
+
+<p>To dynamically generate alias names, use the <code>alias</code> function. For example:</p>
+
+<p><code>alias{[1, 2, 3], 'Title value'}</code></p>
+
+<p>will yield items with these labels:</p>
+
+<p><code>{Title 1, Title 2, Title 3}</code></p>
+
+<figure>
+<img src="../uploads/Main/search-expression-alias-dynamic-generation.png" alt="">
+</figure>
+
+<h2>Expand operator</h2>
+
+<p>The expand operator <code>...</code> allows a set of items to be grouped into multiple sets of items instead of just one set.</p>
+
+<p>
+<code>...{expandable expression}</code> -&gt; <code>{sub expr 1} {sub expr 2} {sub expr N}</code>
+</p>
+
+<p>Example:</p>
+
+<p>A small project has <em>3 prefabs, 4 textures and 5 shaders</em>. The following expression provides a count for all:</p>
+
+<p>
+<code>count{t:[prefab, texture, shader]}</code> -&gt; <code>{12}</code>
+</p>
+
+<p>The result of the search expression <code>t:[prefab, texture, shader]</code> is a unified list of 12 items of type prefabs, textures, and shaders. This could also be expressed as: <code>t:prefab or t:texture or t:shader</code>.</p>
+
+<p>Use the expand operator to count the number of each type of asset separately:</p>
+
+<p>
+<code>count{...t:[prefab, texture, shader]}</code> -&gt; <code>count{t:prefab, t:texture, t:shader}</code> -&gt; <code>{3, 4, 5}</code>
+</p>
+
+<p>The <a href="search-expressions-functions-ref#groupby"><code>groupBy</code></a> function can be used with the expand operator to return sets of items grouped by a common key.</p>
+
+<p>Example:</p>
+
+<p>A project has three types of assets (prefabs, textures, and shaders). For a selector <code>@type</code> that returns the type of Search Item, the expression would expand to:</p>
+
+<p><code>count{t:prefab or t:texture or t:shader}</code></p>
+
+<p>You can use the <code>groupBy</code> function to group items by their type and then count each number of items per type:</p>
+
+<p><code>count{...groupBy{t:prefab or t:texture or t:shader, @type}}</code></p>
+
+<h2>Search expression examples</h2>
+
+<p>These examples demonstrate how search expressions can be used for complex requests in a project.</p>
+
+<ul>
+<li>
+<p>Count prefab usage in scenes and sort by highest usage:</p>
+
+<p><code>sort{select{p: t:prefab *.prefab, @path, count{t:scene ref:@path} as count}, @count, desc}</code></p>
+</li>
+<li>
+<p>Sort and count all asset types</p>
+
+<p><code>sort{count{...groupby{a:assets, @type}}, @value, desc}</code></p>
+</li>
+<li>
+<p>Find the <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> with the most vertices (assuming the @vertices selector is available in the project).</p>
+
+<p><code>first{sort{t:mesh, @vertices, desc}}</code></p>
+</li>
+<li>
+<p>Sort all meshes by their vertex count</p>
+
+<p><code>sort{select{h: t:mesh, @path, @vertices}, @vertices, desc}</code></p>
+</li>
+<li>
+<p>Count the number of vertices for all meshes</p>
+
+<p><code>sum{select{h:t:mesh, @vertices}}</code></p>
+</li>
+<li>
+<p>Find all assets referencing a mesh</p>
+
+<p><code>ref=select{p:t:mesh, @path}</code></p>
+</li>
+<li>
+<p>List prefab scene references count</p>
+
+<p><code>select{p: *.prefab, @path, count{p: a:sceneIndex ref=&quot;@path&quot;} as count}</code></p>
+</li>
+</ul>
+
+<h2>Expression evaluation</h2>
+
+<p>Search expression evaluation is based on the C# <a href="https://docs.microsoft.com/en-us/dotnet/csharp/iterators">iterator</a> pattern and uses of the <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/yield">yield</a> keyword. This ensures that the evaluation is exposed as a fully asynchronous operation and is as non-blocking as possible. It allows each search expression to start its computation before the initial sets of search items are fully computed.</p>
+
+<p>By default all search expression evaluation is done in a worker thread in order to not block the Editor. For operations that need to rely on non-thread safe Unity API (like some selector accessors), we have a utility API to queue those operations on the main thread and maintain the pattern of <em>yielding</em> search items.</p>
+
+<h1>Customize the search expression language</h1>
+
+<p>The search expression language has been designed to be customizable. APIs to customize all parts of the framework will be available in a future release.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="search-additional-searchfilters.html"></a></span><div class="tip">Additional Search filters</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="search-expression-functions-ref.html"></a></span><div class="tip">Functions reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

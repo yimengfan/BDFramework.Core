@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Introduction to collider types</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/collider-types-introduction.html">English</a></li>
+<li><a href="/cn/current/Manual/collider-types-introduction.html">中文</a></li>
+<li><a href="/ja/current/Manual/collider-types-introduction.html">日本語</a></li>
+<li><a href="/kr/current/Manual/collider-types-introduction.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/collider-types-introduction.html">English</a></li>
+<li><a href="/cn/current/Manual/collider-types-introduction.html">中文</a></li>
+<li><a href="/ja/current/Manual/collider-types-introduction.html">日本語</a></li>
+<li><a href="/kr/current/Manual/collider-types-introduction.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PhysicsSection.html">Physics</a></li>
+<li><a href="PhysicsOverview.html">Built-in 3D Physics</a></li>
+<li><a href="collision-section.html">Collision</a></li>
+<li><a href="collider-types.html">Collider types</a></li>
+<li>Introduction to collider types</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="collider-types.html"></a></span><div class="tip">Collider types</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="collider-types-interaction.html"></a></span><div class="tip">Interaction between collider types</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Introduction to collider types</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A <span class="tooltip"><strong>collider</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span>’s type defines how it interacts with other colliders, based on the configuration of its <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span>’s type defines how it interacts with other colliders, based on the configuration of its <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>’s collider and physics body components. </p>
+
+<p>The Unity documentation refers to the following collider types:</p>
+
+<ul>
+<li>Static colliders: The GameObject has a collider but no physics body (Rigidbody or ArticulationBody).</li>
+<li>Physics body colliders: The GameObject has a collider and a physics body.
+
+<ul>
+<li>Dynamic colliders: The GameObject’s physics body is dynamic (that is, it has <strong>Is Kinematic</strong> disabled).</li>
+<li>Kinematic <span class="tooltip"><strong>Rigidbody</strong><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Rigidbody.html" href="class-Rigidbody.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span> colliders: The GameObject’s Rigidbody is kinematic (that is, it has <strong>Is Kinematic</strong> enabled). An ArticulationBody cannot be kinematic.</li>
+</ul>
+</li>
+</ul>
+
+<p>For more information, see <a href="RigidbodiesOverview.html">Introduction to rigid body physics</a>.</p>
+
+<h2>Static colliders</h2>
+
+<p>A Static collider is a collider that has no associated Rigidbody or ArticulationBody (that is, there is no Rigidbody or ArticulationBody on the associated GameObject), and therefore doesn’t respond to simulated physics forces. Other colliders can collide with Static colliders, but Static colliders don’t move in response to <span class="tooltip"><strong>collisions</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span>. </p>
+
+<p>Use Static colliders for geometry that always stays in the same place and never moves around (for example, floors, walls and other motionless elements of a Scene). </p>
+
+<p>The only way to move a static collider at run time is via the Transform. However, in most cases you should not do this. The physics system cannot immediately take Transform-led movement into consideration while calculating physics updates, and you might see unintended side-effects if you move a static collider via the Transform. Instead, you should only use Static colliders for collider geometry that does not move at run time. If you want a collider that does not respond to physics forces but which can move at run time in a way that the physics system can detect and calculate, consider using a kinematic physics body collider.</p>
+
+<p>Because Static colliders are not designed to be moving or temporary colliders, the physics system does not recalculate or awaken physics bodies in response to Static colliders moving or disappearing. For example: if you place a car (with a physics body and Wheel Colliders) on a static collider, the <span class="tooltip"><strong>Wheel Colliders</strong><span class="tooltiptext">A special collider for grounded vehicles. It has built-in collision detection, wheel physics, and a slip-based tire friction model. It can be used for objects other than wheels, but it is specifically designed for vehicles with wheels. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-WheelCollider.html" href="class-WheelCollider.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WheelCollider" aria-label="Go to glossary anchor for WheelCollider">Glossary</a></span></span></span> detect the collider and rest on it. After a few frames without input, the car’s physics body and colliders go to sleep. If the static collider moves, you might expect the car to travel with it, or fall. However, the physics system does not awaken the car’s physics body in response to the static collider’s movement, so the car stays where it is. </p>
+
+<h2>Physics body colliders</h2>
+
+<p>A physics body collider is a collider on the same GameObject as a physics body (a Rigidbody or an ArticulationBody). Physics body colliders are included in physics calculations, but behave differently depending on whether they are dynamic or kinematic (that is, whether <strong>Is Kinematic</strong> is disabled or enabled). </p>
+
+<p>A Rigidbody can be either dynamic or kinematic. An ArticulationBody can only be dynamic; it cannot be kinematic.</p>
+
+<h3>Dynamic colliders</h3>
+
+<p>A dynamic collider is a collider on the same GameObject as a dynamic physics body. Dynamic colliders respond to simulated physics forces. They can collide with other objects (including static colliders), and other colliders can move them or apply force to them. </p>
+
+<p>Use dynamic colliders for any GameObject that you want the physics system to include in physics calculations, and to move via physics forces.</p>
+
+<p>Physics body colliders are dynamic by default. </p>
+
+<h3>Kinematic colliders</h3>
+
+<p>A kinematic collider is a collider on the same GameObject as a kinematic Rigidbody. An ArticulationBody cannot be kinematic.</p>
+
+<p>Like static colliders, kinematic colliders do not respond to simulated physics forces. Other colliders can collide with kinematic colliders, but kinematic colliders don’t move in response to collisions. </p>
+
+<p>Unlike a static collider, the physics system can include a kinematic collider in physics calculations. Kinematic colliders can:</p>
+
+<ul>
+<li>Wake other colliders from a sleeping state when they make contact</li>
+<li>Act as a <a href="collider-interactions.html">trigger collider</a>, and receive trigger events from other colliders</li>
+<li>Apply <a href="collider-surface-friction.html">friction</a> to other colliders</li>
+</ul>
+
+<p>Use kinematic colliders for colliders that act like static colliders most of the time, but which you also want to be able to occasionally move (for example, a sliding door that normally acts as an immovable physical obstacle but can open when necessary). </p>
+
+<p>You can use <a href="../ScriptReference/Rigidbody-isKinematic.html"><code>Rigidbody.isKinematic</code></a> to switch a Rigidbody collider between dynamic and kinematic via script as needed at run time. This can be a useful way to manage performance on colliders that don’t always need to be dynamic. For example, a common use case for switching collider types is to create a “ragdoll” effect, where a character normally moves under animation but responds physically to a heavy collision. The character’s limbs can be kinematic by default and move via animation, but a particular collider can trigger the Rigidbody to disable <code>IsKinematic</code>, so that the limbs are dynamic and behave like physics objects.</p>
+
+<h2>Collider interactions</h2>
+
+<p>The different collider types (static, kinematic, and dynamic) interact differently depending on the configuration of each pair of colliders. For more details, see <a href="collider-interactions.html">Collider interactions</a>.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="collider-types.html"></a></span><div class="tip">Collider types</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="collider-types-interaction.html"></a></span><div class="tip">Interaction between collider types</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

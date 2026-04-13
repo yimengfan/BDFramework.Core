@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: UnityEngine.CoreModule</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">UnityEngine.CoreModule</h1>
+                <div class="clear">
+                </div>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>The Core module implements basic classes required for Unity to function.</p>
+              </div>
+              <div class="subsection">
+        <p>This module cannot be disabled.</p>
+      </div>
+              <div class="subsection">
+                <h3>Classes</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Class</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="AddComponentMenu.html">AddComponentMenu</a></td><td class="desc">The AddComponentMenu attribute allows you to place a script anywhere in the "Component" menu, instead of just the "Component-&gt;Scripts" menu.</td></tr>
+      <tr><td class="lbl"><a href="Scripting.AlwaysLinkAssemblyAttribute.html">AlwaysLinkAssemblyAttribute</a></td><td class="desc">Ensure an assembly is always processed during managed code stripping.</td></tr>
+      <tr><td class="lbl"><a href="AnimationCurve.html">AnimationCurve</a></td><td class="desc">Store a collection of Keyframes that can be evaluated over time.</td></tr>
+      <tr><td class="lbl"><a href="Application.html">Application</a></td><td class="desc">Provides access to application runtime data.</td></tr>
+      <tr><td class="lbl"><a href="WSA.Application.html">Application</a></td><td class="desc">Provides essential methods related to Window Store application.</td></tr>
+      <tr><td class="lbl"><a href="Device.Application.html">Application</a></td><td class="desc">Access to platform-specific application runtime data.</td></tr>
+      <tr><td class="lbl"><a href="AssemblyIsEditorAssembly.html">AssemblyIsEditorAssembly</a></td><td class="desc">Assembly level attribute. Any classes in an assembly with this attribute will be considered to be Editor Classes.</td></tr>
+      <tr><td class="lbl"><a href="Assertions.Assert.html">Assert</a></td><td class="desc">The Assert class contains assertion methods for setting invariants in the code.</td></tr>
+      <tr><td class="lbl"><a href="Assertions.AssertionException.html">AssertionException</a></td><td class="desc">An exception that is thrown when an assertion fails.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.AsyncGPUReadback.html">AsyncGPUReadback</a></td><td class="desc">Allows the asynchronous read back of GPU resources.</td></tr>
+      <tr><td class="lbl"><a href="AsyncOperation.html">AsyncOperation</a></td><td class="desc">Asynchronous operation coroutine.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.AsyncReadManager.html">AsyncReadManager</a></td><td class="desc">With the AsyncReadManager, you can perform asynchronous I/O operations through Unity's virtual file system. You can perform these operations on any thread or job.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics.html">AsyncReadManagerMetrics</a></td><td class="desc">Manages the recording and retrieval of metrics from the AsyncReadManager.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetricsFilters.html">AsyncReadManagerMetricsFilters</a></td><td class="desc">Defines a filter for selecting specific categories of data when summarizing AsyncReadManager metrics.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.AsyncReadManagerSummaryMetrics.html">AsyncReadManagerSummaryMetrics</a></td><td class="desc">A summary of the metrics collected for AsyncReadManager read operations.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BatchRendererGroup.html">BatchRendererGroup</a></td><td class="desc">A group of batches.</td></tr>
+      <tr><td class="lbl"><a href="BeforeRenderOrderAttribute.html">BeforeRenderOrderAttribute</a></td><td class="desc">Use this BeforeRenderOrderAttribute when you need to specify a custom callback order for Application.onBeforeRender.</td></tr>
+      <tr><td class="lbl"><a href="Behaviour.html">Behaviour</a></td><td class="desc">Behaviours are Components that can be enabled or disabled.</td></tr>
+      <tr><td class="lbl"><a href="BillboardAsset.html">BillboardAsset</a></td><td class="desc">BillboardAsset describes how a billboard is rendered.</td></tr>
+      <tr><td class="lbl"><a href="BillboardRenderer.html">BillboardRenderer</a></td><td class="desc">Renders a billboard from a BillboardAsset.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.BurstAuthorizedExternalMethodAttribute.html">BurstAuthorizedExternalMethodAttribute</a></td><td class="desc">The BurstAuthorizedExternalMethod attribute lets you mark a function as being authorized for Burst to call from within a static constructor.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.BurstDiscardAttribute.html">BurstDiscardAttribute</a></td><td class="desc">The BurstDiscard attribute lets you remove a method or property from being compiled to native code by the burst compiler.</td></tr>
+      <tr><td class="lbl"><a href="Caching.html">Caching</a></td><td class="desc">The Caching class lets you manage cached AssetBundles, downloaded using UnityWebRequestAssetBundle.GetAssetBundle().</td></tr>
+      <tr><td class="lbl"><a href="Camera.html">Camera</a></td><td class="desc">A Camera is a device through which the player views the world.</td></tr>
+      <tr><td class="lbl"><a href="Pool.CollectionPool_2.html">CollectionPool&lt;T0,T1&gt;</a></td><td class="desc">A Collection such as List, HashSet, Dictionary etc can be pooled and reused by using a CollectionPool.</td></tr>
+      <tr><td class="lbl"><a href="ColorUsageAttribute.html">ColorUsageAttribute</a></td><td class="desc">Attribute used to configure the usage of the ColorField and Color Picker for a color.</td></tr>
+      <tr><td class="lbl"><a href="ColorUtility.html">ColorUtility</a></td><td class="desc">A collection of common color functions.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBuffer.html">CommandBuffer</a></td><td class="desc">List of graphics commands to execute.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBufferExtensions.html">CommandBufferExtensions</a></td><td class="desc">Static class providing extension methods for CommandBuffer.</td></tr>
+      <tr><td class="lbl"><a href="Component.html">Component</a></td><td class="desc">Base class for everything attached to a GameObject.</td></tr>
+      <tr><td class="lbl"><a href="ComputeBuffer.html">ComputeBuffer</a></td><td class="desc">GPU data buffer, mostly for use with compute shaders.</td></tr>
+      <tr><td class="lbl"><a href="ComputeShader.html">ComputeShader</a></td><td class="desc">Compute Shader asset.</td></tr>
+      <tr><td class="lbl"><a href="ContextMenu.html">ContextMenu</a></td><td class="desc">Use the ContextMenu attribute to add commands to the context menu of the Inspector window.</td></tr>
+      <tr><td class="lbl"><a href="ContextMenuItemAttribute.html">ContextMenuItemAttribute</a></td><td class="desc">Use this attribute to add a context menu to a field that calls a  named method.</td></tr>
+      <tr><td class="lbl"><a href="Coroutine.html">Coroutine</a></td><td class="desc">
+          MonoBehaviour.StartCoroutine returns a Coroutine. Instances of this class are only used to reference these coroutines, and do not hold any exposed properties or functions.</td></tr>
+      <tr><td class="lbl"><a href="TestTools.Coverage.html">Coverage</a></td><td class="desc">Describes the interface for the code coverage data exposed by mono.</td></tr>
+      <tr><td class="lbl"><a href="CrashReport.html">CrashReport</a></td><td class="desc">Holds data for a single application crash event and provides access to all gathered crash reports.</td></tr>
+      <tr><td class="lbl"><a href="Windows.CrashReporting.html">CrashReporting</a></td><td class="desc">Provides information specific to crash reporting on Windows platforms.</td></tr>
+      <tr><td class="lbl"><a href="CreateAssetMenuAttribute.html">CreateAssetMenuAttribute</a></td><td class="desc">Mark a ScriptableObject-derived type to be automatically listed in the Assets/Create submenu, so that instances of the type can be easily created and stored in the project as ".asset" files.</td></tr>
+      <tr><td class="lbl"><a href="Windows.Crypto.html">Crypto</a></td><td class="desc">Class representing cryptography algorithms.</td></tr>
+      <tr><td class="lbl"><a href="Cubemap.html">Cubemap</a></td><td class="desc">Class for handling cube maps, Use this to create or modify existing cube map assets.</td></tr>
+      <tr><td class="lbl"><a href="CubemapArray.html">CubemapArray</a></td><td class="desc">Class for handling Cubemap arrays.</td></tr>
+      <tr><td class="lbl"><a href="CullingGroup.html">CullingGroup</a></td><td class="desc">Describes a set of bounding spheres that should have their visibility and distances maintained.</td></tr>
+      <tr><td class="lbl"><a href="Cursor.html">Cursor</a></td><td class="desc">Cursor API for setting the cursor (mouse pointer).</td></tr>
+      <tr><td class="lbl"><a href="WSA.Cursor.html">Cursor</a></td><td class="desc">Cursor API for Windows Store Apps.</td></tr>
+      <tr><td class="lbl"><a href="CustomRenderTexture.html">CustomRenderTexture</a></td><td class="desc">Custom Render Textures are an extension to Render Textures that allow you to render directly to the Texture using a Shader.</td></tr>
+      <tr><td class="lbl"><a href="CustomRenderTextureManager.html">CustomRenderTextureManager</a></td><td class="desc">Custom Render Texture Manager.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.CustomSampler.html">CustomSampler</a></td><td class="desc">Custom CPU Profiler label used for profiling arbitrary code blocks.</td></tr>
+      <tr><td class="lbl"><a href="CustomYieldInstruction.html">CustomYieldInstruction</a></td><td class="desc">Base class for custom yield instructions to suspend coroutines.</td></tr>
+      <tr><td class="lbl"><a href="Sprites.DataUtility.html">DataUtility</a></td><td class="desc">Helper utilities for accessing Sprite data.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.DeallocateOnJobCompletionAttribute.html">DeallocateOnJobCompletionAttribute</a></td><td class="desc">Automatically deallocates the native container when the job is finished.</td></tr>
+      <tr><td class="lbl"><a href="Debug.html">Debug</a></td><td class="desc">Class containing methods to ease debugging while developing a game.</td></tr>
+      <tr><td class="lbl"><a href="DefaultExecutionOrder.html">DefaultExecutionOrder</a></td><td class="desc">Specifies the script execution order for a MonoBehaviour-derived class relative to other MonoBehaviour-derived types.</td></tr>
+      <tr><td class="lbl"><a href="DelayedAttribute.html">DelayedAttribute</a></td><td class="desc">Attribute used to make a float, int, or string variable in a script be delayed.</td></tr>
+      <tr><td class="lbl"><a href="tvOS.Device.html">Device</a></td><td class="desc">Interface into tvOS specific functionality.</td></tr>
+      <tr><td class="lbl"><a href="iOS.Device.html">Device</a></td><td class="desc">Interface into iOS specific functionality.</td></tr>
+      <tr><td class="lbl"><a href="Windows.Speech.DictationRecognizer.html">DictationRecognizer</a></td><td class="desc">DictationRecognizer listens to speech input and attempts to determine what phrase was uttered.</td></tr>
+      <tr><td class="lbl"><a href="Pool.DictionaryPool_2.html">DictionaryPool&lt;T0,T1&gt;</a></td><td class="desc">A version of CollectionPool&lt;T0,T1&gt; for Dictionaries.</td></tr>
+      <tr><td class="lbl"><a href="Windows.Directory.html">Directory</a></td><td class="desc">Exposes static methods for directory operations.</td></tr>
+      <tr><td class="lbl"><a href="DisallowMultipleComponent.html">DisallowMultipleComponent</a></td><td class="desc">Prevents MonoBehaviour of same type (or subtype) to be added more than once to a GameObject.</td></tr>
+      <tr><td class="lbl"><a href="Display.html">Display</a></td><td class="desc">Provides access to a display / screen for rendering operations.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.DisposeSentinel.html">DisposeSentinel</a></td><td class="desc">DisposeSentinel is used to automatically detect memory leaks.</td></tr>
+      <tr><td class="lbl"><a href="DynamicGI.html">DynamicGI</a></td><td class="desc">Allows to control the dynamic Global Illumination.</td></tr>
+      <tr><td class="lbl"><a href="TestTools.ExcludeFromCoverageAttribute.html">ExcludeFromCoverageAttribute</a></td><td class="desc">Allows you to exclude an Assembly, Class, Constructor, Method or Struct from Coverage.</td></tr>
+      <tr><td class="lbl"><a href="ExcludeFromObjectFactoryAttribute.html">ExcludeFromObjectFactoryAttribute</a></td><td class="desc">Add this attribute to a class to prevent the class and its inherited classes from being created with ObjectFactory methods.</td></tr>
+      <tr><td class="lbl"><a href="ExcludeFromPresetAttribute.html">ExcludeFromPresetAttribute</a></td><td class="desc">Add this attribute to a class to prevent creating a Preset from the instances of the class.</td></tr>
+      <tr><td class="lbl"><a href="ExecuteAlways.html">ExecuteAlways</a></td><td class="desc">Makes instances of a script always execute, both as part of Play Mode and when editing.</td></tr>
+      <tr><td class="lbl"><a href="ExecuteInEditMode.html">ExecuteInEditMode</a></td><td class="desc">Makes all instances of a script execute in Edit Mode.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Rendering.ExternalGPUProfiler.html">ExternalGPUProfiler</a></td><td class="desc">The ExternalGPUProfiler API allows developers to programatically take GPU frame captures in conjunction with supported external GPU profilers.
+GPU frame captures can be used to both analyze performance and debug graphics related issues.</td></tr>
+      <tr><td class="lbl"><a href="Windows.File.html">File</a></td><td class="desc">Provides static methods for file operations.</td></tr>
+      <tr><td class="lbl"><a href="Flare.html">Flare</a></td><td class="desc">A flare asset. Read more about flares in the components reference.</td></tr>
+      <tr><td class="lbl"><a href="FlareLayer.html">FlareLayer</a></td><td class="desc">FlareLayer component.</td></tr>
+      <tr><td class="lbl"><a href="Assertions.Comparers.FloatComparer.html">FloatComparer</a></td><td class="desc">A float comparer used by Assert performing approximate comparison.</td></tr>
+      <tr><td class="lbl"><a href="Serialization.FormerlySerializedAsAttribute.html">FormerlySerializedAsAttribute</a></td><td class="desc">Use this attribute to rename a field without losing its serialized value.</td></tr>
+      <tr><td class="lbl"><a href="Apple.FrameCapture.html">FrameCapture</a></td><td class="desc">Interface to control XCode Frame Capture.</td></tr>
+      <tr><td class="lbl"><a href="FrameDebugger.html">FrameDebugger</a></td><td class="desc">Controls the Frame Debugger from a script.</td></tr>
+      <tr><td class="lbl"><a href="FrameTimingManager.html">FrameTimingManager</a></td><td class="desc">The FrameTimingManager allows the user to capture and access FrameTiming data for multiple frames.</td></tr>
+      <tr><td class="lbl"><a href="GameObject.html">GameObject</a></td><td class="desc">Base class for all entities in Unity Scenes.</td></tr>
+      <tr><td class="lbl"><a href="Scripting.GarbageCollector.html">GarbageCollector</a></td><td class="desc">API to control the garbage collector on the Mono and IL2CPP scripting backends.</td></tr>
+      <tr><td class="lbl"><a href="Pool.GenericPool_1.html">GenericPool&lt;T0&gt;</a></td><td class="desc">Provides a static implementation of ObjectPool&lt;T0&gt;.</td></tr>
+      <tr><td class="lbl"><a href="GeometryUtility.html">GeometryUtility</a></td><td class="desc">Utility class for common geometric functions.</td></tr>
+      <tr><td class="lbl"><a href="Gizmos.html">Gizmos</a></td><td class="desc">Gizmos are used to give visual debugging or setup aids in the Scene view.</td></tr>
+      <tr><td class="lbl"><a href="GL.html">GL</a></td><td class="desc">Low-level graphics library.</td></tr>
+      <tr><td class="lbl"><a href="Gradient.html">Gradient</a></td><td class="desc">Gradient used for animating colors.</td></tr>
+      <tr><td class="lbl"><a href="GradientUsageAttribute.html">GradientUsageAttribute</a></td><td class="desc">Attribute used to configure the usage of the GradientField and Gradient Editor for a gradient.</td></tr>
+      <tr><td class="lbl"><a href="Windows.Speech.GrammarRecognizer.html">GrammarRecognizer</a></td><td class="desc">The GrammarRecognizer is a complement to the KeywordRecognizer. In many cases developers will find the KeywordRecognizer fills all their development needs. However, in some cases, more complex grammars will be better expressed in the form of an xml file on disk.
+The GrammarRecognizer uses Extensible Markup Language (XML) elements and attributes, as specified in the World Wide Web Consortium (W3C) Speech Recognition Grammar Specification (SRGS) Version 1.0. These XML elements and attributes represent the rule structures that define the words or phrases (commands) recognized by speech recognition engines.</td></tr>
+      <tr><td class="lbl"><a href="Graphics.html">Graphics</a></td><td class="desc">Raw interface to Unity's drawing functions.</td></tr>
+      <tr><td class="lbl"><a href="GraphicsBuffer.html">GraphicsBuffer</a></td><td class="desc">GPU graphics data buffer, for working with geometry or compute shader data.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.GraphicsSettings.html">GraphicsSettings</a></td><td class="desc">Script interface for Graphics Settings.</td></tr>
+      <tr><td class="lbl"><a href="Handheld.html">Handheld</a></td><td class="desc">Interface into functionality unique to handheld devices.</td></tr>
+      <tr><td class="lbl"><a href="Pool.HashSetPool_1.html">HashSetPool&lt;T0&gt;</a></td><td class="desc">A version of CollectionPool&lt;T0,T1&gt; for HashSets.</td></tr>
+      <tr><td class="lbl"><a href="HashUnsafeUtilities.html">HashUnsafeUtilities</a></td><td class="desc">Utilities to compute hashes with unsafe code.</td></tr>
+      <tr><td class="lbl"><a href="HashUtilities.html">HashUtilities</a></td><td class="desc">Utilities to compute hashes.</td></tr>
+      <tr><td class="lbl"><a href="HDROutputSettings.html">HDROutputSettings</a></td><td class="desc">Provides access to HDR display settings and information.</td></tr>
+      <tr><td class="lbl"><a href="HeaderAttribute.html">HeaderAttribute</a></td><td class="desc">Use this PropertyAttribute to add a header above some fields in the Inspector.</td></tr>
+      <tr><td class="lbl"><a href="HelpURLAttribute.html">HelpURLAttribute</a></td><td class="desc">Provide a custom documentation URL for a class.</td></tr>
+      <tr><td class="lbl"><a href="HideInCallstackAttribute.html">HideInCallstackAttribute</a></td><td class="desc">Marks the methods you want to hide from the Console window callstack. When you hide these methods they are removed from the detail area of the selected message in the Console window.</td></tr>
+      <tr><td class="lbl"><a href="HideInInspector.html">HideInInspector</a></td><td class="desc">Flags a variable to not appear in the Inspector.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Rendering.HybridV2.HybridV2ShaderReflection.html">HybridV2ShaderReflection</a></td><td class="desc">Contains methods for reading Hybrid Renderer specific reflection data from shaders.</td></tr>
+      <tr><td class="lbl"><a href="IconAttribute.html">IconAttribute</a></td><td class="desc">Attribute to specify an icon for a MonoBehaviour or ScriptableObject.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Jobs.IJobExtensions.html">IJobExtensions</a></td><td class="desc">Extension methods for Jobs using the IJob interface.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Jobs.IJobForExtensions.html">IJobForExtensions</a></td><td class="desc">Extension methods for Jobs using the IJobFor.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Jobs.IJobParallelForExtensions.html">IJobParallelForExtensions</a></td><td class="desc">Extension methods for Jobs using the IJobParallelFor.</td></tr>
+      <tr><td class="lbl"><a href="Jobs.IJobParallelForTransformExtensions.html">IJobParallelForTransformExtensions</a></td><td class="desc">Extension methods for IJobParallelForTransform.</td></tr>
+      <tr><td class="lbl"><a href="ImageEffectAfterScale.html">ImageEffectAfterScale</a></td><td class="desc">Any Image Effect with this attribute will be rendered after Dynamic Resolution stage.</td></tr>
+      <tr><td class="lbl"><a href="ImageEffectAllowedInSceneView.html">ImageEffectAllowedInSceneView</a></td><td class="desc">Any Image Effect with this attribute can be rendered into the Scene view camera.</td></tr>
+      <tr><td class="lbl"><a href="ImageEffectOpaque.html">ImageEffectOpaque</a></td><td class="desc">Any Image Effect with this attribute will be rendered after opaque geometry but before transparent geometry.</td></tr>
+      <tr><td class="lbl"><a href="ImageEffectTransformsToLDR.html">ImageEffectTransformsToLDR</a></td><td class="desc">When using HDR rendering it can sometime be desirable to switch to LDR rendering during ImageEffect rendering.</td></tr>
+      <tr><td class="lbl"><a href="ImageEffectUsesCommandBuffer.html">ImageEffectUsesCommandBuffer</a></td><td class="desc">Use this attribute when image effects are implemented using Command Buffers.</td></tr>
+      <tr><td class="lbl"><a href="Windows.Input.html">Input</a></td><td class="desc">Provides static methods for Windows specific input manipulation.</td></tr>
+      <tr><td class="lbl"><a href="InspectorNameAttribute.html">InspectorNameAttribute</a></td><td class="desc">Use this attribute on enum value declarations to change the display name shown in the Inspector.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Jobs.LowLevel.Unsafe.JobHandleUnsafeUtility.html">JobHandleUnsafeUtility</a></td><td class="desc">JobHandle Unsafe Utilities.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Jobs.LowLevel.Unsafe.JobProducerTypeAttribute.html">JobProducerTypeAttribute</a></td><td class="desc">All job interface types must be marked with the JobProducerType. This is used to compile the Execute method by the Burst ASM inspector.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Jobs.LowLevel.Unsafe.JobsUtility.html">JobsUtility</a></td><td class="desc">Static class containing functionality to create, run and debug jobs.</td></tr>
+      <tr><td class="lbl"><a href="Windows.Speech.KeywordRecognizer.html">KeywordRecognizer</a></td><td class="desc">KeywordRecognizer listens to speech input and attempts to match uttered phrases to a list of registered keywords.</td></tr>
+      <tr><td class="lbl"><a href="WSA.Launcher.html">Launcher</a></td><td class="desc">Class which is capable of launching user's default app for file type or a protocol. See also PlayerSettings where you can specify file or URI associations.</td></tr>
+      <tr><td class="lbl"><a href="LensFlare.html">LensFlare</a></td><td class="desc">Script interface for a Lens flare component.</td></tr>
+      <tr><td class="lbl"><a href="Windows.LicenseInformation.html">LicenseInformation</a></td><td class="desc">This class provides information regarding application's trial status and allows initiating application purchase.</td></tr>
+      <tr><td class="lbl"><a href="Light.html">Light</a></td><td class="desc">Script interface for light components.</td></tr>
+      <tr><td class="lbl"><a href="U2D.Light2DBase.html">Light2DBase</a></td><td class="desc">Provides a base class for 2D lights.</td></tr>
+      <tr><td class="lbl"><a href="LightingSettings.html">LightingSettings</a></td><td class="desc">An object containing settings for precomputing lighting data, that Unity can serialize as a Lighting Settings Asset.</td></tr>
+      <tr><td class="lbl"><a href="LightmapData.html">LightmapData</a></td><td class="desc">Data of a lightmap.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.LightmapperUtils.html">LightmapperUtils</a></td><td class="desc">Utility class for converting Unity Lights to light types recognized by the baking backends.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.Lightmapping.html">Lightmapping</a></td><td class="desc">Interface to the light baking backends.</td></tr>
+      <tr><td class="lbl"><a href="LightmapSettings.html">LightmapSettings</a></td><td class="desc">Stores lightmaps of the Scene.</td></tr>
+      <tr><td class="lbl"><a href="LightProbeGroup.html">LightProbeGroup</a></td><td class="desc">Light Probe Group.</td></tr>
+      <tr><td class="lbl"><a href="LightProbeProxyVolume.html">LightProbeProxyVolume</a></td><td class="desc">The Light Probe Proxy Volume component offers the possibility to use higher resolution lighting for large non-static GameObjects.</td></tr>
+      <tr><td class="lbl"><a href="LightProbes.html">LightProbes</a></td><td class="desc">Stores light probe data for all currently loaded Scenes.</td></tr>
+      <tr><td class="lbl"><a href="LineRenderer.html">LineRenderer</a></td><td class="desc">The line renderer is used to draw free-floating lines in 3D space.</td></tr>
+      <tr><td class="lbl"><a href="LineUtility.html">LineUtility</a></td><td class="desc">A collection of common line functions.</td></tr>
+      <tr><td class="lbl"><a href="Pool.LinkedPool_1.html">LinkedPool&lt;T0&gt;</a></td><td class="desc">A linked list version of IObjectPool&lt;T0&gt;.</td></tr>
+      <tr><td class="lbl"><a href="Pool.ListPool_1.html">ListPool&lt;T0&gt;</a></td><td class="desc">A version of CollectionPool&lt;T0,T1&gt; for Lists.</td></tr>
+      <tr><td class="lbl"><a href="LODGroup.html">LODGroup</a></td><td class="desc">LODGroup lets you group multiple Renderers into LOD levels.</td></tr>
+      <tr><td class="lbl"><a href="Logger.html">Logger</a></td><td class="desc">Initializes a new instance of the Logger.</td></tr>
+      <tr><td class="lbl"><a href="Material.html">Material</a></td><td class="desc">The material class.</td></tr>
+      <tr><td class="lbl"><a href="MaterialPropertyBlock.html">MaterialPropertyBlock</a></td><td class="desc">A block of material values to apply.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.MemoryProfiler.html">MemoryProfiler</a></td><td class="desc">Memory profiling API container class.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.html">Mesh</a></td><td class="desc">A class that allows you to create or modify meshes.</td></tr>
+      <tr><td class="lbl"><a href="MeshFilter.html">MeshFilter</a></td><td class="desc">A class to access the Mesh of the mesh filter.</td></tr>
+      <tr><td class="lbl"><a href="MeshRenderer.html">MeshRenderer</a></td><td class="desc">Renders meshes inserted by the MeshFilter or TextMesh.</td></tr>
+      <tr><td class="lbl"><a href="Networking.PlayerConnection.MessageEventArgs.html">MessageEventArgs</a></td><td class="desc">Arguments passed to Action callbacks registered in PlayerConnection.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.MetaData.html">MetaData</a></td><td class="desc">Container for memory snapshot meta data.</td></tr>
+      <tr><td class="lbl"><a href="MinAttribute.html">MinAttribute</a></td><td class="desc">Attribute used to make a float or int variable in a script be restricted to a specific minimum value.</td></tr>
+      <tr><td class="lbl"><a href="MonoBehaviour.html">MonoBehaviour</a></td><td class="desc">MonoBehaviour is the base class from which every Unity script derives.</td></tr>
+      <tr><td class="lbl"><a href="MultilineAttribute.html">MultilineAttribute</a></td><td class="desc">Attribute to make a string be edited with a multi-line textfield.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.NativeArrayUnsafeUtility.html">NativeArrayUnsafeUtility</a></td><td class="desc">NativeArray Unsafe Utility.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.NativeContainerAttribute.html">NativeContainerAttribute</a></td><td class="desc">Allows you to create your own custom native container.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.NativeContainerIsAtomicWriteOnlyAttribute.html">NativeContainerIsAtomicWriteOnlyAttribute</a></td><td class="desc">NativeContainerIsAtomicWriteOnlyAttribute.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.NativeContainerIsReadOnlyAttribute.html">NativeContainerIsReadOnlyAttribute</a></td><td class="desc">NativeContainerIsReadOnlyAttribute.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.NativeContainerSupportsDeallocateOnJobCompletionAttribute.html">NativeContainerSupportsDeallocateOnJobCompletionAttribute</a></td><td class="desc">Indicates that a native container can be automatically deallocated.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.NativeContainerSupportsDeferredConvertListToArray.html">NativeContainerSupportsDeferredConvertListToArray</a></td><td class="desc">NativeContainerSupportsDeferredConvertListToArray.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.NativeContainerSupportsMinMaxWriteRestrictionAttribute.html">NativeContainerSupportsMinMaxWriteRestrictionAttribute</a></td><td class="desc">NativeContainerSupportsMinMaxWriteRestrictionAttribute.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.NativeDisableContainerSafetyRestrictionAttribute.html">NativeDisableContainerSafetyRestrictionAttribute</a></td><td class="desc">By default native containers are tracked by the safety system to avoid race conditions. The safety system encapsulates the best practices and catches many race condition bugs from the start.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.NativeDisableParallelForRestrictionAttribute.html">NativeDisableParallelForRestrictionAttribute</a></td><td class="desc">NativeDisableParallelForRestrictionAttribute.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.NativeDisableUnsafePtrRestrictionAttribute.html">NativeDisableUnsafePtrRestrictionAttribute</a></td><td class="desc">By default unsafe Pointers are not allowed to be used in a job since it is not possible for the Job Debugger to gurantee race condition free behaviour. This attribute lets you explicitly disable the restriction on a job.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.NativeFixedLengthAttribute.html">NativeFixedLengthAttribute</a></td><td class="desc">The container has from start a size that will never change.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.NativeLeakDetection.html">NativeLeakDetection</a></td><td class="desc">Static class for native leak detection settings.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.NativeSetClassTypeToNullOnScheduleAttribute.html">NativeSetClassTypeToNullOnScheduleAttribute</a></td><td class="desc">When this attribute is applied to a field in a job struct, the managed reference to the class will be set to null on the copy of the job struct that is passed to the job.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.NativeSetThreadIndexAttribute.html">NativeSetThreadIndexAttribute</a></td><td class="desc">This attribute can inject a worker thread index into an int on the job struct. This is usually used in the implementation of atomic containers. The index is guaranteed to be unique to any other job that might be running in parallel.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.NativeSliceUnsafeUtility.html">NativeSliceUnsafeUtility</a></td><td class="desc">NativeSlice unsafe utility class.</td></tr>
+      <tr><td class="lbl"><a href="NonReorderableAttribute.html">NonReorderableAttribute</a></td><td class="desc">Disables reordering of an array or list in the Inspector window.</td></tr>
+      <tr><td class="lbl"><a href="Playables.Notification.html">Notification</a></td><td class="desc">Default implementation for Playable notifications.</td></tr>
+      <tr><td class="lbl"><a href="Object.html">Object</a></td><td class="desc">Base class for all objects Unity can reference.</td></tr>
+      <tr><td class="lbl"><a href="Pool.ObjectPool_1.html">ObjectPool&lt;T0&gt;</a></td><td class="desc">A stack based IObjectPool&lt;T0&gt;.</td></tr>
+      <tr><td class="lbl"><a href="OcclusionArea.html">OcclusionArea</a></td><td class="desc">OcclusionArea is an area in which occlusion culling is performed.</td></tr>
+      <tr><td class="lbl"><a href="OcclusionPortal.html">OcclusionPortal</a></td><td class="desc">The portal for dynamically changing occlusion at runtime.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.OnDemandRendering.html">OnDemandRendering</a></td><td class="desc">Use the OnDemandRendering class to control and query information about your application's rendering speed independent from all other subsystems (such as physics, input, or animation).
+</td></tr>
+      <tr><td class="lbl"><a href="iOS.OnDemandResources.html">OnDemandResources</a></td><td class="desc">On Demand Resources API.</td></tr>
+      <tr><td class="lbl"><a href="iOS.OnDemandResourcesRequest.html">OnDemandResourcesRequest</a></td><td class="desc">Represents a request for On Demand Resources (ODR). It's an AsyncOperation and can be yielded in a coroutine.</td></tr>
+      <tr><td class="lbl"><a href="Windows.WebCam.PhotoCapture.html">PhotoCapture</a></td><td class="desc">Captures a photo from the web camera and stores it in memory or on disk.</td></tr>
+      <tr><td class="lbl"><a href="Windows.WebCam.PhotoCaptureFrame.html">PhotoCaptureFrame</a></td><td class="desc">Contains information captured from the web camera.</td></tr>
+      <tr><td class="lbl"><a href="Windows.Speech.PhraseRecognitionSystem.html">PhraseRecognitionSystem</a></td><td class="desc">Phrase recognition system is responsible for managing phrase recognizers and dispatching recognition events to them.</td></tr>
+      <tr><td class="lbl"><a href="Windows.Speech.PhraseRecognizer.html">PhraseRecognizer</a></td><td class="desc">A common base class for both keyword recognizer and grammar recognizer.</td></tr>
+      <tr><td class="lbl"><a href="Ping.html">Ping</a></td><td class="desc">Ping any given IP address (given in dot notation).</td></tr>
+      <tr><td class="lbl"><a href="Rendering.PIX.html">PIX</a></td><td class="desc">Provides an interface to control GPU frame capture in Microsoft's PIX software.</td></tr>
+      <tr><td class="lbl"><a href="U2D.PixelPerfectRendering.html">PixelPerfectRendering</a></td><td class="desc">A collection of APIs that facilitate pixel perfect rendering of sprite-based renderers.</td></tr>
+      <tr><td class="lbl"><a href="Playables.PlayableAsset.html">PlayableAsset</a></td><td class="desc">A base class for assets that can be used to instantiate a Playable at runtime.</td></tr>
+      <tr><td class="lbl"><a href="Playables.PlayableBehaviour.html">PlayableBehaviour</a></td><td class="desc">PlayableBehaviour is the base class from which every custom playable script derives.</td></tr>
+      <tr><td class="lbl"><a href="Playables.PlayableExtensions.html">PlayableExtensions</a></td><td class="desc">Extensions for all the types that implements IPlayable.</td></tr>
+      <tr><td class="lbl"><a href="Playables.PlayableOutputExtensions.html">PlayableOutputExtensions</a></td><td class="desc">Extensions for all the types that implements IPlayableOutput.</td></tr>
+      <tr><td class="lbl"><a href="Networking.PlayerConnection.PlayerConnection.html">PlayerConnection</a></td><td class="desc">Used for handling the network connection from the Player to the Editor.</td></tr>
+      <tr><td class="lbl"><a href="LowLevel.PlayerLoop.html">PlayerLoop</a></td><td class="desc">The class representing the player loop in Unity.</td></tr>
+      <tr><td class="lbl"><a href="PlayerPrefs.html">PlayerPrefs</a></td><td class="desc">
+          PlayerPrefs is a class that stores Player preferences between game sessions. It can store string, float and integer values into the user’s platform registry.</td></tr>
+      <tr><td class="lbl"><a href="PlayerPrefsException.html">PlayerPrefsException</a></td><td class="desc">An exception thrown by the PlayerPrefs class in a  web player build.</td></tr>
+      <tr><td class="lbl"><a href="PreferBinarySerialization.html">PreferBinarySerialization</a></td><td class="desc">Prefer ScriptableObject derived type to use binary serialization regardless of project's asset serialization mode.</td></tr>
+      <tr><td class="lbl"><a href="Scripting.PreserveAttribute.html">PreserveAttribute</a></td><td class="desc">PreserveAttribute prevents byte code stripping from removing a class, method, field, or property.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Profiler.html">Profiler</a></td><td class="desc">Controls the Profiler from script.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.LowLevel.Unsafe.ProfilerUnsafeUtility.html">ProfilerUnsafeUtility</a></td><td class="desc">Utility class which provides access to low level Profiler API.</td></tr>
+      <tr><td class="lbl"><a href="Projector.html">Projector</a></td><td class="desc">A script interface for a projector component.</td></tr>
+      <tr><td class="lbl"><a href="PropertyAttribute.html">PropertyAttribute</a></td><td class="desc">Base class to derive custom property attributes from. Use this to create custom attributes for script variables.</td></tr>
+      <tr><td class="lbl"><a href="QualitySettings.html">QualitySettings</a></td><td class="desc">This represents the script interface for Quality Settings.</td></tr>
+      <tr><td class="lbl"><a href="Random.html">Random</a></td><td class="desc">Easily generate random data for games.</td></tr>
+      <tr><td class="lbl"><a href="RangeAttribute.html">RangeAttribute</a></td><td class="desc">Attribute used to make a float or int variable in a script be restricted to a specific range.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Rendering.RayTracingAccelerationStructure.html">RayTracingAccelerationStructure</a></td><td class="desc">A data structure used to represent the Renderers in the Scene for GPU ray tracing.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Rendering.RayTracingShader.html">RayTracingShader</a></td><td class="desc">A shader for GPU ray tracing.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.ReadOnlyAttribute.html">ReadOnlyAttribute</a></td><td class="desc">The ReadOnly attribute lets you mark a member of a struct used in a job as read-only.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Recorder.html">Recorder</a></td><td class="desc">Records profiling data produced by a specific Sampler.</td></tr>
+      <tr><td class="lbl"><a href="RectOffset.html">RectOffset</a></td><td class="desc">Offsets for rectangles, borders, etc.</td></tr>
+      <tr><td class="lbl"><a href="RectTransform.html">RectTransform</a></td><td class="desc">Position, size, anchor and pivot information for a rectangle.</td></tr>
+      <tr><td class="lbl"><a href="ReflectionProbe.html">ReflectionProbe</a></td><td class="desc">The reflection probe is used to capture the surroundings into a texture which is passed to the shaders and used for reflections.</td></tr>
+      <tr><td class="lbl"><a href="tvOS.Remote.html">Remote</a></td><td class="desc">A class for Apple TV remote input configuration.</td></tr>
+      <tr><td class="lbl"><a href="Renderer.html">Renderer</a></td><td class="desc">General functionality for all renderers.</td></tr>
+      <tr><td class="lbl"><a href="RendererExtensions.html">RendererExtensions</a></td><td class="desc">Extension methods to the Renderer class, used only for the UpdateGIMaterials method used by the Global Illumination System.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderPipeline.html">RenderPipeline</a></td><td class="desc">Defines a series of commands and settings that describes how Unity renders a frame.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderPipelineAsset.html">RenderPipelineAsset</a></td><td class="desc">An asset that produces a specific IRenderPipeline.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderPipelineGlobalSettings.html">RenderPipelineGlobalSettings</a></td><td class="desc">A ScriptableObject to associate with a RenderPipeline and store project-wide settings for that Pipeline.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderPipelineManager.html">RenderPipelineManager</a></td><td class="desc">Render Pipeline manager.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.RenderSettings.html">RenderSettings</a></td><td class="desc">Experimental render settings features.</td></tr>
+      <tr><td class="lbl"><a href="RenderSettings.html">RenderSettings</a></td><td class="desc">The Render Settings contain values for a range of visual elements in your Scene, like fog and ambient light.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.RenderSettings.html">RenderSettings</a></td><td class="desc">Experimental render settings features.</td></tr>
+      <tr><td class="lbl"><a href="RenderTexture.html">RenderTexture</a></td><td class="desc">Render textures are textures that can be rendered to.</td></tr>
+      <tr><td class="lbl"><a href="Apple.ReplayKit.ReplayKit.html">ReplayKit</a></td><td class="desc">ReplayKit is only available on certain iPhone, iPad and iPod Touch devices running iOS 9.0 or later.</td></tr>
+      <tr><td class="lbl"><a href="Scripting.RequireAttributeUsagesAttribute.html">RequireAttributeUsagesAttribute</a></td><td class="desc">Only allowed on attribute types. If the attribute type is marked, then so too will all CustomAttributes of that type.</td></tr>
+      <tr><td class="lbl"><a href="RequireComponent.html">RequireComponent</a></td><td class="desc">The RequireComponent attribute automatically adds required components as dependencies.</td></tr>
+      <tr><td class="lbl"><a href="Scripting.RequireDerivedAttribute.html">RequireDerivedAttribute</a></td><td class="desc">When the type is marked, all types derived from that type will also be marked.</td></tr>
+      <tr><td class="lbl"><a href="Scripting.RequiredInterfaceAttribute.html">RequiredInterfaceAttribute</a></td><td class="desc">When a type is marked, all interface implementations of the specified types will be marked.</td></tr>
+      <tr><td class="lbl"><a href="Scripting.RequiredMemberAttribute.html">RequiredMemberAttribute</a></td><td class="desc">When a type is marked, all of it's members with [RequiredMember] will be marked.</td></tr>
+      <tr><td class="lbl"><a href="Scripting.RequireImplementorsAttribute.html">RequireImplementorsAttribute</a></td><td class="desc">When the interface type is marked, all types implementing that interface will be marked.</td></tr>
+      <tr><td class="lbl"><a href="ResourceRequest.html">ResourceRequest</a></td><td class="desc">Asynchronous load request from the Resources bundle.</td></tr>
+      <tr><td class="lbl"><a href="Resources.html">Resources</a></td><td class="desc">The Resources class allows you to find and access Objects including assets.</td></tr>
+      <tr><td class="lbl"><a href="ResourcesAPI.html">ResourcesAPI</a></td><td class="desc">Derive from this base class to provide alternative implementations to the C# behavior of specific Resources methods.</td></tr>
+      <tr><td class="lbl"><a href="RuntimeInitializeOnLoadMethodAttribute.html">RuntimeInitializeOnLoadMethodAttribute</a></td><td class="desc">Allow a runtime class method to be initialized when a game is loaded at runtime
+      without action from the user.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Sampler.html">Sampler</a></td><td class="desc">Provides control over a CPU Profiler label.</td></tr>
+      <tr><td class="lbl"><a href="ScalableBufferManager.html">ScalableBufferManager</a></td><td class="desc">Scales render textures to support dynamic resolution if the target platform/graphics API supports it.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.SceneManager.html">SceneManager</a></td><td class="desc">Scene management at run-time.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.SceneManagerAPI.html">SceneManagerAPI</a></td><td class="desc">Derive from this base class to provide alternative implementations to the C# behavior of specific SceneManager methods.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.SceneUtility.html">SceneUtility</a></td><td class="desc">Scene and Build Settings related utilities.</td></tr>
+      <tr><td class="lbl"><a href="Screen.html">Screen</a></td><td class="desc">Provides access to display information.</td></tr>
+      <tr><td class="lbl"><a href="Device.Screen.html">Screen</a></td><td class="desc">Access platform-specific display information.</td></tr>
+      <tr><td class="lbl"><a href="ScriptableObject.html">ScriptableObject</a></td><td class="desc">A class you can derive from if you want to create objects that live independently of GameObjects.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Rendering.ScriptableRuntimeReflectionSystem.html">ScriptableRuntimeReflectionSystem</a></td><td class="desc">Empty implementation of IScriptableRuntimeReflectionSystem.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Rendering.ScriptableRuntimeReflectionSystemSettings.html">ScriptableRuntimeReflectionSystemSettings</a></td><td class="desc">Global settings for the scriptable runtime reflection system.</td></tr>
+      <tr><td class="lbl"><a href="Playables.ScriptPlayableBinding.html">ScriptPlayableBinding</a></td><td class="desc">A PlayableBinding that contains information representing a ScriptingPlayableOutput.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchContextAttribute.html">SearchContextAttribute</a></td><td class="desc">This attribute can be attached to a component object field in order to have the ObjectField use the advanced Object Picker.</td></tr>
+      <tr><td class="lbl"><a href="Security.html">Security</a></td><td class="desc">Webplayer security related class. Not supported from 5.4.0 onwards.</td></tr>
+      <tr><td class="lbl"><a href="SelectionBaseAttribute.html">SelectionBaseAttribute</a></td><td class="desc">Add this attribute to a script class to mark its GameObject as a selection base object for Scene View picking.</td></tr>
+      <tr><td class="lbl"><a href="SerializeField.html">SerializeField</a></td><td class="desc">Force Unity to serialize a private field.</td></tr>
+      <tr><td class="lbl"><a href="SerializeReference.html">SerializeReference</a></td><td class="desc">A scripting attribute that instructs Unity to serialize a field as a reference instead of as a value.</td></tr>
+      <tr><td class="lbl"><a href="Shader.html">Shader</a></td><td class="desc">Shader scripts used for all rendering.</td></tr>
+      <tr><td class="lbl"><a href="ShaderVariantCollection.html">ShaderVariantCollection</a></td><td class="desc">ShaderVariantCollection records which shader variants are actually used in each shader.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Rendering.ShaderWarmup.html">ShaderWarmup</a></td><td class="desc">Prewarms shaders in a way that is supported by all graphics APIs.</td></tr>
+      <tr><td class="lbl"><a href="SkinnedMeshRenderer.html">SkinnedMeshRenderer</a></td><td class="desc">The Skinned Mesh filter.</td></tr>
+      <tr><td class="lbl"><a href="Skybox.html">Skybox</a></td><td class="desc">A script interface for the skybox component.</td></tr>
+      <tr><td class="lbl"><a href="SleepTimeout.html">SleepTimeout</a></td><td class="desc">Constants for special values of Screen.sleepTimeout.</td></tr>
+      <tr><td class="lbl"><a href="Snapping.html">Snapping</a></td><td class="desc">Snap values to rounded increments.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.SortingGroup.html">SortingGroup</a></td><td class="desc">Adding a SortingGroup component to a GameObject will ensure that all Renderers within the GameObject's descendants will be sorted and rendered together.</td></tr>
+      <tr><td class="lbl"><a href="SpaceAttribute.html">SpaceAttribute</a></td><td class="desc">Use this PropertyAttribute to add some spacing in the Inspector.</td></tr>
+      <tr><td class="lbl"><a href="SparseTexture.html">SparseTexture</a></td><td class="desc">Class for handling Sparse Textures.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.SplashScreen.html">SplashScreen</a></td><td class="desc">Provides an interface to the Unity splash screen.</td></tr>
+      <tr><td class="lbl"><a href="Sprite.html">Sprite</a></td><td class="desc">Represents a Sprite object for use in 2D gameplay.</td></tr>
+      <tr><td class="lbl"><a href="U2D.SpriteAtlas.html">SpriteAtlas</a></td><td class="desc">Sprite Atlas is an asset created within Unity. It is part of the built-in sprite packing solution.</td></tr>
+      <tr><td class="lbl"><a href="U2D.SpriteAtlasManager.html">SpriteAtlasManager</a></td><td class="desc">Manages SpriteAtlas during runtime.</td></tr>
+      <tr><td class="lbl"><a href="U2D.SpriteDataAccessExtensions.html">SpriteDataAccessExtensions</a></td><td class="desc">A list of methods designed for reading and writing to the rich internal data of a Sprite.</td></tr>
+      <tr><td class="lbl"><a href="SpriteRenderer.html">SpriteRenderer</a></td><td class="desc">Renders a Sprite for 2D graphics.</td></tr>
+      <tr><td class="lbl"><a href="U2D.SpriteRendererDataAccessExtensions.html">SpriteRendererDataAccessExtensions</a></td><td class="desc">A list of methods that allow the caller to override what the SpriteRenderer renders.</td></tr>
+      <tr><td class="lbl"><a href="StaticBatchingUtility.html">StaticBatchingUtility</a></td><td class="desc">StaticBatchingUtility can prepare your objects to take advantage of Unity's static batching.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.SupportedRenderingFeatures.html">SupportedRenderingFeatures</a></td><td class="desc">Describes the rendering features supported by a given render pipeline.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo.html">SystemInfo</a></td><td class="desc">Access system and hardware information.</td></tr>
+      <tr><td class="lbl"><a href="Device.SystemInfo.html">SystemInfo</a></td><td class="desc">Access platform-specific system and hardware information.</td></tr>
+      <tr><td class="lbl"><a href="TextAreaAttribute.html">TextAreaAttribute</a></td><td class="desc">Attribute to make a string be edited with a height-flexible and scrollable text area.</td></tr>
+      <tr><td class="lbl"><a href="TextAsset.html">TextAsset</a></td><td class="desc">Represents a raw text or binary file asset.</td></tr>
+      <tr><td class="lbl"><a href="Texture.html">Texture</a></td><td class="desc">Base class for Texture handling.</td></tr>
+      <tr><td class="lbl"><a href="Texture2D.html">Texture2D</a></td><td class="desc">Class that represents textures in C# code.</td></tr>
+      <tr><td class="lbl"><a href="Texture2DArray.html">Texture2DArray</a></td><td class="desc">Class for handling 2D texture arrays.</td></tr>
+      <tr><td class="lbl"><a href="Texture3D.html">Texture3D</a></td><td class="desc">Class for handling 3D Textures, Use this to create 3D texture assets.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Playables.TexturePlayableBinding.html">TexturePlayableBinding</a></td><td class="desc">A PlayableBinding that contains information representing a TexturePlayableOutput.</td></tr>
+      <tr><td class="lbl"><a href="WSA.Tile.html">Tile</a></td><td class="desc">Represents tile on Windows start screen
+</td></tr>
+      <tr><td class="lbl"><a href="Time.html">Time</a></td><td class="desc">Provides an interface to get time information from Unity.</td></tr>
+      <tr><td class="lbl"><a href="WSA.Toast.html">Toast</a></td><td class="desc">Represents a toast notification in Windows Store Apps.
+</td></tr>
+      <tr><td class="lbl"><a href="TooltipAttribute.html">TooltipAttribute</a></td><td class="desc">Specify a tooltip for a field in the Inspector window.</td></tr>
+      <tr><td class="lbl"><a href="TouchScreenKeyboard.html">TouchScreenKeyboard</a></td><td class="desc">Interface for on-screen keyboards. Only native iPhone, Android, and Windows Store Apps are supported.</td></tr>
+      <tr><td class="lbl"><a href="TrailRenderer.html">TrailRenderer</a></td><td class="desc">The trail renderer is used to make trails behind objects in the Scene as they move about.</td></tr>
+      <tr><td class="lbl"><a href="Transform.html">Transform</a></td><td class="desc">Position, rotation and scale of an object.</td></tr>
+      <tr><td class="lbl"><a href="UnityAPICompatibilityVersionAttribute.html">UnityAPICompatibilityVersionAttribute</a></td><td class="desc">Declares an assembly to be compatible (API wise) with a specific Unity API. Used by internal tools to avoid processing the assembly in order to decide whether assemblies may be using old Unity API.</td></tr>
+      <tr><td class="lbl"><a href="Events.UnityEvent.html">UnityEvent</a></td><td class="desc">A zero argument persistent callback that can be saved with the Scene.</td></tr>
+      <tr><td class="lbl"><a href="Events.UnityEvent_4.html">UnityEvent&lt;T0,T1,T2,T3&gt;</a></td><td class="desc">Four argument version of UnityEvent.</td></tr>
+      <tr><td class="lbl"><a href="Events.UnityEvent_3.html">UnityEvent&lt;T0,T1,T2&gt;</a></td><td class="desc">Three argument version of UnityEvent.</td></tr>
+      <tr><td class="lbl"><a href="Events.UnityEvent_2.html">UnityEvent&lt;T0,T1&gt;</a></td><td class="desc">Two argument version of UnityEvent.</td></tr>
+      <tr><td class="lbl"><a href="Events.UnityEvent_1.html">UnityEvent&lt;T0&gt;</a></td><td class="desc">One argument version of UnityEvent.</td></tr>
+      <tr><td class="lbl"><a href="Events.UnityEventBase.html">UnityEventBase</a></td><td class="desc">Abstract base class for UnityEvents.</td></tr>
+      <tr><td class="lbl"><a href="Pool.UnsafeGenericPool_1.html">UnsafeGenericPool&lt;T0&gt;</a></td><td class="desc">Provides a static implementation of ObjectPool&lt;T0&gt;.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.UnsafeUtility.html">UnsafeUtility</a></td><td class="desc">Unsafe utility class.</td></tr>
+      <tr><td class="lbl"><a href="Lumin.UsesLuminPlatformLevelAttribute.html">UsesLuminPlatformLevelAttribute</a></td><td class="desc">This attribute provides a way to declaratively define a Lumin platform level requirement that is automatically added to the manifest at build time.</td></tr>
+      <tr><td class="lbl"><a href="Lumin.UsesLuminPrivilegeAttribute.html">UsesLuminPrivilegeAttribute</a></td><td class="desc">This attribute provides a way to declaratively define a Lumin privilege requirement that is automatically added to the manifest at build time.</td></tr>
+      <tr><td class="lbl"><a href="Diagnostics.Utils.html">Utils</a></td><td class="desc">A utility class that you can use for diagnostic purposes.</td></tr>
+      <tr><td class="lbl"><a href="Windows.WebCam.VideoCapture.html">VideoCapture</a></td><td class="desc">Records a video from the web camera directly to disk.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.VirtualFileSystem.html">VirtualFileSystem</a></td><td class="desc">Class that provides access to some of the Unity low level virtual file system APIs.</td></tr>
+      <tr><td class="lbl"><a href="WaitForEndOfFrame.html">WaitForEndOfFrame</a></td><td class="desc">Waits until the end of the frame after Unity has rendererd every Camera and GUI, just before displaying the frame on screen.</td></tr>
+      <tr><td class="lbl"><a href="WaitForFixedUpdate.html">WaitForFixedUpdate</a></td><td class="desc">Waits until next fixed frame rate update function. Additional resources: FixedUpdate.</td></tr>
+      <tr><td class="lbl"><a href="WaitForSeconds.html">WaitForSeconds</a></td><td class="desc">Suspends the coroutine execution for the given amount of seconds using scaled time.</td></tr>
+      <tr><td class="lbl"><a href="WaitForSecondsRealtime.html">WaitForSecondsRealtime</a></td><td class="desc">Suspends the coroutine execution for the given amount of seconds using unscaled time.</td></tr>
+      <tr><td class="lbl"><a href="WaitUntil.html">WaitUntil</a></td><td class="desc">Suspends the coroutine execution until the supplied delegate evaluates to true.</td></tr>
+      <tr><td class="lbl"><a href="WaitWhile.html">WaitWhile</a></td><td class="desc">Suspends the coroutine execution until the supplied delegate evaluates to false.</td></tr>
+      <tr><td class="lbl"><a href="Windows.WebCam.WebCam.html">WebCam</a></td><td class="desc">Contains general information about the current state of the web camera.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.WriteAccessRequiredAttribute.html">WriteAccessRequiredAttribute</a></td><td class="desc">Used in conjunction with the ReadOnlyAttribute, WriteAccessRequiredAttribute lets you specify which struct method and property require write access to be invoked.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.WriteOnlyAttribute.html">WriteOnlyAttribute</a></td><td class="desc">The WriteOnly attribute lets you mark a member of a struct used in a job as write-only.</td></tr>
+      <tr><td class="lbl"><a href="YieldInstruction.html">YieldInstruction</a></td><td class="desc">Base class for all yield instructions.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Structs</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Struct</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Rendering.AsyncGPUReadbackRequest.html">AsyncGPUReadbackRequest</a></td><td class="desc">Represents an asynchronous request for a GPU resource.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.AsyncReadManagerRequestMetric.html">AsyncReadManagerRequestMetric</a></td><td class="desc">Metrics for an individual read request.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle.html">AtomicSafetyHandle</a></td><td class="desc">AtomicSafetyHandle is used by the job system to coordinate access to container memory from multiple jobs safely.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.AttachmentDescriptor.html">AttachmentDescriptor</a></td><td class="desc">A declaration of a single color or depth rendering surface to be attached into a RenderPass.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BatchCullingContext.html">BatchCullingContext</a></td><td class="desc">Culling context for a batch.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Jobs.LowLevel.Unsafe.BatchQueryJob_2.html">BatchQueryJob&lt;T0,T1&gt;</a></td><td class="desc">Struct used to implement batch query jobs.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Jobs.LowLevel.Unsafe.BatchQueryJobStruct_1.html">BatchQueryJobStruct&lt;T0&gt;</a></td><td class="desc">Struct used to schedule batch query jobs.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BatchVisibility.html">BatchVisibility</a></td><td class="desc">Describes the visibility for a batch.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BlendState.html">BlendState</a></td><td class="desc">Values for the blend state.</td></tr>
+      <tr><td class="lbl"><a href="BoneWeight.html">BoneWeight</a></td><td class="desc">Describes 4 skinning bone weights that affect a vertex in a mesh.</td></tr>
+      <tr><td class="lbl"><a href="BoneWeight1.html">BoneWeight1</a></td><td class="desc">Describes a bone weight that affects a vertex in a mesh.</td></tr>
+      <tr><td class="lbl"><a href="BoundingSphere.html">BoundingSphere</a></td><td class="desc">Describes a single bounding sphere for use by a CullingGroup.</td></tr>
+      <tr><td class="lbl"><a href="Bounds.html">Bounds</a></td><td class="desc">Represents an axis aligned bounding box.</td></tr>
+      <tr><td class="lbl"><a href="BoundsInt.html">BoundsInt</a></td><td class="desc">Represents an axis aligned bounding box with all values as integers.</td></tr>
+      <tr><td class="lbl"><a href="Cache.html">Cache</a></td><td class="desc">Data structure for cache. Please refer to Additional resources:Caching.AddCache for more information.</td></tr>
+      <tr><td class="lbl"><a href="CachedAssetBundle.html">CachedAssetBundle</a></td><td class="desc">Data structure for downloading AssetBundles to a customized cache path. Additional resources:UnityWebRequestAssetBundle.GetAssetBundle for more information.</td></tr>
+      <tr><td class="lbl"><a href="Windows.WebCam.CameraParameters.html">CameraParameters</a></td><td class="desc">When calling PhotoCapture.StartPhotoModeAsync, you must pass in a CameraParameters object that contains the various settings that the web camera will use.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Playables.CameraPlayable.html">CameraPlayable</a></td><td class="desc">An implementation of IPlayable that produces a Camera texture.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CameraProperties.html">CameraProperties</a></td><td class="desc">Camera related properties in CullingParameters.</td></tr>
+      <tr><td class="lbl"><a href="Color.html">Color</a></td><td class="desc">Representation of RGBA colors.</td></tr>
+      <tr><td class="lbl"><a href="Color32.html">Color32</a></td><td class="desc">Representation of RGBA colors in 32 bit format.</td></tr>
+      <tr><td class="lbl"><a href="CombineInstance.html">CombineInstance</a></td><td class="desc">Struct used to describe meshes to be combined using Mesh.CombineMeshes.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.Cookie.html">Cookie</a></td><td class="desc">A helper structure used to initialize a LightDataGI structure with cookie information.</td></tr>
+      <tr><td class="lbl"><a href="TestTools.CoveredMethodStats.html">CoveredMethodStats</a></td><td class="desc">Describes the summary of the code coverage for the specified method used by Coverage. For an example of typical usage, see Coverage.GetStatsFor.</td></tr>
+      <tr><td class="lbl"><a href="TestTools.CoveredSequencePoint.html">CoveredSequencePoint</a></td><td class="desc">Describes a covered sequence point used by Coverage. For an example of typical usage, see Coverage.GetSequencePointsFor.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.CreateSceneParameters.html">CreateSceneParameters</a></td><td class="desc">This struct collects all the CreateScene parameters in to a single place.</td></tr>
+      <tr><td class="lbl"><a href="CullingGroupEvent.html">CullingGroupEvent</a></td><td class="desc">Provides information about the current and previous states of one sphere in a CullingGroup.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CullingResults.html">CullingResults</a></td><td class="desc">A struct containing the results of a culling operation.</td></tr>
+      <tr><td class="lbl"><a href="CustomRenderTextureUpdateZone.html">CustomRenderTextureUpdateZone</a></td><td class="desc">Structure describing an Update Zone.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Experimental.DebugScreenCapture.html">DebugScreenCapture</a></td><td class="desc">A raw data representation of a screenshot.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.DepthState.html">DepthState</a></td><td class="desc">Values for the depth state.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.DirectionalLight.html">DirectionalLight</a></td><td class="desc">A helper structure used to initialize a LightDataGI structure as a directional light.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.DiscLight.html">DiscLight</a></td><td class="desc">A helper structure used to initialize a LightDataGI structure as a disc light.</td></tr>
+      <tr><td class="lbl"><a href="DisplayInfo.html">DisplayInfo</a></td><td class="desc">Represents a connected display.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Rendering.HybridV2.DOTSInstancingCbuffer.html">DOTSInstancingCbuffer</a></td><td class="desc">Reflection data for a DOTS instancing constant buffer.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Rendering.HybridV2.DOTSInstancingProperty.html">DOTSInstancingProperty</a></td><td class="desc">Reflection data for a DOTS instancing property.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.DrawingSettings.html">DrawingSettings</a></td><td class="desc">Settings for ScriptableRenderContext.DrawRenderers.</td></tr>
+      <tr><td class="lbl"><a href="DrivenRectTransformTracker.html">DrivenRectTransformTracker</a></td><td class="desc">A component can be designed to drive a RectTransform. The DrivenRectTransformTracker struct is used to specify which RectTransforms it is driving.</td></tr>
+      <tr><td class="lbl"><a href="PlayerLoop.EarlyUpdate.html">EarlyUpdate</a></td><td class="desc">Update phase in the native player loop.</td></tr>
+      <tr><td class="lbl"><a href="ExposedPropertyResolver.html">ExposedPropertyResolver</a></td><td class="desc">Object that is used to resolve references to an ExposedReference field.</td></tr>
+      <tr><td class="lbl"><a href="ExposedReference_1.html">ExposedReference&lt;T0&gt;</a></td><td class="desc">Creates a type whos value is resolvable at runtime.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.FileHandle.html">FileHandle</a></td><td class="desc">A handle to an asynchronously opened file.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.FileInfoResult.html">FileInfoResult</a></td><td class="desc">The results of an asynchronous AsyncReadManager.GetFileInfo call.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.FilteringSettings.html">FilteringSettings</a></td><td class="desc">A struct that represents filtering settings for ScriptableRenderContext.DrawRenderers.</td></tr>
+      <tr><td class="lbl"><a href="PlayerLoop.FixedUpdate.html">FixedUpdate</a></td><td class="desc">Update phase in the native player loop.</td></tr>
+      <tr><td class="lbl"><a href="Playables.FrameData.html">FrameData</a></td><td class="desc">This structure contains the frame information a Playable receives in Playable.PrepareFrame.</td></tr>
+      <tr><td class="lbl"><a href="FrameTiming.html">FrameTiming</a></td><td class="desc">Struct containing basic FrameTimings and accompanying relevant data.</td></tr>
+      <tr><td class="lbl"><a href="FrustumPlanes.html">FrustumPlanes</a></td><td class="desc">This struct contains the view space coordinates of the near projection plane.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.GlobalKeyword.html">GlobalKeyword</a></td><td class="desc">Represents a global shader keyword.</td></tr>
+      <tr><td class="lbl"><a href="GradientAlphaKey.html">GradientAlphaKey</a></td><td class="desc">Alpha key used by Gradient.</td></tr>
+      <tr><td class="lbl"><a href="GradientColorKey.html">GradientColorKey</a></td><td class="desc">Color key used by Gradient.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.GraphicsFence.html">GraphicsFence</a></td><td class="desc">Used to manage synchronisation between tasks on async compute queues and the graphics queue.</td></tr>
+      <tr><td class="lbl"><a href="Hash128.html">Hash128</a></td><td class="desc">Represents  a 128-bit hash value.</td></tr>
+      <tr><td class="lbl"><a href="PlayerLoop.Initialization.html">Initialization</a></td><td class="desc">Update phase in the native player loop.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Jobs.JobHandle.html">JobHandle</a></td><td class="desc">A handle to a job, which uniquely identifies a job scheduled in the job system.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Jobs.LowLevel.Unsafe.JobRanges.html">JobRanges</a></td><td class="desc">Struct containing information about a range the job is allowed to work on.</td></tr>
+      <tr><td class="lbl"><a href="Keyframe.html">Keyframe</a></td><td class="desc">A single keyframe that can be injected into an animation curve.</td></tr>
+      <tr><td class="lbl"><a href="LayerMask.html">LayerMask</a></td><td class="desc">Specifies Layers to use in a Physics.Raycast.</td></tr>
+      <tr><td class="lbl"><a href="LazyLoadReference_1.html">LazyLoadReference&lt;T0&gt;</a></td><td class="desc">Serializable lazy reference to a UnityEngine.Object contained in an asset file.</td></tr>
+      <tr><td class="lbl"><a href="LightBakingOutput.html">LightBakingOutput</a></td><td class="desc">Struct describing the result of a Global Illumination bake for a given light.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.LightDataGI.html">LightDataGI</a></td><td class="desc">The interop structure to pass light information to the light baking backends. There are helper structures for Directional, Point, Spot and Rectangle lights to correctly initialize this structure.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.LinearColor.html">LinearColor</a></td><td class="desc">Contains normalized linear color values for red, green, blue in the range of 0 to 1, and an additional intensity value.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.LoadSceneParameters.html">LoadSceneParameters</a></td><td class="desc">This struct collects all the LoadScene parameters in to a single place.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.LocalKeyword.html">LocalKeyword</a></td><td class="desc">Represents a shader keyword declared in a shader source file.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.LocalKeywordSpace.html">LocalKeywordSpace</a></td><td class="desc">Represents the local keyword space of a Shader or ComputeShader.</td></tr>
+      <tr><td class="lbl"><a href="LOD.html">LOD</a></td><td class="desc">Structure for building a LOD for passing to the SetLODs function.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.LODParameters.html">LODParameters</a></td><td class="desc">
+          LODGroup culling parameters.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Playables.MaterialEffectPlayable.html">MaterialEffectPlayable</a></td><td class="desc">An implementation of IPlayable that allows application of a Material shader to one or many texture inputs to produce a texture output.</td></tr>
+      <tr><td class="lbl"><a href="Mathf.html">Mathf</a></td><td class="desc">A collection of common math functions.</td></tr>
+      <tr><td class="lbl"><a href="Matrix4x4.html">Matrix4x4</a></td><td class="desc">A standard 4x4 transformation matrix.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.NativeArray_1.html">NativeArray&lt;T0&gt;</a></td><td class="desc">A NativeArray exposes a buffer of native memory to managed code, making it possible to share data between managed and native without marshalling costs.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.NativeSlice_1.html">NativeSlice&lt;T0&gt;</a></td><td class="desc">Native Slice.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.PassIdentifier.html">PassIdentifier</a></td><td class="desc">Represents an opaque identifier of a specific Pass in a Shader.</td></tr>
+      <tr><td class="lbl"><a href="Windows.Speech.PhraseRecognizedEventArgs.html">PhraseRecognizedEventArgs</a></td><td class="desc">Provides information about a phrase recognized event.</td></tr>
+      <tr><td class="lbl"><a href="Plane.html">Plane</a></td><td class="desc">Representation of a plane in 3D space.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.PlatformKeywordSet.html">PlatformKeywordSet</a></td><td class="desc">A collection of ShaderKeyword that represents a specific platform variant.</td></tr>
+      <tr><td class="lbl"><a href="Playables.Playable.html">Playable</a></td><td class="desc">Playables are customizable runtime objects that can be connected together and are contained in a PlayableGraph to create complex behaviours.</td></tr>
+      <tr><td class="lbl"><a href="Playables.PlayableBinding.html">PlayableBinding</a></td><td class="desc">Struct that holds information regarding an output of a PlayableAsset.</td></tr>
+      <tr><td class="lbl"><a href="Playables.PlayableGraph.html">PlayableGraph</a></td><td class="desc">Use the PlayableGraph to manage Playable creations and destructions.</td></tr>
+      <tr><td class="lbl"><a href="Playables.PlayableOutput.html">PlayableOutput</a></td><td class="desc">See: IPlayableOutput.</td></tr>
+      <tr><td class="lbl"><a href="LowLevel.PlayerLoopSystem.html">PlayerLoopSystem</a></td><td class="desc">The representation of a single system being updated by the player loop in Unity.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.PointLight.html">PointLight</a></td><td class="desc">A helper structure used to initialize a LightDataGI structure as a point light.</td></tr>
+      <tr><td class="lbl"><a href="Pool.PooledObject_1.html">PooledObject&lt;T0&gt;</a></td><td class="desc">
+            A pooled object wraps a reference to an instance returned to the pool when the pooled object is disposed of.
+            </td></tr>
+      <tr><td class="lbl"><a href="Pose.html">Pose</a></td><td class="desc">Representation of a Position, and a Rotation in 3D Space</td></tr>
+      <tr><td class="lbl"><a href="PlayerLoop.PostLateUpdate.html">PostLateUpdate</a></td><td class="desc">Update phase in the native player loop.</td></tr>
+      <tr><td class="lbl"><a href="PlayerLoop.PreLateUpdate.html">PreLateUpdate</a></td><td class="desc">Update phase in the native player loop.</td></tr>
+      <tr><td class="lbl"><a href="PlayerLoop.PreUpdate.html">PreUpdate</a></td><td class="desc">Update phase in the native player loop.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.ProfilerCategory.html">ProfilerCategory</a></td><td class="desc">Use to specify category for instrumentation Profiler markers.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.LowLevel.Unsafe.ProfilerCategoryDescription.html">ProfilerCategoryDescription</a></td><td class="desc">Provides information about Profiler category.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.ProfilerMarker.html">ProfilerMarker</a></td><td class="desc">Performance marker used for profiling arbitrary code blocks.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.LowLevel.Unsafe.ProfilerMarkerData.html">ProfilerMarkerData</a></td><td class="desc">Describes Profiler metadata parameter that can be associated with a sample.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.ProfilerRecorder.html">ProfilerRecorder</a></td><td class="desc">Records the Profiler metric data that a Profiler marker or counter produces.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderDescription.html">ProfilerRecorderDescription</a></td><td class="desc">Gets the description of a Profiler metric.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderHandle.html">ProfilerRecorderHandle</a></td><td class="desc">Gets the handle of a Profiler metric.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.ProfilerRecorderSample.html">ProfilerRecorderSample</a></td><td class="desc">Sample value structure.</td></tr>
+      <tr><td class="lbl"><a href="PropertyName.html">PropertyName</a></td><td class="desc">Represents a string as an int for efficient lookup and comparison. Use this for common PropertyNames.Internally stores just an int to represent the string. A PropertyName can be created from a string but can not be converted back to a string. The same string always results in the same int representing that string. Thus this is a very efficient string representation in both memory and speed when all you need is comparison.PropertyName is serializable.ToString() is only implemented for debugging purposes in the editor it returns "theName:3737" in the player it returns "Unknown:3737".</td></tr>
+      <tr><td class="lbl"><a href="Quaternion.html">Quaternion</a></td><td class="desc">Quaternions are used to represent rotations.</td></tr>
+      <tr><td class="lbl"><a href="RangeInt.html">RangeInt</a></td><td class="desc">Describes an integer range.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RasterState.html">RasterState</a></td><td class="desc">Values for the raster state.</td></tr>
+      <tr><td class="lbl"><a href="Ray.html">Ray</a></td><td class="desc">Representation of rays.</td></tr>
+      <tr><td class="lbl"><a href="Ray2D.html">Ray2D</a></td><td class="desc">A ray in 2D space.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.ReadCommand.html">ReadCommand</a></td><td class="desc">Describes the offset, size, and destination buffer of a single read operation.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.ReadCommandArray.html">ReadCommandArray</a></td><td class="desc">An array of ReadCommand instances to pass to AsyncReadManager.Read and AsyncReadManager.ReadDeferred.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.ReadHandle.html">ReadHandle</a></td><td class="desc">You can use this handle to query the status of an asynchronous read operation. Note: To avoid a memory leak, you must call Dispose.</td></tr>
+      <tr><td class="lbl"><a href="Rect.html">Rect</a></td><td class="desc">A 2D Rectangle defined by X and Y position, width and height.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.RectangleLight.html">RectangleLight</a></td><td class="desc">A helper structure used to initialize a LightDataGI structure as a rectangle light.</td></tr>
+      <tr><td class="lbl"><a href="RectInt.html">RectInt</a></td><td class="desc">A 2D Rectangle defined by x, y, width, height with integers.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ReflectionProbeBlendInfo.html">ReflectionProbeBlendInfo</a></td><td class="desc">ReflectionProbeBlendInfo contains information required for blending probes.</td></tr>
+      <tr><td class="lbl"><a href="RefreshRate.html">RefreshRate</a></td><td class="desc">Represents the display refresh rate. This is how many frames the display can show per second.</td></tr>
+      <tr><td class="lbl"><a href="RenderBuffer.html">RenderBuffer</a></td><td class="desc">Color or depth buffer part of a RenderTexture.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RendererUtils.RendererList.html">RendererList</a></td><td class="desc">Represents a subset of visible GameObjects.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RendererUtils.RendererListDesc.html">RendererListDesc</a></td><td class="desc">Represents the set of GameObjects that a RendererList contains.</td></tr>
+      <tr><td class="lbl"><a href="RenderParams.html">RenderParams</a></td><td class="desc">Rendering parameters used by various rendering functions.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderQueueRange.html">RenderQueueRange</a></td><td class="desc">Describes a material render queue range.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderStateBlock.html">RenderStateBlock</a></td><td class="desc">A set of values that Unity uses to override the GPU's render state.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderTargetBinding.html">RenderTargetBinding</a></td><td class="desc">Describes a render target with one or more color buffers, a depth/stencil buffer and the associated load/store-actions that are applied when the render target is active.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderTargetBlendState.html">RenderTargetBlendState</a></td><td class="desc">Values for the blend state.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderTargetIdentifier.html">RenderTargetIdentifier</a></td><td class="desc">Identifies a RenderTexture for a CommandBuffer.</td></tr>
+      <tr><td class="lbl"><a href="RenderTargetSetup.html">RenderTargetSetup</a></td><td class="desc">Fully describes setup of RenderTarget.</td></tr>
+      <tr><td class="lbl"><a href="RenderTextureDescriptor.html">RenderTextureDescriptor</a></td><td class="desc">This struct contains all the information required to create a RenderTexture. It can be copied, cached, and reused to easily create RenderTextures that all share the same properties. Avoid using the default constructor as it does not initialize some flags with the recommended values.</td></tr>
+      <tr><td class="lbl"><a href="Resolution.html">Resolution</a></td><td class="desc">Represents a display resolution.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.Scene.html">Scene</a></td><td class="desc">Run-time data structure for *.unity file.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ScopedRenderPass.html">ScopedRenderPass</a></td><td class="desc">Represents an active render pass until disposed.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ScopedSubPass.html">ScopedSubPass</a></td><td class="desc">Represents an active sub pass until disposed.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ScriptableCullingParameters.html">ScriptableCullingParameters</a></td><td class="desc">Parameters that configure a culling operation in the Scriptable Render Pipeline.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ScriptableRenderContext.html">ScriptableRenderContext</a></td><td class="desc">Defines state and drawing commands that custom render pipelines use.</td></tr>
+      <tr><td class="lbl"><a href="Playables.ScriptPlayable_1.html">ScriptPlayable&lt;T0&gt;</a></td><td class="desc">A IPlayable implementation that contains a PlayableBehaviour for the PlayableGraph. PlayableBehaviour can be used to write custom Playable that implement their own PrepareFrame callback.</td></tr>
+      <tr><td class="lbl"><a href="Playables.ScriptPlayableOutput.html">ScriptPlayableOutput</a></td><td class="desc">A IPlayableOutput implementation that contains a script output for the a PlayableGraph.</td></tr>
+      <tr><td class="lbl"><a href="SecondarySpriteTexture.html">SecondarySpriteTexture</a></td><td class="desc">Encapsulates a Texture2D and its shader property name to give Sprite-based renderers access to a secondary texture, in addition to the main Sprite texture.</td></tr>
+      <tr><td class="lbl"><a href="WSA.SecondaryTileData.html">SecondaryTileData</a></td><td class="desc">Defines the default look of secondary tile.
+</td></tr>
+      <tr><td class="lbl"><a href="Windows.Speech.SemanticMeaning.html">SemanticMeaning</a></td><td class="desc">Semantic meaning is a collection of semantic properties of a recognized phrase. These semantic properties can be specified in SRGS grammar files.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShaderKeyword.html">ShaderKeyword</a></td><td class="desc">Represents an identifier for a specific code path in a shader.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShaderKeywordSet.html">ShaderKeywordSet</a></td><td class="desc">A collection of ShaderKeyword that represents a specific shader variant.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShaderTagId.html">ShaderTagId</a></td><td class="desc">Shader tag ids are used to refer to various names in shaders.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Rendering.ShaderWarmupSetup.html">ShaderWarmupSetup</a></td><td class="desc">The rendering configuration to use when prewarming shader variants.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShadowDrawingSettings.html">ShadowDrawingSettings</a></td><td class="desc">Settings for ScriptableRenderContext.DrawShadows.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShadowSplitData.html">ShadowSplitData</a></td><td class="desc">Describes the culling information for a given shadow split (e.g. directional cascade).</td></tr>
+      <tr><td class="lbl"><a href="SortingLayer.html">SortingLayer</a></td><td class="desc">SortingLayer allows you to set the render order of multiple sprites easily. There is always a default SortingLayer named "Default" which all sprites are added to initially. Added more SortingLayers to easily control the order of rendering of groups of sprites. Layers can be ordered before or after the default layer.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.SortingLayerRange.html">SortingLayerRange</a></td><td class="desc">Describes a renderer's sorting layer range.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.SortingSettings.html">SortingSettings</a></td><td class="desc">This struct describes the methods to sort objects during rendering.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.SphericalHarmonicsL2.html">SphericalHarmonicsL2</a></td><td class="desc">Spherical harmonics up to the second order (3 bands, 9 coefficients).</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.SpotLight.html">SpotLight</a></td><td class="desc">A helper structure used to initialize a LightDataGI structure as a spot light.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.SpotLightBoxShape.html">SpotLightBoxShape</a></td><td class="desc">Use this Struct to help initialize a LightDataGI structure as a box-shaped spot light.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.SpotLightPyramidShape.html">SpotLightPyramidShape</a></td><td class="desc">Use this Struct to help initialize a LightDataGI structure as a pyramid-shaped spot light.</td></tr>
+      <tr><td class="lbl"><a href="U2D.SpriteBone.html">SpriteBone</a></td><td class="desc">Stores a set of information that describes the bind pose of this Sprite.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.StencilState.html">StencilState</a></td><td class="desc">Values for the stencil state.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.SubMeshDescriptor.html">SubMeshDescriptor</a></td><td class="desc">Contains information about a single sub-mesh of a Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Playables.TextureMixerPlayable.html">TextureMixerPlayable</a></td><td class="desc">An implementation of IPlayable that allows mixing two textures.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Playables.TexturePlayableOutput.html">TexturePlayableOutput</a></td><td class="desc">An IPlayableOutput implementation that will be used to manipulate textures.</td></tr>
+      <tr><td class="lbl"><a href="PlayerLoop.TimeUpdate.html">TimeUpdate</a></td><td class="desc">Update phase in the native player loop that waits for the operating system (OS) to flip the back buffer to the display and update the time in the engine.</td></tr>
+      <tr><td class="lbl"><a href="Jobs.TransformAccess.html">TransformAccess</a></td><td class="desc">Position, rotation and scale of an object.</td></tr>
+      <tr><td class="lbl"><a href="Jobs.TransformAccessArray.html">TransformAccessArray</a></td><td class="desc">TransformAccessArray.</td></tr>
+      <tr><td class="lbl"><a href="PlayerLoop.Update.html">Update</a></td><td class="desc">Update phase in the native player loop.</td></tr>
+      <tr><td class="lbl"><a href="Vector2.html">Vector2</a></td><td class="desc">Representation of 2D vectors and points.</td></tr>
+      <tr><td class="lbl"><a href="Vector2Int.html">Vector2Int</a></td><td class="desc">Representation of 2D vectors and points using integers.</td></tr>
+      <tr><td class="lbl"><a href="Vector3.html">Vector3</a></td><td class="desc">Representation of 3D vectors and points.</td></tr>
+      <tr><td class="lbl"><a href="Vector3Int.html">Vector3Int</a></td><td class="desc">Representation of 3D vectors and points using integers.</td></tr>
+      <tr><td class="lbl"><a href="Vector4.html">Vector4</a></td><td class="desc">Representation of four-dimensional vectors.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.VertexAttributeDescriptor.html">VertexAttributeDescriptor</a></td><td class="desc">Information about a single VertexAttribute of a Mesh vertex.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.VisibleLight.html">VisibleLight</a></td><td class="desc">Holds data of a visible light.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.VisibleReflectionProbe.html">VisibleReflectionProbe</a></td><td class="desc">Holds data of a visible reflection reflectionProbe.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Enumerations</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Enumeration</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="iOS.ActivityIndicatorStyle.html">ActivityIndicatorStyle</a></td><td class="desc">ActivityIndicator Style (iOS Specific).</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.Allocator.html">Allocator</a></td><td class="desc">Used to specify allocation type for NativeArray.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.AmbientMode.html">AmbientMode</a></td><td class="desc">Ambient lighting mode.</td></tr>
+      <tr><td class="lbl"><a href="AndroidActivityIndicatorStyle.html">AndroidActivityIndicatorStyle</a></td><td class="desc">ActivityIndicator Style (Android Specific).</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.AngularFalloffType.html">AngularFalloffType</a></td><td class="desc">Sets the method to use to compute the angular attenuation of spot lights.</td></tr>
+      <tr><td class="lbl"><a href="AnisotropicFiltering.html">AnisotropicFiltering</a></td><td class="desc">Anisotropic filtering mode.</td></tr>
+      <tr><td class="lbl"><a href="ApplicationInstallMode.html">ApplicationInstallMode</a></td><td class="desc">Application installation mode (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="ApplicationSandboxType.html">ApplicationSandboxType</a></td><td class="desc">Application sandbox type.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.AssetLoadingSubsystem.html">AssetLoadingSubsystem</a></td><td class="desc">Subsystem tags for the read request, describing broad asset type or subsystem that triggered the read request.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.AtomicSafetyErrorType.html">AtomicSafetyErrorType</a></td><td class="desc">Enumeration of AtomicSafetyHandle errors.</td></tr>
+      <tr><td class="lbl"><a href="AudioType.html">AudioType</a></td><td class="desc">Type of the imported(native) data.</td></tr>
+      <tr><td class="lbl"><a href="BatteryStatus.html">BatteryStatus</a></td><td class="desc">Enumeration for SystemInfo.batteryStatus which represents the current status of the device's battery.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BlendMode.html">BlendMode</a></td><td class="desc">Blend mode for controlling the blending.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BlendOp.html">BlendOp</a></td><td class="desc">Blend operation.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinRenderTextureType.html">BuiltinRenderTextureType</a></td><td class="desc">Built-in temporary render textures produced during camera's rendering.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.html">BuiltinShaderDefine</a></td><td class="desc">Defines set by editor when compiling shaders, based on the target platform and GraphicsTier.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderMode.html">BuiltinShaderMode</a></td><td class="desc">Built-in shader modes used by GraphicsSettings.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderType.html">BuiltinShaderType</a></td><td class="desc">Built-in shader types used by GraphicsSettings.</td></tr>
+      <tr><td class="lbl"><a href="CameraClearFlags.html">CameraClearFlags</a></td><td class="desc">Values for Camera.clearFlags, determining what to clear when rendering a Camera.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CameraEvent.html">CameraEvent</a></td><td class="desc">Defines a place in camera's rendering to attach CommandBuffer objects to.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CameraHDRMode.html">CameraHDRMode</a></td><td class="desc">The HDR mode to use for rendering.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CameraLateLatchMatrixType.html">CameraLateLatchMatrixType</a></td><td class="desc">The types of camera matrices that support late latching.</td></tr>
+      <tr><td class="lbl"><a href="CameraType.html">CameraType</a></td><td class="desc">Describes different types of camera.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.CaptureFlags.html">CaptureFlags</a></td><td class="desc">Flags that specify which fields to capture in a snapshot.</td></tr>
+      <tr><td class="lbl"><a href="Windows.WebCam.CapturePixelFormat.html">CapturePixelFormat</a></td><td class="desc">The encoded image or video pixel format to use for PhotoCapture and VideoCapture.</td></tr>
+      <tr><td class="lbl"><a href="ColorGamut.html">ColorGamut</a></td><td class="desc">Represents a color gamut.</td></tr>
+      <tr><td class="lbl"><a href="ColorSpace.html">ColorSpace</a></td><td class="desc">Color space for player settings.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ColorWriteMask.html">ColorWriteMask</a></td><td class="desc">Specifies which color components will get written into the target framebuffer.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CommandBufferExecutionFlags.html">CommandBufferExecutionFlags</a></td><td class="desc">Flags describing the intention for how the command buffer will be executed. Set these via CommandBuffer.SetExecutionFlags.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CompareFunction.html">CompareFunction</a></td><td class="desc">Depth or stencil comparison function.</td></tr>
+      <tr><td class="lbl"><a href="ComputeBufferMode.html">ComputeBufferMode</a></td><td class="desc">Intended usage of the buffer.</td></tr>
+      <tr><td class="lbl"><a href="ComputeBufferType.html">ComputeBufferType</a></td><td class="desc">
+          ComputeBuffer type.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ComputeQueueType.html">ComputeQueueType</a></td><td class="desc">Describes the desired characteristics with respect to prioritisation and load balancing of the queue that a command buffer being submitted via Graphics.ExecuteCommandBufferAsync or [[ScriptableRenderContext.ExecuteCommandBufferAsync] should be sent to.</td></tr>
+      <tr><td class="lbl"><a href="Windows.Speech.ConfidenceLevel.html">ConfidenceLevel</a></td><td class="desc">Used by KeywordRecognizer, GrammarRecognizer, DictationRecognizer. Phrases under the specified minimum level will be ignored.</td></tr>
+      <tr><td class="lbl"><a href="Networking.PlayerConnection.ConnectionTarget.html">ConnectionTarget</a></td><td class="desc">The type of the connected target.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CopyTextureSupport.html">CopyTextureSupport</a></td><td class="desc">Support for various Graphics.CopyTexture cases.</td></tr>
+      <tr><td class="lbl"><a href="CubemapFace.html">CubemapFace</a></td><td class="desc">
+          Cubemap face.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CullingOptions.html">CullingOptions</a></td><td class="desc">Flags used by ScriptableCullingParameters.cullingOptions to configure a culling operation.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.CullMode.html">CullMode</a></td><td class="desc">Determines which faces Unity culls.</td></tr>
+      <tr><td class="lbl"><a href="CursorLockMode.html">CursorLockMode</a></td><td class="desc">How the cursor should behave.</td></tr>
+      <tr><td class="lbl"><a href="CursorMode.html">CursorMode</a></td><td class="desc">Determines whether the mouse cursor is rendered using software rendering or, on supported platforms, hardware rendering.</td></tr>
+      <tr><td class="lbl"><a href="CustomRenderTextureInitializationSource.html">CustomRenderTextureInitializationSource</a></td><td class="desc">Specify the source of a Custom Render Texture initialization.</td></tr>
+      <tr><td class="lbl"><a href="CustomRenderTextureUpdateMode.html">CustomRenderTextureUpdateMode</a></td><td class="desc">Frequency of update or initialization of a Custom Render Texture.</td></tr>
+      <tr><td class="lbl"><a href="CustomRenderTextureUpdateZoneSpace.html">CustomRenderTextureUpdateZoneSpace</a></td><td class="desc">Space in which coordinates are provided for Update Zones.</td></tr>
+      <tr><td class="lbl"><a href="D3DHDRDisplayBitDepth.html">D3DHDRDisplayBitDepth</a></td><td class="desc">The type for the number of bits to be used when an HDR display is active in each color channel of swap chain buffers. The bit count also defines the method Unity uses to render content to the display.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Rendering.DefaultFormat.html">DefaultFormat</a></td><td class="desc">
+                Use a default format to create either Textures or RenderTextures from scripts based on platform specific capability.
+            </td></tr>
+      <tr><td class="lbl"><a href="Rendering.DefaultReflectionMode.html">DefaultReflectionMode</a></td><td class="desc">Default reflection mode.</td></tr>
+      <tr><td class="lbl"><a href="DepthTextureMode.html">DepthTextureMode</a></td><td class="desc">Depth texture generation mode for Camera.</td></tr>
+      <tr><td class="lbl"><a href="tvOS.DeviceGeneration.html">DeviceGeneration</a></td><td class="desc">tvOS device generation.</td></tr>
+      <tr><td class="lbl"><a href="iOS.DeviceGeneration.html">DeviceGeneration</a></td><td class="desc">iOS device generation.</td></tr>
+      <tr><td class="lbl"><a href="DeviceType.html">DeviceType</a></td><td class="desc">Enumeration for SystemInfo.deviceType, denotes a coarse grouping of kinds of devices.</td></tr>
+      <tr><td class="lbl"><a href="Windows.Speech.DictationCompletionCause.html">DictationCompletionCause</a></td><td class="desc">Represents the reason why dictation session has completed.</td></tr>
+      <tr><td class="lbl"><a href="Windows.Speech.DictationTopicConstraint.html">DictationTopicConstraint</a></td><td class="desc">DictationTopicConstraint enum specifies the scenario for which a specific dictation recognizer should optimize.</td></tr>
+      <tr><td class="lbl"><a href="Playables.DirectorUpdateMode.html">DirectorUpdateMode</a></td><td class="desc">Defines what time source is used to update a Director graph.</td></tr>
+      <tr><td class="lbl"><a href="Playables.DirectorWrapMode.html">DirectorWrapMode</a></td><td class="desc">Wrap mode for Playables.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.DistanceMetric.html">DistanceMetric</a></td><td class="desc">Type of sorting to use while rendering.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Rendering.HybridV2.DOTSInstancingPropertyType.html">DOTSInstancingPropertyType</a></td><td class="desc">Describes the type of a DOTS instancing property.</td></tr>
+      <tr><td class="lbl"><a href="DrivenTransformProperties.html">DrivenTransformProperties</a></td><td class="desc">An enumeration of transform properties that can be driven on a RectTransform by an object.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.LowLevel.Unsafe.EnforceJobResult.html">EnforceJobResult</a></td><td class="desc">The result of requesting to enforce that all buffer jobs on an AtomicSafetyHandle have completed.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.FalloffType.html">FalloffType</a></td><td class="desc">Available falloff models for baking.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.FastMemoryFlags.html">FastMemoryFlags</a></td><td class="desc">Control Fast Memory render target layout.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.FileReadType.html">FileReadType</a></td><td class="desc">The type of file read requested from the AsyncReadManager.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.FileState.html">FileState</a></td><td class="desc">Defines the possible existential states of a file.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.FileStatus.html">FileStatus</a></td><td class="desc">The possible statuses of a FileHandle.</td></tr>
+      <tr><td class="lbl"><a href="FilterMode.html">FilterMode</a></td><td class="desc">Filtering mode for textures. Corresponds to the settings in a texture inspector.</td></tr>
+      <tr><td class="lbl"><a href="FindObjectsInactive.html">FindObjectsInactive</a></td><td class="desc">Options to control whether object find functions return inactive objects.</td></tr>
+      <tr><td class="lbl"><a href="FindObjectsSortMode.html">FindObjectsSortMode</a></td><td class="desc">Options to specify if and how to sort objects returned by a function.</td></tr>
+      <tr><td class="lbl"><a href="FogMode.html">FogMode</a></td><td class="desc">Fog mode to use.</td></tr>
+      <tr><td class="lbl"><a href="WSA.Folder.html">Folder</a></td><td class="desc">List of accessible folders on Windows Store Apps.</td></tr>
+      <tr><td class="lbl"><a href="Diagnostics.ForcedCrashCategory.html">ForcedCrashCategory</a></td><td class="desc">Specifies the category of crash to cause when calling ForceCrash().</td></tr>
+      <tr><td class="lbl"><a href="Rendering.FormatSwizzle.html">FormatSwizzle</a></td><td class="desc">Graphics Format Swizzle.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Rendering.FormatUsage.html">FormatUsage</a></td><td class="desc">Use this format usages to figure out the capabilities of specific GraphicsFormat</td></tr>
+      <tr><td class="lbl"><a href="Apple.FrameCaptureDestination.html">FrameCaptureDestination</a></td><td class="desc">Destination of Frame Capture
+This is a wrapper for MTLCaptureDestination.</td></tr>
+      <tr><td class="lbl"><a href="FullScreenMode.html">FullScreenMode</a></td><td class="desc">Sets the full-screen mode. For information on platform compatibility, refer to the description of each mode.</td></tr>
+      <tr><td class="lbl"><a href="FullScreenMovieControlMode.html">FullScreenMovieControlMode</a></td><td class="desc">Describes options for displaying movie playback controls.</td></tr>
+      <tr><td class="lbl"><a href="FullScreenMovieScalingMode.html">FullScreenMovieScalingMode</a></td><td class="desc">Describes scaling modes for displaying movies.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.GizmoSubset.html">GizmoSubset</a></td><td class="desc">Specifies whether gizmos render before or after postprocessing for a camera render.</td></tr>
+      <tr><td class="lbl"><a href="GradientMode.html">GradientMode</a></td><td class="desc">Select how gradients will be evaluated.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.GraphicsDeviceType.html">GraphicsDeviceType</a></td><td class="desc">Graphics device API type.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.GraphicsFenceType.html">GraphicsFenceType</a></td><td class="desc">The type of GraphicFence.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Rendering.GraphicsFormat.html">GraphicsFormat</a></td><td class="desc">Use this format to create either Textures or RenderTextures from scripts.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.GraphicsTier.html">GraphicsTier</a></td><td class="desc">An enum that represents graphics tiers.</td></tr>
+      <tr><td class="lbl"><a href="HDRDisplaySupportFlags.html">HDRDisplaySupportFlags</a></td><td class="desc">A set of flags that describe the level of HDR display support available on the GPU and driver.</td></tr>
+      <tr><td class="lbl"><a href="HideFlags.html">HideFlags</a></td><td class="desc">Bit mask that controls object destruction, saving and visibility in inspectors.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.IndexFormat.html">IndexFormat</a></td><td class="desc">Format of the mesh index buffer data.</td></tr>
+      <tr><td class="lbl"><a href="KeyCode.html">KeyCode</a></td><td class="desc">Key codes returned by Event.keyCode. These map directly to a physical key on the keyboard.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.LightEvent.html">LightEvent</a></td><td class="desc">Defines a place in light's rendering to attach CommandBuffer objects to.</td></tr>
+      <tr><td class="lbl"><a href="LightmapBakeType.html">LightmapBakeType</a></td><td class="desc">Enum describing what part of a light contribution can be baked.</td></tr>
+      <tr><td class="lbl"><a href="LightmapCompression.html">LightmapCompression</a></td><td class="desc">A set of options for the level of compression the Editor uses for lightmaps.</td></tr>
+      <tr><td class="lbl"><a href="LightmapsMode.html">LightmapsMode</a></td><td class="desc">Lightmap (and lighting) configuration mode, controls how lightmaps interact with lighting and what kind of information they store.</td></tr>
+      <tr><td class="lbl"><a href="LightmapsModeLegacy.html">LightmapsModeLegacy</a></td><td class="desc">Single, dual, or directional lightmaps rendering mode, used only in GIWorkflowMode.Legacy</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.LightMode.html">LightMode</a></td><td class="desc">The lightmode. A light can be real-time, mixed, baked or unknown. Unknown lights will be ignored by the baking backends.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.LightProbeUsage.html">LightProbeUsage</a></td><td class="desc">Light probe interpolation type.</td></tr>
+      <tr><td class="lbl"><a href="LightRenderMode.html">LightRenderMode</a></td><td class="desc">How the Light is rendered.</td></tr>
+      <tr><td class="lbl"><a href="LightShadowCasterMode.html">LightShadowCasterMode</a></td><td class="desc">Allows mixed lights to control shadow caster culling when Shadowmasks are present.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.LightShadowResolution.html">LightShadowResolution</a></td><td class="desc">Shadow resolution options for a Light.</td></tr>
+      <tr><td class="lbl"><a href="LightShadows.html">LightShadows</a></td><td class="desc">Shadow casting options for a Light.</td></tr>
+      <tr><td class="lbl"><a href="LightShape.html">LightShape</a></td><td class="desc">Describes the shape of a spot light.</td></tr>
+      <tr><td class="lbl"><a href="LightType.html">LightType</a></td><td class="desc">The type of a Light.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GlobalIllumination.LightType.html">LightType</a></td><td class="desc">The light type.</td></tr>
+      <tr><td class="lbl"><a href="LineAlignment.html">LineAlignment</a></td><td class="desc">Control the direction lines face, when using the LineRenderer or TrailRenderer.</td></tr>
+      <tr><td class="lbl"><a href="LineTextureMode.html">LineTextureMode</a></td><td class="desc">Choose how textures are applied to Lines and Trails.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.LoadSceneMode.html">LoadSceneMode</a></td><td class="desc">Used when loading a Scene in a player.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.LocalPhysicsMode.html">LocalPhysicsMode</a></td><td class="desc">Provides options for 2D and 3D local physics.</td></tr>
+      <tr><td class="lbl"><a href="LODFadeMode.html">LODFadeMode</a></td><td class="desc">The LOD (level of detail) fade modes. Modes other than LODFadeMode.None will result in Unity calculating a blend factor for blending/interpolating between two neighbouring LODs and pass it to your shader.</td></tr>
+      <tr><td class="lbl"><a href="LogOption.html">LogOption</a></td><td class="desc">Option flags for specifying special treatment of a log message.</td></tr>
+      <tr><td class="lbl"><a href="LogType.html">LogType</a></td><td class="desc">The type of the log message in Debug.unityLogger.Log or delegate registered with Application.RegisterLogCallback.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.LowLevel.MarkerFlags.html">MarkerFlags</a></td><td class="desc">Profiler marker usage flags.</td></tr>
+      <tr><td class="lbl"><a href="MaterialGlobalIlluminationFlags.html">MaterialGlobalIlluminationFlags</a></td><td class="desc">How the material interacts with lightmaps and lightprobes.</td></tr>
+      <tr><td class="lbl"><a href="MeshTopology.html">MeshTopology</a></td><td class="desc">Topology of Mesh faces.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.MeshUpdateFlags.html">MeshUpdateFlags</a></td><td class="desc">Mesh data update flags.</td></tr>
+      <tr><td class="lbl"><a href="MixedLightingMode.html">MixedLightingMode</a></td><td class="desc">Enum describing what lighting mode to be used with Mixed lights.</td></tr>
+      <tr><td class="lbl"><a href="MotionVectorGenerationMode.html">MotionVectorGenerationMode</a></td><td class="desc">The type of motion vectors that should be generated.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.NativeArrayOptions.html">NativeArrayOptions</a></td><td class="desc">NativeArrayOptions lets you control if memory should be cleared on allocation or left uninitialized.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Collections.NativeLeakDetectionMode.html">NativeLeakDetectionMode</a></td><td class="desc">Native leak memory leak detection mode enum.</td></tr>
+      <tr><td class="lbl"><a href="NetworkReachability.html">NetworkReachability</a></td><td class="desc">Describes network reachability options.</td></tr>
+      <tr><td class="lbl"><a href="NPOTSupport.html">NPOTSupport</a></td><td class="desc">NPOT textures support.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.OpaqueSortMode.html">OpaqueSortMode</a></td><td class="desc">Opaque object sorting mode of a Camera.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.OpenGLESVersion.html">OpenGLESVersion</a></td><td class="desc">Specifies the OpenGL ES version.</td></tr>
+      <tr><td class="lbl"><a href="OperatingSystemFamily.html">OperatingSystemFamily</a></td><td class="desc">Enumeration for SystemInfo.operatingSystemFamily.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.PassType.html">PassType</a></td><td class="desc">Shader pass type for Unity's lighting pipeline.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.PerObjectData.html">PerObjectData</a></td><td class="desc">What kind of per-object data to setup during rendering.</td></tr>
+      <tr><td class="lbl"><a href="Events.PersistentListenerMode.html">PersistentListenerMode</a></td><td class="desc">The mode that a listener is operating in.</td></tr>
+      <tr><td class="lbl"><a href="Windows.WebCam.PhotoCaptureFileOutputFormat.html">PhotoCaptureFileOutputFormat</a></td><td class="desc">Image Encoding Format.</td></tr>
+      <tr><td class="lbl"><a href="Playables.PlayableTraversalMode.html">PlayableTraversalMode</a></td><td class="desc">Traversal mode for Playables.</td></tr>
+      <tr><td class="lbl"><a href="Playables.PlayState.html">PlayState</a></td><td class="desc">Status of a Playable.</td></tr>
+      <tr><td class="lbl"><a href="PrimitiveType.html">PrimitiveType</a></td><td class="desc">The various primitives that can be created using the GameObject.CreatePrimitive function.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.Priority.html">Priority</a></td><td class="desc">The priority level attached to the AsyncReadManager read request.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.ProcessingState.html">ProcessingState</a></td><td class="desc">The state of the read request at the time of retrieval of AsyncReadManagerMetrics.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.ProfilerArea.html">ProfilerArea</a></td><td class="desc">The different areas of profiling, corresponding to the charts in ProfilerWindow.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.ProfilerCategoryColor.html">ProfilerCategoryColor</a></td><td class="desc">Profiler category colors enum.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.ProfilerCategoryFlags.html">ProfilerCategoryFlags</a></td><td class="desc">Options for determining if a Profiler category is built into Unity by default.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.ProfilerFlowEventType.html">ProfilerFlowEventType</a></td><td class="desc">Defines Profiler flow event type.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.LowLevel.ProfilerMarkerDataType.html">ProfilerMarkerDataType</a></td><td class="desc">Options for the Profiler metadata type.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.ProfilerMarkerDataUnit.html">ProfilerMarkerDataUnit</a></td><td class="desc">Options for Profiler marker data unit types.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.ProfilerRecorderOptions.html">ProfilerRecorderOptions</a></td><td class="desc">ProfilerRecorder lifecycle and collection options.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Rendering.RayTracingMode.html">RayTracingMode</a></td><td class="desc">Indicates how a Renderer is updated.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Rendering.RayTracingSubMeshFlags.html">RayTracingSubMeshFlags</a></td><td class="desc">Flags that determine the behavior of a sub-mesh in a RayTracingAccelerationStructure.</td></tr>
+      <tr><td class="lbl"><a href="Unity.IO.LowLevel.Unsafe.ReadStatus.html">ReadStatus</a></td><td class="desc">The state of an asynchronous file request.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RealtimeGICPUUsage.html">RealtimeGICPUUsage</a></td><td class="desc">How much CPU usage to assign to the final lighting calculations at runtime.</td></tr>
+      <tr><td class="lbl"><a href="ReceiveGI.html">ReceiveGI</a></td><td class="desc">This property only takes effect if you enable a global illumination setting such as Baked Global Illumination or Enlighten Realtime Global Illumination for the target Scene. When you enable ReceiveGI, you can determine whether illumination data at runtime will come from Light Probes or Lightmaps. When you set ReceiveGI to Lightmaps, the Mesh Renderer receives global illumination from lightmaps. That means the Renderer is included in lightmap atlases, possibly increasing their size, memory consumption and storage costs. Calculating global illumination values for texels in this Renderer also adds to bake times. When you set ReceiveGI to Light Probes, the Mesh Renderer is not assigned space in lightmap atlases. Instead it receives global illumination stored by Light Probes in the target Scene. This can reduce bake times by avoiding the memory consumption and storage cost associated with lightmaps. ReceiveGI is only editable if you enable StaticEditorFlags.ContributeGI for the GameObject associated with the target Mesh Renderer. Otherwise this property defaults to the Light Probes setting.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ReflectionCubemapCompression.html">ReflectionCubemapCompression</a></td><td class="desc">Determines how Unity will compress baked reflection cubemap.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ReflectionProbeClearFlags.html">ReflectionProbeClearFlags</a></td><td class="desc">Values for ReflectionProbe.clearFlags, determining what to clear when rendering a ReflectionProbe.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ReflectionProbeMode.html">ReflectionProbeMode</a></td><td class="desc">Reflection probe's update mode.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ReflectionProbeRefreshMode.html">ReflectionProbeRefreshMode</a></td><td class="desc">An enum describing the way a real-time reflection probe refreshes in the Player.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ReflectionProbeSortingCriteria.html">ReflectionProbeSortingCriteria</a></td><td class="desc">Visible reflection probes sorting options.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ReflectionProbeTimeSlicingMode.html">ReflectionProbeTimeSlicingMode</a></td><td class="desc">When a probe's ReflectionProbe.refreshMode is set to ReflectionProbeRefreshMode.EveryFrame, this enum specify whether or not Unity should update the probe's cubemap over several frames or update the whole cubemap in one frame.
+Updating a probe's cubemap is a costly operation. Unity needs to render the entire Scene for each face of the cubemap, as well as perform special blurring in order to get glossy reflections. The impact on frame rate can be significant. Time-slicing helps maintaning a more constant frame rate during these updates by performing the rendering over several frames.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ReflectionProbeUsage.html">ReflectionProbeUsage</a></td><td class="desc">Reflection Probe usage.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderBufferLoadAction.html">RenderBufferLoadAction</a></td><td class="desc">This enum describes what should be done on the render target when it is activated (loaded).</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderBufferStoreAction.html">RenderBufferStoreAction</a></td><td class="desc">This enum describes what should be done on the render target when the GPU is done rendering into it.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RendererUtils.RendererListStatus.html">RendererListStatus</a></td><td class="desc">Options that represent the result of a ScriptableRenderContext.QueryRendererList operation.</td></tr>
+      <tr><td class="lbl"><a href="RenderingPath.html">RenderingPath</a></td><td class="desc">Rendering path of a Camera.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderingThreadingMode.html">RenderingThreadingMode</a></td><td class="desc">Options for the application's actual rendering threading mode.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderQueue.html">RenderQueue</a></td><td class="desc">Determine in which order objects are renderered.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderStateMask.html">RenderStateMask</a></td><td class="desc">Specifies which parts of the render state that is overriden.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderTargetFlags.html">RenderTargetFlags</a></td><td class="desc">This enum describes optional flags for the RenderTargetBinding structure.</td></tr>
+      <tr><td class="lbl"><a href="RenderTextureCreationFlags.html">RenderTextureCreationFlags</a></td><td class="desc">Set of flags that control the state of a newly-created RenderTexture.</td></tr>
+      <tr><td class="lbl"><a href="RenderTextureFormat.html">RenderTextureFormat</a></td><td class="desc">Format of a RenderTexture.</td></tr>
+      <tr><td class="lbl"><a href="RenderTextureMemoryless.html">RenderTextureMemoryless</a></td><td class="desc">Flags enumeration of the render texture memoryless modes.</td></tr>
+      <tr><td class="lbl"><a href="RenderTextureReadWrite.html">RenderTextureReadWrite</a></td><td class="desc">Color space conversion mode of a RenderTexture.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderTextureSubElement.html">RenderTextureSubElement</a></td><td class="desc">Types of data that you can encapsulate within a render texture.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RTClearFlags.html">RTClearFlags</a></td><td class="desc">Flags that determine which render targets Unity clears when you use CommandBuffer.ClearRenderTarget.</td></tr>
+      <tr><td class="lbl"><a href="RuntimeInitializeLoadType.html">RuntimeInitializeLoadType</a></td><td class="desc">Set RuntimeInitializeOnLoadMethod type.</td></tr>
+      <tr><td class="lbl"><a href="RuntimePlatform.html">RuntimePlatform</a></td><td class="desc">The platform application is running. Returned by Application.platform.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Jobs.LowLevel.Unsafe.ScheduleMode.html">ScheduleMode</a></td><td class="desc">ScheduleMode options for scheduling a manage job.</td></tr>
+      <tr><td class="lbl"><a href="ScreenOrientation.html">ScreenOrientation</a></td><td class="desc">Describes screen orientation.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchViewFlags.html">SearchViewFlags</a></td><td class="desc">Search view flags used to open the Object Picker in various states.</td></tr>
+      <tr><td class="lbl"><a href="SendMessageOptions.html">SendMessageOptions</a></td><td class="desc">Options for how to send a message.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShaderConstantType.html">ShaderConstantType</a></td><td class="desc">Options for the shader constant value type.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShaderKeywordType.html">ShaderKeywordType</a></td><td class="desc">Type of a shader keyword, eg: built-in or user defined.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShaderParamType.html">ShaderParamType</a></td><td class="desc">Options for the data type of a shader constant's members.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShaderPropertyFlags.html">ShaderPropertyFlags</a></td><td class="desc">Flags that control how a shader property behaves.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShaderPropertyType.html">ShaderPropertyType</a></td><td class="desc">Type of a given shader property.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShadowCastingMode.html">ShadowCastingMode</a></td><td class="desc">How shadows are cast from this object.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShadowMapPass.html">ShadowMapPass</a></td><td class="desc">Allows precise control over which shadow map passes to execute CommandBuffer objects attached using Light.AddCommandBuffer.</td></tr>
+      <tr><td class="lbl"><a href="ShadowmaskMode.html">ShadowmaskMode</a></td><td class="desc">The rendering mode of Shadowmask.</td></tr>
+      <tr><td class="lbl"><a href="ShadowObjectsFilter.html">ShadowObjectsFilter</a></td><td class="desc">The filters that Unity can use when it renders GameObjects in the shadow pass.</td></tr>
+      <tr><td class="lbl"><a href="ShadowProjection.html">ShadowProjection</a></td><td class="desc">Shadow projection type for Quality Settings.</td></tr>
+      <tr><td class="lbl"><a href="ShadowQuality.html">ShadowQuality</a></td><td class="desc">Determines which type of shadows should be used.</td></tr>
+      <tr><td class="lbl"><a href="ShadowResolution.html">ShadowResolution</a></td><td class="desc">Default shadow resolution. Each decrease in quality level halves the resolution of shadows.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShadowSamplingMode.html">ShadowSamplingMode</a></td><td class="desc">Used by CommandBuffer.SetShadowSamplingMode.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.SinglePassStereoMode.html">SinglePassStereoMode</a></td><td class="desc">Enum type defines the different stereo rendering modes available.</td></tr>
+      <tr><td class="lbl"><a href="SkinQuality.html">SkinQuality</a></td><td class="desc">The maximum number of bones affecting a single vertex.</td></tr>
+      <tr><td class="lbl"><a href="SkinWeights.html">SkinWeights</a></td><td class="desc">Skin weights.</td></tr>
+      <tr><td class="lbl"><a href="SnapAxis.html">SnapAxis</a></td><td class="desc">Defines the axes that can be snapped.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.SortingCriteria.html">SortingCriteria</a></td><td class="desc">How to sort objects during rendering.</td></tr>
+      <tr><td class="lbl"><a href="Space.html">Space</a></td><td class="desc">The coordinate space in which to operate.</td></tr>
+      <tr><td class="lbl"><a href="Windows.Speech.SpeechError.html">SpeechError</a></td><td class="desc">Represents an error in a speech recognition system.</td></tr>
+      <tr><td class="lbl"><a href="Windows.Speech.SpeechSystemStatus.html">SpeechSystemStatus</a></td><td class="desc">Represents the current status of the speech recognition system or a dictation recognizer.</td></tr>
+      <tr><td class="lbl"><a href="SpriteAlignment.html">SpriteAlignment</a></td><td class="desc">How a Sprite's graphic rectangle is aligned with its pivot point.</td></tr>
+      <tr><td class="lbl"><a href="SpriteDrawMode.html">SpriteDrawMode</a></td><td class="desc">
+          SpriteRenderer draw mode.</td></tr>
+      <tr><td class="lbl"><a href="SpriteMaskInteraction.html">SpriteMaskInteraction</a></td><td class="desc">This enum controls the mode under which the sprite will interact with the masking system.</td></tr>
+      <tr><td class="lbl"><a href="SpriteMeshType.html">SpriteMeshType</a></td><td class="desc">Defines the type of mesh generated for a sprite.</td></tr>
+      <tr><td class="lbl"><a href="SpritePackingMode.html">SpritePackingMode</a></td><td class="desc">Sprite packing modes for the Sprite Packer.</td></tr>
+      <tr><td class="lbl"><a href="SpritePackingRotation.html">SpritePackingRotation</a></td><td class="desc">Sprite rotation modes for the Sprite Packer.</td></tr>
+      <tr><td class="lbl"><a href="SpriteSortPoint.html">SpriteSortPoint</a></td><td class="desc">Determines the position of the Sprite used for sorting the Renderer.</td></tr>
+      <tr><td class="lbl"><a href="SpriteTileMode.html">SpriteTileMode</a></td><td class="desc">Tiling mode for SpriteRenderer.tileMode.</td></tr>
+      <tr><td class="lbl"><a href="StackTraceLogType.html">StackTraceLogType</a></td><td class="desc">Stack trace logging options.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.StencilOp.html">StencilOp</a></td><td class="desc">Specifies the operation that's performed on the stencil buffer when rendering.</td></tr>
+      <tr><td class="lbl"><a href="StereoTargetEyeMask.html">StereoTargetEyeMask</a></td><td class="desc">Enum values for the Camera's targetEye property.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.SynchronisationStage.html">SynchronisationStage</a></td><td class="desc">The stages of the draw call processing on the GPU.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.SynchronisationStageFlags.html">SynchronisationStageFlags</a></td><td class="desc">Describes the various stages of GPU processing against which the GraphicsFence can be set and waited against.</td></tr>
+      <tr><td class="lbl"><a href="iOS.SystemGestureDeferMode.html">SystemGestureDeferMode</a></td><td class="desc">Bit-mask used to control the deferring of system gestures on iOS.</td></tr>
+      <tr><td class="lbl"><a href="SystemLanguage.html">SystemLanguage</a></td><td class="desc">The language the user's operating system is running in. Returned by Application.systemLanguage.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.TextureDimension.html">TextureDimension</a></td><td class="desc">Texture "dimension" (type).</td></tr>
+      <tr><td class="lbl"><a href="TextureFormat.html">TextureFormat</a></td><td class="desc">Format used when creating textures from scripts.</td></tr>
+      <tr><td class="lbl"><a href="TextureWrapMode.html">TextureWrapMode</a></td><td class="desc">Wrap mode for textures.</td></tr>
+      <tr><td class="lbl"><a href="ThreadPriority.html">ThreadPriority</a></td><td class="desc">Priority of a thread.</td></tr>
+      <tr><td class="lbl"><a href="WSA.TileForegroundText.html">TileForegroundText</a></td><td class="desc">Style for foreground text on a secondary tile.</td></tr>
+      <tr><td class="lbl"><a href="WSA.TileTemplate.html">TileTemplate</a></td><td class="desc">Templates for various tile styles.
+</td></tr>
+      <tr><td class="lbl"><a href="WSA.ToastTemplate.html">ToastTemplate</a></td><td class="desc">Templates for various toast styles.
+</td></tr>
+      <tr><td class="lbl"><a href="TouchScreenKeyboardType.html">TouchScreenKeyboardType</a></td><td class="desc">Enumeration of the different types of supported touchscreen keyboards.</td></tr>
+      <tr><td class="lbl"><a href="TransparencySortMode.html">TransparencySortMode</a></td><td class="desc">Transparent object sorting mode of a Camera.</td></tr>
+      <tr><td class="lbl"><a href="Events.UnityEventCallState.html">UnityEventCallState</a></td><td class="desc">Controls the scope of UnityEvent callbacks.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.UnloadSceneOptions.html">UnloadSceneOptions</a></td><td class="desc">Scene unloading options passed to SceneManager.UnloadScene.</td></tr>
+      <tr><td class="lbl"><a href="UserAuthorization.html">UserAuthorization</a></td><td class="desc">Use this enum to request permission from the user’s device for access to system features.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.VertexAttribute.html">VertexAttribute</a></td><td class="desc">Possible attribute types that describe a vertex in a Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.VertexAttributeFormat.html">VertexAttributeFormat</a></td><td class="desc">Data type of a VertexAttribute.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.VideoShadersIncludeMode.html">VideoShadersIncludeMode</a></td><td class="desc">Video shaders mode used by GraphicsSettings.</td></tr>
+      <tr><td class="lbl"><a href="VRTextureUsage.html">VRTextureUsage</a></td><td class="desc">This enum describes how the RenderTexture is used as a VR eye texture. Instead of using the values of this enum manually, use the value returned by eyeTextureDesc or other VR functions returning a RenderTextureDescriptor.</td></tr>
+      <tr><td class="lbl"><a href="Windows.WebCam.WebCamMode.html">WebCamMode</a></td><td class="desc">Describes the active mode of the Web Camera resource.</td></tr>
+      <tr><td class="lbl"><a href="WeightedMode.html">WeightedMode</a></td><td class="desc">Sets which weights to use when calculating curve segments.</td></tr>
+      <tr><td class="lbl"><a href="WSA.WindowActivationState.html">WindowActivationState</a></td><td class="desc">Specifies the set of reasons that a windowActivated event was raised.</td></tr>
+      <tr><td class="lbl"><a href="WrapMode.html">WrapMode</a></td><td class="desc">Determines how time is treated outside of the keyframed range of an AnimationClip or AnimationCurve.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

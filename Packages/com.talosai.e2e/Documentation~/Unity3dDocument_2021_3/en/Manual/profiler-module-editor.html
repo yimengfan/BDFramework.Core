@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Profiler Module Editor</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/profiler-module-editor.html">English</a></li>
+<li><a href="/cn/current/Manual/profiler-module-editor.html">中文</a></li>
+<li><a href="/ja/current/Manual/profiler-module-editor.html">日本語</a></li>
+<li><a href="/kr/current/Manual/profiler-module-editor.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/profiler-module-editor.html">English</a></li>
+<li><a href="/cn/current/Manual/profiler-module-editor.html">中文</a></li>
+<li><a href="/ja/current/Manual/profiler-module-editor.html">日本語</a></li>
+<li><a href="/kr/current/Manual/profiler-module-editor.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="Profiler.html">Profiler overview</a></li>
+<li><a href="Profiler-customizing.html">Customizing the Profiler</a></li>
+<li><a href="Profiler-creating-custom-modules.html">Creating Custom Profiler modules</a></li>
+<li>Profiler Module Editor</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Profiler-creating-custom-modules.html"></a></span><div class="tip">Creating Custom Profiler modules</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Profiler-customizing-details-view.html"></a></span><div class="tip">Creating a custom module details panel</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Profiler Module Editor</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> Module Editor is a tool that you can use to add your own custom modules to the Unity Profiler window. You can also add built-in counters to modules, or use the runtime API to add your own custom counters to modules. For information on how to implement your own counters, see the Profiling package documentation on <a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@latest/index.html?subfolder=/manual/profilercounter-guide.html">Profiler Counters API</a>.</p>
+
+<p>It’s particularly useful when you need to hone in on statistics that you want to analyze deeper, or to add custom statistics about your application to the Profiler window.</p>
+
+<figure>
+<img src="../uploads/Main/profiler-module-editor.png" alt="The Profiler Module Editor window, with a new module selected">
+<figcaption>The Profiler Module Editor window, with a new module selected</figcaption>
+</figure>
+
+<p>To use the Profiler Module Editor, open the Profiler Window (<strong>Window &gt; Analysis &gt; Profiler</strong>) and then select the Profiler Modules dropdown. </p>
+
+<figure>
+<img src="../uploads/Main/profiler-module-dropdown.png" alt="The Profiler module dropdown">
+<figcaption>The Profiler module dropdown</figcaption>
+</figure>
+
+<p>Select the gear icon, and the <strong>Profiler Module Editor</strong> window opens. The window has three columns:</p>
+
+<ul>
+<li>
+<strong>List of Profiler Modules:</strong> This list contains all of the available modules you can add to the Profiler Window. Built-in modules are greyed-out in the list, indicating that you cannot edit their contents. You can drag and drop the modules to reorder their appearance in the Profiler window. When you create your own custom Profiler Module, it also appears in this list.</li>
+<li>
+<strong>Profiler Module information pane</strong> (only appears when you create or select a custom module): Lists the counters contained in the custom module</li>
+<li>
+<strong>Available counters</strong> (only appears when you create or select a custom module): Lists the available counters you can add to the custom module.</li>
+</ul>
+
+<h2>Creating a custom module</h2>
+
+<p>To create a custom module, select the <strong>Add</strong> button in the bottom left of the Profiler Module Editor window. Unity adds a new Profiler module to the list called <strong>New Profiler Module</strong>. To rename the module, click in the text field and use your keyboard to set the name.</p>
+
+<h3>Adding counters to a module</h3>
+
+<p>To collect data in the custom Profiler module, you must add at least one counter for the module to track. You can add both built-in Unity counters, or use the <a href="../ScriptReference/Unity.Profiling.ProfilerRecorder.html">ProfilerRecorder</a> API to create your own counters to add to the module. The list of available counters appears in the <strong>Available Counters</strong> pane.</p>
+
+<p>If you don’t have any data loaded into the Profiler window, then any counters you’ve created do not appear in the <strong>Available Counters</strong> pane when you load the Profiler Module Editor. To see your custom counters, you must capture or load some data that has your emitted counters in with the Profiler, and reopen the Profiler Module Editor.</p>
+
+<p>The available Unity counters are divided into three areas: <a href="ProfilerMemory.html">Memory</a>, <a href="ProfilerRender">Render</a>, and <a href="profiler-virtual-texturing">Virtual Texturing</a>. For more information on the specific counters available in these areas, see the documentation for each module.</p>
+
+<p>If you use the API to add your own counters, you must load or collect some data into the Profiler window first, and then your custom counters appear in the <strong>Available Counters</strong> pane under the <strong>User</strong> heading of the Profiler Module Editor.</p>
+
+<figure>
+<img src="../uploads/Main/profiler-module-editor-user-counters.png" alt="Profiler Module Editor with User counters listed.">
+<figcaption>Profiler Module Editor with User counters listed.</figcaption>
+</figure>
+
+<p>To add a counter to a module, select it in the <strong>Available Counters</strong> list and then select the <strong>Add Selected</strong> button. Alternatively, you can double-click a counter to add it to a module. Unity then adds these counters to the selected Profiler module. To add multiple counters to the module at once, you can hold down <strong>Shift</strong> and click two counters to select all the counters between the two, or you can hold down <strong>Ctrl</strong> (<strong>Command</strong> on macOS) to select counters one at a time, then select the <strong>Add Selected</strong> button.</p>
+
+<p>To reorder the counters, you can drag and drop them. You can only add a maximum of 10 counters to a module.</p>
+
+<h3>Using custom modules</h3>
+
+<p>When you are happy with your custom module, select the <strong>Save Changes</strong> button in the bottom right corner of the Profiler Module Editor window. Unity closes the window, and you can then see your new module listed in the Profiler Window.</p>
+
+<figure>
+<img src="../uploads/Main/profiler-garbage-collection-module.png" alt="Profiler Module Editor (left), with a custom module. On the right, the custom module in the Profiler window.">
+<figcaption>Profiler Module Editor (left), with a custom module. On the right, the custom module in the Profiler window.</figcaption>
+</figure>
+
+<p>To effectively use and compare your data against the built-in modules, you can reorder the modules in the Profiler Window. To do this, open the Profiler Module Editor, and then drag and drop modules in the <strong>Profiler Modules</strong> pane.</p>
+
+<p>This is particularly useful if you want to inspect custom elements of your application against spikes in the built-in Profiler data.</p>
+
+<figure>
+<img src="../uploads/Main/profiler-window-custom-module.png" alt="A custom Profiler Module displaying the number of bullets and tanks on screen in the game. Note the correspondence to the rendering data.">
+<figcaption>A custom Profiler Module displaying the number of bullets and tanks on screen in the game. Note the correspondence to the rendering data.</figcaption>
+</figure>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Profiler-creating-custom-modules.html"></a></span><div class="tip">Creating Custom Profiler modules</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Profiler-customizing-details-view.html"></a></span><div class="tip">Creating a custom module details panel</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

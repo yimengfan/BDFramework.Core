@@ -1,0 +1,962 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Functions reference</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/search-expression-functions-ref.html">English</a></li>
+<li><a href="/cn/current/Manual/search-expression-functions-ref.html">中文</a></li>
+<li><a href="/ja/current/Manual/search-expression-functions-ref.html">日本語</a></li>
+<li><a href="/kr/current/Manual/search-expression-functions-ref.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/search-expression-functions-ref.html">English</a></li>
+<li><a href="/cn/current/Manual/search-expression-functions-ref.html">中文</a></li>
+<li><a href="/ja/current/Manual/search-expression-functions-ref.html">日本語</a></li>
+<li><a href="/kr/current/Manual/search-expression-functions-ref.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="search-overview.html">Unity Search</a></li>
+<li><a href="search-expressions.html">Search expressions</a></li>
+<li>Functions reference</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="search-expressions.html"></a></span><div class="tip">Search expressions</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="api.html"></a></span><div class="tip">Creating a custom Search Provider</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Functions reference</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>Functions by category</h2>
+
+<h3>Set manipulation</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Expression</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<a href="#distinct"><strong>distinct</strong></a><br> {Variadic | AnyExpression}</td>
+	<td style="text-align:left;">Produces the unique set union of multiple expressions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#except"><strong>except</strong></a><br> {Iterable, Variadic | Iterable}</td>
+	<td style="text-align:left;">Produces the set difference of two sequences.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#first"><strong>first</strong></a><br> {Number, Variadic | Iterable}</td>
+	<td style="text-align:left;">Returns the first result for each expression.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#groupby"><strong>groupBy</strong></a><br> {Iterable, Optional | Selector}</td>
+	<td style="text-align:left;">Group search results by a specified <code>@selector</code> | Hints: ExpandSupported</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#intersect"><strong>intersect</strong></a><br> {No signature}</td>
+	<td style="text-align:left;">Produces the set intersection of two sequences.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#last"><strong>last</strong></a><br> {Number, Variadic | Iterable}</td>
+	<td style="text-align:left;">Returns the last result for each expression.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#map"><strong>map</strong></a><br> {Iterable, AnyValue}</td>
+	<td style="text-align:left;">Maps an expression result to form a new expression using variables.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#select"><strong>select</strong></a><br> {No signature}</td>
+	<td style="text-align:left;">Creates new results by selecting which value and property to take.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#sort"><strong>sort</strong></a><br> {No signature}</td>
+	<td style="text-align:left;">Sorts expression results based on a criteria.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#union"><strong>union</strong></a><br> {Variadic | AnyExpression}</td>
+	<td style="text-align:left;">Produces a unique set union of multiple expressions.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Set filtering</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Expression</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<a href="#eq"><strong>eq</strong></a><br> {Iterable, Selector, Literal | QueryString}</td>
+	<td style="text-align:left;">Keeps search results that have an equal value.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#gt"><strong>gt</strong></a><br> {Iterable, Selector, Literal | QueryString}</td>
+	<td style="text-align:left;">Keeps search results that have a greater value.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#gte"><strong>gte</strong></a><br> {Iterable, Selector, Literal | QueryString}</td>
+	<td style="text-align:left;">Keeps search results that have a greater or equal value.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#lt"><strong>lw</strong></a><br> {Iterable, Selector, Literal | QueryString}</td>
+	<td style="text-align:left;">Keeps search results that have a lower value.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="(#lte)"><strong>lwe</strong></a><br> {Iterable, Selector, Literal | QueryString}</td>
+	<td style="text-align:left;">Keeps search results that have a lower or equal value.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#neq"><strong>neq</strong></a><br> {Iterable, Selector, Literal| QueryString}</td>
+	<td style="text-align:left;">Keeps search results that have a different value.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#where"><strong>where</strong></a><br> {Iterable, Text | Selector | QueryString}</td>
+	<td style="text-align:left;">Excludes search results for which the expression is not valid.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Math</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Expression</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<a href="#avg"><strong>avg</strong></a><br> {Selector, Variadic | Iterable}</td>
+	<td style="text-align:left;">Finds the average value for each expression.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#count"><strong>count</strong></a><br> {Variadic | Iterable}</td>
+	<td style="text-align:left;">Counts the number of results in an expression.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#max"><strong>max</strong></a><br> {Selector, Variadic | Iterable}</td>
+	<td style="text-align:left;">Finds the maximum value for each expression.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#min"><strong>min</strong></a><br> {Selector, Variadic | Iterable}</td>
+	<td style="text-align:left;">Finds the minimal value for each expression.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#sum"><strong>sum</strong></a><br> {Selector, Variadic | Iterable}</td>
+	<td style="text-align:left;">Computes the sum value for each expression.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Utility</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Expression</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<a href="#alias"><strong>alias</strong></a><br> {Iterable, Text | Selector | Iterable}</td>
+	<td style="text-align:left;">Assigns an alias to an expression. | Hints: AlwaysExpand</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#constant"><strong>constant</strong></a> <br>{Literal | Function}</td>
+	<td style="text-align:left;">Returns the first result for each expression.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#format"><strong>format</strong></a><br> {Text | Selector, Variadic | AnyValue}</td>
+	<td style="text-align:left;">Converts arguments to a string allowing you to format the result.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#print"><strong>print</strong></a><br> {Text | Selector, Variadic | Iterable}</td>
+	<td style="text-align:left;">Prints expression results in the console.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#query"><strong>query</strong></a><br> {No signature}</td>
+	<td style="text-align:left;">Hints: ExpandSupported</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#random"><strong>random</strong></a><br> {Variadic | Iterable}</td>
+	<td style="text-align:left;">Randomly picks a result for each expression.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#set"><strong>set</strong></a><br> {Variadic | Iterable}</td>
+	<td style="text-align:left;">Returns a set of elements from any expression.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="#text"><strong>text</strong></a><br> {No signature}</td>
+	<td style="text-align:left;">Converts the text of any expression to a literal string.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Functions in alphabetical order</h2>
+
+<p><a name="alias" aria-hidden="true"></a></p>
+
+<h3>alias</h3>
+
+<p><code>alias{set, aliasName} -&gt; {each element in set gets assigned an aliasName}</code></p>
+
+<p><code>alias{set, formatString} -&gt; {each element in set gets assigned an alias computed from the formatString}</code></p>
+
+<p>This function effectively assigns an alias to an expression. This is equivalent to using the “as” keyword. See also <a href="search-expressions.html#alias-usage">alias usage</a>.</p>
+
+<p>Example:</p>
+
+<p>
+<code>count{t:material as material}</code> is equivalent to:</p>
+
+<p><code>count{alias{t:material, material}}</code></p>
+
+<p>Example:</p>
+
+<p>Assign the alias “number” to the elements: 1, 2 and 3.</p>
+
+<p><code>alias{[1, 2, 3], 'number'}</code></p>
+
+<p>Example:</p>
+
+<p>Assign and alias dynamically computed from a format string to 1,2 and 3:</p>
+
+<p><code>alias{[1,2,3], 'number @value}'}</code></p>
+
+<p><a name="avg" aria-hidden="true"></a></p>
+
+<h3>avg</h3>
+
+<p><code>avg{selector, sets...} -&gt; {Average of selector value in each set}</code></p>
+
+<p><code>avg{set...} -&gt; {Average of @value in each set}</code></p>
+
+<p>Find the average value of each item in each set passed as parameters.</p>
+
+<p>Example:</p>
+
+<p><code>avg{[1,2,3,4, 5,6], [1, 1, 1], []} -&gt; {3.5, 1, 1}</code></p>
+
+<p>Example:</p>
+
+<p><code>avg{@size, t:texture, t:material} -&gt; {1100576, 3618}</code></p>
+
+<p><a name="constant" aria-hidden="true"></a></p>
+
+<h3>constant</h3>
+
+<p><code>constant{value} -&gt; {constant value}</code></p>
+
+<p>Attempts to convert the value to a constant literal value: either a number, string, or Boolean. This can use used to disambiguate parameter types in some functions.</p>
+
+<p>Example:</p>
+
+<p><code>first{constant{5}, t:material}</code></p>
+
+<p><a name="count" aria-hidden="true"></a></p>
+
+<h3>count</h3>
+
+<p><code>count{sets...} -&gt; {count of each set}</code></p>
+
+<p>Counts the number of results in each set passed as parameters.</p>
+
+<p>Example:</p>
+
+<p><code>count{t:texture, t:material} -&gt; {359, 194}</code></p>
+
+<p>Example:</p>
+
+<p>From the index named “assets”, group assets by type and count each of those asset groups. Take the five largest groups.</p>
+
+<p><code>first{5, sort{count{...groupBy{a:assets, @type}}, @value, desc}}</code></p>
+
+<p><a name="distinct" aria-hidden="true"></a></p>
+
+<h3>distinct</h3>
+
+<p><code>distinct{sets...} -&gt; {Unified set of all unique elements in all sets}</code></p>
+
+<p>Distinct creates a set of all elements found in all sets passed as parameters. Like union, no duplicate elements are kept.</p>
+
+<p>Example:
+This example shows that duplicates are removed.</p>
+
+<p><code>distinct{[1,2,3], [3,4,5]} -&gt; {1,2,3,4,5}</code></p>
+
+<p>Example:</p>
+
+<p><code>distinct{*.mat, t:shader} -&gt; {all materials and shaders in the project}</code></p>
+
+<p>Example:</p>
+
+<p>Select the <code>@type</code> of each asset in the index named “project” and keep a single asset of each type since duplicates are computed according to the <code>@value</code> of an item.</p>
+
+<p><code>distinct{select{a:project, @type}}</code></p>
+
+<p><a name="eq" aria-hidden="true"></a></p>
+
+<h3>eq</h3>
+
+<p><code>eq{set, value} -&gt; {all elements equal to value}</code></p>
+
+<p><code>eq{set, selector, value} -&gt; {all selector value equal to value}</code></p>
+
+<p>Filters a set of element by keeping those equal to a given value.</p>
+
+<p>Example:</p>
+
+<p><code>eq{[2,4,5,6,4,3], 4} -&gt; {4,4}</code></p>
+
+<p>this is equivalent to:</p>
+
+<p><code>where{[2,4,5,6,4,3], “@value=4”}</code></p>
+
+<p>Example:</p>
+
+<p>Find all textures with a <code>#width</code> serialized property of 256.</p>
+
+<p><code>eq{t:texture, #width, 256}</code></p>
+
+<p>this is equivalent to</p>
+
+<p><code>t:texture #width=256</code></p>
+
+<p><a name="except" aria-hidden="true"></a></p>
+
+<h3>except</h3>
+
+<p><code>except{set, sets...} -&gt; {New set of elements}</code></p>
+
+<p>Except creates a set of all elements that are not in any of the sets passed as parameters.</p>
+
+<p>Example:</p>
+
+<p><code>except{[1,2,3,4,5], [2,3], [5], [6]} -&gt; {1,4}</code></p>
+
+<p>Example:</p>
+
+<p><code>except{t:prefab, t:prefab ref=select{t:texture, @path}}</code></p>
+
+<p><a name="first" aria-hidden="true"></a></p>
+
+<h3>first</h3>
+
+<p><code>first{sets...} -&gt; {all first element in each sets}</code></p>
+
+<p><code>first{count, sets...} -&gt; {first count elements in each sets}</code></p>
+
+<p>First returns a set of the first element found in each set passed as a parameter. If <code>count</code> is passed as parameter, will take the first count element in each set.</p>
+
+<p>Example:</p>
+
+<p><code>first{[3, 4,5], [9, 28, 3]} -&gt; {3,9}</code></p>
+
+<p>Example:</p>
+
+<p><code>first{3, [9, 28, 3, 4, 6, 7, 8, 9], [1, 2, 3, 4, 5, 6, 7]} -&gt; {9, 28, 3, 1, 2, 3}</code></p>
+
+<p>Example:</p>
+
+<p>Sort all .fbx files in the project by descending order of size and show the three largest.</p>
+
+<p><code>first{3,sort{*.fbx, @size, desc}}</code></p>
+
+<p><a name="format" aria-hidden="true"></a></p>
+
+<h3>format</h3>
+
+<p><code>format{expression} -&gt; {set of items where the value is converted to a string}</code></p>
+
+<p><code>format{formatString, expression} -&gt; {set of items where the value is set by applying a format string}</code></p>
+
+<p>Format can be used in two ways. When only a single expression argument is used it will try to convert the current <code>@value</code> of an item to a string representation.</p>
+
+<p>If format is used with a format string, it will replace all selectors in the format string with the selected value of the item and set this formatted string in the <code>@value</code> of the item.</p>
+
+<p>Example:</p>
+
+<p>
+<code>print{format{“value=@value”, [1,2,3,4]}}</code> would print [“value=1”,”value=2”,”value=3”,”value=4”] in the <span class="tooltip"><strong>Console window</strong><span class="tooltiptext">A Unity Editor window that shows errors, warnings and other messages generated by Unity, or your own scripts. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Console.html" href="Console.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Consolewindow" aria-label="Go to glossary anchor for Consolewindow">Glossary</a></span></span></span>.</p>
+
+<p><a name="groupby" aria-hidden="true"></a></p>
+
+<h3>groupBy</h3>
+
+<p>
+<code>groupBy{set, selector}</code> -&gt; <code>{multiple sets of items grouped by their selector}</code>
+</p>
+
+<p>Example:</p>
+
+<p>To count the number of assets for each type in a project, the <code>groupBy</code> function coupled with the Expand Operator allows you to automatically group items according to a selector. In the example below it creates a set of items of the same types. The <a href="#expand-operator">Expand Operator</a> allows you to expand this set of items into multiple sets of the same type.</p>
+
+<p>
+<code>count{...groupBy{a:assets, @type}}</code> -&gt; <code>{numberOfAssetType1, numberOfAssetType2, .. numberOfAssetTypeN}</code>
+</p>
+
+<p><a name="gt" aria-hidden="true"></a></p>
+
+<h3>gt</h3>
+
+<p><code>gt{set, value} -&gt; {all elements greater than value}</code></p>
+
+<p><code>gt{set, selector, value} -&gt; {all elements with selector value greater than value}</code></p>
+
+<p>Filters a set of elements by keeping those greater than a given value.</p>
+
+<p>Example:</p>
+
+<p><code>gt{[2,4,5,6,4,3], 4} -&gt; {5,6}</code></p>
+
+<p><a name="gte" aria-hidden="true"></a></p>
+
+<h3>gte</h3>
+
+<p><code>gte{set, value} -&gt; {all elements greater or equal than value}</code></p>
+
+<p><code>gte{set, selector, value} -&gt; {all with a selector value greater or equal than value}</code></p>
+
+<p>Filters a set of element by keeping those greater than or equal to a given value.</p>
+
+<p>Example:</p>
+
+<p><code>gte{[2,4,5,6,4,3], 4} -&gt; {4,5,6,4}</code></p>
+
+<p><a name="intersect" aria-hidden="true"></a></p>
+
+<h3>intersect</h3>
+
+<p><code>intersect{sets...} -&gt; {elements that are in all sets}</code></p>
+
+<p><code>intersect{sets…, selector} -&gt; {elements whose selector value is contained in all sets}</code></p>
+
+<p>Intersect creates a new set of elements whose <code>@value</code> is contained in all sets. If a selector is passed as parameter the selector value is used to compare elements.</p>
+
+<p>Example:</p>
+
+<p><code>intersect{[1,2,3,4,5], [3, 5], [6, 3]} -&gt; {3}</code></p>
+
+<p>Example:</p>
+
+<p>Find all textures whose size is bigger than 4000 bytes and intersect with all textures whose path contains the word “rock”.</p>
+
+<p><code>intersect{t:texture size&gt;4000, t:texture @path:rock}</code></p>
+
+<p><a name="last" aria-hidden="true"></a></p>
+
+<h3>last</h3>
+
+<p><code>last{sets...} -&gt; {all last element in each sets}</code></p>
+
+<p><code>last{count, sets...} -&gt; {last count elements in each sets}</code></p>
+
+<p>Last returns a set of the last element found in each set passed as parameter. If <code>count</code> is passed as parameter, will take the last count elements in each set.</p>
+
+<p>Example:</p>
+
+<p><code>last{[3, 4,5], [9, 28, 3]} -&gt; {5, 3}</code></p>
+
+<p>Example:</p>
+
+<p><code>last{3, [9, 28, 3, 4, 6, 7, 8, 9], [1, 2, 3, 4, 5, 6, 7]} -&gt; {7,8,9,5,6,7}</code></p>
+
+<p>Example:</p>
+
+<p>Sort all .fbx files in the project by ascending order of size and take the last three.</p>
+
+<p><code>last{3,sort{*.fbx, @size}}</code></p>
+
+<p><a name="lt" aria-hidden="true"></a></p>
+
+<h3>lw</h3>
+
+<p><code>lw{set, value} -&gt; {all elements less than value}</code></p>
+
+<p><code>lw{set, selector, value} -&gt; {all elements with selector value less than value}</code></p>
+
+<p>Filters a set of elements by keeping those less than a given value.</p>
+
+<p>Example:</p>
+
+<p><code>lw{[2,4,5,6,4,3], 4} -&gt; {2,3}</code></p>
+
+<p><a name="lte" aria-hidden="true"></a></p>
+
+<h3>lwe</h3>
+
+<p><code>lwe{set, value} -&gt; {all elements less or equal than value}</code></p>
+
+<p><code>lwe{set, selector, value} -&gt; {all with a selector value less or equal than value}</code></p>
+
+<p>Filters a set of elements by keeping those less than or equal to a given value.</p>
+
+<p>Example:</p>
+
+<p><code>lwe{[2,4,5,6,4,3], 4} -&gt; {2,4,3,4}</code></p>
+
+<p><a name="map" aria-hidden="true"></a></p>
+
+<h3>map</h3>
+
+<p><code>map{set, &lt;string containing selectors to replace&gt;}</code></p>
+
+<p>The map operator is a functional way of expressing a <a href="#query-expression">search expression</a>. It maps an expression result to form a new expression using variables.</p>
+
+<p>The following example:</p>
+
+<p>
+<code>map{t:texture, t:prefab ref=@id}</code> -&gt; <code>{t:prefab ref=&lt;textureId1&gt;} {t:prefab ref=&lt;textureId2&gt;} ... {t:prefab ref=&lt;textureIdN&gt;}</code>
+</p>
+
+<p>will run the query <code>t:prefab ref=@id</code> for each of the textures returned by <code>t:texture</code>.</p>
+
+<p>This is equivalent to running:</p>
+
+<p><code>{t:prefab ref={t:texture}}</code></p>
+
+<p><a name="max" aria-hidden="true"></a></p>
+
+<h3>max</h3>
+
+<p><code>max{sets...} -&gt; {max value element in each set}</code></p>
+
+<p><code>max{selector, sets...} -&gt; {max selector value element in each set}</code></p>
+
+<p>Finds the maximum <code>@value` for each set passed as parameters. If a selector is passed as a parameter, find the element with maximum</code>@selector` value.</p>
+
+<p>Example:</p>
+
+<p><code>max{[1,2,3,4,5,6], [2,4,5]} -&gt; {6, 5}</code></p>
+
+<p>Example:</p>
+
+<p>Find the largest .png file and the largest .jpg file.</p>
+
+<p><code>max{@size, *.png, *.jpg} -&gt; {&lt;largest .png file&gt;, &lt;largest .jpg file&gt;}</code></p>
+
+<p><a name="min" aria-hidden="true"></a></p>
+
+<h3>min</h3>
+
+<p><code>min{sets...} -&gt; {min value element in each set}</code></p>
+
+<p><code>min{selector, sets...} -&gt; {min selector value element in each set}</code></p>
+
+<p>Finds the minimum <code>@value` for each set passed as parameters. If a selector is passed as parameter, find the element with minimum</code>@selector` value.</p>
+
+<p>Example:</p>
+
+<p><code>min{[1,2,3,4,5,6], [2,4,5]} -&gt; {1, 2}</code></p>
+
+<p>Example:</p>
+
+<p>Find the smallest .png file and the largest .jpg file.</p>
+
+<p><code>min{@size, *.png, *.jpg} -&gt; {&lt;smallest .png file&gt;, &lt;smallest .jpg file&gt;}</code></p>
+
+<p><a name="neq" aria-hidden="true"></a></p>
+
+<h3>neq</h3>
+
+<p><code>neq{set, value} -&gt; {all elements not equal to value}</code></p>
+
+<p><code>neq{set, selector, value} -&gt; {all selector value not equal to value}</code></p>
+
+<p>Filters a set of elements by keeping those not equal to a given value.</p>
+
+<p>Example:</p>
+
+<p><code>neq{[2,4,5,6,4,3], 4} -&gt; {2,5,6,3}</code></p>
+
+<p><a name="print" aria-hidden="true"></a></p>
+
+<h3>print</h3>
+
+<p><code>print(FormatString | selector, set)</code></p>
+
+<p>Print takes a format string (or a selector) and a set of items and prints the formatted results of each item in the console. This can be useful to debug the values of an item.</p>
+
+<p>In a project, the following expression returns the textures and their paths in the Search window and prints them in the Console window:</p>
+
+<p><code>print{'path=@path', t:texture}</code></p>
+
+<p>Example:</p>
+
+<p>
+<code>print{@value, [1,2,3,4]}</code> would print [1,2,3,4] in the Console window.</p>
+
+<p><a name="query" aria-hidden="true"></a></p>
+
+<h3>query</h3>
+
+<p><code>query{value} -&gt; {query expression}</code></p>
+
+<p>Attempts to convert value to a query expression. This can use used to disambiguate parameters type in some specific functions.</p>
+
+<p>Example:</p>
+
+<p>
+<code>count{t:material}</code> is equivalent to</p>
+
+<p><code>count{query{t:material}}</code></p>
+
+<p><a name="random" aria-hidden="true"></a></p>
+
+<h3>random</h3>
+
+<p><code>random{sets...} -&gt; {random elements in each set}</code></p>
+
+<p>Creates a set out of random elements taken from each set of items passed as a parameter.</p>
+
+<p>Example:</p>
+
+<p>
+<code>random{[1,3,5], [6,4,2]} -&gt; {3, 2}</code> returns a random results in each set.</p>
+
+<p><a name="select" aria-hidden="true"></a></p>
+
+<h3>select</h3>
+
+<p><code>select(&lt;set&gt;, selectorForLabel, selectorForDesc, otherSelectors...)</code></p>
+
+<p>Select is a function that creates a new set of search items and extracts or transforms properties from an original set of search items.</p>
+
+<p>The second parameter (selectorForLabel) of the select function assigns the selected value to the label of the new item.</p>
+
+<p>The third parameter (selectorForDesc) assigns the selected value to the description of the new item.</p>
+
+<p>The last selector in a select function also specifies the value of the item</p>
+
+<p>Example:</p>
+
+<p>When searching for textures in a project, using <code>select</code>, generates a set of items where the label is the path and where the description becomes the size of the texture:</p>
+
+<p><code>select{t:texture, @path, @size}</code></p>
+
+<figure>
+<img src="../uploads/Main/search-expression-select-1.png" alt="">
+</figure>
+
+<p>The last selector in a select statement also sets the value of the item. For the example <code>select{t:texture, @path, @size}</code> this means <code>@size</code> will also become the <code>@value</code> of the search item. Switch to the Table view to see how the search expression replaces the label and description sets the value:</p>
+
+<figure>
+<img src="../uploads/Main/search-expression-select-2.png" alt="">
+</figure>
+
+<p>Selectors of a <code>select</code> function can also be functions themselves. Selectors in these functions are evaluated according to the search item being processed.</p>
+
+<p>Example:</p>
+
+<p><code>select{t:texture, @path, count{t:prefab ref=@id}}</code></p>
+
+<ol>
+<li>For each texture in the project, create a new search item (<code>t:texture</code>)</li>
+<li>whose label is equal to the <code>@path</code> of the texture (<code>@path</code>)</li>
+<li>and whose description is equal to how many <span class="tooltip"><strong>prefabs</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> refer to that texture (<code>count{t:prefab ref=@id}</code>). In the example, <code>@id</code> refers to the <code>SearchItem.id</code> of each texture item.</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/search-expression-select-3.png" alt="">
+</figure>
+
+<p>You can assign a property value to a search item field if you use the alias operator.</p>
+
+<p>Example:</p>
+
+<p><code>print{&quot;@pow&quot;, select{t:script, @path as pow}}</code></p>
+
+<p>This extracts the <code>@path</code> property from a search item and assigns it to the search item field named <code>pow</code> in the new search item created by the <code>select</code> function.</p>
+
+<p><a name="set" aria-hidden="true"></a></p>
+
+<h3>set</h3>
+
+<p><code>set{sets...} -&gt; {set of all elements in all sets}</code></p>
+
+<p>Creates a set of all elements contained in all the sets passed as parameter. This is equivalent to using the “[set, of , element]” notation.</p>
+
+<p>Example:</p>
+
+<p>
+<code>set{[1, 2,3], [4,5,6]}</code> is equivalent to:</p>
+
+<p>
+<code>[[1,2,3], [4,5,6]]</code> which is equivalent to:</p>
+
+<p><code>[1,2,3,4,5,6]</code></p>
+
+<p><a name="sort" aria-hidden="true"></a></p>
+
+<h3>sort</h3>
+
+<p><code>sort{set, selector} -&gt; {set of items sorted in ascending order according to selector value}</code></p>
+
+<p><code>sort{set, selector, desc} -&gt; {set of items sorted in descending order according to selector value}</code></p>
+
+<p>Sorts a set of items according to a selector value in descending or ascending order.</p>
+
+<p>Example:</p>
+
+<p>Sort this set in ascending order (from smallest to largest).</p>
+
+<p><code>Sort{[4,2,7,5,8,1,9], @value} -&gt; {1,2,4,5,7,8,9}</code></p>
+
+<p>Example:</p>
+
+<p>Sort this set in descending order (from largest to smallest).</p>
+
+<p><code>sort{[4,2,7,5,8,1,9], @value, desc} -&gt; {9,8,7,5,4,2,1}</code></p>
+
+<p>Example:</p>
+
+<p>Sort all textures in my project according to their @size in descending order (from largest to smallest).</p>
+
+<p><code>sort{t:texture, @size, desc}</code></p>
+
+<p><a name="sum" aria-hidden="true"></a></p>
+
+<h3>sum</h3>
+
+<p><code>sum{sets...} -&gt; {sum of all elements in each set}</code></p>
+
+<p><code>sum{selector, sets...} -&gt; {sum of all elements in each set}</code></p>
+
+<p>Find the sum `<code>@value</code> of each item in each set passed as parameters. If a selector is passed as parameter, find the sum <code>@selector</code> value of each element in each set.</p>
+
+<p>Example:</p>
+
+<p><code>sum{[1,2,3,4,5,6], [2,4,5]} -&gt; {21, 11}</code></p>
+
+<p>Example:</p>
+
+<p>Find the sum of all textures <code>@size</code> in a project.</p>
+
+<p><code>sum{@size, t:texture}</code></p>
+
+<p><a name="text" aria-hidden="true"></a></p>
+
+<h3>text</h3>
+
+<p><code>text{expression} -&gt; {“text of the expression”}</code></p>
+
+<p>Creates a string out of an expression. This is equivalent to using the “” or ‘’ delimiters.</p>
+
+<p>Example:</p>
+
+<p>
+<code>[text{hello}]</code> is equivalent to</p>
+
+<p>
+<code>[“hello”]</code> or <code>[‘hello’]</code>
+</p>
+
+<p><a name="union" aria-hidden="true"></a></p>
+
+<h3>union</h3>
+
+<p><code>union{sets...} -&gt; {Unified set of all unique elements in all sets}</code></p>
+
+<p>Union creates a set of all elements found in all sets passed as a parameter. Like <code>distinct</code>, no duplicate of elements are kept.</p>
+
+<p>Example:</p>
+
+<p>This example shows that duplicates are removed.</p>
+
+<p><code>union{[1,2,3], [3,4,5]} -&gt; {1,2,3,4,5}</code></p>
+
+<p>Example:</p>
+
+<p><code>union{*.mat, t:shader} -&gt; {all materials and shaders in the project}</code></p>
+
+<p><a name="where" aria-hidden="true"></a></p>
+
+<h3>where</h3>
+
+<p><code>where{set, filterString | selector} -&gt; {filtered set of items}</code></p>
+
+<p>Where is a general filtering function that accepts a selector or a string containing selector usage and operators (&gt;, ==, …) to filter elements of a set and returns the new filtered set.</p>
+
+<p>Example:
+Filtering out numbers according to their value:</p>
+
+<p>
+<code>where{[1,2,3,4,5,6,7,8,9,10], '@value&gt;4 and @value&lt;9'}</code> -&gt; <code>{5,6,7,8}</code>
+</p>
+
+<p>Example:
+Finding all <span class="tooltip"><strong>audio clips</strong><span class="tooltiptext">A container for audio data in Unity. Unity supports mono, stereo and multichannel audio assets (up to eight channels). Unity can import .aif, .wav, .mp3, and .ogg audio file format, and .xm, .mod, .it, and .s3m tracker module formats. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioClip.html" href="class-AudioClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioClip" aria-label="Go to glossary anchor for AudioClip">Glossary</a></span></span></span> containing the word <code>effect</code>:</p>
+
+<p><code>where{t:AudioClip, @path:effect}</code></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="search-expressions.html"></a></span><div class="tip">Search expressions</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="api.html"></a></span><div class="tip">Creating a custom Search Provider</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

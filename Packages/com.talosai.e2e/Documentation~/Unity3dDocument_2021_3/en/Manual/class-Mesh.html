@@ -1,0 +1,417 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Mesh asset</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Mesh.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Mesh.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Mesh.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Mesh.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Mesh.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Mesh.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Mesh.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Mesh.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="mesh.html">Meshes</a></li>
+<li>Mesh asset</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AnatomyofaMesh.html"></a></span><div class="tip">Mesh data</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="comp-MeshGroup.html"></a></span><div class="tip">Mesh components</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Mesh asset</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/Mesh.html' title='Go to Mesh page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> asset represents a mesh in your Unity project. </p>
+
+<p>Usually, Unity creates mesh assets when it imports <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about models.html">model</a><span class="tooltiptext">A 3D model representation of an object, such as a character, a building, or a piece of furniture. <a href="3D-formats.html" href="models.html">model</a><span class="tooltiptext">A 3D model representation of an object, such as a character, a building, or a piece of furniture. <a href="3D-formats.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Model" aria-label="Go to glossary anchor for Model">Glossary</a></span></span></span>, but you can also create mesh assets directly in Unity; for example, by <a href="GeneratingMeshGeometryProcedurally.html">creating a mesh with code</a> and saving the results as an asset.</p>
+
+<h2>Mesh Inspector reference</h2>
+
+<p>Select a mesh asset in the <strong><span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span></strong> to open the <strong>Mesh <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span></strong> to open the <strong>Mesh <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong>. This Inspector displays information about the mesh, such as the total number of vertices or the names of any blend shapes the mesh has. It also displays a visual preview of the mesh.</p>
+
+<h3>Mesh information</h3>
+
+<p>The Mesh Inspector displays information about how the mesh <span class="tooltip"><strong>asset stores</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span> its data, but not the values in the data itself. For example, the Inspector shows that Unity stores the value for Position as a set of three Float32 values for each vertex, but it doesn’t show the Position value of a specific vertex.</p>
+
+<figure>
+<img src="../uploads/Main/mesh-inspector.png" alt="The Mesh Inspector">
+<figcaption>The Mesh Inspector</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Vertices</strong></td>
+	<td style="text-align:left;">The total number of vertices in the mesh, and how much on-disk storage and runtime memory Unity uses to store the vertex data for the mesh. For each vertex attribute, Unity shows how much on-disk storage and runtime memory Unity uses to store that attribute, and the data type that Unity uses for it.<br><br>For more information about this data, see <a href="AnatomyofaMesh.html">Mesh data</a>. For information about how Unity can compress data in a mesh, see the <a href="mesh-compression.html">Compressing mesh data</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Indices</strong></td>
+	<td style="text-align:left;">The total number of indices in the mesh, how much on-disk storage and runtime memory Unity uses to store this data, and information about the indices for each sub-mesh.<br><br>For more information about this data, see <a href="AnatomyofaMesh.html">Mesh data</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Skin</strong></td>
+	<td style="text-align:left;">This section is only visible on a <a href="mesh-introduction.html#deformable-meshes">skinned mesh</a>.<br><br>For more information about this data, see <a href="AnatomyofaMesh.html">Mesh data</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>BlendWeight</strong></td>
+	<td style="text-align:left;">How many bones can affect a vertex.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>BlendIndices</strong></td>
+	<td style="text-align:left;">The indices of the bones that affect skinned vertices.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Blend Shapes</strong></td>
+	<td style="text-align:left;">The total number of blend shapes in your mesh and lists their names. The number of frames next to each blend shape describes how many key frames each one has.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Other</strong></td>
+	<td style="text-align:left;">Shows additional information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Bounds Center</strong></td>
+	<td style="text-align:left;">A bounding box describes where the outermost edges of a mesh lie. The “Bounds Center” stores the location of the center of the mesh’s bounding box.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Bounds Size</strong></td>
+	<td style="text-align:left;">Each value represents the length of the bounding box edges in X, Y and Z directions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Read/Write Enabled</strong></td>
+	<td style="text-align:left;">The value of the <a href="../ScriptReference/Mesh-isReadable.html">Mesh.isReadable</a> property, which determines whether Unity can access and modify certain mesh data at runtime.<br><br>You can set this value with the <strong>Read/Write Enabled</strong> checkbox in the <a href="FBXImporter-Model.html">Model Import Settings window</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Mesh preview</h3>
+
+<p>This part of the Inspector allows you to preview the appearance of a mesh and explore the mesh data in a visual way. </p>
+
+<p>You can use the following mouse and keyboard controls to navigate the mesh view:</p>
+
+<ul>
+<li>Rotate the view: left-click and drag.</li>
+<li>Rotate the light source: right-click and drag. A light source is present only in the “Shaded” and “Blendshapes” views.</li>
+<li>Pan the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>: middle-click and drag.</li>
+<li>Zoom the camera in and out: scroll the mouse wheel.</li>
+<li>Reset the zoom and pan settings: hover the mouse cursor inside the preview and press the “F” key. This does not reset the rotation.</li>
+</ul>
+
+<p>The “UV Layout” view displays the UV map of your mesh as a 2D image. Unity disables rotation in this view. To pan the camera, click and drag any of the left, right, or middle mouse buttons.</p>
+
+<p>You can use the following properties in the <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> to configure the view:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>View mode</strong></td>
+	<td style="text-align:left;">Provides different ways of visualizing the mesh.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Shaded</strong></td>
+	<td style="text-align:left;">Provides a visualization of the mesh with a basic light. This is the default view. For more information, see <a href="#shaded">Shaded view</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>UV Checker</strong></td>
+	<td style="text-align:left;">Applies a checkerboard texture to the mesh to visualize how the mesh’s UV map applies textures. For more information, see <a href="#uv-checker">UV Checker view</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>UV Layout</strong></td>
+	<td style="text-align:left;">Displays how the vertices of the mesh are organized in the unwrapped UV map. This view disables the Wireframe toggle. For more information, see <a href="#uv-layout">UV Layout view</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Vertex Color</strong></td>
+	<td style="text-align:left;">Visualizes any vertex colors that the vertices in this mesh have. If no vertices have a vertex color, this menu item is disabled. For more information, see <a href="#vertex-color">Vertex Color view</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Normals</strong></td>
+	<td style="text-align:left;">Visualizes the relative directions of the normals in the mesh with color. For more information, see <a href="#normals">Normals view</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Tangents</strong></td>
+	<td style="text-align:left;">Visualizes the tangent data in the mesh with color. For more information, see <a href="#tangents">Tangents view</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Blendshapes</strong></td>
+	<td style="text-align:left;">Lets you preview blend shape deformations to the mesh. If the mesh has no blend shapes, this menu item is disabled. For more information, see <a href="#blend-shapes">Blendshapes view</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Wireframe</strong></td>
+	<td style="text-align:left;">Not available in UV Layout mode.<br><br>If enabled, the preview displays a visualisation of the vertices and edges. Otherwise, it doesn’t.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Channel picker</strong></td>
+	<td style="text-align:left;">Only available in UV Checker mode.<br><br>This drop-down menu allows you to change which UV channel the preview displays. If the mesh only uses one UV channel, then only “Channel 0” is enabled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Texture size</strong></td>
+	<td style="text-align:left;">Only available in UV Checker mode.<br><br>This slider allows you to change the size of the checkered texture on the mesh’s UV map.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Blend shape picker</strong></td>
+	<td style="text-align:left;">Only available in Blendshapes mode.<br><br>This drop-down allows you to change the blend shape that Unity visualizes in the mesh preview. When you select a different blend shape, Unity no longer applies the previous blend shape to the mesh preview.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Each view displays the following data about the mesh underneath the preview of the mesh:</p>
+
+<ul>
+<li>The name of the mesh.</li>
+<li>The number of vertices in the mesh.</li>
+<li>The type and number of faces in the mesh. Most meshes use triangles to define faces.</li>
+<li>The number of blend shapes in the mesh, if any.</li>
+<li>The number of sub-meshes in the mesh, if there is more than one.</li>
+<li>The names of all UV maps in the mesh.</li>
+<li>For skinned meshes, the name of the skin weights property.</li>
+</ul>
+
+<p><a name="shaded" aria-hidden="true"></a></p>
+
+<h4>Shaded view</h4>
+
+<figure>
+<img src="../uploads/Main/mesh-preview-shaded.png" alt="The Mesh Preview in Shaded view, with the wireframe setting disabled">
+<figcaption>The Mesh Preview in Shaded view, with the wireframe setting disabled</figcaption>
+</figure>
+
+<p>The Shaded view provides a visualization of the mesh with a basic light. When you import a mesh from a 3D modelling application, Unity separates the mesh into sub-meshes for each material on the mesh. Unity applies a different color to each sub-mesh in this view. You can find the legend for these colors under the Indices section of the Mesh Inspector. The following screenshot shows an example of this legend for a mesh with three sub-meshes, with the wireframe setting enabled.</p>
+
+<figure>
+<img src="../uploads/Main/mesh-preview-shaded-submesh.png" alt="The Shaded view, displaying a mesh with three submeshes and the legend that shows their colors">
+<figcaption>The Shaded view, displaying a mesh with three submeshes and the legend that shows their colors</figcaption>
+</figure>
+
+<p><a name="uv-checker" aria-hidden="true"></a></p>
+
+<h4>UV Checker view</h4>
+
+<figure>
+<img src="../uploads/Main/mesh-preview-uv-checker.png" alt="The UV Checker view with the wireframe setting enabled">
+<figcaption>The UV Checker view with the wireframe setting enabled</figcaption>
+</figure>
+
+<p>This view applies a checkerboard texture to the mesh to visualize how the mesh’s UV map applies textures. It also adds another dropdown menu next to the view picker menu. In the above screenshot, this new menu displays “Channel 0”. This dropdown allows you to check different UV channels when your UV map uses more than one channel.</p>
+
+<p>To change the size of the checkerboard texture in this view, use the slider next to the channel picker dropdown menu. Changes to this slider don’t affect the settings in your UV map, only the texture size within this view. Use the slider to explore how different texture sizes look on the mesh.</p>
+
+<p><a name="uv-layout" aria-hidden="true"></a></p>
+
+<h4>UV Layout view</h4>
+
+<figure>
+<img src="../uploads/Main/mesh-preview-uv-layout.png" alt="The UV Layout view">
+<figcaption>The UV Layout view</figcaption>
+</figure>
+
+<p>The UV Layout view view displays how the vertices of your mesh are organized in the unwrapped UV map. The wireframe toggle isn’t active in this view, because it already deals with vertices. Unity disables all camera controls except camera pan and zoom in this view. </p>
+
+<p>By default, the UV Layout view displays the 0..1 UV range. You can access different UV channels with the channel picker dropdown menu.</p>
+
+<p><a name="vertex-color" aria-hidden="true"></a></p>
+
+<h4>Vertex Color view</h4>
+
+<figure>
+<img src="../uploads/Main/mesh-preview-vertex-color.png" alt="The Vertex Color view with the wireframe setting disabled">
+<figcaption>The Vertex Color view with the wireframe setting disabled</figcaption>
+</figure>
+
+<p>The Vertex Color view displays vertex colors in your mesh. Vertex colors are separate from any Materials the mesh has. For more information on vertex colors, see <a href="https://docs.unity3d.com/ScriptReference/Mesh-colors.html">Mesh.colors</a>.</p>
+
+<p><a name="normals" aria-hidden="true"></a></p>
+
+<h4>Normals view</h4>
+
+<figure>
+<img src="../uploads/Main/mesh-preview-normals.png" alt="The Normals view with the wireframe setting enabled">
+<figcaption>The Normals view with the wireframe setting enabled</figcaption>
+</figure>
+
+<p>The Normals view uses color to visualize which direction the normals in the mesh face. The direction of a normal vector affects how light interacts with that part of the mesh.</p>
+
+<p><a name="tangents" aria-hidden="true"></a></p>
+
+<h4>Tangents view</h4>
+
+<figure>
+<img src="../uploads/Main/mesh-preview-tangents.png" alt="The Tangents view with the wireframe setting enabled">
+<figcaption>The Tangents view with the wireframe setting enabled</figcaption>
+</figure>
+
+<p>The Tangents view uses color to visualize tangent data in the mesh. Unity uses tangents as part of the workflow for bump-mapped <span class="tooltip"><strong>Shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>.</p>
+
+<p><a name="blend-shapes" aria-hidden="true"></a></p>
+
+<h4>Blendshapes view</h4>
+
+<figure>
+<img src="../uploads/Main/mesh-preview-blendshapes.png" alt="The Blendshapes view with the wireframe setting disabled.">
+<figcaption>The Blendshapes view with the wireframe setting disabled.</figcaption>
+</figure>
+
+<p>The Blendshapes view applies blend shape deformations to your mesh and displays the result in the preview window. You can preview one blend shape at a time; the view shows each blend shape at its highest value. This means that a preview of a blend shape that curves a character’s smile, for example, displays the curve at its maximum.</p>
+
+<p>This view adds a new dropdown menu to select a blend shape next to the view picker dropdown. The dropdown menu lists all blend shapes in the current mesh. If the list cannot fit into a single screen, use the arrows at the top and bottom of the list to navigate through the full list. </p>
+
+<p><span class="search-words">Mesh</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AnatomyofaMesh.html"></a></span><div class="tip">Mesh data</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="comp-MeshGroup.html"></a></span><div class="tip">Mesh components</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

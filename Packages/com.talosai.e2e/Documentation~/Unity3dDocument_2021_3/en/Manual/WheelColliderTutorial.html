@@ -1,0 +1,489 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create a car with Wheel colliders</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/WheelColliderTutorial.html">English</a></li>
+<li><a href="/cn/current/Manual/WheelColliderTutorial.html">中文</a></li>
+<li><a href="/ja/current/Manual/WheelColliderTutorial.html">日本語</a></li>
+<li><a href="/kr/current/Manual/WheelColliderTutorial.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/WheelColliderTutorial.html">English</a></li>
+<li><a href="/cn/current/Manual/WheelColliderTutorial.html">中文</a></li>
+<li><a href="/ja/current/Manual/WheelColliderTutorial.html">日本語</a></li>
+<li><a href="/kr/current/Manual/WheelColliderTutorial.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PhysicsSection.html">Physics</a></li>
+<li><a href="PhysicsOverview.html">Built-in 3D Physics</a></li>
+<li><a href="collision-section.html">Collision</a></li>
+<li><a href="collider-shapes.html">Collider shapes</a></li>
+<li><a href="wheel-colliders.html">Wheel colliders</a></li>
+<li>Create a car with Wheel colliders</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="wheel-colliders-suspension.html"></a></span><div class="tip">Wheel collider suspension</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-WheelCollider.html"></a></span><div class="tip">Wheel collider component reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create a car with Wheel colliders</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This tutorial takes you through the process of creating a basic functioning four-wheeled car with the PhysX <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-WheelCollider.html">Wheel collider</a><span class="tooltiptext">A special collider for grounded vehicles. It has built-in collision detection, wheel physics, and a slip-based tire friction model. It can be used for objects other than wheels, but it is specifically designed for vehicles with wheels. <a href="class-WheelCollider.html" href="class-WheelCollider.html">Wheel collider</a><span class="tooltiptext">A special collider for grounded vehicles. It has built-in collision detection, wheel physics, and a slip-based tire friction model. It can be used for objects other than wheels, but it is specifically designed for vehicles with wheels. <a href="class-WheelCollider.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WheelCollider" aria-label="Go to glossary anchor for WheelCollider">Glossary</a></span></span></span>. </p>
+
+<p>The steps include:</p>
+
+<ol>
+<li><a href="#prepare-project">Prepare the project</a></li>
+<li><a href="#prepare-model">Prepare the car model</a></li>
+<li>
+<a href="#add-wheel-colliders">Add the Wheel colliders</a>, and set their position and radius</li>
+<li>
+<a href="#add-scripts">Add scripts to control car behavior</a>, including car movement and wheel rotation</li>
+<li><a href="#test-car">Test the car</a></li>
+</ol>
+
+<p><a name="prepare-project" aria-hidden="true"></a></p>
+
+<h2>Prepare the project</h2>
+
+<p>To follow these instructions, you need:</p>
+
+<ul>
+<li>A new empty scene</li>
+<li>The demo car model (download: <a href="../uploads/Main/car.fbx">car.fbx</a>), imported into the open project</li>
+<li>A ground surface for the car to travel across.</li>
+</ul>
+
+<p>To create a ground surface:</p>
+
+<ol>
+<li>Create a plane <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> and rename it <code>Ground</code>. This plane is the ground that the car drives on.</li>
+<li>Set its position to (0,0,0), and its scale to (100,1,100).</li>
+</ol>
+
+<p><a name="prepare-model" aria-hidden="true"></a></p>
+
+<h2>Prepare the car model</h2>
+
+<p>First, place the Car model in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>:</p>
+
+<ol>
+<li>In the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, select the imported <code>Car</code> asset.</li>
+<li>Extract the car model’s textures so that Unity can display them in the Scene. To do this, navigate to the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-FBXImporter.html">Import Settings</a> in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="class-FBXImporter.html">Import Settings</a> in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window and do the following:
+
+<ol>
+<li>Select <strong>Materials</strong>
+</li>
+<li>Select <strong>Textures</strong> &gt; <strong>Extract Textures</strong>. In the file explorer that opens, save them in the <code>Assets</code> folder (the default location).</li>
+<li>Select <strong>Apply</strong>.</li>
+</ol>
+</li>
+<li>Place the Car asset into the Scene, on or just above the Ground plane.</li>
+</ol>
+
+<p>Take a look at the Car GameObject’s hierarchy in the Hierarchy window. There is a root GameObject called <code>Car</code>, and child GameObjects for the car body model and each wheel model.</p>
+
+<p>Configure the car body for <span class="tooltip"><strong>collision</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span>:</p>
+
+<ol>
+<li>On the <code>Car</code> root GameObject, add a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Rigidbody.html">Rigidbody</a><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a href="class-Rigidbody.html" href="class-Rigidbody.html">Rigidbody</a><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a href="class-Rigidbody.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span> component.</li>
+<li>Set the Rigidbody’s <strong>Mass</strong> to `1500``. This value defines the weight of the car in kilograms. It is a suitable weight for the Wheel collider’s default suspension settings. For more information, see <a href="wheel-colliders-suspension.html#mass-suspension-values">Wheel collider suspension: Mass and suspension values</a>.</li>
+<li>On the <code>Car Body</code> GameObject, add a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshCollider.html">Mesh collider</a><span class="tooltiptext">A free-form collider component which accepts a mesh reference to define its collision surface shape. <a href="class-MeshCollider.html" href="class-MeshCollider.html">Mesh collider</a><span class="tooltiptext">A free-form collider component which accepts a mesh reference to define its collision surface shape. <a href="class-MeshCollider.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshCollider" aria-label="Go to glossary anchor for MeshCollider">Glossary</a></span></span></span> component.</li>
+<li>On the new <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> <span class="tooltip"><strong>collider</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a href="CollidersOverview.html" href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> <span class="tooltip"><strong>collider</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> component, enable <strong>Convex</strong>.</li>
+</ol>
+
+<p><a name="add-wheel-colliders" aria-hidden="true"></a></p>
+
+<h2>Add the Wheel colliders</h2>
+
+<p>To add Wheel colliders to the wheel models, you need to create four new separate GameObjects at the same position as the wheel models (but not as child GameObjects of the wheels).</p>
+
+<p>A fast way to set this up at approximately the same position is to duplicate the wheel GameObjects and then configure the new GameObject:</p>
+
+<ol>
+<li>Select all four wheel GameObjects.</li>
+<li>Duplicate the GameObjects (Ctrl/Cmd+D).</li>
+<li>Select all four duplicates and do the following:
+
+<ol>
+<li>Remove the <span class="tooltip"><strong>Mesh Renderer</strong><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshRenderer.html" href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span> and <span class="tooltip"><strong>Mesh Filter</strong><span class="tooltiptext">A mesh component that takes a mesh from your assets and passes it to the Mesh Renderer for rendering on the screen. <a href="class-MeshFilter.html" href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span> and <span class="tooltip"><strong>Mesh Filter</strong><span class="tooltiptext">A mesh component that takes a mesh from your assets and passes it to the Mesh Renderer for rendering on the screen. <a href="class-MeshFilter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshFilter" aria-label="Go to glossary anchor for MeshFilter">Glossary</a></span></span></span> components</li>
+<li>Add a Wheel collider component</li>
+</ol>
+</li>
+<li>Rename the new Wheel collider GameObjects. By default, Unity gives duplicate GameObjects the same name and adds a number in parentheses; for example, <code>Wheel Back Left (1)</code>. For clarity, add the word “Collider” to the GameObject name instead; for example, <code>Wheel Back Left collider</code>.</li>
+</ol>
+
+<p>The Car GameObject hierarchy should now look like this:</p>
+
+<figure>
+<img src="../uploads/Main/wheel-collider-tutorial-hierarchy.png" alt="The root Car GameObject and all child GameObjects, including the Car Body, four wheel model GameObjects, and four Wheel collider GameObjects.">
+<figcaption>The root Car GameObject and all child GameObjects, including the Car Body, four wheel model GameObjects, and four Wheel collider GameObjects.</figcaption>
+</figure>
+
+<p>Next, you need to adjust the Wheel colliders’ position and size to match the wheel models. </p>
+
+<p>When you select a Wheel collider, the <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> displays a <span class="tooltip"><a href="GizmosMenu.html">gizmo</a><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a href="GizmosMenu.html#GizmosIcons" href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> displays a <span class="tooltip"><a href="GizmosMenu.html">gizmo</a><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a href="GizmosMenu.html#GizmosIcons">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Gizmo" aria-label="Go to glossary anchor for Gizmo">Glossary</a></span></span></span> which provides a visualization of the Wheel collider settings (see <a href="wheel-colliders-introduction.html#wheel-collider-visualization">Wheel collider visualization</a>). You can use the gizmo to check the position and size of the Wheel collider against the position and size of the wheel model. </p>
+
+<p>To see the wheel orientation and the gizmo more clearly, set the Scene’s <a href="ViewModes.html">Draw mode</a> to <strong>Wireframe</strong> and the <a href="SceneViewNavigation.html">Scene orientation</a> to <strong>Isometric</strong>.</p>
+
+<h3>Set the Wheel collider position</h3>
+
+<p>When you first add the Wheel colliders with the workflow described in <a href="#add-wheel-colliders">Add Wheel colliders</a>, they are too low (in the Scene view, the Wheel collider circle appears below the wheel model mesh). This is because the <strong>Suspension Distance</strong> starts from these GameObjects’ positions, and extends downwards by the distance specified in the <strong>Suspension Distance</strong> setting. The Scene view visualization displays the <strong>Suspension Distance</strong> as an orange line down the Y axis of the Wheel collider’s gizmo. </p>
+
+<p>The green circle outline displays the wheel at the halfway point of the suspension distance extents, and should be considered the wheel’s normal position, when the car is not squashed down or raised up on its suspension. Therefore the green outline of each Wheel collider needs to be centered over its corresponding wheel mesh.</p>
+
+<figure>
+<img src="../uploads/Main/wheel-collider-tutorial-gizmo-before.png" alt="The Wheel collider gizmo indicates the position of the Wheel collider in relation to the wheel model. In this image, the Wheel collider is too large and too low.">
+<figcaption>The Wheel collider gizmo indicates the position of the Wheel collider in relation to the wheel model. In this image, the Wheel collider is too large and too low.</figcaption>
+</figure>
+
+<p>To correct this, you need to move the WheelCollider GameObjects up (on the Y axis) by half the value of the Wheel collider’s <strong>Suspension Distance</strong>. In this example project, the <strong>Suspension Distance</strong> is 0.3 (the default value), so you need to move the Wheel collider GameObjects up by 0.15 units.</p>
+
+<p>Unity allows you to enter simple mathematical calculations into numeric fields. You can use this to add to the Y axis value.</p>
+
+<ol>
+<li>Select all four Wheel collider GameObjects.</li>
+<li>In the Inspector, navigate to the Transform’s <strong>Position</strong> property.</li>
+<li>In the <strong>Y</strong> axis value, place the cursor at the end of the value.
+Add <code>+0.15</code> to the end of the value (for example, if the value is 0.5, the value should now read <code>0.5+0.15</code>).</li>
+<li>Press the Return key.</li>
+</ol>
+
+<p>Unity applies +0.15 to the previous value, which moves the Wheel collider GameObjects up the Y axis by 0.15 units.</p>
+
+<p>The Wheel collider gizmo should now be perfectly centered on the wheel meshes:</p>
+
+<figure>
+<img src="../uploads/Main/wheel-collider-tutorial-gizmo-correct-transform.png" alt="The Wheel collider gizmo indicates the position of the Wheel collider in relation to the wheel model. In this image, the Wheel collider is centered correctly in the wheel model.">
+<figcaption>The Wheel collider gizmo indicates the position of the Wheel collider in relation to the wheel model. In this image, the Wheel collider is centered correctly in the wheel model.</figcaption>
+</figure>
+
+<h3>Set the Wheel collider radius</h3>
+
+<p>When you first add the Wheel colliders with the workflow described in <a href="#add-wheel-colliders">Add Wheel colliders</a>, they are too big (in the Scene view, the Wheel collider gizmo is larger than the wheel model mesh).</p>
+
+<p>To correct this accurately, you need to know the exact radius of the wheel model. This information should be available from your 3D modeling software, or from the technical artist who authored the model. </p>
+
+<p>In this example project, the radius of the wheel model is 0.44.</p>
+
+<ol>
+<li>Select all four Wheel collider GameObjects</li>
+<li>In the Inspector, navigate to the Wheel collider component’s <strong>Radius</strong> property</li>
+<li>Set the <strong>Radius</strong> to <code>0.44</code>.</li>
+</ol>
+
+<p>If the exact radius of a wheel model is unknown or unavailable, you can use the Wheel collider gizmo to approximately match its radius to the model. Alternatively, you can use a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-SphereCollider.html">Sphere collider</a><span class="tooltiptext">A sphere-shaped collider component that handles collisions for GameObjects like balls or other things that can be roughly approximated as a sphere for the purposes of physics. <a href="class-SphereCollider.html" href="class-SphereCollider.html">Sphere collider</a><span class="tooltiptext">A sphere-shaped collider component that handles collisions for GameObjects like balls or other things that can be roughly approximated as a sphere for the purposes of physics. <a href="class-SphereCollider.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SphereCollider" aria-label="Go to glossary anchor for SphereCollider">Glossary</a></span></span></span> to get the radius, because the Sphere collider automatically resizes to encompass the mesh of its associated model. </p>
+
+<p>To get the radius with a Sphere collider:</p>
+
+<ol>
+<li>Select any wheel model GameObject.</li>
+<li>Add a Sphere collider.</li>
+<li>Take note of the Sphere collider’s <strong>Radius</strong> property value.</li>
+<li>Remove the Sphere collider.</li>
+<li>Select all four Wheel collider GameObjects.</li>
+<li>In the Inspector, navigate to the Wheel collider component’s <strong>Radius</strong> property.</li>
+<li>Set the Wheel collider <strong>Radius</strong> to the Sphere collider <strong>Radius</strong> value you noted.</li>
+</ol>
+
+<p>The Wheel colliders should now exactly match the position and size of the wheel models.</p>
+
+<figure>
+<img src="../uploads/Main/wheel-collider-tutorial-gizmo-correct-radius.png" alt="Two Wheel collider gizmos indicate the position of the Wheel colliders in relation to the wheel models. In this image, the Wheel colliders are centered correctly in the wheel model, and their radius correctly matches the radius of the wheel model.">
+<figcaption>Two Wheel collider gizmos indicate the position of the Wheel colliders in relation to the wheel models. In this image, the Wheel colliders are centered correctly in the wheel model, and their radius correctly matches the radius of the wheel model.</figcaption>
+</figure>
+
+<p><a name="add-scripts" aria-hidden="true"></a></p>
+
+<h2>Add scripts to control car behavior</h2>
+
+<p>To control the car, you need to add <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> to the project that do the following:</p>
+
+<ul>
+<li>
+<strong>Control car movement</strong>: Send steering, torque, and brake values to the Wheel colliders based on user input.</li>
+<li>
+<strong>Control wheel movement</strong>: Move and rotate the wheel meshes according to each Wheel collider’s state.</li>
+</ul>
+
+<p>In this example, we use two scripts to do this: <code>CarControl.cs</code> and <code>WheelControl.cs</code>.</p>
+
+<h3>Add control for car movement</h3>
+
+<p>Create a C# file named <code>CarControl.cs</code>, and paste in the code below:</p>
+
+<pre><code>using UnityEngine;
+
+public class CarControl : MonoBehaviour
+{
+    public float motorTorque = 2000;
+    public float brakeTorque = 2000;
+    public float maxSpeed = 20;
+    public float steeringRange = 30;
+    public float steeringRangeAtMaxSpeed = 10;
+    public float centreOfGravityOffset = -1f;
+
+    WheelControl[] wheels;
+    Rigidbody rigidBody;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        rigidBody = GetComponent&lt;Rigidbody&gt;();
+
+        // Adjust center of mass vertically, to help prevent the car from rolling
+        rigidBody.centerOfMass += Vector3.up * centreOfGravityOffset;
+
+        // Find all child GameObjects that have the WheelControl script attached
+        wheels = GetComponentsInChildren&lt;WheelControl&gt;();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        float vInput = Input.GetAxis(&quot;Vertical&quot;);
+        float hInput = Input.GetAxis(&quot;Horizontal&quot;);
+
+        // Calculate current speed in relation to the forward direction of the car
+        // (this returns a negative number when traveling backwards)
+        float forwardSpeed = Vector3.Dot(transform.forward, rigidBody.velocity);
+
+
+        // Calculate how close the car is to top speed
+        // as a number from zero to one
+        float speedFactor = Mathf.InverseLerp(0, maxSpeed, forwardSpeed);
+
+        // Use that to calculate how much torque is available 
+        // (zero torque at top speed)
+        float currentMotorTorque = Mathf.Lerp(motorTorque, 0, speedFactor);
+
+        // …and to calculate how much to steer 
+        // (the car steers more gently at top speed)
+        float currentSteerRange = Mathf.Lerp(steeringRange, steeringRangeAtMaxSpeed, speedFactor);
+
+        // Check whether the user input is in the same direction 
+        // as the car's velocity
+        bool isAccelerating = Mathf.Sign(vInput) == Mathf.Sign(forwardSpeed);
+
+        foreach (var wheel in wheels)
+        {
+            // Apply steering to Wheel colliders that have &quot;Steerable&quot; enabled
+            if (wheel.steerable)
+            {
+                wheel.WheelCollider.steerAngle = hInput * currentSteerRange;
+            }
+            
+            if (isAccelerating)
+            {
+                // Apply torque to Wheel colliders that have &quot;Motorized&quot; enabled
+                if (wheel.motorized)
+                {
+                    wheel.WheelCollider.motorTorque = vInput * currentMotorTorque;
+                }
+                wheel.WheelCollider.brakeTorque = 0;
+            }
+            else
+            {
+                // If the user is trying to go in the opposite direction
+                // apply brakes to all wheels
+                wheel.WheelCollider.brakeTorque = Mathf.Abs(vInput) * brakeTorque;
+                wheel.WheelCollider.motorTorque = 0;
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>Add this <code>CarControl.cs</code> script to the <code>Car</code> root GameObject.</p>
+
+<p>The <code>CarControl.cs</code> script handles car behavior such as acceleration, torque, and braking, based on user input. See the code comments for details.</p>
+
+<p>Some elements of the <code>CarControl.cs</code> script refer to the <code>WheelControl.cs</code> script created in the next section.</p>
+
+<h3>Add control for wheel movement</h3>
+
+<p>Create a C# file named <code>WheelControl.cs</code>, and paste in the code below:</p>
+
+<pre><code>using UnityEngine;
+
+public class WheelControl : MonoBehaviour
+{
+    public Transform wheelModel;
+
+    [HideInInspector] public WheelCollider WheelCollider;
+
+    // Create properties for the CarControl script
+    // (You should enable/disable these via the 
+    // Editor Inspector window)
+    public bool steerable;
+    public bool motorized;
+
+    Vector3 position;
+    Quaternion rotation;
+
+    // Start is called before the first frame update
+    private void Start()
+    {
+        WheelCollider = GetComponent&lt;WheelCollider&gt;();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Get the Wheel collider's world pose values and
+        // use them to set the wheel model's position and rotation
+        WheelCollider.GetWorldPose(out position, out rotation);
+        wheelModel.transform.position = position;
+        wheelModel.transform.rotation = rotation;
+    }
+}
+</code></pre>
+
+<p>Add this script to each Wheel collider GameObject.</p>
+
+<p>The <code>WheelControl.cs</code> script uses <a href="../ScriptReference/WheelCollider.GetWorldPose.html"><code>WheelCollider.GetWorldPose</code></a> to get the Wheel collider’s position in the scene. The script then assigns that position information to a specified wheel model GameObject. See the code comments for details.</p>
+
+<p>Each instance of the <code>WheelControl.cs</code> script must have a reference to its corresponding wheel model GameObject. </p>
+
+<p>To assign the correct wheel model GameObject to each Wheel collider:</p>
+
+<ol>
+<li>Select a Wheel collider GameObject</li>
+<li>In the Inspector window, navigate to the <strong>Wheel Control</strong> component created by the script</li>
+<li>Set the <strong>Wheel Model</strong> to the corresponding wheel model GameObject (for example, on the “Wheel Rear Left collider” GameObject, assign the “Wheel Rear Left” wheel model GameObject):</li>
+<li>Repeat for each Wheel collider.</li>
+</ol>
+
+<p>You also need to select which wheels receive motor input and steering input from the CarControl script. To simulate a four-wheel drive car via the Wheel Control properties:</p>
+
+<ol>
+<li>On all four Wheel collider GameObjects, enable <strong>Motorized</strong>.</li>
+<li>On the two front Wheel collider GameObjects, enable <strong>Steerable</strong>.</li>
+</ol>
+
+<p><a name="test-car" aria-hidden="true"></a></p>
+
+<h2>Test the car</h2>
+
+<p>To test the car, enter Play mode and use the arrow or WASD keys to move and steer. Note that input controls only work when the Game view has focus.</p>
+
+<p>To get a better view of the car moving around the Scene:</p>
+
+<ol>
+<li>Arrange the Editor windows so that both the Scene view and Game view are visible at the same time.</li>
+<li>Lock the Scene view’s focus to the car. To do this, select the <code>Car</code> root GameObject in the Scene view, then press Shift + F.</li>
+</ol>
+
+<p>Now that you have a basic setup, you can try changing different settings to observe how they affect the movement of the car. You can also follow these instructions with different car models and observe the similarities and differences in their setup.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="wheel-colliders-suspension.html"></a></span><div class="tip">Wheel collider suspension</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-WheelCollider.html"></a></span><div class="tip">Wheel collider component reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

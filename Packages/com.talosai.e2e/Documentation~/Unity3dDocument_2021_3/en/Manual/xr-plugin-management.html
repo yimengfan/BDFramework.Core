@@ -1,0 +1,355 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: XR Plug-in Management settings</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xr-plugin-management.html">English</a></li>
+<li><a href="/cn/current/Manual/xr-plugin-management.html">中文</a></li>
+<li><a href="/ja/current/Manual/xr-plugin-management.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xr-plugin-management.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xr-plugin-management.html">English</a></li>
+<li><a href="/cn/current/Manual/xr-plugin-management.html">中文</a></li>
+<li><a href="/ja/current/Manual/xr-plugin-management.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xr-plugin-management.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="XR.html">XR</a></li>
+<li><a href="configuring-project-for-xr.html">XR Project set up</a></li>
+<li>XR Plug-in Management settings</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="xr-origin.html"></a></span><div class="tip">XR Origin</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="xr-run.html"></a></span><div class="tip">Run an XR application</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>XR Plug-in Management settings</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Understand the settings you can configure with <span class="tooltip"><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html" href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> <span class="tooltip"><strong>Plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a href="Plugins.html" href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> <span class="tooltip"><strong>Plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> Management.</p>
+
+<p>The <strong>XR Plug-in Management</strong> section of the <strong>Project Settings</strong> window contains the settings you can use to configure XR in your Unity project. Use this section to <a href="xr-configure-providers.html#enable">Choose XR provider plug-ins</a> and <a href="xr-configure-providers.html#configure-settings">Configure settings</a> for each XR platform your project targets. To open the <strong>XR Plug-in management</strong> section, go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>XR Plug-in Management</strong>.</p>
+
+<p>The following sections describe the XR Plug-in Management <a href="#settings">Settings</a>, and how to interpret XR configuration issues using the <a href="#project-validation">Project validation system</a>.</p>
+
+<p><a id="settings" aria-hidden="true"></a></p>
+
+<h2>Settings reference</h2>
+
+<p>You can use the <strong>XR Plug-in Management</strong> section to <a href="xr-configure-providers.html">Enable a provider</a>.</p>
+
+<p>Refer to the following image and table to understand the key regions of the section that you can use to enable XR providers:</p>
+
+<figure>
+<img src="../uploads/Main/xr-management-enable-plugin.png" alt="The XR Plug-in Management section of the Project Settings.">
+<figcaption>The XR Plug-in Management section of the Project Settings.</figcaption>
+</figure>
+
+<p>The <strong>XR Plug-in Management</strong> settings:</p>
+
+<table>
+<colgroup>
+<col style="text-align:center;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:center;"><strong>Label</strong></th>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Purpose</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:center;"><span class="icon-CalloutLabel-A" style="font-size:24px"></span></td>
+	<td style="text-align:left;"><strong>Build target tabs</strong></td>
+	<td style="text-align:left;">A tab is shown for each platform build target installed for the current Unity Editor. You can add additional platform support modules with the Unity Hub.</td>
+</tr>
+<tr>
+	<td style="text-align:center;"><span class="icon-CalloutLabel-B" style="font-size:24px"></span></td>
+	<td style="text-align:left;"><strong>Initialize XR on Startup</strong></td>
+	<td style="text-align:left;">Whether the game or application starts in XR mode immediately. If disabled, then your application logic must initialize XR at the appropriate time. For example, your app might start with a normal desktop display and then swap to XR on demand. Refer to <a href="https://docs.unity3d.com/Packages/com.unity.xr.management@4.4/manual/EndUser.html#load-xr-plug-ins">Load XR plug-ins</a> for more information.</td>
+</tr>
+<tr>
+	<td style="text-align:center;"><span class="icon-CalloutLabel-C" style="font-size:24px"></span></td>
+	<td style="text-align:left;"><strong>Plug-in Providers</strong></td>
+	<td style="text-align:left;">The list of known XR provider plug-ins. This list contains the plug-ins officially supported by Unity or its strategic partners, and any third-party provider plug-ins you have installed with the Package Manager.</td>
+</tr>
+<tr>
+	<td style="text-align:center;"><span class="icon-CalloutLabel-D" style="font-size:24px"></span></td>
+	<td style="text-align:left;"><strong>XR Plug-in Management menu</strong></td>
+	<td style="text-align:left;">Tabs to manage provider plug-in settings, and validate your project. Refer to <a href="#menu">XR Plug-in Management menu reference</a> for more information.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a id="menu" aria-hidden="true"></a></p>
+
+<h2>XR Plug-in Management menu reference</h2>
+
+<p>For each plug-in provider you <a href="xr-configure-providers.html#enable">enable</a> in the plug-ins section <span class="icon-CalloutLabel-C" style="font-size:24px"></span>, a new menu item appears in the left-hand menu, underneath <strong>XR Plug-in Management</strong>. You can open these provider sections to configure provider-specific settings, as described in <a href="#provider-settings">Provider plug-in settings</a>.</p>
+
+<figure>
+<img src="../uploads/Main/xr-plugin-management-enable-plugins.png" alt="Unity adds enabled plug-ins as tabs in the left-hand menu.">
+<figcaption>Unity adds enabled plug-ins as tabs in the left-hand menu.</figcaption>
+</figure>
+
+<p>This menu also provides options to validate your project and to configure XR simulation in your project, as outlined in the following image and table:</p>
+
+<figure>
+<img src="../uploads/Main/xr-plugin-management-menu.png" alt="The XR Plug-in Management menu items.">
+<figcaption>The XR Plug-in Management menu items.</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Item</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Provider plug-in settings</strong></td>
+	<td style="text-align:left;">The settings for each installed XR provider plug-in appear in their own pages within the <strong>XR Plug-in Management</strong> section. For information about the available settings for a specific plug-in, refer to that plug-in’s documentation, available from <a href="xr-support-packages.html#plug-ins">Provider plug-ins</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Project Validation</strong></td>
+	<td style="text-align:left;">Displays the results of project validation checks for the plug-ins you have enabled. To view the checks, select the <strong>Project Validation</strong> page inside the <strong>XR Plug-in Management</strong> section of your <strong><span class="tooltip"><strong>Project Settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html" href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span></strong>. For more information, refer to <a href="#project-validation">Project validation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>XR Simulation settings</strong></td>
+	<td style="text-align:left;">The <span class="tooltip"><strong>AR</strong><span class="tooltiptext">Augmented Reality <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AROverview.html" href="AROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AR" aria-label="Go to glossary anchor for AR">Glossary</a></span></span></span> Foundation package provides an <strong>XR Simulation</strong> feature, which lets you test AR <span class="tooltip"><strong>Scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#AR" aria-label="Go to glossary anchor for AR">Glossary</a></span></span></span> Foundation package provides an <strong>XR Simulation</strong> feature, which lets you test AR <span class="tooltip"><strong>Scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> in the Unity Editor. Visit <a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@6.0/manual/xr-simulation/simulation-project-settings.html">XR Simulation project settings</a> for a description of these settings and options.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a id="provider-settings" aria-hidden="true"></a></p>
+
+<h2>Provider plug-in settings</h2>
+
+<p>The settings that you can configure for your target platform depends on the provider plug-in. To learn about settings for a specific provider, refer to the documentation of the individual plug-in, which you can access from <a href="xr-support-packages.html">XR packages</a>.</p>
+
+<p>If a plug-in supports more than one build target, its settings page includes a tab so that you can configure the settings for each target independently. For example:</p>
+
+<figure>
+<img src="../uploads/Main/xr-plugin-management-oculus.png" alt="Oculus provider plug-in settings with the build tab highlighted.">
+<figcaption>Oculus provider plug-in settings with the build tab highlighted.</figcaption>
+</figure>
+
+<p><a id="project-validation" aria-hidden="true"></a></p>
+
+<h2>Project validation reference</h2>
+
+<p>The project validation system helps you avoid common scene and project configuration issues for the XR packages you have installed. The XR packages you have installed can include rules for the validation system. The system evaluates these rules when you make a build and whenever you have the <strong>Project Validation</strong> section open.</p>
+
+<p>To open the <strong>Project Validation</strong> system, go to your <strong>Project Settings</strong> (menu: <strong>Edit &gt; Project Settings</strong>) and then select <strong>Project Validation</strong> in the <strong>XR Plug-in Management</strong> menu. The project validation system checks these rules per platform build target. Some rules might examine the current scene to verify that the project settings support features used in that scene.</p>
+
+<figure>
+<img src="../uploads/Main/xr-project-validation.png" alt="The Project Validation section of the XR Plug-in Management settings.">
+<figcaption>The Project Validation section of the XR Plug-in Management settings.</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Platform tabs</strong></td>
+	<td style="text-align:left;">The validation checks for each platform are grouped by platform. You can select a platform tab to view the validation checks for that platform.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Issue list</strong></td>
+	<td style="text-align:left;">The list of issues found in the project when evaluating the rules. Each issue has a severity level, description, and action button.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Show all</strong></td>
+	<td style="text-align:left;">Select to display all issues, regardless of severity. Issues marked with a green check indicate validation checks that passed and don’t require any action. Successful checks are only displayed when you enable <strong>Show all</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Ignore build errors</strong></td>
+	<td style="text-align:left;">Select to ignore build errors. This option can sometimes be useful when debugging build problems.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Fix all</strong></td>
+	<td style="text-align:left;">Click to correct all issues that have a fix available.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Tip:</strong> If the issue has scene objects associated with it, you can click on the message to select or highlight these objects in the Unity Editor.</p>
+
+<h3>Severity level</h3>
+
+<p>The status icons to the left of an individual validation issue indicate the status and severity of the issue.</p>
+
+<table>
+<colgroup>
+<col style="text-align:center;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:center;"><strong>Status</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:center;"><span class="icon-EditorUI-Checkmark" style="color:#008126;font-size:24px;"></span></td>
+	<td style="text-align:left;">Validation passed because the project and scene are either set up correctly, or the rule isn’t applicable. Successful checks are hidden in the project validation issue list unless you enable the <strong>Show all</strong> option.</td>
+</tr>
+<tr>
+	<td style="text-align:center;"><span class="icon-EditorUI-WarningDimmed" style="font-size:24px;color:#C99700"></span></td>
+	<td style="text-align:left;">Validation failed, but does not block building the project. You can safely ignore these if you have set up your project differently than recommended.</td>
+</tr>
+<tr>
+	<td style="text-align:center;"><span class="icon-EditorUI-Error" style="color:#B10C0C;font-size:24px;"></span></td>
+	<td style="text-align:left;">Validation failed and blocks building the project. You can’t ignore these issues. You must fix them to build the project.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Fix and Edit buttons</h3>
+
+<p>The <strong>Fix</strong> button automatically fixes the issue in your project or scene. The <strong>Edit</strong> button takes you to the appropriate place in the Unity Editor where you can correct the issue in your project. Both the <strong>Fix</strong> and <strong>Edit</strong> buttons provide a tooltip explaining the steps to manually correct the issue.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="xr-support-packages.html">XR packages</a></li>
+<li><a href="xr-configure-providers.html">Configure XR provider plug-ins</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="xr-origin.html"></a></span><div class="tip">XR Origin</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="xr-run.html"></a></span><div class="tip">Run an XR application</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

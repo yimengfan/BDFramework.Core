@@ -1,0 +1,392 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: UI Builder interface overview</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIB-interface-overview.html">English</a></li>
+<li><a href="/cn/current/Manual/UIB-interface-overview.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIB-interface-overview.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIB-interface-overview.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIB-interface-overview.html">English</a></li>
+<li><a href="/cn/current/Manual/UIB-interface-overview.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIB-interface-overview.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIB-interface-overview.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIBuilder.html">UI Builder</a></li>
+<li>UI Builder interface overview</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIBuilder.html"></a></span><div class="tip">UI Builder</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIB-getting-started.html"></a></span><div class="tip">Get started with UI Builder</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>UI Builder interface overview</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To open the <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Builder window:</p>
+
+<ul>
+<li>Select <strong>Window</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>UI Builder</strong>. This opens a UXML document that has been previously loaded with UIBuilder.</li>
+<li>From the Project window, double-click a UXML file.</li>
+</ul>
+
+<p>The following image shows an example UI Builder window:</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/UIBuilderAnnotatedMainWindow.png" alt="UI Builder main window">
+<figcaption>UI Builder main window</figcaption>
+</figure>
+
+<p><a name="open-and-save-ui-documents-uxml" aria-hidden="true"></a></p>
+
+<h1>Open and save UI Documents (UXML)</h1>
+
+<p>To open a UI Document in UI Builder:</p>
+
+<ul>
+<li>Use the <strong>File</strong> menu inside the UI Builder <strong><span class="tooltip"><strong>Viewport</strong><span class="tooltiptext">The user’s visible area of an app on their screen.<br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Viewport" aria-label="Go to glossary anchor for Viewport">Glossary</a></span></span></span></strong> pane <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html" href="Glossary.html#Viewport" aria-label="Go to glossary anchor for Viewport">Glossary</a></span></span></span></strong> pane <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> and select <strong>Open…</strong>.</li>
+<li>In the <strong>Project</strong> tab of the <strong>Library</strong> pane, right-click on the document and select <strong>Open in UI Builder</strong>.</li>
+</ul>
+
+<p>To open a UI Document (UXML) in your default text editor or IDE:</p>
+
+<ul>
+<li>Use the <strong>inlineStyle</strong> file icon.
+
+<ol>
+<li>Go to the <strong>Project</strong> window &gt; <strong>Assets</strong>.</li>
+<li>Click the arrow in the middle of the UXML file icon.</li>
+<li>Double-click the <strong>inlineStyle</strong> file icon.</li>
+</ol>
+</li>
+<li>Use the <strong>Open with IDE</strong> button.
+
+<ol>
+<li>In UI Builder, go to <strong>Library</strong> &gt; <strong>Project</strong> tab.</li>
+<li>Open the <strong>Assets</strong> folder.</li>
+<li>Right-click on the UI Document (UXML) and select <strong>Open with IDE</strong>.</li>
+</ol>
+</li>
+<li>Use the <strong>UXML Preview</strong> pane.
+
+<ol>
+<li>In UI Builder, make sure your UI Document (UXML) is currently loaded.</li>
+<li>Go to the <strong>UXML Preview</strong> pane.</li>
+<li>Select the icon at the top-right corner of the <strong>UXML Preview</strong> pane.</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/UXMLPreviewPane.png" alt="UXML Preview pane">
+<figcaption>UXML Preview pane</figcaption>
+</figure>
+</li>
+</ul>
+
+<p>The currently opened and active UI Document (UXML) asset name is displayed in the <strong>Hierarchy</strong> pane as a root tree item, in the <strong>Canvas</strong> header inside the <strong>Viewport</strong>, and in the <strong>UXML Preview</strong> pane at the bottom of the <strong>Viewport</strong>. An asterisk (*) next to the name indicates unsaved changes.</p>
+
+<p>To save a UI Document (UXML):</p>
+
+<ul>
+<li>Use the <strong>File &gt; Save</strong> menu in the UI Builder’s <strong>Viewport</strong> pane toolbar.</li>
+<li>Use <strong>Ctrl/CMD + S</strong>. It also prompts you to save the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> in the Editor.</li>
+</ul>
+
+<p>
+<strong>Note</strong>: The Unity project-wide save doesn’t save the active UI Document (UXML) opened in the UI Builder.</p>
+
+<h2>StyleSheets</h2>
+
+<p>StyleSheets and the USS Selectors in UI Toolkit are used to share and apply styles across many elements and UI Documents (UXML).</p>
+
+<p>The <strong>StyleSheets</strong> pane <img src="../uploads/Main/UIBuilder/Numeral_1_half.png" alt="1"> is where you can:</p>
+
+<ul>
+<li>Add, reorder, or remove StyleSheets (USS) in the current UI Document (UXML).</li>
+<li>Create, reorder, copy, or remove USS Selectors within StyleSheets to share styles across different elements.</li>
+</ul>
+
+<h2>Hierarchy</h2>
+
+<p>The <strong>Hierarchy</strong> pane <img src="../uploads/Main/UIBuilder/Numeral_2_half.png" alt="2"> contains the tree view representing the element hierarchy of the current document. It’s a superset of the hierarchy you see in the UXML text representation of the UI Document (UXML). Besides the elements created directly from UXML, the <strong>Hierarchy</strong> pane also contains elements created dynamically that only exist in the runtime of the UI. For example, the <strong>Hierarchy</strong> pane includes elements that are part of a Template instance (a different document instanced inside the current document), whereas the UXML would just have a single <code>&lt;Instance&gt;</code> tag.</p>
+
+<p>You can use the <strong>Hierarchy</strong> pane to:</p>
+
+<ul>
+<li>Select elements for inspecting or editing.</li>
+<li>Cut, copy, delete, or reorder elements.</li>
+<li>Open instanced template documents as sub-documents for in-place (in context) editing.</li>
+<li>Check at once many elements’ style class lists, name attributes, and locally attached StyleSheets.</li>
+</ul>
+
+<p>Elements appear in the tree according to their <code>name</code> attributes. If an element’s <code>name</code> attribute isn’t set, it appears according to its C# type. You can double-click an element to quickly rename it.</p>
+
+<p>Click the <strong>⋮</strong> icon in the top right corner of the <strong>Hierarchy</strong> pane header to access a menu of display options.</p>
+
+<ul>
+<li>Select <strong>Type</strong> to force the <strong>Hierarchy</strong> to display each element’s C# type, regardless of whether it has a name.</li>
+<li>Select <strong>Class List</strong> to display each element’s style class list next to its <strong>Hierarchy</strong> entry.</li>
+<li>Select <strong>Attached StyleSheets</strong> to display any locally attached StyleSheets next to their element.</li>
+</ul>
+
+<h2>Library</h2>
+
+<p>The <strong>Library</strong> pane <img src="../uploads/Main/UIBuilder/Numeral_3_half.png" alt="3"> is similar to the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html">Project window</a><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a href="ProjectView.html" href="ProjectView.html">Project window</a><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span> in the Unity Editor. It lists available UI elements.</p>
+
+<ul>
+<li>The <strong>Standard</strong> tab lists the standard built-in elements that Unity provides. These elements include standard styling that works for all supported Unity Editor and runtime themes.</li>
+</ul>
+
+<p>You can change this view mode between tiles and tree view using the <strong>⋮</strong> icon in the top right corner of the <strong>Library</strong> window and choosing <strong>Tree View</strong>.</p>
+
+<ul>
+<li>The <strong>Project</strong> tab lists custom <code>.uxml</code> assets in the Project. It also lists any custom C# elements that inherit from <code>VisualElement</code> and have their <code>UxmlFactory</code> set up to be instantiable via UXML. To preview any element in the <strong>Library</strong>’s Project tab, hover over it. The preview appears to the right of the <strong>Library</strong> pane.</li>
+</ul>
+
+<p>To instantiate an element, do one of the following:</p>
+
+<ul>
+<li>Drag it into the <strong>Hierarchy</strong> pane.</li>
+<li>Drag the element onto the <strong>Canvas</strong> in the <strong>Viewport</strong>.</li>
+<li>Double-click the element. This adds the element as a sibling of the currently selected element. If nothing is selected, the element is added at the root of the UI Document (UXML).</li>
+</ul>
+
+<p>You can select elements in the <strong>Hierarchy</strong> window or in the <strong>Canvas</strong>. In the <strong>Hierarchy</strong>, hold down <strong>Ctrl/Cmd</strong> to select additional elements. In the <strong>Canvas</strong>, when an element is focused, you can click the element to select its parent element, which you can repeat to travel up the element hierarchy until it reverts back to the original element.</p>
+
+<h2>Viewport</h2>
+
+<p>The <strong>Viewport</strong> pane <img src="../uploads/Main/UIBuilder/Numeral_4_half.png" alt="4"> displays the output of a UI Document (UXML) on a floating resizable edit-time <strong>Canvas</strong>. The toolbar contains menus of UI Builder-specific commands, <strong>Viewport</strong> settings, <strong>Theme</strong> selector, and the <strong>Preview</strong> button. You can find additional UI Builder settings in the top-right corner of the <strong>Viewport</strong> under the <strong>⋮</strong> menu, including a shortcut to the UI Builder’s Settings in Unity’s <strong><span class="tooltip"><strong>Project Settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html" href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span></strong>.</p>
+
+<h3>Navigate in the Viewport</h3>
+
+<p>Pan and zoom to navigate in the <strong>Viewport</strong>. The UI Builder saves each UI Document (UXML)’s current pan and zoom state, and restores them after the UI Builder window reloads, a domain reloads, or when you close and re-open the same UI Document (UXML).</p>
+
+<p>When you create and open a new document, the UI Builder resets the pan and zoom states.</p>
+
+<p>To pan, do one of the following:</p>
+
+<ul>
+<li>Middle-click and drag in the <strong>Viewport</strong>.</li>
+<li>Hold down <strong>Ctrl/Cmd</strong> + <strong>Alt</strong>/<strong>Option</strong> and click and drag in the <strong>Viewport</strong>.</li>
+</ul>
+
+<p>To zoom in and out, position the mouse pointer in the <strong>Viewport</strong> and do one of the following:</p>
+
+<ul>
+<li>Position the mouse pointer in the <strong>Viewport</strong>, and rotate the mouse wheel.</li>
+<li>Hold down <strong>Alt</strong>/<strong>Option</strong> and right-mouse drag. Drag right to zoom in, and left to zoom out.</li>
+</ul>
+
+<h3>Set up the Canvas</h3>
+
+<p>The <strong>Canvas</strong> is where you edit, preview, and interact with the UI Document (UXML) you are authoring. If you can’t see it, select the <strong>Fit Canvas</strong> button in the <strong>Viewport</strong> toolbar to bring it into view. The header of the <strong>Canvas</strong> displays the name of the currently loaded UI Document (UXML). An asterisk (*) next to the name indicates unsaved changes. </p>
+
+<p>To resize the <strong>Canvas</strong>:</p>
+
+<ul>
+<li>Inside the <strong>Viewport</strong>, drag the edges or corners.</li>
+<li>Select the <strong>Canvas</strong> header to display the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window of the canvas, where you can enter the canvas’ width and height.</li>
+</ul>
+
+<p>To match the <strong>Canvas</strong> size to the size of the Unity Game window, select the <strong>Match Game View</strong> checkbox.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/CanvasSizeSettings.png" alt="CanvasSizeSettings">
+<figcaption>CanvasSizeSettings</figcaption>
+</figure>
+
+<p>You can change the <strong>Canvas</strong> background to make it easier to edit the UI. To change the background, select the <strong>Canvas</strong> in the <strong>Inspector</strong> pane. You can set it to be a solid color, a specific texture (a mock-up from a UI Designer), or a live view from a <strong><span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span></strong> in an open Unity Scene:</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/CanvasBackgroundSettings.png" alt="CanvasBackgroundSettings">
+<figcaption>CanvasBackgroundSettings</figcaption>
+</figure>
+
+<p>Any settings related to the <strong>Canvas</strong>, like its size, aren’t saved as part of the UI Document (UXML) but stored in a separate settings file for the next time you open the same UI Document (UXML).</p>
+
+<p><a name="preview-with-a-light-or-dark-theme" aria-hidden="true"></a></p>
+
+<h3>Preview with a light or dark theme</h3>
+
+<p>By default, the UI Builder uses the Unity Default Runtime theme. You can preview your UI with a light or dark Editor theme. To do this, make sure the <a href="#enable-editor-extension-authoring-for-ui-documents-uxml"><strong>Editor Extension Authoring</strong></a> is enabled, and then select the <strong>Dark Editor Theme</strong> or <strong>Light Editor Theme</strong> from the themes dropdown list in the <strong>Viewport</strong> toolbar.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/DarkLightEditorTheme.png" alt="Themes dropdown control in Viewport">
+<figcaption>Themes dropdown control in Viewport</figcaption>
+</figure>
+
+<p>The <strong>Active Editor Theme</strong> is the light or dark theme that you have <a href="Preferences.html#general">set up in the Unity Editor</a>.</p>
+
+<p>If you <a href="UIE-tss.html">create a custom theme</a>, you can also select it from the list to preview it in the <strong>Viewport</strong>.</p>
+
+<h2>Code Previews</h2>
+
+<p>As you build your UI, UI Builder automatically generates the underlying UXML and USS text, and displays them in the <strong>UXML Preview</strong> and <strong>USS Preview</strong> panes <img src="../uploads/Main/UIBuilder/Numeral_5_half.png" alt="5">.</p>
+
+<p><a name="uibuilder-inspector" aria-hidden="true"></a></p>
+
+<h2>Inspector</h2>
+
+<p>The UI Builder <strong>Inspector</strong> pane <img src="../uploads/Main/UIBuilder/Numeral_6_half.png" alt="6"> is similar to the Unity <a href="UsingTheInspector.html"><strong>Inspector</strong> window</a>. The <strong>Inspector</strong> displays slightly different content, depending on the object you have selected inside the UI Builder:</p>
+
+<ul>
+<li>Elements display an attribute section for per-element (UXML) attributes, a <strong>StyleSheets</strong> section to assign style classes and view applied styles from StyleSheets, and an <strong>Inlined Styles</strong> section to edit inline per-element style properties.</li>
+<li>USS Selectors display a <strong>Style Selector</strong> section to change the selector query string and a <strong>Styles</strong> section to edit style properties.</li>
+<li>Canvas displays a <strong>Canvas Size</strong> section to change the Canvas size, a <strong>Canvas Background</strong> section to change the edit-time canvas background, and a <strong>Document Settings</strong> section for per-document edit-time settings.</li>
+</ul>
+
+<p><a name="enable-editor-extension-authoring-for-ui-documents-uxml" aria-hidden="true"></a></p>
+
+<h2>Enable Editor Extension Authoring for UI Documents (UXML)</h2>
+
+<p>By default, new UI Documents (UXML) created in the UI Builder have a setting saved within the UXML that marks them as runtime-only UI:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot; editor-extension-mode=&quot;False&quot;&gt;
+</code></pre>
+
+<p>This means that, by default, the <strong>Library</strong> pane’s <strong>Standard</strong> tab only contains elements that work best at runtime.</p>
+
+<p>To create UI for the Unity Editor, like custom Editor Windows or custom Inspectors, you can enable <strong>Editor Extension Authoring</strong> to see additional <strong>Editor-Only</strong> controls in the <strong>Standard</strong> tab of the <strong>Library</strong> pane.</p>
+
+<p>To enable Editor Extension Authoring:</p>
+
+<ul>
+<li>Select the <strong>Canvas</strong> header to display the Inspector window of the canvas, where you select the <strong>Document Settings &gt; Editor Extension Authoring</strong> option:</li>
+</ul>
+
+<p><img src="../uploads/Main/UIBuilder/EditorExtensionAuthoringPanelSettings.png" alt="EditorExtensionAuthoringPanelSettings"></p>
+
+<ul>
+<li>In the menu on the <strong>Library</strong> pane, select <strong>Editor Extension Authoring</strong>.</li>
+</ul>
+
+<p>
+<strong>Note</strong>: Unlike the other <strong>Canvas</strong> settings, this setting is saved in the <code>editor-extension-mode</code> attribute of the root element of the UI Document (UXML).</p>
+
+<p>To enable <strong>Editor Extension Authoring</strong> on any new UI Documents (UXML) by default:</p>
+
+<ol>
+<li>Go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>UI Builder</strong>.</li>
+<li>Select <strong>Enable Editor Extension Authoring by Default</strong>.</li>
+</ol>
+
+<p>UI Documents (UXML) that you create outside of the UI Builder, for example, in a text editor or IDE, don’t have an Editor Extension Authoring attribute until you open them in the UI Builder. However, you can add the <code>editor-extension-mode</code> attribute manually in your UI Document (UXML) in a text editor or IDE at any moment. When you open an externally created UI Document (UXML) in the UI Builder for the first time, the Editor Extension Authoring attribute is set according to the default specified in the UI Builder project settings. </p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIB-getting-started.html">Get started with UI Builder</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIBuilder.html"></a></span><div class="tip">UI Builder</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIB-getting-started.html"></a></span><div class="tip">Get started with UI Builder</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Troubleshooting</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="cloud" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetBundles-Troubleshooting.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetBundles-Troubleshooting.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetBundles-Troubleshooting.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetBundles-Troubleshooting.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetBundles-Troubleshooting.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetBundles-Troubleshooting.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetBundles-Troubleshooting.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetBundles-Troubleshooting.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AssetWorkflow.html">Asset Workflow</a></li>
+<li><a href="AssetBundlesIntro.html">AssetBundles</a></li>
+<li>Troubleshooting</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetBundles-Patching.html"></a></span><div class="tip">Patching with AssetBundles</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetBundles-Browser.html"></a></span><div class="tip">Unity Asset Bundle Browser tool</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Troubleshooting</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This section describes several problems that commonly appear in projects using AssetBundles.</p>
+
+<h2>Asset Duplication</h2>
+
+<p>Unity’s AssetBundle system will discover all dependencies of an Object when the Object is built into an AssetBundle. This is done using the Asset Database. This dependency information is used to determine the set of Objects that will be included in an AssetBundle.</p>
+
+<p>Assignment to AssetBundles happens at the Asset level. The Objects inside an Asset that is explicitly assigned to an AssetBundle will only be built into that single AssetBundle. Depending which signature of <a href="../ScriptReference/BuildPipeline.BuildAssetBundles.html">BuildPipeline.BuildAssetBundles</a> is called, an Asset is “explicitly assigned” either by setting the Asset’s <a href="../ScriptReference/AssetImporter.assetBundleName.html">AssetImporter.assetBundleName</a> property to a non-empty string, or by listing it in <a href="../ScriptReference/AssetBundleBuild.assetNames.html">AssetBundleBuild.assetNames</a>.</p>
+
+<p>Any Object that is part of an Asset that is not explicitly assigned in an AssetBundle will be included in each AssetBundle that contains any Objects that reference it.</p>
+
+<p>In other words, if two different Objects are assigned to two different AssetBundles, but both have references to a common dependency Object, then that dependency Object will be copied into both AssetBundles. The duplicated dependency will also be instanced, meaning that the two copies of the dependency Object will be considered different Objects with a different identifiers. This will increase the total size of the application’s AssetBundles. This will also cause two different copies of the Object to be loaded into memory if the application loads both of its parents.</p>
+
+<p>There are several ways to address this problem:</p>
+
+<ol>
+<li>
+<p>Ensure that Objects built into different AssetBundles do not share dependencies. Any Objects which do share dependencies can be placed into the same AssetBundle without duplicating their dependencies.</p>
+
+<ul>
+<li>This method usually is not viable for projects with many shared dependencies. It can produce monolithic AssetBundles that must be rebuilt and re-downloaded too frequently to be convenient or efficient.</li>
+</ul>
+</li>
+<li>
+<p>Segment AssetBundles so that no two AssetBundles that share a dependency will be loaded at the same time.</p>
+
+<ul>
+<li>This method may work for certain types of projects, such as level-based games. However there is still a trade-off, because duplicated objects will increase the build time and sizes of the project’s AssetBundles, and could impact loading times.</li>
+</ul>
+</li>
+<li><p>Ensure that all dependency assets are built into their own AssetBundles. This entirely eliminates the risk of duplicated assets, but also introduces complexity. The application must track dependencies between AssetBundles, and ensure that the right AssetBundles are loaded before calling any AssetBundle.LoadAsset APIs.</p></li>
+</ol>
+
+<p>Object dependencies are tracked via the AssetDatabase API, located in the UnityEditor namespace. As the namespace implies, this API is only available in the Unity Editor and not at runtime. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/AssetDatabase.GetDependencies.html">AssetDatabase.GetDependencies</a> can be used to locate all of the immediate dependencies of a specific Object or Asset. Note that these dependencies may have their own dependencies so this can be a recursive calculation. The assignment of Assets to AssetBundles will either be defined explicitly by passing arrays of AssetBundleBuild structures when calling BuildPipeline.BuildAssetBundles, or can be queried using the AssetImporter API. It is possible to write an Editor script that ensures that all of an AssetBundle’s direct or <span class="tooltip"><strong>indirect dependencies</strong><span class="tooltiptext">An <strong>indirect</strong>, or transitive dependency occurs when your project requests a package which itself “depends on” another package. For example, if your project depends on the <code>alembic@1.0.7</code> package which in turn depends on the <code>timeline@1.0.0</code> package, then your project has an direct dependency on Alembic and an indirect dependency on Timeline. <a href="upm-dependencies.html" href="../ScriptReference/AssetDatabase.GetDependencies.html">AssetDatabase.GetDependencies</a> can be used to locate all of the immediate dependencies of a specific Object or Asset. Note that these dependencies may have their own dependencies so this can be a recursive calculation. The assignment of Assets to AssetBundles will either be defined explicitly by passing arrays of AssetBundleBuild structures when calling BuildPipeline.BuildAssetBundles, or can be queried using the AssetImporter API. It is possible to write an Editor script that ensures that all of an AssetBundle’s direct or <span class="tooltip"><strong>indirect dependencies</strong><span class="tooltiptext">An <strong>indirect</strong>, or transitive dependency occurs when your project requests a package which itself “depends on” another package. For example, if your project depends on the <code>alembic@1.0.7</code> package which in turn depends on the <code>timeline@1.0.0</code> package, then your project has an direct dependency on Alembic and an indirect dependency on Timeline. <a href="upm-dependencies.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Indirectdependency" aria-label="Go to glossary anchor for Indirectdependency">Glossary</a></span></span></span> are assigned to AssetBundles, or that no two AssetBundles share dependencies that have not been assigned to an AssetBundle.</p>
+
+<p>
+<strong>Note</strong>: When building AssetBundles with the <a href="http://docs.unity3d.com/Packages/com.unity.addressables@latest/index.html">Addressables</a> package, the <code>Addressables Analyze</code> window can be used to discover duplicated assets.</p>
+
+<h2>Sprite Atlas Duplication</h2>
+
+<p>The following sections describe a quirk of asset dependency calculation code when used in conjunction with automatically-generated <span class="tooltip"><strong>sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> atlases.</p>
+
+<p>Any automatically-generated <span class="tooltip"><strong>sprite atlas</strong><span class="tooltiptext">A texture that is composed of several smaller textures. Also referred to as a texture atlas, image sprite, sprite sheet or packed texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-SpriteAtlas.html" href="class-SpriteAtlas.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#spriteatlas" aria-label="Go to glossary anchor for spriteatlas">Glossary</a></span></span></span> will be assigned to the AssetBundle containing the Sprite Objects from which the sprite atlas was generated. If the sprite Objects are assigned to multiple AssetBundles, then the sprite atlas will not be assigned to an AssetBundle and will be duplicated. If the Sprite Objects are not assigned to an AssetBundle, then the sprite atlas will also not be assigned to an AssetBundle.</p>
+
+<p>To ensure that sprite atlases are not duplicated, check that all sprites tagged into the same sprite atlas are assigned to the same AssetBundle.</p>
+
+<h2>Android Textures</h2>
+
+<p>Due to heavy device fragmentation in the Android ecosystem, it is often necessary to compress textures into several different formats. While all Android devices support ETC1, ETC1 does not support textures with alpha channels. Should an application not require OpenGL ES 2 support, the cleanest way to solve the problem is to use ETC2, which is supported by all Android OpenGL ES 3 devices.</p>
+
+<p>Most applications need to ship on older devices where ETC2 support is unavailable. One way to solve this problem is with AssetBundle Variants. (Please see Unity’s Android optimization guide for details on other options.)</p>
+
+<p>To use AssetBundle Variants, all textures that cannot be cleanly compressed using ETC1 must be isolated into texture-only AssetBundles. Next, create sufficient variants of these AssetBundles to support the non-ETC2-capable slices of the Android ecosystem, using vendor-specific texture <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> formats such as DXT5, PVRTC and ATITC. For each AssetBundle Variant, change the included textures’ TextureImporter settings to the compression format appropriate to the Variant.</p>
+
+<p>At runtime, support for the different <span class="tooltip"><strong>texture compression</strong><span class="tooltiptext">3D Graphics hardware requires Textures to be compressed in specialized formats which are optimized for fast Texture sampling. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporterOverride.html" href="class-TextureImporterOverride.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TextureCompression" aria-label="Go to glossary anchor for TextureCompression">Glossary</a></span></span></span> formats can be detected using the <a href="http://docs.unity3d.com/ScriptReference/SystemInfo.SupportsTextureFormat.html?_ga=1.141687282.1751468213.1479139860">SystemInfo.SupportsTextureFormat</a> API. This information should be used to select and load the AssetBundle Variant containing textures compressed in a supported format.</p>
+
+<p>More information on Android texture compression formats can be found <a href="http://developer.android.com/guide/topics/graphics/opengl.html#textures">here</a>.</p>
+
+<h2>Interactions between Shaders and AssetBundles</h2>
+
+<p>When you build an AssetBundle, Unity uses information in that bundle to select which <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> variants to compile. This includes information about the <span class="tooltip"><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> variants to compile. This includes information about the <span class="tooltip"><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, materials, <a href="https://docs.unity3d.com/Manual/class-GraphicsSettings.html">Graphics Settings</a>, and <a href="../ScriptReference/ShaderVariantCollection.html">ShaderVariantCollections</a> in the AssetBundle.</p>
+
+<p>Separate build pipelines compile their own shaders independently of other pipelines. If both a Player build and an Addressables build reference a shader, Unity compiles two separate copies of the shader, one for each pipeline.</p>
+
+<p>This process doesn’t account for any runtime information such as keywords, textures, or changes due to code execution. If you want to include specific shaders in your build, either include a ShaderVariantCollection with the desired shaders, or include the shader in your build manually by adding it to the Always Included Shaders list in your graphics settings.</p>
+
+<p><br></p>
+<!-- area:cloud -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetBundles-Patching.html"></a></span><div class="tip">Patching with AssetBundles</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetBundles-Browser.html"></a></span><div class="tip">Unity Asset Bundle Browser tool</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

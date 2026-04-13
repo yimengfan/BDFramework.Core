@@ -1,0 +1,413 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Lighting Settings Asset</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-LightingSettings.html">English</a></li>
+<li><a href="/cn/current/Manual/class-LightingSettings.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-LightingSettings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-LightingSettings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-LightingSettings.html">English</a></li>
+<li><a href="/cn/current/Manual/class-LightingSettings.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-LightingSettings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-LightingSettings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="LightingOverview.html">Lighting</a></li>
+<li>Lighting Settings Asset</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="lighting-window.html"></a></span><div class="tip">The Lighting window</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="lighting-mode.html"></a></span><div class="tip">Lighting Mode</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Lighting Settings Asset</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/LightingSettings.html' title='Go to LightingSettings page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A Lighting Settings Asset represents a saved instance of the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/LightingSettings.html">LightingSettings</a> class, which stores data for the Baked <span class="tooltip"><strong>Global Illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span> and the <span class="tooltip"><strong>Enlighten Realtime Global Illumination</strong><span class="tooltiptext">A lighting system by Geomerics used in Unity for lightmapping and for Enlighten Realtime Global Illumination. <a href="https://www.siliconstudio.co.jp/en/products-service/enlighten/" href="../ScriptReference/LightingSettings.html">LightingSettings</a> class, which stores data for the Baked <span class="tooltip"><strong>Global Illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span> and the <span class="tooltip"><strong>Enlighten Realtime Global Illumination</strong><span class="tooltiptext">A lighting system by Geomerics used in Unity for lightmapping and for Enlighten Realtime Global Illumination. <a href="https://www.siliconstudio.co.jp/en/products-service/enlighten/">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#EnlightenRealtimeGlobalIllumination" aria-label="Go to glossary anchor for EnlightenRealtimeGlobalIllumination">Glossary</a></span></span></span> systems. The Unity Editor uses this data when it precomputes lighting data for a <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#EnlightenRealtimeGlobalIllumination" aria-label="Go to glossary anchor for EnlightenRealtimeGlobalIllumination">Glossary</a></span></span></span> systems. The Unity Editor uses this data when it precomputes lighting data for a <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> that uses one or both of these systems.</p>
+
+<p>You can assign the same Lighting Settings Asset or instance of the <code>LightingSettings</code> class to more than one Scene, which makes it easy to share Global Illumination system settings across multiple Scenes.</p>
+
+<h2>Creating a Lighting Settings Asset</h2>
+
+<p>There are two ways to create a Lighting Settings Asset in the Unity Editor.</p>
+
+<p>To create a Lighting Settings Asset from the Project view:</p>
+
+<ol>
+<li>In the Project view, either click the add (+) button, or open the context menu and navigate to <strong>Create</strong>.</li>
+<li>Click <strong>Lighting Settings</strong>. Unity creates a new Lighting Settings Asset in the Project view.</li>
+</ol>
+
+<p>To create and automatically assign Lighting Settings Asset from the Lighting window:</p>
+
+<ol>
+<li>Open the Lighting window (menu: <strong>Window &gt; Rendering &gt; Lighting</strong>).</li>
+<li>Open the <strong>Scene</strong> tab.</li>
+<li>Click <strong>New Lighting Asset</strong>. Unity creates a new Lighting Settings Asset in the Project view, and immediately assigns it to the active Scene.</li>
+</ol>
+
+<p>You can also create a Lighting Settings Asset from a script. To do this, create an instance of the LightingSettings class and either save it to disk, or assign it to a Scene and save that Scene. For more information and code examples, see the <a href="../ScriptReference/LightingSettings.html">LightingSettings API documentation</a>.</p>
+
+<h2>Assigning a Lighting Settings Asset to a Scene</h2>
+
+<p>To assign a Lighting Settings Asset to a Scene in the Unity Editor:</p>
+
+<ol>
+<li>Open the Scene that you want to assign the Lighting Settings Asset to.</li>
+<li>If you have more than one Scene open, ensure that the Scene that you want to assign the Lighting Settings Asset to is the <a href="MultiSceneEditing.html">active Scene</a>.</li>
+<li>Open the Lighting window (menu: <strong>Window &gt; Rendering &gt; Lighting</strong>).</li>
+<li>Open the <strong>Scene</strong> tab.</li>
+<li>Either drag the Lighting Settings Asset to the <strong>Lighting Settings</strong> field, or click the icon to the right of the <strong>Lighting Settings</strong> field and choose the Lighting Settings Asset from the list.</li>
+</ol>
+
+<p>You can also assign a Lighting Settings Asset to the active Scene from a script. To do this, load the Lighting Settings Asset to obtain an instance of the <code>LightingSettings</code> class, then use the <code>Lightmapping.lightingSettings</code> API to assign that <code>LightingSettings</code> instance to the active Scene. For more information and code examples, see the <a href="../ScriptReference/LightingSettings.html">LightingSettings API documentation</a>.</p>
+
+<h2>Viewing and editing the properties of a Lighting Settings Asset</h2>
+
+<p>You can view and edit the properties of Lighting Settings Asset in two places in the Unity Editor:</p>
+
+<ul>
+<li>In the Project view, if you select a Lighting Settings Asset, you can view and edit its properties in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>.</li>
+<li>If the active Scene has a Lighting Settings Asset assigned to it, you can view and edit the properties of that Lighting Settings Asset in the Lighting Window’s Scene tab.</li>
+</ul>
+
+<p>You can also read from or write to the properties of a Lighting Settings Asset from a script. To do this, load the Lighting Settings Asset to obtain an instance of the<code>LightingSettings</code> class, and access its properties. For more information and code examples, see the <a href="../ScriptReference/LightingSettings.html">LightingSettings API documentation</a>.</p>
+
+<p><a name="DefaultLightingSettings" aria-hidden="true"></a></p>
+
+<h2>Default LightingSettings data</h2>
+
+<p>When a Scene does not have a Lighting Settings Asset assigned to it, Unity uses the default <code>LightingSettings</code> object for that Scene. The default <code>LightingSettings</code> object is an internal, read-only instance of the <code>LightingSettings</code> class.</p>
+
+<p>You cannot make any changes to the <code>LightingSettings</code> data for a Scene that uses the default <code>LightingSettings</code>, but Unity can perform a bake using its settings.</p>
+
+<p>To make changes to the <code>LightingSettings</code> data for a Scene, you must use the Unity Editor to create and assign a Lighting Settings Asset, or use a script to create, configure, and assign a <code>LightingSettings</code> object. For more information and code examples, see the <a href="../ScriptReference/LightingSettings.html">LightingSettings API documentation</a>.</p>
+
+<p>Unity automatically generates an <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/RenderSettings-ambientProbe.html">ambient probe</a> and a <a href="../ScriptReference/ReflectionProbe-defaultTexture.html">default Reflection Probe</a> to ensure that environment lighting affects your scene and the <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="../ScriptReference/RenderSettings-ambientProbe.html">ambient probe</a> and a <a href="../ScriptReference/ReflectionProbe-defaultTexture.html">default Reflection Probe</a> to ensure that environment lighting affects your scene and the <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in it by default. To learn more about this functionality, see <a href="using-skymanager.html">SkyManager</a>.</p>
+
+<h2>Properties</h2>
+
+<p>When you view the Lighting Settings Asset in the Inspector or the Lighting window, the properties that you can view or edit are divided into the following sections:</p>
+
+<ul>
+<li><a href="#RealtimeLighting">Realtime Lighting</a></li>
+<li><a href="#MixedLighting">Mixed Lighting</a></li>
+<li><a href="#LightmappingSettings">Lightmapping Settings</a></li>
+<li><a href="#AutoGeneration">Auto Generation</a></li>
+</ul>
+
+<p><a name="RealtimeLighting" aria-hidden="true"></a></p>
+
+<h3>Realtime Lighting</h3>
+
+<p>This section contains <a href="https://docs.unity3d.com/Manual/lighting-window.html">settings</a> related to the <a href="realtime-gi-using-enlighten.html">Enlighten Realtime Global Illumination system</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Realtime Global Illumination</strong></td>
+	<td style="text-align:left;">Enable this property to use the Enlighten Realtime Global Illumination system in Scenes that use this Lighting Settings Asset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Realtime Environment Lighting</strong></td>
+	<td style="text-align:left;">Enable this property to use the Enlighten Realtime Global Illumination system to calculate and update ambient light in real-time. <br><br>This property is only available when both Enlighten <strong>Realtime Global Illumination</strong> and <strong>Baked Global Illumination</strong> are enabled in the Scene.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="MixedLighting" aria-hidden="true"> </a></p>
+
+<h3>Mixed Lighting</h3>
+
+<p>This section contains settings that affect the behavior of <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightMode-Baked.html">Baked Lights</a><span class="tooltiptext">Light components whose Mode property is set to Baked. Unity pre-calculates the illumination from Baked Lights before runtime, and does not include them in any runtime lighting calculations. <a href="LightMode-Baked.html" href="LightMode-Baked.html">Baked Lights</a><span class="tooltiptext">Light components whose Mode property is set to Baked. Unity pre-calculates the illumination from Baked Lights before runtime, and does not include them in any runtime lighting calculations. <a href="LightMode-Baked.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#BakedLights" aria-label="Go to glossary anchor for BakedLights">Glossary</a></span></span></span> and <span class="tooltip"><a href="LightMode-Mixed.html">Mixed Lights</a><span class="tooltiptext">Light components whose Mode property is set to Mixed. Some calculations for Mixed Lights are performed in advance, and some calculations for Mixed Lights are performed at runtime. The behavior of all Mixed Lights in a Scene is determined by the Scene’s Lighting Mode. <a href="LightMode-Mixed.html" href="Glossary.html#BakedLights" aria-label="Go to glossary anchor for BakedLights">Glossary</a></span></span></span> and <span class="tooltip"><a href="LightMode-Mixed.html">Mixed Lights</a><span class="tooltiptext">Light components whose Mode property is set to Mixed. Some calculations for Mixed Lights are performed in advance, and some calculations for Mixed Lights are performed at runtime. The behavior of all Mixed Lights in a Scene is determined by the Scene’s Lighting Mode. <a href="LightMode-Mixed.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MixedLights" aria-label="Go to glossary anchor for MixedLights">Glossary</a></span></span></span> in Scenes that use this Lighting Settings Asset.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2">Property:</th>
+	<th style="text-align:left;">Function:</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Baked Global Illumination</strong></td>
+	<td style="text-align:left;">When this setting is enabled, Unity enables the Baked Global Illumination system for the Scenes that use this Lighting Settings Asset. When this setting is disabled, Unity disables the Baked Global Illumination system for the Scenes that use this Lighting Settings Asset.<br><br>When the Baked Global Illumination system is enabled, Unity uses Baked lights in the Scene for lightmapping only, and Mixed lights behave according to the <strong>Lighting Mode</strong> setting. When the Baked Global Illumination system is disabled, Unity forces all Baked and Mixed lights in the Scene to act as though they were Realtime Lights.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Lighting Mode</strong></td>
+	<td style="text-align:left;">Specifies which <a href="lighting-mode.html">Lighting Mode</a> Unity uses for all Mixed Lights in the Scenes that use this Lighting Settings Asset.<br><br>When you change the Lighting Mode, you need to re-bake the lighting data for the Scenes that use this Lighting Settings Asset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Baked Indirect</strong></td>
+	<td style="text-align:left;">Use <a href="LightMode-Mixed-BakedIndirect.html">Baked Indirect Lighting Mode</a> for all Mixed Lights in the Scenes that use this Lighting Settings Asset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Subtractive</strong></td>
+	<td style="text-align:left;">Use <a href="LightMode-Mixed-Subtractive.html">Subtractive Lighting Mode</a> for all Mixed Lights in the Scenes that use this Lighting Settings Asset.<br><br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Shadowmask</strong></td>
+	<td style="text-align:left;">Use <a href="LightMode-Mixed-Shadowmask.html">Shadowmask Lighting Mode</a> for all Mixed Lights in the Scenes that use this Lighting Settings Asset.<br><br>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="LightmappingSettings" aria-hidden="true"> </a></p>
+
+<h3>Lightmapping Settings</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> Resolution</strong></td>
+	<td style="text-align:left;">Specifies the number of texels per unit to use for lightmaps. Increasing this value improves lightmap quality, but also increases bake times. Note that doubling this value causes the number of texels to quadruple because it determines both the height and width of the lightmap. See the <strong>Occupied texels</strong> count in the statistics area of the Lighting window.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Lightmap Padding</strong></td>
+	<td style="text-align:left;">Determines the separation (in texel units) between separate shapes in the baked lightmap. The default is 2.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Max Lightmap Size</strong></td>
+	<td style="text-align:left;">Specifies the size (in pixels) of the full lightmap texture, which incorporates a separate region for each included GameObject. The default value is 1024.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Lightmap compression</strong></td>
+	<td style="text-align:left;">The level of compression the Editor uses for lightmaps. <br> - None: Does not compress lightmaps. <br> - Low Quality: This may use less memory and storage than Normal Quality, but can also introduce visual artifacts. <br> - Normal Quality: This is a good trade-off between memory usage and visual quality. <br> - High Quality: Requires more memory and storage than Normal Quality, but provides better visual results.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Ambient Occlusion</strong><span class="tooltiptext">A method to approximate how much ambient light (light not coming from a specific direction) can hit a point on a surface.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Ambientocclusion" aria-label="Go to glossary anchor for Ambientocclusion">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Controls the relative brightness of surfaces in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightingBakedAmbientOcclusion.html">baked ambient occlusion</a>. This only applies to the indirect lighting calculated by the <span class="tooltip"><strong>lightmapper</strong><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a href="Lightmapping.html" href="LightingBakedAmbientOcclusion.html">baked ambient occlusion</a>. This only applies to the indirect lighting calculated by the <span class="tooltip"><strong>lightmapper</strong><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmapper" aria-label="Go to glossary anchor for Lightmapper">Glossary</a></span></span></span> you are using to bake your lighting. Enabled by default. If Ambient Occlusion is enabled, it exposes three settings: Max Distance, Indirect Contribution, and Direct Contribution. For all three settings, higher values indicate a greater contrast between occluded and fully lit areas.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Max Distance</strong></td>
+	<td style="text-align:left;">Specifies how far the lighting system casts rays in order to determine whether or not to apply occlusion to an object. A higher value produces longer rays and contributes more shadows to the lightmap, while a lower value produces shorter rays that contribute shadows only when objects are very close to one another. A value of 0 casts an infinitely long ray that has no maximum distance. The default value is 1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Indirect Contribution</strong></td>
+	<td style="text-align:left;">Scales the brightness of indirect <span class="tooltip"><strong>ambient light</strong><span class="tooltiptext">Light that doesn’t come from any specific direction, and contributes equal light in all directions to the Scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about lighting-window.html" href="lighting-window.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Ambientlight" aria-label="Go to glossary anchor for Ambientlight">Glossary</a></span></span></span> bounced and emitted from objects in the final lightmap. This is a value between 0 and 10. The default value is 1. Values less than 1 reduce the intensity, while values greater than 1 increase it.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Direct Contribution</strong></td>
+	<td style="text-align:left;">Scales the brightness of direct light. This is a value between 0 and 10. The default value is 0. The higher this value is, the greater the contrast the Editor applies to the direct lighting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Directional Mode</strong></td>
+	<td style="text-align:left;">Enables the lightmap to store information about the characteristics of the dominant incoming light at each point on an object’s surface. See <a href="LightmappingDirectional.html">Directional Lightmapping</a> for more information. The default mode is <strong>Directional</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Directional</strong></td>
+	<td style="text-align:left;">In <strong>Directional</strong> mode, , Unity generates a second lightmap to store the dominant direction of incoming light. This makes it possible for diffuse normal mapped materials to work with the global illumination system. <span class="tooltip"><strong>Shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> sample both lightmap textures during rendering. As a result, directional mode requires about twice as much video memory as non-directional mode for the additional lightmap data. Generating the additional directionality texture has an impact on baking performance. Directional lightmaps cannot be decoded on SM2.0 hardware or when using GLES2.0.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Non-directional</strong></td>
+	<td style="text-align:left;">
+<strong>Non-directional</strong> mode lightmaps only include a single texture. As a result, they require less video memory and less storage than directional lightmaps, and are faster to decode in shaders. These optimizations reduce visual quality.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Indirect Intensity</strong></td>
+	<td style="text-align:left;">Determines the brightness of indirect light stored in real-time and baked lightmaps. This is a value between 0 and 5. A value above 1 increases the intensity of indirect light while a value of less than 1 reduces indirect light intensity. The default value is 1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Albedo Boost</strong></td>
+	<td style="text-align:left;">Specifies the amount of light Unity bounces between surfaces. This value is between 1 and 10. Increasing this value pulls the albedo value towards white for indirect light computation. The default value of 1 is physically accurate.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Lightmap Parameters</strong></td>
+	<td style="text-align:left;">A Lightmap Parameters <span class="tooltip"><strong>Asset stores</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span> values for settings relevant to Baked Global Illumination. The Editor provides several default Lightmap Parameters Assets to choose from, but you can also create your own lightmap parameters file using the <strong>Create New</strong> option. See <a href="class-LightmapParameters.html">Lightmap Parameters</a> for more information. The default value is <strong>Default-Medium</strong>. The options are Default-Medium, Default-HighResolution, Default-LowResolution, and Default-VeryLowResolution.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Some settings are specific to certain lightmapper backends. To see these settings, visit the page for the relevant lightmapper:</p>
+
+<ul>
+<li>
+<a href="progressive-lightmapper.html">Progressive CPU Lightmapper</a>; also includes settings for the Progressive GPU Lightmapper<br>
+</li>
+<li>
+<a href="GI-Enlighten.html">Enlighten Baked Global Illumination</a><br>
+</li>
+</ul>
+
+<p><a name="AutoGeneration" aria-hidden="true"> </a></p>
+
+<h3>Auto Generation</h3>
+
+<p>When you view a Lighting Settings Asset in the Inspector, this property is at the top of the Inspector. When you view a Lighting Settings Asset in the Lighting window, this property is at the bottom of the Lighting window, near the <strong>Generate Lighting</strong> button.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Auto Generate</strong></td>
+	<td style="text-align:left;">If <strong>Auto Generate</strong> is enabled, Unity precomputes lighting data automatically when you make changes to the Scene.<br><br>This data includes lightmaps for the Baked Global Illumination system, data for the Enlighten Realtime Global Illumination system, Light Probes, and Reflection Probes.<br><br>Unity usually begins the bake a few seconds after you make a change to the Scene. If <strong>Auto Generate</strong> is disabled, you must manually invoke a bake yourself, using the <strong>Generate Lighting</strong> button in the Lighting window, or the <a href="../ScriptReference/Lightmapping.Bake.html">Lightmapping.Bake</a> or <a href="../ScriptReference/Lightmapping.BakeAsync.html">Lightmapping.BakeAsync</a> APIs.<br><br>Note that when you precompute lighting data using <strong>Auto Generate</strong>, the precomputed lighting data is not stored as Assets in your Project. It is instead stored in memory, and serialized as part of the Scene.</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li><span class="page-history">Lighting Settings Asset added in <a href="https://docs.unity3d.com/2020.1/Documentation/Manual/30_search.html?q=newin20201">2020.1</a> <span class="search-words">NewIn20201</span></span></li>
+</ul>
+<!-- area:graphics -->
+
+<p><span class="search-words">LightingSettings</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="lighting-window.html"></a></span><div class="tip">The Lighting window</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="lighting-mode.html"></a></span><div class="tip">Lighting Mode</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

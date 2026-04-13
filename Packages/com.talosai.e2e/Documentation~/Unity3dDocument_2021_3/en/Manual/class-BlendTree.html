@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Blend Trees</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-BlendTree.html">English</a></li>
+<li><a href="/cn/current/Manual/class-BlendTree.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-BlendTree.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-BlendTree.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-BlendTree.html">English</a></li>
+<li><a href="/cn/current/Manual/class-BlendTree.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-BlendTree.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-BlendTree.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AnimationSection.html">Animation</a></li>
+<li><a href="AnimatorControllers.html">Animator Controllers</a></li>
+<li>Blend Trees</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ScriptingRootMotion.html"></a></span><div class="tip">Tutorial: Scripting Root Motion for &quot;in-place&quot; humanoid animations</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="BlendTree-1DBlending.html"></a></span><div class="tip">1D Blending</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Blend Trees</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A common task in game animation is to blend between two or more similar motions. Perhaps the best known example is the blending of walking and running animations according to the character’s speed. Another example is a character leaning to the left or right as it turns during a run.</p>
+
+<p>It is important to distinguish between Transitions and Blend Trees. While both are used for creating smooth animation, they are used for different kinds of situations.</p>
+
+<ul>
+<li><p><span class="tooltip"><strong>Transitions</strong><span class="tooltiptext">The blend from one state to another in a state machine, such as transitioning a character from a walk to a jog animation. Transitions define how long the blend between states should take, and the conditions that activate the blend. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Transition.html" href="class-Transition.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Transition" aria-label="Go to glossary anchor for Transition">Glossary</a></span></span></span> are used for transitioning smoothly from one Animation State to another over a given amount of time. Transitions are specified as part of an <span class="tooltip"><a href="AnimationStateMachines.html">Animation State Machine</a><span class="tooltiptext">A graph within an Animator Controller that controls the interaction of Animation States. Each state references an Animation Blend Tree or a single Animation Clip. <a href="AnimationStateMachines.html" href="Glossary.html#Transition" aria-label="Go to glossary anchor for Transition">Glossary</a></span></span></span> are used for transitioning smoothly from one Animation State to another over a given amount of time. Transitions are specified as part of an <span class="tooltip"><a href="AnimationStateMachines.html">Animation State Machine</a><span class="tooltiptext">A graph within an Animator Controller that controls the interaction of Animation States. Each state references an Animation Blend Tree or a single Animation Clip. <a href="AnimationStateMachines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationStateMachine" aria-label="Go to glossary anchor for AnimationStateMachine">Glossary</a></span></span></span>. A transition from one motion to a completely different motion is usually fine if the transition is quick.</p></li>
+<li><p>
+<strong>Blend Trees</strong> are used for allowing multiple animations to be blended smoothly by incorporating parts of them all to varying degrees. The amount that each of the motions contributes to the final effect is controlled using a <em>blending parameter</em>, which is just one of the numeric <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationParameters.html">animation parameters</a><span class="tooltiptext">Used to communicate between scripting and the Animator Controller. Some parameters can be set in scripting and used by the controller, while other parameters are based on Custom Curves in Animation Clips and can be sampled using the scripting API. <a href="AnimationParameters.html" href="AnimationParameters.html">animation parameters</a><span class="tooltiptext">Used to communicate between scripting and the Animator Controller. Some parameters can be set in scripting and used by the controller, while other parameters are based on Custom Curves in Animation Clips and can be sampled using the scripting API. <a href="AnimationParameters.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AnimationParameters" aria-label="Go to glossary anchor for AnimationParameters">Glossary</a></span></span></span> associated with the <span class="tooltip"><strong>Animator Controller</strong><span class="tooltiptext">Controls animation through Animation Layers with Animation State Machines and Animation Blend Trees, controlled by Animation Parameters. The same Animator Controller can be referenced by multiple models with Animator components. <a href="class-AnimatorController.html" href="Glossary.html#AnimationParameters" aria-label="Go to glossary anchor for AnimationParameters">Glossary</a></span></span></span> associated with the <span class="tooltip"><strong>Animator Controller</strong><span class="tooltiptext">Controls animation through Animation Layers with Animation State Machines and Animation Blend Trees, controlled by Animation Parameters. The same Animator Controller can be referenced by multiple models with Animator components. <a href="class-AnimatorController.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AnimatorController" aria-label="Go to glossary anchor for AnimatorController">Glossary</a></span></span></span>. In order for the blended motion to make sense, the motions that are blended must be of similar nature and timing. Blend Trees are a special type of state in an Animation <span class="tooltip"><strong>State Machine</strong><span class="tooltiptext">The set of states in an Animator Controller that a character or animated GameObject can be in, along with a set of transitions between those states and a variable to remember the current state. The states available will depend on the type of gameplay, but typical states include things like idling, walking, running and jumping. <a href="StateMachineBasics.html" href="Glossary.html#AnimatorController" aria-label="Go to glossary anchor for AnimatorController">Glossary</a></span></span></span>. In order for the blended motion to make sense, the motions that are blended must be of similar nature and timing. Blend Trees are a special type of state in an Animation <span class="tooltip"><strong>State Machine</strong><span class="tooltiptext">The set of states in an Animator Controller that a character or animated GameObject can be in, along with a set of transitions between those states and a variable to remember the current state. The states available will depend on the type of gameplay, but typical states include things like idling, walking, running and jumping. <a href="StateMachineBasics.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#StateMachine" aria-label="Go to glossary anchor for StateMachine">Glossary</a></span></span></span>.</p></li>
+</ul>
+
+<p>Examples of similar motions could be various walk and run animations. In order for the blend to work well, the movements in the clips must take place at the same points in normalized time. For example, walking and running animations can be aligned so that the moments of contact of foot to the floor take place at the same points in normalized time (e.g. the left foot hits at 0.0 and the right foot at 0.5). Since normalized time is used, it doesn’t matter if the clips are of different length.</p>
+
+<h2>Using Blend Trees</h2>
+
+<p>To start working with a new Blend Tree, you need to:</p>
+
+<ol>
+<li>Right-click on empty space on the Animator Controller Window.</li>
+<li>Select <strong>Create State &gt; From New Blend Tree</strong> from the context menu that appears.</li>
+<li>Double-click on the Blend Tree to enter the Blend Tree Graph.</li>
+</ol>
+
+<p>The <span class="tooltip"><strong>Animator Window</strong><span class="tooltiptext">The window where the Animator Controller is visualized and edited. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimatorWindow.html" href="AnimatorWindow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AnimatorWindow" aria-label="Go to glossary anchor for AnimatorWindow">Glossary</a></span></span></span> now shows a graph of the entire Blend Tree while the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#AnimatorWindow" aria-label="Go to glossary anchor for AnimatorWindow">Glossary</a></span></span></span> now shows a graph of the entire Blend Tree while the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> shows the currently selected node and its immediate children.</p>
+
+<figure>
+<img src="../uploads/Main/MecanimBlendTreeStateDiagramCombined.png" alt="The Animator Window shows a graph of the entire Blend Tree. To the left is a Blend Tree with only the root Blend Node (no child nodes have been added yet). To the right is a Blend Tree with a root Blend Node and three Animation Clips as child nodes.">
+<figcaption>The Animator Window shows a graph of the entire Blend Tree. To the left is a Blend Tree with only the root Blend Node (no child nodes have been added yet). To the right is a Blend Tree with a root Blend Node and three Animation Clips as child nodes.</figcaption>
+</figure>
+
+<p>To add <span class="tooltip"><strong>animation clips</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html" href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> to the blend tree you can select the blend tree, then click the plus icon in the motion field in the inspector.</p>
+
+<figure>
+<img src="../uploads/Main/MecanimBlendTreeInitial.png" alt="A Blend Node shown in the inspector before any motions have been added. The plus icon is used to add animation clips or child blend trees.">
+<figcaption>A Blend Node shown in the inspector before any motions have been added. The plus icon is used to add animation clips or child blend trees.</figcaption>
+</figure>
+
+<p>Alternatively, you can add animation clips or child <strong>blend nodes</strong> by right-clicking on the blend tree and selecting from the context menu:</p>
+
+<figure>
+<img src="../uploads/Main/AnimatorBlendTreeContextMenu.png" alt="The context menu when right-clicking on a blend tree node.">
+<figcaption>The context menu when right-clicking on a blend tree node.</figcaption>
+</figure>
+
+<p>When the blendtree is set up with Animation clips and input parameters, the inspector window gives a graphical visualization of how the animations are combined as the parameter value changes (as you drag the slider, the arrows from the tree root change their shading to show the dominant animation clip).</p>
+
+<figure>
+<img src="../uploads/Main/AnimatorBlendTreeInspectorPreview.jpg" alt="A 2D Blendtree set up with five animation clips, being previewed in the inspector">
+<figcaption>A 2D Blendtree set up with five animation clips, being previewed in the inspector</figcaption>
+</figure>
+
+<p>You can select any of the nodes in the Blend Tree graph to inspect it in the Inspector. If the selected node is an Animation Clip the Inspector for that Animation Clip will be shown. The settings will be read-only if the animation is imported from a model. If the node is a Blend Node, the Inspector for Blend Nodes will be shown.</p>
+
+<p>You can choose either <a href="BlendTree-1DBlending.html">1D</a> or <a href="BlendTree-2DBlending.html">2D</a> blending from the <em>Blend Type</em> menu; the differences between the two types are described on their own pages in this section.</p>
+<!-- area:authoring -->
+
+<p><span class="search-words">BlendTree</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ScriptingRootMotion.html"></a></span><div class="tip">Tutorial: Scripting Root Motion for &quot;in-place&quot; humanoid animations</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="BlendTree-1DBlending.html"></a></span><div class="tip">1D Blending</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

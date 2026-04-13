@@ -1,0 +1,1324 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Custom shader fundamentals</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-VertexFragmentShaderExamples.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-VertexFragmentShaderExamples.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-VertexFragmentShaderExamples.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-VertexFragmentShaderExamples.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-VertexFragmentShaderExamples.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-VertexFragmentShaderExamples.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-VertexFragmentShaderExamples.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-VertexFragmentShaderExamples.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="render-pipelines.html">Render pipelines</a></li>
+<li><a href="built-in-render-pipeline.html">Using the Built-in Render Pipeline</a></li>
+<li><a href="built-in-shader-examples.html">Example shaders for the Built-in Render Pipeline</a></li>
+<li>Custom shader fundamentals</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="built-in-shader-examples.html"></a></span><div class="tip">Example shaders for the Built-in Render Pipeline</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="built-in-shader-examples-vertex-data.html"></a></span><div class="tip">Visualizing vertex data</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Custom shader fundamentals</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>These example shaders for the Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> demonstrate the basics of writing custom shaders, and cover common use cases.</p>
+
+<p>For information on writing shaders, see <a href="shader-writing.html">Writing shaders</a>.</p>
+
+<h3>Setting up the scene</h3>
+
+<p>The first step is to create some objects which you will use to test your shaders. Select <strong>Game Object</strong> &gt; <span class="tooltip"><strong>3D Object</strong><span class="tooltiptext">A 3D GameObject such as a cube, terrain or ragdoll. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GameObjects.html" href="GameObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#3DObject" aria-label="Go to glossary anchor for 3DObject">Glossary</a></span></span></span> &gt; <strong>Capsule</strong> in the main menu. Then position the camera so it shows the capsule. Double-click the Capsule in the Hierarchy to
+focus the scene view on it, then select the Main Camera object and click <strong>Game object</strong> &gt; <strong>Align with View</strong>
+from the main menu.</p>
+
+<figure>
+<img src="../uploads/Main/SL-CapsuleSetup.png" alt="">
+</figure>
+
+<p>Create a new <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Materials.html">Material</a> by selecting <strong>Create</strong> &gt; <span class="tooltip"><strong>Material</strong><span class="tooltiptext">An asset that defines how a surface should be rendered. <a href="class-Material.html" href="Materials.html">Material</a> by selecting <strong>Create</strong> &gt; <span class="tooltip"><strong>Material</strong><span class="tooltiptext">An asset that defines how a surface should be rendered. <a href="class-Material.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span> from the menu in the Project View. A new material called <em>New Material</em> will appear in the Project View.</p>
+
+<figure>
+<img src="../uploads/Main/SL-NewMaterial.png" alt="">
+</figure>
+
+<h3>Creating a shader</h3>
+
+<p>Now create a new <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html">Shader</a> asset in a similar way. Select <strong>Create</strong> &gt; <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Shaders.html">Shader</a> asset in a similar way. Select <strong>Create</strong> &gt; <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> &gt; <strong>Unlit Shader</strong> from the menu in the Project View.
+This creates a basic shader that just displays a texture without any lighting.</p>
+
+<figure>
+<img src="../uploads/Main/SL-NewShader.png" alt="">
+</figure>
+
+<p>Other entries in the <strong>Create</strong> &gt; <strong>Shader</strong> menu create barebone shaders
+or other types, for example a basic <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-SurfaceShaders.html">surface shader</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html" href="SL-SurfaceShaders.html">surface shader</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SurfaceShader" aria-label="Go to glossary anchor for SurfaceShader">Glossary</a></span></span></span>.</p>
+
+<h3>Linking the mesh, material and shader</h3>
+
+<p>Make the material use the shader via the material’s <span class="tooltip"><strong>inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, or just drag the shader asset over the material asset in the Project View. The material inspector will display a white sphere when it uses this shader.</p>
+
+<figure>
+<img src="../uploads/Main/SL-SelectShaderMenu.png" alt="">
+</figure>
+
+<p>Now drag the material onto your <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> object in either the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> object in either the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> or the Hierarchy views. Alternatively, select the object, and in the inspector make it use the material in the <span class="tooltip"><a href="class-MeshRenderer.html">Mesh Renderer</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> or the Hierarchy views. Alternatively, select the object, and in the inspector make it use the material in the <span class="tooltip"><a href="class-MeshRenderer.html">Mesh Renderer</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span> component’s Materials slot.</p>
+
+<figure>
+<img src="../uploads/Main/SL-WhiteCapsuleUnlitShader.png" alt="">
+</figure>
+
+<p>With these things set up, you can now begin looking at the shader code, and you will see the results of your changes to the shader on the capsule in the <span class="tooltip"><strong>Scene View</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>.</p>
+
+<h2>Main parts of the shader</h2>
+
+<p>To begin examining the code of the shader, double-click the shader asset in the Project View. The shader code will open in your script editor (MonoDevelop or Visual Studio).</p>
+
+<p>The shader starts off with this code:</p>
+
+<pre><code>Shader &quot;Unlit/NewUnlitShader&quot;
+{
+    Properties
+    {
+        _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+    }
+    SubShader
+    {
+        Tags { &quot;RenderType&quot;=&quot;Opaque&quot; }
+        LOD 100
+
+        Pass
+        {
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            // make fog work
+            #pragma multi_compile_fog
+            
+            #include &quot;UnityCG.cginc&quot;
+
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
+            };
+
+            struct v2f
+            {
+                float2 uv : TEXCOORD0;
+                UNITY_FOG_COORDS(1)
+                float4 vertex : SV_POSITION;
+            };
+
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
+            
+            v2f vert (appdata v)
+            {
+                v2f o;
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                UNITY_TRANSFER_FOG(o,o.vertex);
+                return o;
+            }
+            
+            fixed4 frag (v2f i) : SV_Target
+            {
+                // sample the texture
+                fixed4 col = tex2D(_MainTex, i.uv);
+                // apply fog
+                UNITY_APPLY_FOG(i.fogCoord, col);
+                return col;
+            }
+            ENDCG
+        }
+    }
+}
+</code></pre>
+
+<p>This initial shader does not look very simple! But don’t worry,
+we will go over each part step-by-step.</p>
+
+<p>Let’s see the main parts of our simple shader.</p>
+
+<pre><code>Shader
+</code></pre>
+
+<p>The <a href="SL-Shader.html">Shader</a> command contains a string with the name of
+the shader. You can use forward slash characters “/” to place your shader in sub-menus when selecting your shader in the <a href="class-Material.html">Material</a> inspector.</p>
+
+<pre><code>Properties
+</code></pre>
+
+<p>The <a href="SL-Properties.html">Properties</a> block contains shader variables
+(textures, colors etc.) that will be saved as part of the Material,
+and displayed in the material inspector. In our unlit shader template,
+there is a single texture property declared.</p>
+
+<pre><code>SubShader
+</code></pre>
+
+<p>A Shader can contain one or more <a href="SL-SubShader.html">SubShaders</a>, which are
+primarily used to implement shaders for different GPU capabilities.
+In this tutorial we’re not much concerned with that, so all our
+shaders will contain just one SubShader.</p>
+
+<pre><code>Pass
+</code></pre>
+
+<p>Each SubShader is composed of a number of <a href="SL-Pass.html">passes</a>, and
+each Pass represents an execution of the vertex and fragment code
+for the same object rendered with the material of the shader.
+Many simple shaders use just one pass, but shaders that
+interact with lighting might need more (see
+<a href="SL-RenderPipeline.html">Lighting Pipeline</a> for details). Commands
+inside Pass typically setup fixed function state, for example
+blending modes.</p>
+
+<pre><code>CGPROGRAM .. ENDCG
+</code></pre>
+
+<p>These keywords surround portions of HLSL code within the vertex and fragment
+shaders. Typically this is where most of the interesting code is. See
+<a href="SL-ShaderPrograms.html">vertex and fragment shaders</a> for details.</p>
+
+<h2>Simple unlit shader</h2>
+
+<p>The unlit shader template does a few more things than would be
+absolutely needed to display an object with a texture. For example,
+it supports Fog, and texture tiling/offset fields in the material.
+Let’s simplify the shader to bare minimum, and add more comments:</p>
+
+<pre><code>Shader &quot;Unlit/SimpleUnlitTexturedShader&quot;
+{
+    Properties
+    {
+        // we have removed support for texture tiling/offset,
+        // so make them not be displayed in material inspector
+        [NoScaleOffset] _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+    }
+    SubShader
+    {
+        Pass
+        {
+            HLSLPROGRAM
+            // use &quot;vert&quot; function as the vertex shader
+            #pragma vertex vert
+            // use &quot;frag&quot; function as the pixel (fragment) shader
+            #pragma fragment frag
+            #include &quot;UnityCG.cginc&quot;
+
+            // vertex shader inputs
+            struct appdata
+            {
+                float4 vertex : POSITION; // vertex position
+                float2 uv : TEXCOORD0; // texture coordinate
+            };
+
+            // vertex shader outputs (&quot;vertex to fragment&quot;)
+            struct v2f
+            {
+                float2 uv : TEXCOORD0; // texture coordinate
+                float4 vertex : SV_POSITION; // clip space position
+            };
+
+            // vertex shader
+            v2f vert (appdata v)
+            {
+                v2f o;
+                // transform position to clip space
+                // (multiply with model*view*projection matrix)
+                o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+                // just pass the texture coordinate
+                o.uv = v.uv;
+                return o;
+            }
+            
+            // texture we will sample
+            sampler2D _MainTex;
+
+            // pixel shader; returns low precision (&quot;fixed4&quot; type)
+            // color (&quot;SV_Target&quot; semantic)
+            fixed4 frag (v2f i) : SV_Target
+            {
+                // sample texture and return it
+                fixed4 col = tex2D(_MainTex, i.uv);
+                return col;
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+
+<p>The <span class="tooltip"><strong>Vertex Shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-ShaderPrograms.html" href="SL-ShaderPrograms.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span> is a program that runs on each vertex of the 3D model. Quite often it does not do anything particularly interesting. Here we just transform vertex position from object space into so called “clip space”, which is what’s used by the GPU to rasterize the object on screen. We also pass the input texture coordinate unmodified - we’ll need it to sample the texture in the fragment shader.</p>
+
+<p>The <strong>Fragment Shader</strong> is a program that runs on each and every <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> that object occupies on-screen, and is usually used to calculate and output the color of each pixel. Usually there are millions of pixels on the screen, and the fragment shaders are executed
+for all of them! Optimizing fragment shaders is quite an important part of overall game performance work.</p>
+
+<p>Some variable or function definitions are followed by a <strong>Semantic Signifier</strong> - for example <strong>: POSITION</strong> or <strong>: SV_Target</strong>. These semantics signifiers communicate the “meaning” of these variables to the GPU. See the <a href="SL-ShaderSemantics.html">shader semantics</a> page for details.</p>
+
+<p>When used on a nice model with a nice texture, our simple shader looks pretty good!</p>
+
+<figure>
+<img src="../uploads/SL/ExampleUnlitTextured.png" alt="">
+</figure>
+
+<h2>Even simpler single color shader</h2>
+
+<p>Let’s simplify the shader even more – we’ll make a shader that draws the whole object in a single
+color. This is not terribly useful, but hey we’re learning here.</p>
+
+<pre><code>Shader &quot;Unlit/SingleColor&quot;
+{
+    Properties
+    {
+        // Color property for material inspector, default to white
+        _Color (&quot;Main Color&quot;, Color) = (1,1,1,1)
+    }
+    SubShader
+    {
+        Pass
+        {
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &quot;UnityCG.cginc&quot;
+
+            // vertex shader
+            // this time instead of using &quot;appdata&quot; struct, just spell inputs manually,
+            // and instead of returning v2f struct, also just return a single output
+            // float4 clip position
+            float4 vert (float4 vertex : POSITION) : SV_POSITION
+            {
+                return mul(UNITY_MATRIX_MVP, vertex);
+            }
+            
+            // color from the material
+            fixed4 _Color;
+
+            // pixel shader, no inputs needed
+            fixed4 frag () : SV_Target
+            {
+                return _Color; // just return it
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+
+<p>This time instead of using structs for input (<strong>appdata</strong>) and output (<strong>v2f</strong>), the shader functions just spell out inputs manually. Both ways work, and which you choose to use depends on your coding style and preference.</p>
+
+<figure>
+<img src="../uploads/SL/ExampleSingleColor.png" alt="">
+</figure>
+
+<h2>Using mesh normals for fun and profit</h2>
+
+<p>Let’s proceed with a shader that displays mesh normals in world space. Without further ado:</p>
+
+<pre><code>Shader &quot;Unlit/WorldSpaceNormals&quot;
+{
+    // no Properties block this time!
+    SubShader
+    {
+        Pass
+        {
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            // include file that contains UnityObjectToWorldNormal helper function
+            #include &quot;UnityCG.cginc&quot;
+
+            struct v2f {
+                // we'll output world space normal as one of regular (&quot;texcoord&quot;) interpolators
+                half3 worldNormal : TEXCOORD0;
+                float4 pos : SV_POSITION;
+            };
+
+            // vertex shader: takes object space normal as input too
+            v2f vert (float4 vertex : POSITION, float3 normal : NORMAL)
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(vertex);
+                // UnityCG.cginc file contains function to transform
+                // normal from object to world space, use that
+                o.worldNormal = UnityObjectToWorldNormal(normal);
+                return o;
+            }
+            
+            fixed4 frag (v2f i) : SV_Target
+            {
+                fixed4 c = 0;
+                // normal is a 3D vector with xyz components; in -1..1
+                // range. To display it as color, bring the range into 0..1
+                // and put into red, green, blue components
+                c.rgb = i.worldNormal*0.5+0.5;
+                return c;
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+
+<figure>
+<img src="../uploads/SL/ExampleWorldSpaceNormals.png" alt="">
+</figure>
+
+<p>Besides resulting in pretty colors, normals are used for all sorts of graphics effects – lighting, reflections, silhouettes and so on.</p>
+
+<p>In the shader above, we started using one of Unity’s built-in <a href="SL-BuiltinIncludes.html">shader include files</a>.
+Here, <strong>UnityCG.cginc</strong> was used which contains a handy function <strong>UnityObjectToWorldNormal</strong>. We have also used the utility function <strong>UnityObjectToClipPos</strong>, which transforms the vertex from object space to the screen. This just makes the code easier to read and is more efficient under certain circumstances.</p>
+
+<p>We’ve seen that data can be passed from the vertex into fragment shader in so-called “interpolators” (or sometimes called “varyings”). In HLSL shading language they are typically labeled with <strong>TEXCOORDn</strong> semantic, and each of them can be up to a 4-component vector (see <a href="SL-ShaderSemantics.html">semantics</a> page for details).</p>
+
+<p>Also we’ve learned a simple technique in how to visualize normalized vectors (in –1.0 to +1.0 range) as colors: just multiply them by half and add half. For more vertex data visualization examples, see <a href="built-in-shader-examples-vertex-data.html">Visualizaing vertex data</a>.</p>
+
+<h4>Environment reflection using world-space normals</h4>
+
+<p>When a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Skybox.html">Skybox</a><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a href="class-Skybox.html" href="class-Skybox.html">Skybox</a><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a href="class-Skybox.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skybox" aria-label="Go to glossary anchor for Skybox">Glossary</a></span></span></span> is used in the scene as a reflection source (see <a href="lighting-window.html">Lighting window</a>),
+then essentially a “default” <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ReflectionProbe.html">Reflection Probe</a><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html" href="class-ReflectionProbe.html">Reflection Probe</a><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span> is created, containing the skybox data.
+A reflection probe is internally a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Cubemap.html">Cubemap</a><span class="tooltiptext">A collection of six square textures that can represent the reflections in an environment or the skybox drawn behind your geometry. The six squares form the faces of an imaginary cube that surrounds an object; each face represents the view along the directions of the world axes (up, down, left, right, forward and back). <a href="class-Cubemap.html" href="class-Cubemap.html">Cubemap</a><span class="tooltiptext">A collection of six square textures that can represent the reflections in an environment or the skybox drawn behind your geometry. The six squares form the faces of an imaginary cube that surrounds an object; each face represents the view along the directions of the world axes (up, down, left, right, forward and back). <a href="class-Cubemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Cubemap" aria-label="Go to glossary anchor for Cubemap">Glossary</a></span></span></span> texture; we will extend the world-space normals shader above to look into it.</p>
+
+<p>The code is starting to get a bit involved by now. Of course, if you want shaders that automatically work with lights, shadows, reflections and the rest of the lighting system, it’s way easier to use <a href="SL-SurfaceShaders.html">surface shaders</a>. This example is intended to show you how to use parts of the lighting system in a “manual” way.</p>
+
+<pre><code>Shader &quot;Unlit/SkyReflection&quot;
+{
+    SubShader
+    {
+        Pass
+        {
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &quot;UnityCG.cginc&quot;
+
+            struct v2f {
+                half3 worldRefl : TEXCOORD0;
+                float4 pos : SV_POSITION;
+            };
+
+            v2f vert (float4 vertex : POSITION, float3 normal : NORMAL)
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(vertex);
+                // compute world space position of the vertex
+                float3 worldPos = mul(_Object2World, vertex).xyz;
+                // compute world space view direction
+                float3 worldViewDir = normalize(UnityWorldSpaceViewDir(worldPos));
+                // world space normal
+                float3 worldNormal = UnityObjectToWorldNormal(normal);
+                // world space reflection vector
+                o.worldRefl = reflect(-worldViewDir, worldNormal);
+                return o;
+            }
+        
+            fixed4 frag (v2f i) : SV_Target
+            {
+                // sample the default reflection cubemap, using the reflection vector
+                half4 skyData = UNITY_SAMPLE_TEXCUBE(unity_SpecCube0, i.worldRefl);
+                // decode cubemap data into actual color
+                half3 skyColor = DecodeHDR (skyData, unity_SpecCube0_HDR);
+                // output it!
+                fixed4 c = 0;
+                c.rgb = skyColor;
+                return c;
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+
+<figure>
+<img src="../uploads/SL/ExampleSkyReflection.png" alt="">
+</figure>
+
+<p>The example above uses several things from the built-in <a href="SL-BuiltinIncludes.html">shader include files</a>:</p>
+
+<ul>
+<li>
+<strong>unity_SpecCube0</strong>, <strong>unity_SpecCube0_HDR</strong>, <strong>Object2World</strong>, <strong>UNITY_MATRIX_MVP</strong> from the
+ <a href="SL-UnityShaderVariables.html">built-in shader variables</a>. <strong>unity_SpecCube0</strong> contains data for the active reflection probe.</li>
+<li>
+<strong>UNITY_SAMPLE_TEXCUBE</strong> is a <a href="SL-BuiltinMacros.html">built-in macro</a> to sample a cubemap. Most regular cubemaps are declared and
+ used using standard HLSL syntax (<strong>samplerCUBE</strong> and <strong>texCUBE</strong>), however the reflection probe cubemaps in Unity are declared in a special way to save on sampler slots. If you don’t know what that is, don’t worry, just know that in order to use <strong>unity_SpecCube0</strong> cubemap you have to use <strong>UNITY_SAMPLE_TEXCUBE</strong> macro.</li>
+<li>
+<strong>UnityWorldSpaceViewDir</strong> function from <strong>UnityCG.cginc</strong>, and <strong>DecodeHDR</strong> function from the same file. The latter is used to get actual color from the reflection probe data – since Unity stores reflection probe cubemap in specially encoded way.</li>
+<li>
+<strong>reflect</strong> is just a built-in HLSL function to compute vector reflection around a given normal.</li>
+</ul>
+
+<h4>Environment reflection with a normal map</h4>
+
+<p>Often <span class="tooltip"><strong>Normal Maps</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normalmap" aria-label="Go to glossary anchor for Normalmap">Glossary</a></span></span></span> are used to create additional detail on objects, without creating additional geometry. Let’s see how to make a shader that reflects the environment, with a normal map texture.</p>
+
+<p>Now the math is starting to get <em>really involved</em>, so we’ll do it in a few steps. In the shader above, the reflection
+direction was computed per-vertex (in the vertex shader), and the fragment shader was only doing the reflection
+probe cubemap lookup. However once we start using normal maps, the surface normal itself needs to be calculated on a per-pixel basis, which means we also have to compute how the environment is reflected per-pixel!</p>
+
+<p>So first of all, let’s rewrite the shader above to do the same thing, except we will move some of the calculations to the fragment shader, so they are computed per-pixel:</p>
+
+<pre><code>Shader &quot;Unlit/SkyReflection Per Pixel&quot;
+{
+    SubShader
+    {
+        Pass
+        {
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &quot;UnityCG.cginc&quot;
+
+            struct v2f {
+                float3 worldPos : TEXCOORD0;
+                half3 worldNormal : TEXCOORD1;
+                float4 pos : SV_POSITION;
+            };
+
+            v2f vert (float4 vertex : POSITION, float3 normal : NORMAL)
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(vertex);
+                o.worldPos = mul(_Object2World, vertex).xyz;
+                o.worldNormal = UnityObjectToWorldNormal(normal);
+                return o;
+            }
+        
+            fixed4 frag (v2f i) : SV_Target
+            {
+                // compute view direction and reflection vector
+                // per-pixel here
+                half3 worldViewDir = normalize(UnityWorldSpaceViewDir(i.worldPos));
+                half3 worldRefl = reflect(-worldViewDir, i.worldNormal);
+
+                // same as in previous shader
+                half4 skyData = UNITY_SAMPLE_TEXCUBE(unity_SpecCube0, worldRefl);
+                half3 skyColor = DecodeHDR (skyData, unity_SpecCube0_HDR);
+                fixed4 c = 0;
+                c.rgb = skyColor;
+                return c;
+            }
+            ENDCG
+        }
+    }
+}
+</code></pre>
+
+<p>That by itself does not give us much – the shader looks exactly the same, except now it runs slower since it does more calculations for each and every pixel on screen, instead of only for each of the model’s vertices. However, we’ll need these calculations really soon. Higher graphics fidelity often requires more complex shaders.</p>
+
+<p>We’ll have to learn a new thing now too; the so-called “tangent space”. Normal map textures are most often expressed in a coordinate space that can be thought of as “following the surface” of the model. In our shader, we will need to to know the tangent space basis vectors, read the normal vector from the texture, transform it into world space, and then do all the math
+from the above shader. Let’s get to it!</p>
+
+<pre><code>Shader &quot;Unlit/SkyReflection Per Pixel&quot;
+{
+    Properties {
+        // normal map texture on the material,
+        // default to dummy &quot;flat surface&quot; normalmap
+        _BumpMap(&quot;Normal Map&quot;, 2D) = &quot;bump&quot; {}
+    }
+    SubShader
+    {
+        Pass
+        {
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &quot;UnityCG.cginc&quot;
+
+            struct v2f {
+                float3 worldPos : TEXCOORD0;
+                // these three vectors will hold a 3x3 rotation matrix
+                // that transforms from tangent to world space
+                half3 tspace0 : TEXCOORD1; // tangent.x, bitangent.x, normal.x
+                half3 tspace1 : TEXCOORD2; // tangent.y, bitangent.y, normal.y
+                half3 tspace2 : TEXCOORD3; // tangent.z, bitangent.z, normal.z
+                // texture coordinate for the normal map
+                float2 uv : TEXCOORD4;
+                float4 pos : SV_POSITION;
+            };
+
+            // vertex shader now also needs a per-vertex tangent vector.
+            // in Unity tangents are 4D vectors, with the .w component used to
+            // indicate direction of the bitangent vector.
+            // we also need the texture coordinate.
+            v2f vert (float4 vertex : POSITION, float3 normal : NORMAL, float4 tangent : TANGENT, float2 uv : TEXCOORD0)
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(vertex);
+                o.worldPos = mul(_Object2World, vertex).xyz;
+                half3 wNormal = UnityObjectToWorldNormal(normal);
+                half3 wTangent = UnityObjectToWorldDir(tangent.xyz);
+                // compute bitangent from cross product of normal and tangent
+                half tangentSign = tangent.w * unity_WorldTransformParams.w;
+                half3 wBitangent = cross(wNormal, wTangent) * tangentSign;
+                // output the tangent space matrix
+                o.tspace0 = half3(wTangent.x, wBitangent.x, wNormal.x);
+                o.tspace1 = half3(wTangent.y, wBitangent.y, wNormal.y);
+                o.tspace2 = half3(wTangent.z, wBitangent.z, wNormal.z);
+                o.uv = uv;
+                return o;
+            }
+
+            // normal map texture from shader properties
+            sampler2D _BumpMap;
+        
+            fixed4 frag (v2f i) : SV_Target
+            {
+                // sample the normal map, and decode from the Unity encoding
+                half3 tnormal = UnpackNormal(tex2D(_BumpMap, i.uv));
+                // transform normal from tangent to world space
+                half3 worldNormal;
+                worldNormal.x = dot(i.tspace0, tnormal);
+                worldNormal.y = dot(i.tspace1, tnormal);
+                worldNormal.z = dot(i.tspace2, tnormal);
+
+                // rest the same as in previous shader
+                half3 worldViewDir = normalize(UnityWorldSpaceViewDir(i.worldPos));
+                half3 worldRefl = reflect(-worldViewDir, worldNormal);
+                half4 skyData = UNITY_SAMPLE_TEXCUBE(unity_SpecCube0, worldRefl);
+                half3 skyColor = DecodeHDR (skyData, unity_SpecCube0_HDR);
+                fixed4 c = 0;
+                c.rgb = skyColor;
+                return c;
+            }
+            ENDCG
+        }
+    }
+}
+</code></pre>
+
+<p>Phew, that was quite involved. But look, normal mapped reflections!</p>
+
+<figure>
+<img src="../uploads/SL/ExampleSkyReflectionNormalmap.png" alt="">
+</figure>
+
+<h2>Adding more textures</h2>
+
+<p>Let’s add more textures to the normal-mapped, sky-reflecting shader above. We’ll add the base color texture, seen in the first unlit example, and an occlusion map to darken the cavities.</p>
+
+<pre><code>Shader &quot;Unlit/More Textures&quot;
+{
+    Properties {
+        // three textures we'll use in the material
+        _MainTex(&quot;Base texture&quot;, 2D) = &quot;white&quot; {}
+        _OcclusionMap(&quot;Occlusion&quot;, 2D) = &quot;white&quot; {}
+        _BumpMap(&quot;Normal Map&quot;, 2D) = &quot;bump&quot; {}
+    }
+    SubShader
+    {
+        Pass
+        {
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &quot;UnityCG.cginc&quot;
+
+            // exactly the same as in previous shader
+            struct v2f {
+                float3 worldPos : TEXCOORD0;
+                half3 tspace0 : TEXCOORD1;
+                half3 tspace1 : TEXCOORD2;
+                half3 tspace2 : TEXCOORD3;
+                float2 uv : TEXCOORD4;
+                float4 pos : SV_POSITION;
+            };
+            v2f vert (float4 vertex : POSITION, float3 normal : NORMAL, float4 tangent : TANGENT, float2 uv : TEXCOORD0)
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(vertex);
+                o.worldPos = mul(_Object2World, vertex).xyz;
+                half3 wNormal = UnityObjectToWorldNormal(normal);
+                half3 wTangent = UnityObjectToWorldDir(tangent.xyz);
+                half tangentSign = tangent.w * unity_WorldTransformParams.w;
+                half3 wBitangent = cross(wNormal, wTangent) * tangentSign;
+                o.tspace0 = half3(wTangent.x, wBitangent.x, wNormal.x);
+                o.tspace1 = half3(wTangent.y, wBitangent.y, wNormal.y);
+                o.tspace2 = half3(wTangent.z, wBitangent.z, wNormal.z);
+                o.uv = uv;
+                return o;
+            }
+
+            // textures from shader properties
+            sampler2D _MainTex;
+            sampler2D _OcclusionMap;
+            sampler2D _BumpMap;
+        
+            fixed4 frag (v2f i) : SV_Target
+            {
+                // same as from previous shader...
+                half3 tnormal = UnpackNormal(tex2D(_BumpMap, i.uv));
+                half3 worldNormal;
+                worldNormal.x = dot(i.tspace0, tnormal);
+                worldNormal.y = dot(i.tspace1, tnormal);
+                worldNormal.z = dot(i.tspace2, tnormal);
+                half3 worldViewDir = normalize(UnityWorldSpaceViewDir(i.worldPos));
+                half3 worldRefl = reflect(-worldViewDir, worldNormal);
+                half4 skyData = UNITY_SAMPLE_TEXCUBE(unity_SpecCube0, worldRefl);
+                half3 skyColor = DecodeHDR (skyData, unity_SpecCube0_HDR);                
+                fixed4 c = 0;
+                c.rgb = skyColor;
+
+                // modulate sky color with the base texture, and the occlusion map
+                fixed3 baseColor = tex2D(_MainTex, i.uv).rgb;
+                fixed occlusion = tex2D(_OcclusionMap, i.uv).r;
+                c.rgb *= baseColor;
+                c.rgb *= occlusion;
+
+                return c;
+            }
+            ENDCG
+        }
+    }
+}
+</code></pre>
+
+<p>Balloon cat is looking good!</p>
+
+<figure>
+<img src="../uploads/SL/ExampleMoreTextures.png" alt="">
+</figure>
+
+<h2>Texturing shader examples</h2>
+
+<h4>Procedural checkerboard pattern</h4>
+
+<p>Here’s a shader that outputs a checkerboard pattern based on texture coordinates of a mesh:</p>
+
+<pre><code>Shader &quot;Unlit/Checkerboard&quot;
+{
+    Properties
+    {
+        _Density (&quot;Density&quot;, Range(2,50)) = 30
+    }
+    SubShader
+    {
+        Pass
+        {
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &quot;UnityCG.cginc&quot;
+
+            struct v2f
+            {
+                float2 uv : TEXCOORD0;
+                float4 vertex : SV_POSITION;
+            };
+
+            float _Density;
+
+            v2f vert (float4 pos : POSITION, float2 uv : TEXCOORD0)
+            {
+                v2f o;
+                o.vertex = UnityObjectToClipPos(pos);
+                o.uv = uv * _Density;
+                return o;
+            }
+            
+            fixed4 frag (v2f i) : SV_Target
+            {
+                float2 c = i.uv;
+                c = floor(c) / 2;
+                float checker = frac(c.x + c.y) * 2;
+                return checker;
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+
+<p>The density slider in the <a href="SL-Properties.html">Properties</a> block controls how dense the checkerboard is. In the vertex shader, the mesh UVs are multiplied by the density value to take them from a range of 0 to 1 to a range of 0 to density. Let’s say the density was set to 30 - this will make <strong>i.uv</strong> input into the fragment shader contain floating point values from zero to 30 for various places of the mesh being rendered.</p>
+
+<p>Then the fragment shader code takes only the integer part of the input coordinate using HLSL’s built-in <strong>floor</strong> function, and divides it by two. Recall that the input coordinates were numbers from 0 to 30; this makes them all be “quantized” to values of 0, 0.5, 1, 1.5, 2, 2.5, and so on. This was done on both the x and y components of the input coordinate.</p>
+
+<p>Next up, we add these x and y coordinates together (each of them only having possible values of 0, 0.5, 1, 1.5, …) and only take the fractional part using another built-in HLSL function, <strong>frac</strong>. Result of this can only be either 0.0 or 0.5. We then multiply it by two to make it either 0.0 or 1.0, and output as a color (this results in black or white color respectively).</p>
+
+<figure>
+<img src="../uploads/SL/ExampleCheckerboard.png" alt="">
+</figure>
+
+<h4>Tri-planar texturing</h4>
+
+<p>For complex or procedural meshes, instead of texturing them using the regular UV coordinates, it is sometimes useful to just “project” texture onto the object from three primary directions. This is called “tri-planar” texturing. The idea is to use surface normal to weight the three texture directions. Here’s the shader:</p>
+
+<pre><code>Shader &quot;Unlit/Triplanar&quot;
+{
+    Properties
+    {
+        _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+        _Tiling (&quot;Tiling&quot;, Float) = 1.0
+        _OcclusionMap(&quot;Occlusion&quot;, 2D) = &quot;white&quot; {}
+    }
+    SubShader
+    {
+        Pass
+        {
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &quot;UnityCG.cginc&quot;
+
+            struct v2f
+            {
+                half3 objNormal : TEXCOORD0;
+                float3 coords : TEXCOORD1;
+                float2 uv : TEXCOORD2;
+                float4 pos : SV_POSITION;
+            };
+
+            float _Tiling;
+
+            v2f vert (float4 pos : POSITION, float3 normal : NORMAL, float2 uv : TEXCOORD0)
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(pos);
+                o.coords = pos.xyz * _Tiling;
+                o.objNormal = normal;
+                o.uv = uv;
+                return o;
+            }
+
+            sampler2D _MainTex;
+            sampler2D _OcclusionMap;
+            
+            fixed4 frag (v2f i) : SV_Target
+            {
+                // use absolute value of normal as texture weights
+                half3 blend = abs(i.objNormal);
+                // make sure the weights sum up to 1 (divide by sum of x+y+z)
+                blend /= dot(blend,1.0);
+                // read the three texture projections, for x,y,z axes
+                fixed4 cx = tex2D(_MainTex, i.coords.yz);
+                fixed4 cy = tex2D(_MainTex, i.coords.xz);
+                fixed4 cz = tex2D(_MainTex, i.coords.xy);
+                // blend the textures based on weights
+                fixed4 c = cx * blend.x + cy * blend.y + cz * blend.z;
+                // modulate by regular occlusion map
+                c *= tex2D(_OcclusionMap, i.uv);
+                return c;
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+
+<figure>
+<img src="../uploads/SL/ExampleTriPlanar.png" alt="">
+</figure>
+
+<h2>Calculating lighting</h2>
+
+<p>Typically when you want a shader that works with Unity’s lighting pipeline, you
+would write a <a href="SL-SurfaceShaders.html">surface shader</a>. This does most of the “heavy lifting”
+for you, and your shader code just needs to define surface properties.</p>
+
+<p>However in some cases you want to bypass the standard surface shader path; either because
+you want to only support some limited subset of whole lighting pipeline for performance reasons,
+or you want to do custom things that aren’t quite “standard lighting”. The following examples
+will show how to get to the lighting data from manually-written vertex and fragment shaders.
+Looking at the code generated by surface shaders (via <a href="class-Shader.html">shader inspector</a>) is also
+a good learning resource.</p>
+
+<h4>Simple diffuse lighting</h4>
+
+<p>The first thing we need to do is to indicate that our shader does in fact need lighting information passed to it. Unity’s <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-RenderPipeline.html">rendering pipeline</a> supports various ways of rendering; here we’ll be using the default <span class="tooltip"><a href="RenderTech-ForwardRendering.html">forward rendering</a><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a href="RenderTech-ForwardRendering.html" href="SL-RenderPipeline.html">rendering pipeline</a> supports various ways of rendering; here we’ll be using the default <span class="tooltip"><a href="RenderTech-ForwardRendering.html">forward rendering</a><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a href="RenderTech-ForwardRendering.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ForwardRendering" aria-label="Go to glossary anchor for ForwardRendering">Glossary</a></span></span></span> one.</p>
+
+<p>We’ll start by only supporting one directional light. Forward rendering in Unity works by rendering the main directional light, ambient, <span class="tooltip"><strong>lightmaps</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> and reflections in a single pass called <strong>ForwardBase</strong>. In the shader, this is indicated by adding a <a href="SL-PassTags.html">pass tag</a>: <strong>Tags {“LightMode”=“ForwardBase”}</strong>. This will make directional light data be passed into shader via some <a href="SL-UnityShaderVariables.html">built-in variables</a>.</p>
+
+<p>Here’s the shader that computes simple diffuse lighting per vertex, and uses a single main texture:</p>
+
+<pre><code>Shader &quot;Lit/Simple Diffuse&quot;
+{
+    Properties
+    {
+        [NoScaleOffset] _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+    }
+    SubShader
+    {
+        Pass
+        {
+            // indicate that our pass is the &quot;base&quot; pass in forward
+            // rendering pipeline. It gets ambient and main directional
+            // light data set up; light direction in _WorldSpaceLightPos0
+            // and color in _LightColor0
+            Tags {&quot;LightMode&quot;=&quot;ForwardBase&quot;}
+        
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &quot;UnityCG.cginc&quot; // for UnityObjectToWorldNormal
+            #include &quot;UnityLightingCommon.cginc&quot; // for _LightColor0
+
+            struct v2f
+            {
+                float2 uv : TEXCOORD0;
+                fixed4 diff : COLOR0; // diffuse lighting color
+                float4 vertex : SV_POSITION;
+            };
+
+            v2f vert (appdata_base v)
+            {
+                v2f o;
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.uv = v.texcoord;
+                // get vertex normal in world space
+                half3 worldNormal = UnityObjectToWorldNormal(v.normal);
+                // dot product between normal and light direction for
+                // standard diffuse (Lambert) lighting
+                half nl = max(0, dot(worldNormal, _WorldSpaceLightPos0.xyz));
+                // factor in the light color
+                o.diff = nl * _LightColor0;
+                return o;
+            }
+            
+            sampler2D _MainTex;
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+                // sample texture
+                fixed4 col = tex2D(_MainTex, i.uv);
+                // multiply by lighting
+                col *= i.diff;
+                return col;
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+
+<p>This makes the object react to light direction - parts of it facing the light are illuminated, and parts facing away are not illuminated at all.</p>
+
+<figure>
+<img src="../uploads/SL/ExampleDiffuseLighting.png" alt="">
+</figure>
+
+<h4>Diffuse lighting with ambient</h4>
+
+<p>The example above does not take any ambient lighting or light probes into account. Let’s fix this!
+It turns out we can do this by adding just a single line of code. Both ambient and <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html">light probe</a><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html" href="LightProbes.html">light probe</a><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span> data is passed to shaders in Spherical Harmonics form, and <strong>ShadeSH9</strong> function from <strong>UnityCG.cginc</strong> <a href="SL-BuiltinIncludes.html">include file</a> does all the work of evaluating it, given a world space normal.</p>
+
+<pre><code>Shader &quot;Lit/Diffuse With Ambient&quot;
+{
+    Properties
+    {
+        [NoScaleOffset] _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+    }
+    SubShader
+    {
+        Pass
+        {
+            Tags {&quot;LightMode&quot;=&quot;ForwardBase&quot;}
+        
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &quot;UnityCG.cginc&quot;
+            #include &quot;UnityLightingCommon.cginc&quot;
+
+            struct v2f
+            {
+                float2 uv : TEXCOORD0;
+                fixed4 diff : COLOR0;
+                float4 vertex : SV_POSITION;
+            };
+
+            v2f vert (appdata_base v)
+            {
+                v2f o;
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.uv = v.texcoord;
+                half3 worldNormal = UnityObjectToWorldNormal(v.normal);
+                half nl = max(0, dot(worldNormal, _WorldSpaceLightPos0.xyz));
+                o.diff = nl * _LightColor0;
+
+                // the only difference from previous shader:
+                // in addition to the diffuse lighting from the main light,
+                // add illumination from ambient or light probes
+                // ShadeSH9 function from UnityCG.cginc evaluates it,
+                // using world space normal
+                o.diff.rgb += ShadeSH9(half4(worldNormal,1));
+                return o;
+            }
+            
+            sampler2D _MainTex;
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+                fixed4 col = tex2D(_MainTex, i.uv);
+                col *= i.diff;
+                return col;
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+
+<p>This shader is in fact starting to look very similar to the built-in <a href="shader-NormalDiffuse.html">Legacy Diffuse</a> shader!</p>
+
+<figure>
+<img src="../uploads/SL/ExampleDiffuseAmbientLighting.png" alt="">
+</figure>
+
+<h4>Implementing shadow casting</h4>
+
+<p>Our shader currently can neither receive nor cast shadows. Let’s implement shadow casting first.</p>
+
+<p>In order to cast shadows, a shader has to have a <strong>ShadowCaster</strong> <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-PassTags.html">pass type</a> in any of its <a href="SL-SubShader.html">subshaders</a> or any <a href="SL-Fallback.html">fallback</a>. The ShadowCaster pass is used to render the object into the shadowmap, and typically it is fairly simple - the vertex shader only needs to evaluate the vertex position, and the fragment shader pretty much does not do anything. The shadowmap is only the <span class="tooltip"><strong>depth buffer</strong><span class="tooltiptext">A memory store that holds the z-value depth of each pixel in an image, where the z-value is the depth for each rendered pixel from the projection plane. <a href="class-RenderTexture.html" href="SL-PassTags.html">pass type</a> in any of its <a href="SL-SubShader.html">subshaders</a> or any <a href="SL-Fallback.html">fallback</a>. The ShadowCaster pass is used to render the object into the shadowmap, and typically it is fairly simple - the vertex shader only needs to evaluate the vertex position, and the fragment shader pretty much does not do anything. The shadowmap is only the <span class="tooltip"><strong>depth buffer</strong><span class="tooltiptext">A memory store that holds the z-value depth of each pixel in an image, where the z-value is the depth for each rendered pixel from the projection plane. <a href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#depthbuffer" aria-label="Go to glossary anchor for depthbuffer">Glossary</a></span></span></span>, so even the color output by the fragment shader does not really matter.</p>
+
+<p>This means that for a lot of shaders, the shadow caster pass is going to be almost exactly the same (unless object has custom vertex shader based deformations, or has alpha cutout / semitransparent parts). The easiest way to pull it in is via <a href="SL-UsePass.html">UsePass</a> shader command:</p>
+
+<pre><code>Pass
+{
+    // regular lighting pass
+}
+// pull in shadow caster from VertexLit built-in shader
+UsePass &quot;Legacy Shaders/VertexLit/SHADOWCASTER&quot;
+</code></pre>
+
+<p>However we’re learning here, so let’s do the same thing “by hand” so to speak. For shorter code,
+we’ve replaced the lighting pass (“ForwardBase”) with code that only does untextured ambient. Below it, there’s a “ShadowCaster” pass that makes the object support shadow casting.</p>
+
+<pre><code>Shader &quot;Lit/Shadow Casting&quot;
+{
+    SubShader
+    {
+        // very simple lighting pass, that only does non-textured ambient
+        Pass
+        {
+            Tags {&quot;LightMode&quot;=&quot;ForwardBase&quot;}
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &quot;UnityCG.cginc&quot;
+            struct v2f
+            {
+                fixed4 diff : COLOR0;
+                float4 vertex : SV_POSITION;
+            };
+            v2f vert (appdata_base v)
+            {
+                v2f o;
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                half3 worldNormal = UnityObjectToWorldNormal(v.normal);
+                // only evaluate ambient
+                o.diff.rgb = ShadeSH9(half4(worldNormal,1));
+                o.diff.a = 1;
+                return o;
+            }
+            fixed4 frag (v2f i) : SV_Target
+            {
+                return i.diff;
+            }
+            ENDHLSL
+        }
+
+        // shadow caster rendering pass, implemented manually
+        // using macros from UnityCG.cginc
+        Pass
+        {
+            Tags {&quot;LightMode&quot;=&quot;ShadowCaster&quot;}
+
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma multi_compile_shadowcaster
+            #include &quot;UnityCG.cginc&quot;
+
+            struct v2f { 
+                V2F_SHADOW_CASTER;
+            };
+
+            v2f vert(appdata_base v)
+            {
+                v2f o;
+                TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
+                return o;
+            }
+
+            float4 frag(v2f i) : SV_Target
+            {
+                SHADOW_CASTER_FRAGMENT(i)
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+
+<p>Now there’s a plane underneath, using a regular built-in Diffuse shader, so that we can see
+our shadows working (remember, our current shader does not support <em>receiving</em> shadows yet!).</p>
+
+<figure>
+<img src="../uploads/SL/ExampleShadowCasting.png" alt="">
+</figure>
+
+<p>We’ve used the <strong>#pragma multi_compile_shadowcaster</strong> directive. This causes the shader to be compiled into several variants with different preprocessor macros defined for each (see
+<a href="SL-MultipleProgramVariants.html">multiple shader variants</a> page for details). When rendering into the shadowmap, the cases of point lights vs other light types need slightly different shader code, that’s why this directive is needed.</p>
+
+<h4>Receiving shadows</h4>
+
+<p>Implementing support for receiving shadows will require compiling the base lighting pass into
+several variants, to handle cases of “directional light without shadows” and “directional light with shadows” properly. <strong>#pragma multi_compile_fwdbase</strong> directive does this (see
+<a href="SL-MultipleProgramVariants.html">multiple shader variants</a> for details). In fact it does a lot more:
+it also compiles variants for the different lightmap types, Enlighten Realtime <span class="tooltip"><strong>Global Illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span> (Realtime GI) being on or off etc. Currently we don’t need all that, so we’ll explicitly skip these variants.</p>
+
+<p>Then to get actual shadowing computations, we’ll <strong>#include “AutoLight.cginc”</strong> shader <a href="SL-BuiltinIncludes.html">include file</a> and use SHADOW_COORDS, TRANSFER_SHADOW, SHADOW_ATTENUATION macros from it.</p>
+
+<p>Here’s the shader:</p>
+
+<pre><code>Shader &quot;Lit/Diffuse With Shadows&quot;
+{
+    Properties
+    {
+        [NoScaleOffset] _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+    }
+    SubShader
+    {
+        Pass
+        {
+            Tags {&quot;LightMode&quot;=&quot;ForwardBase&quot;}
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &quot;UnityCG.cginc&quot;
+            #include &quot;Lighting.cginc&quot;
+
+            // compile shader into multiple variants, with and without shadows
+            // (we don't care about any lightmaps yet, so skip these variants)
+            #pragma multi_compile_fwdbase nolightmap nodirlightmap nodynlightmap novertexlight
+            // shadow helper functions and macros
+            #include &quot;AutoLight.cginc&quot;
+
+            struct v2f
+            {
+                float2 uv : TEXCOORD0;
+                SHADOW_COORDS(1) // put shadows data into TEXCOORD1
+                fixed3 diff : COLOR0;
+                fixed3 ambient : COLOR1;
+                float4 pos : SV_POSITION;
+            };
+            v2f vert (appdata_base v)
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(v.vertex);
+                o.uv = v.texcoord;
+                half3 worldNormal = UnityObjectToWorldNormal(v.normal);
+                half nl = max(0, dot(worldNormal, _WorldSpaceLightPos0.xyz));
+                o.diff = nl * _LightColor0.rgb;
+                o.ambient = ShadeSH9(half4(worldNormal,1));
+                // compute shadows data
+                TRANSFER_SHADOW(o)
+                return o;
+            }
+
+            sampler2D _MainTex;
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+                fixed4 col = tex2D(_MainTex, i.uv);
+                // compute shadow attenuation (1.0 = fully lit, 0.0 = fully shadowed)
+                fixed shadow = SHADOW_ATTENUATION(i);
+                // darken light's illumination with shadow, keep ambient intact
+                fixed3 lighting = i.diff * shadow + i.ambient;
+                col.rgb *= lighting;
+                return col;
+            }
+            ENDHLSL
+        }
+
+        // shadow casting support
+        UsePass &quot;Legacy Shaders/VertexLit/SHADOWCASTER&quot;
+    }
+}
+</code></pre>
+
+<p>Look, we have shadows now!</p>
+
+<figure>
+<img src="../uploads/SL/ExampleShadowReceiving.png" alt="">
+</figure>
+
+<h2>Other shader examples</h2>
+
+<h3>Fog</h3>
+
+<pre><code>Shader &quot;Custom/TextureCoordinates/Fog&quot; {
+    SubShader {
+        Pass {
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            
+            //Needed for fog variation to be compiled.
+            #pragma multi_compile_fog
+
+            #include &quot;UnityCG.cginc&quot;
+
+            struct vertexInput {
+                float4 vertex : POSITION;
+                float4 texcoord0 : TEXCOORD0;
+            };
+
+            struct fragmentInput{
+                float4 position : SV_POSITION;
+                float4 texcoord0 : TEXCOORD0;
+                
+                //Creates a variable that contains fog coordinates. The parameter must be a free TEXCOORD, for example 1 if TEXCOORD1 is free.
+                UNITY_FOG_COORDS(1)
+            };
+
+            fragmentInput vert(vertexInput i){
+                fragmentInput o;
+                o.position = UnityObjectToClipPos(i.vertex);
+                o.texcoord0 = i.texcoord0;
+                
+                //Compute fog amount from clip space position.
+                UNITY_TRANSFER_FOG(o,o.position);
+                return o;
+            }
+
+            fixed4 frag(fragmentInput i) : SV_Target {
+                fixed4 color = fixed4(i.texcoord0.xy,0,0);
+                
+                //Apply fog (additive pass are automatically handled)
+                UNITY_APPLY_FOG(i.fogCoord, color); 
+                
+                //to handle custom fog color another option would have been 
+                //#ifdef UNITY_PASS_FORWARDADD
+                //  UNITY_APPLY_FOG_COLOR(i.fogCoord, color, float4(0,0,0,0));
+                //#else
+                //  fixed4 myCustomColor = fixed4(0,0,1,0);
+                //  UNITY_APPLY_FOG_COLOR(i.fogCoord, color, myCustomColor);
+                //#endif
+                
+                return color;
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="built-in-shader-examples.html"></a></span><div class="tip">Example shaders for the Built-in Render Pipeline</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="built-in-shader-examples-vertex-data.html"></a></span><div class="tip">Visualizing vertex data</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

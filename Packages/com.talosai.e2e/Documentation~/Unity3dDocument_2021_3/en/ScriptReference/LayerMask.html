@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: LayerMask</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">LayerMask</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">struct in
+          UnityEngine</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Implemented in:<a href="UnityEngine.CoreModule.html" class="cl">UnityEngine.CoreModule</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Specifies Layers to use in a <a href="Physics.Raycast.html">Physics.Raycast</a>.</p>
+              </div>
+              <div class="subsection">
+        <p>A <a href="GameObject.html">GameObject</a> can use up to 32 <a href="LayerMask.html">LayerMask</a>s supported by the Editor. The first 8 of these <code class="mono">Layers</code> are specified by Unity; the following 24 are controllable by the user.<br /><br />Bitmasks represent the 32 Layers and define them as <code class="mono">true</code> or <code class="mono">false</code>. Each bitmask describes whether the <code class="mono">Layer</code> is used. As an example, bit 5 can be set to 1 (<code class="mono">true</code>). This will allow the use of the built-in <code class="mono">Water</code> setting.<br /><br /><code class="mono">Edit-&gt;Settings-&gt;Tags and Layers</code> option shows the use of the 32 bitmasks. Each <code class="mono">Layer</code> is shown with a string setting. As an example <code class="mono">Built-in Layer 0</code> is set as <code class="mono">Default</code>; <code class="mono">Built-in Layer 1</code> is set as <code class="mono">TransparentFX</code>. New named <code class="mono">Layer</code>s are added above bitmask layer 8. A selected <code class="mono">GameObject</code> will show the chosen <code class="mono">Layer</code> at top right of the Inspector. The example below has <code class="mono">User Layer 13</code> set to "Wall". This causes the assigned <code class="mono">GameObject</code> to be treated as part of a building.<br /><br />In the following script example, <a href="Physics.Raycast.html">Physics.Raycast</a> sends a ray into the world. <a href="Camera-main.html">Camera.main</a> can be rotated around the y-axis and fire a ray. Three <a href="GameObject.html">GameObject</a>s represent walls that can be hit by the fired ray. Each <a href="GameObject.html">GameObject</a> has <a href="GameObject-label.html">GameObject.label</a> set to the "Wall" <a href="LayerMask-layerMask.html">layerMask</a>. </p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using UnityEngine;<br /><br />// Fire a gun at 3 walls in the scene.
+//
+// The Raycast will be aimed in the range of -45 to 45 degrees. If the <a href="Ray.html">Ray</a> hits any of the
+// walls true will be returned . The three walls all have a Wall <a href="Experimental.GraphView.GraphView.Layer.html">Layer</a> attached.  The left
+// and right keys, and the space key, are all used to aim and fire.
+//
+// Quad floor based at (0, -0.5, 0), rotated in x by 90 degrees, scale (8, 8, 8).
+// ZCube wall at (0, 0.5, 6), scale (3, 2, 0.5).
+// LCube wall at (-3, 0, 3), scale (0.5, 1, 4).
+// RCube wall at (3, 1.5, 3), scale (1, 4, 4).<br /><br />public class ExampleScript : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    private float cameraRotation;<br /><br />    void Start()
+    {
+        Camera.main.transform.position = new <a href="Vector3.html">Vector3</a>(0, 0.5f, 0);
+        cameraRotation = 0.0f;
+    }<br /><br />    // <a href="UIElements.Rotate.html">Rotate</a> the camera based on what the user wants to look at.
+    // Avoid rotating more than +/-45 degrees.
+    void <a href="PlayerLoop.Update.html">Update</a>()
+    {
+        if (<a href="Input.GetKey.html">Input.GetKey</a>("left"))
+        {
+            cameraRotation -= 1f;
+            if (cameraRotation &lt; -45.0f)
+            {
+                cameraRotation = -45.0f;
+            }
+        }<br /><br />        if (<a href="Input.GetKey.html">Input.GetKey</a>("right"))
+        {
+            cameraRotation += 1f;
+            if (cameraRotation &gt; 45.0f)
+            {
+                cameraRotation = 45.0f;
+            }
+        }<br /><br />        // <a href="UIElements.Rotate.html">Rotate</a> the camera
+        Camera.main.transform.localEulerAngles = new <a href="Vector3.html">Vector3</a>(0.0f, cameraRotation, 0.0f);
+    }<br /><br />    void <a href="PlayerLoop.FixedUpdate.html">FixedUpdate</a>()
+    {
+        <a href="Transform.html">Transform</a> transform = Camera.main.transform;<br /><br />        if (<a href="Input.GetKeyUp.html">Input.GetKeyUp</a>("space"))
+        {
+            // Check for a Wall.
+            <a href="LayerMask.html">LayerMask</a> mask = <a href="LayerMask.GetMask.html">LayerMask.GetMask</a>("Wall");<br /><br />            // Check if a Wall is hit.
+            if (<a href="Physics.Raycast.html">Physics.Raycast</a>(transform.position, transform.forward, 20.0f, mask))
+            {
+                <a href="Debug.Log.html">Debug.Log</a>("Fired and hit a wall");
+            }
+        }
+    }
+}
+</pre>
+      </div>
+              <div class="subsection">
+        <p>
+<strong>Note:</strong> <a href="LayerMask.html">LayerMask</a> is a bitmask.  Use <a href="LayerMask.GetMask.html">LayerMask.GetMask</a> and <a href="LayerMask.LayerToName.html">LayerMask.LayerToName</a>
+to generate the bitmask.
+</p>
+      </div>
+              <div class="subsection">
+                <h3>Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="LayerMask-value.html">value</a></td><td class="desc">Converts a layer mask value to an integer value.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="LayerMask.GetMask.html">GetMask</a></td><td class="desc">Given a set of layer names as defined by either a Builtin or a User Layer in the Tags and Layers manager, returns the equivalent layer mask for all of them.</td></tr>
+      <tr><td class="lbl"><a href="LayerMask.LayerToName.html">LayerToName</a></td><td class="desc">Given a layer number, returns the name of the layer as defined in either a Builtin or a User Layer in the Tags and Layers manager.</td></tr>
+      <tr><td class="lbl"><a href="LayerMask.NameToLayer.html">NameToLayer</a></td><td class="desc">Given a layer name, returns the layer index as defined by either a Builtin or a User Layer in the Tags and Layers manager.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Operators</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Operator</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="LayerMask-operator_int.html">LayerMask</a></td><td class="desc">Implicitly converts an integer to a LayerMask.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

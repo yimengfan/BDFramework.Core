@@ -1,0 +1,365 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Order of execution for event functions</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="core" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ExecutionOrder.html">English</a></li>
+<li><a href="/cn/current/Manual/ExecutionOrder.html">中文</a></li>
+<li><a href="/ja/current/Manual/ExecutionOrder.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ExecutionOrder.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ExecutionOrder.html">English</a></li>
+<li><a href="/cn/current/Manual/ExecutionOrder.html">中文</a></li>
+<li><a href="/ja/current/Manual/ExecutionOrder.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ExecutionOrder.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="ScriptingConcepts.html">Scripting concepts</a></li>
+<li>Order of execution for event functions</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="InstantiatingPrefabs.html"></a></span><div class="tip">Instantiating Prefabs at run time</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="EventFunctions.html"></a></span><div class="tip">Event Functions</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Order of execution for event functions</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Event functions are a set of built-in events that your MonoBehaviour <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> can optionally subscribe to by implementing the appropriate methods, often referred to as callbacks. The callbacks correspond to events in core Unity subsystems like physics, rendering, and user input, or to stages of the script’s own lifecycle such as its creation, activation, frame-dependent and frame-independent updates, and destruction. When the event occurs, Unity invokes the associated callback on your script, giving you the opportunity to implement logic in response to the event.</p>
+
+<p>To the extent that Unity raises these events and calls the associated MonoBehaviour callbacks in a predetermined order, the order is documented here. It’s important to understand the execution order so you don’t try to use one callback to do work which depends on another callback that hasn’t been invoked yet. However, bear in mind that some callbacks are for events, such as those triggered by user inputs, which can occur at any time while your game is running. You should consult this page in combination with the <a href="../ScriptReference/MonoBehaviour.html">MonoBehaviour</a> script reference (where the event callbacks are listed under <strong>Messages</strong>) for a complete understanding of each event’s meaning and limitations.</p>
+
+<h2>Script lifecycle overview</h2>
+
+<p>The diagram below summarizes how Unity orders and repeats event functions over a script’s lifetime.</p>
+
+<p>For more information about the various event functions, see the following sections:</p>
+
+<ul>
+<li><a href="#GeneralPrinciples">General principles</a></li>
+<li><a href="#FirstSceneLoad">First Scene Load</a></li>
+<li><a href="#Editor">Editor</a></li>
+<li><a href="#BeforeTheFirstFrameUpdate">Before the first frame update</a></li>
+<li><a href="#InBetweenFrames">In between frames</a></li>
+<li><a href="#UpdateOrder">Update order</a></li>
+<li><a href="#AnimationUpdateLoop">Animation update loop</a></li>
+<li><a href="#Rendering">Rendering</a></li>
+<li><a href="#Coroutines">Coroutines</a></li>
+<li><a href="#WhenTheObjectIsDestroyed">When the object is destroyed</a></li>
+<li><a href="#WhenQuitting">When quitting</a></li>
+</ul>
+
+<h3>Scope of the flowchart</h3>
+
+<p>The scope of the flowchart below is limited to the built-in event functions that you can subscribe to on any MonoBehaviour script by implementing the appropriate callbacks documented under <strong>Messages</strong> in the <a href="../ScriptReference/MonoBehaviour.html">MonoBehaviour</a> scripting reference. Some additional internal methods local to the subsystems that raise the events are also shown for context.</p>
+
+<p>In addition to these built-in event functions there are a number of other events you can potentially subscribe to in your scripts. Several major classes such as <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Application.html">Application</a>, <a href="../ScriptReference/SceneManagement.SceneManager.html">SceneManager</a>, and <span class="tooltip"><a href="../ScriptReference/Camera.html">Camera</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="../ScriptReference/Application.html">Application</a>, <a href="../ScriptReference/SceneManagement.SceneManager.html">SceneManager</a>, and <span class="tooltip"><a href="../ScriptReference/Camera.html">Camera</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> offer delegates that you can register your own callback methods with. Method attributes like <a href="../ScriptReference/RuntimeInitializeOnLoadMethodAttribute.html">RuntimeInitializeOnLoadMethodAttribute</a> can also be used to execute methods at certain stages of the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> offer delegates that you can register your own callback methods with. Method attributes like <a href="../ScriptReference/RuntimeInitializeOnLoadMethodAttribute.html">RuntimeInitializeOnLoadMethodAttribute</a> can also be used to execute methods at certain stages of the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. Refer to the scripting reference for the component or subsystem you’re interested in to see what event callbacks you can subscribe to and details of their execution order.</p>
+
+<p><a name="ScriptLifecycleFlowchart" aria-hidden="true"></a></p>
+
+<h3>Script lifecycle flowchart</h3>
+
+<figure>
+<img src="../uploads/Main/monobehaviour_flowchart.svg" alt="">
+</figure>
+
+<p>
+<strong>Note</strong>: Some browsers do not support SVG image files. If the image above does not display properly (for example, if you cannot see any text), please try another browser, such as <a href="https://www.google.com/chrome/">Google Chrome</a> or <a href="https://www.mozilla.org/">Mozilla Firefox</a>.</p>
+
+<p><a name="GeneralPrinciples" aria-hidden="true"></a></p>
+
+<h2>General principles</h2>
+
+<p>In general, you should not rely on the order in which the same event function is invoked for different <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> — except when the order is explicitly documented or settable. If you need a more fine-grained control of the player loop, you can use the <a href="../ScriptReference/LowLevel.PlayerLoop.html">PlayerLoop API</a>.<br>
+You cannot specify the order in which an event function is called for different instances of the same MonoBehaviour subclass. For example, the <code>Update</code> function of one MonoBehaviour might be called before or after the <code>Update</code> function for the same MonoBehaviour on another GameObject — including its own parent or child GameObjects. </p>
+
+<p>You can specify that the event functions of one MonoBehaviour subclass should be invoked before those of a different subclass using the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MonoManager.html">Script Execution Order</a> panel of the <span class="tooltip"><a href="comp-ManagerGroup.html">Project Settings</a><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a href="comp-ManagerGroup.html" href="class-MonoManager.html">Script Execution Order</a> panel of the <span class="tooltip"><a href="comp-ManagerGroup.html">Project Settings</a><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span> window. For example, if you had two scripts, EngineBehaviour and SteeringBehaviour, you could set the Script Execution Order such that EngineBehaviours always update before SteeringBehaviours. If loading <a href="../ScriptReference/SceneManagement.LoadSceneMode.Additive.html">multiple scenes additively</a>, the configured script execution order is applied in full one scene at a time, rather than partially across scenes, so EngineBehaviours and SteeringBehaviours would both update on one scene before they updated on the next one.</p>
+
+<p><a name="FirstSceneLoad" aria-hidden="true"></a></p>
+
+<h2>First Scene load</h2>
+
+<p>These functions get called when a scene starts (once for each object in the scene). </p>
+
+<ul>
+<li>
+<code>Awake</code>: First lifecycle function called when a new instance of an object is created. Always called before any <code>Start</code> functions. If a GameObject is inactive during start up, <code>Awake</code> is not called until it is made active.</li>
+<li>
+<code>OnEnable</code>: Called when the object becomes enabled and active, always after <code>Awake</code> (on the same object) and before any <code>Start</code>.</li>
+</ul>
+
+<p>For objects that are part of a scene asset, <code>Awake</code> and <code>OnEnable</code> functions for <em>all</em> scripts are called before <code>Start</code> and subsequent functions are called for <em>any</em> of them. However, this can’t be enforced when you instantiate an object at runtime.</p>
+
+<p>
+<code>Awake</code> is only guaranteed to be called before <code>OnEnable</code> in the scope of each individual object. Across multiple objects the order is not deterministic and you can’t rely on one object’s <code>Awake</code> being called before another object’s <code>OnEnable</code>. Any work that depends on <code>Awake</code> having been called for all objects in the scene should be done in <code>Start</code>.</p>
+
+<h3>Before scene load and unload</h3>
+
+<p>Not shown in the diagram above are the <a href="../ScriptReference/SceneManagement.SceneManager-sceneLoaded.html">SceneManager.sceneLoaded</a> and <a href="../ScriptReference/SceneManagement.SceneManager-sceneUnloaded.html">SceneManager.sceneUnloaded</a> events which allow you to receive callbacks when a scene has loaded and unloaded respectively. Refer to the relevant scripting reference pages for details and example usage. You can expect to receive the <code>sceneLoaded</code> notification after <code>OnEnable</code> but before <code>Start</code> for all objects in the scene. Refer to <a href="ConfigurableEnterPlayModeDetails.html">Details of disabling Domain and Scene reload</a> for a diagram that includes scene load as part of the execution flow.</p>
+
+<p>You can also use the <a href="../ScriptReference/RuntimeInitializeOnLoadMethodAttribute.html">RuntimeInitializeOnLoadMethodAttribute</a> and its types <a href="../ScriptReference/RuntimeInitializeLoadType.BeforeSceneLoad.html">BeforeSceneLoad</a> and <a href="../ScriptReference/RuntimeInitializeLoadType.AfterSceneLoad.html">AfterSceneLoad</a> to make your methods run before or after scene load respectively. Refer to the <a href="../ScriptReference/RuntimeInitializeOnLoadMethodAttribute.html">RuntimeInitializeOnLoadMethodAttribute</a> scripting reference main page for execution order information for methods marked with these types.</p>
+
+<p><a name="Editor" aria-hidden="true"></a></p>
+
+<h2>Editor</h2>
+
+<ul>
+<li>
+<code>Reset</code>: called to initialize the script’s properties when it is first attached to an object and also when the <em>Reset</em> command is used.</li>
+<li>
+<code>OnValidate</code>: called whenever the script’s properties are set, including when an object is deserialized, which can occur at various times, such as when you open a scene in the Editor and after a domain reload.</li>
+</ul>
+
+<p><a name="BeforeTheFirstFrameUpdate" aria-hidden="true"></a></p>
+
+<h2>Before the first frame update</h2>
+
+<ul>
+<li>
+<code>Start</code>: called before the first frame update only if the script instance is enabled.</li>
+</ul>
+
+<p>For objects that are part of a scene asset, the <code>Start</code> function is called on all scripts before <code>Update</code> is called for any of them. However, this cannot be enforced when you instantiate an object during gameplay. For example, if you instantiate an object from another object’s <code>Update</code> function, the instantiated object’s <code>Start</code> can’t be called until <code>Update</code> runs for the first time on the original object.</p>
+
+<p><a name="InBetweenFrames" aria-hidden="true"></a></p>
+
+<h2>In between frames</h2>
+
+<ul>
+<li>
+<code>OnApplicationPause</code>: This is called at the end of the frame where the pause is detected, effectively between the normal frame updates. One extra frame will be issued after <code>OnApplicationPause</code> is called to allow the game to show graphics that indicate the paused state.</li>
+</ul>
+
+<p><a name="UpdateOrder" aria-hidden="true"></a></p>
+
+<h2>Update Order</h2>
+
+<p>When you’re keeping track of game logic and interactions, animations, camera positions, etc., there are a few different events you can use. The common pattern is to perform most tasks inside the <code>Update</code> function, but there are also other functions you can use.</p>
+
+<ul>
+<li><p>
+<code>FixedUpdate</code> happens at fixed intervals of in-game time rather than per frame. Since these updates are fixed and frame rate is variable, there may be no fixed update during a frame when frame rate is high, or multiple fixed updates per frame when frame rate is low. All physics calculations and updates occur immediately after <code>FixedUpdate</code> and because it’s frame-rate independent you don’t need to multiply values by <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Time-deltaTime.html">Time.deltaTime</a> when calculating movement in a <code>FixedUpdate</code>. The interval at which fixed updates happen is defined by <a href="../ScriptReference/Time-fixedDeltaTime.html">Time.fixedDeltaTime</a>, which can be set directly in scripts or via the <strong><span class="tooltip"><strong>Fixed Timestep</strong><span class="tooltiptext">A customizable frame-rate-independent interval that dictates when physics calculations and FixedUpdate() events are performed. <a href="class-TimeManager.html" href="../ScriptReference/Time-deltaTime.html">Time.deltaTime</a> when calculating movement in a <code>FixedUpdate</code>. The interval at which fixed updates happen is defined by <a href="../ScriptReference/Time-fixedDeltaTime.html">Time.fixedDeltaTime</a>, which can be set directly in scripts or via the <strong><span class="tooltip"><strong>Fixed Timestep</strong><span class="tooltiptext">A customizable frame-rate-independent interval that dictates when physics calculations and FixedUpdate() events are performed. <a href="class-TimeManager.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#FixedTimestep" aria-label="Go to glossary anchor for FixedTimestep">Glossary</a></span></span></span></strong> property in the Editor’s <a href="class-TimeManager.html">Time settings</a>. For more information, including the time calculations used to determine whether to perform an <code>Update</code> or a <code>FixedUpdate</code>, refer to <a href="TimeFrameManagement.html">Time</a>.</p></li>
+<li><p>
+<code>Update</code> is called once per frame and is the main function for frame updates.</p></li>
+<li><p>
+<code>LateUpdate</code> is called once per frame, after <code>Update</code> has finished. Any calculations performed in <code>Update</code> will have completed when <code>LateUpdate</code> begins. A common use for <code>LateUpdate</code> would be a following third-person camera. If you make your character move and turn inside <code>Update</code>, you can perform all camera movement and rotation calculations in <code>LateUpdate</code>. This will ensure that the character has moved completely before the camera tracks its position.</p></li>
+</ul>
+
+<p><a name="AnimationUpdateLoop" aria-hidden="true"></a></p>
+
+<h2>Animation update loop</h2>
+
+<p>The following Animation loop callbacks shown in the <a href="(#ScriptLifecycleFlowchart)">flowchart</a> above are called on scripts that derive from <a href="../ScriptReference/MonoBehaviour.html">MonoBehaviour</a>:</p>
+
+<ul>
+<li><a href="../ScriptReference/MonoBehaviour.OnAnimatorMove.html">MonoBehaviour.OnAnimatorMove</a></li>
+<li><a href="../ScriptReference/MonoBehaviour.OnAnimatorIK.html">MonoBehaviour.OnAnimatorIK</a></li>
+</ul>
+
+<p>Additional animation-related event functions are called on scripts that derive from <a href="../ScriptReference/StateMachineBehaviour.html">StateMachineBehaviour</a>:</p>
+
+<ul>
+<li><a href="../ScriptReference/StateMachineBehaviour.OnStateMachineEnter.html">StateMachineBehaviour.OnStateMachineEnter</a></li>
+<li><a href="../ScriptReference/StateMachineBehaviour.OnStateMachineExit.html">StateMachineBehaviour.OnStateMachineExit</a></li>
+<li><a href="../ScriptReference/StateMachineBehaviour.OnStateEnter.html">StateMachineBehaviour.OnStateEnter</a></li>
+<li><a href="../ScriptReference/StateMachineBehaviour.OnStateUpdate.html">StateMachineBehaviour.OnStateUpdate</a></li>
+<li><a href="../ScriptReference/StateMachineBehaviour.OnStateExit.html">StateMachineBehaviour.OnStateExit</a></li>
+<li><a href="../ScriptReference/StateMachineBehaviour.OnStateMove.html">StateMachineBehaviour.OnStateMove</a></li>
+<li><a href="../ScriptReference/StateMachineBehaviour.OnStateIK.html">StateMachineBehaviour.OnStateIK</a></li>
+</ul>
+
+<p>For the meaning and limitations of these callbacks, refer to the relevant scripting reference pages.</p>
+
+<p>Other animation functions shown in the flowchart are internal to the animation system and are provided for context. These functions have associated Profiler markers so you can use the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html">Profiler</a><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a href="Profiler.html" href="Profiler.html">Profiler</a><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> to see when in the frame Unity calls them. Knowing when Unity calls these functions can help you understand exactly when the Event functions you do call are executed. For a full execution order of animation functions and profiler markers, refer to <span class="tooltip"><a href="profiler-markers.html#animation">Profiler markers</a><span class="tooltiptext">Placed in code to describe a CPU or GPU event that is then displayed in the Unity Profiler window. Added to Unity code by default, or you can use <a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@latest/index.html?subfolder=/manual/profilermarker-guide.html">ProfilerMarker API</a> to add your own custom markers. <a href="profiler-markers.html" href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> to see when in the frame Unity calls them. Knowing when Unity calls these functions can help you understand exactly when the Event functions you do call are executed. For a full execution order of animation functions and profiler markers, refer to <span class="tooltip"><a href="profiler-markers.html#animation">Profiler markers</a><span class="tooltiptext">Placed in code to describe a CPU or GPU event that is then displayed in the Unity Profiler window. Added to Unity code by default, or you can use <a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@latest/index.html?subfolder=/manual/profilermarker-guide.html">ProfilerMarker API</a> to add your own custom markers. <a href="profiler-markers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profilermarker" aria-label="Go to glossary anchor for Profilermarker">Glossary</a></span></span></span>.</p>
+
+<p><a name="Rendering" aria-hidden="true"></a></p>
+
+<h2>Rendering</h2>
+
+<p>This execution order applies for the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about built-in-render-pipeline.html">Built-in Render Pipeline</a> only. For details of execution order in <span class="tooltip"><strong>render pipelines</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html" href="built-in-render-pipeline.html">Built-in Render Pipeline</a> only. For details of execution order in <span class="tooltip"><strong>render pipelines</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> based on the <a href="scriptable-render-pipeline-introduction.html">Scriptable Render Pipeline</a>, refer to the relevant sections of the documentation for the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/manual/customize/custom-pass-injection-points.html">Universal Render Pipeline</a> or the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest/index.html?subfolder=/manual/rendering-execution-order.html">High Definition Render Pipeline</a>. If you want to do work immediately prior to rendering, refer to <a href="../ScriptReference/Application.onBeforeRender.html">Application.onBeforeRender</a>.</p>
+
+<ul>
+<li>
+<code>OnPreCull</code>: Called before the camera culls the scene. Culling determines which objects are visible to the camera. <code>OnPreCull</code> is called just before culling takes place.</li>
+<li>
+<code>OnBecameVisible</code>/<code>OnBecameInvisible</code>: Called when an object becomes visible/invisible to any camera. <code>OnBecameInvisible</code> is not shown in the flow chart above since an object may become invisible at any time.</li>
+<li>
+<code>OnWillRenderObject</code>: Called <strong>once</strong> for each camera if the object is visible.</li>
+<li>
+<code>OnPreRender</code>: Called before the camera starts rendering the scene.</li>
+<li>
+<code>OnRenderObject</code>: Called after all regular scene rendering is done. You can use <a href="../ScriptReference/GL.html">GL</a> class or <a href="../ScriptReference/Graphics.DrawMeshNow.html">Graphics.DrawMeshNow</a> to draw custom geometry at this point.</li>
+<li>
+<code>OnPostRender</code>: Called after a camera finishes rendering the scene.</li>
+<li>
+<code>OnRenderImage</code>: Called after scene rendering is complete to allow <span class="tooltip"><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span> of the image, see <a href="PostProcessingOverview.html">Post-processing Effects</a>.</li>
+<li>
+<code>OnGUI</code>: Called multiple times per frame in response to GUI events. The Layout and Repaint events are processed first, followed by a Layout and keyboard/mouse event for each input event.</li>
+<li>
+<code>OnDrawGizmos</code> Used for drawing <span class="tooltip"><strong>Gizmos</strong><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GizmosMenu.html#GizmosIcons" href="GizmosMenu.html#GizmosIcons">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Gizmo" aria-label="Go to glossary anchor for Gizmo">Glossary</a></span></span></span> in the <span class="tooltip"><strong>scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html" href="Glossary.html#Gizmo" aria-label="Go to glossary anchor for Gizmo">Glossary</a></span></span></span> in the <span class="tooltip"><strong>scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> for visualisation purposes.</li>
+</ul>
+
+<p>
+<strong>Note</strong>: <a href="../ScriptReference/Camera.OnPreCull.html">OnPreCull</a>, <a href="../ScriptReference/Camera.OnPreRender.html">OnPreRender</a>, <a href="../ScriptReference/Camera.OnPostRender.html">OnPostRender</a>, and <a href="../ScriptReference/Camera.OnRenderImage.html">OnRenderImage</a> are built-in Unity event functions that are called on MonoBehaviour scripts but <strong>only if those scripts are attached to the same object as an enabled Camera component</strong>. If you want to receive the equivalent callbacks for <code>OnPreCull</code>, <code>OnPreRender</code>, and <code>OnPostRender</code> on a MonoBehaviour attached to a <strong>different</strong> object, you must use the equivalent delegates (note the lowercase <code>on</code> in the names) <a href="../ScriptReference/Camera-onPreCull.html">Camera.onPreCull</a>, <a href="../ScriptReference/Camera-onPreRender.html">Camera.onPreRender</a>, and <a href="../ScriptReference/Camera-onPostRender.html">Camera.onPostRender</a> as shown in the code examples in the relevant pages of the scripting reference.</p>
+
+<p><a name="Coroutines" aria-hidden="true"></a></p>
+
+<h2>Coroutines</h2>
+
+<p>Normal coroutine updates are run after the <code>Update</code> function returns. A coroutine is a function that can suspend its execution (<code>yield</code>) until the given YieldInstruction finishes.</p>
+
+<p>Different uses of Coroutines:</p>
+
+<ul>
+<li>
+<code>yield</code> The coroutine will continue after all <code>Update</code> functions have been called on the next frame.</li>
+<li>
+<code>yield WaitForSeconds</code> Continue after a specified time delay, after all <code>Update</code> functions have been called for the frame.</li>
+<li>
+<code>yield WaitForFixedUpdate</code> Continue after all <code>FixedUpdate</code> has been called on all scripts. If the coroutine yielded before <code>FixedUpdate</code>, then it resumes after <code>FixedUpdate</code> in the current frame.</li>
+<li>
+<code>yield WWW</code> Continue after a WWW download has completed.</li>
+<li>
+<code>yield StartCoroutine</code> Chains the coroutine so that if a theoretical coroutine <code>coroutineA</code> starts another <code>coroutineB</code> with <code>yield StartCoroutine(coroutineB());</code> then <code>coroutineA</code> pauses and waits for <code>coroutineB</code> to finish before continuing. For an example, refer to <a href="../ScriptReference/MonoBehaviour.StartCoroutine.html">MonoBehaviour.StartCoroutine</a>.</li>
+</ul>
+
+<p><a name="WhenTheObjectIsDestroyed" aria-hidden="true"></a></p>
+
+<h2>When the Object is destroyed</h2>
+
+<ul>
+<li>
+<code>OnDestroy</code>: This function is called after all frame updates for the last frame of the object’s existence (the object might be destroyed in response to Object.Destroy or at the closure of a scene).</li>
+</ul>
+
+<p><a name="WhenQuitting" aria-hidden="true"></a></p>
+
+<h2>When quitting</h2>
+
+<p>These functions get called on all the active objects in your scene:</p>
+
+<ul>
+<li>
+<code>OnApplicationQuit</code>: This function is called on all game objects before the application is quit. In the editor it is called when the user stops playmode.</li>
+<li>
+<code>OnDisable</code>: This function is called when the behaviour becomes disabled or inactive.</li>
+</ul>
+
+<hr>
+
+<ul>
+<li><span class="page-edit">2019–03–18 Page amended
+</span></li>
+</ul>
+<!-- area:core -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="InstantiatingPrefabs.html"></a></span><div class="tip">Instantiating Prefabs at run time</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="EventFunctions.html"></a></span><div class="tip">Event Functions</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

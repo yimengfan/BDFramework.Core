@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Search.QueryEngine_1.AddOperatorHandler</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">
+                  <a href="Search.QueryEngine_1.html">QueryEngine&lt;T0&gt;</a>.AddOperatorHandler</h1>
+                <div class="clear">
+                </div>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public void <span class="sig-kw">AddOperatorHandler</span>(string <span class="sig-kw">op</span>,
+Func&lt;TFilterVariable,TFilterConstant,bool&gt; <span class="sig-kw">handler</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public void <span class="sig-kw">AddOperatorHandler</span>(string <span class="sig-kw">op</span>,
+Func&lt;TFilterVariable,TFilterConstant,stringComparison,bool&gt; <span class="sig-kw">handler</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">op</td>
+                    <td class="desc">The filter operator.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">handler</td>
+                    <td class="desc">Callback to handle the operation. Takes a TFilterVariable (the value returned by the filter handler, it will vary for each element), a TFilterConstant (right-hand side value of the operator, which is constant), and a StringComparison option and returns a boolean indicating if the filter passes or not.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Adds a custom filter operator handler.</p>
+              </div>
+              <div class="subsection">
+        <p>&lt;TFilterVariable&gt;: The type of the operator's left-hand side operand. This is the type returned by a filter handler.<br /><br />&lt;TFilterConstant&gt;: The type of the operator's right-hand side operand.<br /><br />An operator handler is a function that is executed for a particular operator (for example "=") with specific type requirements. The operator handler is chosen by the return value of the filter handler (see <a href="Search.QueryEngine_1.AddFilter.html">AddFilter</a>) that is identified when parsing the query, and the type of the filter value.<br /><br />This function can be used to add operator handlers to a new custom operator (see <a href="Search.QueryEngine_1.AddOperator.html">AddOperator</a> for the full example):</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">// Add a new operator token
+const string op = "%";
+queryEngine.AddOperator(op);
+
+// Define what this operator does, and which types it operates on.
+queryEngine.AddOperatorHandler(op, (int ev, int fv) =&gt; ev % fv == 0);
+</pre>
+      </div>
+              <div class="subsection">
+        <p>But it can also be used to register new operator handlers on existing operators:</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using <a href="Rendering.VirtualTexturing.System.html">System</a>;
+using System.Collections.Generic;
+using System.Linq;
+using <a href="UnityEditor.html">UnityEditor</a>;
+using UnityEditor.Search;
+using UnityEngine;
+
+static class Example_QueryEngine_AddOperatorHandler
+{
+    static List&lt;MyObjectType&gt; s_Data;
+
+    [<a href="MenuItem.html">MenuItem</a>("Examples/<a href="Search.QueryEngine.html">QueryEngine</a>/AddOperatorHandler")]
+    public static void RunExample()
+    {
+        // Set up the query engine
+        var queryEngine = new <a href="Search.QueryEngine.html">QueryEngine</a>&lt;MyObjectType&gt;();
+        queryEngine.AddFilter("id", myObj =&gt; myObj.id);
+        queryEngine.AddFilter("prop", myObj =&gt; myObj.property);
+        queryEngine.SetSearchDataCallback(myObj =&gt; new[] { myObj.id.ToString(), myObj.name });
+
+        // Set the global string comparison options (default is OrdinalIgnoreCase)
+        queryEngine.SetGlobalStringComparisonOptions(StringComparison.Ordinal);
+
+        // Define new handlers for existing operators, but with new types
+        queryEngine.AddOperatorHandler("=", (Property ev, int fv) =&gt; HandleIntType(ev, fv, (propValue, filterValue) =&gt; propValue == filterValue));
+        queryEngine.AddOperatorHandler("!=", (Property ev, int fv) =&gt; HandleIntType(ev, fv, (propValue, filterValue) =&gt; propValue != filterValue));
+        queryEngine.AddOperatorHandler("&lt;", (Property ev, int fv) =&gt; HandleIntType(ev, fv, (propValue, filterValue) =&gt; propValue &lt; filterValue));
+        queryEngine.AddOperatorHandler("&gt;", (Property ev, int fv) =&gt; HandleIntType(ev, fv, (propValue, filterValue) =&gt; propValue &gt; filterValue));
+        queryEngine.AddOperatorHandler("&lt;=", (Property ev, int fv) =&gt; HandleIntType(ev, fv, (propValue, filterValue) =&gt; propValue &lt;= filterValue));
+        queryEngine.AddOperatorHandler("&gt;=", (Property ev, int fv) =&gt; HandleIntType(ev, fv, (propValue, filterValue) =&gt; propValue &gt;= filterValue));
+
+        // New handlers with support for the global string comparison options
+        queryEngine.AddOperatorHandler(":", (Property ev, string fv, StringComparison options) =&gt; HandleStringType(ev, fv, (propValue, filterValue) =&gt; propValue.IndexOf(filterValue, options) &gt;= 0));
+        queryEngine.AddOperatorHandler("=", (Property ev, string fv, StringComparison options) =&gt; HandleStringType(ev, fv, (propValue, filterValue) =&gt; propValue.Equals(filterValue, options)));
+        queryEngine.AddOperatorHandler("!=", (Property ev, string fv, StringComparison options) =&gt; HandleStringType(ev, fv, (propValue, filterValue) =&gt; !propValue.Equals(filterValue, options)));
+
+        s_Data = new List&lt;MyObjectType&gt;()
+        {
+            new MyObjectType { id = 0, property = new Property("size", PropertyType.Integer, 64) },
+            new MyObjectType { id = 1, property = new Property("size", PropertyType.Integer, 128) },
+            new MyObjectType { id = 2, property = new Property("tag", PropertyType.String, "item") },
+            new MyObjectType { id = 3, property = new Property("tag", PropertyType.String, "car item") },
+            new MyObjectType { id = 3, property = new Property("tag", PropertyType.String, "42") }
+        };
+
+        // Find all items that have a property with an integer value &lt; 100
+        var query = queryEngine.Parse("prop&lt;100");
+        var filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 1, $"There should be 1 item in the filtered list but found {filteredData.Count} items.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Contains(s_Data[0]), "Test 1 should be in the list as its property value is &lt; 100.");
+
+        // Find all items that have a property with a string value that contains "<a href="Progress.Item.html">Item</a>".
+        // In this case, since the comparison option is Ordinal, we test the casing.
+        query = queryEngine.Parse("prop:<a href="Progress.Item.html">Item</a>");
+        filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 0, $"There should be 0 item in the filtered list but found {filteredData.Count} items.");
+    }
+
+    static bool HandleIntType(Property prop, int value, Func&lt;int, int, bool&gt; operatorHandler)
+    {
+        if (prop.type != PropertyType.Integer)
+            return false;
+        if (!(prop.value is int i))
+            return false;
+        return operatorHandler(i, value);
+    }
+
+    static bool HandleStringType(Property prop, string value, Func&lt;string, string, bool&gt; operatorHandler)
+    {
+        if (prop.type != PropertyType.String)
+            return false;
+        if (!(prop.value is string s))
+            return false;
+        return operatorHandler(s, value);
+    }
+
+    enum PropertyType
+    {
+        Integer,
+        String
+    }
+    struct Property
+    {
+        public string name { get; }
+        public PropertyType type { get; }
+        public object value { get; set; }
+
+        public Property(string name, PropertyType type, object value)
+        {
+            this.name = name;
+            this.type = type;
+            this.value = value;
+        }
+    }
+
+    class MyObjectType
+    {
+        public int id { get; set; }
+        public string name { get; set; } = string.Empty;
+        public <a href="Vector2.html">Vector2</a> position { get; set; } = <a href="Vector2-zero.html">Vector2.zero</a>;
+        public bool active { get; set; }
+        public Property property { get; set; }
+
+        public override string ToString()
+        {
+            return $"({id}, {name}, ({position.x}, {position.y}), {active})";
+        }
+    }
+}
+
+</pre>
+      </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

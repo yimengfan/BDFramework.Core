@@ -1,0 +1,285 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Editing a Prefab in Prefab Mode</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/EditingInPrefabMode.html">English</a></li>
+<li><a href="/cn/current/Manual/EditingInPrefabMode.html">中文</a></li>
+<li><a href="/ja/current/Manual/EditingInPrefabMode.html">日本語</a></li>
+<li><a href="/kr/current/Manual/EditingInPrefabMode.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/EditingInPrefabMode.html">English</a></li>
+<li><a href="/cn/current/Manual/EditingInPrefabMode.html">中文</a></li>
+<li><a href="/ja/current/Manual/EditingInPrefabMode.html">日本語</a></li>
+<li><a href="/kr/current/Manual/EditingInPrefabMode.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="CreatingGameplay.html">Create Gameplay</a></li>
+<li><a href="Prefabs.html">Prefabs</a></li>
+<li>Editing a Prefab in Prefab Mode</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="CreatingPrefabs.html"></a></span><div class="tip">Creating Prefabs</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="PrefabInstanceOverrides.html"></a></span><div class="tip">Instance overrides</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Editing a Prefab in Prefab Mode</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To edit a <span class="tooltip"><strong>Prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> Asset, open it in <strong>Prefab Mode</strong>. Prefab Mode allows you to view and edit the contents of the Prefab Asset separately from any other <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> Asset, open it in <strong>Prefab Mode</strong>. Prefab Mode allows you to view and edit the contents of the Prefab Asset separately from any other <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in your <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in your <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. Changes that you make in Prefab Mode affect all instances of that Prefab.</p>
+
+<p><a name="EnteringAndExiting" aria-hidden="true"></a></p>
+
+<h2>Entering and exiting Prefab Mode</h2>
+
+<p>You can edit a Prefab Asset <strong>in isolation</strong>, or <strong>in context</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/PrefabContextVsIsolation.png" alt="Left: editing a Prefab in isolation. Right: editing a *Prefab in context.">
+<figcaption>Left: editing a Prefab in isolation. Right: editing a *Prefab in context.</figcaption>
+</figure>
+
+<ul>
+<li><p>
+<strong>In isolation:</strong> When you edit a Prefab in isolation, Unity hides the rest of your current working Scene, and you only see the GameObjects that relate to the Prefab itself (plus, optionally, a pre-set <strong>editing environment </strong>- see below).</p></li>
+<li><p>
+<strong>In context:</strong> When you edit a Prefab in context, the rest of your current working Scene remains visible, but locked for editing. </p></li>
+</ul>
+
+<h3>Editing in isolation</h3>
+
+<p>You can begin to edit a Prefab in Prefab Mode in several ways. To open a Prefab Asset and edit it <strong>in isolation</strong> you can do it in the following ways:</p>
+
+<ul>
+<li>Double-click the Prefab Asset in the Project window</li>
+<li>Select a Prefab Asset in the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span> and click the <strong>Open Prefab</strong> button in the <strong><span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span> and click the <strong>Open Prefab</strong> button in the <strong><span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> window</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/PrefabAssetOpenPrefabButton.png" alt="A Prefab Asset selected in the Project window (left), and the Open Prefab button visible in the inspector (right)">
+<figcaption>A Prefab Asset selected in the Project window (left), and the Open Prefab button visible in the inspector (right)</figcaption>
+</figure>
+
+<p>When you enter Prefab Mode in isolation, Unity only shows the contents of that Prefab in the <strong><span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span></strong> and the Hierarchy window. In the following image, the root of the Prefab is a regular <strong>GameObject</strong> - it doesn’t have the blue Prefab instance icon.</p>
+
+<figure>
+<img src="../uploads/Main/PrefabsSceneAndHierarchyInPrefabMode.png" alt="The Scene view and Hierarchy, with Prefab Mode in isolation">
+<figcaption>The Scene view and Hierarchy, with Prefab Mode in isolation</figcaption>
+</figure>
+
+<p>In Prefab Mode, the <strong>Scene</strong> view displays a breadcrumb bar at the top. The rightmost entry is the currently open Prefab. Use the breadcrumb bar to navigate back to the main Scenes or other Prefab Assets that you might have opened.</p>
+
+<figure>
+<img src="../uploads/Main/PrefabsBreadcrumbBar.png" alt="The breadcrumb bar at the top of the Scene view, visible when in Prefab Mode">
+<figcaption>The breadcrumb bar at the top of the Scene view, visible when in Prefab Mode</figcaption>
+</figure>
+
+<p>The <strong>Hierarchy</strong> window displays a Prefab header bar at the top which shows the currently open Prefab. You can use the back arrow in the header bar to navigate back one step, which is equivalent to clicking the previous breadcrumb in the breadcrumb bar in the Scene view.</p>
+
+<figure>
+<img src="../uploads/Main/PrefabsBackArrow.png" alt="The back arrow in the header bar of the Hierarchy window, visible when in Prefab Mode">
+<figcaption>The back arrow in the header bar of the Hierarchy window, visible when in Prefab Mode</figcaption>
+</figure>
+
+<h3>Editing in context</h3>
+
+<p>Alternatively, you can open a Prefab Asset <strong>in Context</strong> via an instance of that Prefab. Ways of doing that include:</p>
+
+<ul>
+<li>Select a Prefab instance in the Hierarchy window and click the <strong>Open</strong> button in the Inspector window</li>
+<li>Select a Prefab instance in the Hierarchy window and press <strong>P</strong> on the keyboard. This is the default <a href="UnityHotkeys.html">keyboard binding</a>
+</li>
+<li>Use the <strong>arrow button</strong> next to the Prefab instance in the Hierarchy window</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/PrefabInstanceInspectorOpenButton.png" alt="The Open button in the Inspector when a Prefab Instance is selected">
+<figcaption>The Open button in the Inspector when a Prefab Instance is selected</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/PrefabHierarchyOpenArrow.png" alt="The arrow button next to a Prefab in the Hierarchy window">
+<figcaption>The arrow button next to a Prefab in the Hierarchy window</figcaption>
+</figure>
+
+<p>By default, Unity displays the visual representation of the context in gray scale to visually distinguish it from the Prefab contents you edit. However, you can use the <strong>Context:</strong> control in the Prefab bar to set it to any of the following states:</p>
+
+<ul>
+<li>
+<strong>Normal</strong> - Shows the context with its normal colors</li>
+<li>
+<strong>Gray</strong> - Shows the context in gray scale</li>
+<li>
+<strong>Hidden</strong> - Hides the context entirely so only the Prefab content is visible</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/PrefabModeContextControl.png" alt="The Prefab Mode controls in the Prefab bar in at the top of the Scene view, including the Context control and the Show Overrides toggle">
+<figcaption>The Prefab Mode controls in the Prefab bar in at the top of the Scene view, including the Context control and the Show Overrides toggle</figcaption>
+</figure>
+
+<p>You cannot select the GameObjects that are part of the context, nor do they show in the Hierarchy. This is so you can focus on editing your Prefab without accidentally selecting other unrelated GameObjects, and without having a cluttered Hierarchy window. However, when you move GameObjects around that are part of the Prefab contents, you can use the snapping features in Unity to snap to GameObjects in the context, provided the context is not set to <strong>Hidden</strong>.</p>
+
+<p>In Prefab Mode in Context, Unity displays the Prefab contents at a position that matches that of the Prefab instance it was opened through. This means that you might preview the <span class="tooltip"><strong>root Transform</strong><span class="tooltiptext">The Transform at the top of a hierarchy of Transforms. In a Prefab, the Root Transform is the topmost Transform in the Prefab. In an animated humanoid character, the Root Transform is a projection on the Y plane of the Body Transform and is computed at run time. At every frame, a change in the Root Transform is computed, and then this is applied to the GameObject to make it move. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RootMotion.html" href="RootMotion.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RootTransform" aria-label="Go to glossary anchor for RootTransform">Glossary</a></span></span></span> of the Prefab contents with different position and rotation values than the Prefab Asset actually has. </p>
+
+<p>You cannot edit these values in Prefab Mode in Context. If you need to edit them, you can either open the Prefab in isolation, or select the Prefab Asset in the Project window and edit the values in the Inspector.</p>
+
+<p>Apart from the root Transform properties, you can also override other properties of a Prefab instance, which might drastically change its appearance compared to the Prefab Asset it’s an instance of. To preview these overridden values from the Prefab instance, while in Prefab Mode in Context enable the <strong>Show Overrides</strong> toggle in the Prefab bar. While this setting is enabled, any properties that you override on the Prefab instance are previewed the same way on the Prefab contexts and you cannot edit them. To edit those properties, disable the <strong>Show Overrides</strong> toggle again.</p>
+
+<p><a name="AutoSave" aria-hidden="true"></a></p>
+
+<h2>Auto Save</h2>
+
+<p>Prefab Mode has an <strong>Auto Save</strong> setting in the top right corner of the Scene view. When it is enabled, Unity automatically saves any changes that you make to a Prefab to the Prefab Asset. <strong>Auto Save</strong> is on by default.</p>
+
+<figure>
+<img src="../uploads/Main/PrefabsAutoSave.png" alt="The Auto Save toggle in the upper right corner of the Scene view in Prefab Mode">
+<figcaption>The Auto Save toggle in the upper right corner of the Scene view in Prefab Mode</figcaption>
+</figure>
+
+<p>If you want to make changes without automatically saving those changes to the Preset Asset, disable the <strong>Auto Save</strong> checkbox. In this case, Unity asks you if you want to save unsaved changes or not when you exit Prefab Mode for the current Prefab. If editing a Prefab in Prefab Mode seems slow, turning off <strong>Auto Save</strong> might help.</p>
+
+<h2>Changing between isolation or in context mode</h2>
+
+<p>When you open Prefab Mode via a Prefab Asset, Unity displays the contents of the Prefab in isolation. However, when you open Prefab Mode via a Prefab instance in the Hierarchy window, this opens <strong>Prefab Mode in Context</strong>. </p>
+
+<p>When you open Prefab Mode this way, you can see the context of the Prefab instance in the Scene view even though you are not editing the instance but rather the Prefab Asset itself. For example, if you open Prefab Mode in Context via a Prefab instance in a Scene, then you can see the surroundings in that Scene while you edit the Prefab. The Prefab is also shown with the same lighting conditions as in the Scene.</p>
+
+<figure>
+<img src="../uploads/Main/PrefabModeContextView.png" alt="A Prefab opened in Prefab Mode in Context, with the surrounding context displayed in gray scale">
+<figcaption>A Prefab opened in Prefab Mode in Context, with the surrounding context displayed in gray scale</figcaption>
+</figure>
+
+<p>If you have a Prefab instance that you do not want to open in context, but want to open in isolation, hold down the <strong>Alt</strong> key and click the <strong>Open</strong> button or the arrow button to open Prefab Mode. You can also set up a custom shortcut in the <strong>Shortcuts</strong> window for the command <strong>Stage &gt; Edit Prefab in Isolation</strong>.</p>
+
+<p><a name="Undo" aria-hidden="true"></a></p>
+
+<h2>Undo</h2>
+
+<p>When you make changes to a Prefab Asset while in Prefab Mode, you can only undo those changes while still in Prefab Mode. Once you exit Prefab Mode for a given Prefab Asset, your edits relating to that Prefab Asset are no longer available in the undo history.</p>
+
+<p><a name="Environment" aria-hidden="true"></a></p>
+
+<h2>Editing Environment</h2>
+
+<p>You can assign a Scene as an <strong>editing environment</strong> to be used with Prefab Mode in Isolation. This allows you to edit your Prefab against a backdrop of your choosing rather than an empty Scene. This can be useful to see how your Prefab looks against a specific scenery of your choice. Unity only uses this editing environment when you open Prefab Mode in Isolation.</p>
+
+<p>You cannot select the GameObjects in the Scene that you assign as the editing environment when in Prefab Mode, nor do they show in the Hierarchy. This is so you can focus on editing your Prefab without accidentally selecting other unrelated GameObjects, and without having a cluttered Hierarchy window.</p>
+
+<p>To set a Scene as the editing environment, open the<a href="https://docs.unity3d.com/Manual/class-EditorManager.html"> Editor</a> window (top menu: <strong>Edit &gt; Project Settings</strong>, then select the <strong>Editor</strong> category) and go to the <strong>Prefab Editing Environment</strong> section. Use the <strong>Regular Environment</strong> setting for “non-UI” Prefabs, and the <strong>UI Environment</strong> setting for UI Prefabs. UI Prefabs are those which have a <a href="https://docs.unity3d.com/Manual/class-RectTransform.html">Rect Transform</a> component on the root, rather than a regular Transform component. “non-UI” Prefabs are those which have a regular Transform component.</p>
+
+<figure>
+<img src="../uploads/Main/PrefabsEnvironmentSettings1.png" alt="Prefab editing environment settings in the Editor Project Settings">
+<figcaption>Prefab editing environment settings in the Editor Project Settings</figcaption>
+</figure>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="CreatingPrefabs.html"></a></span><div class="tip">Creating Prefabs</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="PrefabInstanceOverrides.html"></a></span><div class="tip">Instance overrides</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

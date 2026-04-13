@@ -1,0 +1,355 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: AR development in Unity</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AROverview.html">English</a></li>
+<li><a href="/cn/current/Manual/AROverview.html">中文</a></li>
+<li><a href="/ja/current/Manual/AROverview.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AROverview.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AROverview.html">English</a></li>
+<li><a href="/cn/current/Manual/AROverview.html">中文</a></li>
+<li><a href="/ja/current/Manual/AROverview.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AROverview.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="XR.html">XR</a></li>
+<li><a href="xr-support-landing.html">Overview</a></li>
+<li>AR development in Unity</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="xr-support-packages.html"></a></span><div class="tip">XR packages</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="VROverview.html"></a></span><div class="tip">VR and MR development in Unity</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>AR development in Unity</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Get started with <strong>augmented reality</strong> development in Unity.</p>
+
+<p>Augmented Reality (AR) involves a different set of design challenges compared to <span class="tooltip"><strong>VR</strong><span class="tooltiptext">Virtual Reality <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VROverview.html" href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VR" aria-label="Go to glossary anchor for VR">Glossary</a></span></span></span> or traditional real-time 3D applications. An augmented reality app overlays its content on the real world around the user. AR devices, such as glasses, visors, or mobile devices, use transparent displays to allow the user to see the real-world with virtual content overlaid on top.</p>
+
+<p>To place an object in the real world, you must first determine where to place it. For example, you might want to place a virtual painting on a physical wall. If you place a virtual potted plant, you might want it on a physical table or the floor. An AR app receives information about the world from the user’s device, and decides how to use this information to create a good experience for the user. Depending on target device capabilities, this information includes location of planar surfaces (planes), and the detection of objects, people, and faces.</p>
+
+<p>The following sections provide an overview of an <a href="#ar-scene">AR scene</a>, the <a href="#ar-packages">AR packages</a>, and <a href="#ar-template">AR Template</a> you can use to develop AR applications in Unity.</p>
+
+<p><a id="ar-scene" aria-hidden="true"></a></p>
+
+<h2>Introduction to an AR scene</h2>
+
+<p>When you open a typical AR <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> in Unity, you will not find many <span class="tooltip"><strong>3D objects</strong><span class="tooltiptext">A 3D GameObject such as a cube, terrain or ragdoll. <a href="GameObjects.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> in Unity, you will not find many <span class="tooltip"><strong>3D objects</strong><span class="tooltiptext">A 3D GameObject such as a cube, terrain or ragdoll. <a href="GameObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#3DObject" aria-label="Go to glossary anchor for 3DObject">Glossary</a></span></span></span> in the <strong>Scene</strong> or the <strong>Hierarchy</strong> view. Instead, most <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#3DObject" aria-label="Go to glossary anchor for 3DObject">Glossary</a></span></span></span> in the <strong>Scene</strong> or the <strong>Hierarchy</strong> view. Instead, most <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the scene define the settings and logic of the app. 3D content is typically created as <span class="tooltip"><strong>prefabs</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the scene define the settings and logic of the app. 3D content is typically created as <span class="tooltip"><strong>prefabs</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> that are added to the scene at runtime in response to AR-related events.</p>
+
+<p>
+<img src="../uploads/Main/xr-ar-scene.png" alt="A typical AR scene in Unity"><br><br><em>A typical AR scene in the Unity Editor.</em>
+</p>
+
+<h2>AR scene elements</h2>
+
+<p>The following sections outline the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #basic-ar-scene">Required scene elements</a> to make AR work, and the <a href="#optional-scene-elements">Optional scene elements</a> you can add to enable specific AR features. To learn more about how to configure an <span class="tooltip"><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a href="XR.html" href="#basic-ar-scene">Required scene elements</a> to make AR work, and the <a href="#optional-scene-elements">Optional scene elements</a> you can add to enable specific AR features. To learn more about how to configure an <span class="tooltip"><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> scene <a href="xr-scene-setup.html">Set up an XR scene</a>.</p>
+
+<p>
+<strong>Note:</strong> AR GameObjects appear in the create menu when you enable an <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #ar-provider-plug-ins">AR provider plug-in</a> in <strong>XR <span class="tooltip"><strong>Plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a href="Plugins.html" href="#ar-provider-plug-ins">AR provider plug-in</a> in <strong>XR <span class="tooltip"><strong>Plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> Management</strong>.</p>
+
+<p><a id="basic-ar-scene" aria-hidden="true"></a></p>
+
+<h3>Required scene elements</h3>
+
+<p>An AR scene must contain the <code>AR Session</code> and <code>XR Origin</code> GameObjects. The available options for the <a href="xr-origin.html">XR Origin</a> depends on the packages you’ve installed in your project. AR Foundation uses the <a href="#mobile-ar">Mobile AR</a> and XR Interaction Toolkit uses the <a href="#origin-ar">AR</a> variant.</p>
+
+<p>If you start your project from an <a href="#ar-template">AR template</a>, these components will come configured in the scene.</p>
+
+<p>To manually add the relevant <code>XR Origin</code> and <code>AR Session</code> GameObjects:</p>
+
+<ol>
+<li>Right-click in the <strong>Hierarchy</strong> window.</li>
+<li>Go to <strong>GameObject</strong> &gt; <strong>XR</strong>.</li>
+<li>Select the relevant component.</li>
+</ol>
+
+<p>
+<strong>Note:</strong> You must only have one active XR Origin in a scene.</p>
+
+<h4>AR Session</h4>
+
+<p>The <strong>AR Session</strong> GameObject contains the components you need to control the lifecycle and input of AR experience:</p>
+
+<ul>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/manual/features/session.html">AR Session component</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/api/UnityEngine.XR.ARFoundation.ARInputManager.html">AR Input Manager component</a></li>
+</ul>
+
+<p><a id="mobile-ar" aria-hidden="true"></a></p>
+
+<h4>XR Origin (Mobile AR)</h4>
+
+<p>The <strong>XR Origin (Mobile AR)</strong> GameObject is a variant of the <a href="xr-origin.html">XR Origin</a> for hand-held AR applications. This variant isn’t configured for controller input by default. This version of the <code>XR Origin</code> is used by AR Foundation.</p>
+
+<p>The <strong>XR Origin (Mobile AR)</strong> GameObject consists of the following components:</p>
+
+<ul>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/api/UnityEngine.XR.ARFoundation.ARSessionOrigin.html">XR Origin component</a></li>
+<li>
+<strong><span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> Offset</strong> GameObject:
+
+<ul>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/manual/features/Camera/camera-components.html#ar-camera-manager-component">AR Camera Manager component</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/manual/features/Camera/camera-components.html#ar-camera-background-component">AR Camera Background component</a></li>
+</ul>
+</li>
+</ul>
+
+<p>For more information, refer to AR Foundation <a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/manual/project-setup/scene-setup.html">Set up your scene</a> and <a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/manual/device-tracking">Device tracking</a>.</p>
+
+<p><a id="origin-ar" aria-hidden="true"></a></p>
+
+<h4>XR Origin (AR)</h4>
+
+<p>The <strong>XR Origin (AR)</strong> GameObject is a variant of the <a href="xr-origin.html">XR Origin</a> for hand-held AR applications and comes configured for controller input. The <a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.0">XR Interaction Toolkit</a> package provides this variant.</p>
+
+<p>The <strong>XR Origin (AR)</strong> GameObject consists of the following:</p>
+
+<ul>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/api/UnityEngine.XR.ARFoundation.ARSessionOrigin.html">XR Origin component</a></li>
+<li>
+<strong>Camera Offset</strong> GameObject:
+
+<ul>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/manual/features/Camera/camera-components.html#ar-camera-manager-component">AR Camera Manager component</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/manual/features/Camera/camera-components.html#ar-camera-background-component">AR Camera Background component</a></li>
+</ul>
+</li>
+<li>
+<strong>LeftHand/RightHand Controller</strong> GameObjects:
+
+<ul>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.0/manual/xr-controller-action-based.html">XR Controller (Action-based) component</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.0/manual/xr-ray-interactor.html">XR Ray Interactor component</a></li>
+<li><a href="class-LineRenderer.html">Line Renderer component</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.0/manual/xr-interactor-line-visual.html">XR Interactor Line Visual component</a></li>
+<li><a href="sprite/sorting-group/sorting-group-landing">Sorting Group component</a></li>
+</ul>
+</li>
+</ul>
+
+<p>Refer to <a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.0/manual/create-basic-scene.html">Create a basic scene</a> to learn more about scene configuration with XR Interaction Toolkit.</p>
+
+<p><a id="optional-scene-elements" aria-hidden="true"></a></p>
+
+<h3>Optional scene elements</h3>
+
+<p>To enable an AR feature, you must add the corresponding components to your project. Typically, this includes an <a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/manual/architecture/managers.html#trackables-and-trackable-managers">AR Manager</a>, but other features might also require additional components.</p>
+
+<p>To learn more about the required components for AR Foundation features, refer to the documentation for the relevant AR Foundation <a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/manual/features/features.html">Feature</a>. For more in-depth information about setting up your AR Foundation app, visit <a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/manual/project-setup/scene-setup.html">Scene set up</a>.</p>
+
+<p><a id="ar-packages" aria-hidden="true"></a></p>
+
+<h2>AR packages</h2>
+
+<p>To build AR apps in Unity, you can install the <a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/">AR Foundation</a> package along with the XR provider plug-ins for the devices you want to support.</p>
+
+<p>To develop AR/<span class="tooltip"><strong>MR</strong><span class="tooltiptext">Mixed Reality<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MR" aria-label="Go to glossary anchor for MR">Glossary</a></span></span></span> apps for the Apple Vision Pro device, you also need the <a href="https://docs.unity3d.com/Packages/com.unity.polyspatial.visionos@1.3">PolySpatial visionOS packages</a>. Unity provides additional packages, including the <a href="#xr-interaction-toolkit">XR Interaction Toolkit</a> to make it easier and faster to develop AR experiences.</p>
+
+<p><a id="ar-provider-plug-ins" aria-hidden="true"></a></p>
+
+<h3>AR provider plug-ins</h3>
+
+<p>AR platforms are available as provider plug-ins by the XR Plug-in Management system. To understand how to use the XR Plug-in Management system to add and enable provider plug-ins for your target platforms, refer to <a href="configuring-project-for-xr.html">XR Project set up</a>.</p>
+
+<p>The AR provider plug-ins supported by Unity include:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Plug-in</strong></th>
+	<th style="text-align:left;"><strong>Supported devices</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/Packages/com.unity.xr.arkit@5.1">Apple ARKit XR Plug-in</a></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/Packages/com.unity.xr.visionos@1.3">Apple visionOS XR Plug-in</a></td>
+	<td style="text-align:left;">visionOS</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/Packages/com.unity.xr.arcore@5.1">Google ARCore XR Plug-in</a></td>
+	<td style="text-align:left;">Android</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.10/manual/index.html">OpenXR Plug-in</a></td>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.14/manual/index.html#runtimes">Devices with an OpenXR runtime</a></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note:</strong> Depending on the platform or device, you might need to install additional packages to along with OpenXR. For example, to build an AR app for HoloLens 2, you must install the Microsoft’s <a href="https://learn.microsoft.com/en-us/windows/mixed-reality/develop/unity/mixed-reality-openxr-plugin">Mixed Reality OpenXR Plugin</a>.</p>
+
+<p><a id="ar-foundation" aria-hidden="true"></a></p>
+
+<h3>AR Foundation</h3>
+
+<p>The <a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/">AR Foundation</a> package supports AR development in Unity.</p>
+
+<p>AR Foundation enables you to create multi-platform AR apps with Unity. In an AR Foundation project, you choose which AR features to enable by adding the corresponding manager components to your scene. When you build and run your app on an AR device, AR Foundation enables these features using the platform’s native AR SDK, so you can create once and deploy to the world’s leading AR platforms.</p>
+
+<p>A device can be AR-capable without supporting all possible AR features. Available functionality depends on both the device platform and the capabilities of the specific device. Even on the same platform, capabilities can vary from device to device. For example, a specific device model might support AR through its world-facing camera, but not its user-facing camera. To learn which platforms support each AR Foundation feature, refer to the <a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/manual/index.html#platform-support">Platform support</a> table in the AR Foundation documentation.</p>
+
+<p>You can access samples scenes that demonstrate AR Foundation features from the <a href="https://github.com/Unity-Technologies/arfoundation-samples">AR Foundation Samples</a> app (GitHub). To learn more, refer to <a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@6.2/manual/samples.html">AR Foundation samples</a> in the AR Foundation package documentation.</p>
+
+<p><a id="polyspatial-visionos" aria-hidden="true"></a></p>
+
+<h3>PolySpatial visionOS packages</h3>
+
+<p>Augmented and <span class="notooltip">mixed reality</span> development for the Apple Vision Pro device relies on a set of packages that implement the Unity PolySpatial architecture on the visionOS platform.</p>
+
+<p>The PolySpatial architecture splits a Unity game or app into two logical pieces: a simulation controller and a presentation view. The simulation controller drives all app-specific logic, such as MonoBehaviours and other scripting, user interface behavior, asset management, physics, etc. Almost all of your game’s behavior is part of the simulation. The presentation view handles both input and output, which includes rendering to the display and other forms of output, such as audio. The view sends input received from the operating system – including pinch gestures and head position – to the simulation for processing each frame. After each simulation step, the view updates the display by rendering <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> to the screen, submitting audio buffers to the system, etc.</p>
+
+<p>On the visionOS platform, the simulation part runs in a Unity Player, while the presentation view is rendered by Apple’s RealityKit. For every visible object in the simulation, a corresponding object exists in the RealityKit scene graph.</p>
+
+<p>
+<strong>Note:</strong> PolySpatial is only used for augmented and <span class="tooltip"><strong>mixed reality</strong><span class="tooltiptext">Mixed Reality (MR) combines its own virtual environment with the user’s real-world environment and allows them to interact with each other.<br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#MixedReality" aria-label="Go to glossary anchor for MixedReality">Glossary</a></span></span></span> on the Apple Vision Pro. <span class="tooltip"><strong>Virtual reality</strong><span class="tooltiptext">Virtual Reality (VR) immerses users in an artificial 3D world of realistic images and sounds, using a headset and motion tracking. <a href="VROverview.html" href="Glossary.html#MixedReality" aria-label="Go to glossary anchor for MixedReality">Glossary</a></span></span></span> on the Apple Vision Pro. <span class="tooltip"><strong>Virtual reality</strong><span class="tooltiptext">Virtual Reality (VR) immerses users in an artificial 3D world of realistic images and sounds, using a headset and motion tracking. <a href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VirtualReality" aria-label="Go to glossary anchor for VirtualReality">Glossary</a></span></span></span> and windowed apps run in a Unity Player that also controls rendering (using the Apple Metal graphics API).</p>
+
+<p><a id="xr-interaction-toolkit" aria-hidden="true"></a></p>
+
+<h3>XR Interaction Toolkit</h3>
+
+<p>The <a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@3.1/">Unity XR Interaction Toolkit</a> provides tools for building both AR and VR interactions. The AR functionality provided by the XR Interaction Toolkit includes:</p>
+
+<ul>
+<li>AR gesture system to map screen touches to gesture events</li>
+<li>AR placement Interactable component to help place virtual objects in the real world</li>
+<li>AR gesture Interactor and Interactable components to support object manipulations such as place, select, translate, rotate, and scale</li>
+<li>AR annotations to inform users about AR objects placed in the real world</li>
+</ul>
+
+<p>For more information about the template assets and sample scene, refer to the <a href="https://docs.unity3d.com/Packages/com.unity.template.ar-mobile@2.0">AR Mobile template</a> documentation.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="xr-scene-setup.html">Set up an XR scene</a></li>
+<li>
+<a href="https://unity.com/resources/create-virtual-mixed-reality-experiences-unity">Create virtual and mixed reality experiences in Unity</a> (E-book)</li>
+<li><a href="xr-support-packages.html">XR packages</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="xr-support-packages.html"></a></span><div class="tip">XR packages</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="VROverview.html"></a></span><div class="tip">VR and MR development in Unity</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

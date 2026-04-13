@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: The Index Manager</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/search-index-manager.html">English</a></li>
+<li><a href="/cn/current/Manual/search-index-manager.html">中文</a></li>
+<li><a href="/ja/current/Manual/search-index-manager.html">日本語</a></li>
+<li><a href="/kr/current/Manual/search-index-manager.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/search-index-manager.html">English</a></li>
+<li><a href="/cn/current/Manual/search-index-manager.html">中文</a></li>
+<li><a href="/ja/current/Manual/search-index-manager.html">日本語</a></li>
+<li><a href="/kr/current/Manual/search-index-manager.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="search-overview.html">Unity Search</a></li>
+<li><a href="search-usage.html">Search usage</a></li>
+<li>The Index Manager</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="search-query-operators.html"></a></span><div class="tip">Search query operators</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="search-advanced-object-picker.html"></a></span><div class="tip">Search Object Picker</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>The Index Manager</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Index Manager allows you to create, edit, and remove search indexes. Indexes update when you add or change content in your project.</p>
+
+<p><a name="indexes" aria-hidden="true"></a></p>
+
+<h2>Index types</h2>
+
+<ul>
+<li>
+<strong>Asset</strong> - An index of all Assets in a Project. This index is created automatically when you create a Project and rebuilds when you add or modify new content. The Asset index includes all Assets including Prefabs and scenes, but it doesn’t index the content of a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> or a nested hierarchy in a <span class="tooltip"><strong>Prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> or a nested hierarchy in a <span class="tooltip"><strong>Prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span>.</li>
+<li>
+<strong>Package</strong> - An index containing Assets in the Packages.</li>
+<li>
+<strong>Prefab</strong> - An index containing only the <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> which are part of Prefabs.</li>
+<li>
+<strong>Scene</strong> - An index of Assets in any scene</li>
+<li>
+<strong>User</strong> - An index that is created for you and is not shared with the project.</li>
+</ul>
+
+<p>By default Unity creates the Asset index. To use Prefab, Package, Scene, and User indexes, you must create them in the Index Manager.</p>
+
+<p>To open the Index Manager choose <strong>Windows</strong> &gt; <strong>Search</strong> &gt; <strong>Index Manager</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/search-index-manager.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>File Path</strong></td>
+	<td style="text-align:left;">The location of the .index file.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;">The name you give to the index.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Score</strong></td>
+	<td style="text-align:left;">The <strong>Score</strong> is a number that is used with multiple indexes to increase the relevance of one index over another. The lower the number, the more weight is placed on an indexes’ relevance. Unity suggests using the default setting unless you are using advanced indexing scenarios.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Roots</strong></td>
+	<td style="text-align:left;">Choose a folder to index all of its contents.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Packages</strong></td>
+	<td style="text-align:left;">Select Packages to index the content of all the packages in the project.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Includes</strong></td>
+	<td style="text-align:left;">File extensions (*.jpg), specific files, or folders to index. This supersedes <strong>Excludes</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Excludes</strong></td>
+	<td style="text-align:left;">An extension, folder, or file to ignore. Especially useful for files that are generated by other process, for temp files, or for files from external sources (Asset Store plugins).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Options</strong></td>
+	<td style="text-align:left;">
+<strong>Disabled:</strong> Select to disable an index. Use as a debugging function to stop an index from being queried without deleting it.<br><br> <strong>Types:</strong> Indexes the object <a href="search-additional-searchfilters.html#type-filters">types</a> information. <br><br><strong>Properties:</strong> Indexes all properties of all objects (only top level objects in a Scene or Prefab). Allows you to use the <a href="search-additional-searchfilters.html#properties">Property</a> filter to search an index. <br><br><strong>Sub objects:</strong> Indexes all Scene objects for a Unity scene and all subassets for an FBX.<br><br> <strong>Dependencies:</strong> Indexes all dependencies of all Assets. Using this setting creates a much larger index. Allows you to use the <a href="search-additional-searchfilters.html#dependencies">Dependency</a> filter to search an index.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Show package indexes</strong></td>
+	<td style="text-align:left;">Select to show package indexes (when available) in the Index Manager.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="index-results" aria-hidden="true"></a></p>
+
+<h2>Index results</h2>
+
+<p>The following tabs contain information about the index:</p>
+
+<ul>
+<li>
+<strong>Assets:</strong> Displays the files indexed.</li>
+<li>
+<strong>Objects:</strong> (Prefab and Scene indexes only) Displays the object identifiers.</li>
+<li>
+<strong>Keywords:</strong> Displays the available searchable Properties or filters you can use to further narrow your search results.</li>
+</ul>
+
+<h2>Index sizes</h2>
+
+<p>To determine the index options you need, refer to this table.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Project size</th>
+	<th style="text-align:left;">Index required</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Less than 1000 assets</td>
+	<td style="text-align:left;">Minimal - enable a minimal set of indexing options</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Between 1000 and 2000 assets</td>
+	<td style="text-align:left;">Default - index your project assets with File and Type</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Over 2000 assets</td>
+	<td style="text-align:left;">Extended - index your project with File, Type, Properties, Sub objects, and Dependencies</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note:</strong> The more options you add to the index, the longer it will take to generate your first index.</p>
+
+<h2>Add an index</h2>
+
+<ol>
+<li>Open the <strong>Index Manager</strong>.</li>
+<li>Click the plus (+) sign in the left pane of the <strong>Index Manager</strong> window and select the type of index you want to create.</li>
+<li>Customize your index settings in the right pane and click <strong>Create</strong>.</li>
+<li>Name your index in the <strong>Save Index Settings</strong> window and click <strong>Save</strong>. <br> Your index builds automatically. Depending on the size of the project and your index settings, this may take some time.</li>
+</ol>
+
+<h2>Edit an index</h2>
+
+<ol>
+<li>Open the <strong>Index Manager</strong>.</li>
+<li>Select the index from the left pane of the <strong>Index Manager</strong> window.</li>
+<li>Make changes to your index name or settings and click <strong>Save</strong>.</li>
+</ol>
+
+<p>
+<strong>Note:</strong> If you make changes without saving your index, an asterisk (*) appears next to the window title. If you try to close the window without saving, Unity prompts you to save your index. When you save, Unity rebuilds your index with your changes.</p>
+
+<h2>Delete an index</h2>
+
+<ol>
+<li>Open the <strong>Index Manager</strong>.</li>
+<li>Select the index from the left pane of the <strong>Index Manager</strong> window.</li>
+<li>Click the minus (-) sign.</li>
+<li>Click <strong>Yes</strong> to confirm that you want to delete the index.</li>
+</ol>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="search-query-operators.html"></a></span><div class="tip">Search query operators</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="search-advanced-object-picker.html"></a></span><div class="tip">Search Object Picker</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

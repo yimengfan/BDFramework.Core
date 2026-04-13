@@ -1,0 +1,912 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: ShaderLab: assigning tags to a SubShader</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-SubShaderTags.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-SubShaderTags.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-SubShaderTags.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-SubShaderTags.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-SubShaderTags.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-SubShaderTags.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-SubShaderTags.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-SubShaderTags.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-writing.html">Writing shaders</a></li>
+<li><a href="SL-Reference.html">ShaderLab</a></li>
+<li><a href="SL-SubShader.html">ShaderLab: defining a SubShader</a></li>
+<li>ShaderLab: assigning tags to a SubShader</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-SubShader.html"></a></span><div class="tip">ShaderLab: defining a SubShader</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-ShaderLOD.html"></a></span><div class="tip">ShaderLab: assigning a LOD value to a SubShader</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>ShaderLab: assigning tags to a SubShader</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page contains information on using a <code>Tags</code> block in your <span class="tooltip"><strong>ShaderLab</strong><span class="tooltiptext">Unity’s language for defining the structure of Shader objects. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-Shader.html" href="SL-Shader.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span> code to assign tags to a SubShader.</p>
+
+<p>For information on defining SubShader, see <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-SubShader.html">ShaderLab: defining a SubShader</a>. For information on how a <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="SL-SubShader.html">ShaderLab: defining a SubShader</a>. For information on how a <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> object works, and the relationship between Shader objects, SubShaders and Passes, see <span class="tooltip"><a href="shader-objects.html">Shader objects</a><span class="tooltiptext">An instance of the Shader class, a Shader object is container for shader programs and GPU instructions, and information that tells Unity how to use them. Use them with materials to determine the appearance of your scene. <a href="shader-objects.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> object works, and the relationship between Shader objects, SubShaders and Passes, see <span class="tooltip"><a href="shader-objects.html">Shader objects</a><span class="tooltiptext">An instance of the Shader class, a Shader object is container for shader programs and GPU instructions, and information that tells Unity how to use them. Use them with materials to determine the appearance of your scene. <a href="shader-objects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shaderobject" aria-label="Go to glossary anchor for Shaderobject">Glossary</a></span></span></span>.</p>
+
+<h2>Overview</h2>
+
+<p>Tags are key-value pairs of data. Unity uses predefined keys and values to determine how and when to use a given SubShader, or you can also create your own custom SubShader tags with custom values. You can access SubShader tags from C# code.</p>
+
+<h2>Render pipeline compatibility</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature name</strong></th>
+	<th style="text-align:left;"><strong>Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span></strong></th>
+	<th style="text-align:left;"><strong>Universal Render Pipeline (URP)</strong></th>
+	<th style="text-align:left;"><strong>High Definition Render Pipeline (HDRP)</strong></th>
+	<th style="text-align:left;"><strong>Custom SRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>ShaderLab: SubShader Tags block</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ShaderLab: RenderPipeline SubShader tag</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ShaderLab: Queue SubShader tag</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>
+</td>
+	<td style="text-align:left;">Yes<br><br><strong>Note:</strong> in a custom SRP, you can define your own rendering order and choose whether or not to use render queues. For more information, see DrawingSettings and SortingCriteria.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ShaderLab: RenderType SubShader tag</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ShaderLab: DisableBatching SubShader tag</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ShaderLab: ForceNoShadowCasting SubShader tag</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>This disables regular shadows, but has no effect on contact shadows.</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ShaderLab: CanUseSpriteAtlas SubShader tag</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ShaderLab: PreviewType SubShader tag</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Using the Tags block in a SubShader</h2>
+
+<p>In ShaderLab, you assign tags to a SubShader by placing a <code>Tags</code> block inside a <code>SubShader</code> block.</p>
+
+<p>Note that both SubShaders and Passes use the <code>Tags</code> block, but they work differently. Assigning SubShader tags to a Pass has no effect, and vice versa. The difference is where you put the <code>Tags</code> block:</p>
+
+<ul>
+<li>To define Pass tags, place the <code>Tags</code> block inside a <code>Pass</code> block.</li>
+<li>To define SubShader tags, place the <code>Tags</code> block inside a <code>SubShader</code> block but outside a <code>Pass</code> block.</li>
+</ul>
+
+<p>For information on assigning tags to a Pass, see <a href="SL-Pass.html">Assigning tags to a Pass</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Tags { “[name1]” = “[value1]” “[name2]” = “[value2]”}</td>
+	<td style="text-align:left;">Applies the given tags to the SubShader.<br><br>You can define as many tags as you like.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Using SubShader tags with C# code</h2>
+
+<p>You can read SubShader tags from a C# script using the <a href="../ScriptReference/Material.GetTag.html">Material.GetTag</a> API, like this:</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+
+public class Example : MonoBehaviour
+{
+    // Attach this to a gameObject that has a Renderer component
+    string tagName = &quot;ExampleTagName&quot;;
+
+    void Start()
+    {
+        Renderer myRenderer = GetComponent&lt;Renderer&gt;();
+        string tagValue = myRenderer.material.GetTag(ExampleTagName, true, &quot;Tag not found&quot;);
+        Debug.Log(tagValue);
+    }
+}
+</code></pre>
+
+<h2>RenderPipeline tag</h2>
+
+<p>The <code>RenderPipeline</code> tag tells Unity whether a SubShader is compatible with the Universal Render Pipeline (URP) or the High Definition Render Pipeline (HDRP).</p>
+
+<h3>Syntax and valid values</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">“RenderPipeline” = “[name]”</td>
+	<td style="text-align:left;">Tells Unity whether this SubShader is compatible with URP or HDRP.</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Parameter</strong></th>
+	<th style="text-align:left;"><strong>Value</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">[name]</td>
+	<td style="text-align:left;"><code>UniversalPipeline</code></td>
+	<td style="text-align:left;">This SubShader is compatible with URP only.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>HDRenderPipeline</code></td>
+	<td style="text-align:left;">This SubShader is compatible with HDRP only.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">(any other value, or not declared)</td>
+	<td style="text-align:left;">This SubShader is not compatible with URP or HDRP.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Examples</h3>
+
+<p>This example code declares that a SubShader is compatible with URP:</p>
+
+<pre><code>Shader &quot;ExampleShader&quot; {
+    SubShader {
+        Tags { &quot;RenderPipeline&quot; = &quot;UniversalPipeline&quot; }
+        Pass {
+            …
+        }
+    }
+}
+</code></pre>
+
+<h2>Queue tag</h2>
+
+<p>The <code>Queue</code> tag tells Unity which render queue to use for geometry that it renders. The render queue is one of the factors that determines the order that Unity renders geometry in.</p>
+
+<h3>Syntax and valid values</h3>
+
+<p>You can use the <code>Queue</code> tag in two ways: you can tell Unity to use a named render queue, or an unnamed render queue that it renders after a named render queue.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">“Queue” = “[queue name]”</td>
+	<td style="text-align:left;">Use the named render queue.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">“Queue” = “[queue name] + [offset]”</td>
+	<td style="text-align:left;">Use an unnamed queue, at a given offset from the named queue.<br><br>An example of when this is useful is in the case of transparent water, which you should draw after opaque objects but before transparent objects.</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Value</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">[queue name]</td>
+	<td style="text-align:left;">Background</td>
+	<td style="text-align:left;">Specifies the Background render queue.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Geometry</td>
+	<td style="text-align:left;">Specifies the Geometry render queue.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">AlphaTest</td>
+	<td style="text-align:left;">Specifies the AlphaTest render queue.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Transparent</td>
+	<td style="text-align:left;">Specifies the Transparent render queue.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Overlay</td>
+	<td style="text-align:left;">Specifies the Overlay render queue.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">[offset]</td>
+	<td style="text-align:left;">integer</td>
+	<td style="text-align:left;">Specifies the index at which Unity renders the unnamed queue, relative to the named queue.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Using this tag with C# code</h3>
+
+<p>You can use <a href="../ScriptReference/Shader-renderQueue.html">Shader.renderQueue</a> to read the Queue tag value of a Shader object’s active SubShader.</p>
+
+<p>By default, Unity renders geometry in the render queue specified in the [Queue] tag. You can override this value on a per-material basis. In the Unity Editor, you can do this in the <a href="class-Material.html">material Inspector</a> by setting the <strong>Render Queue</strong> property. In a C# script, you can do this by setting the value of <a href="../ScriptReference/Material-renderQueue.html">Material.renderQueue</a> using the <a href="../ScriptReference/Rendering.RenderQueue.html">Rendering.RenderQueue</a> enum.</p>
+
+<h3>Examples</h3>
+
+<p>This example code creates a SubShader that renders geometry as part of the Transparent render queue:</p>
+
+<pre><code>Shader &quot;ExampleShader&quot; {
+    SubShader {
+        Tags { &quot;Queue&quot; = &quot;Transparent&quot; }
+        Pass {
+            …
+        }
+    }
+}
+</code></pre>
+
+<p>This example code creates a SubShader that renders geometry in an unnamed queue, after the Geometry queue.</p>
+
+<pre><code>Shader &quot;ExampleShader&quot; {
+    SubShader {
+        Tags { &quot;Queue&quot; = &quot;Geometry+1&quot; }
+        Pass {
+            …
+        }
+    }
+}
+</code></pre>
+
+<h2>RenderType tag</h2>
+
+<p>Use the <code>RenderType</code> tag to override the behavior of a Shader object.</p>
+
+<p>In the Built-in Render Pipeline, you can swap SubShaders at runtime using a technique called <a href="SL-ShaderReplacement.html">shader replacement</a>. This technique works by identifying SubShaders that have matching <code>RenderType</code> tag values. This is used in some cases to produce <a href="SL-CameraDepthTexture.html">camera’s depth texture</a>.</p>
+
+<p>In a render pipeline based on the Scriptable Render Pipeline, you can override the render state defined in a Shader object using a <code>RenderStateBlock</code> struct. You can use the value of the <code>RenderType</code> tag to identify SubShaders to override.</p>
+
+<h3>Syntax and valid values</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">“RenderType” = “[renderType]”</td>
+	<td style="text-align:left;">Set the RenderType value for this SubShader.</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Value</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">[renderType]</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">There are no set values for this parameter. To identify the RenderType value for any SubShader that you want to replace, open its shader source file.<br><br>The <code>RenderType</code> SubShader tags for Unity’s legacy built-in shaders are listed on the <a href="SL-ShaderReplacement.html">shader replacement page</a>.<br><br>You can also create your own values for your custom SubShaders.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Using this tag with C# code</h3>
+
+<p>For information on shader replacement in the Built-in Render Pipeline, see <a href="SL-ShaderReplacement.html">Shader replacement</a>. For information on using a RenderStateBlock in the Scriptable Render Pipeline, see the API documentation for <a href="../ScriptReference/Rendering.ScriptableRenderContext.DrawRenderers.html">ScriptableRenderContext.DrawRenderers</a>.</p>
+
+<h3>Examples</h3>
+
+<p>This example code creates a SubShader with a RenderType value of <code>TransparentCutout</code>:</p>
+
+<pre><code>Shader &quot;ExampleShader&quot; {
+    SubShader {
+        Tags { &quot;RenderType&quot; = &quot;TransparentCutout&quot; }
+        Pass {
+            …
+        }
+    }
+}
+</code></pre>
+
+<h2>ForceNoShadowCasting tag</h2>
+
+<p>The <code>ForceNoShadowCasting</code> tag prevents geometry in a SubShader from casting (and sometimes receiving) shadows. The exact behavior depends on the render pipeline and <span class="tooltip"><strong>rendering path</strong><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingPaths.html" href="RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderingPath" aria-label="Go to glossary anchor for RenderingPath">Glossary</a></span></span></span>.</p>
+
+<p>This can be useful if you are using <a href="SL-ShaderReplacement.html">shader replacement</a>, but you do not want to inherit a shadow pass from another SubShader.</p>
+
+<h3>Syntax and valid values</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">“ForceNoShadowCasting” = “[state]”</td>
+	<td style="text-align:left;">Whether to prevent shadow casting (and sometimes receiving) for all geometry that uses this SubShader.</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Value</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">[state]</td>
+	<td style="text-align:left;">True</td>
+	<td style="text-align:left;">Unity prevents the geometry in this SubShader from casting shadows.<br><br>In the Built in Render Pipeline, with the Forward, Legacy Vertex Lit or Legacy Deferred rendering paths, Unity also prevents the geometry in this SubShader from receiving shadows.<br><br>In HDRP, this does not prevent the geometry from casting contact shadows.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">False</td>
+	<td style="text-align:left;">Unity does not prevent the geometry in this SubShader from casting or receiving shadows. This is the default value.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Examples</h3>
+
+<p>This example code creates a SubShader with a ForceNoShadowCasting value of <code>True</code>:</p>
+
+<pre><code>Shader &quot;ExampleShader&quot; {
+    SubShader {
+        Tags { &quot;ForceNoShadowCasting&quot; = &quot;True&quot; }
+        Pass {
+            …
+        }
+    }
+}
+</code></pre>
+
+<h2>DisableBatching tag</h2>
+
+<p>The <code>DisableBatching</code> SubShader Tag prevents Unity from applying <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DrawCallBatching.html">Dynamic Batching</a><span class="tooltiptext">An automatic Unity process which attempts to render multiple meshes as if they were a single mesh for optimized graphics performance. The technique transforms all of the GameObject vertices on the CPU and groups many similar vertices together. <a href="DrawCallBatching.html" href="DrawCallBatching.html">Dynamic Batching</a><span class="tooltiptext">An automatic Unity process which attempts to render multiple meshes as if they were a single mesh for optimized graphics performance. The technique transforms all of the GameObject vertices on the CPU and groups many similar vertices together. <a href="DrawCallBatching.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DynamicBatching" aria-label="Go to glossary anchor for DynamicBatching">Glossary</a></span></span></span> to geometry that uses this SubShader.</p>
+
+<p>This is useful for shader programs that perform object space operations. Dynamic Batching transforms all geometry into world space, meaning that shader programs can no longer access object space. Shader programs that rely on object space therefore do not render correctly. To avoid this problem, use this SubShader Tag to prevent Unity from applying Dynamic Batching.</p>
+
+<h3>Syntax and valid values</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">“DisableBatching” = “[state]”</td>
+	<td style="text-align:left;">Whether Unity prevents Dynamic Batching for all geometry that uses this SubShader.</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Value</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">[state]</td>
+	<td style="text-align:left;">True</td>
+	<td style="text-align:left;">Unity prevents Dynamic Batching for geometry that uses this SubShader.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">False</td>
+	<td style="text-align:left;">Unity does not prevent Dynamic Batching for geometry that uses this SubShader. This is the default value.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">LODFading</td>
+	<td style="text-align:left;">Unity prevents Dynamic Batching for all geometry that is part of a <a href="https://docs.unity3d.com/Manual/class-LODGroup.html">LODGroup</a> with a Fade Mode value that is not None. Otherwise, Unity does not prevent Dynamic Batching.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Examples</h3>
+
+<p>This example code creates a SubShader with a DisableBatching value of <code>True</code>:</p>
+
+<pre><code>Shader &quot;ExampleShader&quot; {
+    SubShader {
+        Tags { &quot;DisableBatching&quot; = &quot;True&quot; }
+        Pass {
+            …
+        }
+    }
+}
+</code></pre>
+
+<h2>IgnoreProjector tag</h2>
+
+<p>In the Built-in Render Pipeline, the <code>IgnoreProjector</code> SubShader tag tells Unity whether geometry is affected by <a href="class-Projector.html">Projectors</a>. This is mostly useful for excluding semi-transparent geometry, which Projectors are not compatible with.</p>
+
+<p>This tag has no effect in other render pipelines.</p>
+
+<h3>Syntax and valid values</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">“IgnoreProjector” = “[state]”</td>
+	<td style="text-align:left;">Whether Unity ignores Projectors when rendering this geometry.</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Value</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">[state]</td>
+	<td style="text-align:left;">True</td>
+	<td style="text-align:left;">Unity ignores Projectors when rendering this geometry.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">False</td>
+	<td style="text-align:left;">Unity does not ignore Projectors when rendering this geometry. This is the default value.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Examples</h3>
+
+<p>This example code creates a SubShader with an IgnoreProjectors value of <code>True</code>:</p>
+
+<pre><code>Shader &quot;ExampleShader&quot; {
+    SubShader {
+        Tags { &quot;IgnoreProjector&quot; = &quot;True&quot; }
+        Pass {
+            …
+        }
+    }
+}
+</code></pre>
+
+<h2>PreviewType tag</h2>
+
+<p>The <code>PreviewType</code> SubShader Tag tells the Unity Editor how to display a material that uses this SubShader in the Material <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>.</p>
+
+<h3>Syntax and valid values</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">“PreviewType” = “[shape]”</td>
+	<td style="text-align:left;">Which shape the Unity Editor uses to display a preview of a material that uses this SubShader.</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Value</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">[shape]</td>
+	<td style="text-align:left;">Sphere</td>
+	<td style="text-align:left;">Display the material on a sphere. This is the default value.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Plane</td>
+	<td style="text-align:left;">Display the material on a plane.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Skybox</strong><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Skybox.html" href="class-Skybox.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skybox" aria-label="Go to glossary anchor for Skybox">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Display the material on a skybox.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Examples</h3>
+
+<p>This example code creates a SubShader with an PreviewType value of <code>Plane</code>:</p>
+
+<pre><code>Shader &quot;ExampleShader&quot; {
+    SubShader {
+        Tags { &quot;PreviewType&quot; = &quot;Plane&quot; }
+        Pass {
+            …
+        }
+    }
+}
+</code></pre>
+
+<h2>CanUseSpriteAtlas tag</h2>
+
+<p>Use this SubShader tag in projects that use the <a href="SpritePacker.html">Legacy Sprite Packer</a> to warn users that your shader relies on original texture coordinates, and that they should therefore not pack its textures into atlases.</p>
+
+<h3>Syntax and valid values</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">“CanUseSpriteAtlas” = “[state]”</td>
+	<td style="text-align:left;">Whether the Sprites that use this SubShader are compatible with the Legacy <span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> Packer.</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Value</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">[state]</td>
+	<td style="text-align:left;">True</td>
+	<td style="text-align:left;">Sprites that use this SubShader are compatible with the Legacy <span class="tooltip"><strong>Sprite Packer</strong><span class="tooltiptext">A facility that packs graphics from several sprite textures tightly together within a single texture known as an atlas. Unity provides a Sprite Packer utility to automate the process of generating atlases from the individual sprite textures. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SpritePacker.html" href="SpritePacker.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SpritePacker" aria-label="Go to glossary anchor for SpritePacker">Glossary</a></span></span></span>. This is the default value.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">False</td>
+	<td style="text-align:left;">Sprites that use this SubShader are not compatible with the Legacy Sprite Packer.<br><br>When a SubShader with a <code>CanUseSpriteAtlas</code> value of <code>False</code> is used with a Sprite that has a Legacy Sprite Packer packing tag, Unity shows an error message in the Inspector.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>CanUseSpriteAtlas tag code examples</h3>
+
+<p>This example code creates a SubShader with an CanUseSpriteAtlas value of <code>False</code>:</p>
+
+<pre><code>Shader &quot;ExampleShader&quot; {
+    SubShader {
+        Tags { &quot;CanUseSpriteAtlas&quot; = &quot;False&quot; }
+        Pass {
+            …
+        }
+    }
+}
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-SubShader.html"></a></span><div class="tip">ShaderLab: defining a SubShader</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-ShaderLOD.html"></a></span><div class="tip">ShaderLab: assigning a LOD value to a SubShader</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

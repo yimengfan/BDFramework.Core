@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Parallel jobs</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/JobSystemParallelForJobs.html">English</a></li>
+<li><a href="/cn/current/Manual/JobSystemParallelForJobs.html">中文</a></li>
+<li><a href="/ja/current/Manual/JobSystemParallelForJobs.html">日本語</a></li>
+<li><a href="/kr/current/Manual/JobSystemParallelForJobs.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/JobSystemParallelForJobs.html">English</a></li>
+<li><a href="/cn/current/Manual/JobSystemParallelForJobs.html">中文</a></li>
+<li><a href="/ja/current/Manual/JobSystemParallelForJobs.html">日本語</a></li>
+<li><a href="/kr/current/Manual/JobSystemParallelForJobs.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="JobSystem.html">Job system </a></li>
+<li>Parallel jobs</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="JobSystemJobDependencies.html"></a></span><div class="tip">Job dependencies </div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnityWebRequest.html"></a></span><div class="tip">UnityWebRequest</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Parallel jobs</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>When you <a href="JobSystemCreatingJobs.html#schedule-a-job">schedule a job</a> there can only be one job doing one task. However, there will be times where you need to perform the same operation on a lot of objects. To do this, use a ParallelFor job type, which inherits from <a href="Scriptref:Unity.Jobs.IJobParallelFor"><code>IJobParallelFor</code></a>.</p>
+
+<p>A ParallelFor job uses a <a href="../ScriptReference/Unity.Collections.NativeArray_1.html"><code>NativeArray</code></a> of data to act on as its data source. ParallelFor jobs run across multiple CPU cores. There’s one job per core, with each handling a subset of the workload. </p>
+
+<p>
+<code>IJobParallelFor</code> behaves like <a href="JobsOverview"><code>IJob</code></a>, but instead of a single <a href="../ScriptReference/Unity.Jobs.IJob.Execute.html"><code>Execute</code></a> method, it invokes the <code>Execute</code> method once per item in the data source. There’s also an integer parameter index in the <code>Execute</code> method, which you can use to access and operate on a single element of the data source within the job implementation.</p>
+
+<p>The following is an example of a ParallelFor job definition:</p>
+
+<pre><code class="lang-cs">struct IncrementByDeltaTimeJob: IJobParallelFor
+{
+    public NativeArray&lt;float&gt; values;
+    public float deltaTime;
+
+    public void Execute (int index)
+    {
+        float temp = values[index];
+        temp += deltaTime;
+        values[index] = temp;
+    }
+}
+</code></pre>
+
+<h2>Schedule a ParallelFor job</h2>
+
+<p>To schedule a <code>ParallelFor</code> job, you must specify the length of the <code>NativeArray</code> data source that you want to split. The job system doesn’t know which <code>NativeArray</code> you want to use as the data source if there are several in the struct. The length also tells the job system how many <code>Execute</code> methods to expect.</p>
+
+<p>In Unity’s native code, the scheduling of <code>ParallelFor</code> jobs is more complicated. When Unity schedules a <code>ParallelFor</code> job, the job system divides the work into batches to distribute between cores. Each batch contains a subset of <code>Execute</code> methods. The job system then schedules one job in Unity’s native job system per CPU core and passes that native job to the batches to complete.</p>
+
+<figure>
+<img src="../uploads/Main/jobsystem_parallelfor_job_batches.svg" alt="A ParallelFor job dividing batches across cores">
+<figcaption>A ParallelFor job dividing batches across cores</figcaption>
+</figure>
+
+<p>When a native job completes its batches before others, it <a href="JobSystemOverview.html#work-stealing">steals</a> remaining batches from the other native jobs. It only steals half of a native job’s remaining batches at a time, to ensure <a href="https://en.wikipedia.org/wiki/Locality_of_reference">cache locality</a>.</p>
+
+<p>To optimize the process, you need to specify a batch count. The batch count controls how many jobs you get, and how fine-grained the redistribution of work between threads is. Having a low batch count, such as 1, gives you an even distribution of work between threads. However, it comes with some overhead, so sometimes it’s better to increase the batch count. Starting at 1 and increasing the batch count until there are negligible performance gains is a good strategy.</p>
+
+<p>The following is an example of scheduling a ParallelFor job</p>
+
+<p>Job code:</p>
+
+<pre><code class="lang-cs">// Job adding two floating point values together
+public struct MyParallelJob : IJobParallelFor
+{
+    [ReadOnly]
+    public NativeArray&lt;float&gt; a;
+    [ReadOnly]
+    public NativeArray&lt;float&gt; b;
+    public NativeArray&lt;float&gt; result;
+
+    public void Execute(int i)
+    {
+        result[i] = a[i] + b[i];
+    }
+}
+</code></pre>
+
+<p>Main thread code:</p>
+
+<pre><code class="lang-cs">NativeArray&lt;float&gt; a = new NativeArray&lt;float&gt;(2, Allocator.TempJob);
+
+NativeArray&lt;float&gt; b = new NativeArray&lt;float&gt;(2, Allocator.TempJob);
+
+NativeArray&lt;float&gt; result = new NativeArray&lt;float&gt;(2, Allocator.TempJob);
+
+a[0] = 1.1;
+b[0] = 2.2;
+a[1] = 3.3;
+b[1] = 4.4;
+
+MyParallelJob jobData = new MyParallelJob();
+jobData.a = a;  
+jobData.b = b;
+jobData.result = result;
+
+// Schedule the job with one Execute per index in the results array and only 1 item per processing batch
+JobHandle handle = jobData.Schedule(result.Length, 1);
+
+// Wait for the job to complete
+handle.Complete();
+
+// Free the memory allocated by the arrays
+a.Dispose();
+b.Dispose();
+result.Dispose();
+</code></pre>
+
+<h2>ParallelForTransform jobs</h2>
+
+<p>A <code>ParallelForTransform</code> job is another type of <code>ParallelFor</code> job designed specifically for operating on <a href="class-Transform.html">Transforms</a>. It’s useful for working on Transform operations from jobs efficiently. For more information, see the <a href="../ScriptReference/Jobs.IJobParallelForTransform.html">ParallelForTransform</a> API documentation.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="JobSystemJobDependencies.html"></a></span><div class="tip">Job dependencies </div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnityWebRequest.html"></a></span><div class="tip">UnityWebRequest</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

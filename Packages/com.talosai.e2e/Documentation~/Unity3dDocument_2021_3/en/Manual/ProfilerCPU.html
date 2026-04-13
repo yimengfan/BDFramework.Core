@@ -1,0 +1,500 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: CPU Usage Profiler module</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ProfilerCPU.html">English</a></li>
+<li><a href="/cn/current/Manual/ProfilerCPU.html">中文</a></li>
+<li><a href="/ja/current/Manual/ProfilerCPU.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ProfilerCPU.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ProfilerCPU.html">English</a></li>
+<li><a href="/cn/current/Manual/ProfilerCPU.html">中文</a></li>
+<li><a href="/ja/current/Manual/ProfilerCPU.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ProfilerCPU.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="Profiler.html">Profiler overview</a></li>
+<li><a href="ProfilerWindow.html">The Profiler window</a></li>
+<li>CPU Usage Profiler module</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ProfilerAudio.html"></a></span><div class="tip">Audio Profiler module</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="profiler-file-access-module.html"></a></span><div class="tip">File Access Profiler module</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>CPU Usage Profiler module</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The CPU Usage <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> module contains a chart that displays where time is spent in your application. It provides an overview of all the significant areas where your application spends time, such as on rendering, its <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html" href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> module contains a chart that displays where time is spent in your application. It provides an overview of all the significant areas where your application spends time, such as on rendering, its <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>, and animation. This section of the documentation covers:</p>
+
+<ul>
+<li><a href="#charts">Chart categories</a></li>
+<li>
+<a href="#details-pane">Module details pane</a>
+
+<ul>
+<li><a href="#live-setting">Live setting</a></li>
+<li><a href="#full-names-setting">Show Show Full Scripting Method Names setting</a></li>
+</ul>
+</li>
+<li>
+<a href="#timeline">Timeline view</a>
+
+<ul>
+<li><a href="#flow-events">Flow events</a></li>
+</ul>
+</li>
+<li><a href="#hierarchy">Hierarchy and Raw Hierarchy view</a></li>
+<li><a href="#call-stacks">Allocation call stacks</a></li>
+<li><a href="#samples">Common markers</a></li>
+</ul>
+
+<p><a name="charts" aria-hidden="true"></a></p>
+
+<h2>Chart categories</h2>
+
+<p>The CPU Usage Profiler module’s chart tracks the time spent on the application’s main thread. The timings are divided into nine categories. To change the order of the categories in the chart, you can drag and drop them in the chart’s legend. You can also click a category’s colored legend to toggle its display.</p>
+
+<figure>
+<img src="../uploads/Main/profiler-cpu-window.png" alt="The CPU Usage Profiler module">
+<figcaption>The CPU Usage Profiler module</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Category</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Rendering</strong></td>
+	<td style="text-align:left;">How much time your application spends on rendering graphics.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scripts</strong></td>
+	<td style="text-align:left;">How much time your application spends on running scripts.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Physics</strong></td>
+	<td style="text-align:left;">How much time your application spends on the <span class="tooltip"><strong>physics engine</strong><span class="tooltiptext">A system that simulates aspects of physical systems so that objects can accelerate correctly and be affected by collisions, gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PhysicsSection.html" href="PhysicsSection.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PhysicsEngine" aria-label="Go to glossary anchor for PhysicsEngine">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Animation</strong></td>
+	<td style="text-align:left;">How much time your application spends on animating Skinned <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> Renderers, <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> Renderers, <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> and other components in your application. This also includes the time spent on calculations for systems the Animation and <span class="tooltip"><strong>Animator components</strong><span class="tooltiptext">A component on a model that animates that model using the Animation system. The component has a reference to an Animator Controller asset that controls the animation. <a href="class-AnimatorController.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> and other components in your application. This also includes the time spent on calculations for systems the Animation and <span class="tooltip"><strong>Animator components</strong><span class="tooltiptext">A component on a model that animates that model using the Animation system. The component has a reference to an Animator Controller asset that controls the animation. <a href="class-AnimatorController.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorComponent" aria-label="Go to glossary anchor for AnimatorComponent">Glossary</a></span></span></span> use.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GarbageCollector</strong></td>
+	<td style="text-align:left;">How much time your application spends on running the <a href="../ScriptReference/Scripting.GarbageCollector.html">Garbage Collector</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>VSync</strong><span class="tooltiptext">Vertical synchronization (VSync) is a display setting that caps a game’s frame rate to match the refresh rate of a monitor, to prevent image tearing.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VSync" aria-label="Go to glossary anchor for VSync">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">How much time your application spends per frame waiting for the <a href="../ScriptReference/Application-targetFrameRate.html">targetFrameRate</a> or the next <span class="tooltip"><strong>VBlank</strong><span class="tooltiptext">Vertical blanking interval (VBlank) is the time between the end of the final visible line of a frame and the beginning of the first visible line of the next frame. This is the refresh interval as defined by a screen’s refresh rate.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VBlank" aria-label="Go to glossary anchor for VBlank">Glossary</a></span></span></span> to sync with. This is according to the <a href="../ScriptReference/QualitySettings-vSyncCount.html">QualitySettings.vSyncCount</a> value, the target frame rate, or the VSync setting that is the default or enforced maximum of the platform your application is running on. For more information about VSync, see the section in this documentation on <a href="#samples">Rendering and VSync samples</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Global Illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">How much time your application spends on lighting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">How much time your application spends on displaying its UI.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Others</strong></td>
+	<td style="text-align:left;">How much time your application spends on code that does not fall into any of the other categories. This includes areas like the entire EditorLoop, or the Profiling overhead when you profile Play Mode in the Editor.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="details-pane" aria-hidden="true"></a></p>
+
+<h2>Module details pane</h2>
+
+<p>When you select the CPU Usage module, the details pane below it displays a breakdown of where the application spent time in the selected frame. You can display the timing data as either a timeline or a hierarchical table. To change the display, use the top-left dropdown in the details pane (set to <strong>Timeline</strong> by default). The three views available are:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>View</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="#timeline">Timeline</a></td>
+	<td style="text-align:left;">Displays a breakdown of the timings for a particular frame, alongside a time axis of the frame’s length. This is the only view mode that you can use to see timings on all threads at once and at the times within the frame at which they happened, so that you can correlate timings across threads (for example, <a href="JobSystem.html">Job System</a> worker threads starting up after a system on the main thread schedules them).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#hierarchy">Hierarchy</a></td>
+	<td style="text-align:left;">Groups the timing data by its internal hierarchical structure. This option displays the elements that your application called in a descending list format, ordered by the time spent by default. You can also order the information by the amount of scripting memory allocated (<strong>GC Alloc</strong>), or the number of calls. To change the column that orders the table, click the table column’s header.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#hierarchy">Raw Hierarchy</a></td>
+	<td style="text-align:left;">Displays the timing data in a hierarchical structure that is similar to the call stacks where the timing occurred. Unity lists each call stack separately in this mode instead of merging them, as it does in <strong>Hierarchy</strong> view.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="live-setting" aria-hidden="true"></a></p>
+
+<h3>Live setting</h3>
+
+<p>The <strong>Live</strong> setting, which is available in each of the views, displays the information about the current or selected frame in the module details pane when you start recording new data in Playmode or the Editor. To enable this, click the <strong>Live</strong> button next to the module details dropdown. By default, this setting is disabled, and the module details pane is blank when you record data. <strong>Note:</strong> This setting increases the overhead of the <code>EditorLoop</code> when the Profiler window is repainted. </p>
+
+<p><a name="full-names-setting" aria-hidden="true"></a></p>
+
+<h3>Show Full Scripting Method Names setting</h3>
+
+<p>Additionally, in each view, you can select the <strong>More Items</strong> menu (⋮) and enable <strong>Show Full Scripting Method Names</strong>, which then displays the fully qualified names for all scripting methods (<code>Assembly::Class::MethodName</code>).</p>
+
+<figure>
+<img src="../uploads/Main/profiler-cpu-full-scripting-methods.png" alt="A: Scripting methods in the Hierarchy view and Timeline view without Show Full Scripting Method Names enabled&lt;br/&gt; B: Scripting methods in the Hierarchy view and Timeline view with Show Full Scripting Method Names enabled">
+<figcaption><strong>A:</strong> Scripting methods in the Hierarchy view and Timeline view without <strong>Show Full Scripting Method Names</strong> enabled<br>
+<strong>B:</strong> Scripting methods in the Hierarchy view and Timeline view with <strong>Show Full Scripting Method Names</strong> enabled</figcaption>
+</figure>
+
+<p><a name="timeline" aria-hidden="true"></a></p>
+
+<h2>Timeline view</h2>
+
+<figure>
+<img src="../uploads/Main/profiler-cpu-timeline-view.png" alt="CPU Usage Profiler module with the Timeline view">
+<figcaption>CPU Usage Profiler module with the Timeline view</figcaption>
+</figure>
+
+<p>The Timeline view is the default view for the CPU Usage Profiler module. It contains an overview of where time is spent in your application and how the timings relate to each other.</p>
+
+<p>The Timeline view displays profiling data from all threads in their own subsections and along the same time axis, unlike the Hierarchy views. The Hierarchy views only display profiling data one thread at a time, defaulting to the main thread. Also, these views only show a sample’s duration, whereas the Timeline view shows at which times each sample occurred.</p>
+
+<p>You can use the Timeline view to see how activities on the different threads correlate to each other in their parallel execution. You can see how much or little you are using the different threads, such as the <a href="JobSystem.html">Job System</a>’s worker threads, how work on the threads are queued up, and if any thread is idling (Idle sample) or waiting for another thread or a Job to finish (Wait for x sample).</p>
+
+<h3>Navigating and selecting items</h3>
+
+<p>To zoom in on areas of the time axis, use the scroll wheel on your mouse, or press and hold the Alt key while you drag with the right mouse button pressed down. You can also use the ends of the horizontal scrollbar to zoom in. Press the <strong>A</strong> key on your keyboard to reset the zoom so that the entire frame time is visible.</p>
+
+<p>Whenever you see a white arrow on the bottom of a thread, you can click it to unfold the thread to show all lines, or click again to show only the top ones. You can also drag the line that separates the threads to readjust how many lines you can see. Double-clicking the line sets the height of the thread’s section to the maximum depth of the call stack. To pan the view, press the middle mouse button, or hold the Alt key (Command key on macOS) and press the left mouse button.</p>
+
+<p>To collapse and expand groups of threads, click on the foldout arrows next to the thread names on the far left of the view.</p>
+
+<p>To see an item’s contribution to the CPU chart, select it in the lower pane. The Profiler highlights its contribution, and dims the rest of the chart. To deselect the item, click elsewhere in the view. Press the <strong>F</strong> key to focus the current sample you selected, or to show the default zoom level if you’ve selected nothing.</p>
+
+<figure>
+<img src="../uploads/Main/profiler-cpu-selected-module.png" alt="CPU Usage module in Timeline view, with a selected item">
+<figcaption>CPU Usage module in Timeline view, with a selected item</figcaption>
+</figure>
+
+<p>In the image above, the tooltip on the selected sample provides further details, such as the number of instances and the total time of this sample across all threads. You can select the text within the tooltip and copy it as well as use the buttons to interact with the sample further:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Operation</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Copy</strong></td>
+	<td style="text-align:left;">Copy the call stack and the entire content of the tooltip to your clipboard.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Show</strong></td>
+	<td style="text-align:left;">Select this dropdown to choose from the following options:</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><em>Hierarchy</em></td>
+	<td style="text-align:left;">Switch to this sample in <a href="#hierarchy">Hierarchy</a> view</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><em>Raw Hierarchy</em></td>
+	<td style="text-align:left;">Switch to this sample in <a href="#hierarchy">Raw Hierarchy</a> view</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><em>Full Details for Call Stacks</em></td>
+	<td style="text-align:left;">Unity records call stacks as a list of method pointer addresses, which it uses to display the method name, file path, and line number of the stack. Whenever only the pointer address is present, Unity ignores it to conserve screen space for the actionable items that have further information available. Enable this property to see the full list of method pointer addresses of the call stack.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><em>Selected Sample Stack</em></td>
+	<td style="text-align:left;">View the details of the sample stack. Unity opens this information in a separate window. You can then copy the sample stack information to your clipboard.<br><br>The sample stack differs from a method’s call stack because Unity does not tie every sample to a specific method, nor does it record every call as a sample. If you select a sample in a different frame and there isn’t a sample with the same sample stack in the displayed frame, this window shows both the sample stack of the original selection, as well as the approximate selection for this frame.</td>
+</tr>
+</tbody>
+</table>
+
+<p>GC.Alloc samples appear colored in red-magenta, and show you the size of the allocation.</p>
+
+<p>To show managed call stacks in the tooltip, navigate to the Profiler window’s <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span>, and select the Call Stacks button. You must enable this property before you profile a frame to display the call stack for a frame. For more information, see the section on <a href="#call-stacks">call stacks</a>.</p>
+
+<p><a name="flow-events" aria-hidden="true"></a></p>
+
+<h3>Flow Events</h3>
+
+<p>To help you visualize how Unity schedules jobs across threads, you can use the <strong>Flow Events</strong> setting. This setting displays the relationship between systems, jobs and threads. To enable this setting, select the <strong>More</strong> menu (⋮) in the top right of the Timeline view pane, and then select <strong>Show Flow Events</strong>.</p>
+
+<p>When you enable this setting, the Profiler adds white event markers to the <span class="tooltip"><strong>Profiler samples</strong><span class="tooltiptext">A set of data associated with a Profiler marker, that the Profiler has recorded and collected.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profilersample" aria-label="Go to glossary anchor for Profilersample">Glossary</a></span></span></span> that schedule jobs, or wait on scheduled jobs to complete. It also darkens unrelated samples so that you can more easily visualize the sample you select.</p>
+
+<p>There are three types of arrows the Profiler adds to the samples:</p>
+
+<ul>
+<li>Down arrow: Indicates the beginning of a flow, and that this sample scheduled some work.</li>
+<li>Right arrow: Indicates the next item in a flow, and that a different sample scheduled this.</li>
+<li>Up arrow: Indicates the end of a flow, and that the work ended or synchronized on this sample.</li>
+</ul>
+
+<p>When you select a sample, the Profiler connects the relevant flow event markers together with lines. A thicker line highlights the particular flow line you select. For example, if a <code>begin</code> sample points to two other <code>next</code> samples, when you click one of the <code>next</code> samples, the Profiler draws a thicker line to it. </p>
+
+<p>This view is useful to discover the flow of execution of your code, what work was being waited on to complete, and helps you uncover the dependencies of your code in a visual way. </p>
+
+<figure>
+<img src="../uploads/Main/profiler-flow-events.png" alt="The Timeline CPU Profiler view with Flow Events enabled and a sample selected.">
+<figcaption>The Timeline CPU Profiler view with Flow Events enabled and a sample selected.</figcaption>
+</figure>
+
+<p><a name="hierarchy" aria-hidden="true"></a></p>
+
+<h2>Hierarchy and Raw Hierarchy view</h2>
+
+<p>When you switch to the <strong>Hierarchy</strong> or <strong>Raw Hierarchy</strong> view, your selection carries over, as long as the sample is on the main thread. If you cannot immediately find your selection, press the F key to focus it. </p>
+
+<figure>
+<img src="../uploads/Main/profiler-cpu-hierarchy-view.png" alt="The CPU Usage Profiler module with the Hierarchy view">
+<figcaption>The CPU Usage Profiler module with the Hierarchy view</figcaption>
+</figure>
+
+<p>The <strong>Hierarchy</strong> view lists all samples you have profiled and groups them together by their shared call stack and the hierarchy of ProfilerMarkers. The <strong>Raw Hierarchy</strong> view does not group samples together, which makes it ideal for looking into samples on a granular level. You can also use the <strong>Thread</strong> dropdown to select a specific thread, like the Main Thread or Render Thread to inspect in these views.</p>
+
+<p>By default, all EditorOnly samples are collapsed in these views. EditorOnly samples are samples in the Player Loop that only happen because of Editor-only safety checks. When the samples are collapsed, their GC.Alloc value does not contribute to the GC.Alloc value of their enclosing sample. To display these samples, select the <strong>More Items</strong> menu (⋮) in the top right of the details pane, and then disable the <strong>Collapse EditorOnly Samples</strong> setting. For more information, see the <a href="#editor-only">Editor only samples</a> section of this documentation.</p>
+
+<p>Both views display the following detailed information for each item in the Hierarchy, next to each row:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Total</strong></td>
+	<td style="text-align:left;">The total amount of time Unity spent on a particular function, as a percentage.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Self</strong></td>
+	<td style="text-align:left;">The total amount of time Unity spent on a particular function as a percentage, excluding the time Unity spends calling sub-functions. <br> <br> For example, in the screenshot, 16.7% of time is spent in the <code>Camera.Render</code> function. This is because it calls a lot of drawing and culling functions. However, when you exclude the functions it calls, only 0.2% of time is spent on the <code>Camera.Render</code> function itself.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Calls</strong></td>
+	<td style="text-align:left;">The number of calls made to this function in this frame. In the <strong>Raw Hierarchy</strong> view the values in this column are always 1 because the Profiler does not merge the hierarchy of samples.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GC Alloc</strong></td>
+	<td style="text-align:left;">How much scripting heap memory Unity has allocated in the current frame. The <a href="performance-garbage-collector.html">garbage collector</a> manages the scripting heap memory. <br> <br> Whenever Unity calls <code>GC.Collect()</code> or there is a scripting heap allocation that does not fit within the heap’s current size, the garbage collector triggers. It marks all allocations that have no more references to them and collects them. This process appears as <strong>GC.Collect</strong> samples in the Profiler. <br> <br> Unity runs the garbage collector more frequently as your application allocates more on the heap. As the managed heap grows, it takes Unity longer to mark and collect the memory. As such, you should keep the <strong>GC Alloc</strong> value at zero while your application runs, to prevent the garbage collector from affecting your application’s frame rate, and to keep the overall heap size small.<br> <br> For more details about the managed heap see the documentation on <a href="performance-managed-memory.html">Understanding Automatic Memory Management</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Time ms</strong></td>
+	<td style="text-align:left;">The total amount of time Unity spent on a particular function, in milliseconds. If your application uses the <a href="JobSystem.html">Job System</a> or multithreaded rendering, this information might be misleading, because it only contains the time Unity spent on the currently selected thread. To change the thread, select the <strong>Thread</strong> dropdown at the top of the Hierarchy pane.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Self ms</strong></td>
+	<td style="text-align:left;">The total amount of time Unity spent on a particular function, in milliseconds, excluding the time Unity spends calling sub-functions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Warning</strong></td>
+	<td style="text-align:left;">Indicated by a warning icon, this displays how many times the application has triggered a warning during the current frame. For more information, see the <a href="#warnings">Performance warnings</a> section of this documentation.</td>
+</tr>
+</tbody>
+</table>
+
+<p>To get more information about where your application calls and uses the profiled functions, select the <strong>Details</strong> dropdown at the top right hand corner of the module details pane and choose either <strong>Related Data</strong> or <strong>Calls</strong> view.</p>
+
+<figure>
+<img src="../uploads/Main/profiler-related-data.png" alt="Related Data panel">
+<figcaption>Related Data panel</figcaption>
+</figure>
+
+<p>The <strong>Related Data</strong> view displays a list of <code>UnityEngine.Objects</code> that use a <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Unity.Profiling.ProfilerMarker.Begin.html">Begin()</a> overload and are associated with the Profiler sample. Some samples that Unity reports have these associations built in, such as <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="../ScriptReference/Unity.Profiling.ProfilerMarker.Begin.html">Begin()</a> overload and are associated with the Profiler sample. Some samples that Unity reports have these associations built in, such as <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>.Render samples that are linked to the Camera GameObject that does the rendering. Unity reports these objects via their instance ID and resolves them to a name in the Profiler window, if you profile in the Editor. When you profile a built player, or load a capture from disk, these names do not appear and the Profiler displays them as <code>N/A</code>.</p>
+
+<p>When you click on one of these objects, Unity tries to find the object via the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> hierarchy and <a href="../ScriptReference/EditorGUIUtility.PingObject.html">ping</a> it. Because the association uses the instance ID, pinging only works when you profile your application in the Editor, and for as long as the object still exists.</p>
+
+<p>For <code>GC.Alloc</code> samples, this view displays a list of <code>N/A</code> items, one for each allocation that happened at this hierarchy level, with the size of the allocation listed in the GC.Alloc column. If you profile your application with the <span class="tooltip"><strong>Call Stacks</strong><span class="tooltiptext">A list of methods that were called at run time, organized as a last-in-first-out stack. <br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#callstack" aria-label="Go to glossary anchor for callstack">Glossary</a></span></span></span> setting enabled, when you select a <code>GC.Alloc</code> sample in this view, the Profiler window displays the call stack for the allocated scripting object you select, even if you did not enable the Deep Profiling setting. For more information, see the <a href="#allocation-callstacks">Allocation call stacks</a> section of this documentation.</p>
+
+<figure>
+<img src="../uploads/Main/profiler-show-calls.png" alt="Calls panel">
+<figcaption>Calls panel</figcaption>
+</figure>
+
+<p>The <strong>Calls</strong> view displays where the selected sample is being called from as well as what other functions it calls to.</p>
+
+<p><a name="call-stacks" aria-hidden="true"></a></p>
+
+<h2>Call stacks</h2>
+
+<p>
+<a href="https://docs.unity3d.com/ScriptReference/Unity.Profiling.ProfilerMarker.html">ProfilerMarkers</a> emit a set of samples which the Profiler uses to display and organize profiling information into different chronological and hierarchical views. Any sample displayed in the Profiler window is therefore part of a sample stack.</p>
+
+<p>A sample stack differs from a method’s call stack because Unity does not tie every sample to a specific method, nor does it record every call as a sample. <a href="ProfilerWindow.html#deep-profiling">Deep Profiling</a> adds a <code>ProfilerMarker</code> to every function call, but it does not add any for native code, plus recording all of these samples comes with a potentially high overhead.</p>
+
+<p>You can enable the full call stacks for samples that <strong>GC.Alloc</strong>, <strong>UnsafeUtility.Malloc</strong>, <strong>JobHandle.Complete</strong> emit. This is useful if you want to track down where these samples happened, without enabling Deep Profiling and encountering its high overhead. For more information about these markers, see the documentation on <a href="profiler-markers.html">Common Profiler Markers</a>.</p>
+
+<p>To enable full call stacks for these samples, navigate to the toolbar of the Profiler window and enable the <strong>Call Stacks</strong> button. By default, this enables the call stacks for <strong>GC.Alloc</strong> samples. To enable other call stacks, select the dropdown arrow and enable any of the other markers you would like to see the call stacks for.</p>
+
+<p>You can use this functionality whether you profile in the Editor or on a running player. This only takes effect for the frames you profile after you turn this option on.</p>
+
+<p>For example, every scripting heap allocation shows up as a GC.Alloc sample in both the <strong>Hierarchy</strong> view and <strong>Timeline</strong> view. In the Timeline view, it is colored bright magenta. To see a call stack, select the CPU Profiler module and then select a GC.Alloc sample in Timeline view. The call stack appears in the selection highlight.</p>
+
+<p>To copy the call stack, select the <strong>Copy</strong> button in the tooltip. You can also open the relevant code file from this view if the file path is highlighted as a blue link. Click on the link and the file opens in your default IDE. <strong>Note:</strong> The call stack information does not contain the exact line number within that method but just the line at the beginning of that method.</p>
+
+<figure>
+<img src="../uploads/Main/profiler-cpu-heirarchy-callstack.png" alt="Profiler window in Timeline view with GC.Alloc sample selected (top), and with the same sample selected in Hierarchy view.">
+<figcaption>Profiler window in Timeline view with GC.Alloc sample selected (top), and with the same sample selected in Hierarchy view.</figcaption>
+</figure>
+
+<p>You can also use the <strong>Show</strong> dropdown to see the GC.Alloc’s sample stack, its full details, or switch to view it in the <strong>Hierarchy</strong> or <strong>Raw Hierarchy</strong> view.</p>
+
+<p>To see the full call stack details, while in the Hierarchy or Raw Hierarchy view, set the <strong>Details</strong> view to <strong>Related Data</strong>. This view lists the metadata associated with this sample, which might include a UnityEngine.Object that it was associated with. For any metadata entry that is not associated with a UnityEngine.Object, the name shows up as <strong>N/A</strong> in this panel. When you select an N/A entry, the Profiler displays the meta data, including the call stack in the bottom half of the details view.</p>
+
+<p>For more information about managed allocations, see documentation on <a href="performance-managed-memory.html">Understanding Automatic Memory Management</a>.</p>
+
+<p><a name="samples" aria-hidden="true"></a></p>
+
+<h2>Common markers</h2>
+
+<p>Unity’s code is instrumented with a large number of <span class="tooltip"><strong>Profiler markers</strong><span class="tooltiptext">Placed in code to describe a CPU or GPU event that is then displayed in the Unity Profiler window. Added to Unity code by default, or you can use <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.profiling.core@latest/index.html?subfolder=/manual/profilermarker-guide.html">ProfilerMarker API</a> to add your own custom markers. <a href="profiler-markers.html" href="https://docs.unity3d.com/Packages/com.unity.profiling.core@latest/index.html?subfolder=/manual/profilermarker-guide.html">ProfilerMarker API</a> to add your own custom markers. <a href="profiler-markers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profilermarker" aria-label="Go to glossary anchor for Profilermarker">Glossary</a></span></span></span> that give you insight into what is taking up time in your application. For a full list of the most common markers you might see in your profiling data, see the documentation on <a href="profiler-markers.html">Common Profiler markers</a>.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ProfilerAudio.html"></a></span><div class="tip">Audio Profiler module</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="profiler-file-access-module.html"></a></span><div class="tip">File Access Profiler module</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

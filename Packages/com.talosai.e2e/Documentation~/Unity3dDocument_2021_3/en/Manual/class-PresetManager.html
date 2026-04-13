@@ -1,0 +1,321 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Preset Manager</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-PresetManager.html">English</a></li>
+<li><a href="/cn/current/Manual/class-PresetManager.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-PresetManager.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-PresetManager.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-PresetManager.html">English</a></li>
+<li><a href="/cn/current/Manual/class-PresetManager.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-PresetManager.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-PresetManager.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="EditorFeatures.html">Editor Features</a></li>
+<li><a href="comp-ManagerGroup.html">Project Settings</a></li>
+<li>Preset Manager</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-PlayerSettingsSplashScreen.html"></a></span><div class="tip">Splash Image Player settings</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-QualitySettings.html"></a></span><div class="tip">Quality settings tab reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Preset Manager</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Preset Manager is a window in Project Settings (menu: <strong>Edit</strong> &gt; <span class="tooltip"><strong>Project Settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html" href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span> &gt; <strong>Preset Manager</strong>) that allows you to manage custom <a href="Presets.html">Presets</a> you create to specify default properties when you add a component to a GameObject or a new Asset to your project. The default Presets you define override Unity’s default settings. </p>
+
+<p>
+<strong>Note:</strong> You cannot set the default properties for Project settings, Preferences settings, or native Assets such as Materials, Animations, or SpriteSheets.</p>
+
+<p>In addition to using default Presets when creating new components and importing Assets, Unity applies default Presets when you use the <strong>Reset</strong> command in the Component Context Menu in the <a href="UsingTheInspector.html">Inspector</a> window.</p>
+
+<h2>Preset Manager reference</h2>
+
+<figure>
+<img src="../uploads/Main/preset-reference.png" alt="Preset Manager window">
+<figcaption>Preset Manager window</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Filter</strong></td>
+	<td style="text-align:left;">Use the <strong>Filter</strong> field to define which components or importers the Preset is applied to.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Preset</strong></td>
+	<td style="text-align:left;">Use the <strong>Preset</strong> field to set the Preset you want to use. By default, a Preset applies to all components or asset importers of that Preset type once you create it. If you want to only apply it to specific components or asset types, use the <strong>Filter</strong> field to define when to apply the Preset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Add Default Preset</strong></td>
+	<td style="text-align:left;">Select this button to choose the <strong>Importer</strong>, <span class="tooltip"><strong>Component</strong><span class="tooltiptext">A functional part of a GameObject. A GameObject can contain any number of components. Unity has many built-in components, and you can create your own by writing scripts that inherit from MonoBehaviour. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingComponents.html" href="UsingComponents.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#component" aria-label="Go to glossary anchor for component">Glossary</a></span></span></span>, or <strong>ScriptableObject</strong> to add a Preset to. If you choose <strong>Importer</strong> or <strong>Component</strong>, select the type of asset importer or component you want to create a Preset for.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Assigning a Preset for default settings</h2>
+
+<p>To specify a Preset to use for default settings in the Preset Manager:</p>
+
+<ol>
+<li><p>If you don’t already have a Preset in your project to use for default settings, <a href="Presets.html">create one</a>.</p></li>
+<li><p>Open the Preset Manager by choosing <strong>Edit &gt; Project Settings</strong>, and selecting the <strong>Preset Manager</strong>.</p></li>
+<li><p>Select <strong>Add Default Preset</strong> and select a default type.<br>The Preset type you choose appears in the <strong>Preset Manager</strong> list.<br>
+<img src="../uploads/Main/preset-manager-add-type.png" alt="Select a Preset type">
+</p></li>
+<li><p>In the Preset field, click the <strong>Preset selector</strong> (circle icon).</p></li>
+<li><p>From the <strong>Select Preset</strong> window, choose a Preset for this Preset type. <br> Alternatively, you can also drag and drop a Preset from the <span class="tooltip"><strong>Project</strong><span class="tooltiptext">In Unity, you use a project to design and develop a game. A project stores all of the files that are related to a game, such as the asset and Scene files. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about 2Dor3D.html" href="2Dor3D.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Project" aria-label="Go to glossary anchor for Project">Glossary</a></span></span></span> window into the Preset field. <br>
+</p></li>
+<li><p>If you want to add another Preset field to the list, click the <strong>Add</strong> (<strong>+</strong>) tab.<br>
+ <img src="../uploads/Main/preset-manager-add-default-presets.png" alt="Choose a Preset">
+</p></li>
+</ol>
+
+<p>
+<strong>Note:</strong> If you set a default Preset for Transform components, Unity does not use the Position values when you create a new <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. Instead, it sets the default Position values to the center of the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. Instead, it sets the default Position values to the center of the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view. To set the Position values to those of the default Preset, select the <span class="tooltip"><strong>Transform component</strong><span class="tooltiptext">A Transform component determines the Position, Rotation, and Scale of each object in the scene. Every GameObject has a Transform. <a href="class-Transform.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view. To set the Position values to those of the default Preset, select the <span class="tooltip"><strong>Transform component</strong><span class="tooltiptext">A Transform component determines the Position, Rotation, and Scale of each object in the scene. Every GameObject has a Transform. <a href="class-Transform.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TransformComponent" aria-label="Go to glossary anchor for TransformComponent">Glossary</a></span></span></span>’s <strong>More items</strong> button (<strong>⋮</strong>) and select <strong>Reset</strong>.</p>
+
+<h2>Assigning Presets via the Inspector window</h2>
+
+<p>You can also add and remove Presets to use for default settings via the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window.</p>
+
+<p>To add a default Preset:</p>
+
+<ol>
+<li><p>Select a Preset in the <strong>Project</strong> window.</p></li>
+<li><p>In the <strong>Inspector</strong> window, click <strong>Add to default</strong>.<br> Unity adds your default Preset to the <strong>Preset Manager</strong>.</p></li>
+<li><p>Open the <strong>Preset Manager</strong> to add filters to the Preset or reorder your Preset list.<br>
+<img src="../uploads/Main/presets-add-to-default-from-inspector.png" alt="Add to default (red) in the Inspector window">
+</p></li>
+</ol>
+
+<p>To remove a default Preset:</p>
+
+<ol>
+<li>Select a Preset in the <strong>Project</strong> window.</li>
+<li>In the <strong>Inspector</strong> window, click <strong>Remove from</strong>.</li>
+</ol>
+
+<h2>Adding filters</h2>
+
+<p>By default, a Preset applies to all components or asset importers of that Preset type once it is created. If you want to only apply it to specific components or asset types, you can use the Filter field to define when to apply the Preset.</p>
+
+<p>Filters allow you to create multiple Presets for a given type, and apply them to specific components or importers based on whether those components and importers meet the filter criteria. You can filter by file names, folders, and file extensions.<br>
+<br>You can also apply <a href="Presets.html">partial Presets</a> that affect only properties you specify in your components or assets.</p>
+
+<p>
+<strong>Note:</strong> Default Presets in a Preset Type are applied in order from top to bottom. This means that filters at the bottom of the list can override previous filters if not logically ordered.</p>
+
+<ol>
+<li>Open the Preset Manager by choosing <strong>Edit &gt; Project Settings</strong>, then selecting the <strong>Preset Manager</strong> category.</li>
+<li>Find the default Preset you want to filter, and enter the search string in the <strong>Filter</strong> field.</li>
+</ol>
+
+<h4>Advanced filter search</h4>
+
+<p>Presets can use glob search, which is a way to use symbols in your filters to allow for more inclusive import filters. See the table below for a list of symbols you can use. A glob search filter is case-sensitive.<br>
+To create a glob search filter, the syntax is <code>glob:&quot;yoursearchpatternhere&quot;</code>. Your filter field must begin <code>glob:</code>, and the search term must be in quotation mark characters. For example, <code>glob:&quot;example-folder/*.fbx&quot;</code> filters for any .fbx file in a folder called <code>example-folder</code>.</p>
+
+<p>Supported symbols:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Symbol</th>
+	<th style="text-align:left;">Description</th>
+	<th style="text-align:left;">Example</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">*</td>
+	<td style="text-align:left;">Match 0 or more characters in a single path portion (a single path portion is defined as any suite of characters excluding / )</td>
+	<td style="text-align:left;">
+<code>glob:&quot;foldername/*.fbx&quot;</code> <br>searches for any .fbx file located in a folder named <code>foldername</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">?</td>
+	<td style="text-align:left;">Match 1 character</td>
+	<td style="text-align:left;">
+<code>glob:&quot;foldername/filename-?.fbx&quot;</code> <br>searches for any .fbx file located in a folder named <code>foldername</code> that has the name <code>filename-</code> followed by one single character. <br> For example, this includes <code>filename-1.fbx</code>, <code>filename-2.fbx</code>, but not <code>filename-01.fbx</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">[…]</td>
+	<td style="text-align:left;">Match 1 character in the specified range, similar to a RegExp range. If the first character of the range is ! or ^ then it matches any character not in the range.</td>
+	<td style="text-align:left;">
+<code>glob:&quot;foldername/file-[0-9]1.fbx&quot;</code> <br>Matches .fbx files located in the folder named <code>foldername</code> where the filename begins with <code>file-</code> and ends with a two-digit number ending in <code>1</code>. <br>This example matches <code>file-01.fbx</code>, <code>file-11.fbx</code>, and <code>file-21.fbx</code>, but not <code>file-2.fbx</code>, or <code>file-22.fbx</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">(pattern–1|pattern–2|pattern–3)</td>
+	<td style="text-align:left;">Place a search inside parentheses and separate patterns by a vertical pipe to match one or more search patterns. The vertical pipe character denotes <code>or</code>.</td>
+	<td style="text-align:left;">
+<code>glob:(&quot;foldername/filename-?.fbx&quot;|&quot;foldername/file-?.fbx&quot;)</code> <br>Matches .fbx files located in the folder named <code>foldername</code> where the file name is either <code>filename-</code> or <code>file-</code> followed by a single character. <br>This example matches <code>filename-1.fbx</code>, <code>file-1.fbx</code>, and <code>file-2.fbx</code>, but not <code>filename-22.fbx</code>, or <code>file-22.fbx</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">**</td>
+	<td style="text-align:left;">Match zero or more folders and subfolders.</td>
+	<td style="text-align:left;">
+<code>glob:&quot;foldername/**.fbx&quot;</code> <br>Matches any .fbx file located in the folder named <code>foldername</code> and its subfolders.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Editing the list of default Presets</h2>
+
+<p>This section describes how to toggle, move and remove Presets in the Preset Manager’s default Preset list for each Preset type.</p>
+
+<ul>
+<li>
+<strong>Reorder a Preset list:</strong> Select the handle (<strong>=</strong>) of the default Preset that you want to move, and drag it to the new position.</li>
+<li>
+<strong>Remove a Preset:</strong> Select the handle (<strong>=</strong>) of the default Preset that you want to remove, then click the Remove (<strong>-</strong>) button to remove the selected Preset.</li>
+<li>
+<strong>Remove a Preset type:</strong> Remove all Presets assigned to that default Preset type.</li>
+</ul>
+
+<h2>Disabling and enabling default Presets</h2>
+
+<p>You can temporarily disable/enable a default Preset without losing filter settings.</p>
+
+<ol>
+<li><p>Open the Preset Manager by choosing <strong>Edit &gt; Project Settings</strong>, and then selecting the <strong>Preset Manager</strong> category.</p></li>
+<li><p>Clear the check box to the left of the default Preset to disable the Preset. Select the check box to enable.<br>
+<img src="../uploads/Main/preset-manager-enable-preset.png" alt="Disable or enable a Preset">
+</p></li>
+</ol>
+
+<hr>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-PlayerSettingsSplashScreen.html"></a></span><div class="tip">Splash Image Player settings</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-QualitySettings.html"></a></span><div class="tip">Quality settings tab reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Editing scene templates</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/scene-templates-editing.html">English</a></li>
+<li><a href="/cn/current/Manual/scene-templates-editing.html">中文</a></li>
+<li><a href="/ja/current/Manual/scene-templates-editing.html">日本語</a></li>
+<li><a href="/kr/current/Manual/scene-templates-editing.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/scene-templates-editing.html">English</a></li>
+<li><a href="/cn/current/Manual/scene-templates-editing.html">中文</a></li>
+<li><a href="/ja/current/Manual/scene-templates-editing.html">日本語</a></li>
+<li><a href="/kr/current/Manual/scene-templates-editing.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="CreatingGameplay.html">Create Gameplay</a></li>
+<li><a href="CreatingScenes.html">Scenes</a></li>
+<li>Editing scene templates</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="scene-templates-creating.html"></a></span><div class="tip">Creating scene templates</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="scene-templates-customizing-scene-instantiation.html"></a></span><div class="tip">Customizing new scene creation</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Editing scene templates</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To edit a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> template, select it in the <span class="tooltip"><a href="https://docs.unity3d.com/Manual/ProjectView.html">Project window</a><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a href="ProjectView.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> template, select it in the <span class="tooltip"><a href="https://docs.unity3d.com/Manual/ProjectView.html">Project window</a><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, then open it in an <a href="https://docs.unity3d.com/Manual/UsingTheInspector.html">Inspector window</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Note:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">When you first create an <a href="scene-templates-creating.html#creating-an-empty-scene-template">empty scene template</a>, you must edit its properties to associate it with a scene before you can use it. Templates that you create from the active scene, or an existing scene asset, have some properties set by default.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<img src="../uploads/Main/scene-template-inspector.png" alt="The scene template Inspector"><br><em>The scene template Inspector</em>
+</p>
+
+<p>The scene template <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> has the following sections:</p>
+
+<ol>
+<li>
+<strong><a href="#details">Details</a></strong>: Specifies which scene the template uses, and contains the template description that appears in the New Scene dialog.</li>
+<li>
+<strong><a href="#thumbnail">Thumbnail</a></strong>: Provides options for creating a preview image for the template.</li>
+<li>
+<strong><a href="#scene-template-pipeline">Scene Template Pipeline</a></strong>: Specifies an optional custom script to run when Unity creates a new scene from the template.</li>
+<li>
+<strong><a href="#dependencies">Dependencies</a></strong>: Lists the template scene’s dependencies, and specifies whether Unity clones them when it creates a new scene from the template.</li>
+</ol>
+
+<p><a name="details" aria-hidden="true"></a></p>
+
+<h3>Details</h3>
+
+<p>Use the Details section to specify which scene to use for a template, and control how the template appears in the <a href="CreatingScenes.html#new-scene-dialog">New Scene dialog</a>.</p>
+
+<p>
+<img src="../uploads/Main/scene-template-inspector-details.png" alt=""><br>
+</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Description:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Template Scene</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Specifies the scene to use as a template. This can be any scene in the Project.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Title</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">The template name. The name you enter here appears in the <a href="CreatingScenes.html#new-scene-dialog">New Scene dialog</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Description</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">The template description. The description you enter here appears in the <a href="CreatingScenes.html#new-scene-dialog">New Scene dialog</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Pin in New Scene Dialog</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Controls whether this template is pinned in the <a href="CreatingScenes.html#new-scene-dialog">New Scene dialog</a>.<br><br>Pinned templates always appear at the top of the <strong>Scene Templates in Project</strong> list.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="thumbnail" aria-hidden="true"></a></p>
+
+<h3>Thumbnail</h3>
+
+<p>The Thumbnail section contains options for creating a preview image for the template. The preview image appears in the New Scene dialog.</p>
+
+<p>
+<img src="../uploads/Main/scene-template-inspector-thumbnail.png" alt="The scene template Inspector"><br>
+</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Description:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Texture</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Specifies a Texture asset to use as a thumbnail for this template. You can use any Texture asset in the Project. <br><br>If you don’t assign a Texture, the template uses the default scene template asset icon.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><em>[Thumbnail Preview]</em></strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Displays the template’s thumbnail texture, if it has one.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Snapshot</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Provides options for capturing a thumbnail image for this template.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">View</td>
+	<td style="text-align:left;">Specifies whether to capture the <strong>Main <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span></strong> view or the <strong>Game View</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Take Snapshot</td>
+	<td style="text-align:left;">Click this button to capture the selected <strong>View</strong>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="scene-template-pipeline" aria-hidden="true"></a></p>
+
+<h3>Scene Template Pipeline</h3>
+
+<p>Use these properties to add a <strong>Scene Template Pipeline</strong> script to this template.</p>
+
+<p>
+<img src="../uploads/Main/scene-template-inspector-pipeline.png" alt=""><br>
+</p>
+
+<p>A Scene Template Pipeline script lets you execute custom code when you create a new scene from the template. See <a href="scene-templates-customizing-scene-instantiation.html">Customizing new scene creation</a>.</p>
+
+<p><a name="dependencies" aria-hidden="true"></a></p>
+
+<h3>Dependencies</h3>
+
+<p>This section lists all of the template scene’s <strong>Dependencies</strong>. You can specify whether or not to <strong>Clone</strong> each dependency when you <a href="scenes-working-with.html">create a new scene from the template</a>.</p>
+
+<p>To search for a dependency by name, enter text in the search bar.</p>
+
+<p>To sort the <strong>Dependencies</strong> list:</p>
+
+<ul>
+<li>Click the <strong>Dependencies</strong> heading to sort by the name of the dependency in alphabetical order.</li>
+<li>Click the <strong>Type</strong> heading to sort by the dependency Type.</li>
+<li>Click the <strong>Clone</strong> heading to sort by dependencies that are cloned and not cloned.</li>
+</ul>
+
+<p>
+<img src="../uploads/Main/Scene-template-inspector-dependencies.png" alt=""><br>
+</p>
+
+<p>For each dependency in the list, toggle the <strong>Clone</strong> option on to clone the dependency, or off to reference the dependency. When you clone a dependency, you create a copy. When you reference a dependency, all changes made to the original will affect the dependency.</p>
+
+<p>When you create a new scene from the template, Unity checks whether the template scene has cloneable dependencies. If it does, Unity creates a folder with the same name as the new scene, and puts any cloned dependencies in that folder.</p>
+
+<p>For more information about cloned and referenced dependencies, see <a href="scene-templates.html#templates-and-scene-dependencies">Templates and scene dependencies</a>.</p>
+
+<p>To specify which types of asset Unity clones by default, edit the <a href="scene-templates-settings.html">scene template Project settings</a>.</p>
+
+<hr>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="scene-templates-creating.html"></a></span><div class="tip">Creating scene templates</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="scene-templates-customizing-scene-instantiation.html"></a></span><div class="tip">Customizing new scene creation</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

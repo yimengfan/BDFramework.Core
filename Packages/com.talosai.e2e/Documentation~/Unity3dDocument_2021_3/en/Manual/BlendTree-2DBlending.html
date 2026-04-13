@@ -1,0 +1,255 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: 2D Blending</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/BlendTree-2DBlending.html">English</a></li>
+<li><a href="/cn/current/Manual/BlendTree-2DBlending.html">中文</a></li>
+<li><a href="/ja/current/Manual/BlendTree-2DBlending.html">日本語</a></li>
+<li><a href="/kr/current/Manual/BlendTree-2DBlending.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/BlendTree-2DBlending.html">English</a></li>
+<li><a href="/cn/current/Manual/BlendTree-2DBlending.html">中文</a></li>
+<li><a href="/ja/current/Manual/BlendTree-2DBlending.html">日本語</a></li>
+<li><a href="/kr/current/Manual/BlendTree-2DBlending.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AnimationSection.html">Animation</a></li>
+<li><a href="AnimatorControllers.html">Animator Controllers</a></li>
+<li><a href="class-BlendTree.html">Blend Trees</a></li>
+<li>2D Blending</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="BlendTree-1DBlending.html"></a></span><div class="tip">1D Blending</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="BlendTree-DirectBlending.html"></a></span><div class="tip">Direct Blending</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>2D Blending</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The first option in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> of a <span class="tooltip"><strong>Blend Node</strong><span class="tooltiptext">A node in a Blend Tree graph that blends animation clip nodes. <a href="class-BlendTree.html" href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> of a <span class="tooltip"><strong>Blend Node</strong><span class="tooltiptext">A node in a Blend Tree graph that blends animation clip nodes. <a href="class-BlendTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#BlendNode" aria-label="Go to glossary anchor for BlendNode">Glossary</a></span></span></span> is the <strong>Blend Type</strong>. This drop-down is used to select one of the different blend types that can blend according to one or two parameters. The 2D blending types blends the child motions according to two parameters.</p>
+
+<p>The different 2D Blend Types have different uses that they are suitable for. They differ in how the influence of each motion is calculated.</p>
+
+<p>
+<strong>2D Simple Directional</strong>: Best used when your motions represent different directions, such as “walk forward”, “walk backward”, “walk left”, and “walk right”, or “aim up”, “aim down”, “aim left”, and “aim right”. Optionally a single motion at position (0, 0) can be included, such as “idle” or “aim straight”. In the Simple Directional type there should <em>not</em> be multiple motions in the same direction, such as “walk forward” and “run forward”.</p>
+
+<p>
+<strong>2D Freeform Directional</strong>: This blend type is also used when your motions represent different directions, however you can have multiple motions in the same direction, for example “walk forward” and “run forward”. In the Freeform Directional type the set of motions should always include a single motion at position (0, 0), such as “idle”.</p>
+
+<p>
+<strong>2D Freeform Cartesian</strong>: Best used when your motions do not represent different directions. With Freeform Cartesian your X parameter and Y parameter can represent different concepts, such as angular speed and linear speed. An example would be motions such as “walk forward no turn”, “run forward no turn”, “walk forward turn right”, “run forward turn right” etc.</p>
+
+<p>
+<strong>Direct</strong>: This type of blend tree lets user control the weight of each node directly. Useful for facial shapes or random idle blending. </p>
+
+<p>After setting the Blend Type, the first thing you need is to select the two <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationParameters.html">Animation Parameters</a><span class="tooltiptext">Used to communicate between scripting and the Animator Controller. Some parameters can be set in scripting and used by the controller, while other parameters are based on Custom Curves in Animation Clips and can be sampled using the scripting API. <a href="AnimationParameters.html" href="AnimationParameters.html">Animation Parameters</a><span class="tooltiptext">Used to communicate between scripting and the Animator Controller. Some parameters can be set in scripting and used by the controller, while other parameters are based on Custom Curves in Animation Clips and can be sampled using the scripting API. <a href="AnimationParameters.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationParameters" aria-label="Go to glossary anchor for AnimationParameters">Glossary</a></span></span></span> that will control this <a href="class-BlendTree.html">Blend Tree</a>. In this example, the parameters are <em>velocityX</em> (strafing) and <em>velocityZ</em> (forward speed).</p>
+
+<p>Then you can add individual animations by clicking <strong>+ -&gt; Add Motion Field</strong> to add an Animation Clip to the blend tree. When you’re done, it should look something like this:</p>
+
+<figure>
+<img src="../uploads/Main/MecanimBlendTree2D.png" alt="A 2D Blend Node with five Animation Clips.">
+<figcaption>A 2D Blend Node with five Animation Clips.</figcaption>
+</figure>
+
+<p>The positions in 2D blending are like the thresholds in 1D blending, except that there are two values instead of one, corresponding to each of the two parameters. Their positions along the horizontal X axis correspond to the first parameter, and their positions along the vertical Y axis correspond to the second parameter. A walking forward animation might have a velocityX of 0 and a velocityZ of 1.5, so those values should be typed into the Pos X and Pos Y number fields for the motion.</p>
+
+<h2>The 2D Blending Diagram</h2>
+
+<p>The diagram at the top of the Inspector shows the positions of the child motions in the 2D blend space. The motions are shown as blue dots. Motions with no <span class="tooltip"><strong>Animation Clip</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html" href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> or Blend Tree assigned have no influence on the blend and are shown as gray dots. You can select a motion by clicking on its dot in the diagram. Once selected, the influence of that motion for each point in the blending space is visualized as a blue field. The field is strongest right under the position of the motion, where the motion has full influence, meaning that its animation weight is 1 and the other animations have a weight of 0. Further away the influence decreases as the influence of other motions take over.</p>
+
+<figure>
+<img src="../uploads/Main/MecanimBlendTree2DDiagram.png" alt="The diagram at the top of the Blend Node Inspector visualizes the weights of the child motions over the extends of the parameter values.">
+<figcaption>The diagram at the top of the Blend Node Inspector visualizes the weights of the child motions over the extends of the parameter values.</figcaption>
+</figure>
+
+<p>The red dot indicates the values of the two <strong>Parameters</strong>. If you press <strong>Play</strong> in the <strong>Preview</strong> at the bottom of the <strong>Inspector</strong> and drag the red dot in the diagram around, you can see how the values of the parameters are controlling the blending of the different motions. In the diagram you can also see the influence of each motion represented as circles around each motion. You will see that if you move the red dot on top of one of the blue dots representing a motion, the circle for that motion gains its maximum radius and the circles for all other motions shrink down to nothing. At positions that are in between several motions, multiple of the nearby motions will have an influence on the blend. If you select one of the motions in order to see the blue influence field of that motion, you can see that as you move the red dot around, the circle size of the motion corresponds exactly with how strong the influence field is at various positions.</p>
+
+<p>When no motion is selected, the diagram shows a mix of all the influence fields that is more blue where a single motion dominates and less blue where many motions contribute to the blend.</p>
+
+<h2>Positions</h2>
+
+<p>You can change the positions of a motion by clicking on its corresponding blue dot in the diagram and dragging it around. You can also edit position coordinates of a motion in the motion list by typing in numbers in the number fields in the Pos X and Pos Y columns.</p>
+
+<p>The <strong>Compute Positions</strong> drop-down will set the positions from data of your choice obtained from the <span class="tooltip"><strong>root motions</strong><span class="tooltiptext">Motion of character’s root node, whether it’s controlled by the animation itself or externally. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RootMotion.html" href="RootMotion.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RootMotion" aria-label="Go to glossary anchor for RootMotion">Glossary</a></span></span></span> in the Animation Clips. The data that is available to choose from is speed, velocity x, y, or z, and angular speed in degrees or radians. If one or both of your <strong>parameters</strong> correspond to one of these properties, you can compute the Pos X and/or Pos Y using the Compute Positions drop-down.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property:</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function:</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Velocity XZ</strong></td>
+	<td style="text-align:left;">Sets the Pos X of each motion according to its velocity.x and the Pos Y according to its velocity.z.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Speed And Angular Speed</strong></td>
+	<td style="text-align:left;">Sets the Pos X of each motion according to its angular speed (in radians per second) and the Pos Y according to its speed.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Furthermore you can mix and match by choosing <strong>Compute Position -&gt; X Position From</strong> and/or <strong>Compute Position -&gt; Y Position From</strong> to only auto-compute one of them at a time, leaving the other unchanged.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property:</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function:</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Speed</strong></td>
+	<td style="text-align:left;">Sets the Pos X or Pos Y of each motion according to its speed (the magnitude of the velocity).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Velocity X</strong></td>
+	<td style="text-align:left;">Sets the Pos X or Pos Y of each motion according to its velocity.x.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Velocity Y</strong></td>
+	<td style="text-align:left;">Sets the Pos X or Pos Y of each motion according to its velocity.y.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Velocity Z</strong></td>
+	<td style="text-align:left;">Sets the Pos X or Pos Y of each motion according to its velocity.z.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Angular Speed (Rad)</strong></td>
+	<td style="text-align:left;">Sets the Pos X or Pos Y of each motion according to its angular speed in radians per second.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Angular Speed (Deg)</strong></td>
+	<td style="text-align:left;">Sets the Pos X or Pos Y of each motion according to its angular speed in degrees per second.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Say, for example, that your parameters correspond to sideways velocity and forward velocity, and that you have an idle animation with an average velocity (0, 0, 0), a walk animation with (0, 0, 1.5), and two strafe animations with velocities of (–1.5, 0, 0) and (1.5, 0, 0) respectively. Choosing the <em>Velocity XZ</em> option from the drop-down would set the positions of the motions according to the X and Z coordinates of those velocities.</p>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="BlendTree-1DBlending.html"></a></span><div class="tip">1D Blending</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="BlendTree-DirectBlending.html"></a></span><div class="tip">Direct Blending</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Texture arrays</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Texture2DArray.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Texture2DArray.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Texture2DArray.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Texture2DArray.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Texture2DArray.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Texture2DArray.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Texture2DArray.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Texture2DArray.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Textures.html">Textures</a></li>
+<li>Texture arrays</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-Texture3D-reference.html"></a></span><div class="tip">3D texture preview reference</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-Cubemap.html"></a></span><div class="tip">Cubemaps</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Texture arrays</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/Texture2DArray.html' title='Go to Texture2DArray page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A texture array is a collection of same size/format/flags 2D textures that look like a single object to the GPU, and can be sampled in the <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> with a texture element index. They are useful for implementing custom <span class="tooltip"><strong>terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a href="terrain-UsingTerrains.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> with a texture element index. They are useful for implementing custom <span class="tooltip"><strong>terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> rendering systems or other special effects where you need an efficient way of accessing many textures of the same size and format. Elements of a 2D texture array are also known as slices, or layers.</p>
+
+<h2>Platform Support</h2>
+
+<p>Texture arrays need to be supported by the underlying graphics API and the GPU. They are available on:</p>
+
+<ul>
+<li>Direct3D 11/12 (Windows)</li>
+<li>OpenGL Core (Mac OS X, Linux)</li>
+<li>Metal (iOS, Mac OS X)</li>
+<li>OpenGL ES 3.0 (Android, WebGL 2.0)</li>
+</ul>
+
+<p>Other platforms do not support texture arrays (OpenGL ES 2.0 or WebGL 1.0). Use <a href="../ScriptReference/SystemInfo-supports2DArrayTextures.html">SystemInfo.supports2DArrayTextures</a> to determine texture array support at runtime.</p>
+
+<h2>Importing texture arrays</h2>
+
+<p>You can import texture arrays from source texture files that are divided into cells. These are called flipbook textures. To do this:</p>
+
+<ol>
+<li>Import the source texture into your Unity Project.</li>
+<li>In your Project view, select the resulting Texture Asset. Unity displays the Texture import settings in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>.</li>
+<li>In the Inspector, set <strong>Texture Shape</strong> to <strong>2D Array</strong>. Unity displays the Columns and Rows properties.</li>
+<li>Set <strong>Columns</strong> and <strong>Rows</strong> to the appropriate values for your flipbook texture.</li>
+<li>Click <strong>Apply</strong>.</li>
+</ol>
+
+<p>For more information, see <a href="class-TextureImporter.html">Texture import settings</a>.</p>
+
+<h2>Creating and manipulating texture arrays using scripts</h2>
+
+<p>To create a texture array from a C# script, use the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Texture2DArray.html">Texture2DArray</a> class to initialize the texture and set <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a href="ShadowPerformance.html" href="../ScriptReference/Texture2DArray.html">Texture2DArray</a> class to initialize the texture and set <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> data, and save the object as an asset file using <a href="../ScriptReference/AssetDatabase.CreateAsset.html">AssetDatabase.CreateAsset</a>.</p>
+
+<p>Normally, texture arrays are used purely within GPU memory, but you can use <a href="../ScriptReference/Graphics.CopyTexture.html">Graphics.CopyTexture</a>, <a href="../ScriptReference/Texture2DArray.GetPixels.html">Texture2DArray.GetPixels</a> and <a href="../ScriptReference/Texture2DArray.SetPixels.html">Texture2DArray.SetPixels</a> to transfer pixels to and from system memory.</p>
+
+<h2>Using texture arrays as render targets</h2>
+
+<p>Texture array elements may also be used as render targets. Use <a href="../ScriptReference/RenderTexture-dimension.html">RenderTexture.dimension</a> to specify in advance whether the render target is to be a 2D texture array. The <strong>depthSlice</strong> argument to <a href="../ScriptReference/Graphics.SetRenderTarget.html">Graphics.SetRenderTarget</a> specifies which mipmap level or cube map face to render to. On platforms that support “layered rendering” (i.e. geometry shaders), you can set the <strong>depthSlice</strong> argument to –1 to set the whole texture array as a render target. You can also use a geometry shader to render into individual elements.</p>
+
+<h2>Using texture arrays in shaders</h2>
+
+<p>Since texture arrays do not work on all platforms, shaders need to use an appropriate <a href="SL-ShaderCompileTargets.html">compilation target</a> or feature requirement to access them. The minimum shader model compilation target that supports texture arrays is <code>3.5</code>, and the feature name is <code>2darray</code>.</p>
+
+<p>Use these <a href="SL-BuiltinMacros.html">macros</a> to declare and sample texture arrays:</p>
+
+<ul>
+<li>UNITY_DECLARE_TEX2DARRAY(name) declares a texture array sampler variable inside HLSL code.</li>
+<li>UNITY_SAMPLE_TEX2DARRAY(name,uv) samples a texture array with a <strong>float3</strong> UV; the z component of the coordinate is an array element index.</li>
+<li>UNITY_SAMPLE_TEX2DARRAY_LOD(name,uv,lod) samples a texture array with an explicit mipmap level.</li>
+</ul>
+
+<h2>Examples</h2>
+
+<p>The following shader example samples a texture array using object space vertex positions as coordinates:</p>
+
+<pre><code>Shader &quot;Example/Sample2DArrayTexture&quot;
+{
+    Properties
+    {
+        _MyArr (&quot;Tex&quot;, 2DArray) = &quot;&quot; {}
+        _SliceRange (&quot;Slices&quot;, Range(0,16)) = 6
+        _UVScale (&quot;UVScale&quot;, Float) = 1.0
+    }
+    SubShader
+    {
+        Pass
+        {
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            // texture arrays are not available everywhere,
+            // only compile shader on platforms where they are
+            #pragma require 2darray
+            
+            #include &quot;UnityCG.cginc&quot;
+
+            struct v2f
+            {
+                float3 uv : TEXCOORD0;
+                float4 vertex : SV_POSITION;
+            };
+
+            float _SliceRange;
+            float _UVScale;
+
+            v2f vert (float4 vertex : POSITION)
+            {
+                v2f o;
+                o.vertex = mul(UNITY_MATRIX_MVP, vertex);
+                o.uv.xy = (vertex.xy + 0.5) * _UVScale;
+                o.uv.z = (vertex.z + 0.5) * _SliceRange;
+                return o;
+            }
+            
+            UNITY_DECLARE_TEX2DARRAY(_MyArr);
+
+            half4 frag (v2f i) : SV_Target
+            {
+                return UNITY_SAMPLE_TEX2DARRAY(_MyArr, i.uv);
+            }
+            ENDCG
+        }
+    }
+}
+</code></pre>
+
+<h2>See Also</h2>
+
+<ul>
+<li>
+<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ff476906.aspx#Texture2D_Resource">Introduction To Textures</a> in Direct3D documentation.</li>
+<li>
+<a href="https://www.opengl.org/wiki/Array_Texture">Array Textures</a> in OpenGL Wiki.</li>
+</ul>
+
+<p><span class="search-words">Texture2DArray</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-Texture3D-reference.html"></a></span><div class="tip">3D texture preview reference</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-Cubemap.html"></a></span><div class="tip">Cubemaps</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

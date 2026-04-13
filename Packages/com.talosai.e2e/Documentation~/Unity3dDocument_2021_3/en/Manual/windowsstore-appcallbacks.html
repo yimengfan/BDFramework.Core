@@ -1,0 +1,359 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: AppCallbacks class reference</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="platforms" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/windowsstore-appcallbacks.html">English</a></li>
+<li><a href="/cn/current/Manual/windowsstore-appcallbacks.html">中文</a></li>
+<li><a href="/ja/current/Manual/windowsstore-appcallbacks.html">日本語</a></li>
+<li><a href="/kr/current/Manual/windowsstore-appcallbacks.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/windowsstore-appcallbacks.html">English</a></li>
+<li><a href="/cn/current/Manual/windowsstore-appcallbacks.html">中文</a></li>
+<li><a href="/ja/current/Manual/windowsstore-appcallbacks.html">日本語</a></li>
+<li><a href="/kr/current/Manual/windowsstore-appcallbacks.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="WindowsStore.html">Universal Windows Platform</a></li>
+<li><a href="uwp-developing.html">Develop for Universal Windows Platform</a></li>
+<li>AppCallbacks class reference</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="windowsstore-scripts.html"></a></span><div class="tip">WinRT API in C# scripts for UWP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="windowsstore-commandlinearguments.html"></a></span><div class="tip">Command line arguments for UWP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>AppCallbacks class reference</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can use the <code>AppCallbacks</code> class to connect your main application to the Unity engine.</p>
+
+<h2>Example: How to use the <code>AppCallbacks</code> class</h2>
+
+<h3>
+<code>App.xaml.cpp</code> file</h3>
+
+<pre><code>App::App()
+{
+    InitializeComponent();
+    SetupOrientation();
+    m_AppCallbacks = ref new AppCallbacks();
+}
+
+void App::OnLaunched(LaunchActivatedEventArgs^ e)
+{
+    m_SplashScreen = e-&gt;SplashScreen;
+    InitializeUnity(e-&gt;Arguments);
+}
+
+void App::InitializeUnity(String^ args)
+{
+    ApplicationView::GetForCurrentView()-&gt;SuppressSystemOverlays = true;
+
+    m_AppCallbacks-&gt;SetAppArguments(args);
+    auto rootFrame = safe_cast&lt;Frame^&gt;(Window::Current-&gt;Content);
+
+    // Do not repeat app initialization when the Window already has content,
+    // just ensure that the window is active
+    if (rootFrame == nullptr &amp;&amp; !m_AppCallbacks-&gt;IsInitialized())
+    {
+        rootFrame = ref new Frame();
+        Window::Current-&gt;Content = rootFrame;
+#if !UNITY_HOLOGRAPHIC
+        Window::Current-&gt;Activate();
+#endif
+
+        rootFrame-&gt;Navigate(TypeName(MainPage::typeid ));
+    }
+
+    Window::Current-&gt;Activate();
+}
+</code></pre>
+
+<h3>
+<code>MainPage.xaml.cpp</code> file</h3>
+
+<pre><code>MainPage::MainPage()
+{
+    m_SplashScreenRemovalEventToken.Value = 0;
+    m_OnResizeRegistrationToken.Value = 0;
+
+    InitializeComponent();
+    NavigationCacheMode = ::NavigationCacheMode::Required;
+
+    auto appCallbacks = AppCallbacks::Instance;
+
+    bool isWindowsHolographic = false;
+
+#if UNITY_HOLOGRAPHIC
+    // If application was exported as Holographic check if the device actually supports it
+    // Otherwise, we treat this as a normal XAML application
+    isWindowsHolographic = AppCallbacks::IsMixedRealitySupported();
+#endif
+
+    if (isWindowsHolographic)
+    {
+        appCallbacks-&gt;InitializeViewManager(Window::Current-&gt;CoreWindow);
+    }
+    else
+    {
+        m_SplashScreenRemovalEventToken = appCallbacks-&gt;RenderingStarted += ref new RenderingStartedHandler(this, &amp;MainPage::RemoveSplashScreen);
+
+        appCallbacks-&gt;SetSwapChainPanel(m_DXSwapChainPanel);
+        // Subscribes to all needed system events
+        appCallbacks-&gt;SetCoreWindowEvents(Window::Current-&gt;CoreWindow);
+
+        // This is the main initialization function for Unity
+        // Initializes engine graphics, DirectX, and gamepad and joystick input
+        // Loads IL2CPP and all engine subsystems except graphics
+        appCallbacks-&gt;InitializeD3DXAML();
+        // At this point, when Unity finishes loading the first level, it enters the main loop.
+
+        m_SplashScreen = safe_cast&lt;App^&gt;(App::Current)-&gt;GetSplashScreen();
+
+        auto dispatcher = CoreWindow::GetForCurrentThread()-&gt;Dispatcher;
+        ThreadPool::RunAsync(ref new WorkItemHandler([this, dispatcher](IAsyncAction^)
+        {
+            GetSplashBackgroundColor(dispatcher);
+        }));
+
+        OnResize();
+
+        m_OnResizeRegistrationToken = Window::Current-&gt;SizeChanged += ref new WindowSizeChangedEventHandler([this](Object^, WindowSizeChangedEventArgs^)
+        {
+            OnResize();
+        });
+    }
+}
+</code></pre>
+
+<h2>Create an app thread</h2>
+
+<p>Unity doesn’t run your app on the <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> thread because the UI could become unresponsive when loading large apps. For more information on UI threads, refer to Microsoft documentation on <a href="https://learn.microsoft.com/en-gb/windows/uwp/debug-test-perf/keep-the-ui-thread-responsive">Keeping the UI thread responsive</a>.</p>
+
+<p>When you create the <code>AppCallbacks</code> class using <code>m_AppCallbacks = ref new AppCallbacks();</code>, Unity creates a new thread called <code>App Thread</code>. Unity creates this new thread due to a Microsoft restriction: if your application doesn’t become responsive after 5 seconds, you’ll fail to pass the Windows App Certification Kit tests. For more information, refer to Microsoft documentation on the <a href="https://learn.microsoft.com/en-us/windows/uwp/debug-test-perf/windows-app-certification-kit">Windows App Certification Kit</a>.</p>
+
+<p>
+<strong>Note:</strong> Code located in the <code>App.xaml.cpp</code> and <code>MainPage.xaml.cpp</code> files always runs on the UI thread, unless called from the <code>InvokeOnAppThread</code> function.</p>
+
+<h2>Command line arguments</h2>
+
+<p>You can pass custom command line arguments as string arrays into the AppCallbacks constructor. For more information, refer to <a href="https://docs.unity3d.com/2023.1/Documentation/Manual/windowsstore-commandlinearguments.html">UWP Command line arguments</a>.</p>
+
+<h2>AppCallbacks functions</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Function</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>appCallbacks-&gt;InitializeD3DXAML();</code></td>
+	<td style="text-align:left;">Initializes your DirectX 11 device and loads the first level.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>appCallbacks-&gt;SetCoreWindowEvents(Window::Current-&gt;CoreWindow);</code></td>
+	<td style="text-align:left;">Sets the core window for Unity. Unity subscribes to the following system events:<br> - VisibilityChanged<br>- Closed<br>- PointerCursor<br>- SizeChanged<br>- Activated<br>- CharacterReceived<br>- PointerPressed<br>- PointerReleased<br>- PointerMoved<br>- PointerCaptureLost<br>- PointerWheelChanged <br>- AcceleratorKeyActivated <br>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>appCallbacks-&gt;SetSwapChainPanel(m_DXSwapChainPanel);</code></td>
+	<td style="text-align:left;">Passes a XAML control to Unity which is used as a render target for DirectX 11.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>void GetSwapChainPanel()</code></td>
+	<td style="text-align:left;">Returns the SwapChainPanel object, which you can set via the SetSwapChainPanel method.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>void Initialized()</code></td>
+	<td style="text-align:left;">Returns whether the engine is initialized enough to run the main game loop.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>void InitializeD3DWindow()</code></td>
+	<td style="text-align:left;">Initializes engine graphics, DirectX, and gamepad and joystick input for D3D applications.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>void Instance()</code></td>
+	<td style="text-align:left;">Retrieves a singleton instance of a previously created AppCallbacks object.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>void InvokeOnAppThread(AppCallbackItem item, bool waitUntilDone)</code></td>
+	<td style="text-align:left;">Invokes a delegate on the application thread. This function is useful when you want to execute your script function from a UI thread.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>void InvokeOnUIThread(AppCallbackItem item, bool waitUntilDone)</code></td>
+	<td style="text-align:left;">Invokes a delegate on the UI thread. This function is useful when you want to invoke an XAML-specific API from your <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>bool IsInitialized()</code></td>
+	<td style="text-align:left;">Returns true when the first level of your application is fully loaded.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>void RenderingStarted()</code></td>
+	<td style="text-align:left;">Starts after Unity renders its first frame.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>void Run()</code></td>
+	<td style="text-align:left;">Enables D3D applications to enter the main loop.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>bool RunningOnAppThread()</code></td>
+	<td style="text-align:left;">Returns true if you’re currently running in an application thread.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>bool RunningOnUIThread()</code></td>
+	<td style="text-align:left;">Returns true if you’re currently running in a UI thread.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>void SetAppArguments(string arg)</code> / <code>string GetAppArguments()</code>
+</td>
+	<td style="text-align:left;">Sets your application arguments, which you can then access from <a href="../ScriptReference/WSA.Application-arguments.html">UnityEngine.WSA.Application.arguments</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>void SetCoreApplicationViewEvents()</code></td>
+	<td style="text-align:left;">Subscribes to the CoreApplicationView::Activated event and loads the <span class="tooltip"><strong>IL2CPP</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html" href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> <span class="tooltip"><strong>scripting backend</strong><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a href="scripting-backends.html" href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> <span class="tooltip"><strong>scripting backend</strong><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a href="scripting-backends.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScriptingBackend" aria-label="Go to glossary anchor for ScriptingBackend">Glossary</a></span></span></span> and all engine subsystems except graphics.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>bool UnityGetInput()</code></td>
+	<td style="text-align:left;">Returns true if Unity processes incoming input.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>void UnitySetInput(bool enabled)</code></td>
+	<td style="text-align:left;">Enables or disables input processing.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>bool UnityPause(int pause)</code></td>
+	<td style="text-align:left;">Pauses Unity if you pass 1 and unpauses if you pass 0. This function is useful if you want to temporarily freeze your game.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="https://learn.microsoft.com/en-gb/windows/uwp/debug-test-perf/keep-the-ui-thread-responsive">Microsoft documentation on Keeping the UI thread responsive</a></li>
+<li><a href="windowsstore-commandlinearguments.html">UWP Command line arguments</a></li>
+<li><a href="PlayerCommandLineArguments.html">Command line arguments</a></li>
+</ul>
+<!-- area:platforms -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="windowsstore-scripts.html"></a></span><div class="tip">WinRT API in C# scripts for UWP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="windowsstore-commandlinearguments.html"></a></span><div class="tip">Command line arguments for UWP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

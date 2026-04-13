@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Cubemap</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">Cubemap</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEngine</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Inherits from:<a href="Texture.html" class="cl">Texture</a></p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Implemented in:<a href="UnityEngine.CoreModule.html" class="cl">UnityEngine.CoreModule</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <a aria-label="go to usermanual page" href='../Manual/class-Cubemap.html' title='Go to Cubemap Component in the Manual' class='switch-link gray-btn sbtn left show'>Switch to Manual</a>
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Class for handling cube maps, Use this to create or modify existing <a href="../Manual/class-Cubemap.html">cube map assets</a>.</p>
+              </div>
+              <div class="subsection">
+        <p>This class does not support Cubemap creation with a Crunch compression <a href="TextureFormat.html">TextureFormat</a>.</p>
+      </div>
+              <div class="subsection">
+                <h3>Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Cubemap-desiredMipmapLevel.html">desiredMipmapLevel</a></td><td class="desc">The mipmap level that the streaming system would load before memory budgets are applied.</td></tr>
+      <tr><td class="lbl"><a href="Cubemap-format.html">format</a></td><td class="desc">The format of the pixel data in the texture (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="Cubemap-loadedMipmapLevel.html">loadedMipmapLevel</a></td><td class="desc">The mipmap level that is currently loaded by the streaming system.</td></tr>
+      <tr><td class="lbl"><a href="Cubemap-loadingMipmapLevel.html">loadingMipmapLevel</a></td><td class="desc">The mipmap level that the mipmap streaming system is in the process of loading.</td></tr>
+      <tr><td class="lbl"><a href="Cubemap-requestedMipmapLevel.html">requestedMipmapLevel</a></td><td class="desc">The mipmap level to load.</td></tr>
+      <tr><td class="lbl"><a href="Cubemap-streamingMipmaps.html">streamingMipmaps</a></td><td class="desc">Determines whether mipmap streaming is enabled for this Texture.</td></tr>
+      <tr><td class="lbl"><a href="Cubemap-streamingMipmapsPriority.html">streamingMipmapsPriority</a></td><td class="desc">Sets the relative priority for this Texture when reducing memory size to fit within the memory budget.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Constructors</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Constructor</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Cubemap-ctor.html">Cubemap</a></td><td class="desc">Create a new empty cubemap texture.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Public Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Cubemap.Apply.html">Apply</a></td><td class="desc">Copies changes you've made in a CPU texture to the GPU.</td></tr>
+      <tr><td class="lbl"><a href="Cubemap.ClearRequestedMipmapLevel.html">ClearRequestedMipmapLevel</a></td><td class="desc">Resets the requestedMipmapLevel field.</td></tr>
+      <tr><td class="lbl"><a href="Cubemap.GetPixel.html">GetPixel</a></td><td class="desc">Gets the pixel color at coordinates (x, y).</td></tr>
+      <tr><td class="lbl"><a href="Cubemap.GetPixelData.html">GetPixelData</a></td><td class="desc">Gets the raw data from a texture.</td></tr>
+      <tr><td class="lbl"><a href="Cubemap.GetPixels.html">GetPixels</a></td><td class="desc">Gets the pixel color data for a mipmap level of a face as Color structs.</td></tr>
+      <tr><td class="lbl"><a href="Cubemap.IsRequestedMipmapLevelLoaded.html">IsRequestedMipmapLevelLoaded</a></td><td class="desc">Checks to see whether the mipmap level set by requestedMipmapLevel has finished loading.</td></tr>
+      <tr><td class="lbl"><a href="Cubemap.SetPixel.html">SetPixel</a></td><td class="desc">Sets the pixel color at coordinates (x,y).</td></tr>
+      <tr><td class="lbl"><a href="Cubemap.SetPixelData.html">SetPixelData</a></td><td class="desc">Sets the raw data of an entire mipmap level of a face directly in CPU memory.</td></tr>
+      <tr><td class="lbl"><a href="Cubemap.SetPixels.html">SetPixels</a></td><td class="desc">Sets the pixel colors of an entire mipmap level of a face.</td></tr>
+      <tr><td class="lbl"><a href="Cubemap.SmoothEdges.html">SmoothEdges</a></td><td class="desc">Performs smoothing of near edge regions.</td></tr>
+      <tr><td class="lbl"><a href="Cubemap.UpdateExternalTexture.html">UpdateExternalTexture</a></td><td class="desc">Updates Unity cubemap to use different native cubemap texture object.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Cubemap.CreateExternalTexture.html">CreateExternalTexture</a></td><td class="desc">Creates a Unity cubemap out of externally created native cubemap object.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Inherited Members</h3>
+      <div class="subsection"><h3>Static Properties</h3><table class="list"><thead><tr><th>Property</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Texture-allowThreadedTextureCreation.html">allowThreadedTextureCreation</a></td><td class="desc">Allow Unity internals to perform Texture creation on any thread (rather than the dedicated render thread).</td></tr>
+        <tr><td class="lbl"><a href="Texture-currentTextureMemory.html">currentTextureMemory</a></td><td class="desc">The amount of memory that all Textures in the scene use.</td></tr>
+        <tr><td class="lbl"><a href="Texture-desiredTextureMemory.html">desiredTextureMemory</a></td><td class="desc">The total size of the Textures, in bytes, that Unity loads if there were no other constraints. Before Unity loads any Textures, it applies the memory budget which reduces the loaded Texture resolution if the Texture sizes exceed its value. The desiredTextureMemory value takes into account the mipmap levels that Unity has requested or that you have set manually.For example, if Unity does not load a Texture at full resolution because it is far away or its requested mipmap level is greater than 0,  Unity reduces the desiredTextureMemory value to match the total memory needed.The desiredTextureMemory value can be greater than the Texture.targetTextureMemory value.
+                </td></tr>
+        <tr><td class="lbl"><a href="Texture.GenerateAllMips.html">GenerateAllMips</a></td><td class="desc">Can be used with Texture constructors that take a mip count to indicate that all mips should be generated.  The value of this field is -1.</td></tr>
+        <tr><td class="lbl"><a href="Texture-nonStreamingTextureCount.html">nonStreamingTextureCount</a></td><td class="desc">The number of non-streaming Textures in the scene. This includes instances of Texture2D and CubeMap Textures. This does not include any other Texture types, or 2D and CubeMap Textures that Unity creates internally.</td></tr>
+        <tr><td class="lbl"><a href="Texture-nonStreamingTextureMemory.html">nonStreamingTextureMemory</a></td><td class="desc">The amount of memory Unity allocates for non-streaming Textures in the scene. This only includes instances of Texture2D and CubeMap Textures. This does not include any other Texture types, or 2D and CubeMap Textures that Unity creates internally.</td></tr>
+        <tr><td class="lbl"><a href="Texture-streamingMipmapUploadCount.html">streamingMipmapUploadCount</a></td><td class="desc">How many times has a Texture been uploaded due to Texture mipmap streaming.</td></tr>
+        <tr><td class="lbl"><a href="Texture-streamingRendererCount.html">streamingRendererCount</a></td><td class="desc">Number of renderers registered with the Texture streaming system.</td></tr>
+        <tr><td class="lbl"><a href="Texture-streamingTextureCount.html">streamingTextureCount</a></td><td class="desc">Number of streaming Textures.</td></tr>
+        <tr><td class="lbl"><a href="Texture-streamingTextureDiscardUnusedMips.html">streamingTextureDiscardUnusedMips</a></td><td class="desc">This property forces the streaming Texture system to discard all unused mipmaps instead of caching them until the Texture memory budget is exceeded. This is useful when you profile or write tests to keep a predictable set of Textures in memory.</td></tr>
+        <tr><td class="lbl"><a href="Texture-streamingTextureForceLoadAll.html">streamingTextureForceLoadAll</a></td><td class="desc">Force streaming Textures to load all mipmap levels.</td></tr>
+        <tr><td class="lbl"><a href="Texture-streamingTextureLoadingCount.html">streamingTextureLoadingCount</a></td><td class="desc">Number of streaming Textures with mipmaps currently loading.</td></tr>
+        <tr><td class="lbl"><a href="Texture-streamingTexturePendingLoadCount.html">streamingTexturePendingLoadCount</a></td><td class="desc">Number of streaming Textures with outstanding mipmaps to be loaded.</td></tr>
+        <tr><td class="lbl"><a href="Texture-targetTextureMemory.html">targetTextureMemory</a></td><td class="desc">The total amount of Texture memory that Unity allocates to the Textures in the scene after it applies the memory budget and finishes loading Textures. `targetTextureMemory`also takes mipmap streaming settings into account. This value only includes instances of Texture2D and CubeMap Textures. This value does not include any other Texture types, or 2D and CubeMap Textures that Unity creates internally.</td></tr>
+        <tr><td class="lbl"><a href="Texture-totalTextureMemory.html">totalTextureMemory</a></td><td class="desc">The total amount of Texture memory that Unity would use if it loads all Textures at mipmap level 0. This is a theoretical value that does not take into account any input from the streaming system or any other input, for example when you set the`Texture2D.requestedMipmapLevel` manually. To see a Texture memory value that takes inputs into account, use `desiredTextureMemory`. `totalTextureMemory` only includes instances of Texture2D and CubeMap Textures. This value does not include any other Texture types, or 2D and CubeMap Textures that Unity creates internally.</td></tr>
+      </table></div>
+      <div class="subsection"><h3>Properties</h3><table class="list"><thead><tr><th>Property</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object-hideFlags.html">hideFlags</a></td><td class="desc">Should the object be hidden, saved with the Scene or modifiable by the user?</td></tr>
+        <tr><td class="lbl"><a href="Object-name.html">name</a></td><td class="desc">The name of the object.</td></tr>
+        <tr><td class="lbl"><a href="Texture-anisoLevel.html">anisoLevel</a></td><td class="desc">Defines the anisotropic filtering level of the Texture.</td></tr>
+        <tr><td class="lbl"><a href="Texture-dimension.html">dimension</a></td><td class="desc">Dimensionality (type) of the Texture (Read Only).</td></tr>
+        <tr><td class="lbl"><a href="Texture-filterMode.html">filterMode</a></td><td class="desc">Filtering mode of the Texture.</td></tr>
+        <tr><td class="lbl"><a href="Texture-graphicsFormat.html">graphicsFormat</a></td><td class="desc">Returns the GraphicsFormat format or color format of a Texture object.</td></tr>
+        <tr><td class="lbl"><a href="Texture-height.html">height</a></td><td class="desc">Height of the Texture in pixels (Read Only).</td></tr>
+        <tr><td class="lbl"><a href="Texture-imageContentsHash.html">imageContentsHash</a></td><td class="desc">The hash value of the Texture.</td></tr>
+        <tr><td class="lbl"><a href="Texture-isDataSRGB.html">isDataSRGB</a></td><td class="desc">Returns true if the texture pixel data is in sRGB color space (Read Only).</td></tr>
+        <tr><td class="lbl"><a href="Texture-isReadable.html">isReadable</a></td><td class="desc">Whether Unity stores an additional copy of this texture's pixel data in CPU-addressable memory.</td></tr>
+        <tr><td class="lbl"><a href="Texture-mipMapBias.html">mipMapBias</a></td><td class="desc">The mipmap bias of the Texture.</td></tr>
+        <tr><td class="lbl"><a href="Texture-mipmapCount.html">mipmapCount</a></td><td class="desc">How many mipmap levels are in this Texture (Read Only).</td></tr>
+        <tr><td class="lbl"><a href="Texture-updateCount.html">updateCount</a></td><td class="desc">This counter is incremented when the Texture is updated.</td></tr>
+        <tr><td class="lbl"><a href="Texture-width.html">width</a></td><td class="desc">Width of the Texture in pixels (Read Only).</td></tr>
+        <tr><td class="lbl"><a href="Texture-wrapMode.html">wrapMode</a></td><td class="desc">Texture coordinate wrapping mode.</td></tr>
+        <tr><td class="lbl"><a href="Texture-wrapModeU.html">wrapModeU</a></td><td class="desc">Texture U coordinate wrapping mode.</td></tr>
+        <tr><td class="lbl"><a href="Texture-wrapModeV.html">wrapModeV</a></td><td class="desc">Texture V coordinate wrapping mode.</td></tr>
+        <tr><td class="lbl"><a href="Texture-wrapModeW.html">wrapModeW</a></td><td class="desc">Texture W coordinate wrapping mode for Texture3D.</td></tr>
+      </table></div>
+      
+      
+      
+      <div class="subsection"><h3>Public Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object.GetInstanceID.html">GetInstanceID</a></td><td class="desc">Gets  the instance ID of the object.</td></tr>
+        <tr><td class="lbl"><a href="Object.ToString.html">ToString</a></td><td class="desc">Returns the name of the object.</td></tr>
+        <tr><td class="lbl"><a href="Texture.GetNativeTexturePtr.html">GetNativeTexturePtr</a></td><td class="desc">Retrieve a native (underlying graphics API) pointer to the Texture resource.</td></tr>
+        <tr><td class="lbl"><a href="Texture.IncrementUpdateCount.html">IncrementUpdateCount</a></td><td class="desc">Increment the update counter.</td></tr>
+      </table></div>
+      
+      <div class="subsection"><h3>Static Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object.Destroy.html">Destroy</a></td><td class="desc">Removes a GameObject, component or asset.</td></tr>
+        <tr><td class="lbl"><a href="Object.DestroyImmediate.html">DestroyImmediate</a></td><td class="desc">Destroys the object obj immediately. You are strongly recommended to use Destroy instead.</td></tr>
+        <tr><td class="lbl"><a href="Object.DontDestroyOnLoad.html">DontDestroyOnLoad</a></td><td class="desc">Do not destroy the target Object when loading a new Scene.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindAnyObjectByType.html">FindAnyObjectByType</a></td><td class="desc">Retrieves any active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindFirstObjectByType.html">FindFirstObjectByType</a></td><td class="desc">Retrieves the first active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectOfType.html">FindObjectOfType</a></td><td class="desc">Returns the first active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectsByType.html">FindObjectsByType</a></td><td class="desc">Retrieves a list of all loaded objects of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectsOfType.html">FindObjectsOfType</a></td><td class="desc">Gets a list of all loaded objects of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.Instantiate.html">Instantiate</a></td><td class="desc">Clones the object original and returns the clone.</td></tr>
+        <tr><td class="lbl"><a href="Texture.SetGlobalAnisotropicFilteringLimits.html">SetGlobalAnisotropicFilteringLimits</a></td><td class="desc">Sets Anisotropic limits.</td></tr>
+        <tr><td class="lbl"><a href="Texture.SetStreamingTextureMaterialDebugProperties.html">SetStreamingTextureMaterialDebugProperties</a></td><td class="desc">This function sets mipmap streaming debug properties on any materials that use this Texture through the mipmap streaming system.</td></tr>
+      </table></div>
+      <div class="subsection"><h3>Operators</h3><table class="list"><thead><tr><th>Operator</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object-operator_Object.html">bool</a></td><td class="desc">Does the object exist?</td></tr>
+        <tr><td class="lbl"><a href="Object-operator_ne.html">operator !=</a></td><td class="desc">Compares if two objects refer to a different object.</td></tr>
+        <tr><td class="lbl"><a href="Object-operator_eq.html">operator ==</a></td><td class="desc">Compares two object references to see if they refer to the same object.</td></tr>
+      </table></div>
+      
+      
+      
+    </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

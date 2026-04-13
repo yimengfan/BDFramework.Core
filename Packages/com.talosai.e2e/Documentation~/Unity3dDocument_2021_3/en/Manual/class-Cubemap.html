@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Cubemaps</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Cubemap.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Cubemap.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Cubemap.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Cubemap.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Cubemap.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Cubemap.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Cubemap.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Cubemap.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Textures.html">Textures</a></li>
+<li>Cubemaps</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-Texture2DArray.html"></a></span><div class="tip">Texture arrays</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-CubemapArray.html"></a></span><div class="tip">Cubemap arrays</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Cubemaps</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/Cubemap.html' title='Go to Cubemap page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A <strong>Cubemap</strong> is a collection of six square textures that represent the
+reflections on an environment. The six squares form the faces of an imaginary cube that surrounds an
+object; each face represents the view along the directions of the world axes
+(up, down, left, right, forward and back).</p>
+
+<p>Cubemaps are often used to capture reflections or “surroundings” of objects; for example
+<a href="class-Skybox.html">skyboxes</a> and <a href="class-ReflectionProbe.html">environment reflections</a> often use cubemaps.</p>
+
+<figure>
+<img src="../uploads/Main/CubeMapExample.jpg" alt="Cubemapped skybox and reflections">
+<figcaption>Cubemapped skybox and reflections</figcaption>
+</figure>
+
+<h2>Creating Cubemaps from Textures</h2>
+
+<p>The fastest way to create cubemaps is to import them from specially laid out <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html">Textures</a><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a href="class-TextureImporter.html" href="class-TextureImporter.html">Textures</a><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a href="class-TextureImporter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#texture" aria-label="Go to glossary anchor for texture">Glossary</a></span></span></span>.
+Select the Texture in the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, to see the Import Settings in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, to see the Import Settings in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window. In the Import Settings, set the <strong>Texture Type</strong> to <strong>Default</strong>, <span class="tooltip"><strong>Normal Map</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normalmap" aria-label="Go to glossary anchor for Normalmap">Glossary</a></span></span></span> or <strong>Single Channel</strong>, and the <strong>Texture Shape</strong> to <strong>Cube</strong>. Unity then automatically sets the Texture up as a Cubemap.</p>
+
+<figure>
+<img src="../uploads/Textures/CubeImportInspector.png" alt="Cubemap texture import type">
+<figcaption>Cubemap texture import type</figcaption>
+</figure>
+
+<p>Several commonly-used cubemap layouts are supported (and in most cases, Unity detects them automatically).</p>
+
+<p>Vertical and horizontal cross layouts, as well as column and row of cubemap faces are supported:</p>
+
+<figure>
+<img src="../uploads/Textures/CubeLayout6Faces1.png" alt="">
+</figure>
+
+<p>Another common layout is <code>LatLong</code> (Latitude-Longitude, sometimes called cylindrical). Panorama images are
+often in this layout:</p>
+
+<figure>
+<img src="../uploads/Textures/CubeLayoutLatLong.png" alt="">
+</figure>
+
+<p>
+<code>SphereMap</code> (spherical environment map) images can also be found:</p>
+
+<figure>
+<img src="../uploads/Textures/CubeLayoutSphereMap.png" alt="">
+</figure>
+
+<p>By default Unity looks at the <span class="tooltip"><strong>aspect ratio</strong><span class="tooltiptext">The relationship of an image’s proportional dimensions, such as its width and height.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AspectRatio" aria-label="Go to glossary anchor for AspectRatio">Glossary</a></span></span></span> of the imported texture to determine the most appopriate layout from
+the above. When imported, a cubemap is produced which can be used for skyboxes and reflections:</p>
+
+<figure>
+<img src="../uploads/Textures/CubeImportedView.png" alt="">
+</figure>
+
+<p>Selecting <code>Glossy Reflection</code> option is useful for cubemap textures that will be used by
+<span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ReflectionProbe.html">Reflection Probes</a><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html" href="class-ReflectionProbe.html">Reflection Probes</a><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span>. It processes cubemap mipmap levels in a special way
+(specular convolution) that can be used to simulate reflections from surfaces of different smoothness:</p>
+
+<figure>
+<img src="../uploads/Textures/CubeOptionGlossyReflections.png" alt="Cubemap used in a Reflection Probe on varying-smoothness surface">
+<figcaption>Cubemap used in a Reflection Probe on varying-smoothness surface</figcaption>
+</figure>
+
+<h2>Legacy Cubemap Assets</h2>
+
+<p>Unity also supports creating cubemaps out of six separate <a href="class-TextureImporter.html">textures</a>.
+Select <strong>Assets &gt; Create &gt; Legacy &gt; Cubemap</strong> from the menu,
+and drag six textures into empty slots in the inspector.</p>
+
+<figure>
+<img src="../uploads/Main/Inspector-CubeMap.jpg" alt="Legacy Cubemap Inspector">
+<figcaption>Legacy Cubemap Inspector</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property:</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function:</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Right..Back Slots</strong></td>
+	<td style="text-align:left;">Textures for the corresponding cubemap face.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Face Size</strong></td>
+	<td style="text-align:left;">Width and Height of each Cubemap face in <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span>. The textures will be scaled automatically to fit this size.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Mipmap</strong></td>
+	<td style="text-align:left;">Should mipmaps be created?</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Linear</strong></td>
+	<td style="text-align:left;">Should the cubemap use linear color?</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Readable</strong></td>
+	<td style="text-align:left;">Should the cubemap allow <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> to access the pixel data?</td>
+</tr>
+</tbody>
+</table>
+
+<p>Note that it is preferred to create cubemaps using the Cubemap texture import type (see above) - this
+way cubemap texture data can be compressed; edge fixups and glossy reflection convolution be performed;
+and <span class="tooltip"><strong>HDR</strong><span class="tooltiptext">high dynamic range<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#HDR" aria-label="Go to glossary anchor for HDR">Glossary</a></span></span></span> cubemaps are supported.</p>
+
+<h2>Other Techniques</h2>
+
+<p>Another useful technique is to generate the cubemap from the contents of a Unity <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> using a script.
+The <a href="../ScriptReference/Camera.RenderToCubemap.html">Camera.RenderToCubemap</a> function can record the six face
+images from any desired position in the scene; the code example on the function’s script reference page
+adds a menu command to make this task easy.</p>
+
+<hr>
+
+<p><span class="page-edit"> 2018–01–31 Page amended
+</span></p>
+<!-- area:graphics -->
+
+<p><span class="search-words">Cubemap</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-Texture2DArray.html"></a></span><div class="tip">Texture arrays</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-CubemapArray.html"></a></span><div class="tip">Cubemap arrays</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

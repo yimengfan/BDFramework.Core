@@ -1,0 +1,199 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Install a UPM package from a Git URL</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-ui-giturl.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-ui-giturl.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-ui-giturl.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-ui-giturl.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-ui-giturl.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-ui-giturl.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-ui-giturl.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-ui-giturl.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li><a href="Packages.html">Unity's Package Manager</a></li>
+<li><a href="upm-ui.html">Package Manager window</a></li>
+<li><a href="upm-ui-actions.html">Add and remove UPM packages or feature sets</a></li>
+<li>Install a UPM package from a Git URL</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-ui-tarball.html"></a></span><div class="tip">Install a UPM package from a local tarball file</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-ui-quick.html"></a></span><div class="tip">Install a UPM package by name</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Install a UPM package from a Git URL</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Package Manager can load a <span class="tooltip"><strong>UPM package</strong><span class="tooltiptext">A <strong>Package</strong> managed by the <strong>Unity Package Manager</strong>. Refer to <strong>Packages</strong>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UPMpackage" aria-label="Go to glossary anchor for UPMpackage">Glossary</a></span></span></span> from a Git repository on a remote server.</p>
+
+<h2>Prerequisites</h2>
+
+<ul>
+<li>Install the <a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">Git client</a> (minimum version 2.14.0) on your computer.</li>
+<li>On Windows, add the Git executable path to the <code>PATH</code> system environment variable.</li>
+<li>If the target repository tracks files with Git LFS, install the <a href="https://git-lfs.com/" target="_blank" rel="noopener noreferrer">Git LFS client</a> on your computer.</li>
+<li>Read the information about using <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-git.html">Git dependencies</a><span class="tooltiptext">The Package Manager retrieves Git dependencies from a Git repository directly rather than from a package registry. Git dependencies use a Git URL reference instead of a version, and there’s no guarantee about the package quality, stability, validity, or even whether the version stated in its <code>package.json</code> file respects Semantic Versioning rules with regards to officially published releases of this package. <a href="upm-concepts.html#Git" href="upm-git.html">Git dependencies</a><span class="tooltiptext">The Package Manager retrieves Git dependencies from a Git repository directly rather than from a package registry. Git dependencies use a Git URL reference instead of a version, and there’s no guarantee about the package quality, stability, validity, or even whether the version stated in its <code>package.json</code> file respects Semantic Versioning rules with regards to officially published releases of this package. <a href="upm-concepts.html#Git">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Gitdependency" aria-label="Go to glossary anchor for Gitdependency">Glossary</a></span></span></span> in your project.</li>
+</ul>
+
+<h2>Procedure</h2>
+
+<p>To load a UPM package from a Git URL:</p>
+
+<ol>
+<li><p>Open the <strong>add</strong> <img src="../uploads/Main/iconAdd.png" alt=""> menu in the Package Manager’s <span class="no tooltip">toolbar</span>.</p></li>
+<li>
+<p>The options for adding packages appear.</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-giturl.png" alt="Add package from git URL button">
+<figcaption>Add package from git URL button</figcaption>
+</figure>
+</li>
+<li><p>Select <strong>Add package from git URL</strong> from the add menu. A text box and an <strong>Add</strong> button appear.</p></li>
+<li>Enter a valid Git URL in the text box. For information about constructing a valid Git URL, refer to <a href="upm-git.html#syntax">Git URLs and extended syntax</a>. Examples of valid Git URLs include:
+
+<ul>
+<li>
+<code>https://github.example.com/myuser/myrepo.git</code> (if your package is in the root of the repository).</li>
+<li>
+<code>https://github.example.com/myuser/myrepo.git?path=/subfolder</code> (if your package is in a <a href="upm-git.html#subfolder">subfolder</a> within the repository).</li>
+</ul>
+</li>
+<li><p>Select <strong>Add</strong>.</p></li>
+</ol>
+
+<p>If Unity was able to install the package successfully, the package now appears in the <a href="upm-ui-list.html">package list</a> with the <img src="../uploads/Main/iconGit.png" alt=""> tag. If Unity was not able to install the package, the <a href="Console.html">Unity Console</a> displays an error message, such as:</p>
+
+<ul>
+<li><a href="upm-errors.html#git-not-found">No ‘git’ executable was found</a></li>
+<li><a href="upm-errors.html#git-lfs">git-lfs: command not found</a></li>
+<li><a href="upm-errors.html#bad-url">Repository not found</a></li>
+<li><a href="upm-errors.html#prompts-disabled">Could not read Username: terminal prompts disabled</a></li>
+</ul>
+
+<p>Click on an error message link to get some help for it on the <a href="upm-errors.html">Troubleshooting</a> page.</p>
+
+<p>
+<strong>Tip</strong>: If you want to update your Git dependency to a newer version from the repository, use the <a href="upm-ui-giturl.html">Add package from git URL</a> button to enter a Git URL. For more information, see <a href="upm-git.html#git-locks">Locked Git dependencies</a>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="upm-package-types.html">Package types</a></li>
+<li><a href="upm-ui-actions.html">Add and remove UPM packages or feature sets</a></li>
+<li><a href="upm-ui-actions-ap.html">Add and remove asset packages</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-ui-tarball.html"></a></span><div class="tip">Install a UPM package from a local tarball file</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-ui-quick.html"></a></span><div class="tip">Install a UPM package by name</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

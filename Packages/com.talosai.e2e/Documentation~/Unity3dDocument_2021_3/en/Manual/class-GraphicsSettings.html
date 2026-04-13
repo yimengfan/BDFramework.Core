@@ -1,0 +1,604 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Graphics</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-GraphicsSettings.html">English</a></li>
+<li><a href="/cn/current/Manual/class-GraphicsSettings.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-GraphicsSettings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-GraphicsSettings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-GraphicsSettings.html">English</a></li>
+<li><a href="/cn/current/Manual/class-GraphicsSettings.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-GraphicsSettings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-GraphicsSettings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="EditorFeatures.html">Editor Features</a></li>
+<li><a href="comp-ManagerGroup.html">Project Settings</a></li>
+<li>Graphics</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-EditorManager.html"></a></span><div class="tip">Editor</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-PackageManager.html"></a></span><div class="tip">Package Manager</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Graphics</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use the <strong>Graphics</strong> settings (main menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong>, then select the <strong>Graphics</strong> category) to apply global settings for Graphics.</p>
+
+<p>This section provides documentation on the following groups of properties:</p>
+
+<ul>
+<li><a href="#SRLoop">Scriptable Render Pipeline Settings</a></li>
+<li><a href="#Camera">Camera Settings</a></li>
+<li><a href="#Tier">Tier Settings</a></li>
+<li><a href="#Built-in">Built-in shader settings</a></li>
+<li><a href="#Always">Always-included Shaders</a></li>
+<li><a href="#stripping">Shader stripping</a></li>
+<li><a href="#shader-loading">Shader loading</a></li>
+<li><a href="#culling-settings">Culling settings</a></li>
+</ul>
+
+<p><a name="SRLoop" aria-hidden="true"></a></p>
+
+<h2>Scriptable Render Pipeline Settings</h2>
+
+<p>Allows you to set the default <span class="tooltip"><strong>render pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> that Unity uses to render your project. To set a render pipeline based on the Scriptable Render Pipeline, assign the desired Render Pipeline Asset here.</p>
+
+<p>For more information, see <a href="srp-setting-render-pipeline-asset.html">How to get, set, and configure the active render pipeline</a>.</p>
+
+<p><a name="Camera" aria-hidden="true"></a></p>
+
+<h2>Camera Settings</h2>
+
+<p>These properties control various rendering settings.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Transparency Sort Mode</strong></td>
+	<td style="text-align:left;">Define the order for rendering objects by their distance along a specific axis. Renderers in Unity are sorted by several criteria, such as their layer number or their distance from the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>. This is generally only useful in 2D development: for example, sorting <span class="tooltip"><strong>Sprites</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html" href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>. This is generally only useful in 2D development: for example, sorting <span class="tooltip"><strong>Sprites</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> by height or along the Y-axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Default</em></td>
+	<td style="text-align:left;">Sort objects based on the Camera mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Perspective</em></td>
+	<td style="text-align:left;">Sort objects based on perspective view.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Orthographic</em></td>
+	<td style="text-align:left;">Sort objects based on orthographic view.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Custom Axis</em></td>
+	<td style="text-align:left;">Sort objects based on the sort mode defined with the <strong>Transparency Sort Axis</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Transparency Sort Axis</strong></td>
+	<td style="text-align:left;">Define a custom <strong>Transparency Sort Mode</strong>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Tier" aria-hidden="true"></a></p>
+
+<h2>Tier Settings</h2>
+
+<figure>
+<img src="../uploads/Main/GraphicsSettings2.png" alt="Tier Settings as displayed in the Player settings">
+<figcaption>Tier Settings as displayed in the Player settings</figcaption>
+</figure>
+
+<p>In the Built-in Render Pipeline, you can use <strong>Tier settings</strong> to change rendering and shader compilation settings for different types of hardware. For more information, see <a href="graphics-tiers.html">Graphics tiers</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Standard Shader Quality</strong></td>
+	<td style="text-align:left;">Set the quality of the <a href="shader-StandardShader.html">Standard Shader</a> to <em>High</em>, <em>Medium</em>, or <em>Low</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Reflection Probes Box Projection</strong></td>
+	<td style="text-align:left;">Enable projection for reflection UV mappings on <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ReflectionProbe.html">Reflection Probes</a><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html" href="class-ReflectionProbe.html">Reflection Probes</a><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Reflection Probes Blending</strong></td>
+	<td style="text-align:left;">Enable <a href="UsingReflectionProbes.html">blending on Reflection Probes</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Detail Normal Map</strong></td>
+	<td style="text-align:left;">Enable <a href="StandardShaderMaterialParameterDetail.html">Detail Normal Map</a> sampling, if assigned.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Enable Semitransparent Shadows</strong></td>
+	<td style="text-align:left;">Enable Semitransparent Shadows. <br>This adds or removes the UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS shader compiler define.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Enable Light Probe Proxy Volume</strong></td>
+	<td style="text-align:left;">Enable rendering a 3D grid of interpolated <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LightProbeProxyVolume.html">Light Probes</a><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html" href="class-LightProbeProxyVolume.html">Light Probes</a><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Cascaded Shadows</strong></td>
+	<td style="text-align:left;">Enable using cascaded shadow maps. <br>This adds or removes the UNITY_NO_SCREENSPACE_SHADOWS shader compiler define.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Prefer 32 bit shadow maps</strong></td>
+	<td style="text-align:left;">Enable 32-bit float shadow map when you are targeting PS4 or platforms using DX11 or DX12.<br>Most platforms have a fixed shadow map format that you can’t adjust. These vary in format, and can be 16-bit, 24-bit, or 32-bit, and can also be either float- or integer-based. 32-bit shadow maps give higher quality shadows than 16-bit, but use increased memory and bandwidth on the GPU.<br><strong>Note:</strong> To use 32-bit shadow maps, make sure the depth buffer is also set to 32-bit.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Use HDR</strong></td>
+	<td style="text-align:left;">Enable <a href="HDR.html">High Dynamic Range rendering</a> for this tier.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>HDR Mode</strong></td>
+	<td style="text-align:left;">Select the format to use for the HDR buffer when <span class="tooltip"><strong>HDR</strong><span class="tooltiptext">high dynamic range<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#HDR" aria-label="Go to glossary anchor for HDR">Glossary</a></span></span></span> is enabled for the current Graphics Tier. By default, this is set to <em>FP16</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>FP16</em></td>
+	<td style="text-align:left;">Color <span class="tooltip"><strong>render texture</strong><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span> format, 16-bit floating point per channel.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>R11G11B10</em></td>
+	<td style="text-align:left;">Color render <span class="tooltip"><strong>texture format</strong><span class="tooltiptext">A file format for handling textures during real-time rendering by 3D graphics hardware, such as a graphics card or mobile device. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporterOverride.html" href="class-TextureImporterOverride.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TextureFormat" aria-label="Go to glossary anchor for TextureFormat">Glossary</a></span></span></span>. R and G channels are 11-bit floating point, B channel is 10-bit floating point.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><span class="tooltip"><strong>Rendering Path</strong><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingPaths.html" href="RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderingPath" aria-label="Go to glossary anchor for RenderingPath">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Choose how Unity should render graphics. Different rendering paths affect the performance of your game, and how lighting and shading are calculated. Some paths are more suited to different platforms and hardware than others.<br><em>Deferred</em> rendering is not supported when using Orthographic projection. If the camera’s projection mode is set to Orthographic, these values are overridden, and the camera always uses <em>Forward</em> rendering. For more information, see <a href="RenderingPaths.html">Rendering Paths</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Forward</em></td>
+	<td style="text-align:left;">The <a href="RenderTech-ForwardRendering.html">traditional rendering path</a>. This supports all the typical Unity graphics features (normal maps, per-pixel lights, shadows etc.). However under default settings, only a small number of the brightest lights are rendered in per-pixel lighting mode. The rest of the lights are calculated at object vertices or per-object.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Deferred</em></td>
+	<td style="text-align:left;"><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderTech-DeferredShading.html">Deferred shading</a><span class="tooltiptext">A rendering path in the Built-in Render Pipeline that places no limit on the number of Lights that can affect a GameObject. All Lights are evaluated per-pixel, which means that they all interact correctly with normal maps and so on. Additionally, all Lights can have cookies and shadows. <a href="RenderTech-DeferredShading.html" href="RenderTech-DeferredShading.html">Deferred shading</a><span class="tooltiptext">A rendering path in the Built-in Render Pipeline that places no limit on the number of Lights that can affect a GameObject. All Lights are evaluated per-pixel, which means that they all interact correctly with normal maps and so on. Additionally, all Lights can have cookies and shadows. <a href="RenderTech-DeferredShading.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Deferredshading" aria-label="Go to glossary anchor for Deferredshading">Glossary</a></span></span></span> has the most lighting and shadow fidelity, and is best suited if you have many real-time lights. It requires a certain level of hardware support.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Legacy Vertex Lit</em></td>
+	<td style="text-align:left;">
+<a href="RenderTech-VertexLit.html">Legacy Vertex Lit</a> is the rendering path with the lowest lighting fidelity and no support for real-time shadows. It is a subset of <em>Forward</em> rendering path.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Legacy Deferred (light prepass)</em></td>
+	<td style="text-align:left;">
+<a href="RenderTech-DeferredLighting.html">Legacy Deferred</a> is similar to Deferred Shading, just using a different technique with different trade-offs. It does not support the Unity 5 physically-based standard shader.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Realtime Global Illumination CPU Usage</strong></td>
+	<td style="text-align:left;">The CPU budget you allow Enlighten Realtime Global Illumination to use for lighting calculations at runtime. Increasing this makes the system react faster to changes in lighting at a cost of using more CPU time.<br><strong>Note:</strong> Some platforms allow all CPUs to be occupied by worker threads whereas some enforce maximums. For example, some gaming consoles allow a maximum of 4 CPU cores. For Android devices, if it is a bigLittle architecture, only the little CPUs are used; otherwise the maximum is one less than the total number of CPUs.<br>If you use the URP or HDRP render pipelines, you can configure this property in the <a href="class-QualitySettings.html">quality settings</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Low</em></td>
+	<td style="text-align:left;">25% of the allowed CPU threads are used as worker threads.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Medium</em></td>
+	<td style="text-align:left;">50% of the allowed CPU threads are used as worker threads.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>High</em></td>
+	<td style="text-align:left;">75% of the allowed CPU threads are used as worker threads.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Unlimited</em></td>
+	<td style="text-align:left;">100% of the allowed CPU threads are used as worker threads.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Built-in" aria-hidden="true"></a></p>
+
+<h2>Built-in shader settings</h2>
+
+<p>Use these settings to specify which shader to use for each of the listed features in the Built-in Render Pipeline.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Rendering path</strong></th>
+	<th style="text-align:left;"><strong>Shader to use</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Deferred</strong></td>
+	<td style="text-align:left;">Use with <a href="RenderTech-DeferredShading.html">Deferred shading</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Deferred Reflection</strong></td>
+	<td style="text-align:left;">Use with <a href="class-ReflectionProbe.html">Reflection Probes</a> along deferred lighting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Screen Space shadows</strong></td>
+	<td style="text-align:left;">Use with cascaded shadow maps for directional lights on PC/console platforms.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Legacy deferred</strong></td>
+	<td style="text-align:left;">Use with <a href="RenderTech-DeferredLighting.html">Legacy Deferred</a> lighting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Motion vectors</strong></td>
+	<td style="text-align:left;">Use for object-based motion vector calculations.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Lens Flare</strong><span class="tooltiptext">A component that simulates the effect of lights refracting inside a camera lens. Use a Lens Flare to represent very bright lights or add atmosphere to your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LensFlare.html" href="class-LensFlare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LensFlare" aria-label="Go to glossary anchor for LensFlare">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Use with <a href="class-Flare.html">Lens Flares</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Light Halo</strong></td>
+	<td style="text-align:left;">Use with <a href="class-Halo.html">Light Halos</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>For each of these features, you can choose which type of Shader to use:</p>
+
+<ul>
+<li>
+<strong>No Support</strong> disables this calculation. Use this setting if you are not using deferred shading or lighting. This will save some space in the built game data files.</li>
+<li>
+<strong>Built-in Shader</strong> uses Unity’s built-in Shaders to do the calculation. This is the default.</li>
+<li>
+<strong>Custom Shader</strong> uses your own compatible Shader to do the calculation. This enables you to do deep customization of deferred rendering.</li>
+</ul>
+
+<p>When you choose <strong>Custom shader</strong>, a <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> reference property appears below the feature property where you can set a reference to the Shader you want to use.</p>
+
+<p><a name="Always" aria-hidden="true"></a></p>
+
+<h2>Always Included Shaders</h2>
+
+<p>This is a list of shaders for which Unity includes all possible <a href="shader-variants.html">variants</a> in every build. This can be useful if you want to use shaders or variants at runtime that would not otherwise be included in the build; for example, if you use AssetBundles or Addressables that rely on those shaders or variants, or if you use <a href="shader-keywords.html">shader keywords</a> to change variants at runtime.</p>
+
+<p>
+<strong>Warning:</strong> This feature is not recommended for shaders that have a large number of variants, such as the <a href="shader-StandardShader.html">Standard Shader</a>; it can lead to significant runtime and build time performance problems. You should instead create <a href="shader-variant-collections.html">shader variant collections</a> that contain only the variants you need, and include those in your build.</p>
+
+<p>
+<strong>Note:</strong> This setting overrides <a href="shader-keywords.html#declaring-keywords-definition-type">shader keyword declaration settings</a>. For each shader in the list, Unity includes all sets of all keywords, even if you use the “shader feature” declaration type.</p>
+
+<p>To add a shader to the list, increase the value in the <strong>Size</strong> property. To remove the last shader in the list, decrease the <strong>Size</strong> property. To remove a shader which is not the last one in the list, you can set the value to <strong>None</strong>.</p>
+
+<p>
+<a name="stripping" aria-hidden="true"></a>
+<a name="lightmaps" aria-hidden="true"></a>
+<a name="fog" aria-hidden="true"></a>
+<a name="variants" aria-hidden="true"></a>
+</p>
+
+<h2>Shader stripping</h2>
+
+<p>These properties allow you to configure <a href="shader-variant-stripping.html">shader variant stripping</a> in your build.</p>
+
+<p>By default, Unity examines the <span class="tooltip"><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> in the build and automatically strips <span class="tooltip"><a href="shader-variants.html">shader variants</a><span class="tooltiptext">A verion of a shader program that Unity generates according to a specific combination of shader keywords and their status. A Shader object can contain multiple shader variants. <a href="shader-variants.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> in the build and automatically strips <span class="tooltip"><a href="shader-variants.html">shader variants</a><span class="tooltiptext">A verion of a shader program that Unity generates according to a specific combination of shader keywords and their status. A Shader object can contain multiple shader variants. <a href="shader-variants.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shadervariant" aria-label="Go to glossary anchor for Shadervariant">Glossary</a></span></span></span> that are not used in those scenes. However, this can cause problems if you want to use shaders or variants at runtime that would not otherwise be included in the build; for example, if you use AssetBundles or Addressables that rely on those shaders or variants, or if you use <a href="shader-keywords.html">shader keywords</a> to change variants at runtime.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Lightmap Modes</strong></td>
+	<td style="text-align:left;">Determine the shader variant stripping behavior for lightmap-related shaders.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Automatic</em></td>
+	<td style="text-align:left;">Unity examines the scenes in the build and automatically strips variants that are not used in those scenes. This is the default setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Custom</em></td>
+	<td style="text-align:left;">Choose to manually include or exclude variants for the following lightmap modes:<br><br>* <strong>Baked Non-Directional</strong><br>* <strong>Baked Directional</strong><br>* <strong>Realtime Non-Directional</strong><br>* <strong>Realtime Directional</strong><br>* <strong>Baked Shadowmask</strong><br>* <strong>Baked Subtractive</strong>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Fog Modes</strong></td>
+	<td style="text-align:left;">Determine the shader variant stripping behavior for shaders that relate to Unity’s built-in fog effect.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Automatic</em></td>
+	<td style="text-align:left;">Unity examines the scenes in the build and automatically strips variants that are not used in those scenes. This is the default setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Custom</em></td>
+	<td style="text-align:left;">Choose to manually include or exclude variants for the following fog modes:<br><br>* <strong>Linear</strong><br>* <strong>Exponential</strong><br>* <strong>Exponential Squared</strong>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Instancing Variants</strong></td>
+	<td style="text-align:left;">Determine the shader variant stripping behavior for shaders that relate to GPU instancing.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Strip Unused</em></td>
+	<td style="text-align:left;">Unity only includes variants for GPU instancing for a given shader if at least one material that uses that shader has <strong>Enable instancing</strong> enabled. This is the default setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Strip All</em></td>
+	<td style="text-align:left;">Strip all variants for GPU instancing, even if they are being used.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Keep All</em></td>
+	<td style="text-align:left;">Include all variants for GPU instancing, even if they are being used.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="shader-loading" aria-hidden="true"></a></p>
+
+<h2>Shader loading</h2>
+
+<p>These properties allow you to configure how Unity “prewarms” <a href="shader-variant-collections.html">shader variant collections</a> in your application.</p>
+
+<p>For information on prewarming, including important information about graphics API support, see <a href="shader-loading.html#prewarming-shader-variants">Shader loading: Prewarming shader variants</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Preloaded shaders</strong></td>
+	<td style="text-align:left;">The shader variant collections to prewarm on application start.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Preload shaders after showing first scene</strong></td>
+	<td style="text-align:left;">When Unity prewarms the shader variants specified in <strong>Preloaded shaders</strong>.<br><br>If enabled, Unity loads and prewarms them after the first scene has fully loaded. Otherwise, Unity loads and prewarms them before showing the first scene.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Preloaded time limit per frame (ms)</strong></td>
+	<td style="text-align:left;">This property determines how Unity prewarms the shader variants specified in <strong>Preloaded shaders</strong> if <strong>Preload shaders after showing first scene</strong> is enabled.<br><br>If the value is 0, Unity preloads all shader variants on the next frame after it shows the first scene.<br><br>Otherwise, Unity preloads new shader variants over multiple frames after it shows the first scene. In a given frame, Unity prewarms shader variants until it reaches the time limit set in this property. After that, it does not begin prewarming new shader variants until the next frame.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Tracked shader variants</h3>
+
+<p>The Unity Editor can track which <a href="shader-variants.html">shader variants</a> your application uses when it runs. You can use this information to build <a href="shader-variant-collections.html">shader variant collections</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Control</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Create asset</strong></td>
+	<td style="text-align:left;">Creates a new shader variant collection asset using the currently tracked shader variants.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clear</strong></td>
+	<td style="text-align:left;">Clear tracked shader variants.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="culling-settings" aria-hidden="true"></a></p>
+
+<h2>Culling settings</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Camera-Relative Culling</strong></td>
+	<td style="text-align:left;">Determines whether Unity uses the camera position as the reference point for culling.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Lights</strong></td>
+	<td style="text-align:left;">Use the camera position as the reference point to cull lights instead of the world space origin. Enable <strong>Lights</strong> to reduce flickering if lights are far away from the camera. Refer to <a href="UnderstandingFrustum.html">Understanding the View Frustum</a> for more information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Shadows</strong></td>
+	<td style="text-align:left;">Use the camera position as the reference point to cull shadows instead of the world space origin. Enable <strong>Shadows</strong> to reduce flickering if shadows are far away from the camera. Refer to <a href="UnderstandingFrustum.html">Understanding the View Frustum</a> for more information.</td>
+</tr>
+</tbody>
+</table>
+
+<p><span class="search-words">GraphicsSettings</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-EditorManager.html"></a></span><div class="tip">Editor</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-PackageManager.html"></a></span><div class="tip">Package Manager</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

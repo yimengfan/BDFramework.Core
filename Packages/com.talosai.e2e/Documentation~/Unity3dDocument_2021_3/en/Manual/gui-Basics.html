@@ -1,0 +1,370 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: IMGUI Basics</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/gui-Basics.html">English</a></li>
+<li><a href="/cn/current/Manual/gui-Basics.html">中文</a></li>
+<li><a href="/ja/current/Manual/gui-Basics.html">日本語</a></li>
+<li><a href="/kr/current/Manual/gui-Basics.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/gui-Basics.html">English</a></li>
+<li><a href="/cn/current/Manual/gui-Basics.html">中文</a></li>
+<li><a href="/ja/current/Manual/gui-Basics.html">日本語</a></li>
+<li><a href="/kr/current/Manual/gui-Basics.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="GUIScriptingGuide.html">Immediate Mode GUI (IMGUI)</a></li>
+<li>IMGUI Basics</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="GUIScriptingGuide.html"></a></span><div class="tip">Immediate Mode GUI (IMGUI)</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="gui-Controls.html"></a></span><div class="tip">IMGUI Controls</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>IMGUI Basics</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This section will explain the bare necessities for scripting <strong>Controls</strong> with Unity’s Immediate Mode GUI system (IMGUI).</p>
+
+<h2>Making Controls with IMGUI</h2>
+
+<p>Unity’s IMGUI controls make use of a special function called <strong>OnGUI()</strong>. The <strong>OnGUI()</strong> function gets called every frame as long as the containing script is enabled - just like the <strong>Update()</strong> function.</p>
+
+<p>IMGUI controls themselves are very simple in structure. This structure is evident in the following example.</p>
+
+<pre><code>/* Example level loader */
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour {
+            
+    void OnGUI ()
+    {
+        // Make a background box
+        GUI.Box(new Rect(10,10,100,90), &quot;Loader Menu&quot;);
+    
+        // Make the first button. If it is pressed, Application.Loadlevel (1) will be executed
+        if(GUI.Button(new Rect(20,40,80,20), &quot;Level 1&quot;))
+        {
+            Application.LoadLevel(1);
+        }
+    
+        // Make the second button.
+        if(GUI.Button(new Rect(20,70,80,20), &quot;Level 2&quot;)) 
+        {
+            Application.LoadLevel(2);
+        }
+    }
+}
+</code></pre>
+
+<p>This example is a complete, functional level loader. If you copy/paste this script and attach it a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, you’ll see the following menu appear in when you enter <strong>Play Mode</strong>:</p>
+
+<figure>
+<img src="../uploads/Main/guiScripting-BasicsLoaderMenuExample.png" alt="The Loader Menu created by the example code">
+<figcaption>The Loader Menu created by the example code</figcaption>
+</figure>
+
+<p>Let’s take a look at the details of the example code:</p>
+
+<p>The first GUI line, <strong>GUI.Box (Rect (10,10,100,90), “Loader Menu”);</strong> displays a <strong>Box</strong> Control with the header text “Loader Menu”. It follows the typical GUI Control declaration scheme which we’ll explore momentarily.</p>
+
+<p>The next GUI line is a <strong>Button</strong> Control declaration. Notice that it is slightly different from the Box Control declaration. Specifically, the entire Button declaration is placed inside an <strong>if</strong> statement. When the game is running and the Button is clicked, this <strong>if</strong> statement returns true and any code inside the <strong>if</strong> block is executed.</p>
+
+<p>Since the <strong>OnGUI()</strong> code gets called every frame, you don’t need to explicitly create or destroy GUI controls. The line that declares the Control is the same one that creates it. If you need to display Controls at specific times, you can use any kind of scripting logic to do so.</p>
+
+<pre><code>/* Flashing button example */
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour
+{
+            
+    void OnGUI () 
+    {
+        if (Time.time % 2 &lt; 1) 
+        {
+            if (GUI.Button (new Rect (10,10,200,20), &quot;Meet the flashing button&quot;))
+            {
+                print (&quot;You clicked me!&quot;);
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>Here, <strong>GUI.Button()</strong> only gets called every other second, so the button will appear and disappear. Naturally, the user can only click it when the button is visible.</p>
+
+<p>As you can see, you can use any desired logic to control when GUI Controls are displayed and functional. Now we will explore the details of each Control’s declaration.</p>
+
+<h2>Anatomy of a Control</h2>
+
+<p>There are three key pieces of information required when declaring a GUI Control:</p>
+
+<p>
+<strong>Type</strong> (<strong>Position</strong>, <strong>Content</strong>)</p>
+
+<p>Observe that this structure is a function with two arguments. We’ll explore the details of this structure now.</p>
+
+<h3>Type</h3>
+
+<p>
+<strong>Type</strong> is the <strong>Control Type</strong>, and is declared by calling a function in Unity’s <a href="../ScriptReference/GUI.html">GUI class</a> or the <a href="../ScriptReference/GUILayout.html">GUILayout class</a>, which is discussed at length in the <a href="gui-Layout.html">Layout Modes</a> section of the Guide. For example, <strong>GUI.Label()</strong> will create a non-interactive label. All the different control types are explained later, in the <a href="gui-Controls.html">Controls</a> section of the Guide.</p>
+
+<h3>Position</h3>
+
+<p>The <strong>Position</strong> is the first argument in any <strong>GUI</strong> Control function. The argument itself is provided with a <strong>Rect()</strong> function. <strong>Rect()</strong> defines four properties: <strong>left-most position</strong>, <strong>top-most position</strong>, <strong>total width</strong>, <strong>total height</strong>. All of these values are provided in <strong>integers</strong>, which correspond to <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> values. All UnityGUI controls work in <strong>Screen Space</strong>, which is the resolution of the published player in pixels.</p>
+
+<p>The coordinate system is top-left based. <strong>Rect(10, 20, 300, 100)</strong> defines a Rectangle that starts at coordinates: 10,20 and ends at coordinates 310,120. It is worth repeating that the second pair of values in <strong>Rect()</strong> are total width and height, not the coordinates where the controls end. This is why the example mentioned above ends at 310,120 and not 300,100.</p>
+
+<p>You can use the <strong>Screen.width</strong> and <strong>Screen.height</strong> properties to get the total dimensions of the screen space available in the player. The following example may help clarify how this is done:</p>
+
+<pre><code>/* Screen.width &amp; Screen.height example */
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour 
+{
+            
+    void OnGUI()
+    {
+        GUI.Box (new Rect (0,0,100,50), &quot;Top-left&quot;);
+        GUI.Box (new Rect (Screen.width - 100,0,100,50), &quot;Top-right&quot;);
+        GUI.Box (new Rect (0,Screen.height - 50,100,50), &quot;Bottom-left&quot;);
+        GUI.Box (new Rect (Screen.width - 100,Screen.height - 50,100,50), &quot;Bottom-right&quot;);
+    }
+
+}
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-ScreenWidthHeight.png" alt="The Boxes positioned by the above example">
+<figcaption>The Boxes positioned by the above example</figcaption>
+</figure>
+
+<h3>Content</h3>
+
+<p>The second argument for a GUI Control is the actual content to be displayed with the Control. Most often you will want to display some text or an image on your Control. To display text, pass a string as the Content argument like this:</p>
+
+<pre><code>using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour 
+{
+    void OnGUI ()
+    {
+        GUI.Label (new Rect (0,0,100,50), &quot;This is the text string for a Label Control&quot;);
+    }
+}
+</code></pre>
+
+<p>To display an image, declare a <strong>Texture2D</strong> public variable, and pass the variable name as the content argument like this:</p>
+
+<pre><code>/* Texture2D Content example */
+public Texture2D controlTexture;
+  ...
+
+void OnGUI () 
+{
+    GUI.Label (new Rect (0,0,100,50), controlTexture);
+}
+</code></pre>
+
+<p>Here is an example closer to a real-world scenario:</p>
+
+<pre><code>/* Button Content examples */
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour
+{
+    public Texture2D icon;
+    
+    void OnGUI () 
+    {
+        if (GUI.Button (new Rect (10,10, 100, 50), icon)) 
+        {
+            print (&quot;you clicked the icon&quot;);
+        }
+    
+        if (GUI.Button (new Rect (10,70, 100, 20), &quot;This is text&quot;)) 
+        {
+            print (&quot;you clicked the text button&quot;);
+        }
+    }
+}
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-IconStringContent.png" alt="The Buttons created by the above example">
+<figcaption>The Buttons created by the above example</figcaption>
+</figure>
+
+<p>There is a third option which allows you to display images and text together in a GUI Control. You can provide a <strong>GUIContent</strong> object as the Content argument, and define the string and image to be displayed within the GUIContent.</p>
+
+<pre><code>/* Using GUIContent to display an image and a string */
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour
+{
+    public Texture2D icon;
+
+    void OnGUI () 
+    {
+        GUI.Box (new Rect (10,10,100,50), new GUIContent(&quot;This is text&quot;, icon));
+    }
+}
+</code></pre>
+
+<p>You can also define a <strong>Tooltip</strong> in the GUIContent, and display it elsewhere in the GUI when the mouse hovers over it.</p>
+
+<pre><code>/* Using GUIContent to display a tooltip */
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour 
+{
+    void OnGUI () 
+    {
+        // This line feeds &quot;This is the tooltip&quot; into GUI.tooltip
+        GUI.Button (new Rect (10,10,100,20), new GUIContent (&quot;Click me&quot;, &quot;This is the tooltip&quot;));
+        
+        // This line reads and displays the contents of GUI.tooltip
+        GUI.Label (new Rect (10,40,100,20), GUI.tooltip);
+    }
+}
+</code></pre>
+
+<p>You can also use GUIContent to display a string, an icon, and a tooltip.</p>
+
+<pre><code>/* Using GUIContent to display an image, a string, and a tooltip */
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour 
+{
+    public Texture2D icon;
+    
+    void OnGUI () 
+    {
+        GUI.Button (new Rect (10,10,100,20), new GUIContent (&quot;Click me&quot;, icon, &quot;This is the tooltip&quot;));
+        GUI.Label (new Rect (10,40,100,20), GUI.tooltip);
+    }
+}
+</code></pre>
+
+<p>The script reference page for the <a href="../ScriptReference/GUIContent-ctor.html">GUIContent constructor</a> has some examples of its use.</p>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="GUIScriptingGuide.html"></a></span><div class="tip">Immediate Mode GUI (IMGUI)</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="gui-Controls.html"></a></span><div class="tip">IMGUI Controls</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

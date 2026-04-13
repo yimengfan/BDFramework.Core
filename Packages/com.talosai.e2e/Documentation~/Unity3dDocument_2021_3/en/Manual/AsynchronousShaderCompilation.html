@@ -1,0 +1,325 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Asynchronous shader compilation</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AsynchronousShaderCompilation.html">English</a></li>
+<li><a href="/cn/current/Manual/AsynchronousShaderCompilation.html">中文</a></li>
+<li><a href="/ja/current/Manual/AsynchronousShaderCompilation.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AsynchronousShaderCompilation.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AsynchronousShaderCompilation.html">English</a></li>
+<li><a href="/cn/current/Manual/AsynchronousShaderCompilation.html">中文</a></li>
+<li><a href="/ja/current/Manual/AsynchronousShaderCompilation.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AsynchronousShaderCompilation.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="ShadersOverview.html">Shaders core concepts</a></li>
+<li><a href="shader-compilation.html">Shader compilation</a></li>
+<li>Asynchronous shader compilation</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="shader-compilation.html"></a></span><div class="tip">Shader compilation</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="shader-variants-and-keywords.html"></a></span><div class="tip">Branching, variants, and keywords</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Asynchronous shader compilation</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Asynchronous <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> compilation is an Editor-only feature that can improve your workflow when you have complex <span class="tooltip"><strong>Shader objects</strong><span class="tooltiptext">An instance of the Shader class, a Shader object is container for shader programs and GPU instructions, and information that tells Unity how to use them. Use them with materials to determine the appearance of your scene. <a href="shader-objects.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> compilation is an Editor-only feature that can improve your workflow when you have complex <span class="tooltip"><strong>Shader objects</strong><span class="tooltiptext">An instance of the Shader class, a Shader object is container for shader programs and GPU instructions, and information that tells Unity how to use them. Use them with materials to determine the appearance of your scene. <a href="shader-objects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shaderobject" aria-label="Go to glossary anchor for Shaderobject">Glossary</a></span></span></span> with lots of shader variants.</p>
+
+<p>This page contains the following information:</p>
+
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#how-it-works">How asynchronous shader compilation works</a></li>
+<li><a href="#enabling-disabling-project">Enabling and disabling asynchronous shader compilation for your project</a></li>
+<li><a href="#enabling-disabling-calls">Enabling and disabling asynchronous shader compilation for specific rendering calls</a></li>
+<li><a href="#disabling-shader">Disabling asynchronous shader compilation for a specific Shader object</a></li>
+<li><a href="#detecting-compilation">Detecting asynchronous shader compilation in the Unity Editor</a></li>
+<li><a href="#advanced-rendering-in-the-editor">Advanced rendering in the Editor and asynchronous shader compilation</a></li>
+<li><a href="#using-it-in-custom-editor-tools">Custom Editor tools and asynchronous shader compilation</a></li>
+</ul>
+
+<p><a name="overview" aria-hidden="true"></a></p>
+
+<h2>Overview</h2>
+
+<p>Shader objects can contain of hundreds or thousands of <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about shader-variants.html">shader variants</a><span class="tooltiptext">A verion of a shader program that Unity generates according to a specific combination of shader keywords and their status. A Shader object can contain multiple shader variants. <a href="shader-variants.html" href="shader-variants.html">shader variants</a><span class="tooltiptext">A verion of a shader program that Unity generates according to a specific combination of shader keywords and their status. A Shader object can contain multiple shader variants. <a href="shader-variants.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shadervariant" aria-label="Go to glossary anchor for Shadervariant">Glossary</a></span></span></span>. If the Editor compiled all variants when loading a Shader object, the import process would be very slow. Instead, the Editor compiles shader variants on-demand, the first time it encounters them.</p>
+
+<p>Compiling these shader variants can cause the Editor to stall for milliseconds or even seconds, depending on the graphics API and the complexity of the Shader object. To avoid these stalls, you can use asynchronous shader compilation to compile the shader variants in the background, and use placeholder Shader objects in the meantime.</p>
+
+<p><a name="how-it-works" aria-hidden="true"></a></p>
+
+<h2>How asynchronous shader compilation works</h2>
+
+<p>Asynchronous shader compilation works like this:</p>
+
+<ol>
+<li>When the Editor first encounters an uncompiled shader variant, it adds the shader variant to a compilation queue on a job thread. The progress bar in the bottom right corner of the Editor shows the status of the compilation queue.</li>
+<li>While the shader variant is loading, Editor renders the geometry with a placeholder shader, which appears as a plain cyan color.</li>
+<li>When the Editor has finished compiling the shader variant, it renders the geometry using the shader variant.</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/cyan_dummy_shaders.png" alt="Unity renders shader variants that are still compiling with a cyan dummy Shader until compilation has finished. The bottom right progress bar indicates the compilation queue progress.">
+<figcaption>Unity renders shader variants that are still compiling with a cyan dummy Shader until compilation has finished. The bottom right progress bar indicates the compilation queue progress.</figcaption>
+</figure>
+
+<h3>Exceptions</h3>
+
+<p>The following exceptions apply:</p>
+
+<ul>
+<li>If you draw geometry using <a href="../ScriptReference/Graphics.DrawProcedural.html"><code>DrawProcedural</code></a> or <a href="../ScriptReference/Rendering.CommandBuffer.DrawProcedural.html"><code>CommandBuffer.DrawProcedural</code></a>, the Editor doesn’t use a placeholder shader. Instead, the Editor just skips rendering this geometry until it has compiled the shader variant.</li>
+<li>The Unity Editor does not use asynchronous shader compilation with <span class="tooltip"><strong>Blit</strong><span class="tooltiptext">A shorthand term for “bit block transfer”. A blit operation is the process of transferring blocks of data from one place in memory to another.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#blit" aria-label="Go to glossary anchor for blit">Glossary</a></span></span></span> operations. This is to guarantee correct output in the most common use cases.</li>
+</ul>
+
+<p><a name="enabling-disabling-project" aria-hidden="true"></a></p>
+
+<h2>Enabling and disabling asynchronous shader compilation for your project</h2>
+
+<p>Asynchronous shader compilation is enabled by default.</p>
+
+<p>To enable or disable asynchronous shader compilation:</p>
+
+<ol>
+<li>Go to <strong>Edit &gt; Project Settings &gt; Editor</strong>.</li>
+<li>At the bottom of the Editor settings, under <strong>Shader Compilation</strong>, check or uncheck the <strong>Asynchronous Shader Compilation</strong> checkbox.</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/asynchronous_shader_compilation_ui.png" alt="You can find the check box for Asynchronous Shader Compilation under the Project Settings &amp;gt; Editor &amp;gt; Shader Compilation.">
+<figcaption>You can find the check box for <strong>Asynchronous Shader Compilation</strong> under the <strong>Project Settings &gt; Editor &gt; Shader Compilation</strong>.</figcaption>
+</figure>
+
+<p>
+<strong>Note:</strong> Enabling and disabling asynchronous shader compilation in this way affects only the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> and Game views by default. If you want to use it in other parts of the Editor, see <a href="#using-it-in-custom-editor-tools">Custom Editor tools and asynchronous shader compilation</a>.</p>
+
+<p><a name="enabling-disabling-calls" aria-hidden="true"></a></p>
+
+<h2>Enabling and disabling asynchronous shader compilation for specific rendering calls</h2>
+
+<p>You can enable or disable asynchronous shader compilation for specific rendering commands in your C# <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>.</p>
+
+<p>The following instructions show you how to enable or disable the feature in an immediate scope, and a <a href="../ScriptReference/Rendering.CommandBuffer.html">CommandBuffer</a> scope.</p>
+
+<h4>In an immediate scope</h4>
+
+<p>In an immediate scope, you can use <a href="../ScriptReference/ShaderUtil-allowAsyncCompilation.html"><code>ShaderUtil.allowAsyncCompilation</code></a>. </p>
+
+<p>To do this:</p>
+
+<ol>
+<li>Store the current state of <code>ShaderUtil.allowAsyncCompilation</code> in a variable.</li>
+<li>Before you call the rendering commands, set <code>ShaderUtil.allowAsyncCompilation</code> to <code>false</code>.</li>
+<li>Call the rendering commands.</li>
+<li>After calling the rendering commands, restore <code>ShaderUtil.allowAsyncCompilation</code> back to its previous state.</li>
+</ol>
+
+<p>Here is a pseudo-code example:</p>
+
+<pre><code>// Store the current state
+bool oldState = ShaderUtil.allowAsyncCompilation;
+
+// Disable async compilation
+ShaderUtil.allowAsyncCompilation = false;
+
+// Enter your rendering code that should never use the placeholder shader
+Graphics.DrawMesh(...);
+
+// Restore the old state
+ShaderUtil.allowAsyncCompilation = oldState;
+</code></pre>
+
+<h4>In a CommandBuffer scope</h4>
+
+<p>In a <code>CommandBuffer</code> scope, you can use <a href="../ScriptReference/ShaderUtil.SetAsyncCompilation.html"><code>ShaderUtil.SetAsyncCompilation</code></a> and <a href="../ScriptReference/ShaderUtil.RestoreAsyncCompilation.html"><code>ShaderUtil.RestoreAsyncCompilation</code></a>.</p>
+
+<ol>
+<li>Immediately before you call the rendering commands, call <code>ShaderUtil.SetAsyncCompilation</code>, and set it to <code>false</code>. Subsequent commands in the CommandBuffer won’t allow asynchronous compilation.</li>
+<li>Add the rendering commands to the CommandBuffer.</li>
+<li>After the rendering commands, call <a href="../ScriptReference/ShaderUtil.RestoreAsyncCompilation.html"><code>Shader.Util.RestoreAsyncCompilation</code></a> to restore the state of asynchronous shader compilation.</li>
+</ol>
+
+<p>Here is an example:</p>
+
+<pre><code>// Create the CommandBuffer
+CommandBuffer cmd = new CommandBuffer();
+
+// Disable async compilation for subsequent commands
+ShaderUtil.SetAsyncCompilation(cmd, false);
+
+/// Enter your rendering commands that should never use the placeholder shader
+cmd.DrawMesh(...);
+
+// Restore the old state
+ShaderUtil.RestoreAsyncCompilation(cmd);
+</code></pre>
+
+<p><a name="disabling-shader" aria-hidden="true"></a></p>
+
+<h2>Disabling asynchronous compilation for specific Shader objects</h2>
+
+<p>You can disable asynchronous shader compilation for specific Shader objects by forcing the Editor to always compile them synchronously. This is a good option for data generating Shader objects that are always present at the start of your rendering, and which are relatively quick to compile. You would most likely need this if you are performing <a href="#advanced-rendering-in-the-editor">advanced rendering</a>.</p>
+
+<p>To force synchronous compilation for a Shader object, add the <code>#pragma editor_sync_compilation</code> <a href="SL-ShaderPrograms.html">directive</a> to your shader source code.</p>
+
+<p>
+<strong>Note:</strong> You should not force synchronous compilation for complex Shader objects that encounter new shader variants during rendering; this can stall rendering in the Editor.</p>
+
+<p><a name="detecting-compilation" aria-hidden="true"></a></p>
+
+<h2>Detecting asynchronous shader compilation</h2>
+
+<p>You can use C# APIs to monitor the state of asynchronous shader compilation, and perform operations when this state changes.</p>
+
+<p>This is most likely useful in <a href="#advanced-rendering-in-the-editor">advanced rendering</a>; if the placeholder shader pollutes your generated data, you can wait until compilation is complete, discard the polluted data, and regenerate a new set with the correct shader variants.</p>
+
+<p>If you already know which material you are interested in, you can use <code>ShaderUtil.IsPassCompiled</code> to check the compilation status of the shader variant. When the status changes <em>Uncompiled</em> to <em>Compiled</em>, compilation is complete.</p>
+
+<p>If you do not know which material you are interested in, or if you are interested in more than one material, you can use <code>ShaderUtil.anythingCompiling</code> to detect whether Unity is compiling any shader variants asynchronously. When this changes from <code>true</code> to <code>false</code>, all current compilation is complete.</p>
+
+<p><a name="advanced-rendering-in-the-editor" aria-hidden="true"></a></p>
+
+<h2>Advanced rendering in the Editor and asynchronous shader compilation</h2>
+
+<p>Advanced rendering solutions rely on generating data once and reusing it in later frames. If the Editor uses a placeholder shader during this process, it might pollute the generated data. If this happens, you can see the cyan color or other rendering artifacts in your scene, even after the shader variants have finished compiling. </p>
+
+<p>To avoid this, you can:</p>
+
+<ul>
+<li><a href="#enabling-disabling-project">Disable asynchronous shader compilation completely for your project</a></li>
+<li><a href="#enabling-disabling-calls">Disable asynchronous shader compilation for specific rendering calls</a></li>
+<li><a href="#disabling-shader">Disable asynchronous shader compilation for a specific Shader object</a></li>
+<li>
+<a href="#detecting-compilation">Detect when the source of the data pollution has finished compiling</a>, and then re-generate the data.</li>
+</ul>
+
+<p><a name="using-it-in-custom-editor-tools" aria-hidden="true"></a></p>
+
+<h2>Custom Editor tools and asynchronous shader compilation</h2>
+
+<p>By default, asynchronous Shader compilation works in the Game and <span class="tooltip"><strong>Scene views</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>. If you want to use it in custom Editor tools, you can enable it via C# for your custom tool.</p>
+
+<p>To do this, you can <a href="#enabling-disabling-calls">enable asynchronous shader compilation for specific rendering calls</a>.</p>
+
+<h3>Customizing compile time rendering</h3>
+
+<p>You can make your custom tools draw something other than the placeholder shader for each material. This way, you can avoid rendering in plain cyan, and instead draw something else while the shader variant compiles. </p>
+
+<p>To check if a specific shader variant has compiled, see <a href="#detecting-compilation">Detecting asynchronous shader compilation</a>.</p>
+
+<p>To trigger compilation manually, you can use <a href="../ScriptReference/ShaderUtil.CompilePass.html"><code>ShaderUtil.CompilePass</code></a>. This way, you can avoid rendering with the cyan placeholder, and draw something else while the shader variant compiles. </p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="shader-compilation.html"></a></span><div class="tip">Shader compilation</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="shader-variants-and-keywords.html"></a></span><div class="tip">Branching, variants, and keywords</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Time and frame rate management</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/TimeFrameManagement.html">English</a></li>
+<li><a href="/cn/current/Manual/TimeFrameManagement.html">中文</a></li>
+<li><a href="/ja/current/Manual/TimeFrameManagement.html">日本語</a></li>
+<li><a href="/kr/current/Manual/TimeFrameManagement.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/TimeFrameManagement.html">English</a></li>
+<li><a href="/cn/current/Manual/TimeFrameManagement.html">中文</a></li>
+<li><a href="/ja/current/Manual/TimeFrameManagement.html">日本語</a></li>
+<li><a href="/kr/current/Manual/TimeFrameManagement.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="ScriptingImportantClasses.html">Important Classes </a></li>
+<li>Time and frame rate management</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-ScriptableObject.html"></a></span><div class="tip">ScriptableObject</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-Mathf.html"></a></span><div class="tip">Mathf</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Time and frame rate management</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity’s Time class provides important basic properties that allow you to work with time-related values in your project.</p>
+
+<p>This page contains explanations for some more commonly used members of the Time class, and how they relate to each other. You can read individual descriptions for each member of the time class on the <a href="../ScriptReference/Time.html">Time script reference page</a>. </p>
+
+<p>The Time class has a few properties which provide you with numeric values that allow you to measure time elapsing while your game or app is running. For example:</p>
+
+<ul>
+<li>
+<a href="../ScriptReference/Time-time.html"><code>Time.time</code></a> returns the amount of time in seconds since your project started playing.</li>
+<li>
+<a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Time-deltaTime.html"><code>Time.deltaTime</code></a> returns the amount of time in seconds that elapsed since the last frame completed. This value varies depending on the <span class="tooltip"><strong>frames per second</strong><span class="tooltiptext">The frequency at which consecutive frames are displayed in a running game. <a href="RenderingStatistics.html" href="../ScriptReference/Time-deltaTime.html"><code>Time.deltaTime</code></a> returns the amount of time in seconds that elapsed since the last frame completed. This value varies depending on the <span class="tooltip"><strong>frames per second</strong><span class="tooltiptext">The frequency at which consecutive frames are displayed in a running game. <a href="RenderingStatistics.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#framespersecond" aria-label="Go to glossary anchor for framespersecond">Glossary</a></span></span></span> (FPS) rate at which your game or app is running.</li>
+</ul>
+
+<p>The Time class also provides you with properties which allow you to control and limit how time elapses, for example:</p>
+
+<ul>
+<li>
+<a href="../ScriptReference/Time-timeScale.html"><code>Time.timeScale</code></a> controls the rate at which time elapses. You can read this value, or set it to control how fast time passes, allowing you to create slow-motion effects.</li>
+<li>
+<a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Time-fixedDeltaTime.html"><code>Time.fixedDeltaTime</code></a> controls the interval of Unity’s <span class="tooltip"><strong>fixed timestep</strong><span class="tooltiptext">A customizable frame-rate-independent interval that dictates when physics calculations and FixedUpdate() events are performed. <a href="class-TimeManager.html" href="../ScriptReference/Time-fixedDeltaTime.html"><code>Time.fixedDeltaTime</code></a> controls the interval of Unity’s <span class="tooltip"><strong>fixed timestep</strong><span class="tooltiptext">A customizable frame-rate-independent interval that dictates when physics calculations and FixedUpdate() events are performed. <a href="class-TimeManager.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#FixedTimestep" aria-label="Go to glossary anchor for FixedTimestep">Glossary</a></span></span></span> loop (used for physics, and if you want to write deterministic time-based code).</li>
+<li>
+<a href="../ScriptReference/Time-maximumDeltaTime.html"><code>Time.maximumDeltaTime</code></a> sets an upper limit on the amount of time the engine will report as having passed by the “delta time” properties above.</li>
+</ul>
+
+<h2>Variable and Fixed time steps</h2>
+
+<p>Unity has two systems which track time, one with a variable amount of time between each step, and one with a fixed amount of time between each step.</p>
+
+<p>The variable time step system operates on the repeated process of drawing a frame to the screen, and running your app or game code once per frame. </p>
+
+<p>The fixed time step system steps forward at a pre-defined amount each step, and is not linked to the visual frame updates. It is more commonly associated with the physics system, which runs at the rate specified by the fixed time step size, but you can also execute your own code each fixed time step if necessary.</p>
+
+<h2>Variable frame rate management</h2>
+
+<p>The frame rate of your game or app can vary because of the time it takes to display and execute the code for each frame. This is affected by the capabilities of the device on which it is running, and also on the varying amount of complexity of the graphics displayed and computation required each frame. For example, your game may run at a slower frame rate when there are one hundred characters active and on-screen, compared to when there is only one. This variable rate is often referred to as “frames per second”, or <span class="tooltip"><strong>FPS</strong><span class="tooltiptext">See first person shooter, frames per second.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#FPS" aria-label="Go to glossary anchor for FPS">Glossary</a></span></span></span>.</p>
+
+<p>Unless otherwise constrained by your <a href="class-QualitySettings.html">quality settings</a> or by the <a href="com.unity.adaptiveperformance.html">Adaptive Performance package</a>, Unity tries to run your game or app at the fastest frame rate possible. You can see more details of what occurs each frame in the <a href="ExecutionOrder.html">execution order diagram</a>, in the section marked “Game Logic”.</p>
+
+<p>Unity provides the <a href="../ScriptReference/MonoBehaviour.Update.html"><code>Update</code></a> method as an entry point for you to execute your own code each frame. For example, in your game character’s <code>Update</code> method, you might read the user input from a joypad, and move the character forward a certain amount. It’s important to remember when handling time-based actions like this is that the game’s frame rate can vary and so the length of time between Update calls also varies.</p>
+
+<p>Consider the task of moving an object forward gradually, one frame at a time. It might seem at first that you could just translate the object by a fixed distance each frame:</p>
+
+<pre><code>//C# script example
+using UnityEngine;
+using System.Collections;
+
+public class ExampleScript : MonoBehaviour {
+    public float distancePerFrame;
+    
+    void Update() {
+        transform.Translate(0, 0, distancePerFrame); // this is incorrect
+    }
+}
+</code></pre>
+
+<p>However with this code, as the frame rate varies, the object’s apparent speed also varies. If the game is running at 100 frames per second, the object moves <em>distancePerFrame</em> one hundred times per second. But if the frame rate slows to 60 frames per second (due to CPU load, say) then it only steps forward sixty times a second and therefore covers a shorter distance over the same amount of time.</p>
+
+<p>In most cases this is undesirable, particularly with games and animation. It is much more common to want your in-game objects to move at steady and predictable speeds regardless of the frame rate. The solution is to scale the amount of the movement each frame by the amount of time elapsed each frame, which you can read from the <a href="../ScriptReference/Time-deltaTime.html">Time.deltaTime</a> property:</p>
+
+<pre><code>//C# script example
+using UnityEngine;
+using System.Collections;
+
+public class ExampleScript : MonoBehaviour {
+    public float distancePerSecond;
+    
+    void Update() {
+        transform.Translate(0, 0, distancePerSecond * Time.deltaTime);
+    }
+}
+</code></pre>
+
+<p>Note that the movement is now given as <em>distancePerSecond</em> rather than <em>distancePerFrame</em>. As the frame rate varies, the size of the movement step will vary accordingly and so the object’s speed will be constant.</p>
+
+<p>Depending on your target platform, use either <a href="../ScriptReference/Application-targetFrameRate.html">Application.targetFrameRate</a> or <a href="../ScriptReference/QualitySettings-vSyncCount.html">QualitySettings.vSyncCount</a> to set the frame rate of your application. For more information, see the <a href="../ScriptReference/Application-targetFrameRate.html">Application.targetFrameRate API documentation</a>.</p>
+
+<h2>Fixed Timestep</h2>
+
+<p>Unlike the main frame update, Unity’s physics system works to a fixed timestep, which is important for the accuracy and consistency of the simulation. At the start of the each frame, Unity performs as many fixed updates as necessary to catch up with the current time. You can see more details of what occurs during the fixed update cycle in the <a href="ExecutionOrder.html">execution order diagram</a>, in the section marked “Physics”. </p>
+
+<p>You can also execute your own code in sync with the fixed timestep, if necessary. This is most commonly used for executing your own physics-related code, such as <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Rigidbody.AddForce.html">applying a force</a> to a <span class="tooltip"><a href="../ScriptReference/Rigidbody.html">Rigidbody</a><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a href="class-Rigidbody.html" href="../ScriptReference/Rigidbody.AddForce.html">applying a force</a> to a <span class="tooltip"><a href="../ScriptReference/Rigidbody.html">Rigidbody</a><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a href="class-Rigidbody.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span>. Unity provides the <a href="../ScriptReference/MonoBehaviour.FixedUpdate.html"><code>FixedUpdate</code></a> method as an entry point for you to execute your own code each fixed timestep.</p>
+
+<p>The <a href="../ScriptReference/Time-fixedDeltaTime.html"><code>fixedDeltaTime</code></a> property controls the interval of Unity’s fixed timestep loop, and is specified in seconds. For example, a value of 0.01 means each fixed timestep is one hundredth of a second in duration, and so there will be 100 fixed time steps per second.</p>
+
+<p>If your game or app is running at a higher frame rate than the number of fixed timesteps per second, it means each frame duration is less than the duration of a single fixed timestep. In that case, Unity performs either zero or one fixed physics updates per frame. For example, if your fixed timestep value is 0.02, there will be 50 fixed updates per second. If your game or app then runs at 60 frames per second, approximately one in ten frames will not have a fixed update.</p>
+
+<figure>
+<img src="../uploads/Main/UpdateAndFixedUpdateExample1.svg" alt="An example showing Update running at 60fps and FixedUpdate running at 50 updates per second. Occasionally a frame update occurs (marked in yellow) with no corresponding FixedUpdate.">
+<figcaption>An example showing Update running at 60fps and FixedUpdate running at 50 updates per second. Occasionally a frame update occurs (marked in yellow) with no corresponding FixedUpdate.</figcaption>
+</figure>
+
+<p>If your game or app is running at a lower frame rate than the fixed timestep value, it means each frame duration is longer than a single fixed timestep. To account for this, Unity will perform one or more fixed updates each frame, so that the physics simulation catches up with the amount of time elapsed since the last frame. For example, if your fixed timestep value is 0.01, there will be 100 fixed updates per second. If your app runs at 25 frames per second, Unity performs four fixed updates every frame. You might want a scenario like this where it’s more important to model more accurate physics than to have a high frame rate.</p>
+
+<figure>
+<img src="../uploads/Main/UpdateAndFixedUpdateExample2.svg" alt="An example showing Update running at 25 FPS and FixedUpdate running at 100 updates per second. You can see there are four occurrences of a FixedUpdate during one frame, marked in yellow.">
+<figcaption>An example showing Update running at 25 FPS and FixedUpdate running at 100 updates per second. You can see there are four occurrences of a FixedUpdate during one frame, marked in yellow.</figcaption>
+</figure>
+
+<p>You can read or change the duration of the fixed timestep in the <a href="class-TimeManager.html">Time</a> window, or from a script using the <a href="../ScriptReference/Time-fixedDeltaTime.html">Time.fixedDeltaTime</a> property.</p>
+
+<p>Note: A lower timestep value means more frequent physics updates and more precise simulations, which leads to higher CPU load.</p>
+
+<h2>Unity’s Time Logic</h2>
+
+<p>The following flowchart illustrates the logic that Unity uses to count time in a single frame, and how the <a href="../ScriptReference/Time-time.html">time</a>, <a href="../ScriptReference/Time-deltaTime.html">deltaTime</a>, <a href="../ScriptReference/Time-fixedDeltaTime.html">fixedDeltaTime</a>, and <a href="../ScriptReference/Time-maximumDeltaTime.html">maximumDeltaTime</a> properties relate to each other.</p>
+
+<figure>
+<img src="../uploads/Main/time-flowchart.svg" alt="">
+</figure>
+
+<p><a name="MaximumAllowedTimestep" aria-hidden="true"></a></p>
+
+<h2>Controlling and handling variations in time</h2>
+
+<p>As described above, there can be variations in the amount of time elapsed between each frame.</p>
+
+<p>Elapsed time variations can be slight. For example, in a game running at 60 frames per second, the actual number of frames per second may vary slightly, so that each frame lasts between 0.016 and 0.018 seconds. Larger variations can occur when your app performs heavy computations or garbage collection, or when the resources it needs to maintain its frame rate are being used by a different app.</p>
+
+<p>The properties explained in this section are:</p>
+
+<ul>
+<li><a href="../ScriptReference/Time-time.html">Time.time</a></li>
+<li><a href="../ScriptReference/Time-unscaledTime.html">Time.unscaledTime</a></li>
+<li><a href="../ScriptReference/Time-deltaTime.html">Time.deltaTime</a></li>
+<li><a href="../ScriptReference/Time-unscaledDeltaTime.html">Time.unscaledDeltaTime</a></li>
+<li><a href="../ScriptReference/Time-smoothDeltaTime.html">Time.smoothDeltaTime</a></li>
+<li><a href="../ScriptReference/Time-timeScale.html">Time.timeScale</a></li>
+<li><a href="../ScriptReference/Time-maximumDeltaTime.html">Time.maximumDeltaTime</a></li>
+</ul>
+
+<p>These properties each have their own scripting API documentation page, but it can help to see their descriptions and outputs in relation to each other to understand their appropriate uses.</p>
+
+<p>
+<code>Time.time</code> indicates the amount of time elapsed since the player started, and so usually continuously and steadily rises. <code>Time.deltaTime</code> indicates the amount of time elapsed since the last frame, and so ideally remains fairly constant.</p>
+
+<p>Both these values are subjective measures of time elapsed within your app or game. This means they take into account any scaling of time that you apply. So for example, you could set the Time.timeScale to 0.1 for a slow-motion effect (which indicates 10% of normal playback speed). In this situation the value reported by <code>Time.time</code> increases at 10% the rate of “real” time. After 10 seconds, the value of <code>Time.time</code> would have increased by 1. In addition to slowing down or speeding up time in your app, you can set Time.timeScale to zero to pause your game, in which case the <code>Update</code> method is still called, but <code>Time.time</code> does not increase at all, and <code>Time.deltaTime</code> is zero.</p>
+
+<p>These values are also clamped by the value of the <code>Time.maximumDeltaTime</code> property. This means the length of any pauses or variations in frame rate reported by these properties will never exceed maximumDeltaTime. For example, if a delay of one second occurs, but the maximumDeltaTime is set to the default value of 0.333, <code>Time.time</code> would only increase by 0.333, and <code>Time.deltaTime</code> would equal 0.333, despite more time having actually elapsed in the real world.</p>
+
+<p>The unscaled versions of each of these properties (<code>Time.unscaledTime</code> and <code>Time.unscaledDeltaTime</code>) ignore these subjective variations and limitations, and report the actual time elapsed in both cases. This is useful for anything that should respond at a fixed speed even when the game is playing in slow-motion. An example of this is <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> interaction animation.</p>
+
+<p>The table below shows an example of 16 frames elapsing one after another, with one large delay occuring half-way through, on a single frame. These figures illustrate how the various Time class properties report and respond to this large variation in frame rate.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Frame</th>
+	<th style="text-align:left;">unscaledTime</th>
+	<th style="text-align:left;">time</th>
+	<th style="text-align:left;">unscaledDeltaTime</th>
+	<th style="text-align:left;">deltaTime</th>
+	<th style="text-align:left;">smoothDeltaTime</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">1</td>
+	<td style="text-align:left;">0.000</td>
+	<td style="text-align:left;">0.000</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+</tr>
+<tr>
+	<td style="text-align:left;">2</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+</tr>
+<tr>
+	<td style="text-align:left;">3</td>
+	<td style="text-align:left;">0.036</td>
+	<td style="text-align:left;">0.036</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+</tr>
+<tr>
+	<td style="text-align:left;">4</td>
+	<td style="text-align:left;">0.054</td>
+	<td style="text-align:left;">0.054</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+</tr>
+<tr>
+	<td style="text-align:left;">5</td>
+	<td style="text-align:left;">0.071</td>
+	<td style="text-align:left;">0.071</td>
+	<td style="text-align:left;">0.017</td>
+	<td style="text-align:left;">0.017</td>
+	<td style="text-align:left;">0.018</td>
+</tr>
+<tr>
+	<td style="text-align:left;">6</td>
+	<td style="text-align:left;">0.089</td>
+	<td style="text-align:left;">0.089</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+</tr>
+<tr>
+	<td style="text-align:left;">7</td>
+	<td style="text-align:left;">0.107</td>
+	<td style="text-align:left;">0.107</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+</tr>
+<tr>
+	<td style="text-align:left;">8 (<strong>a</strong>)</td>
+	<td style="text-align:left;">1.123 (<strong>b</strong>)</td>
+	<td style="text-align:left;">0.440 (<strong>c</strong>)</td>
+	<td style="text-align:left;">1.016 (<strong>d</strong>)</td>
+	<td style="text-align:left;">0.333 (<strong>e</strong>)</td>
+	<td style="text-align:left;">0.081 (<strong>f</strong>)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">9</td>
+	<td style="text-align:left;">1.140</td>
+	<td style="text-align:left;">0.457</td>
+	<td style="text-align:left;">0.017</td>
+	<td style="text-align:left;">0.017</td>
+	<td style="text-align:left;">0.066</td>
+</tr>
+<tr>
+	<td style="text-align:left;">10</td>
+	<td style="text-align:left;">1.157</td>
+	<td style="text-align:left;">0.474</td>
+	<td style="text-align:left;">0.017</td>
+	<td style="text-align:left;">0.017</td>
+	<td style="text-align:left;">0.056</td>
+</tr>
+<tr>
+	<td style="text-align:left;">11</td>
+	<td style="text-align:left;">1.175</td>
+	<td style="text-align:left;">0.492</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.049</td>
+</tr>
+<tr>
+	<td style="text-align:left;">12</td>
+	<td style="text-align:left;">1.193</td>
+	<td style="text-align:left;">0.510</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.042</td>
+</tr>
+<tr>
+	<td style="text-align:left;">13</td>
+	<td style="text-align:left;">1.211</td>
+	<td style="text-align:left;">0.528</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.038</td>
+</tr>
+<tr>
+	<td style="text-align:left;">14</td>
+	<td style="text-align:left;">1.229</td>
+	<td style="text-align:left;">0.546</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.034</td>
+</tr>
+<tr>
+	<td style="text-align:left;">15</td>
+	<td style="text-align:left;">1.247</td>
+	<td style="text-align:left;">0.564</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.031</td>
+</tr>
+<tr>
+	<td style="text-align:left;">16</td>
+	<td style="text-align:left;">1.265</td>
+	<td style="text-align:left;">0.582</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.018</td>
+	<td style="text-align:left;">0.028</td>
+</tr>
+</tbody>
+</table>
+
+<p>Frames 1 to 7 are running at a steady rate of approximately 60 frames per second. You can see both “time” and “unscaledTime” increasing steadily together, indicating that the timeScale during this example is set to 1.</p>
+
+<p>Then on frame 8 (<strong>a</strong>), a large delay of just over one second occurs. This can happen when there is resource competition. For example, a code in the app blocks the main process while it loads a large amount of data from disk.</p>
+
+<p>When a frame delay of larger than the maximumDeltaTime value occurs, Unity limits the value reported by <code>deltaTime</code>, and the amount added to the current <code>time</code>. The purpose of this limit is to avoid undesirable side-effects that might occur if the timestep exceeded that amount. If there was no limit, an object whose movement was scaled by deltaTime would be able to “glitch” through a wall in a game during a frame rate spike, because there would theoretically be no limit to how far an object could move from one frame to the next, so it could possibly jump from one side of an obstacle to another in a single frame without intersecting with it at all.</p>
+
+<p>You can adjust the maximumDeltaTime value in the <a href="class-TimeManager.html">Time</a> window, where it is labelled <strong>Maximum allowed timestep</strong>, as well as with the <a href="../ScriptReference/Time-maximumDeltaTime.html">Time.maximumDeltaTime</a> property.</p>
+
+<p>The default maximumDeltaTime value is one third of a second (0.3333333). This means that in a game where movement is controlled by deltaTime, an object’s movement from one frame to the next is limited to the distance it could cover in a third of a second, regardless of how much time actually elapsed since the previous frame.</p>
+
+<p>Looking at the data from the table above in graph form can help to visualise how these time properties behave in relation to each other:</p>
+
+<figure>
+<img src="../uploads/Main/time-delta-unscaled.png" alt="">
+</figure>
+
+<p>You can see above, on frame 8, that <code>unscaledDeltaTime</code> (<strong>d</strong>) and <code>deltaTime</code> (<strong>e</strong>) differ in how much time they report has elapsed. Although a whole second of real time elapsed between frames 7 and 8, deltaTime reports only 0.333 seconds. This is because deltaTime is clamped to the <code>maximumDeltaTime</code> value.</p>
+
+<figure>
+<img src="../uploads/Main/time-and-unscaled.png" alt="">
+</figure>
+
+<p>Similarly, <code>unscaledTime</code> (<strong>b</strong>) has increased by approximately a whole second because the true (unclamped) value has been added, whereas <code>time</code> (<strong>c</strong>) has only increased by the smaller clamped value. The <code>time</code> value does not catch up to the real amount of time that has elapsed, and instead behaves as though the delay was only <code>maximumDeltaTime</code> in duration.</p>
+
+<figure>
+<img src="../uploads/Main/time-delta-smoothed.png" alt="">
+</figure>
+
+<p>The <code>Time.smoothDeltaTime</code> property reports an approximation of the recent deltaTime values with all variations smoothed out according to an algorithm. This is another technique to avoid undesirably large steps or fluctuations in movement or other time-based calculations. In particular, those which fall below the threshold set by <code>maximumDeltaTime</code>. The smoothing-out algorithm cannot predict future variations, but it gradually adapts its reported value to smooth out variations in the recently elapsed delta time values, so that the average reported time remains approximately equivalent to the actual amount of time elapsed.</p>
+
+<h2>Time variation and the physics system</h2>
+
+<p>The <code>maximumDeltaTime</code> value also affects the physics system. The physics system uses the <code>fixedTimestep</code> value to determine how much time to simulate in each step. Unity tries to keep the physics simulation up-to-date with the amount of time that has elapsed and, as mentioned above, sometimes performs multiple physics updates per frame. However if the physics simulation fall too far behind, for example because of some heavy computation or a delay of some kind, the physics system may require a large number of steps to catch up with the current time. This large number of steps may then itself cause a further slow-down.</p>
+
+<p>To avoid this cyclic feedback of slowing down due to attempting to catch up, the maximumDeltaTime value also acts as a limit on the amount of time the physics system will simulate between any given two frames.</p>
+
+<p>If a frame update takes longer than maximumDeltaTime to process, the <span class="tooltip"><strong>physics engine</strong><span class="tooltiptext">A system that simulates aspects of physical systems so that objects can accelerate correctly and be affected by collisions, gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PhysicsSection.html" href="PhysicsSection.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PhysicsEngine" aria-label="Go to glossary anchor for PhysicsEngine">Glossary</a></span></span></span> will not try to simulate any time beyond the maximumDeltaTime, and instead lets the frame processing catch up. Once the frame update has finished, the physics resumes as though no time has passed since it stopped. The result of this is that physics objects will not move perfectly in real time as they usually do, but will be slowed slightly. However, the physics “clock” will still track them as though they were moving normally. The slowing of physics time is usually not noticeable and is often an acceptable trade-off against gameplay performance.</p>
+
+<h2>Time Scale</h2>
+
+<p>For special time effects such as slow-motion, it’s sometimes useful to slow the passage of game time so that animations and time-based calculations in your code happen at a slower pace. Furthermore, you may sometimes want to freeze game time completely, as when the game is paused. Unity has a <em>Time Scale</em> property that controls how fast game time proceeds relative to real time. If you set the scale to 1.0, your in-game time matches real time. A value of 2.0 makes time pass twice as quickly in Unity (ie, the action will be speeded-up) while a value of 0.5 will slow gameplay down to half speed. A value of zero will make your in-game time stop completely. Note that the time scale doesn’t actually slow execution but instead changes the time step reported to the Update and FixedUpdate functions with <a href="../ScriptReference/Time-deltaTime.html">Time.deltaTime</a> and <a href="../ScriptReference/Time-fixedDeltaTime.html">Time.fixedDeltaTime</a>. Your Update function may be called just as often when you reduce your time scale, but the value of deltaTime each frame will be less. Other script functions aren’t affected by the time scale, so you can for example display a GUI with normal interaction when the game is paused.</p>
+
+<p>The <a href="class-TimeManager.html">Time</a> window has a property to let you set the time scale globally but it’s usually more useful to set the value from a script using the <a href="../ScriptReference/Time-timeScale.html">Time-timeScale</a> property:</p>
+
+<pre><code>//C# script example
+using UnityEngine;
+using System.Collections;
+
+public class ExampleScript : MonoBehaviour {
+    void Pause() {
+        Time.timeScale = 0;
+    }
+    
+    void Resume() {
+        Time.timeScale = 1;
+    }
+}
+</code></pre>
+
+<h2>Capture frame rate</h2>
+
+<p>A special case of time management is where you want to record gameplay as a video. Since the task of saving screen images takes considerable time, the game’s normal frame rate is reduced, and the video doesn’t reflect the game’s true performance.</p>
+
+<p>To improve the video’s appearance, use the <a href="../ScriptReference/Time-captureFramerate.html">Capture Framerate</a> property. The property’s default value is 0, for unrecorded gameplay. For recording. When you set the property’s value to anything other than zero, game time is slowed and the frame updates are issued at precise regular intervals. The interval between frames is equal to <code>1 / Time.captureFramerate</code>, so if you set the value to 5.0 then updates occur every fifth of a second. With the demands on frame rate effectively reduced, you have time in the Update function to save screenshots or take other actions:</p>
+
+<pre><code>//C# script example
+using UnityEngine;
+using System.Collections;
+
+public class ExampleScript : MonoBehaviour {
+    // Capture frames as a screenshot sequence. Images are
+    // stored as PNG files in a folder - these can be combined into
+    // a movie using image utility software (eg, QuickTime Pro).
+    // The folder to contain our screenshots.
+    // If the folder exists we will append numbers to create an empty folder.
+    string folder = &quot;ScreenshotFolder&quot;;
+    int frameRate = 25;
+        
+    void Start () {
+        // Set the playback frame rate (real time will not relate to game time after this).
+        Time.captureFramerate = frameRate;
+        
+        // Create the folder
+        System.IO.Directory.CreateDirectory(folder);
+    }
+    
+    void Update () {
+        // Append filename to folder name (format is '0005 shot.png&quot;')
+        string name = string.Format(&quot;{0}/{1:D04} shot.png&quot;, folder, Time.frameCount );
+        
+        // Capture the screenshot to the specified file.
+        Application.CaptureScreenshot(name);
+    }
+}
+</code></pre>
+
+<p>Using this technique improves the video, but can make the game much harder to play. Try different values of Time.captureFramerate to find a good balance.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-ScriptableObject.html"></a></span><div class="tip">ScriptableObject</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-Mathf.html"></a></span><div class="tip">Mathf</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

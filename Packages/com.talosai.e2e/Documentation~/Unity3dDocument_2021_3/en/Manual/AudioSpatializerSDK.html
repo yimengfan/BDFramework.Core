@@ -1,0 +1,294 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Audio Spatializer SDK</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AudioSpatializerSDK.html">English</a></li>
+<li><a href="/cn/current/Manual/AudioSpatializerSDK.html">中文</a></li>
+<li><a href="/ja/current/Manual/AudioSpatializerSDK.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AudioSpatializerSDK.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AudioSpatializerSDK.html">English</a></li>
+<li><a href="/cn/current/Manual/AudioSpatializerSDK.html">中文</a></li>
+<li><a href="/ja/current/Manual/AudioSpatializerSDK.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AudioSpatializerSDK.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Audio.html">Audio</a></li>
+<li><a href="AudioMixerNativeAudioPlugin.html">Native audio plug-in SDK</a></li>
+<li>Audio Spatializer SDK</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AudioMixerNativeAudioPlugin.html"></a></span><div class="tip">Native audio plug-in SDK</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AudioProfiler.html"></a></span><div class="tip">Audio Profiler</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Audio Spatializer SDK</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <strong>audio spatializer</strong> SDK provides controls to change the way your application transmits audio from an <span class="tooltip"><strong>audio source</strong><span class="tooltiptext">A component which plays back an Audio Clip in the scene to an audio listener or through an audio mixer. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioSource.html" href="class-AudioSource.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioSource" aria-label="Go to glossary anchor for AudioSource">Glossary</a></span></span></span> into the surrounding space. It is an extension of the native audio plugin SDK.</p>
+
+<p>The built-in panning of audio sources is a simple form of spatialization. It takes the source and regulates the gains of the left and right ear contributions based on the distance and angle between the <span class="tooltip"><strong>Audio Listener</strong><span class="tooltiptext">A component that acts like a microphone, receiving sound from Audio Sources in the scene and outputting to the computer speakers. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioListener.html" href="class-AudioListener.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioListener" aria-label="Go to glossary anchor for AudioListener">Glossary</a></span></span></span> and the Audio Source. This provides simple directional cues for the player on the horizontal plane.</p>
+
+<h2>The Unity Audio Spatializer SDK and example implementation</h2>
+
+<p>To provide flexibility and support for working with audio spatialization, Unity has an open interface, the Audio Spatializer SDK, as an extension on top of the Native Audio Plugin SDK. You can replace the standard panner in Unity with a more advanced one, and give it access to important meta-data about the source and listener needed for the computation.</p>
+
+<p>For an example of a native spatializer audio plugin, see the <a href="https://github.com/Unity-Technologies/NativeAudioPlugins">Unity Native Audio Plugin SDK</a>. The plugin only supports a direct Head-Related Transfer Function (HRTF), and is intended for example purposes only.</p>
+
+<p>You can use a simple reverb, included in the plugin, to route audio data from the spatializer plugin to the reverb plugin. The HRTF filtering is based on a modified version of the KEMAR data set. For more information on the KEMAR data set, see the <a href="http://sound.media.mit.edu/resources/KEMAR.html">MIT Media Lab’s documentation and measurement files</a>.</p>
+
+<p>If you would like to explore a data set obtained from a human subject, refer to <a href="http://recherche.ircam.fr/equipes/salles/listen">IRCAM’s data sets</a>.</p>
+
+<h3>Initializing the Unity Audio Spatializer <a name="Initialization" aria-hidden="true"></a>
+</h3>
+
+<p>Unity applies spatialization effects directly after the Audio Source decodes audio data. This produces a stream of audio data in which each source has its own separate effect instance. Unity only processes the audio from that source with its corresponding effect instance.</p>
+
+<p>To enable a plugin to operate as a spatializer, you need to set a flag in the description bit-field of the effect:</p>
+
+<pre><code>definition.flags |= UnityAudioEffectDefinitionFlags_IsSpatializer;
+</code></pre>
+
+<p>If you set the <code>UnityAudioEffectDefinitionFlags_IsSpatializer</code> flag, Unity recognizes the plugin as a spatializer during the plugin scanning phase. When Unity creates an instance of the plugin, it allocates the <code>UnityAudioSpatializerData</code> structure for the <code>spatializerdata</code> member of the <code>UnityAudioEffectState</code> structure.</p>
+
+<p>To use the spatializer in a project, select it in your Project settings (menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Audio</strong>):</p>
+
+<figure>
+<img src="../uploads/Main/AudioSpatializerProjectSettings.png" alt="Spatializer plugin selector">
+<figcaption>Spatializer plugin selector</figcaption>
+</figure>
+
+<p>Then, in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window for an Audio Source that you want to use with the spatializer plugin, enable <strong>Spatialize</strong>:</p>
+
+<figure>
+<img src="../uploads/Main/AudioSpatializerEnable.png" alt="Spatializer checkbox on Audio Source">
+<figcaption>Spatializer checkbox on Audio Source</figcaption>
+</figure>
+
+<p>You can also enable the spatializer for an Audio Source through a C# script, using the <code>AudioSource.spatialize</code> property. </p>
+
+<p>In an application with a lot of sounds, you might want to only enable the spatializer on your nearby sounds, and use traditional panning on the distant ones, to reduce the CPU load on the mixing thread for the spatializer effects.</p>
+
+<p>If you want Unity to pass spatial data to an audio mixer plugin that is not a spatializer, you can use the following flag in the description bit-field: </p>
+
+<pre><code>definition.flags |= UnityAudioEffectDefinitionFlags_NeedsSpatializerData;
+</code></pre>
+
+<p>If a plugin initializes with the <code>UnityAudioEffectDefinitionFlags_NeedsSpatializerData</code> flag, the plugin receives the <code>UnityAudioSpatializerData</code> structure, but only the <code>listenermatrix</code> field is valid. For more information about UnityAudioSpatializerData, see the <a href="#SpatializerMetaData">Spatializer effect meta-data section</a>. </p>
+
+<p>To stop Unity from applying distance-attenuation on behalf of a spatializer plugin, use the following flag: </p>
+
+<pre><code>definition.flags |= UnityAudioEffectDefinitionFlags_AppliesDistanceAttenuation;
+</code></pre>
+
+<p>The <code>UnityAudioEffectDefinitionFlags_AppliesDistanceAttenuation</code> flag indicates to Unity that the spatializer handles the application of distance-attenuation. For more information on distance-attenuation, see the <a href="#AttenuationCurves">Attenuation curves and audibility</a> section. </p>
+
+<h3>Spatializer effect meta-data <a name="SpatializerMetaData" aria-hidden="true"></a>
+</h3>
+
+<p>Unlike other Unity <span class="tooltip"><strong>audio effects</strong><span class="tooltiptext">Any effect that can modify the output of Audio Mixer components, such as filtering frequency ranges of a sound or applying reverb. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioEffectMixer.html" href="class-AudioEffectMixer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioEffect" aria-label="Go to glossary anchor for AudioEffect">Glossary</a></span></span></span> that run on a mixture of sounds, Unity applies spatializers directly after the Audio Source decodes audio data. Each instance of the spatializer effect has its own instance of <code>UnityAudioSpatializerData</code>, mainly associated with data about the Audio Source.</p>
+
+<pre><code class="lang-csharp">struct UnityAudioSpatializerData
+{
+    float listenermatrix[16];   // Matrix that transforms sourcepos into the local space of the listener
+    float sourcematrix[16];     // Transform matrix of the Audio Source
+    float spatialblend;         // Distance-controlled spatial blend
+    float reverbzonemix;        // Reverb zone mix level parameter (and curve) on 
+                                // the Audio Source
+    float spread;               // Spread parameter of the Audio Source (0..360 degrees)
+    float stereopan;            // Stereo panning parameter of the Audio Source (-1: fully left, 1: fully right)
+                                // The spatializer plugin may override the distance attenuation to
+                                // influence the voice prioritization (leave this callback as NULL 
+                                // to use the built-in Audio Source attenuation curve)
+    UnityAudioEffect_DistanceAttenuationCallback distanceattenuationcallback;
+    float minDistance;          // The minimum distance of the Audio Source. 
+                                // This value may be useful for determining when to apply near-field effects. 
+    float maxDistance;          // The maximum distance of the Audio Source, or the 
+                                // distance where the audio becomes inaudible to the listener. 
+    
+};
+</code></pre>
+
+<p>The structure contains fields corresponding to the properties of the Audio Source component in the Inspector: <strong>Spatial Blend</strong>, <strong>Reverb Zone Mix</strong>, <strong>Spread</strong>, <strong>Stereo Pan</strong>, <strong>Minimum Distance</strong>, and <strong>Maximum Distance</strong>.</p>
+
+<p>The <code>UnityAudioSpatializerData</code> structure contains the full 4x4 transform matrices for the Audio Listener and Audio Source. The listener matrix is inverted so that you can multiply the two matrices to get a relative direction-vector. The listener matrix is always orthonormal, so you can quickly calculate the inverse matrix. </p>
+
+<p>Unity’s audio system only provides the raw source sound as a stereo signal. The signal is stereo even when the source is mono or multi-channel, and Unity uses up- or down-mixing, as required.</p>
+
+<h3>Matrix conventions</h3>
+
+<p>The <code>sourcematrix</code> field contains a copy of the Audio Source’s transformation matrix. For a default Audio Source on a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> that is not rotated, the matrix is a translation matrix where the position is encoded in elements 12, 13 and 14.</p>
+
+<p>The <code>listenermatrix</code> field contains the inverse of the AudioListener’s transform matrix. </p>
+
+<p>You can determine the direction vector from the AudioListener to the Audio Source as shown below, where L is the <code>listenermatrix</code> and S is the <code>sourcematrix</code>: </p>
+
+<pre><code class="lang-csharp">float dir_x = L[0] * S[12] + L[4] * S[13] + L[ 8] * S[14] + L[12];
+float dir_y = L[1] * S[12] + L[5] * S[13] + L[ 9] * S[14] + L[13];
+float dir_z = L[2] * S[12] + L[6] * S[13] + L[10] * S[14] + L[14];
+</code></pre>
+
+<p>The position in (L[12], L[13], L[14]) is actually the negative value of what you see in Unity’s Inspector window for the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> matrix. If the camera had also been rotated, you would also have to undo the effect of the rotation first. To invert a Transformation-Rotation matrix, transpose the top-left 3x3 rotation matrix of L, and calculate the positions as shown below:</p>
+
+<pre><code class="lang-csharp">float listenerpos_x = -(L[0] * L[12] + L[ 1] * L[13] + L[ 2] * L[14]);
+float listenerpos_y = -(L[4] * L[12] + L[ 5] * L[13] + L[ 6] * L[14]);
+float listenerpos_z = -(L[8] * L[12] + L[ 9] * L[13] + L[10] * L[14]);
+</code></pre>
+
+<p>For an example in the code for the Audio Spatializer plugin, see line 215 in the <a href="https://github.com/Unity-Technologies/NativeAudioPlugins/blob/master/NativeCode/Plugin_Spatializer.cpp">Plugin_Spatializer.cpp file</a>. </p>
+
+<h3>Attenuation curves and audibility <a name="AttenuationCurves" aria-hidden="true"></a>
+</h3>
+
+<p>Unless you specify the <code>UnityAudioEffectDefinitionFlags_AppliesDistanceAttenuation</code> flag, as specified in the <a href="#Initialization">Initializing the Unity Audio Spatializer</a> section, the Unity audio system still controls the distance-attenuation. Unity applies distance-attenuation to the sound before it enters the spatialization stage, and allows the audio system to know the approximate audibility of the source. The audio system uses approximate audibility for dynamic virtualization of sounds based on importance to match the user-defined <strong>Max Real Voices</strong> limit. </p>
+
+<p>Unity does not retrieve audibility information from actual signal level measurements, but uses the combination of the values that it reads from the distance-controlled attenuation curve, the <strong>Volume</strong> property, and the mixer’s applied attenuations. </p>
+
+<p>You can directly override the attenuation curve, or you can use the value calculated by the Audio Source’s curve as a base for modification. To override or modify the value, use the callback in the <code>UnityAudioSpatializerData</code> structure as shown below:</p>
+
+<pre><code class="lang-csharp">typedef UNITY_AUDIODSP_RESULT (UNITY_AUDIODSP_CALLBACK* UnityAudioEffect_DistanceAttenuationCallback)(
+    UnityAudioEffectState* state,
+    float distanceIn,
+    float attenuationIn,
+    float* attenuationOut);
+</code></pre>
+
+<p>You can also use a simple custom logarithmic curve, as shown below:</p>
+
+<pre><code class="lang-csharp">UNITY_AUDIODSP_RESULT UNITY_AUDIODSP_CALLBACK SimpleLogAttenuation(
+    UnityAudioEffectState* state,
+    float distanceIn,
+    float attenuationIn,
+    float* attenuationOut)
+{
+    const float rollOffScale = 1.0f; // Similar to the one in the Audio Project Settings
+    *attenuationOut = 1.0f / max(1.0f, rollOffScale * distanceIn);
+    return UNITY_AUDIODSP_OK;
+}
+</code></pre>
+
+<h2>Using C# scripts from the Unity API</h2>
+
+<p>There are two methods on the Audio Source that allow setting and getting parameters from the spatializer effect: <code>SetSpatializerFloat</code> and <code>GetSpatializerFloat</code>. These methods work similarly to the <code>SetFloatParameter</code> and <code>GetFloatParameter</code> methods in the generic native audio plugin interface. However, <code>SetSpatializerFloat</code> and <code>GetSpatializerFloat</code> take an index to the parameter they must set or read, while <code>SetFloatParameter</code> and <code>GetFloatParameter</code> refer to the parameters by name.</p>
+
+<p>The boolean property <code>AudioSource.spatializer</code> is linked to the <strong>Spatialize</strong> option in Unity’s Inspector window for an Audio Source. The property controls how Unity instantiates and deallocates the spatializer effect, based on the selected plugin in your Audio <span class="tooltip"><strong>Project Settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html" href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span>. </p>
+
+<p>If instantiation of your spatializer effect is very resource-intensive, in terms of memory or other resources in your project, it might be effective to allocate your spatialization effects from a preset “pool,” so that Unity does not need to create a new instance of the spatializer every time you need to use it. If you keep your Unity plugin interface bindings very lightweight and dynamically allocate your audio effects, you can avoid frame drops or other performance issues in your project.</p>
+
+<h2>Known limitations of the example plugin</h2>
+
+<p>Due to the fast convolution algorithm, quick movements cause some zipper artifacts, which you can remove through the use of overlap-save convolution or cross-fading buffers. </p>
+
+<p>The code also does not support tilting the listener’s head, whether the listener is directly attached to the player character, or a camera located elsewhere.</p>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AudioMixerNativeAudioPlugin.html"></a></span><div class="tip">Native audio plug-in SDK</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AudioProfiler.html"></a></span><div class="tip">Audio Profiler</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

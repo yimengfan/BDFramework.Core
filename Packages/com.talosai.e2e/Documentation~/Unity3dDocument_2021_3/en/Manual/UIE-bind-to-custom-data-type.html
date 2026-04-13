@@ -1,0 +1,346 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Bind a custom control to custom data type</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-bind-to-custom-data-type.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-bind-to-custom-data-type.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-bind-to-custom-data-type.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-bind-to-custom-data-type.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-bind-to-custom-data-type.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-bind-to-custom-data-type.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-bind-to-custom-data-type.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-bind-to-custom-data-type.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-support-for-editor-ui.html">Support for Editor UI</a></li>
+<li><a href="UIE-Binding.html">SerializedObject data binding</a></li>
+<li><a href="UIE-binding-examples.html">Binding examples</a></li>
+<li>Bind a custom control to custom data type</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-bind-custom-control.html"></a></span><div class="tip">Bind a custom control </div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-ViewData.html"></a></span><div class="tip">View data persistence</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Bind a custom control to custom data type</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Version</strong>: 2021.3+</p>
+
+<p>This example demonstrates how to bind custom controls to custom data types.</p>
+
+<h2>Example overview</h2>
+
+<p>This example creates a custom data type and a custom control based on three built-in controls. It binds the custom control to the custom data type. The drawer converts between Celsius and Fahrenheit.</p>
+
+<figure>
+<img src="../uploads/Main/uie_bind_custom_data_type.png" alt="">
+</figure>
+
+<p>You can find the completed files that this example creates in this <a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/master/bind-custom-data-type">GitHub repository</a>.</p>
+
+<h2>Prerequisites</h2>
+
+<p>This guide is for developers familiar with the Unity Editor, <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit, and C# scripting. Before you start, get familiar with the following:</p>
+
+<ul>
+<li><a href="UIE-UXML.html">UXML</a></li>
+<li><a href="../ScriptReference/UIElements.PropertyField.html"><code>PropertyField</code></a></li>
+</ul>
+
+<h2>Create a custom data type</h2>
+
+<p>Create a custom data type <code>Temperature</code>, and use it as a serialized property.</p>
+
+<ol>
+<li><p>Create a Unity project with any template.</p></li>
+<li><p>Create a folder named <code>bind-custom-data-type</code> to store all the files.</p></li>
+<li>
+<p>Create a C# script named <code>Temperature.cs</code> and replace its contents with the following:</p>
+
+<pre><code class="lang-csharp">using System;
+
+namespace UIToolkitExamples
+{
+    public enum TemperatureUnit
+    {
+        Celsius,
+        Farenheit
+    }
+
+    [Serializable]
+    public struct Temperature
+    {
+        public double value;
+        public TemperatureUnit unit;
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>Create a C# script named <code>PlanetScript.cs</code> and replace its contents with the following:</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+
+namespace UIToolkitExamples
+{
+    public class PlanetScript : MonoBehaviour
+    {
+        public Temperature coreTemperature;
+    }
+}
+</code></pre>
+</li>
+</ol>
+
+<h2>Create a custom control</h2>
+
+<p>Create a custom Editor for <code>Planet</code> and a custom <span class="tooltip"><strong>Property Drawer</strong><span class="tooltiptext">A Unity feature that allows you to customize the look of certain controls in the Inspector window by using attributes on your scripts, or by controlling how a specific Serializable class should look <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about editor-PropertyDrawers.html" href="editor-PropertyDrawers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PropertyDrawer" aria-label="Go to glossary anchor for PropertyDrawer">Glossary</a></span></span></span> for <code>Temperature</code>.</p>
+
+<p>In the custom Property Drawer, implement a button that converts temperature between Fahrenheit and Celsius by writing to properties of <a href="../ScriptReference/SerializedProperty.html"><code>SerializedProperty</code></a> (use <a href="../ScriptReference/SerializedProperty-doubleValue.html"><code>doubleValue</code></a> and <a href="../ScriptReference/SerializedProperty-enumValueIndex.html"><code>enumValueIndex</code></a>) and then calling <a href="../ScriptReference/SerializedObject.ApplyModifiedProperties.html"><code>SerializedObject.ApplyModifiedProperties()</code></a>.</p>
+
+<p>The custom Property Draweris is considered as a custom control. It’s a built-in control that behaves in a custom way.</p>
+
+<ol>
+<li><p>Create a folder named <code>Editor</code>.</p></li>
+<li>
+<p>In the <strong>Editor</strong> folder, create a C# script named <code>PlanetEditor.cs</code> and replace its contents with the following:</p>
+
+<pre><code class="lang-csharp">using UnityEditor;
+using UnityEngine.UIElements;
+using UnityEditor.UIElements;
+
+namespace UIToolkitExamples
+{
+    [CustomEditor(typeof(PlanetScript))]
+    public class PlanetEditor : Editor
+    {
+        public override VisualElement CreateInspectorGUI()
+        {
+            return new PropertyField(serializedObject.FindProperty(&quot;coreTemperature&quot;));
+        }
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>In the <strong>Editor</strong> folder, create a C# script named <code>TemperatureDrawer.cs</code> and replace its contents with the following:</p>
+
+<pre><code class="lang-csharp">using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+namespace UIToolkitExamples
+{
+    [CustomPropertyDrawer(typeof(Temperature))]
+    public class TemperatureDrawer : PropertyDrawer
+    {
+        public override VisualElement CreatePropertyGUI(SerializedProperty property)
+        {
+            var asset = Resources.Load&lt;VisualTreeAsset&gt;(&quot;temperature_drawer&quot;);
+            var drawer = asset.Instantiate(property.propertyPath);
+
+            drawer.Q&lt;Label&gt;().text = property.displayName;
+
+            // Don't allow conversion when you've selected multiple objects in the Inspector
+            if (!property.serializedObject.isEditingMultipleObjects)
+            {
+                drawer.Q&lt;Button&gt;().RegisterCallback&lt;ClickEvent, SerializedProperty&gt;(Convert, property);
+            }
+
+            return drawer;
+        }
+
+        static void Convert(ClickEvent evt, SerializedProperty property)
+        {
+            var valueProperty = property.FindPropertyRelative(&quot;value&quot;);
+            var unitProperty = property.FindPropertyRelative(&quot;unit&quot;);
+
+            // F -&gt; C
+            if (unitProperty.enumValueIndex == (int)TemperatureUnit.Farenheit)
+            {
+                valueProperty.doubleValue -= 32;
+                valueProperty.doubleValue *= 5.0d / 9.0d;
+                unitProperty.enumValueIndex = (int)TemperatureUnit.Celsius;
+            }
+            else // C -&gt; F
+            {
+                valueProperty.doubleValue *= 9.0d / 5.0d;
+                valueProperty.doubleValue += 32;
+                unitProperty.enumValueIndex = (int)TemperatureUnit.Farenheit;
+            }
+
+            // Important: Because you are bypassing the binding system, you must save the modified SerializedObject
+            property.serializedObject.ApplyModifiedProperties();
+        }
+    }
+}
+</code></pre>
+</li>
+</ol>
+
+<h2>Set the binding</h2>
+
+<p>Create a UXML file with the following:</p>
+
+<ul>
+<li>A DoubleField</li>
+<li>An EnumField</li>
+<li>A Button</li>
+</ul>
+
+<p>Set the <code>binding-path</code> of the two fields to <code>value</code> and <code>unit</code> of the <code>Temperature</code> property. </p>
+
+<ol>
+<li><p>In the <strong>Editor</strong> folder, create a folder named <code>Resources</code>.</p></li>
+<li>
+<p>In the <strong>Resources</strong> folder, create a UI Document named <code>temperature_drawer.uxml</code> and replace its contents with the following:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot; xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; engine=&quot;UnityEngine.UIElements&quot; editor=&quot;UnityEditor.UIElements&quot; noNamespaceSchemaLocation=&quot;../../../../UIElementsSchema/UIElements.xsd&quot; editor-extension-mode=&quot;False&quot;&gt;
+    &lt;ui:VisualElement class=&quot;unity-base-field&quot;&gt;
+        &lt;ui:Label class=&quot;unity-base-field__label&quot; /&gt;
+        &lt;ui:VisualElement class=&quot;unity-base-field__input&quot; style=&quot;flex-direction: row;&quot;&gt;
+            &lt;uie:DoubleField binding-path=&quot;value&quot; /&gt;
+            &lt;uie:EnumField binding-path=&quot;unit&quot; /&gt;
+            &lt;ui:Button text=&quot;Convert&quot; /&gt;
+        &lt;/ui:VisualElement&gt;
+    &lt;/ui:VisualElement&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+</li>
+</ol>
+
+<h2>Test the binding</h2>
+
+<ol>
+<li>Create an empty <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</li>
+<li>In the Hierarchy, select the GameObject.</li>
+<li>Drag <strong>PlanetScript.cs</strong> to the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>. This adds a <strong>Planet Script</strong> component to the GameObject.</li>
+<li>Enter a number in the <strong>Temperature</strong> field and select a unit from the dropdown.</li>
+<li>Select the <strong>Convert</strong> button to convert between units. If you make changes in the Inspector UI, the <code>Temperature</code> property of the custom contol changes.</li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-Binding.html">SerializedObject data binding</a></li>
+<li><a href="UIE-bindable-elements.html">Bindable elements</a></li>
+<li><a href="UIE-binding-data-type-conversion.html">Binding data type conversion</a></li>
+<li><a href="UIE-binding-implementation-details.html">Implementation details</a></li>
+<li><a href="UIE-binding-examples.html">Binding examples</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-bind-custom-control.html"></a></span><div class="tip">Bind a custom control </div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-ViewData.html"></a></span><div class="tip">View data persistence</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

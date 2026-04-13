@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Collider2D.CreateMesh</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">
+                  <a href="Collider2D.html">Collider2D</a>.CreateMesh</h1>
+                <div class="clear">
+                </div>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public <a href="Mesh.html">Mesh</a> <span class="sig-kw">CreateMesh</span>(bool <span class="sig-kw">useBodyPosition</span>,
+bool <span class="sig-kw">useBodyRotation</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">useBodyPosition</td>
+                    <td class="desc">Should the mesh be transformed by the position of the attached <a href="Rigidbody2D.html">Rigidbody2D</a>?</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">useBodyRotation</td>
+                    <td class="desc">Should the mesh be transformed by the rotation of the attached <a href="Rigidbody2D.html">Rigidbody2D</a>?</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Returns</h3>
+                <p>
+                  <strong>Mesh</strong>
+        The planar <a href="Mesh.html">Mesh</a> created that matches the collider geometry or NULL if no <a href="Mesh.html">Mesh</a> could be created.
+      </p>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Creates a planar <a href="Mesh.html">Mesh</a> that is identical to the area defined by the <a href="Collider2D.html">Collider2D</a> geometry.</p>
+              </div>
+              <div class="subsection">
+        <p>In simple terms, this method will create a <a href="Mesh.html">Mesh</a> that exactly represents the area defined by the <a href="Collider2D.html">Collider2D</a>. The created <a href="Mesh.html">Mesh</a> can then be used for any purpose including but not limited to navigation meshes for 2D navigation. The <a href="Collider2D.html">Collider2D</a> does not own the created <a href="Mesh.html">Mesh</a> and you are responsible for its lifetime therefore not deleting the <a href="Mesh.html">Mesh</a> will result in a memory leak. The <a href="Collider2D.html">Collider2D</a> is not altered in any way during this call. The <a href="Collider2D.html">Collider2D</a> must have valid shapes present for a <a href="Mesh.html">Mesh</a> to be created otherwise NULL will be returned indicating that no <a href="Mesh.html">Mesh</a> was created.<br /><br />All <a href="Collider2D.html">Collider2D</a> geometry lives in the space of the <a href="Rigidbody2D.html">Rigidbody2D</a> it is attached to. You can select whether the <a href="Mesh.html">Mesh</a> vertices are transformed by the <a href="Rigidbody2D.html">Rigidbody2D</a> position and rotation using <code class="varname">useBodyPosition</code> and <code class="varname">useBodyRotation</code> respectively. If the <a href="Collider2D.html">Collider2D</a> is not attached to a <a href="Rigidbody2D.html">Rigidbody2D</a> then the geometry is permanently in world-space and both <code class="varname">useBodyPosition</code> and <code class="varname">useBodyRotation</code> should always be set to false.<br /><br />What follows is more detail on how the <a href="Collider2D.html">Collider2D</a> shapes are considered when creating a <a href="Mesh.html">Mesh</a>. Whilst there are many types of <a href="Collider2D.html">Collider2D</a>, they only produce collision geometry which comprise of the following primitive shape types: Circle, Capsule, Polygon and Edge. These primitive types are split into two groups known as closed convex primitives and open primitives. Primitives of type Circle, Capsule and Polygon are closed convex primitives which define a closed convex area bounded by the primitive. The Edge primitive is an open type that defines geometry with no internal area.<br /><br />A <a href="CircleCollider2D.html">CircleCollider2D</a> will produce a single circle primitive. A <a href="CapsuleCollider2D.html">CapsuleCollider2D</a> will produce a single capsule primitive. A <a href="BoxCollider2D.html">BoxCollider2D</a> will produce a single polygon primitive. A <a href="PolygonCollider2D.html">PolygonCollider2D</a> can produce multiple polygon primitives to convert a potentially concave area into multiple convex polygons. An <a href="EdgeCollider2D.html">EdgeCollider2D</a> can produce multiple edge primitives. A <a href="Tilemaps.TilemapCollider2D.html">TilemapCollider2D</a> can produce multiple polygon primitives (per-tile). A <a href="CompositeCollider2D.html">CompositeCollider2D</a> can produce either multiple polygon primitives (in Polygon mode) or produce multiple edge primitives (in Outline mode).<br /><br />When creating a <a href="Mesh.html">Mesh</a> to represent <a href="Collider2D.html">Collider2D</a> geometry, all closed convex primitives (circle, capsule and polygon) produce the respective filled area defined by those primitives. In the case where there are multiple polygons, the total area of all the polygons is created. Note that when <a href="BoxCollider2D-edgeRadius.html">BoxCollider2D.edgeRadius</a> that is greater than zero is used (to produce radial edges), the <a href="Mesh.html">Mesh</a> is created to also represent that geometry.<br /><br />When creating a <a href="Mesh.html">Mesh</a> to represent <a href="Collider2D.html">Collider2D</a> geometry, all open primitives (edges) have special handling. When the start vertex of the first edge is coincident with the end vertex of the last edge (to define a pseudo-closed area) then a mesh is created to represent that closed area even though 2D physics doesn't itself treat it as such. If the vertex are not coincident then a <a href="Mesh.html">Mesh</a> will only be created if <a href="EdgeCollider2D-edgeRadius.html">EdgeCollider2D.edgeRadius</a> is greater than zero as this produces edges with an area.<br /><br />An <a href="EdgeCollider2D.html">EdgeCollider2D</a> when used with coincident start/end vertex will create a <a href="Mesh.html">Mesh</a> that is a convex hull of all edge vertices. Any concave vertex (producing a concave configuration) will be considered as being on the convex hull resulting in a convex planar <a href="Mesh.html">Mesh</a>. If a convex <a href="Mesh.html">Mesh</a> is required then multiple polygon primitives should be used i.e. a <a href="PolygonCollider2D.html">PolygonCollider2D</a> or a <a href="CompositeCollider2D.html">CompositeCollider2D</a> in polygon mode. A <a href="CompositeCollider2D.html">CompositeCollider2D</a> in outline mode produces edges with coincident start/end vertex so will always create a closed shape <a href="Mesh.html">Mesh</a> which also supports <a href="CompositeCollider2D-edgeRadius.html">CompositeCollider2D.edgeRadius</a>.<br /><br />Additional resources: <a href="Collider2D.GetShapeHash.html">GetShapeHash</a> and <a href="AI.NavMeshBuildSource-sourceObject.html">NavMeshBuildSource.sourceObject</a>.</p>
+      </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

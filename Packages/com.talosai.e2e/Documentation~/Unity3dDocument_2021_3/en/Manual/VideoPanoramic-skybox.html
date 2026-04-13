@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Set up a panoramic video as a skybox</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/VideoPanoramic-skybox.html">English</a></li>
+<li><a href="/cn/current/Manual/VideoPanoramic-skybox.html">中文</a></li>
+<li><a href="/ja/current/Manual/VideoPanoramic-skybox.html">日本語</a></li>
+<li><a href="/kr/current/Manual/VideoPanoramic-skybox.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/VideoPanoramic-skybox.html">English</a></li>
+<li><a href="/cn/current/Manual/VideoPanoramic-skybox.html">中文</a></li>
+<li><a href="/ja/current/Manual/VideoPanoramic-skybox.html">日本語</a></li>
+<li><a href="/kr/current/Manual/VideoPanoramic-skybox.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Video.html">Video and cutscenes</a></li>
+<li><a href="VideoPlayer.html">Video Player</a></li>
+<li><a href="VideoPanoramic.html">Panoramic video</a></li>
+<li>Set up a panoramic video as a skybox</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="VideoPanoramic-setup.html"></a></span><div class="tip">Set up a panoramic video</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="VideoPanoramic-3D.html"></a></span><div class="tip">Set up your 3D panoramic video</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Set up a panoramic video as a skybox</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use your panoramic video as the backdrop of your <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<p>This information covers how to create a <span class="tooltip"><strong>skybox</strong><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Skybox.html" href="class-Skybox.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skybox" aria-label="Go to glossary anchor for Skybox">Glossary</a></span></span></span> material and assign it to your default skybox. For more information about how to work with skyboxes, refer to <a href="skyboxes-using.html">Using skyboxes</a>. </p>
+
+<p>You can use a panoramic video as a skybox to enhance immersion in various ways. You can use it to create dynamic backgrounds, such as weather systems, day-night cycles, or other visual changes that add depth and realism to the experience.</p>
+
+<p>In <span class="tooltip"><strong>virtual reality</strong><span class="tooltiptext">Virtual Reality (VR) immerses users in an artificial 3D world of realistic images and sounds, using a headset and motion tracking. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VROverview.html" href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VirtualReality" aria-label="Go to glossary anchor for VirtualReality">Glossary</a></span></span></span> (VR), panoramic video skyboxes provide a fully dynamic, 360° environment that users can explore. As the user moves their head, their view of the video’s content shifts, which can make their surroundings feel more realistic.</p>
+
+<p>To use a panoramic video as a skybox, complete the following tasks:</p>
+
+<ol>
+<li>Check the <a href="#prerequisites">prerequisites before you continue</a>.</li>
+<li>
+<a href="#identify-your-video-content-type">Identify your video content type</a>.</li>
+<li>If your video has a equirectangular layout, <a href="#create-a-panoramic-skybox-material-for-your-video">Create a panoramic skybox material for your video</a>.</li>
+<li>If your video has a <span class="tooltip"><strong>cubemap</strong><span class="tooltiptext">A collection of six square textures that can represent the reflections in an environment or the skybox drawn behind your geometry. The six squares form the faces of an imaginary cube that surrounds an object; each face represents the view along the directions of the world axes (up, down, left, right, forward and back). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Cubemap.html" href="class-Cubemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Cubemap" aria-label="Go to glossary anchor for Cubemap">Glossary</a></span></span></span> layout, you have 2 options:
+
+<ul>
+<li>
+<a href="#create-a-panoramic-skybox-material-for-your-video">Create a panoramic skybox material for your video</a>.</li>
+<li>
+<a href="#create-a-cubemap-skybox-material-for-your-video">Create a cubemap skybox material for your cubemap video</a>.</li>
+</ul>
+</li>
+<li>
+<a href="#assign-your-skybox-material-to-your-skybox">Assign your skybox material to your skybox</a>.</li>
+</ol>
+
+<p>For more information about how to create a skybox, refer to <a href="skyboxes-using.html">Create a skybox</a>.</p>
+
+<p><a name="prerequisites" aria-hidden="true"></a></p>
+
+<h2>Prerequisites</h2>
+
+<p>Before you continue to set up a panoramic video as a skybox, you need to set up a panoramic video. For more information, refer to <a href="VideoPanoramic-setup.html">Set up a panoramic video</a>. </p>
+
+<p><a name="identify-your-video-content-type" aria-hidden="true"></a></p>
+
+<h2>Identify your video content type</h2>
+
+<p>You need to correctly identify the type of content in the video (cubemap or equirectangular) for the panoramic video to display correctly. To check the type, you can either check the video’s resolution or view the video itself. </p>
+
+<h3>Check the video’s resolution</h3>
+
+<p>You can check the video resolution to confirm what content type the video has using the following steps:</p>
+
+<ol>
+<li>Click on the video.</li>
+<li>In the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, click on the video’s name.</li>
+<li>Select <strong>Source Info</strong>.</li>
+<li>Check the <strong><span class="tooltip"><strong>Pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span></strong> value.
+
+<ul>
+<li>Equirectangular videos have 2:1 or 1:1 ratios.</li>
+<li>Cubemap videos have 1:6, 3:4, 4:3, or 6:1 ratios.</li>
+</ul>
+</li>
+</ol>
+
+<h3>View the video content</h3>
+
+<p>Click on the video to bring up a preview in the Inspector window. If the video looks like a flattened cube, it’s a cubemap. If the video looks more like a flattened sphere, it’s likely equirectangular. </p>
+
+<p><a name="create-a-panoramic-skybox-material-for-your-video" aria-hidden="true"></a></p>
+
+<h2>Create a panoramic skybox material for your video</h2>
+
+<p>If you want your panoramic video with an equirectangular layout to be the backdrop of your Scene, you need to replace the default skybox with your video content. To do this: </p>
+
+<ol>
+<li>Create a new Material (menu: <strong>Assets</strong> &gt; <strong>Create</strong> &gt; <strong>Material</strong>).</li>
+<li>Select the new Material. This opens the Inspector window for the Material.</li>
+<li>Set <strong>Shader</strong> to <strong>Skybox</strong> &gt; <strong>Panoramic</strong>.</li>
+<li>In the <strong>Texture</strong> slot, assign your <span class="tooltip"><strong>render texture</strong><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span>.</li>
+<li>Set <strong>Mapping</strong> to:
+
+<ul>
+<li>
+<strong>Latitude Longitude Layout</strong> for equirectangular videos.</li>
+<li>
+<strong>6 Frames Layout</strong> for cubemap videos.</li>
+</ul>
+</li>
+<li>For <strong>Image Type</strong>:
+
+<ul>
+<li>Choose <strong>360 Degrees</strong> if the video covers a full 360° view.</li>
+<li>Choose <strong>180 Degrees</strong> if the video only faces one way.</li>
+</ul>
+</li>
+</ol>
+
+<p>To check your content looks correct, view the <strong>Preview</strong> at the bottom of the <strong>Material</strong> Inspector.</p>
+
+<p>For more information about the panoramic skybox <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>, refer to <a href="shader-skybox-panoramic.html">Panoramic skybox</a>.</p>
+
+<p><a name="create-a-cubemap-skybox-material-for-your-video" aria-hidden="true"></a></p>
+
+<h2>Create a cubemap skybox material for your video</h2>
+
+<p>The cubemap layout (such as a cross and strip layout) is common for static skybox textures. To set up a skybox material for a cubemap video:</p>
+
+<ol>
+<li>Create a new Material (menu: <strong>Assets</strong> &gt; <strong>Create</strong> &gt; <strong>Material</strong>).</li>
+<li>Select the new Material. This opens the Inspector window for the Material.</li>
+<li>Set <strong>Shader</strong> to <strong>Skybox</strong> &gt; <strong>Cubemap</strong>.</li>
+<li>In the <strong>Texture</strong> slot, assign your render texture.</li>
+</ol>
+
+<p>To check your content looks correct, view the <strong>Preview</strong> at the bottom of the <strong>Material</strong> Inspector.</p>
+
+<p>For more information about the cubemap skybox shader, refer to <a href="shader-skybox-cubemap.html">Cubemap skybox</a>.</p>
+
+<p><a name="assign-your-skybox-material-to-your-skybox" aria-hidden="true"></a></p>
+
+<h2>Assign your skybox material to your skybox</h2>
+
+<p>After you create your skybox panoramic or cubemap material, you can assign it to your skybox. </p>
+
+<ol>
+<li>From the main menu, select <strong>Window</strong> &gt; <strong>Rendering</strong> &gt; <strong>Lighting</strong>.</li>
+<li>In the <strong>Lighting</strong> window, select the <strong>Environment</strong> tab.</li>
+<li>Drag your skybox material to the <strong>Skybox Material</strong> property.</li>
+</ol>
+
+<p>For more information about how to create a skybox, refer to <a href="skyboxes-using.html">Create a skybox</a>. </p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="shader-skybox-panoramic.html">Panoramic Skybox Shader Material Inspector window reference</a></li>
+<li><a href="VideoPanoramic.html">Panoramic video</a></li>
+<li><a href="VideoPanoramic-introduction.html">Introduction to panoramic videos</a></li>
+<li><a href="VideoPanoramic-setup.html">Set up a panoramic video</a></li>
+<li><a href="VideoPanoramic-3D.html">Set up your 3D panoramic video</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="VideoPanoramic-setup.html"></a></span><div class="tip">Set up a panoramic video</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="VideoPanoramic-3D.html"></a></span><div class="tip">Set up your 3D panoramic video</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

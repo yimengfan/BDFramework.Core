@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Mesh</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">Mesh</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEngine</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Inherits from:<a href="Object.html" class="cl">Object</a></p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Implemented in:<a href="UnityEngine.CoreModule.html" class="cl">UnityEngine.CoreModule</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <a aria-label="go to usermanual page" href='../Manual/class-Mesh.html' title='Go to Mesh Component in the Manual' class='switch-link gray-btn sbtn left show'>Switch to Manual</a>
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>A class that allows you to create or modify meshes.</p>
+              </div>
+              <div class="subsection">
+        <p>Meshes contain vertices and multiple triangle arrays.<br /><br />Conceptually, all vertex data is stored in separate arrays of the same size. For example, if you have
+a mesh of 100 Vertices, and want to have a position, normal and two texture coordinates
+for each vertex, then the mesh should have <a href="Mesh-vertices.html">vertices</a>, <a href="Mesh-normals.html">normals</a>, <a href="Mesh-uv.html">uv</a> and <a href="Mesh-uv2.html">uv2</a>
+arrays, each being 100 in size. Data for i-th vertex is at index "i" in each array.<br /><br />For every vertex there can be a vertex position, normal, tangent, color and up to 8 texture coordinates.
+Texture coordinates most often are 2D data (<a href="Vector2.html">Vector2</a>), but it is possible to make them
+<a href="Vector3.html">Vector3</a> or <a href="Vector4.html">Vector4</a> if needed. This is most often used for holding arbitrary data in mesh
+vertices, for special effects used in shaders. For skinned meshes, the vertex data can also
+contain <a href="Mesh-boneWeights.html">boneWeights</a>.<br /><br />The mesh face data, i.e. the triangles it is made of, is simply three vertex indices for each triangle.
+For example, if the mesh has 10 triangles, then the <a href="Mesh-triangles.html">triangles</a> array should be 30 numbers,
+with each number indicating which vertex to use. The first three elements in the triangles array are
+the indices for the vertices that make up that triangle; the second three elements make up
+another triangle and so on.<br /><br />Note that while triangle meshes are the most common use case, Unity also supports other
+mesh topology types, for example Line or Point meshes. For line meshes, each line
+is composed of two vertex indices and so on. See <a href="Mesh.SetIndices.html">SetIndices</a> and <a href="MeshTopology.html">MeshTopology</a>.<br /><br />
+<strong>Simple vs Advanced Mesh API</strong><br /><br />The Mesh class has two sets of methods for assigning data to a Mesh from script. The "simple" set of methods provide a basis for setting the indices, triangle, normals, tangents, etc. These methods include validation checks, for example to ensure that you are not passing in data that would include out-of-bounds indices. They represent the standard way to assign Mesh data from script in Unity.<br /><br />The "simple" methods are: <a href="Mesh.SetColors.html">SetColors</a>, <a href="Mesh.SetIndices.html">SetIndices</a>, <a href="Mesh.SetNormals.html">SetNormals</a>, <a href="Mesh.SetTangents.html">SetTangents</a>, <a href="Mesh.SetTriangles.html">SetTriangles</a>, <a href="Mesh.SetUVs.html">SetUVs</a>, <a href="Mesh.SetVertices.html">SetVertices</a>, <a href="Mesh.SetBoneWeights.html">SetBoneWeights</a>.<br /><br />There is also an "advanced" set of methods, which allow you to directly write to the mesh data with control over whether any checks or validation should be performed. These methods are intended for advanced use cases which require maximum performance. They are faster, but allow you to skip the checks on the data you supply. If you use these methods you must make sure that you are not supplying invalid data, because Unity will not check for you.<br /><br />The "advanced" methods are: <a href="Mesh.SetVertexBufferParams.html">SetVertexBufferParams</a>, <a href="Mesh.SetVertexBufferData.html">SetVertexBufferData</a>, <a href="Mesh.SetIndexBufferParams.html">SetIndexBufferParams</a>, <a href="Mesh.SetIndexBufferData.html">SetIndexBufferData</a>, <a href="Mesh.SetSubMesh.html">SetSubMesh</a>, and you can use the <a href="Rendering.MeshUpdateFlags.html">MeshUpdateFlags</a> to control which checks or validation are performed or omitted. Use <a href="Mesh.AcquireReadOnlyMeshData.html">AcquireReadOnlyMeshData</a> to take a read-only snapshot of Mesh data that you can use with C# Jobs and Burst, and <a href="Mesh.AllocateWritableMeshData.html">AllocateWritableMeshData</a> with <a href="Mesh.ApplyAndDisposeWritableMeshData.html">ApplyAndDisposeWritableMeshData</a> to create Meshes from C# Jobs and Burst.<br /><br /><br /><br /><strong>Manipulating meshes from a script</strong><br /><br />There are three common tasks that might want to use the Mesh API for:<br /><br /><strong>1. Building a mesh from scratch</strong>:
+should always be done in the following order:<br />
+a) Assign <a href="Mesh-vertices.html">vertices</a><br />
+b) Assign <a href="Mesh-triangles.html">triangles</a>.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using UnityEngine;<br /><br />public class Example : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    <a href="Vector3.html">Vector3</a>[] newVertices;
+    <a href="Vector2.html">Vector2</a>[] newUV;
+    int[] newTriangles;<br /><br />   void Start()
+    {
+        <a href="Mesh.html">Mesh</a> mesh = new <a href="Mesh.html">Mesh</a>();
+        GetComponent&lt;<a href="MeshFilter.html">MeshFilter</a>&gt;().mesh = mesh;
+        mesh.vertices = newVertices;
+        mesh.uv = newUV;
+        mesh.triangles = newTriangles;
+    }
+}
+</pre>
+      </div>
+              <div class="subsection">
+        <p>
+          <strong>2. Modifying vertex attributes every frame</strong>:<br />
+a) Get vertices<br />
+b) Modify them<br />
+c) Assign them back to the mesh.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using UnityEngine;<br /><br />public class Example : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    void <a href="PlayerLoop.Update.html">Update</a>()
+    {
+        <a href="Mesh.html">Mesh</a> mesh = GetComponent&lt;<a href="MeshFilter.html">MeshFilter</a>&gt;().mesh;
+        <a href="Vector3.html">Vector3</a>[] vertices = mesh.vertices;
+        <a href="Vector3.html">Vector3</a>[] normals = mesh.normals;<br /><br />       for (var i = 0; i &lt; vertices.Length; i++)
+        {
+            vertices[i] += normals[i] * <a href="Mathf.Sin.html">Mathf.Sin</a>(<a href="Time-time.html">Time.time</a>);
+        }<br /><br />       mesh.vertices = vertices;
+    }
+}
+</pre>
+      </div>
+              <div class="subsection">
+        <p>
+          <strong>3. Continously changing the mesh triangles and vertices</strong>:<br />
+a) Call <a href="Mesh.Clear.html">Clear</a> to start fresh<br />
+b) Assign vertices and other attributes<br />
+c) Assign triangle indices.<br /><br />It is important to call <a href="Mesh.Clear.html">Clear</a> before assigning new vertices or triangles. Unity always checks the supplied triangle indices whether they don't reference out of bounds vertices.
+Calling <a href="Mesh.Clear.html">Clear</a> then assigning vertices then triangles makes sure you never have out of bounds data.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using UnityEngine;<br /><br />public class ExampleClass : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    <a href="Vector3.html">Vector3</a>[] newVertices;
+    <a href="Vector2.html">Vector2</a>[] newUV;
+    int[] newTriangles;<br /><br />   void Start()
+    {
+        <a href="Mesh.html">Mesh</a> mesh = GetComponent&lt;<a href="MeshFilter.html">MeshFilter</a>&gt;().mesh;<br /><br />       mesh.Clear();<br /><br />       // Do some calculations...
+        mesh.vertices = newVertices;
+        mesh.uv = newUV;
+        mesh.triangles = newTriangles;
+    }
+}
+</pre>
+      </div>
+              <div class="subsection">
+                <h3>Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Mesh-bindposes.html">bindposes</a></td><td class="desc">The bind poses. The bind pose at each index refers to the bone with the same index.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-blendShapeCount.html">blendShapeCount</a></td><td class="desc">Returns BlendShape count on this mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-boneWeights.html">boneWeights</a></td><td class="desc">The BoneWeight for each vertex in the Mesh, which represents 4 bones per vertex.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-bounds.html">bounds</a></td><td class="desc">The bounding volume of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-colors.html">colors</a></td><td class="desc">Vertex colors of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-colors32.html">colors32</a></td><td class="desc">Vertex colors of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-indexBufferTarget.html">indexBufferTarget</a></td><td class="desc">The intended target usage of the Mesh GPU index buffer.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-indexFormat.html">indexFormat</a></td><td class="desc">Format of the mesh index buffer data.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-isReadable.html">isReadable</a></td><td class="desc">Returns true if the Mesh is read/write enabled, or false if it is not.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-normals.html">normals</a></td><td class="desc">The normals of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-subMeshCount.html">subMeshCount</a></td><td class="desc">The number of sub-meshes inside the Mesh object.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-tangents.html">tangents</a></td><td class="desc">The tangents of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-triangles.html">triangles</a></td><td class="desc">An array containing all triangles in the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-uv.html">uv</a></td><td class="desc">The texture coordinates (UVs) in the first channel.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-uv2.html">uv2</a></td><td class="desc">The texture coordinates (UVs) in the second channel.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-uv3.html">uv3</a></td><td class="desc">The texture coordinates (UVs) in the third channel.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-uv4.html">uv4</a></td><td class="desc">The texture coordinates (UVs) in the fourth channel.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-uv5.html">uv5</a></td><td class="desc">The texture coordinates (UVs) in the fifth channel.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-uv6.html">uv6</a></td><td class="desc">The texture coordinates (UVs) in the sixth channel.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-uv7.html">uv7</a></td><td class="desc">The texture coordinates (UVs) in the seventh channel.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-uv8.html">uv8</a></td><td class="desc">The texture coordinates (UVs) in the eighth channel.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-vertexAttributeCount.html">vertexAttributeCount</a></td><td class="desc">Returns the number of vertex attributes that the mesh has. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="Mesh-vertexBufferCount.html">vertexBufferCount</a></td><td class="desc">Gets the number of vertex buffers present in the Mesh. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="Mesh-vertexBufferTarget.html">vertexBufferTarget</a></td><td class="desc">The intended target usage of the Mesh GPU vertex buffer.</td></tr>
+      <tr><td class="lbl"><a href="Mesh-vertexCount.html">vertexCount</a></td><td class="desc">Returns the number of vertices in the Mesh (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="Mesh-vertices.html">vertices</a></td><td class="desc">Returns a copy of the vertex positions or assigns a new vertex positions array.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Constructors</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Constructor</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Mesh-ctor.html">Mesh</a></td><td class="desc">Creates an empty Mesh.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Public Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Mesh.AddBlendShapeFrame.html">AddBlendShapeFrame</a></td><td class="desc">Adds a new blend shape frame.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.Clear.html">Clear</a></td><td class="desc">Clears all vertex data and all triangle indices.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.ClearBlendShapes.html">ClearBlendShapes</a></td><td class="desc">Clears all blend shapes from Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.CombineMeshes.html">CombineMeshes</a></td><td class="desc">Combines several Meshes into this Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetAllBoneWeights.html">GetAllBoneWeights</a></td><td class="desc">Gets the bone weights for the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetBaseVertex.html">GetBaseVertex</a></td><td class="desc">Gets the base vertex index of the given sub-mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetBindposes.html">GetBindposes</a></td><td class="desc">Gets the bind poses of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetBlendShapeFrameCount.html">GetBlendShapeFrameCount</a></td><td class="desc">Returns the frame count for a blend shape.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetBlendShapeFrameVertices.html">GetBlendShapeFrameVertices</a></td><td class="desc">Retreives deltaVertices, deltaNormals and deltaTangents of a blend shape frame.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetBlendShapeFrameWeight.html">GetBlendShapeFrameWeight</a></td><td class="desc">Returns the weight of a blend shape frame.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetBlendShapeIndex.html">GetBlendShapeIndex</a></td><td class="desc">Returns index of BlendShape by given name.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetBlendShapeName.html">GetBlendShapeName</a></td><td class="desc">Returns name of BlendShape by given index.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetBonesPerVertex.html">GetBonesPerVertex</a></td><td class="desc">The number of non-zero bone weights for each vertex.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetBoneWeights.html">GetBoneWeights</a></td><td class="desc">Gets the bone weights for the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetColors.html">GetColors</a></td><td class="desc">Gets the vertex colors of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetIndexBuffer.html">GetIndexBuffer</a></td><td class="desc">Retrieves a GraphicsBuffer to the GPU index buffer.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetIndexCount.html">GetIndexCount</a></td><td class="desc">Gets the index count of the given sub-mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetIndexStart.html">GetIndexStart</a></td><td class="desc">Gets the starting index location within the Mesh's index buffer, for the given sub-mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetIndices.html">GetIndices</a></td><td class="desc">Fetches the index list for the specified sub-mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetNativeIndexBufferPtr.html">GetNativeIndexBufferPtr</a></td><td class="desc">Retrieves a native (underlying graphics API) pointer to the index buffer.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetNativeVertexBufferPtr.html">GetNativeVertexBufferPtr</a></td><td class="desc">Retrieves a native (underlying graphics API) pointer to the vertex buffer.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetNormals.html">GetNormals</a></td><td class="desc">Gets the vertex normals of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetSubMesh.html">GetSubMesh</a></td><td class="desc">Get information about a sub-mesh of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetTangents.html">GetTangents</a></td><td class="desc">Gets the tangents of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetTopology.html">GetTopology</a></td><td class="desc">Gets the topology of a sub-mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetTriangles.html">GetTriangles</a></td><td class="desc">Fetches the triangle list for the specified sub-mesh on this object.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetUVDistributionMetric.html">GetUVDistributionMetric</a></td><td class="desc">The UV distribution metric can be used to calculate the desired mipmap level based on the position of the camera.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetUVs.html">GetUVs</a></td><td class="desc">Gets the texture coordinates (UVs) stored in a given channel.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetVertexAttribute.html">GetVertexAttribute</a></td><td class="desc">Returns information about a vertex attribute based on its index.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetVertexAttributeDimension.html">GetVertexAttributeDimension</a></td><td class="desc">Get dimension of a specific vertex data attribute on this Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetVertexAttributeFormat.html">GetVertexAttributeFormat</a></td><td class="desc">Get format of a specific vertex data attribute on this Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetVertexAttributeOffset.html">GetVertexAttributeOffset</a></td><td class="desc">Get offset within a vertex buffer stream of a specific vertex data attribute on this Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetVertexAttributes.html">GetVertexAttributes</a></td><td class="desc">Get information about vertex attributes of a Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetVertexAttributeStream.html">GetVertexAttributeStream</a></td><td class="desc">Gets the vertex buffer stream index of a specific vertex data attribute on this Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetVertexBuffer.html">GetVertexBuffer</a></td><td class="desc">Retrieves a GraphicsBuffer that provides direct acces to the GPU vertex buffer.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetVertexBufferStride.html">GetVertexBufferStride</a></td><td class="desc">Get vertex buffer stream stride in bytes.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.GetVertices.html">GetVertices</a></td><td class="desc">Gets the vertex positions of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.HasVertexAttribute.html">HasVertexAttribute</a></td><td class="desc">Checks if a specific vertex data attribute exists on this Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.MarkDynamic.html">MarkDynamic</a></td><td class="desc">Optimize mesh for frequent updates.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.MarkModified.html">MarkModified</a></td><td class="desc">Notify Renderer components of mesh geometry change.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.Optimize.html">Optimize</a></td><td class="desc">Optimizes the Mesh data to improve rendering performance.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.OptimizeIndexBuffers.html">OptimizeIndexBuffers</a></td><td class="desc">Optimizes the geometry of the Mesh to improve rendering performance.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.OptimizeReorderVertexBuffer.html">OptimizeReorderVertexBuffer</a></td><td class="desc">Optimizes the vertices of the Mesh to improve rendering performance.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.RecalculateBounds.html">RecalculateBounds</a></td><td class="desc">Recalculate the bounding volume of the Mesh from the vertices.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.RecalculateNormals.html">RecalculateNormals</a></td><td class="desc">Recalculates the normals of the Mesh from the triangles and vertices.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.RecalculateTangents.html">RecalculateTangents</a></td><td class="desc">Recalculates the tangents of the Mesh from the normals and texture coordinates.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.RecalculateUVDistributionMetric.html">RecalculateUVDistributionMetric</a></td><td class="desc">Recalculates the UV distribution metric of the Mesh from the vertices and uv coordinates.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.RecalculateUVDistributionMetrics.html">RecalculateUVDistributionMetrics</a></td><td class="desc">Recalculates the UV distribution metrics of the Mesh from the vertices and uv coordinates.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.SetBoneWeights.html">SetBoneWeights</a></td><td class="desc">Sets the bone weights for the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.SetColors.html">SetColors</a></td><td class="desc">Set the per-vertex colors of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.SetIndexBufferData.html">SetIndexBufferData</a></td><td class="desc">Sets the data of the index buffer of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.SetIndexBufferParams.html">SetIndexBufferParams</a></td><td class="desc">Sets the index buffer size and format.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.SetIndices.html">SetIndices</a></td><td class="desc">Sets the index buffer for the sub-mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.SetNormals.html">SetNormals</a></td><td class="desc">Set the normals of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.SetSubMesh.html">SetSubMesh</a></td><td class="desc">Sets the information about a sub-mesh of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.SetSubMeshes.html">SetSubMeshes</a></td><td class="desc">Sets information defining all sub-meshes in this Mesh, replacing any existing sub-meshes.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.SetTangents.html">SetTangents</a></td><td class="desc">Set the tangents of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.SetTriangles.html">SetTriangles</a></td><td class="desc">Sets the triangle list for the sub-mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.SetUVs.html">SetUVs</a></td><td class="desc">Sets the texture coordinates (UVs) stored in a given channel.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.SetVertexBufferData.html">SetVertexBufferData</a></td><td class="desc">Sets the data of the vertex buffer of the Mesh.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.SetVertexBufferParams.html">SetVertexBufferParams</a></td><td class="desc">Sets the vertex buffer size and layout.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.SetVertices.html">SetVertices</a></td><td class="desc">Assigns a new vertex positions array.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.UploadMeshData.html">UploadMeshData</a></td><td class="desc">Upload previously done Mesh modifications to the graphics API.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Mesh.AcquireReadOnlyMeshData.html">AcquireReadOnlyMeshData</a></td><td class="desc">Gets a snapshot of Mesh data for read-only access.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.AllocateWritableMeshData.html">AllocateWritableMeshData</a></td><td class="desc">Allocates data structures for Mesh creation using C# Jobs.</td></tr>
+      <tr><td class="lbl"><a href="Mesh.ApplyAndDisposeWritableMeshData.html">ApplyAndDisposeWritableMeshData</a></td><td class="desc">Applies data defined in MeshData structs to Mesh objects.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Inherited Members</h3>
+      
+      <div class="subsection"><h3>Properties</h3><table class="list"><thead><tr><th>Property</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object-hideFlags.html">hideFlags</a></td><td class="desc">Should the object be hidden, saved with the Scene or modifiable by the user?</td></tr>
+        <tr><td class="lbl"><a href="Object-name.html">name</a></td><td class="desc">The name of the object.</td></tr>
+      </table></div>
+      
+      
+      
+      <div class="subsection"><h3>Public Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object.GetInstanceID.html">GetInstanceID</a></td><td class="desc">Gets  the instance ID of the object.</td></tr>
+        <tr><td class="lbl"><a href="Object.ToString.html">ToString</a></td><td class="desc">Returns the name of the object.</td></tr>
+      </table></div>
+      
+      <div class="subsection"><h3>Static Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object.Destroy.html">Destroy</a></td><td class="desc">Removes a GameObject, component or asset.</td></tr>
+        <tr><td class="lbl"><a href="Object.DestroyImmediate.html">DestroyImmediate</a></td><td class="desc">Destroys the object obj immediately. You are strongly recommended to use Destroy instead.</td></tr>
+        <tr><td class="lbl"><a href="Object.DontDestroyOnLoad.html">DontDestroyOnLoad</a></td><td class="desc">Do not destroy the target Object when loading a new Scene.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindAnyObjectByType.html">FindAnyObjectByType</a></td><td class="desc">Retrieves any active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindFirstObjectByType.html">FindFirstObjectByType</a></td><td class="desc">Retrieves the first active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectOfType.html">FindObjectOfType</a></td><td class="desc">Returns the first active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectsByType.html">FindObjectsByType</a></td><td class="desc">Retrieves a list of all loaded objects of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectsOfType.html">FindObjectsOfType</a></td><td class="desc">Gets a list of all loaded objects of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.Instantiate.html">Instantiate</a></td><td class="desc">Clones the object original and returns the clone.</td></tr>
+      </table></div>
+      <div class="subsection"><h3>Operators</h3><table class="list"><thead><tr><th>Operator</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object-operator_Object.html">bool</a></td><td class="desc">Does the object exist?</td></tr>
+        <tr><td class="lbl"><a href="Object-operator_ne.html">operator !=</a></td><td class="desc">Compares if two objects refer to a different object.</td></tr>
+        <tr><td class="lbl"><a href="Object-operator_eq.html">operator ==</a></td><td class="desc">Compares two object references to see if they refer to the same object.</td></tr>
+      </table></div>
+      
+      
+      
+    </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

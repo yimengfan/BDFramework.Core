@@ -1,0 +1,415 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Native audio plug-in SDK</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AudioMixerNativeAudioPlugin.html">English</a></li>
+<li><a href="/cn/current/Manual/AudioMixerNativeAudioPlugin.html">中文</a></li>
+<li><a href="/ja/current/Manual/AudioMixerNativeAudioPlugin.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AudioMixerNativeAudioPlugin.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AudioMixerNativeAudioPlugin.html">English</a></li>
+<li><a href="/cn/current/Manual/AudioMixerNativeAudioPlugin.html">中文</a></li>
+<li><a href="/ja/current/Manual/AudioMixerNativeAudioPlugin.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AudioMixerNativeAudioPlugin.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Audio.html">Audio</a></li>
+<li>Native audio plug-in SDK</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AudioMixerUsage.html"></a></span><div class="tip">Overview of Usage and API</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AudioSpatializerSDK.html"></a></span><div class="tip">Audio Spatializer SDK</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Native audio plug-in SDK</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This document describes the built-in native audio <span class="tooltip"><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Plugins.html" href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> interface of Unity 5.0. We will do this by looking at some specific example plug-ins that grow in complexity as we move along. This way, we start out with very basic concepts and introduce more complex use-cases near the end of the document.</p>
+
+<h2>Download</h2>
+
+<p>First thing you need to do is to <a href="https://github.com/Unity-Technologies/NativeAudioPlugins">download the newest audio plug-in SDK</a>.</p>
+
+<h2>Overview</h2>
+
+<p>The native audio plug-in system consists of two parts:</p>
+
+<ol>
+<li><p>The native Digital Signal Processing (DSP) plug-in which has to be implemented as a .dll (Windows) or .dylib (OSX) in C or C++. Unlike <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> and because of the high demands on performance this has to be compiled for any platform that you want to support, possibly with platform-specific optimizations.</p></li>
+<li><p>The GUI which is developed in C#. Note that the GUI is optional, so you always start out plug-in development by creating the basic native DSP plug-in, and let Unity show a default slider-based user interface for the parameter descriptions that the <span class="tooltip"><strong>native plug-in</strong><span class="tooltiptext">A platform-specific native code library that is created outside of Unity for use in Unity. Allows you can access features like OS calls and third-party code libraries that would otherwise not be available to Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Plugins.html" href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Nativeplug-in" aria-label="Go to glossary anchor for Nativeplug-in">Glossary</a></span></span></span> exposes. We recommend this approach to bootstrap any project.</p></li>
+</ol>
+
+<p>Note that you can initially prototype the C# GUI as a .cs file that you just drop into the Assets/Editor folder (just like any other editor script). Later on you can move this into a proper Visual Studio project as your code starts to grow and need better modularization and better IDE support. This enables you to compile it into a .dll, making it easier for the user to drop into the project and also in order to protect your code.</p>
+
+<p>Also note that both the native DSP and GUI DLLs can contain multiple plug-ins and that the binding happens only through the names of the effects in the plug-ins regardless of what the DLL file is called.</p>
+
+<h2>What are all these files?</h2>
+
+<p>The native side of the plug-in SDK actually only consists of one file (AudioPluginInterface.h), but to make it easy to have multiple plug-in effects within the same DLL we have added supporting code to handle the effect definition and parameter registration in a simple unified way (AudioPluginUtil.h and AudioPluginUtil.cpp). Note that the NativePluginDemo project contains a number of example plug-ins to get you started and show a variety of different plug-in types that are useful in a game context. We place this code in the public domain, so feel free to use this code as a starting point for your own creations.</p>
+
+<p>Development of a plug-in starts with defining which parameters your plug-in should have. You don’t need to have a detailed master plan of all the parameters that the plug-in will have laid out before you start, but it helps to roughly have an idea of how you want the user experience to be and what components you will need.</p>
+
+<p>The example plug-ins that we provide have a bunch of utility functions that make it easy.
+Let’s take a look at the “Ring Modulator” example plug-in. This simple plug-in multiplies the incoming signal by a sine wave, which gives a nice radio-noise / broken reception like effect, especially if multiple ring modulation effects with different frequencies are chained.</p>
+
+<p>The basic scheme for dealing with parameters in the example plug-ins is to define them as enum-values that we use as indices into an array of floats for both convenience and brevity.</p>
+
+<pre><code>enum Param
+{
+    P_FREQ,
+    P_MIX,
+    P_NUM
+};
+
+int InternalRegisterEffectDefinition(UnityAudioEffectDefinition&amp; definition)
+{
+    int numparams = P_NUM;
+    definition.paramdefs = new UnityAudioParameterDefinition [numparams];
+    RegisterParameter(definition, &quot;Frequency&quot;, &quot;Hz&quot;,
+        0.0f, kMaxSampleRate, 1000.0f,
+        1.0f, 3.0f,
+        P_FREQ);
+    RegisterParameter(definition, &quot;Mix amount&quot;, &quot;%&quot;,
+        0.0f, 1.0f, 0.5f,
+        100.0f, 1.0f,
+        P_MIX);
+    return numparams;
+}
+</code></pre>
+
+<p>The numbers in the RegisterParameter calls are the minimum, maximum and default values followed by a scaling factor used for display only, in other words, in the case of a percentage-value the actual value goes from 0 to 1 and is scaled by 100 when displayed. There is no custom GUI code for this, but as mentioned earlier, Unity will generate a default GUI from these basic parameter definitions. Note that no checks are performed for undefined parameters, so the AudioPluginUtil system expects that all declared enum values (except <code>P_NUM</code>) are matched up with a corresponding parameter definition.</p>
+
+<p>Behind the <span class="tooltip"><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> the RegisterParameter function fills out an entry in the UnityAudioParameterDefinition array of the UnityAudioEffectDefinition structure that is associated with that plug-in (refer to the “AudioEffectPluginInterface.h” header file). The rest that needs to be set up in UnityAudioEffectDefinition is the callbacks to the functions that handle instantiating the plug-in (CreateCallback), setting/getting parameters (<code>SetFloatParameterCallback/UnityAudioEffect_GetFloatParameterCallback</code>), doing the actual processing (<code>UnityAudioEffect_ProcessCallback</code>) and eventually destroying the plug-in instance when done (<code>UnityAudioEffect_ReleaseCallback</code>).</p>
+
+<p>To make it easy to have multiple plug-ins in the same DLL, each plug-in is residing in its own namespace, and a specific naming convention for the callback functions is used such that the <code>DEFINE_EFFECT</code> and <code>DECLARE_EFFECT</code> macros can fill out the UnityAudioEffectDefinition structure. Underneath the hood all the effects definitions are stored in an array to which a pointer is returned by the only entry point of the library UnityGetAudioEffectDefinitions.</p>
+
+<p>This is useful to know in case you want to develop bridge plug-ins that map from other plug-in formats such as VST or AudioUnits to or from the Unity audio plug-in interface, in which case you need to develop a more dynamic way to set up the parameter descriptions at load time.</p>
+
+<h3>Instantiating the plug-in</h3>
+
+<p>The next thing is the data for the instance of the plug-in. In the example plug-ins, we put all this into the EffectData structure. The allocation of this must happen in the corresponding CreateCallback which is called for each instance of the plug-in in the mixer. In this simple example there’s only one sine-wave that is multiplied to all channels, other more advanced plug-ins need allocate additional data per input channel.</p>
+
+<pre><code>struct EffectData
+{
+    struct Data
+    {
+        float p[P_NUM]; // Parameters
+        float s;        // Sine output of oscillator
+        float c;        // Cosine output of oscillator
+    };
+    union
+    {
+        Data data;
+        unsigned char pad[(sizeof(Data) + 15) &amp; ~15];
+    };
+};
+</code></pre>
+
+<pre><code>UNITY_AUDIODSP_RESULT UNITY_AUDIODSP_CALLBACK CreateCallback(
+    UnityAudioEffectState* state)
+{
+    EffectData* effectdata = new EffectData;
+    memset(effectdata, 0, sizeof(EffectData));
+    effectdata-&gt;data.c = 1.0f;
+    state-&gt;effectdata = effectdata;
+    InitParametersFromDefinitions(
+        InternalRegisterEffectDefinition, effectdata-&gt;data.p);
+    return UNITY_AUDIODSP_OK;
+}
+</code></pre>
+
+<p>The UnityAudioEffectState contains various data from the host such as the sampling rate, the total number of samples processed (for timing), or whether the plug-in is bypassed, and is passed to all callback functions.</p>
+
+<p>And obviously to free the plug-in instance there is a corresponding function too:</p>
+
+<pre><code>UNITY_AUDIODSP_RESULT UNITY_AUDIODSP_CALLBACK ReleaseCallback(
+    UnityAudioEffectState* state)
+{
+    EffectData::Data* data = &amp;state-&gt;GetEffectData&lt;EffectData&gt;()-&gt;data;
+    delete data;
+    return UNITY_AUDIODSP_OK;
+}
+</code></pre>
+
+<p>The main processing of audio happens in the ProcessCallback:</p>
+
+<pre><code>UNITY_AUDIODSP_RESULT UNITY_AUDIODSP_CALLBACK ProcessCallback(
+    UnityAudioEffectState* state,
+    float* inbuffer, float* outbuffer,
+    unsigned int length,
+    int inchannels, int outchannels)
+{
+    EffectData::Data* data = &amp;state-&gt;GetEffectData&lt;EffectData&gt;()-&gt;data;
+
+    float w = 2.0f * sinf(kPI * data-&gt;p[P_FREQ] / state-&gt;samplerate);
+    for(unsigned int n = 0; n &lt; length; n++)
+    {
+        for(int i = 0; i &lt; outchannels; i++)
+        {
+            outbuffer[n * outchannels + i] =
+                inbuffer[n * outchannels + i] *
+                (1.0f - data-&gt;p[P_MIX] + data-&gt;p[P_MIX] * data-&gt;s);
+        }
+        data-&gt;s += data-&gt;c * w; // cheap way to calculate a sine-wave
+        data-&gt;c -= data-&gt;s * w;
+    }
+
+    return UNITY_AUDIODSP_OK;
+}
+</code></pre>
+
+<p>The GetEffectData function at the top is just a helper function casting the effectdata field of the state variable to the EffectData::Data in the structure we declared above.</p>
+
+<p>Other simple plug-ins included are the NoiseBox plug-in, which adds and multiplies the input signal by white noise at variable frequencies, or the Lofinator plug-in, which does simple downsampling and quantization of the signal. All of these may be used in combination and with game-driven animated parameters to simulate anything from mobile phones to bad radio reception on walkies, broken loudspeakers etc.</p>
+
+<p>The StereoWidener, which decomposes a stereo input signal into mono and side components with variable delay and then recombines these to increase the perceived stereo effect.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerStereoWidener.jpg" alt="A bunch of simple plug-ins without custom GUIs to get started with.">
+<figcaption>A bunch of simple plug-ins without custom GUIs to get started with.</figcaption>
+</figure>
+
+<h2>Which plug-in to load on which platform?</h2>
+
+<p>Native audio plug-ins use the same scheme as other native or <span class="tooltip"><strong>managed plug-ins</strong><span class="tooltiptext">A managed .NET assembly that is created with tools like Visual Studio for use in Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Plugins.html" href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Managedplug-in" aria-label="Go to glossary anchor for Managedplug-in">Glossary</a></span></span></span> in that they must be associated with their respective platforms via the plug-in importer <span class="tooltip"><strong>inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#Managedplug-in" aria-label="Go to glossary anchor for Managedplug-in">Glossary</a></span></span></span> in that they must be associated with their respective platforms via the plug-in importer <span class="tooltip"><strong>inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>. You can read more about the subfolders in which to place plug-ins <a href="PluginsForDesktop.html">here</a>. The platform association is necessary so that the system knows which plug-ins to include on a each build target in the standalone builds, and with the introduction of 64-bit support this even has to be specified within a platform. OSX plug-ins are special in this regard since the Universal Binary format allows them to contain both 32 and 64 bit variants in the same bundle.</p>
+
+<p>Native plug-ins in Unity that are called from managed code get loaded via the [DllImport] attribute referencing the function to be imported from the native DLL. However, in the case of native audio plug-ins things are different. The special problem that arises here is that the audio plug-ins need to be loaded before Unity starts creating any mixer assets that may need effects from the plug-ins. In the editor this is no problem, because we can just reload and rebuild the mixers that depend on plug-ins, but in standalone builds the plug-ins must be loaded before we create the mixer assets. To solve this, the current convention is to prefix the DLL of the plug-in “audioplugin” (case insensitive) so that the system can detect this and add it to a list of plug-ins that will automatically be loaded at start. Remember that it’s only the definitions inside the plug-in that define the names of the effects that are displayed by Unity’s mixer, so the DLL can be called anything, but it needs to start with the string “audioplugin” to be detected as such.</p>
+
+<p>For platforms such as <span class="tooltip"><strong>IOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> the plug-in code needs to be statically linked into the Unity binary produced by the generated XCode project and there - just like plug-in rendering devices - the plug-in registration has to be added explicitly to the startup code of the app.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerPlugins.png" alt="">
+</figure>
+
+<p>On OSX one bundle can contain both the 32- and 64 bit version of the plug-in. You can also split them to save size.</p>
+
+<h3>Plug-ins with custom GUIs</h3>
+
+<p>Now let’s look at something a little more advanced: Effects for equalization and multiband <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span>. Such plug-ins have a much higher number of parameters than the simple plug-ins presented in the previous section and also there is some physical coupling between parameters that require a better way to visualize the parameters than just a bunch of simple sliders. Consider an equalizer for instance: Each band has 3 different filters that collectively contribute to the final equalization curve and each of these filters has the 3 parameters frequency, Q-factor and gain which are physically linked and define the shape of each filter. So it helps the user a lot, if an equalizer plug-in has a nice big display showing the resulting curve, the individual filter contributions and can be operated in such a way that multiple parameters can be set simultaneously by simple dragging operations on the control instead of changing sliders one at a time.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerCustomGUI.png" alt="">
+</figure>
+
+<p>Custom GUI of the Equalizer plug-in. Drag the three bands to change the gains and frequencies of the filter curve. Hold shift down while dragging to change the shape of each band.</p>
+
+<p>So once again, the definition, initialization, deinitialization and parameter handling follows the exact same enum-based method that the simple plug-ins use, and even the ProcessCallback code is rather short. Well, time to stop looking at the native code and open the AudioPluginDemoGUI.sln project in Visual Studio. Here you will find the associated C# classes for the GUI code. The way it works is simple: Once Unity has loaded the native plug-in DLLs and registered the contained audio plug-ins, it will start looking for corresponding GUIs that match the names of the registered plug-ins. This happens through the Name property of the EqualizerCustomGUI class which, like all custom plug-in GUIs, must inherit from IAudioEffectPluginGUI. There’s only one important function inside this class which is the bool OnGUI(IAudioEffectPlugin plugin) function. Via the IAudioEffectPlugin plug-in argument this function gets a handle to the native plug-in that it can use to read and write the parameters that the native plug-in has defined. So to read a parameter it calls:</p>
+
+<pre><code>plugin.GetFloatParameter(&quot;MasterGain&quot;, out masterGain);
+</code></pre>
+
+<p>which returns true if the parameter was found, and to set it, it calls:</p>
+
+<pre><code>plugin.SetFloatParameter(&quot;MasterGain&quot;, masterGain);
+</code></pre>
+
+<p>which also returns true if the parameter exists. And that’s basically the most important binding between GUI and native code. You can also use the function</p>
+
+<pre><code>plugin.GetFloatParameterInfo(&quot;NAME&quot;, out minVal, out maxVal, out defVal);
+</code></pre>
+
+<p>to query parameter “NAME” for its minimum, maximum, and default values to avoid duplicate definitions of these in the native and <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> code. Note that if your OnGUI function return true, the Inspector will show the default UI sliders below the custom GUI. This is again useful to bootstrap your GUI development as you have all the parameters available while developing your custom GUI and have an easy way to check that the right actions performed on it result in the expected parameter changes.</p>
+
+<p>We won’t discuss the details about the DSP processing that is going on in the Equalizer and Multiband plug-ins here, for those interested, the filters are taken from Robert Bristow Johnson’s excellent Audio EQ Cookbook and to plot the curves Unity provides some internal API functions to draw antialiased curves for the frequency response.</p>
+
+<p>One more thing to mention though is that both the Equalizer and Multiband plug-ins do also provide code to overlay the input and output spectra to visualize the effect of the plug-ins, which brings up an interesting point: The GUI code runs at much lower update rate (the frame rate) than the audio processing and doesn’t have access to the audio streams, so how do we read this data? For this, there is a special function for this in the native code:</p>
+
+<pre><code>UNITY_AUDIODSP_RESULT UNITY_AUDIODSP_CALLBACK GetFloatParameterCallback(
+    UnityAudioEffectState* state,
+    int index,
+    float* value,
+    char *valuestr)
+{
+    EffectData::Data* data = &amp;state-&gt;GetEffectData&lt;EffectData&gt;()-&gt;data;
+    if(index &gt;= P_NUM)
+        return UNITY_AUDIODSP_ERR_UNSUPPORTED;
+    if(value != NULL)
+        *value = data-&gt;p[index];
+    if(valuestr != NULL)
+        valuestr[0] = 0;
+  return UNITY_AUDIODSP_OK;
+}
+</code></pre>
+
+<p>It simply enables reading an array of floating-point data from the native plug-in. Whatever that data is, the plug-in system doesn’t care about, as long as the request doesn’t massively slow down the UI or the native code. For the Equalizer and Multiband code there is a utility class called FFTAnalyzer which makes it easy to feed in input and output data from the plug-in and get a spectrum back. This spectrum data is then resampled by GetFloatBufferCallback and handed to the C# UI code. The reason that the data needs to be resampled is that the FFTAnalyzer runs the analysis at a fixed frequency resolution while GetFloatBufferCallback just returns the number of samples requested, which is determined by the width of the view that is displaying the data. For a very simple plug-in that has a minimal amount of DSP code you might also take a look at the CorrelationMeter plug-in, which simply plots the amplitude of the left channel against the amplitude of the right channel in order to show “how stereo” the signal is.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerDemoCorrelationMeter.png" alt="">
+</figure>
+
+<figure>
+<img src="../uploads/Main/AudioMixerDemoMultiband.jpg" alt="">
+</figure>
+
+<p>Left: Custom GUI of the CorrelationMeter plug-in.</p>
+
+<p>Right: Equalizer GUI with overlaid spectrum analysis (green curve is source, red is processed).</p>
+
+<p>At this point we would also like to point out that both the Equalizer and Multiband effects are kept intentionally simple and unoptimized, but we think they serve as good examples of more complex UIs that are supported by the plug-in system. There’s obviously a lot of work still in doing the relevant platform-specific optimizations, tons of parameter tweaking to make it fell really right and respond in the most musical way etc. etc… We might also implement some of these effects as built-in plug-ins in Unity at some point simply for the convenience of increasing Unity’s standard repertoire of plug-ins, but we sincerely hope that the reader will also take up the challenge to make some really awesome plug-ins – and who knows, they might at some point end up as built-in plug-ins. ;-)</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerDemoConvolutionReverb.png" alt="">
+</figure>
+
+<p>Convolution reverb example plug-in. The impulse response is decaying random noise,
+defined by the parameters. This is only for demonstration purposes, as a production plug-in
+should allow the user to load arbitrary recorded impulses, the underlying convolution algorithm
+remains the same nevertheless.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerDemoLoudnessMeter.png" alt="">
+</figure>
+
+<p>Example of a loudness monitoring tool measuring levels at 3 different time scales.
+Also just for demonstration purposes, but a good place to start building a monitor tool that
+conforms to modern loudness standardizations. The curve rendering code is built into Unity.</p>
+
+<h3>Synchronizing to the DSP clock</h3>
+
+<p>Time for some fun exercises. Why not use the plug-in system to generate sound instead of just processing it? Let’s try to do some simple bassline and drum synthesizers that should be familiar to people who listen to acid trance – some simple clones of some of the main synths that defined this genre. Take a look at Plugin_TeeBee.cpp and Plugin_TeeDee.cpp. These simple synths just generate patterns with random notes and have some parameters for tweaking the filters, envelopes and so forth in the synthesis engine. Again, we won’t discuss those details here, but just point out that the state-&gt;dsptick parameter is read in the ProcessCallback in order to determine the position in the “song”. This counter is a global sample position, so we just divide it by the length of each note specified in samples and fire a note event to the synthesis engine whenever this division has a zero remainder. This way, all plug-in effects stay in sync to the same sample-based clock, and if you would for instance play a prerecorded piece of music with a known tempo through such an effect, you could use the timing info to apply tempo-synchronized filter effects or delays on the music.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerDemoTeeBee3o3.png" alt="">
+</figure>
+
+<figure>
+<img src="../uploads/Main/AudioMixerDemoTeeDee9o9.png" alt="Simple bassline and drum synthesizers to demonstrate tempo-synchronized effects.">
+<figcaption>Simple bassline and drum synthesizers to demonstrate tempo-synchronized effects.</figcaption>
+</figure>
+
+<h2>Spatialization</h2>
+
+<p>The native audio plug-in SDK is the foundation of the Spatialization SDK which allows developing custom spatialization effects that are instantiazed per <span class="tooltip"><strong>audio source</strong><span class="tooltiptext">A component which plays back an Audio Clip in the scene to an audio listener or through an audio mixer. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioSource.html" href="class-AudioSource.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioSource" aria-label="Go to glossary anchor for AudioSource">Glossary</a></span></span></span>.
+More information about this can be found <a href="AudioSpatializerSDK.html">here</a>.</p>
+
+<h2>Outlook</h2>
+
+<p>This is just the start of an effort to open up parts of the sound system to high performance native code. We have plans to integrate this in other parts of Unity as well to make the effects usable outside of the mixer as well as extending the SDK to support other parameter types than floats with support for better default GUIs as well as storage of binary data.</p>
+
+<p>Have a lot of fun creating your own plug-ins. Hope to see them on the <span class="tooltip"><strong>asset store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span>. ;-)</p>
+
+<h2>“Disclaimer”</h2>
+
+<p>While there are many similarities in the design, Unity’s native audio SDK is not built on top of other plug-in SDKs like Steinberg VST or Apple AudioUnits. It should be mentioned that it would be easy for the interested reader to implement basic wrappers for these using this SDK that allow using such plug-ins to be used in Unity. It is not something the dev-team of Unity is planning to do. Proper hosting of any plug-in quickly gets very complex, and dealing with all the intricacies of expected invocation orders and handling custom GUI windows that are based on native code quickly grows by leaps and bounds which makes it less useful as example code.</p>
+
+<p>While we do understand that it could potentially be quite useful to load your VST or AU plug-in or even effects for just mocking up / testing sound design, bear in mind that using VST/AU also limits you to a few specific platforms. The potential of writing audio plug-ins based on the Unity SDK is that it extends to all platforms that support software-mixing and dynamically loaded native code. That said, there are valid use cases for mocking up early sound design with your favourite tools before deciding to devote time to develop custom plug-ins (or simply to be able to use metering plug-ins in the editor that don’t alter the sound in any way), so if anyone wants to make a nice solution for that, please do.</p>
+
+<hr>
+
+<ul>
+<li><p><span class="page-edit">2018–03–19  Page amended
+</span></p></li>
+<li><p><span class="page-history">MonoDevelop replaced by Visual Studio from 2018.1</span></p></li>
+</ul>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AudioMixerUsage.html"></a></span><div class="tip">Overview of Usage and API</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AudioSpatializerSDK.html"></a></span><div class="tip">Audio Spatializer SDK</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

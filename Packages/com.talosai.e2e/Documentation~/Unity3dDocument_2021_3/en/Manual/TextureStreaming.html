@@ -1,0 +1,352 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: The Mipmap Streaming system</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/TextureStreaming.html">English</a></li>
+<li><a href="/cn/current/Manual/TextureStreaming.html">中文</a></li>
+<li><a href="/ja/current/Manual/TextureStreaming.html">日本語</a></li>
+<li><a href="/kr/current/Manual/TextureStreaming.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/TextureStreaming.html">English</a></li>
+<li><a href="/cn/current/Manual/TextureStreaming.html">中文</a></li>
+<li><a href="/ja/current/Manual/TextureStreaming.html">日本語</a></li>
+<li><a href="/kr/current/Manual/TextureStreaming.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Textures.html">Textures</a></li>
+<li><a href="texture-mipmaps.html">Mipmaps</a></li>
+<li>The Mipmap Streaming system</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="texture-mipmaps-introduction.html"></a></span><div class="tip">Mipmaps introduction</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="TextureStreaming-API.html"></a></span><div class="tip">The Mipmap Streaming system API</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>The Mipmap Streaming system</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Mipmap Streaming system gives you control over how Unity loads <a href="texture-mipmaps.html">mipmaps</a>.</p>
+
+<p>This page contains the following information:</p>
+
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li>
+<a href="#getting-started">Getting started</a>
+
+<ul>
+<li><a href="#enabling-system">Enabling Mipmap Streaming</a></li>
+<li><a href="#enabling-textures">Making textures work with the Mipmap Streaming system</a></li>
+<li><a href="#lightmaps">Making lightmaps work with the Mipmap Streaming system</a></li>
+</ul>
+</li>
+<li>
+<a href="#configuring">Configuring Mipmap Streaming</a>
+
+<ul>
+<li><a href="#memory-budget">Setting the memory budget</a></li>
+<li><a href="#cameras">Configuring Cameras</a></li>
+<li><a href="#play-mode">Configuring Play Mode behavior</a></li>
+</ul>
+</li>
+<li><a href="#Debugging">Debugging</a></li>
+<li><a href="#calculate-mipmap-level">How Unity calculates the required mipmap level</a></li>
+<li><a href="#limitations">Limitations</a></li>
+</ul>
+
+<p>For information about using the API to extend the functionality of this system, see <a href="TextureStreaming-API.html">Mipmap Streaming system API</a>.</p>
+
+<p><a name="overview" aria-hidden="true"></a></p>
+
+<h2>Overview</h2>
+
+<p>This system forces Unity to only load the mipmap levels needed to render the current <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> position, instead of loading all of them by default. It trades a small amount of CPU resources to save a potentially large amount of GPU memory.</p>
+
+<p>You can set a total memory limit for all textures in an application, and the system automatically reduces mipmap levels to stay within this budget.</p>
+
+<p>In Unity’s <a href="https://assetstore.unity.com/packages/essentials/tutorial-projects/viking-village-29140">Viking Village</a> demo project, the Mipmap Streaming system saves 25–30% of texture memory, depending on Camera location.</p>
+
+<figure>
+<img src="../uploads/Main/TextureStreaming_image_0.png" alt="">
+</figure>
+
+<p><a name="getting-started" aria-hidden="true"></a></p>
+
+<h2>Getting started</h2>
+
+<p><a name="enabling-system" aria-hidden="true"></a></p>
+
+<h3>Enabling Mipmap Streaming</h3>
+
+<p>To enable Mipmap Streaming, go to Unity’s Quality Settings (<strong>Edit</strong> &gt; <span class="tooltip"><strong>Project Settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html" href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span> &gt; <strong>Quality</strong>) and enable the <strong>Texture Streaming</strong> checkbox.</p>
+
+<p>When you enable this setting, the Quality settings window reveals the settings specific to the Mipmap Streaming system. For details on each setting, see documentation on <a href="class-QualitySettings.html">Quality Settings</a>.</p>
+
+<figure>
+<img src="../uploads/Main/TextureStreaming_image_1.png" alt="">
+</figure>
+
+<p>By default, this enables Mipmap Streaming for all Cameras in your project.</p>
+
+<p><a name="enabling-textures" aria-hidden="true"></a></p>
+
+<h3>Making textures work with the Mipmap Streaming system</h3>
+
+<p>Now you can set up Mipmap Streaming on individual textures. Select a texture asset, navigate to the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window and view the Texture Import settings. Open the <strong>Advanced</strong> settings, and enable the <strong>Mip Streaming</strong> checkbox.</p>
+
+<p>If you’re developing for Android, you also need to open the <a href="BuildSettings.html">Build Settings</a> and set the <strong>Compression Method</strong> to <strong>LZ4</strong> or <strong>LZ4HC</strong>. Unity requires one of these <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> methods for <a href="LoadingTextureandMeshData.html">asynchronous Texture loading</a>, which the Mipmap Streaming system relies upon.</p>
+
+<p>Unity loads mipmap levels at the highest resolution possible while observing the memory budget. You can configure the priority of a texture with the <strong>Mip Map Priority</strong> setting in the Texture Import Settings.</p>
+
+<p>Unity uses this setting to determine:</p>
+
+<ul>
+<li>Which textures to prioritize when assigning resources.</li>
+<li>As a mipmap bias value when choosing a mipmap level that fits in the memory budget. For example, with a priority of 2, the mipmap streaming system tries to use a mipmap two levels higher than Textures with a priority of 0.</li>
+</ul>
+
+<p>Positive numbers give higher priority. Valid values range from –128 to 127.</p>
+
+<p><a name="lightmaps" aria-hidden="true"></a></p>
+
+<h3>Streaming Lightmaps</h3>
+
+<p>You can use the Mipmap Streaming system to stream mipmap levels for <span class="tooltip"><strong>lightmaps</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span>.</p>
+
+<p>You can edit the Mip Map Streaming settings of the lightmap assets in the same way that you can any other texture, but they reset to their default values when Unity regenerates the lightmaps. To solve this, you can tell Unity to apply these values when it generates the lightmaps. The <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html">Player Settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html" href="class-PlayerSettings.html">Player Settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span> (<strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong>) provide two controls to set streaming and priority for generated lightmaps: <strong>Lightmap Streaming Enabled</strong> and <strong>Streaming Priority</strong>.</p>
+
+<p>Enabling Mip Map Streaming and configuring priority work in the same way for lightmaps as for <a href="#enabling-textures">regular textures</a>.</p>
+
+<p><a name="configuring" aria-hidden="true"></a></p>
+
+<h2>Configuring Mipmap Streaming</h2>
+
+<p>You can configure default settings in the Unity Editor, and then use the <a href="TextureStreaming-API.html">Mipmap Streaming API</a> to override these settings if required.</p>
+
+<p><a name="memory-budget" aria-hidden="true"></a></p>
+
+<h3>Setting the memory budget</h3>
+
+<p>The <strong>Memory Budget</strong> property determines the maximum amount of memory Unity uses for textures. If your memory budget is too small, Unity lowers the resolution of textures in your <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. This can cause textures to pop or load slowly. However, the memory budget should be as small as possible to allow memory for other resources.</p>
+
+<p>Set the memory budget in the <a href="class-QualitySettings.html">Quality Settings</a> window, with the <strong>Texture Streaming</strong> &gt; <strong>Memory Budget</strong> property.</p>
+
+<p>When the memory budget is full, Unity discards mipmaps it’s not using, to make room for those it needs to use. You can control how many unused mipmaps it discards with the <strong>Max Level Reduction</strong>.</p>
+
+<p>This value is also the mipmap level that the Mipmap Streaming system initially loads at startup. For example, when this is set to 2, Unity skips the two highest mipmaps on first load.</p>
+
+<p>Set this value in the <a href="class-QualitySettings.html">Quality Settings</a> window, with the <strong>Texture Streaming</strong> &gt; <strong>Max Level Reduction</strong> property.</p>
+
+<p>
+<strong>Note:</strong> Unity prioritises the <strong>Max Level Reduction</strong> value over the memory budget. It never discards more mipmaps than the <strong>Max Level Reduction</strong> value, even if this causes the textures memory to exceed the budget.</p>
+
+<p>The memory budget includes textures that do not use Mipmap Streaming. For example, if your budget is 100MB and you have 90MB of textures that don’t use Mipmap Streaming, Unity tries to fit all the streaming mipmaps in the remaining 10MB. If it can’t, it loads them at a lower resolution. Unity always loads textures that don’t use Mipmap Streaming at full resolution, even if that exceeds the budget.</p>
+
+<p>To figure out what your memory budget should be:</p>
+
+<ol>
+<li>Look at the <a href="../ScriptReference/Texture-desiredTextureMemory.html">Texture.desiredTextureMemory</a> value when your project is running.</li>
+<li>Set the <strong>Memory Budget</strong> value slightly higher than the <a href="../ScriptReference/Texture-desiredTextureMemory.html">Texture.desiredTextureMemory</a> value.</li>
+</ol>
+
+<p>This makes sure there is enough texture memory available for the most resource-intensive areas of your scene and prevents textures from dropping to a lower resolution. If you have extra memory available, you can set a larger memory budget so that Unity can keep texture data that is not visible in your scene in the streaming cache.</p>
+
+<p><a name="cameras" aria-hidden="true"></a></p>
+
+<h3>Configuring Cameras</h3>
+
+<p>By default, when you enable the Mipmap Streaming system, Unity enables it for all cameras. You can disable this setting if you like.</p>
+
+<p>Control whether Unity enables mipmap Streaming for all Cameras in the <a href="class-QualitySettings.html">Quality Settings</a> window, with the <strong>Texture Streaming</strong> &gt; <strong>Add All Cameras</strong> property.</p>
+
+<p>If you want to exclude a specific Camera, add a <a href="class-StreamingController.html">Streaming Controller</a> component to that Camera and then disable it.</p>
+
+<p>If you disable <strong>Add All Cameras</strong>, then you must enable mipmap Streaming per-Camera. To do this, add a <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-StreamingController.html">Streaming Controller</a> component to the same <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="class-StreamingController.html">Streaming Controller</a> component to the same <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> as the Camera component.</p>
+
+<p>This component also allows you to adjust the mipmap bias setting per-Camera.</p>
+
+<figure>
+<img src="../uploads/Main/StreamingController.png" alt="The Streaming Controller component">
+<figcaption>The Streaming Controller component</figcaption>
+</figure>
+
+<p><a name="play-mode" aria-hidden="true"></a></p>
+
+<h3>Configuring Play Mode behavior</h3>
+
+<p>Mipmap Streaming is enabled in Play Mode by default.</p>
+
+<p>Control whether Unity enables Mipmap Streaming in Play Mode in the <a href="class-EditorManager.html">Editor Settings</a> window, with the <strong>Streaming Settings</strong> &gt; <strong>Enable Texture Streaming in Play Mode</strong> property.</p>
+
+<p>When Mipmap Streaming is enabled in Play mode, but not enabled in Edit mode (or the other way around), toggling in and out of Play mode takes slightly longer. This prevents Unity from unloading and reloading mipmap data, and should speed up the Play Mode workflow. </p>
+
+<figure>
+<img src="../uploads/Main/StreamingSettings2019-1.png" alt="Edit &amp;gt; Project Settings &amp;gt; Editor &amp;gt; Streaming Settings">
+<figcaption><strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Editor</strong> &gt; <strong>Streaming Settings</strong></figcaption>
+</figure>
+
+<p><a name="Debugging" aria-hidden="true"></a></p>
+
+<h2>Debugging Mipmap Streaming</h2>
+
+<p>Unity has a built-in Mipmap Streaming debugging view mode. To access it, click the <a href="ViewModes.html">Scene view control drop-down</a> and select <strong>Texture Streaming</strong>. This view mode tints GameObjects the following colours, depending on their status in the Mipmap Streaming system:</p>
+
+<ul>
+<li>
+<strong>Green</strong> for Textures that have reduced mipmaps due to the Mipmap Streaming system.</li>
+<li>
+<strong>Red</strong> for Textures that have fewer mipmaps because the Mipmap Streaming system does not have enough resources to load them all.</li>
+<li>
+<strong>Blue</strong> for Textures that are not set to stream, or if there is no renderer calculating the mipmap levels.</li>
+</ul>
+
+<p>You can also write your own custom debug tools and visualizations using the <a href="TextureStreaming-API.html#DebuggingAPI">Debugging API</a>
+</p>
+
+<p>
+<strong>Important</strong> : When the main texture is set using the <a href="../ScriptReference/Material-mainTexture.html">MainTexture</a> attribute, it is not visible in the game view when you use the texture streaming <a href="TextureStreaming-API.html#DebuggingAPI">debugging view mode</a> or a custom debug tool.</p>
+
+<p><a name="calculate-mipmap-level" aria-hidden="true"></a></p>
+
+<h2>How Unity calculates the required mipmap level</h2>
+
+<p>For textures that use Mipmap Streaming, Unity calculates the correct mipmap level using one of the following methods:</p>
+
+<ul>
+<li>If you assign the texture to a material that is used by a Unity Renderer componennt, Unity calculates the mipmap level automatically.</li>
+<li>Otherwise, you must request mipmap levels manually using <a href="../ScriptReference/Texture2D-requestedMipmapLevel.html">Texture2D.requestedMipmapLevel</a>.</li>
+</ul>
+
+<p>If you don’t do this, Unity can’t calculate the correct mipmap level, and it loads the texture using low-resolution mipmap levels. These can appear blurry.</p>
+
+<p>
+<strong>Note:</strong> The following systems don’t use standard Renderer components. This means you must manually set the requested mipmap levels for these systems:</p>
+
+<ul>
+<li>Decal projector textures.</li>
+<li><span class="tooltip"><strong>Reflection probe</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ReflectionProbe.html" href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span> textures: Lower resolution mipmap levels are a lookup table for roughness. Therefore, if Unity uses a lower mipmap level, it renders materials using the wrong roughness.</li>
+<li><span class="tooltip"><strong>Shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> that use UV texture coordinates in a channel other than <a href="../ScriptReference/Mesh-uv.html">Mesh.uv</a> (also called UV0), or change texture coordinates in the shader. The only exceptions are changes to scale and translation (see below).</li>
+</ul>
+
+<p><a name="limitations" aria-hidden="true"></a></p>
+
+<h2>Limitations</h2>
+
+<ul>
+<li>Unity does not support Mipmap Streaming on <span class="tooltip"><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> textures. This is because Terrain Textures need to be available at full resolution at all times to allow Unity to tile and blend the textures.</li>
+<li>When a Renderer component is active, its mesh requires valid UV distribution metrics to calculate the desired mipmap level. Unity calculates distribution metrics automatically as part of the mesh importing process.<br><br>If you create a mesh from code, Unity does not calculate distribution metrics automatically and therefore it loads the wrong mipmap levels. To manually trigger the UV distribution metric calculation use <a href="../ScriptReference/Mesh.RecalculateUVDistributionMetrics.html">Mesh.RecalculateUVDistributionMetrics</a>.</li>
+<li>When Unity renders a streamed Texture directly with an API (such as <a href="../ScriptReference/Graphics.DrawMeshNow.html">Graphics.DrawMeshNow</a>) the system has no renderer bounds or other information to calculate the mipmap level. This means you need to set the Texture mipmap level manually or disable Mipmap Streaming on this Texture. See <a href="../ScriptReference/Texture2D-requestedMipmapLevel.html">Texture2D.requestedMipmapLevel</a> for more details on how to manually set which mipmap level Unity loads.</li>
+<li>When Unity calculates the miplevel for a texture it looks for the scale and translation of that texture in a <code>_ST</code> value with the same name as the texture flagged in your shader. For example, if you reference your textures are in the shader using <code>_MainTex</code>, Unity will look for <code>_MainTex_ST</code>.</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="texture-mipmaps-introduction.html"></a></span><div class="tip">Mipmaps introduction</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="TextureStreaming-API.html"></a></span><div class="tip">The Mipmap Streaming system API</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

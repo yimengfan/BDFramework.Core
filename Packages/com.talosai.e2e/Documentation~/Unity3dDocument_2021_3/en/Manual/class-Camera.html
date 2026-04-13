@@ -1,0 +1,491 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Camera component</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Camera.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Camera.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Camera.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Camera.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Camera.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Camera.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Camera.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Camera.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="CamerasOverview.html">Cameras</a></li>
+<li>Camera component</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="MultiDisplay.html"></a></span><div class="tip">Multi-display</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="LightingOverview.html"></a></span><div class="tip">Lighting</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Camera component</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/Camera.html' title='Go to Camera page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p><span class="tooltip"><strong>Cameras</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> are the devices that capture and display the world to the player. By customizing and manipulating cameras, you can make the presentation of your game truly unique. You can have an unlimited number of cameras in a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> are the devices that capture and display the world to the player. By customizing and manipulating cameras, you can make the presentation of your game truly unique. You can have an unlimited number of cameras in a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. They can be set to render in any order, at any place on the screen, or only certain parts of the screen.</p>
+
+<figure>
+<img src="../uploads/Main/InspectorCamera35.png" alt="">
+</figure>
+
+<h2>Camera Inspector reference</h2>
+
+<p>Unity displays different properties in the Camera <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> depending on the <span class="tooltip"><a href="render-pipelines.html">render pipeline</a><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html" href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> depending on the <span class="tooltip"><a href="render-pipelines.html">render pipeline</a><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> that your Project uses.</p>
+
+<ul>
+<li>If your Project uses the <a href="universal-render-pipeline.html">Universal Render Pipeline (URP)</a>, see the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest">URP package documentation microsite</a>.</li>
+<li>If your Project uses the <a href="high-definition-render-pipeline.html">High Definition Render Pipeline (HDRP)</a>, see the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest">HDRP package documentation microsite</a>.</li>
+<li>If your Project uses the <a href="built-in-render-pipeline.html">Built-in Render Pipeline</a>, Unity displays the following properties:</li>
+</ul>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property:</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function:</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Clear Flags</strong></td>
+	<td style="text-align:left;">Determines which parts of the screen will be cleared. This is handy when using multiple Cameras to draw different game elements.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Background</strong></td>
+	<td style="text-align:left;">The color applied to the remaining screen after all elements in view have been drawn and there is no <span class="tooltip"><strong>skybox</strong><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Skybox.html" href="class-Skybox.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skybox" aria-label="Go to glossary anchor for Skybox">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Culling Mask</strong><span class="tooltiptext">Allows you to include or omit objects to be rendered by a Camera, by Layer.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#CullingMask" aria-label="Go to glossary anchor for CullingMask">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Includes or omits layers of objects to be rendered by the Camera. Assigns layers to your objects in the Inspector.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Projection</strong></td>
+	<td style="text-align:left;">Toggles the camera’s capability to simulate perspective.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>Perspective</em>
+</td>
+	<td style="text-align:left;">Camera will render objects with perspective intact.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>Orthographic</em>
+</td>
+	<td style="text-align:left;">Camera will render objects uniformly, with no sense of perspective. <strong>NOTE:</strong> Deferred rendering is not supported in Orthographic mode. <span class="tooltip"><strong>Forward rendering</strong><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderTech-ForwardRendering.html" href="RenderTech-ForwardRendering.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ForwardRendering" aria-label="Go to glossary anchor for ForwardRendering">Glossary</a></span></span></span> is always used.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Size</strong> (when Orthographic is selected)</td>
+	<td style="text-align:left;">The <span class="tooltip"><strong>viewport</strong><span class="tooltiptext">The user’s visible area of an app on their screen.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Viewport" aria-label="Go to glossary anchor for Viewport">Glossary</a></span></span></span> size of the Camera when set to Orthographic.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>FOV Axis</strong> (when Perspective is selected)</td>
+	<td style="text-align:left;">Field of view axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>Horizontal</em>
+</td>
+	<td style="text-align:left;">The Camera uses a horizontal field of view axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>Vertical</em>
+</td>
+	<td style="text-align:left;">The Camera uses a vertical field of view axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Field of view</strong> (when Perspective is selected)</td>
+	<td style="text-align:left;">The Camera’s view angle, measured in degrees along the axis specified in the <strong>FOV Axis</strong> drop-down.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Physical Camera</strong></td>
+	<td style="text-align:left;">Tick this box to enable the <a href="PhysicalCameras.html">Physical Camera</a> properties for this camera. <br><br> When the Physical Camera properties are enabled, Unity calculates the <strong>Field of View</strong> using the properties that simulate real-world camera attributes: <strong>Focal Length</strong>, <strong>Sensor Size</strong>, and <strong>Lens Shift</strong>. <br><br>Physical Camera properties are not visible in the Inspector until you tick this box.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>Focal Length</em>
+</td>
+	<td style="text-align:left;">Set the distance, in millimeters, between the camera sensor and the camera lens.<br><br>Lower values result in a wider <strong>Field of View</strong>, and vice versa. <br><br>When you change this value, Unity automatically updates the <strong>Field of View</strong> property accordingly.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>Sensor Type</em>
+</td>
+	<td style="text-align:left;">Specify the real-world camera format you want the camera to simulate. Choose the desired format from the list. <br><br>When you choose a camera format, Unity sets the the <strong>Sensor Size &gt; X</strong> and <strong>Y</strong> properties to the correct values automatically. <br><br>If you change the <strong>Sensor Size</strong> values manually, Unity automatically sets this property to <strong>Custom</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>Sensor Size</em>
+</td>
+	<td style="text-align:left;">Set the size, in millimeters, of the camera sensor. <br><br>Unity sets the <strong>X</strong> and <strong>Y</strong> values automatically when you choose the <strong>Sensor Type</strong>. You can enter custom values if needed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">                <em>X</em>
+</td>
+	<td style="text-align:left;">The width of the sensor.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">                <em>Y</em>
+</td>
+	<td style="text-align:left;">The height of the sensor.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>Lens Shift</em>
+</td>
+	<td style="text-align:left;">Shift the lens horizontally or vertically from center. Values are multiples of the sensor size; for example, a shift of 0.5 along the X axis offsets the sensor by half its horizontal size. <br><br>You can use lens shifts to correct distortion that occurs when the camera is at an angle to the subject (for example, converging parallel lines). <br><br>Shift the lens along either axis to make the camera frustum <a href="ObliqueFrustum.html">oblique</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">                <em>X</em>
+</td>
+	<td style="text-align:left;">The horizontal sensor offset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">                <em>Y</em>
+</td>
+	<td style="text-align:left;">The vertical sensor offset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>Gate Fit</em>
+</td>
+	<td style="text-align:left;">Options for changing the size of the <strong>resolution gate</strong> (size/aspect ratio of the game view) relative to the <strong>film gate</strong> (size/aspect ratio of the Physical Camera sensor). <br><br>For further information about resolution gate and film gate, see documentation on <a href="PhysicalCameras.html">Physical Cameras</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">                <em>Vertical</em>
+</td>
+	<td style="text-align:left;">Fits the resolution gate to the height of the film gate. <br><br>If the sensor aspect ratio is larger than the game view aspect ratio, Unity crops the rendered image at the sides. <br><br>If the sensor aspect ratio is smaller than the game view aspect ratio, Unity overscans the rendered image at the sides. <br><br>When you choose this setting, changing the sensor width (<strong>Sensor Size &gt; X property</strong>) has no effect on the rendered image.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">                <em>Horizontal</em>
+</td>
+	<td style="text-align:left;">Fits the resolution gate to the width of the film gate. <br><br>If the sensor aspect ratio is larger than the game view aspect ratio, Unity overscans the rendered image on the top and bottom. <br><br>If the sensor aspect ratio is smaller than the game view aspect ratio, Unity crops the rendered image on the top and bottom. <br><br>When you choose this setting, changing the sensor height (<strong>Sensor Size &gt; Y</strong> property) has no effect on the rendered image.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">                <em>Fill</em>
+</td>
+	<td style="text-align:left;">Fits the resolution gate to either the width or height of the film gate, whichever is smaller. This crops the rendered image.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">                <em>Overscan</em>
+</td>
+	<td style="text-align:left;">Fits the resolution gate to either the width or height of the film gate, whichever is larger. This overscans the rendered image.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">                <em>None</em>
+</td>
+	<td style="text-align:left;">Ignores the resolution gate and uses the film gate only. This stretches the rendered image to fit the game view <span class="tooltip"><strong>aspect ratio</strong><span class="tooltiptext">The relationship of an image’s proportional dimensions, such as its width and height.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AspectRatio" aria-label="Go to glossary anchor for AspectRatio">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clipping Planes</strong></td>
+	<td style="text-align:left;">Distances from the camera to start and stop rendering.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>Near</em>
+</td>
+	<td style="text-align:left;">The closest point relative to the camera that drawing will occur.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>Far</em>
+</td>
+	<td style="text-align:left;">The furthest point relative to the camera that drawing will occur.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Viewport Rect</strong></td>
+	<td style="text-align:left;">Four values that indicate where on the screen this camera view will be drawn. Measured in Viewport Coordinates (values 0–1).</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>X</em>
+</td>
+	<td style="text-align:left;">The beginning horizontal position that the camera view will be drawn.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>Y</em>
+</td>
+	<td style="text-align:left;">The beginning vertical position that the camera view will be drawn.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>W</em> (Width)</td>
+	<td style="text-align:left;">Width of the camera output on the screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>H</em> (Height)</td>
+	<td style="text-align:left;">Height of the camera output on the screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Depth</strong></td>
+	<td style="text-align:left;">The camera’s position in the draw order. Cameras with a larger value will be drawn on top of cameras with a smaller value.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Rendering Path</strong><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingPaths.html" href="RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderingPath" aria-label="Go to glossary anchor for RenderingPath">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Options for defining what rendering methods will be used by the camera.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>Use Player Settings</em>
+</td>
+	<td style="text-align:left;">This camera will use whichever Rendering Path is set in the <span class="tooltip"><strong>Player Settings</strong><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html" href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>Vertex Lit</em>
+</td>
+	<td style="text-align:left;">All objects rendered by this camera will be rendered as Vertex-Lit objects.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>Forward</em>
+</td>
+	<td style="text-align:left;">All objects will be rendered with one pass per material.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <em>Deferred Lighting</em>
+</td>
+	<td style="text-align:left;">All objects will be drawn once without lighting, then lighting of all objects will be rendered together at the end of the render queue. <strong>NOTE:</strong> <em>If the camera’s projection mode is set to Orthographic, this value is overridden, and the camera will always use Forward rendering.</em>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Target Texture</strong></td>
+	<td style="text-align:left;">Reference to a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html">Render Texture</a><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a href="class-RenderTexture.html" href="class-RenderTexture.html">Render Texture</a><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span> that will contain the output of the Camera view. Setting this reference will disable this Camera’s capability to render to the screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Occlusion Culling</strong><span class="tooltiptext">A process that disables rendering GameObjects that are hidden (occluded) from the view of the camera. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about OcclusionCulling.html" href="OcclusionCulling.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Occlusionculling" aria-label="Go to glossary anchor for Occlusionculling">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Enables Occlusion Culling for this camera. Occlusion Culling means that objects that are hidden behind other objects are not rendered, for example if they are behind walls. See <a href="OcclusionCulling.html">Occlusion Culling</a> for details.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Allow HDR</strong></td>
+	<td style="text-align:left;">Enables High Dynamic Range rendering for this camera. See <a href="HDR.html">High Dynamic Range Rendering</a> for details.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Allow MSAA</strong></td>
+	<td style="text-align:left;">Enables multi sample <span class="tooltip"><strong>antialiasing</strong><span class="tooltiptext">A technique for decreasing artifacts, like jagged lines (jaggies), in images to make them appear smoother.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Antialiasing" aria-label="Go to glossary anchor for Antialiasing">Glossary</a></span></span></span> for this camera.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Allow Dynamic Resolution</strong></td>
+	<td style="text-align:left;">Enables Dynamic Resolution rendering for this camera. See <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DynamicResolution.html">Dynamic Resolution</a><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets, to reduce workload on the GPU. <a href="DynamicResolution.html" href="DynamicResolution.html">Dynamic Resolution</a><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets, to reduce workload on the GPU. <a href="DynamicResolution.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#dynamicresolution" aria-label="Go to glossary anchor for dynamicresolution">Glossary</a></span></span></span> for details.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Target Display</strong></td>
+	<td style="text-align:left;">Defines which external device to render to. Between 1 and 8.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Details</h2>
+
+<p>Cameras are essential for displaying your game to the player. They can be customized, scripted, or parented to achieve just about any kind of effect imaginable. For a puzzle game, you might keep the Camera static for a full view of the puzzle. For a first-person shooter, you would parent the Camera to the player character, and place it at the character’s eye level. For a racing game, you’d probably have the Camera follow your player’s vehicle.</p>
+
+<p>You can create multiple Cameras and assign each one to a different <strong>Depth</strong>. Cameras are drawn from low <strong>Depth</strong> to high <strong>Depth</strong>. In other words, a Camera with a <strong>Depth</strong> of 2 will be drawn on top of a Camera with a depth of 1. You can adjust the values of the <strong>Normalized View Port Rectangle</strong> property to resize and position the Camera’s view onscreen. This can create multiple mini-views like missile cams, map views, rear-view mirrors, etc.</p>
+
+<h3>Render path</h3>
+
+<p>Unity supports different rendering paths. You should choose which one you use depending on your game content and target platform / hardware. Different rendering paths have different features and performance characteristics that mostly affect lights and shadows.
+The rendering path used by your Project is chosen in the <strong>Player</strong> settings. Additionally, you can override it for each Camera.</p>
+
+<p>For more information on rendering paths, check the <a href="RenderingPaths.html">rendering paths</a> page.</p>
+
+<h3>Clear Flags</h3>
+
+<p>Each Camera stores color and depth information when it renders its view. The portions of the screen that are not drawn in are empty, and will display the skybox by default. When you are using multiple Cameras, each one stores its own color and depth information in buffers, accumulating more data as each Camera renders. As any particular Camera in your scene renders its view, you can set the <strong>Clear Flags</strong> to clear different collections of the buffer information. To do this, choose one of the following four options:</p>
+
+<h4>Skybox</h4>
+
+<p>This is the default setting. Any empty portions of the screen will display the current Camera’s skybox. If the current Camera has no skybox set, it will default to the skybox chosen in the <a href="lighting-window.html">Lighting Window</a> (menu: <strong>Window</strong> &gt; <strong>Rendering</strong> &gt; <strong>Lighting</strong>). It will then fall back to the <strong>Background Color</strong>. Alternatively a <a href="class-Skybox.html">Skybox component</a> can be added to the camera. If you want to create a new Skybox, <a href="HOWTO-UseSkybox">you can use this guide</a>.</p>
+
+<h4>Solid color</h4>
+
+<p>Any empty portions of the screen will display the current Camera’s <strong>Background Color</strong>.</p>
+
+<h4>Depth only</h4>
+
+<p>If you want to draw a player’s gun without letting it get clipped inside the environment, set one Camera at <strong>Depth</strong> 0 to draw the environment, and another Camera at <strong>Depth</strong> 1 to draw the weapon alone. Set the weapon Camera’s <strong>Clear Flags</strong> to <strong>depth only</strong>. This will keep the graphical display of the environment on the screen, but discard all information about where each object exists in 3-D space. When the gun is drawn, the opaque parts will completely cover anything drawn, regardless of how close the gun is to the wall.</p>
+
+<figure>
+<img src="../uploads/Main/Camera-ClearFlags.jpg" alt="The gun is drawn last, after clearing the depth buffer of the cameras before it">
+<figcaption>The gun is drawn last, after clearing the depth buffer of the cameras before it</figcaption>
+</figure>
+
+<h4>Don’t clear</h4>
+
+<p>This mode does not clear either the color or the <span class="tooltip"><strong>depth buffer</strong><span class="tooltiptext">A memory store that holds the z-value depth of each pixel in an image, where the z-value is the depth for each rendered pixel from the projection plane. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#depthbuffer" aria-label="Go to glossary anchor for depthbuffer">Glossary</a></span></span></span>. The result is that each frame is drawn over the next, resulting in a smear-looking effect. This isn’t typically used in games, and would more likely be used with a custom <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#depthbuffer" aria-label="Go to glossary anchor for depthbuffer">Glossary</a></span></span></span>. The result is that each frame is drawn over the next, resulting in a smear-looking effect. This isn’t typically used in games, and would more likely be used with a custom <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>.</p>
+
+<p>Note that on some GPUs (mostly mobile GPUs), not clearing the screen might result in the contents of it being undefined in the next frame. On some systems, the screen may contain the previous frame image, a solid black screen, or random colored <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span>.</p>
+
+<h3>Clip Planes</h3>
+
+<p>The <strong>Near</strong> and <strong>Far Clip Plane</strong> properties determine where the Camera’s view begins and ends. The planes are laid out perpendicular to the Camera’s direction and are measured from its position. The <strong>Near plane</strong> is the closest location that will be rendered, and the <strong>Far plane</strong> is the furthest.</p>
+
+<p>The clipping planes also determine how depth buffer precision is distributed over the scene. In general, to get better precision you should move the <strong>Near plane</strong> as far as possible.</p>
+
+<p>Note that the near and far clip planes together with the planes defined by the field of view of the camera describe what is popularly known as the camera <em>frustum</em>. Unity ensures that when rendering your objects those which are completely outside of this frustum are not displayed. This is called Frustum Culling. Frustum Culling happens irrespective of whether you use Occlusion Culling in your game.</p>
+
+<p>For performance reasons, you might want to cull small objects earlier. For example, small rocks and debris could be made invisible at much smaller distance than large buildings. To do that, put small objects into a <a href="Layers.html">separate layer</a> and set up per-layer cull distances using <a href="../ScriptReference/Camera-layerCullDistances.html">Camera.layerCullDistances</a> script function.</p>
+
+<h3>Culling Mask</h3>
+
+<p>The <strong>Culling Mask</strong> is used for selectively rendering groups of objects using Layers. More information on using layers can be found <a href="Layers.html">here</a>.</p>
+
+<h3>Normalized Viewport Rectangles</h3>
+
+<p>
+<strong>Normalized Viewport Rectangle</strong> is specifically for defining a certain portion of the screen that the current camera view will be drawn upon. You can put a map view in the lower-right hand corner of the screen, or a missile-tip view in the upper-left corner. With a bit of design work, you can use <strong>Viewport Rectangle</strong> to create some unique behaviors.</p>
+
+<p>It’s easy to create a two-player split screen effect using <strong>Normalized Viewport Rectangle</strong>. After you have created your two cameras, change both camera’s H values to be 0.5 then set player one’s Y value to 0.5, and player two’s Y value to 0. This will make player one’s camera display from halfway up the screen to the top, and player two’s camera start at the bottom and stop halfway up the screen.</p>
+
+<figure>
+<img src="../uploads/Main/Camera-Viewport.jpg" alt="Two-player display created with the Normalized Viewport Rectangle property">
+<figcaption>Two-player display created with the Normalized Viewport Rectangle property</figcaption>
+</figure>
+
+<h3>Orthographic</h3>
+
+<p>Marking a Camera as <strong>Orthographic</strong> removes all perspective from the Camera’s view. This is mostly useful for making isometric or 2D games.</p>
+
+<p>Note that fog is rendered uniformly in orthographic camera mode and may therefore not appear as expected. This is because the Z coordinate of the post-perspective space is used for the fog “depth”. This is not strictly accurate for an orthographic camera but it is used for its performance benefits during rendering.</p>
+
+<figure>
+<img src="../uploads/Main/Camera-Non-Ortho-FPS.jpg" alt="Perspective camera.">
+<figcaption>Perspective camera.</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/Camera-Ortho-FPS.jpg" alt="Orthographic camera. Objects do not get smaller with distance here!">
+<figcaption>Orthographic camera. Objects do not get smaller with distance here!</figcaption>
+</figure>
+
+<h3>Render Texture</h3>
+
+<p>This will place the camera’s view onto a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html">Texture</a><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a href="class-TextureImporter.html" href="class-RenderTexture.html">Texture</a><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a href="class-TextureImporter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#texture" aria-label="Go to glossary anchor for texture">Glossary</a></span></span></span> that can then be applied to another object. This makes it easy to create sports arena video monitors, surveillance cameras, reflections etc.</p>
+
+<figure>
+<img src="../uploads/Main/Camera-RenderTexture.jpg" alt="A Render Texture used to create a live arena-cam">
+<figcaption>A Render Texture used to create a live arena-cam</figcaption>
+</figure>
+
+<h3>Target display</h3>
+
+<p>A camera has up to 8 target display settings. The camera can be controlled to render to one of up to 8 monitors. This is supported only on PC, Mac and Linux. In Game View the chosen display in the Camera Inspector will be shown.</p>
+
+<hr>
+
+<ul>
+<li><span class="page-edit">2018–10–05 Page amended
+</span></li>
+<li><span class="page-history">Physical Camera options added in Unity 2018.2</span></li>
+<li><span class="page-history">Gate Fit options added in Unity 2018.3</span></li>
+</ul>
+<!-- area:graphics -->
+
+<p><span class="search-words">Camera</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="MultiDisplay.html"></a></span><div class="tip">Multi-display</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="LightingOverview.html"></a></span><div class="tip">Lighting</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

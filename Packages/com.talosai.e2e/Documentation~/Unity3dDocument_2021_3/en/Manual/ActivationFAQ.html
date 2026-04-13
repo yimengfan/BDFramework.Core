@@ -1,0 +1,349 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: License troubleshooting</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ActivationFAQ.html">English</a></li>
+<li><a href="/cn/current/Manual/ActivationFAQ.html">中文</a></li>
+<li><a href="/ja/current/Manual/ActivationFAQ.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ActivationFAQ.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ActivationFAQ.html">English</a></li>
+<li><a href="/cn/current/Manual/ActivationFAQ.html">中文</a></li>
+<li><a href="/ja/current/Manual/ActivationFAQ.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ActivationFAQ.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="GettingStartedInstallingUnity.html">Installing Unity</a></li>
+<li><a href="LicensesAndActivation.html">Licenses and activation</a></li>
+<li>License troubleshooting</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ManualActivationCmdMac.html"></a></span><div class="tip">Submit a license request from a command line and browser (macOS, Linux)</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="2Dor3D.html"></a></span><div class="tip">2D or 3D projects</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>License troubleshooting</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This section provides information on the following licensing management issues:</p>
+
+<ul>
+<li><a href="#activation">Activation issues</a></li>
+<li><a href="#returns">Issues with returns</a></li>
+<li><a href="#licensefilefolders">Unity license file location</a></li>
+<li><a href="#other">Answers to other questions</a></li>
+<li><a href="#more-help">Additional resources</a></li>
+</ul>
+
+<p><a name="activation" aria-hidden="true"></a></p>
+
+<h2>Activation issues</h2>
+
+<p>The following issues can cause error codes or other problems during the activation process:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Issue</strong></th>
+	<th style="text-align:left;"><strong>Solution</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>No internet access</strong></td>
+	<td style="text-align:left;">
+<strong>Serial-based license:</strong><br>You can activate your serial-based license with a license request. For more information, refer to <a href="ManualActivationGuide.html">Manual license activation</a>. <br><br><strong>Named user license:</strong><br>You can’t activate a <a href="LicenseOverview.html">named user license</a> without internet access.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Security settings block Unity</strong></td>
+	<td style="text-align:left;">Review your firewall, proxy, or internet security settings. They might be blocking Unity from sending and receiving data about your license file. For more information, refer to <a href="ent-proxy-autoconfig">Use Unity through web proxies</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>No write privileges for saving the license file</strong></td>
+	<td style="text-align:left;">Grant or request write permissions to the user account you are using to activate a license. This often occurs in closed networks, such as those at workplaces and schools. Contact your IT administrator to find out whether there are any restrictions in place. For a list of directories where you need write privileges, refer to <a href="#licensefilefolders">Unity license file location</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>License fails to recognize your computer</strong></td>
+	<td style="text-align:left;">Major operating system changes or updates might affect your computer’s ID, which might cause your license to stop recognizing your computer. Refer to <a href="https://support.unity.com/hc/en-us/articles/360021433091-Can-I-use-my-licence-with-different-operating-systems">Can I use my licence with different operating systems</a> and these categories of Unity Support articles:<br><br>- <a href="https://support.unity.com/hc/en-us/sections/202242003-Activations-and-Management">Activations and Management</a><br>- <a href="https://support.unity.com/hc/en-us/sections/201104799-Licensing-and-Payments">Licensing and Payments</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Unity’s license servers are down</strong></td>
+	<td style="text-align:left;">Refer to the <a href="https://status.cloud.unity3d.com/">Unity Cloud System Status Page</a> for status updates on all Unity servers.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Too many license activations</strong></td>
+	<td style="text-align:left;">Return your license if you no longer need it for a specific computer. Choose from the following methods to return a license:<br><br>- <strong>Unity Hub</strong>: Return serial-based licenses by using the <strong>Preferences</strong> window &gt; <strong>Licenses</strong> tab &gt; <strong>Return license</strong> button. Return named user licenses by signing out of the Unity Hub.<br>- <strong>Command line</strong>: Return serial-based licenses following the instructions in <a href="ManagingYourUnityLicense.html">Manage your license through the command line</a>.<br>- <strong>ID Portal</strong>: Return serial-based licenses and named user licenses from the <a href="https://id.unity.com/">Unity ID Portal</a> &gt; <strong>My Accounts</strong> &gt; <strong>My Seats</strong>. You can use this method even if you don’t have access to the computer whose license you’re returning, or if that computer’s bindings changed.<br><br>You must return your license before you switch computers. You must also return your license before you make any hardware changes or operating system changes to your computer. If you fail to return the license, the Unity license server sees a request from another computer and informs you that you have reached your activation limit for the license.<br><br>If you get this message but you think it’s an error, you can return all licenses at once, and then reactivate each computer, as needed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Account credentials not recognized</strong></td>
+	<td style="text-align:left;">Make sure you enter your details correctly. Passwords are case sensitive, so make sure you enter them as registered. To reset your password, go to the Unity ID Portal: <a href="https://id.unity.com/en/password/new">https://id.unity.com/en/password/new</a>.<br><br>You can also receive failed login or activation errors if you or your build server exceeds the login rate limit, which is 10 login attempts per minute for a specific user.<br><br>If you still have problems logging in, submit a request in the <a href="https://support.unity.com/hc/en-us">Unity Support portal</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="returns" aria-hidden="true"></a></p>
+
+<h2>Issues with returning licenses</h2>
+
+<p>The following issues can cause error codes or other problems while returning your license:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Issue</strong></th>
+	<th style="text-align:left;"><strong>Solution</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>You can’t return your license because you can’t access the computer where your license was activated</strong></td>
+	<td style="text-align:left;">1. Go to <a href="https://id.unity.com/">https://id.unity.com/</a> and log in with your Unity ID.<br>2. Select <strong>My Account</strong> &gt; <strong>My Seats</strong> in the side menu.<br>3. Select the activation you want to deactivate, then select <strong>Remove selected activations</strong>. If you want to return all activations in one action, select <strong>Disable all activations</strong>.<br><br>If you have licenses activated on other computers, you need to re-activate them later.<br><br>If you still can’t return your license, and your license is for a paid plan, submit a request in the <a href="https://support.unity.com/hc/en-us">Unity Support portal</a>. For serial-based licenses, include these details:<br>- The serial key you were using on the computer.<br>- The (local network) name of the computer you can’t access.<br>- The order or invoice number used to purchase your subscription.<br><br>For named user licenses, include these details:<br>- Organization name.<br>- User name.<br>- Subscription name, if you have multiple subscriptions within your organization.<br><br>The Support Team can return your license manually if you provide the previous information; however, it can take some time.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="licensefilefolders" aria-hidden="true"></a></p>
+
+<h2>Unity license file location</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Question</strong></th>
+	<th style="text-align:left;"><strong>Answer</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Where is my serial-based license file stored?</strong></td>
+	<td style="text-align:left;">- Windows: <code>%PROGRAMDATA%\Unity\Unity_lic.ulf</code><br><br>- macOS: <code>/Library/Application\ Support/Unity/Unity_lic.ulf</code><br><br>- Linux: <code>~/.local/share/unity3d/Unity/Unity_lic.ulf</code><br><br><strong>Note</strong>: If Windows User Account Control (UAC) has restricted your access to <code>C:\ProgramData\Unity</code>, you can find your <code>ulf</code> file at:<br><code>C:\Users\(username)\AppData\Local\VirtualStore\ProgramData\Unity</code><br>(UAC can restrict access if the folder is deleted or if you start the Unity Editor with administrative permissions first time.)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Where is my named user license file stored?</strong></td>
+	<td style="text-align:left;">- Windows: <code>%LOCALAPPDATA%\Unity\licenses\UnityEntitlementLicense.xml</code><br><br>- macOS: <code>~/Library/Unity/licenses/UnityEntitlementLicense.xml</code><br><br>- Linux: <code>~/.config/unity3d/Unity/licenses/UnityEntitlementLicense.xml</code>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Where is my floating license file stored?</strong></td>
+	<td style="text-align:left;">- Windows: <code>%LOCALAPPDATA%\Unity\licenses\&lt;token-id&gt;.xml</code><br><br>- macOS: <code>~/Library/Unity/licenses/&lt;token-id&gt;.xml</code><br><br>- Linux: <code>~/.config/unity3d/Unity/licenses/&lt;token-id&gt;.xml</code>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="other" aria-hidden="true"></a></p>
+
+<h2>Answers to other questions</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Question</strong></th>
+	<th style="text-align:left;"><strong>Answer</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>How do I know what type of license I have?</strong></td>
+	<td style="text-align:left;">Refer to <a href="LicenseOverview.html">Licensing overview</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>How many computers can I install my copy of Unity on?</strong></td>
+	<td style="text-align:left;">Every paid commercial Unity license allows one person to use Unity on two computers that they have exclusive use of. It doesn’t matter where the computers are physically located or what operating system they’re running. <br><br>Educational licenses sold via Unity or any one of Unity’s resellers are good only for a single activation. The same limit applies to Trial licenses (Unity 4.x only), unless otherwise stated.<br><br>The free version of Unity can’t be licensed by a commercial, educational, non-profit, or government entity whose gross revenues or budget exceeds the financial threshold identified in the <a href="https://unity.com/legal/editor-terms-of-service/software">Unity Editor Software Terms</a> section of the <a href="https://unity.com/legal">Unity Terms of Service</a>.<br><br>If you are a Legal Entity, you can’t combine files developed with the free version of Unity with any files developed by you (or by any third party) through the use of Unity Pro.<br><br>For more information about license usage, refer to <a href="https://unity.com/legal">Legal Information</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Can I use the latest version of Unity with a serial key from a previous version?</strong></td>
+	<td style="text-align:left;">If you have a serial key for Unity Editor 2017 or later, open the Unity Hub and activate the serial key. Refer to <a href="https://docs.unity3d.com/hub/manual/ManageLicense.html#activate-with-a-serial-number">Activate with a serial number</a>.<br><br>If you have a serial key for Unity version 5.x, use that version of the Editor. For activation information, refer to <a href="https://docs.unity3d.com/560/Documentation/Manual/LicensesAndActivation.html">Version 5.6 documentation</a>.<br><br>To get a new Unity license, go to the <a href="https://store.unity.com/">online store</a>.<br><br>If you’re unsure about your license options, <a href="https://create.unity.com/contact-unity-expert">contact Unity using this form</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>I have two serial-based licenses, each with an add-on I require. How do I activate them in unison on my computer?</strong></td>
+	<td style="text-align:left;">You can use a single license on only one computer at a time. You can’t activate two or more serial-based licenses at the same time on one computer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>I have seats for multiple subscriptions assigned to my Unity ID. How do I activate them in unison on my computer?</strong></td>
+	<td style="text-align:left;">Named user licenses for all your assigned seats are automatically activated when you sign in to the Unity Hub.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>How can I use different Unity versions?</strong></td>
+	<td style="text-align:left;">You can install multiple versions of the Unity Editor on a single computer. However, you can activate only one serial-based license on a computer at a time. This means that you can’t concurrently run an older version of Unity (2017 or earlier) and another version released after 2017, if you use serial-based licenses for both. These versions require different licenses. You can, however, use an older version of Unity with a serial-based license and a newer version of Unity (2019.4 or later), if the latter uses named user licensing or floating licensing. <br><br>If you need to use different Unity versions with distinct serial-based licenses, you need to manage the activation process. This process involves activating the required license for the version you intend to use and deactivating the licenses for the other versions. <br><br>Another way to manage this process is to activate the required licenses and store their license files in a backup folder on your computer. Then, before launching a specific version of Unity, delete the existing license file (with a <code>.ulf</code> extension) from the Unity <a href="#licensefilefolders">license folder</a>, and copy the appropriate license file from your backup folder into the Unity license folder. This process ensures that the correct license is active for the version you intend to use.<br><br>For further help, submit a request in the <a href="https://support.unity.com/hc/en-us">Unity Support portal</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>What should I do if I’m planning to replace a hardware component or change my operating system?</strong></td>
+	<td style="text-align:left;">You must <a href="ManagingYourUnityLicense.html">return your license</a> before you change any hardware or change the operating system on your computer. You must also <a href="ManagingYourUnityLicense.html">return your license</a> before you switch computers. If you fail to return the license, the Unity license server sees a request from another computer and informs you that you have reached your activation limit for the license.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>What do I do if I can’t log in because my company prevents me from accepting the Terms of Service?</strong></td>
+	<td style="text-align:left;">Contact your sales representative.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>How do I track and remove activated licenses across all of the computers where I’ve activated my licenses?</strong></td>
+	<td style="text-align:left;">To track and remove named user licenses, go to <a href="https://id.unity.com">Unity ID</a> and select <strong>My Account</strong> &gt; <strong>My Seats</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Which versions of the Unity Editor work with named user licenses?</strong></td>
+	<td style="text-align:left;">Any Editor in the 2021 stream or later. For the 2020 Editor, you must use 2020.2.2 or later. For the 2019 Editor, you must use 2019.4.27 or later.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Why don’t I see the Return license button in Unity Hub?</strong></td>
+	<td style="text-align:left;">The <strong>Return license</strong> button doesn’t display if you have a named user license for Unity Personal. The only way to return a named user license for Unity Personal is by signing out of the Unity Hub.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>I unintentionally disagreed with Terms of Service while getting a named user license for Unity Personal. How can I activate this license?</strong></td>
+	<td style="text-align:left;">Sign out of Unity Hub and sign in again. The Unity Hub will display the confirmation window again, where you can agree with Terms of Service to activate the license.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>How do I activate a license for an older editor?</strong></td>
+	<td style="text-align:left;">If you want to use your paid subscription on a older Unity Editor (2019.3 or earlier), you must activate the license with the serial key. For more information refer to <a href="ManagingYourUnityLicense.html#license-activation-cli">Activate a license from the command line</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="more-help" aria-hidden="true"></a></p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li>
+<a href="https://support.unity.com/hc/categories/201268913-Licenses" target="_blank" rel="noopener noreferrer">Licenses</a> (Unity Support category)</li>
+<li>
+<a href="https://support.unity3d.com/hc/en-us/sections/202242003-Activations-and-Management" target="_blank" rel="noopener noreferrer">Activations and Management</a> (Unity Support category)</li>
+<li>
+<a href="https://support.unity3d.com/hc/en-us/requests/new?ticket_form_id=65905" target="_blank" rel="noopener noreferrer">Unity Customer Services</a> (Unity Support request)</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ManualActivationCmdMac.html"></a></span><div class="tip">Submit a license request from a command line and browser (macOS, Linux)</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="2Dor3D.html"></a></span><div class="tip">2D or 3D projects</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

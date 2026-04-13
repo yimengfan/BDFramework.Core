@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Delivering to Google Play</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/android-distribution-google-play.html">English</a></li>
+<li><a href="/cn/current/Manual/android-distribution-google-play.html">中文</a></li>
+<li><a href="/ja/current/Manual/android-distribution-google-play.html">日本語</a></li>
+<li><a href="/kr/current/Manual/android-distribution-google-play.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/android-distribution-google-play.html">English</a></li>
+<li><a href="/cn/current/Manual/android-distribution-google-play.html">中文</a></li>
+<li><a href="/ja/current/Manual/android-distribution-google-play.html">日本語</a></li>
+<li><a href="/kr/current/Manual/android-distribution-google-play.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="android.html">Android</a></li>
+<li><a href="android-building-and-delivering.html">Building and delivering for Android</a></li>
+<li><a href="android-distribution.html">Digital distribution services for Android</a></li>
+<li>Delivering to Google Play</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="android-distribution.html"></a></span><div class="tip">Digital distribution services for Android</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="android-ChromeOS-introducing.html"></a></span><div class="tip">Chrome OS</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Delivering to Google Play</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page contains information about Google Play-specific delivery requirements and considerations.</p>
+
+<p>For information on how to publish your application on Google Play, refer to <a href="https://developer.android.com/distribute/google-play">Google Play</a>.</p>
+
+<h2>Delivery requirements</h2>
+
+<p>Google Play has requirements an application must fulfil before you publish it. This section describes Google Play-specific requirements and explains how to meet them.</p>
+
+<h3>Android App Bundle</h3>
+
+<p>Google Play requires new apps to be an <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://developer.android.com/guide/app-bundle">Android App Bundle</a> (AAB) instead of an <span class="tooltip"><strong>APK</strong><span class="tooltiptext">The Android Package format output by Unity. An APK is automatically deployed to your device when you select File &gt; Build &amp; Run. <a href="android-BuildProcess.html" href="https://developer.android.com/guide/app-bundle">Android App Bundle</a> (AAB) instead of an <span class="tooltip"><strong>APK</strong><span class="tooltiptext">The Android Package format output by Unity. An APK is automatically deployed to your device when you select File &gt; Build &amp; Run. <a href="android-BuildProcess.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#APK" aria-label="Go to glossary anchor for APK">Glossary</a></span></span></span>. For information on why, refer to <a href="https://android-developers.googleblog.com/2021/06/the-future-of-android-app-bundles-is.html">The future of Android App Bundles is here</a>.</p>
+
+<p>To configure an application to be an AAB:</p>
+
+<ol>
+<li><p>Select <strong>Edit</strong> &gt; <strong>Project Settings</strong>.</p></li>
+<li><p>In the Project settings window, select the <strong>Player</strong> tab, then open <a href="class-PlayerSettingsAndroid.html">Android Player Settings</a>:<br><img src="../uploads/Main/android-player-settings-tab.png" alt="">
+</p></li>
+<li><p>In the <strong>Publishing Settings</strong> section, enable <strong>Split Application Binary</strong>.</p></li>
+<li><p>Select <strong>File</strong> &gt; <strong>Build Settings</strong>.</p></li>
+<li><p>From the list of platforms in the <strong>Platform</strong> pane, select <strong>Android</strong>.</p></li>
+<li>
+<p>Enable <strong>Build App Bundle (Google Play)</strong>. If you want to <a href="android-export-process.html">export the project</a> and build it in Android Studio, enable <strong>Export Project</strong> then enable <strong>Export for App Bundle</strong>.</p>
+
+<p>
+<strong>Notes</strong>:</p>
+
+<ul>
+<li>
+<strong>Build App Bundle (Google Play)</strong> setting is visible only if you disable <strong>Export Project</strong> setting.</li>
+<li>Make sure <strong><span class="tooltip"><strong>Development Build</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview" href="https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DevelopmentBuild" aria-label="Go to glossary anchor for DevelopmentBuild">Glossary</a></span></span></span></strong> setting is disabled as otherwise the application upload might fail.</li>
+</ul>
+</li>
+</ol>
+
+<p>Now when you <a href="android-BuildProcess.html#building">build the application</a>, Unity builds the application as an AAB.</p>
+
+<h3>Application size</h3>
+
+<p>Google Play limits the install size of applications. The following table describes the size limitations Google Play has for each application type:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Application type</strong></th>
+	<th style="text-align:left;"><strong>Size limitation</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>APK</strong></td>
+	<td style="text-align:left;">If you <a href="android-BuildProcess.html#splitting-the-application-binary">split the application binary</a> or use a custom <a href="android-OBBsupport.html">expansion file</a>, the APK must be smaller than 100MB and the expansion file must be smaller than 2GB. Otherwise, the APK must be smaller than 100MB.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AAB</strong></td>
+	<td style="text-align:left;">If you split the application binary or use custom <a href="play-asset-delivery.html">asset packs</a>, the base module inside the AAB must be smaller than 200MB and the asset packs must fit the file sizes described in <a href="https://support.google.com/googleplay/android-developer/answer/9859372#size_limits">Android’s Download Size Limits</a> documentation. Otherwise, the AAB must be smaller than 200MB.</td>
+</tr>
+</tbody>
+</table>
+
+<p>For information on how to optimize the install size of your application, refer to <a href="android-optimize-distribution-size.html">Optimize distribution size</a>.</p>
+
+<h3>64-bit Architecture</h3>
+
+<p>Google Play requires applications to support 64-bit architecture. For more information, refer to <a href="https://developer.android.com/distribute/best-practices/develop/64-bit">Support 64-bit architectures</a>. To make your application support 64-bit architecture:</p>
+
+<ol>
+<li>Select <strong>Edit</strong> &gt; <strong>Project Settings</strong>.</li>
+<li>In the Project settings window, select the <strong>Player</strong> tab, then open <a href="class-PlayerSettingsAndroid.html">Android Player Settings</a>:<br><img src="../uploads/Main/android-player-settings-tab.png" alt="">
+</li>
+<li>In the <strong>Other Settings</strong> section, enable <strong>ARM64</strong>. If your application targets Chrome OS, enable <strong>x86–64 (Chrome OS)</strong> too. <strong>Note</strong>: You can only interact with this setting if your project uses the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html" href="IL2CPP.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> <span class="tooltip"><a href="scripting-backends.html">scripting backend</a><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a href="scripting-backends.html" href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> <span class="tooltip"><a href="scripting-backends.html">scripting backend</a><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a href="scripting-backends.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScriptingBackend" aria-label="Go to glossary anchor for ScriptingBackend">Glossary</a></span></span></span>.</li>
+</ol>
+
+<h3>Target API</h3>
+
+<p>Google Play requires applications to support a minimum target API. For information on what the current minimum target API is, refer to <a href="https://developer.android.com/distribute/best-practices/develop/target-sdk">Meet Google Play’s target API level requirement</a>.</p>
+
+<p>To change your application’s target API:</p>
+
+<ol>
+<li>Select <strong>Edit</strong> &gt; <strong>Project Settings</strong>.</li>
+<li>In the Project settings window, select the <strong>Player</strong> tab, then open <a href="class-PlayerSettingsAndroid.html">Android Player Settings</a>:<br><img src="../uploads/Main/android-player-settings-tab.png" alt="">
+</li>
+<li>In the <strong>Other Settings</strong> &gt; <strong>Identification</strong> section, set <strong>Target API Level</strong> to at least the target API level that Google Play requires.</li>
+</ol>
+
+<h3>App signature</h3>
+
+<p>Google Play requires applications to be signed. For information on how to sign your application, refer to <a href="android-keystore-manager.html">Android Keystore Manager</a>.</p>
+
+<h2>Considerations</h2>
+
+<p>This section contains Google Play-specific considerations to be aware of before you publish an application to Google Play.</p>
+
+<h3>Best practice checklist</h3>
+
+<p>To help launch an Android application successfully, Android’s documentation includes a best practice checklist of processes to follow. Refer to <a href="https://developer.android.com/distribute/best-practices/launch/launch-checklist">Launch checklist</a>.</p>
+
+<h3>Public symbols</h3>
+
+<p>If your application crashes on a device, Google can use a <a href="android-symbols.html">symbols package</a> to make a native stacktrace human-readable on the <a href="https://developer.android.com/topic/performance/vitals">Android Vitals</a> dashboard. It’s best practice to generate a <a href="android-symbols.html#public-symbols">public symbols</a> package for your application and upload it to Google Play. For information on how to do this, refer to <a href="android-symbols.html#generating-a-symbols-package">Generating a symbols package</a>.</p>
+
+<h3>Deobfuscation file</h3>
+
+<p>Similar to symbol files, Unity can produce a deobfuscation file if you apply minification to your application build. For more information on applying minification, refer to <a href="class-PlayerSettingsAndroid.html#minify">Android Player Settings</a>. A deobfuscation file is automatically generated as a mapping file in the same location as your application build.</p>
+
+<p>If you apply minification, it’s best practice to upload the deobfuscation file when publishing your application on Google Play. A deobfuscation file deciphers the method names in the stack trace, allowing you to identify and resolve the exact cause of the application crashes. For more information, refer to Google’s documentation on <a href="https://support.google.com/googleplay/android-developer/answer/9848633">Deobfuscate or symbolicate crash stack traces</a>
+</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="android-distribution.html"></a></span><div class="tip">Digital distribution services for Android</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="android-ChromeOS-introducing.html"></a></span><div class="tip">Chrome OS</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

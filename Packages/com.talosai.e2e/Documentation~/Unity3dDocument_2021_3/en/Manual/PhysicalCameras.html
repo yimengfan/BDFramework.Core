@@ -1,0 +1,312 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Using Physical Cameras</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PhysicalCameras.html">English</a></li>
+<li><a href="/cn/current/Manual/PhysicalCameras.html">中文</a></li>
+<li><a href="/ja/current/Manual/PhysicalCameras.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PhysicalCameras.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PhysicalCameras.html">English</a></li>
+<li><a href="/cn/current/Manual/PhysicalCameras.html">中文</a></li>
+<li><a href="/ja/current/Manual/PhysicalCameras.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PhysicalCameras.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="CamerasOverview.html">Cameras</a></li>
+<li>Using Physical Cameras</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="MultipleCameras.html"></a></span><div class="tip">Using more than one camera</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-CameraDepthTexture.html"></a></span><div class="tip">Cameras and depth textures</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Using Physical Cameras</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Camera.html">camera component’s</a> Physical <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="class-Camera.html">camera component’s</a> Physical <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> properties simulate real-world camera formats on a Unity camera. This is useful for importing camera information from 3D modeling applications that also mimic real-world cameras.</p>
+
+<figure>
+<img src="../uploads/Main/InspectorCameraPhysCam.png" alt="">
+</figure>
+
+<p>Unity provides the same settings as those in most 3D modeling application’s physical camera settings. The two main properties that control what the camera sees are <strong>Focal Length</strong> and <strong>Sensor Size</strong>.</p>
+
+<ul>
+<li>
+<p>
+<strong>Focal Length:</strong> The distance between the sensor and the camera lens. This determines the vertical field of view. When a Unity camera is in Physical Camera mode, changing the Focal Length also changes the field of view accordingly. Smaller focal lengths result in a larger field of view, and vice versa.</p>
+
+<figure>
+<img src="../uploads/Main/PhysCamAttributes.png" alt="The relationship between a cameras focal length, field of view, and sensor size">
+<figcaption>The relationship between a camera’s focal length, field of view, and sensor size</figcaption>
+</figure>
+</li>
+<li><p>
+<strong>Sensor Size:</strong> The width and height of the sensor that captures the image. These determine the physical camera’s <span class="tooltip"><strong>aspect ratio</strong><span class="tooltiptext">The relationship of an image’s proportional dimensions, such as its width and height.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AspectRatio" aria-label="Go to glossary anchor for AspectRatio">Glossary</a></span></span></span>. You can choose from several preset sensor sizes that correspond to real-world camera formats, or set a custom size. When the sensor aspect ratio is different to the rendered aspect ratio, as set in the Game view, you can control how Unity fits the camera image to the rendered image (see information on <a href="#GateFit">Gate Fit</a>, below).</p></li>
+</ul>
+
+<p><a name="LensShift" aria-hidden="true"></a></p>
+
+<h2>Lens Shifts</h2>
+
+<p>
+<strong>Lens Shift</strong> offsets the camera’s lens from its sensor horizontally and vertically. This allows you to change the focal center, and reposition a subject in the rendered frame, with little or no distortion.</p>
+
+<p>This technique is common in architectural photography. For example, if you want to capture a tall building, you could rotate the camera. But that distorts the image, making parallel lines appear to converge.</p>
+
+<figure>
+<img src="../uploads/Main/LensShift_VRot.png" alt="Rotating the camera up to capture the top of the building causes vertical lines to converge">
+<figcaption>Rotating the camera up to capture the top of the building causes vertical lines to converge</figcaption>
+</figure>
+
+<p>If you shift the lens up instead of rotating the camera, you can change the composition of the image to include the top of the building, but parallel lines stay straight.</p>
+
+<figure>
+<img src="../uploads/Main/LensShift_VShift.png" alt="Shifting the lens along the Y axis moves the focal center, but keeps vertical lines straight">
+<figcaption>Shifting the lens along the Y axis moves the focal center, but keeps vertical lines straight</figcaption>
+</figure>
+
+<p>Similarly, you can use a horizontal lens shift to capture wide objects without the distortion you might get by rotating the camera.</p>
+
+<figure>
+<img src="../uploads/Main/LensShift_HRot.png" alt="">
+</figure>
+
+<figure>
+<img src="../uploads/Main/LensShift_HShift.png" alt="Rotating the camera (top) to frame the building causes horizontal lines to converge. Shifting the lens horizontally instead (bottom) reframes the image, but keeps the horizontal lines straight.">
+<figcaption>Rotating the camera (top) to frame the building causes horizontal lines to converge. Shifting the lens horizontally instead (bottom) reframes the image, but keeps the horizontal lines straight.</figcaption>
+</figure>
+
+<h3>Lens shifts and frustum obliqueness</h3>
+
+<p>One side effect of a lens shift is that it makes the camera’s <a href="UnderstandingFrustum.html">view frustum</a> oblique. That means the angle between the camera’s center line and its frustum is smaller on one side than on the other.</p>
+
+<figure>
+<img src="../uploads/Main/ObliqueFrustum_LensShift.png" alt="The images above show the camera frustuim before (left) and after (right) a Y-axis lens shift. Shifting the lens up makes the frustum oblique.">
+<figcaption>The images above show the camera frustuim before (left) and after (right) a Y-axis lens shift. Shifting the lens up makes the frustum oblique.</figcaption>
+</figure>
+
+<p>You can use this to create visual effects based on perspective. For example, in a racing game, you might want to keep the perspective low to the ground. A lens shift is a way of achieving an oblique frustum without scripting.</p>
+
+<p>For further information, see documentation on <a href="ObliqueFrustum.html">Using an Oblique Frustum</a>.</p>
+
+<p><a name="GateFit" aria-hidden="true"> </a></p>
+
+<h2>Gate Fit</h2>
+
+<p>The Camera component’s <strong>Gate Fit</strong> property determines what happens when the Game view and the physical camera sensor have different aspect ratios.</p>
+
+<p>In <strong>Physical Camera</strong> mode, a camera has two “gates.”</p>
+
+<ul>
+<li><p>The area rendered in the Game view, according to the resolution you set in the <strong>Aspect</strong> drop-down menu, is called the “resolution gate”.</p></li>
+<li><p>The area that the camera actually sees, as defined by the <strong>Sensor Size</strong> properties, is called the “film gate”.</p></li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/GateFitGates.png" alt="An example of resolution gate vs. film gate when the two gates have different aspect ratios">
+<figcaption>An example of resolution gate vs. film gate when the two gates have different aspect ratios</figcaption>
+</figure>
+
+<p>When the two gates have different aspect ratios, Unity “fits” the resolution gate to the film gate. There are several fit modes, but they all yield one of three results.</p>
+
+<ul>
+<li>
+<strong>Cropping:</strong> When the film gate exceeds the resolution gate after fitting, the Game view renders as much of the camera image as fits within its aspect ratio, and cuts off the rest.</li>
+<li>
+<strong>Overscanning:</strong> When the film gate exceeds the resolution gate after fitting, the Game view still performs rendering calculations for parts of the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> that fall outside the camera’s field of view.</li>
+<li>
+<strong>Stretching:</strong> The Game view renders the full camera image, stretched either horizontally or vertically to fit its aspect ratio.</li>
+</ul>
+
+<p>To view the gates in the <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>, and see how they fit together, select the camera and look at its view frustum. The resolution gate is the camera’s far <span class="tooltip"><strong>clipping plane</strong><span class="tooltiptext">A plane that limits how far or close a camera can see from its current position. A camera’s viewable range is between the far and near clipping planes. See far clipping plane and near clipping plane. <a href="class-Camera.html" href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>, and see how they fit together, select the camera and look at its view frustum. The resolution gate is the camera’s far <span class="tooltip"><strong>clipping plane</strong><span class="tooltiptext">A plane that limits how far or close a camera can see from its current position. A camera’s viewable range is between the far and near clipping planes. See far clipping plane and near clipping plane. <a href="class-Camera.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#clippingplane" aria-label="Go to glossary anchor for clippingplane">Glossary</a></span></span></span>. The film gate is the second rectangle at the base of the frustum.</p>
+
+<figure>
+<img src="../uploads/Main/GateFitUI.png" alt="In the example above, the outer rectangle (A) at the base of the camera’s view frustum is the resolution gate. The inner rectangle (B) is the film gate">
+<figcaption>In the example above, the outer rectangle (A) at the base of the camera’s view frustum is the resolution gate. The inner rectangle (B) is the film gate</figcaption>
+</figure>
+
+<h3>Gate Fit Modes</h3>
+
+<p>The <strong>Gate Fit</strong> mode you choose determines how Unity resizes the resolution gate (and consequently, the camera’s view frustum). The film gate always stays the same size.</p>
+
+<p>The following sections provide more details on each Gate Fit mode.</p>
+
+<h3>Vertical</h3>
+
+<p>When <strong>Gate Fit</strong> is set to <strong>Vertical</strong>, Unity fits the resolution gate to the height (Y axis) of the film gate. Any change you make to the sensor width (<strong>Sensor Size &gt; X</strong>) has no effect on the rendered image.</p>
+
+<p>If the sensor aspect ratio is larger than the game view aspect ratio, Unity crops the rendered image at the sides:</p>
+
+<figure>
+<img src="../uploads/Main/GateFitV_600x900_16mm.png" alt="Gate Fit set to Vertical: Resolution gate aspect ratio is 0.66:1 (600 x 900 px). Film gate aspect ratio is 1.37:1 (16mm). The red areas indicate where Unity crops the image in the Game view.">
+<figcaption><strong>Gate Fit</strong> set to <strong>Vertical</strong>: Resolution gate aspect ratio is 0.66:1 (600 x 900 px). Film gate aspect ratio is 1.37:1 (16mm). The red areas indicate where Unity crops the image in the Game view.</figcaption>
+</figure>
+
+<p>If the sensor aspect ratio is smaller than the game view aspect ratio, Unity overscans the rendered image at the sides:</p>
+
+<figure>
+<img src="../uploads/Main/GateFitV_16-9_16mm.png" alt="Gate Fit set to Vertical: Resolution gate aspect ratio is 16:9. Film gate aspect ratio is 1.37:1 (16mm). The green areas indicate where Unity overscans the image in the Game view.">
+<figcaption><strong>Gate Fit</strong> set to <strong>Vertical</strong>: Resolution gate aspect ratio is 16:9. Film gate aspect ratio is 1.37:1 (16mm). The green areas indicate where Unity overscans the image in the Game view.</figcaption>
+</figure>
+
+<h3>Horizontal</h3>
+
+<p>When <strong>Gate Fit</strong> is set to <strong>Horizontal</strong>, Unity fits the resolution gate to the width (X axis) of the film gate. Any change you make to the sensor height (Sensor Size &gt; Y) has no effect on the rendered image.</p>
+
+<p>If the sensor aspect ratio is larger than the Game view aspect ratio, Unity overscans the rendered image on the top and bottom:</p>
+
+<figure>
+<img src="../uploads/Main/GateFitH_600x900_16mm.png" alt="Gate Fit is set to Horizontal: Resolution gate aspect ratio is 0.66:1 (600 x 900 px). Film gate aspect ratio is 1.37:1 (16mm). The green areas indicate where Unity overscans the image in the Game view.">
+<figcaption><strong>Gate Fit</strong> is set to <strong>Horizontal</strong>: Resolution gate aspect ratio is 0.66:1 (600 x 900 px). Film gate aspect ratio is 1.37:1 (16mm). The green areas indicate where Unity overscans the image in the Game view.</figcaption>
+</figure>
+
+<p>If the sensor aspect ratio is smaller than the game view aspect ratio, the rendered image is cropped on the top and bottom.</p>
+
+<figure>
+<img src="../uploads/Main/GateFitH_16-9_16mm.png" alt="Gate Fit set to Horizontal: Resolution gate aspect ratio is 16:9. Film gate aspect ratio is 1.37:1 (16mm). The red areas indicate where Unity crops the image in the Game view.">
+<figcaption><strong>Gate Fit</strong> set to <strong>Horizontal</strong>: Resolution gate aspect ratio is 16:9. Film gate aspect ratio is 1.37:1 (16mm). The red areas indicate where Unity crops the image in the Game view.</figcaption>
+</figure>
+
+<h3>None</h3>
+
+<p>When Gate Fit is set to None, Unity fits the resolution gate to the width and height (X and Y axes) of the film gate. Unity stretches the rendered image to fit the Game view aspect ratio.</p>
+
+<figure>
+<img src="../uploads/Main/GateFitF_16mm.png" alt="No gate fit. The camera uses the film gate aspect ratio of 1.37:1 (16mm), and stretches the image horizontally to fit a Game view aspect ratio of 16:9 (left) and vertically to fit a game view aspect ratio of 0.66:1 (right)">
+<figcaption>No gate fit. The camera uses the film gate aspect ratio of 1.37:1 (16mm), and stretches the image horizontally to fit a Game view aspect ratio of 16:9 (left) and vertically to fit a game view aspect ratio of 0.66:1 (right)</figcaption>
+</figure>
+
+<h3>Fill and Overscan</h3>
+
+<p>When <strong>Gate Fit</strong> is set to <strong>Fill</strong> or <strong>Overscan</strong>, Unity automatically performs either a vertical or horizontal fit, depending on the resolution gate and film gate aspect ratios.</p>
+
+<ul>
+<li>
+<strong>Fill</strong> fits the resolution gate to the film gate’s smaller axis, and crops the rest of the camera image.</li>
+<li>
+<strong>Overscan</strong> fits the resolution gate to the film gate’s larger axis and overscans the area outside of the camera image’s boundaries.</li>
+</ul>
+
+<hr>
+
+<ul>
+<li><p><span class="page-edit">2018–10–05 Page amended
+</span></p></li>
+<li><p><span class="page-history">Physical Camera options added in <a href="https://docs.unity3d.com/2018.2/Documentation/Manual/30_search.html?q=newin20182">2018.2</a> <span class="search-words">NewIn20182</span></span></p></li>
+<li><p><span class="page-history">Gate Fit options added in Unity 2018.3</span></p></li>
+</ul>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="MultipleCameras.html"></a></span><div class="tip">Using more than one camera</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-CameraDepthTexture.html"></a></span><div class="tip">Cameras and depth textures</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

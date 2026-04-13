@@ -1,0 +1,216 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Install a UPM package by name</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-ui-quick.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-ui-quick.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-ui-quick.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-ui-quick.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-ui-quick.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-ui-quick.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-ui-quick.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-ui-quick.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li><a href="Packages.html">Unity's Package Manager</a></li>
+<li><a href="upm-ui.html">Package Manager window</a></li>
+<li><a href="upm-ui-actions.html">Add and remove UPM packages or feature sets</a></li>
+<li>Install a UPM package by name</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-ui-giturl.html"></a></span><div class="tip">Install a UPM package from a Git URL</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-ui-remove.html"></a></span><div class="tip">Remove a UPM package from a project</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Install a UPM package by name</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>If you know the exact name of a <span class="tooltip"><strong>UPM package</strong><span class="tooltiptext">A <strong>Package</strong> managed by the <strong>Unity Package Manager</strong>. Refer to <strong>Packages</strong>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UPMpackage" aria-label="Go to glossary anchor for UPMpackage">Glossary</a></span></span></span> you want to install, you can use the <strong>Add package by name</strong> option to install it. This is a quick way to install a UPM package from a registry.</p>
+
+<p>This method works for any UPM package and version that’s currently hosted on the Unity package registry or any <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-scoped.html">scoped package registry</a> you have set up for the current project. It also applies to any UPM package in the Unity registry that came from the <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a href="AssetStore.html" href="upm-scoped.html">scoped package registry</a> you have set up for the current project. It also applies to any UPM package in the Unity registry that came from the <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span>.</p>
+
+<p>Specifying the version is optional. If you don’t know which version to install, or want to install the latest compatible version, enter only the package name.</p>
+
+<p>
+<strong>Note:</strong> The latest compatible version might not be the latest published package. If there is a <a href="pack-safe.html">released</a> package version and a newer <a href="pack-preview.html">pre-release</a> or <a href="pack-exp.html">experimental</a> version, Package Manager selects the released package version, unless you explicitly input a value in the optional <strong>Version</strong> field.</p>
+
+<p><a name="prereqs" aria-hidden="true"></a></p>
+
+<h2>Before you begin</h2>
+
+<p>Make sure you know the package’s name. The package name is a unique identifier, not the display name used on user interfaces and documentation.</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-name-v-dname.png" alt="Inspector window showing the name and display name">
+<figcaption>Inspector window showing the name and display name</figcaption>
+</figure>
+
+<p>For packages in the Unity registry, the name’s unique identifier uses reverse domain name notation. Examples include <code>com.unity.example</code> and <code>com.meta.example</code>. For packages in a scoped registry, the name might not follow the same pattern.</p>
+
+<p>For any package in the UPM format, if you can see the package in Package Manager, select it and view its details in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window. The <strong>Name</strong> value is the package name.</p>
+
+<p>Other ways of determining a package name vary, depending on the registry that hosts it:</p>
+
+<ul>
+<li>For a package in the Unity registry:
+
+<ul>
+<li>Use the lists in <a href="pack-safe.html">Released packages</a> and <a href="pack-preview.html">Pre-release packages</a> to identify a package by its display name, such as <code>2D Animation</code>. The hyperlink value is the name of that package; in this case, <code>com.unity.2d.animation</code>.</li>
+<li>The <a href="upm-docs.html">package documentation</a> might have installation instructions that explicitly provide the <code>name</code> value.</li>
+<li>The <a href="upm-docs.html">package documentation</a> URL often nests the package name in its address. Using the <span class="notooltips">AR</span> Foundation
+ package as an example, its package documentation URL is <code>https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.0/manual/index.html</code>; the <code>com.unity.xr.arfoundation</code> component is that package’s name.</li>
+</ul>
+</li>
+<li><p>For a package in a scoped registry, if you can’t determine its name by using the Package Manager and Inspector windows, contact the package creator and request the package name. The package creator recorded this value as a required property in the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-manifestPkg.html">package manifest</a><span class="tooltiptext">Each package has a <em>manifest</em>, which provides information about the package to the Package Manager. The manifest contains information such as the name of the package, its version, a description for users, dependencies on other packages (if any), and other details. <a href="upm-manifestPkg.html" href="upm-manifestPkg.html">package manifest</a><span class="tooltiptext">Each package has a <em>manifest</em>, which provides information about the package to the Package Manager. The manifest contains information such as the name of the package, its version, a description for users, dependencies on other packages (if any), and other details. <a href="upm-manifestPkg.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Packagemanifest" aria-label="Go to glossary anchor for Packagemanifest">Glossary</a></span></span></span> file (<code>package.json</code>).</p></li>
+</ul>
+
+<h2>Procedure</h2>
+
+<p>To add a UPM package by name, follow these steps:</p>
+
+<ol>
+<li><p>Open the <a href="upm-ui-access.html">Package Manager window</a>, if it’s not already open.</p></li>
+<li>
+<p>Click the <strong>add</strong> <img src="../uploads/Main/iconAdd.png" alt=""> button in the status bar. The options for adding packages appear.</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-quick.png" alt="Add package by name option">
+<figcaption>Add package by name option</figcaption>
+</figure>
+</li>
+<li><p>Select <strong>Add package by name</strong> from the add menu. Two text boxes and an <strong>Add</strong> button appear.</p></li>
+<li>
+<p>Enter the package <strong>Name</strong>, as determined in the <a href="#prereqs">Before you begin</a> section.</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-quick-add.png" alt="Enter the package name and package version (optional) then click Add">
+<figcaption>Enter the package name and package version (optional) then click Add</figcaption>
+</figure>
+
+<p>
+<strong>Note</strong>: If you enter an invalid package name or version, Package Manager warns you that it can’t find that name or version. Verify that the package name and version are correct and try again.</p>
+</li>
+<li><p>(Optional) If you know which version you want to install, enter the <a href="upm-manifestPkg.html#version">full package version</a>, such as <code>1.3.0-pre.2</code>, in the <strong>Version (optional)</strong> box.</p></li>
+<li><p>Click <strong>Add</strong>. If Unity was able to install the package successfully, the package now appears in the <a href="upm-ui-list.html">package list</a> like any other installed UPM package.</p></li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="upm-package-types.html">Package types</a></li>
+<li><a href="upm-ui-actions.html">Add and remove UPM packages or feature sets</a></li>
+<li><a href="upm-ui-actions-ap.html">Add and remove asset packages</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-ui-giturl.html"></a></span><div class="tip">Install a UPM package from a Git URL</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-ui-remove.html"></a></span><div class="tip">Remove a UPM package from a project</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

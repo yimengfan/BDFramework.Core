@@ -1,0 +1,745 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Surface Shader examples</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-SurfaceShaderExamples.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-SurfaceShaderExamples.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-SurfaceShaderExamples.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-SurfaceShaderExamples.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-SurfaceShaderExamples.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-SurfaceShaderExamples.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-SurfaceShaderExamples.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-SurfaceShaderExamples.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-writing.html">Writing shaders</a></li>
+<li><a href="SL-SurfaceShaders.html">Writing Surface Shaders</a></li>
+<li>Surface Shader examples</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-RenderPipeline.html"></a></span><div class="tip">Surface Shaders and rendering paths</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-SurfaceShaderLighting.html"></a></span><div class="tip">Custom lighting models in Surface Shaders</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Surface Shader examples</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-SurfaceShaders.html">Surface Shaders</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html" href="SL-SurfaceShaders.html">Surface Shaders</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SurfaceShader" aria-label="Go to glossary anchor for SurfaceShader">Glossary</a></span></span></span> examples on this page show you how to use the built-in lighting models. For examples on how to implement custom lighting models, see <a href="SL-SurfaceShaderLightingExamples.html">Surface Shader Lighting Examples</a>.</p>
+
+<p>In the Built-in Render Pipelne, Surface <span class="tooltip"><strong>Shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> are a streamlined way of writing shaders that interact with lighting.</p>
+
+<h2>Render pipeline compatibility</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature name</strong></th>
+	<th style="text-align:left;"><strong>Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span></strong></th>
+	<th style="text-align:left;"><strong>Universal Render Pipeline (URP)</strong></th>
+	<th style="text-align:left;"><strong>High Definition Render Pipeline (HDRP)</strong></th>
+	<th style="text-align:left;"><strong>Custom SRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Surface Shaders</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>For a streamlined way of creating Shader objects in URP, see <a href="shader-graph.html">Shader Graph</a>.</td>
+	<td style="text-align:left;">No<br><br>For a streamlined way of creating Shader objects in HDRP, see <a href="shader-graph.html">Shader Graph</a>.</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Simple shader example</h2>
+
+<p>We’ll start with a very simple Shader and build up on that. Here’s a Shader that sets the surface color to “white”. It uses the built-in Lambert (diffuse) lighting model.</p>
+
+<pre><code class="lang-hlsl">Shader &quot;Example/Diffuse Simple&quot; {
+  SubShader {
+    Tags { &quot;RenderType&quot; = &quot;Opaque&quot; }
+
+    CGPROGRAM
+
+    #pragma surface surf Lambert
+
+    struct Input {
+        float4 color : COLOR;
+    };
+
+    void surf (Input IN, inout SurfaceOutput o) {
+        o.Albedo = 1;
+    }
+
+    ENDCG
+  }
+  Fallback &quot;Diffuse&quot;
+}
+</code></pre>
+
+<p>Here’s how it looks like on a model with two <a href="class-Light.html">Lights</a> set up: </p>
+
+<figure>
+<img src="../uploads/Main/SurfaceShaderSimple.jpg" alt="">
+</figure>
+
+<h2>Texture</h2>
+
+<p>An all-white object is quite boring, so let’s add a Texture. We’ll add a <a href="SL-Properties.html">Properties</a> block to the Shader, so we get a Texture selector in our Material.</p>
+
+<pre><code>  Shader &quot;Example/Diffuse Texture&quot; {
+    Properties {
+      _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+    }
+    SubShader {
+      Tags { &quot;RenderType&quot; = &quot;Opaque&quot; }
+      CGPROGRAM
+      #pragma surface surf Lambert
+      struct Input {
+          float2 uv_MainTex;
+      };
+      sampler2D _MainTex;
+      void surf (Input IN, inout SurfaceOutput o) {
+          o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb;
+      }
+      ENDCG
+    } 
+    Fallback &quot;Diffuse&quot;
+  }
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/SurfaceShaderDiffuseTex.jpg" alt="">
+</figure>
+
+<h2>Normal mapping</h2>
+
+<p>Let’s add some normal mapping:</p>
+
+<pre><code>  Shader &quot;Example/Diffuse Bump&quot; {
+    Properties {
+      _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+      _BumpMap (&quot;Bumpmap&quot;, 2D) = &quot;bump&quot; {}
+    }
+    SubShader {
+      Tags { &quot;RenderType&quot; = &quot;Opaque&quot; }
+      CGPROGRAM
+      #pragma surface surf Lambert
+      struct Input {
+        float2 uv_MainTex;
+        float2 uv_BumpMap;
+      };
+      sampler2D _MainTex;
+      sampler2D _BumpMap;
+      void surf (Input IN, inout SurfaceOutput o) {
+        o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb;
+        o.Normal = UnpackNormal (tex2D (_BumpMap, IN.uv_BumpMap));
+      }
+      ENDCG
+    } 
+    Fallback &quot;Diffuse&quot;
+  }
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/SurfaceShaderDiffuseBump.jpg" alt="">
+</figure>
+
+<h2>Rim Lighting</h2>
+
+<p>Now, try to add some Rim Lighting to highlight the edges of a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. We’ll add some emissive light based on the angle between surface normal and view direction. For that, we’ll use the built-in <code>viewDir</code> Surface Shader variable.</p>
+
+<pre><code>  Shader &quot;Example/Rim&quot; {
+    Properties {
+      _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+      _BumpMap (&quot;Bumpmap&quot;, 2D) = &quot;bump&quot; {}
+      _RimColor (&quot;Rim Color&quot;, Color) = (0.26,0.19,0.16,0.0)
+      _RimPower (&quot;Rim Power&quot;, Range(0.5,8.0)) = 3.0
+    }
+    SubShader {
+      Tags { &quot;RenderType&quot; = &quot;Opaque&quot; }
+      CGPROGRAM
+      #pragma surface surf Lambert
+      struct Input {
+          float2 uv_MainTex;
+          float2 uv_BumpMap;
+          float3 viewDir;
+      };
+      sampler2D _MainTex;
+      sampler2D _BumpMap;
+      float4 _RimColor;
+      float _RimPower;
+      void surf (Input IN, inout SurfaceOutput o) {
+          o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb;
+          o.Normal = UnpackNormal (tex2D (_BumpMap, IN.uv_BumpMap));
+          half rim = 1.0 - saturate(dot (normalize(IN.viewDir), o.Normal));
+          o.Emission = _RimColor.rgb * pow (rim, _RimPower);
+      }
+      ENDCG
+    } 
+    Fallback &quot;Diffuse&quot;
+  }
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/SurfaceShaderRim.jpg" alt="">
+</figure>
+
+<h2>Detail Texture</h2>
+
+<p>For a different effect, let’s add a Detail Texture that is combined with the base Texture. A Detail Texture usually uses the same UVs but different Tiling in the Material, so we need to use different input UV coordinates.</p>
+
+<pre><code>  Shader &quot;Example/Detail&quot; {
+    Properties {
+      _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+      _BumpMap (&quot;Bumpmap&quot;, 2D) = &quot;bump&quot; {}
+      _Detail (&quot;Detail&quot;, 2D) = &quot;gray&quot; {}
+    }
+    SubShader {
+      Tags { &quot;RenderType&quot; = &quot;Opaque&quot; }
+      CGPROGRAM
+      #pragma surface surf Lambert
+      struct Input {
+          float2 uv_MainTex;
+          float2 uv_BumpMap;
+          float2 uv_Detail;
+      };
+      sampler2D _MainTex;
+      sampler2D _BumpMap;
+      sampler2D _Detail;
+      void surf (Input IN, inout SurfaceOutput o) {
+          o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb;
+          o.Albedo *= tex2D (_Detail, IN.uv_Detail).rgb * 2;
+          o.Normal = UnpackNormal (tex2D (_BumpMap, IN.uv_BumpMap));
+      }
+      ENDCG
+    } 
+    Fallback &quot;Diffuse&quot;
+  }
+</code></pre>
+
+<p>Using a Texture checker does not always make much practical sense, but in this example it is used to illustrate what happens: </p>
+
+<figure>
+<img src="../uploads/Main/SurfaceShaderDetailTex.jpg" alt="">
+</figure>
+
+<h2>Detail Texture in Screen Space</h2>
+
+<p>A Detail Texture in screen space does not make practical sense for a soldier head model, but here it is used to illustrate how a built-in <code>screenPos</code> input might be used:</p>
+
+<pre><code>  Shader &quot;Example/ScreenPos&quot; {
+    Properties {
+      _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+      _Detail (&quot;Detail&quot;, 2D) = &quot;gray&quot; {}
+    }
+    SubShader {
+      Tags { &quot;RenderType&quot; = &quot;Opaque&quot; }
+      CGPROGRAM
+      #pragma surface surf Lambert
+      struct Input {
+          float2 uv_MainTex;
+          float4 screenPos;
+      };
+      sampler2D _MainTex;
+      sampler2D _Detail;
+      void surf (Input IN, inout SurfaceOutput o) {
+          o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb;
+          float2 screenUV = IN.screenPos.xy / IN.screenPos.w;
+          screenUV *= float2(8,6);
+          o.Albedo *= tex2D (_Detail, screenUV).rgb * 2;
+      }
+      ENDCG
+    } 
+    Fallback &quot;Diffuse&quot;
+  }
+</code></pre>
+
+<p>The normal mapping has been removed from the Shader above, just to make it shorter: </p>
+
+<figure>
+<img src="../uploads/Main/SurfaceShaderDetailTexScreenPos.jpg" alt="">
+</figure>
+
+<h2>Cubemap Reflection</h2>
+
+<p>Here’s a Shader that does cubemapped reflection using built-in <code>worldRefl</code> input. It’s very similar to built-in Reflective/Diffuse Shader:</p>
+
+<pre><code>  Shader &quot;Example/WorldRefl&quot; {
+    Properties {
+      _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+      _Cube (&quot;Cubemap&quot;, CUBE) = &quot;&quot; {}
+    }
+    SubShader {
+      Tags { &quot;RenderType&quot; = &quot;Opaque&quot; }
+      CGPROGRAM
+      #pragma surface surf Lambert
+      struct Input {
+          float2 uv_MainTex;
+          float3 worldRefl;
+      };
+      sampler2D _MainTex;
+      samplerCUBE _Cube;
+      void surf (Input IN, inout SurfaceOutput o) {
+          o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb * 0.5;
+          o.Emission = texCUBE (_Cube, IN.worldRefl).rgb;
+      }
+      ENDCG
+    } 
+    Fallback &quot;Diffuse&quot;
+  }
+</code></pre>
+
+<p>Because it assigns the reflection color as <strong>Emission</strong>, we get a very shiny soldier: </p>
+
+<figure>
+<img src="../uploads/Main/SurfaceShaderWorldRefl.jpg" alt="">
+</figure>
+
+<p>If you want to do reflections that are affected by <span class="tooltip"><strong>normal maps</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normalmap" aria-label="Go to glossary anchor for Normalmap">Glossary</a></span></span></span>, it needs to be slightly more involved: <code>INTERNAL_DATA</code> needs to be added to the <code>Input</code> structure, and <code>WorldReflectionVector</code> function used to compute per-pixel reflection vector after you’ve written the Normal output.</p>
+
+<pre><code>  Shader &quot;Example/WorldRefl Normalmap&quot; {
+    Properties {
+      _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+      _BumpMap (&quot;Bumpmap&quot;, 2D) = &quot;bump&quot; {}
+      _Cube (&quot;Cubemap&quot;, CUBE) = &quot;&quot; {}
+    }
+    SubShader {
+      Tags { &quot;RenderType&quot; = &quot;Opaque&quot; }
+      CGPROGRAM
+      #pragma surface surf Lambert
+      struct Input {
+          float2 uv_MainTex;
+          float2 uv_BumpMap;
+          float3 worldRefl;
+          INTERNAL_DATA
+      };
+      sampler2D _MainTex;
+      sampler2D _BumpMap;
+      samplerCUBE _Cube;
+      void surf (Input IN, inout SurfaceOutput o) {
+          o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb * 0.5;
+          o.Normal = UnpackNormal (tex2D (_BumpMap, IN.uv_BumpMap));
+          o.Emission = texCUBE (_Cube, WorldReflectionVector (IN, o.Normal)).rgb;
+      }
+      ENDCG
+    } 
+    Fallback &quot;Diffuse&quot;
+  }
+</code></pre>
+
+<p>Here’s a normal-mapped shiny soldier: </p>
+
+<figure>
+<img src="../uploads/Main/SurfaceShaderWorldReflNormalmap.jpg" alt="">
+</figure>
+
+<h2>Slices via World Space Position</h2>
+
+<p>Here’s a Shader that “slices” the GameObject by discarding <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> in nearly horizontal rings. It does this by using the <code>clip()</code> Cg/HLSL function based on the world position of a pixel. We’ll use the built-in <code>worldPos</code> Surface Shader variable.</p>
+
+<pre><code>  Shader &quot;Example/Slices&quot; {
+    Properties {
+      _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+      _BumpMap (&quot;Bumpmap&quot;, 2D) = &quot;bump&quot; {}
+    }
+    SubShader {
+      Tags { &quot;RenderType&quot; = &quot;Opaque&quot; }
+      Cull Off
+      CGPROGRAM
+      #pragma surface surf Lambert
+      struct Input {
+          float2 uv_MainTex;
+          float2 uv_BumpMap;
+          float3 worldPos;
+      };
+      sampler2D _MainTex;
+      sampler2D _BumpMap;
+      void surf (Input IN, inout SurfaceOutput o) {
+          clip (frac((IN.worldPos.y+IN.worldPos.z*0.1) * 5) - 0.5);
+          o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb;
+          o.Normal = UnpackNormal (tex2D (_BumpMap, IN.uv_BumpMap));
+      }
+      ENDCG
+    } 
+    Fallback &quot;Diffuse&quot;
+  }
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/SurfaceShaderSlices.jpg" alt="">
+</figure>
+
+<h2>Normal Extrusion with Vertex Modifier</h2>
+
+<p>It is possible to use a “vertex modifier” function that will modify the incoming vertex data in the <span class="tooltip"><strong>vertex Shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-ShaderPrograms.html" href="SL-ShaderPrograms.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span>. This can be used for things like procedural animation and extrusion along normals. Surface Shader compilation directive <code>vertex:functionName</code> is used for that, with a function that takes <code>inout appdata_full</code> parameter.</p>
+
+<p>Here’s a Shader that moves vertices along their normals by the amount specified in the Material:</p>
+
+<pre><code>  Shader &quot;Example/Normal Extrusion&quot; {
+    Properties {
+      _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+      _Amount (&quot;Extrusion Amount&quot;, Range(-1,1)) = 0.5
+    }
+    SubShader {
+      Tags { &quot;RenderType&quot; = &quot;Opaque&quot; }
+      CGPROGRAM
+      #pragma surface surf Lambert vertex:vert
+      struct Input {
+          float2 uv_MainTex;
+      };
+      float _Amount;
+      void vert (inout appdata_full v) {
+          v.vertex.xyz += v.normal * _Amount;
+      }
+      sampler2D _MainTex;
+      void surf (Input IN, inout SurfaceOutput o) {
+          o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb;
+      }
+      ENDCG
+    } 
+    Fallback &quot;Diffuse&quot;
+  }
+</code></pre>
+
+<p>Moving vertices along their normals makes a fat soldier: </p>
+
+<figure>
+<img src="../uploads/Main/SurfaceShaderNormalExtrusion.jpg" alt="">
+</figure>
+
+<h2>Custom data computed per-vertex</h2>
+
+<p>Using a vertex modifier function, it is also possible to compute custom data in a vertex Shader, which then will be passed to the Surface Shader function per-pixel. The same compilation directive <code>vertex:functionName</code> is used, but the function should take two parameters: <code>inout appdata_full</code> and <code>out Input</code>. You can fill in any Input member that is not a built-in value there.</p>
+
+<p>
+<strong>Note:</strong> Custom Input members used in this way must not have names beginning with ‘uv’ or they won’t work properly.</p>
+
+<p>The example below defines a custom <code>float3 customColor</code> member, which is computed in a vertex function:</p>
+
+<pre><code>  Shader &quot;Example/Custom Vertex Data&quot; {
+    Properties {
+      _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+    }
+    SubShader {
+      Tags { &quot;RenderType&quot; = &quot;Opaque&quot; }
+      CGPROGRAM
+      #pragma surface surf Lambert vertex:vert
+      struct Input {
+          float2 uv_MainTex;
+          float3 customColor;
+      };
+      void vert (inout appdata_full v, out Input o) {
+          UNITY_INITIALIZE_OUTPUT(Input,o);
+          o.customColor = abs(v.normal);
+      }
+      sampler2D _MainTex;
+      void surf (Input IN, inout SurfaceOutput o) {
+          o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb;
+          o.Albedo *= IN.customColor;
+      }
+      ENDCG
+    } 
+    Fallback &quot;Diffuse&quot;
+  }
+</code></pre>
+
+<p>In this example <code>customColor</code> is set to the absolute value of the normal: </p>
+
+<figure>
+<img src="../uploads/Main/SurfaceShaderCustomVertexData.jpg" alt="">
+</figure>
+
+<p>More practical uses could be computing any per-vertex data that is not provided by built-in Input variables; or optimizing Shader computations. For example, it’s possible to compute Rim lighting at the GameObject’s vertices, instead of doing that in the Surface Shader per-pixel.</p>
+
+<h2>Final Color Modifier</h2>
+
+<p>It is possible to use a “final color modifier” function that will modify the final color computed by the Shader.The Surface Shader compilation directive <code>finalcolor:functionName</code> is used for this, with a function that takes <code>Input IN, SurfaceOutput o, inout fixed4 color</code> parameters.</p>
+
+<p>Here’s a simple Shader that applies tint to the final color. This is different from just applying tint to the surface Albedo color: this tint will also affect any color that comes from <span class="tooltip"><strong>Lightmaps</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span>, <span class="tooltip"><strong>Light Probes</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html" href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span>, <span class="tooltip"><strong>Light Probes</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span> and similar extra sources.</p>
+
+<pre><code>  Shader &quot;Example/Tint Final Color&quot; {
+    Properties {
+      _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+      _ColorTint (&quot;Tint&quot;, Color) = (1.0, 0.6, 0.6, 1.0)
+    }
+    SubShader {
+      Tags { &quot;RenderType&quot; = &quot;Opaque&quot; }
+      CGPROGRAM
+      #pragma surface surf Lambert finalcolor:mycolor
+      struct Input {
+          float2 uv_MainTex;
+      };
+      fixed4 _ColorTint;
+      void mycolor (Input IN, SurfaceOutput o, inout fixed4 color)
+      {
+          color *= _ColorTint;
+      }
+      sampler2D _MainTex;
+      void surf (Input IN, inout SurfaceOutput o) {
+           o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb;
+      }
+      ENDCG
+    } 
+    Fallback &quot;Diffuse&quot;
+  }
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/SurfaceShaderFinalColorSimple.jpg" alt="">
+</figure>
+
+<h2>Custom Fog with Final Color Modifier</h2>
+
+<p>A common case for using final color modifier (see above) would be implementing completely custom Fog in <span class="tooltip"><strong>forward rendering</strong><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderTech-ForwardRendering.html" href="RenderTech-ForwardRendering.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ForwardRendering" aria-label="Go to glossary anchor for ForwardRendering">Glossary</a></span></span></span>. Fog needs to affect the final computed pixel Shader color, which is exactly what the <code>finalcolor</code> modifier does.</p>
+
+<p>Here’s a Shader that applies fog tint based on the distance from screen center. This combines the vertex modifier with the custom vertex data (<code>fog</code>) and the final color modifier. When used in the forward rendering additive pass, the Fog needs to fade to black. This example handles that and performs a check for <code>UNITY_PASS_FORWARDADD</code>.</p>
+
+<pre><code>  Shader &quot;Example/Fog via Final Color&quot; {
+    Properties {
+      _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+      _FogColor (&quot;Fog Color&quot;, Color) = (0.3, 0.4, 0.7, 1.0)
+    }
+    SubShader {
+      Tags { &quot;RenderType&quot; = &quot;Opaque&quot; }
+      CGPROGRAM
+      #pragma surface surf Lambert finalcolor:mycolor vertex:myvert
+      struct Input {
+          float2 uv_MainTex;
+          half fog;
+      };
+      void myvert (inout appdata_full v, out Input data)
+      {
+          UNITY_INITIALIZE_OUTPUT(Input,data);
+          float4 hpos = UnityObjectToClipPos(v.vertex);
+          hpos.xy/=hpos.w;
+          data.fog = min (1, dot (hpos.xy, hpos.xy)*0.5);
+      }
+      fixed4 _FogColor;
+      void mycolor (Input IN, SurfaceOutput o, inout fixed4 color)
+      {
+          fixed3 fogColor = _FogColor.rgb;
+          #ifdef UNITY_PASS_FORWARDADD
+          fogColor = 0;
+          #endif
+          color.rgb = lerp (color.rgb, fogColor, IN.fog);
+      }
+      sampler2D _MainTex;
+      void surf (Input IN, inout SurfaceOutput o) {
+           o.Albedo = tex2D (_MainTex, IN.uv_MainTex).rgb;
+      }
+      ENDCG
+    } 
+    Fallback &quot;Diffuse&quot;
+  }
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/SurfaceShaderFinalColorFog.jpg" alt="">
+</figure>
+
+<h2>Linear Fog</h2>
+
+<pre><code>Shader &quot;Example/Linear Fog&quot; {
+  Properties {
+    _MainTex (&quot;Base (RGB)&quot;, 2D) = &quot;white&quot; {}
+  }
+  SubShader {
+    Tags { &quot;RenderType&quot;=&quot;Opaque&quot; }
+    LOD 200
+    
+    CGPROGRAM
+    #pragma surface surf Lambert finalcolor:mycolor vertex:myvert
+    #pragma multi_compile_fog
+
+    sampler2D _MainTex;
+    uniform half4 unity_FogStart;
+    uniform half4 unity_FogEnd;
+
+    struct Input {
+      float2 uv_MainTex;
+      half fog;
+    };
+
+    void myvert (inout appdata_full v, out Input data) {
+      UNITY_INITIALIZE_OUTPUT(Input,data);
+      float pos = length(UnityObjectToViewPos(v.vertex).xyz);
+      float diff = unity_FogEnd.x - unity_FogStart.x;
+      float invDiff = 1.0f / diff;
+      data.fog = clamp ((unity_FogEnd.x - pos) * invDiff, 0.0, 1.0);
+    }
+    void mycolor (Input IN, SurfaceOutput o, inout fixed4 color) {
+      #ifdef UNITY_PASS_FORWARDADD
+        UNITY_APPLY_FOG_COLOR(IN.fog, color, float4(0,0,0,0));
+      #else
+        UNITY_APPLY_FOG_COLOR(IN.fog, color, unity_FogColor);
+      #endif
+    }
+
+    void surf (Input IN, inout SurfaceOutput o) {
+      half4 c = tex2D (_MainTex, IN.uv_MainTex);
+      o.Albedo = c.rgb;
+      o.Alpha = c.a;
+    }
+    ENDCG
+  } 
+  FallBack &quot;Diffuse&quot;
+}
+</code></pre>
+
+<h2>Decals</h2>
+
+<p>Decals are commonly used to add details to Materials at run time (for example, bullet impacts). They are especially useful in deferred rendering, because they alter the GBuffer before it is lit, therefore saving on performance.</p>
+
+<p>In a typical scenario, Decals should be rendered after the opaque objects and should not be shadow casters, as seen in the <span class="tooltip"><strong>ShaderLab</strong><span class="tooltiptext">Unity’s language for defining the structure of Shader objects. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-Shader.html" href="SL-Shader.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span> “Tags” in the example below.</p>
+
+<pre><code>Shader &quot;Example/Decal&quot; {
+  Properties {
+    _MainTex (&quot;Base (RGB)&quot;, 2D) = &quot;white&quot; {}
+  }
+  SubShader {
+    Tags { &quot;RenderType&quot;=&quot;Opaque&quot; &quot;Queue&quot;=&quot;Geometry+1&quot; &quot;ForceNoShadowCasting&quot;=&quot;True&quot; }
+    LOD 200
+    Offset -1, -1
+    
+    CGPROGRAM
+    #pragma surface surf Lambert decal:blend
+    
+    sampler2D _MainTex;
+    
+    struct Input {
+      float2 uv_MainTex;
+    };
+    
+    void surf (Input IN, inout SurfaceOutput o) {
+        half4 c = tex2D (_MainTex, IN.uv_MainTex);
+        o.Albedo = c.rgb;
+        o.Alpha = c.a;
+      }
+    ENDCG
+    }
+}
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-RenderPipeline.html"></a></span><div class="tip">Surface Shaders and rendering paths</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-SurfaceShaderLighting.html"></a></span><div class="tip">Custom lighting models in Surface Shaders</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

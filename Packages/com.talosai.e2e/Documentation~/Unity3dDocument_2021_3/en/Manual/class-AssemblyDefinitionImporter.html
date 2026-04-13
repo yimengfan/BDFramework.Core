@@ -1,0 +1,369 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Assembly Definition properties</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-AssemblyDefinitionImporter.html">English</a></li>
+<li><a href="/cn/current/Manual/class-AssemblyDefinitionImporter.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-AssemblyDefinitionImporter.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-AssemblyDefinitionImporter.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-AssemblyDefinitionImporter.html">English</a></li>
+<li><a href="/cn/current/Manual/class-AssemblyDefinitionImporter.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-AssemblyDefinitionImporter.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-AssemblyDefinitionImporter.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="unity-architecture.html">Unity architecture</a></li>
+<li><a href="script-compilation.html">Script compilation</a></li>
+<li><a href="ScriptCompilationAssemblyDefinitionFiles.html">Assembly definitions</a></li>
+<li>Assembly Definition properties</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ScriptCompilationAssemblyDefinitionFiles.html"></a></span><div class="tip">Assembly definitions</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-AssemblyDefinitionReferenceImporter.html"></a></span><div class="tip">Assembly Definition Reference properties</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Assembly Definition properties</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Click on an Assembly Definition Asset to set the properties for an assembly in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window.</p>
+
+<p>Assembly Definition properties are divided into the following sections:</p>
+
+<ul>
+<li><a href="#name">Name and General</a></li>
+<li><a href="#define-constraints">Define Constraints</a></li>
+<li><a href="#asmdef-references">Assembly Definition References</a></li>
+<li><a href="#assembly-references">Assembly References</a></li>
+<li><a href="#platforms">Platforms</a></li>
+<li><a href="#version-defines">Version Defines</a></li>
+</ul>
+
+<p>
+<a name="name" aria-hidden="true"></a>
+<a name="general" aria-hidden="true"></a>
+</p>
+
+<h2>Name and General</h2>
+
+<figure>
+<img src="../uploads/Main/name-and-general.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Description:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;">The name for the assembly (without a file extension). Assembly names must be unique across the Project. Consider using a reverse-DNS naming style to reduce the chance of name conflicts, especially if you want to use the assembly in more than one Project.<br><br><strong>Note</strong>: Unity uses the name you assign to the Assembly Definition asset as the default value of the Name field, but you can change the name as needed. However, if you reference an Assembly Definition by its name rather than its GUID, changing the name will break the reference.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Allow ‘unsafe’ Code</strong></td>
+	<td style="text-align:left;">Enable the Allow ‘unsafe’ Code option if you have used the C# <code>unsafe</code> keyword in a script within the assembly. When you enable this setting, Unity passes the /unsafe option to the C# compiler when it compiles the assembly.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Auto Referenced</strong></td>
+	<td style="text-align:left;">Specify whether the predefined assemblies should reference this Project assembly. When you disable the Auto Reference option, Unity does not automatically reference the assembly during compilation. This has no effect on whether Unity includes it in the build.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>No Engine References</strong></td>
+	<td style="text-align:left;">When you enable this property, Unity does not add references to UnityEditor or UnityEngine when it compiles the assembly.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Override References</strong></td>
+	<td style="text-align:left;">Enable the Override References setting to manually specify which precompiled assemblies this assembly depends upon. When you enable Override References, the Inspector shows the Assembly References section, which you can use to specify the references.<br><br>A precompiled assembly is a library compiled outside your Unity Project. By default, assemblies you define in your Project reference all the precompiled assemblies you add to the Project, which matches how the predefined assemblies reference all precompiled assemblies. When you enable Override References, this assembly only references the precompiled assemblies you add under Assembly References.<br><br><strong>Note</strong>: To prevent Project assemblies from automatically referencing a precompiled assembly, you can disable its Auto Referenced option. See Plugin Inspector for more information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Root Namespace</strong></td>
+	<td style="text-align:left;">The default namespace for <strong><span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span></strong> in this assembly definition. If you use either <a href="https://docs.unity3d.com/Packages/com.unity.ide.rider@latest/">Rider</a> or <a href="https://docs.unity3d.com/Packages/com.unity.ide.visualstudio@latest/">Visual Studio</a> as your code editor, they automatically add this namespace to any new scripts you create in this assembly definition.</td>
+</tr>
+</tbody>
+</table>
+
+<p>For more information, see <a href="ScriptCompilationAssemblyDefinitionFiles.html#create-asmdef">Creating an Assembly Definition asset</a>.</p>
+
+<p><a name="define-constraints" aria-hidden="true"></a></p>
+
+<h2>Define Constraints</h2>
+
+<figure>
+<img src="../uploads/Main/define-constraints.png" alt="">
+</figure>
+
+<p>Define constraints specify the compiler #define directives that must be defined for Unity to compile or reference an assembly.</p>
+
+<p>Unity only compiles and references a Project assembly if all of the Define Constraints are satisfied. Constraints work like the #if preprocessor directive in C#, but on the assembly level instead of the script level. Define all the symbols in the Define Constraints setting for the constraints to be satisfied.</p>
+
+<p>To specify that a symbol must be undefined, prefix it with a negating ! (bang) symbol. For example, if you specify the following symbols as the Define Constraints:</p>
+
+<ul>
+<li><code>!ENABLE_IL2CPP</code></li>
+<li><code>UNITY_2018_3_OR_NEWER</code></li>
+</ul>
+
+<p>The constraints are satisfied when the symbol <code>ENABLE_IL2CPP</code> is not defined and the symbol <code>UNITY_2018_3_OR_NEWER</code> is defined. The result is that Unity only compiles and references this assembly on non-IL2CPP scripting runtimes for Unity 2018.3 or newer.</p>
+
+<p>You can use the || (OR) operator to specify that at least one of the constraints must be present in order for the constraints to be satisfied. For example:</p>
+
+<ul>
+<li><code>UNITY_IOS || UNITY_EDITOR_OSX</code></li>
+<li><code>UNITY_2019_3_OR_NEWER</code></li>
+<li><code>!UNITY_ANDROID</code></li>
+</ul>
+
+<p>The constraints are satisfied when either <code>UNITY_IOS</code> or <code>UNITY_EDITOR_OSX</code> and <code>UNITY_2019_3_OR_NEWER</code> are defined and <code>UNITY_ANDROID</code> is not defined. Individual lines are analogous to performing a logical AND operation between the constraints in them. The above example is equivalent to:</p>
+
+<p><code>(UNITY_IOS OR UNITY_EDITOR_OSX) AND (UNITY_2019_3_OR_NEWER) AND (NOT UNITY_ANDROID)</code></p>
+
+<p>You can use any of Unity’s built-in #define directives, symbols defined in a global compiler response (.rsp) file, and any symbols defined in the Project’s Scripting Define Symbols Player setting. See <a href="PlatformDependentCompilation.html">Platform dependent compilation</a> for more information, including a list of the built-in symbols.</p>
+
+<p>
+<strong>Note</strong>: The Scripting Define Symbols settings are platform-specific. If you use this setting to define whether Unity should use an assembly, make sure that you define the necessary symbols on all the relevant platforms.</p>
+
+<p>For more information, see <a href="ScriptCompilationAssemblyDefinitionFiles.html#conditional-assembly">Conditionally including an assembly</a>.</p>
+
+<p><a name="invalid-constraints" aria-hidden="true"></a></p>
+
+<h3>Invalid or incompatible constraints</h3>
+
+<p>Unity marks each constraint with an indicator based on the currently defined settings (for example, the following set of three constraints indicates that the first symbol is currently defined while the other two are not). Since each individual constraint must be true for the overall constraint to be satisfied, the Editor marks the entire Define Constraints section as currently incompatible or invalid.</p>
+
+<figure>
+<img src="../uploads/Main/invalid-constraints.png" alt="Invalid or incompatible constraints are flagged.">
+<figcaption>Invalid or incompatible constraints are flagged.</figcaption>
+</figure>
+
+<p>To satisfy the constraints in this example, you could change the <strong><span class="tooltip"><strong>Scripting Backend</strong><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about scripting-backends.html" href="scripting-backends.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#ScriptingBackend" aria-label="Go to glossary anchor for ScriptingBackend">Glossary</a></span></span></span></strong> to <strong><span class="tooltip"><strong>IL2CPP</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html" href="Glossary.html#ScriptingBackend" aria-label="Go to glossary anchor for ScriptingBackend">Glossary</a></span></span></span></strong> to <strong><span class="tooltip"><strong>IL2CPP</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span></strong> for the second constraint (in <strong>Player Settings</strong>) and remove the invalid characters from the third constraint. However, what often matters is how the constraints are evaluated when you build the project, not how the constraints appear in the Unity Editor (for example, you might have an assembly that you only want to include in builds that use the IL2CPP backend, but not on other builds that use the Mono backend).</p>
+
+<p><a name="asmdef-references" aria-hidden="true"></a></p>
+
+<h2>Assembly Definition References</h2>
+
+<figure>
+<img src="../uploads/Main/assembly-definition-ref.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Description:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Assembly Definition References</strong></td>
+	<td style="text-align:left;">Specify references to other assemblies that you have created using Assembly Definition assets. Unity uses these references to compile the assembly and also define the <strong>dependencies</strong> between assemblies.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Use GUIDs</strong></td>
+	<td style="text-align:left;">This setting controls how Unity serializes references to other Assembly Definition assets. When you enable this property, Unity saves the reference as the asset’s GUID, instead of the Assembly Definition name. It’s good practice to use the GUID instead of the name, because it means you can make changes to the name of an Assembly Definition asset without having to update other Assembly Definition files that reference it.</td>
+</tr>
+</tbody>
+</table>
+
+<p>For more information, see <a href="ScriptCompilationAssemblyDefinitionFiles.html#create-asmdef">Creating an Assembly Definition asset</a>
+</p>
+
+<p><a name="assembly-references" aria-hidden="true"></a></p>
+
+<h2>Assembly References</h2>
+
+<figure>
+<img src="../uploads/Main/assembly-ref.png" alt="">
+</figure>
+
+<p>The Assembly References section only appears when you enable the <strong>Override References</strong> property (in the <a href="#general">General</a> section). Use this area to specify any references to precompiled assemblies on which this assembly depends.</p>
+
+<p>For more information, see <a href="ScriptCompilationAssemblyDefinitionFiles.html#reference-precompiled-assembly">Referencing a precompiled, plugin assembly</a>
+</p>
+
+<p><a name="platforms" aria-hidden="true"></a></p>
+
+<h2>Platforms</h2>
+
+<figure>
+<img src="../uploads/Main/platforms.png" alt="">
+</figure>
+
+<p>Set the platform compatibility of the assembly. Unity only compiles or references this assembly on the included (or not excluded) platforms.</p>
+
+<p>For more information, see <a href="ScriptCompilationAssemblyDefinitionFiles.html#create-platform-specific">Creating a platform-specific assembly</a>
+</p>
+
+<p><a name="version-defines" aria-hidden="true"></a></p>
+
+<h2>Version Defines</h2>
+
+<figure>
+<img src="../uploads/Main/version-defines.png" alt="">
+</figure>
+
+<p>Specify which symbols to define according to the versions of the packages and modules in a project.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Description:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Resource</strong></td>
+	<td style="text-align:left;">A package or module</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Define</strong></td>
+	<td style="text-align:left;">The symbol to define when an applicable version of the Resource is also present in this Unity Project.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Expression</strong></td>
+	<td style="text-align:left;">An expression defining a version or range of versions. See <a href="ScriptCompilationAssemblyDefinitionFiles.html#version-define-expressions">Version Define expressions</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Expression outcome</strong></td>
+	<td style="text-align:left;">The Expression evaluated as a logical statement, where “x” is the version checked. If the Expression outcome says, Invalid, then the Expression is malformed.</td>
+</tr>
+</tbody>
+</table>
+
+<p>For more information, see <a href="ScriptCompilationAssemblyDefinitionFiles.html#define-symbols">Defining symbols based on project packages</a>
+</p>
+
+<p><span class="search-words">AssemblyDefinitionImporter</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ScriptCompilationAssemblyDefinitionFiles.html"></a></span><div class="tip">Assembly definitions</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-AssemblyDefinitionReferenceImporter.html"></a></span><div class="tip">Assembly Definition Reference properties</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

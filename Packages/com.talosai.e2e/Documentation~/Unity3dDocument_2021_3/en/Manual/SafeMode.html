@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Safe Mode</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SafeMode.html">English</a></li>
+<li><a href="/cn/current/Manual/SafeMode.html">中文</a></li>
+<li><a href="/ja/current/Manual/SafeMode.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SafeMode.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SafeMode.html">English</a></li>
+<li><a href="/cn/current/Manual/SafeMode.html">中文</a></li>
+<li><a href="/ja/current/Manual/SafeMode.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SafeMode.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="EditorFeatures.html">Editor Features</a></li>
+<li>Safe Mode</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SmartMerge.html"></a></span><div class="tip">Smart merge</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="CommandLineArguments.html"></a></span><div class="tip">Command-line arguments</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Safe Mode</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>Overview</h2>
+
+<p>Unity’s Safe Mode is a mode that the Unity Editor can enter when you open a project that has script compilation errors. Safe Mode is designed to provide the best environment for resolving compilation errors, so that you can quickly return your project to a functional state.</p>
+
+<p>In Safe Mode, Unity provides a minimal version of the Editor user interface, with limited functions. It only imports script-related assets, and prevents the import of non-script assets (such as models, materials, textures and prefabs). This is because Safe Mode is not meant for content production, only for resolving compilation errors.</p>
+
+<p>Safe Mode never allows managed code to run from your project, or its packages. This means your own <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> such as <a href="ExtendingTheEditor.html">Editor scripts</a>, <a href="../ScriptReference/AssetPostprocessor.html">asset post-processors</a>, and <a href="ScriptedImporters.html">scripted importers</a> do not run. Safe Mode also disables <a href="class-AssemblyDefinitionImporter.html#assembly-references">assembly overrides</a>, and the <a href="com.unity.burst.html">Burst</a> and <a href="roslyn-analyzers.html">Roslyn</a> Analysers. This ensures the Editor in Safe Mode is always fully functional and reliable, even when it opens a project in a very broken state.</p>
+
+<p>Unity automatically exits Safe Mode when it detects there are no more compilation errors. When it exits Safe Mode, Unity imports your project in full, and the Editor restores its normal full functionality.</p>
+
+<h2>Common causes of compilation errors</h2>
+
+<p>Some common scenarios that might result in you encountering compilation errors occur when you:</p>
+
+<ul>
+<li>Upgrade a project from an older version of Unity to a newer version.</li>
+<li>Open a project in a different version of Unity from the one it was created in.</li>
+<li>Open a project with a missing <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PackagesList.html">package</a><span class="tooltiptext">A container that stores various types of features and assets for Unity, including Editor or Runtime tools and libraries, Asset collections, and project templates. Packages are self-contained units that the Unity Package Manager can share across Unity projects. Most of the time these are called <em>packages</em>, but occasionally they are called <strong>Unity Package Manager (UPM) packages</strong>. <a href="Packages.html" href="PackagesList.html">package</a><span class="tooltiptext">A container that stores various types of features and assets for Unity, including Editor or Runtime tools and libraries, Asset collections, and project templates. Packages are self-contained units that the Unity Package Manager can share across Unity projects. Most of the time these are called <em>packages</em>, but occasionally they are called <strong>Unity Package Manager (UPM) packages</strong>. <a href="Packages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Package" aria-label="Go to glossary anchor for Package">Glossary</a></span></span></span>, or an incorrect version of a package.</li>
+<li>Open a project which has errors in your own scripts.</li>
+<li>Open a project under <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VersionControl.html">version control</a><span class="tooltiptext">A system for managing file changes. You can use Unity in conjunction with most common version control tools, including Perforce, Git, Mercurial and PlasticSCM. <a href="VersionControl.html" href="VersionControl.html">version control</a><span class="tooltiptext">A system for managing file changes. You can use Unity in conjunction with most common version control tools, including Perforce, Git, Mercurial and PlasticSCM. <a href="VersionControl.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VersionControl" aria-label="Go to glossary anchor for VersionControl">Glossary</a></span></span></span>, where the latest changes you pulled contained compilation errors.</li>
+</ul>
+
+<p>Opening a project that has compilation errors without Safe Mode can cause many kinds of problems. For example, <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PackagesList.html">packages</a><span class="tooltiptext">Packages are collections of assets to be shared and re-used in Unity. The <a href="upm-ui.html">Unity Package Manager</a> (UPM) can display, add, and remove packages from your project. These packages are native to the Unity Package Manager and provide a fundamental method of delivering Unity functionality. However, the Unity Package Manager can also display <a href="AssetStorePackages.html">Asset Store packages</a> that you downloaded from the Asset Store. <a href="Packages.html" href="PackagesList.html">packages</a><span class="tooltiptext">Packages are collections of assets to be shared and re-used in Unity. The <a href="upm-ui.html">Unity Package Manager</a> (UPM) can display, add, and remove packages from your project. These packages are native to the Unity Package Manager and provide a fundamental method of delivering Unity functionality. However, the Unity Package Manager can also display <a href="AssetStorePackages.html">Asset Store packages</a> that you downloaded from the Asset Store. <a href="Packages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Packages" aria-label="Go to glossary anchor for Packages">Glossary</a></span></span></span> in your project might not load or function properly, and your assets might be imported incorrectly, resulting in incorrect cached artifacts in your <a href="AssetWorkflow.html#processing">Library</a> or in your <a href="UnityAccelerator.html">Cache Server</a>. </p>
+
+<p>In these situations, you usually don’t want to wait for the rest of the project to import before you can resolve the errors. Safe Mode provides you with the tools to resolve these script-related problems yourself, or to use version control to update your project to a newer version that resolves the errors, without waiting for a full import of the project.</p>
+
+<h2>Entering Safe Mode</h2>
+
+<p>When you open a project which has compilation errors, the Editor displays a dialog to ask whether you want to enter Safe Mode:</p>
+
+<figure>
+<img src="../uploads/Main/SafeModeDialog.png" alt="The Enter Safe Mode? dialog prompts you to enter Safe Mode when you open a project with compilation errors">
+<figcaption>The Enter Safe Mode? dialog prompts you to enter Safe Mode when you open a project with compilation errors</figcaption>
+</figure>
+
+<p>At this point you have three choices:</p>
+
+<ul>
+<li><strong>Enter Safe Mode</strong></li>
+<li>
+<strong>Ignore</strong> the errors and open your project</li>
+<li>
+<strong>Quit</strong> Unity</li>
+</ul>
+
+<p>In most cases, you should select <strong>Enter Safe Mode</strong> to resolve the errors in your project (or, if you’re working with version control, to pull changes which contain fixes to the errors). Safe Mode provides the best environment for resolving compilation errors, so that you can quickly return your project to a functional state before Unity imports the rest of your project.</p>
+
+<p>However, there are some cases where you might not want to enter Safe Mode, in which case you can <strong>Quit</strong> Unity, or <strong>Ignore</strong> the errors.</p>
+
+<p>
+<strong>Note</strong>: <em>You can disable this dialog in <strong><em><em>Edit &gt; Preferences &gt; Asset Pipeline &gt; Show Enter Safe Mode Dialog</em></em></strong>. If you disable the dialog, Unity automatically enters Safe Mode when it opens a project with compilation errors.</em>
+</p>
+
+<h3>Quitting without entering Safe Mode</h3>
+
+<p>Safe Mode is specifically designed for fixing compilation errors. If you are working on a Unity project as part of a team, but you are not responsible for the scripts that are causing errors, and don’t know what to do, you should select <strong>Quit </strong>in the dialog, and contact the programmers on your team for advice.</p>
+
+<p><a name="IgnoringErrors" aria-hidden="true"></a></p>
+
+<h3>Ignoring the errors and continuing import</h3>
+
+<p>There are some situations where you don’t need the project to be in a usable state (for example, if you are opening an old project to copy some parts out, or to simply inspect how it is configured). In this case, you can ignore the errors and open your project in a broken state anyway.</p>
+
+<p>If you select <strong>Ignore</strong>, and later want to open the project in Safe Mode, you can close and re-open Unity to access the “Enter Safe Mode” dialog again.</p>
+
+<h3>Implications of ignoring compilation errors</h3>
+
+<p>If you choose to ignore the errors, Unity continues to import the rest of your assets and opens your project fully. Potential implications here include:</p>
+
+<ul>
+<li><p>Your project might not be in a usable state. You might not be able to enter Play Mode, or create builds of your project, until the errors are resolved. In addition, any packages in your project might not load correctly, or at all.</p></li>
+<li><p>Unity might need to import your assets twice; once at launch, and again after you resolve the project’s compilation errors. This increases the amount of time it takes to load your project in a usable state.</p></li>
+<li><p>If your project uses a <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ScriptableRenderPipeline.html">Scriptable Render Pipeline</a>, your <span class="tooltip"><strong>render pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html" href="ScriptableRenderPipeline.html">Scriptable Render Pipeline</a>, your <span class="tooltip"><strong>render pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> might not load, resulting in visual problems such as the <a href="shader-error.html">error shader</a>.</p></li>
+<li><p>Script compilation errors can cause secondary errors within your project. For example, if a <a href="ScriptedImporters.html">scripted importer</a> in your project is unable to load because of compilation errors, your assets might import in an incorrect state.</p></li>
+</ul>
+
+<p>Safe Mode is designed to help you avoid all of these problems.</p>
+
+<h2>The Editor in Safe Mode</h2>
+
+<p>In Safe Mode, Unity provides a minimal Editor interface with limited functions. </p>
+
+<figure>
+<img src="../uploads/Main/SafeModeEditor.png" alt="The Unity Editor in Safe Mode">
+<figcaption>The Unity Editor in Safe Mode</figcaption>
+</figure>
+
+<p>The Unity Editor displays a Safe Mode banner in the <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> section at the top of the Editor, which replaces the standard Editor toolbar. The toolbar indicates that you are in Safe Mode, and provides an <strong>Exit Safe Mode</strong> button, which allows you to ignore the remaining errors and exit Safe Mode. The banner also indicates whether your project uses <span class="tooltip"><a href="pack-preview.html">preview packages</a><span class="tooltiptext">A <em>preview</em> package is in development and not yet ready for production. A package in preview might be at any stage of development, from the initial stages to near completion.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Previewpackage" aria-label="Go to glossary anchor for Previewpackage">Glossary</a></span></span></span>.</p>
+
+<p>The Unity Editor retains its <a href="ScriptingToolsIDEs.html">integration with code editors</a> in Safe Mode, so you can double-click on script assets or <a href="Console.html">console error</a><a href="Console.html">s</a> to open their associated scripts, and you can open the C# project via the <strong>Assets</strong> menu. It also retains its integration with <a href="VersionControl.html">Version Control systems</a>. </p>
+
+<h3>The restricted set of windows in Safe Mode</h3>
+
+<p>The Editor displays a limited selection of windows in Safe Mode. These are:</p>
+
+<ul>
+<li>The Console window</li>
+<li>The Project window</li>
+<li>The <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window</li>
+<li>The Package Manager window</li>
+</ul>
+
+<p>These are the only windows available because they relate to fixing compilation errors. No other windows are available in Safe Mode.</p>
+
+<h3>The Editor Menu in Safe Mode</h3>
+
+<p>The options available in the Editor’s main menu are restricted to a limited set while in Safe Mode. You can only see and select the menu options which relate to working with scripts; the regular options for creating and working with other content are not available. For example, you cannot create or open <span class="tooltip"><strong>Scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, or create non-script assets such as primitive shapes, lights, or <span class="tooltip"><strong>cameras</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, or create non-script assets such as primitive shapes, lights, or <span class="tooltip"><strong>cameras</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>. The <strong><span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>. The <strong><span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span></strong> and <strong>Component</strong> menus are not present, and the <strong>Window</strong> menu only offers a restricted set of windows.</p>
+
+<figure>
+<img src="../uploads/Main/SafeModeLimitedMenu.png" alt="The restricted Editor Menu as it appears in Safe Mode, displaying the available options for creating assets.">
+<figcaption>The restricted Editor Menu as it appears in Safe Mode, displaying the available options for creating assets.</figcaption>
+</figure>
+
+<h3>The Project window in Safe Mode</h3>
+
+<p>In Safe Mode, the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span> has some functional differences compared with its normal behavior outside of Safe Mode.</p>
+
+<p>The primary difference is that you can only select compilation-related assets. Other asset types are not selectable. They remain visible as grayed-out entries in the Project window, but you cannot select or edit them.</p>
+
+<p>Specifically, the compilation-related asset types that you can interact with are:</p>
+
+<ul>
+<li>C# files (.cs)</li>
+<li>DLL files (.dll)</li>
+<li>Assembly definitions (.asm)</li>
+<li>Response files (.rsp)</li>
+<li>Ruleset files (.ruleset)</li>
+</ul>
+
+<p>In addition, the icons for the non-selectable assets do not show a preview of the content of the asset. Instead, they show a generic icon to represent the asset’s type. </p>
+
+<figure>
+<img src="../uploads/Main/SafeModeProjectWindow.png" alt="The Project window displays generic icons for non-selectable assets.">
+<figcaption>The Project window displays generic icons for non-selectable assets.</figcaption>
+</figure>
+
+<p>The <strong>create (+)</strong> menu button is disabled, and the Project window context menu has a reduced set of options available.</p>
+
+<figure>
+<img src="../uploads/Main/SafeModeCreateButton.png" alt="The create (+) menu button in the project window, disabled in Safe Mode">
+<figcaption>The <strong><em><em>create (+)</em></em></strong> menu button in the project window, disabled in Safe Mode</figcaption>
+</figure>
+
+<h2>Exiting Safe Mode</h2>
+
+<p>Unity automatically exits Safe Mode when you have resolved all the compilation errors. Unity then continues to open your project and import your assets.</p>
+
+<p>To exit Safe Mode while there are still compilation errors remaining, select the <strong>Exit Safe Mode</strong> button in the Safe Mode toolbar. This is not recommended (see <a href="SafeMode.html#IgnoringErrors">Implications of ignoring compilation errors</a>), and Unity prompts you with a dialog to confirm your decision. </p>
+
+<figure>
+<img src="../uploads/Main/SafeModeExitButton.png" alt="The Exit Safe Mode button in the Safe Mode toolbar">
+<figcaption>The <strong>Exit Safe Mode</strong> button in the Safe Mode toolbar</figcaption>
+</figure>
+
+<p>If you exit Safe Mode while errors remain in your project, and later want to return to Safe Mode, you can close and re-open Unity to access the “Enter Safe Mode” dialog again.. </p>
+
+<h2>Safe Mode in Batch Mode</h2>
+
+<p>In Batch Mode, Unity automatically quits if there are compilation errors in your project, unless you use the <code>-ignoreCompilerErrors</code> <a href="CommandLineArguments.html">command line argument</a>. </p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SmartMerge.html"></a></span><div class="tip">Smart merge</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="CommandLineArguments.html"></a></span><div class="tip">Command-line arguments</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

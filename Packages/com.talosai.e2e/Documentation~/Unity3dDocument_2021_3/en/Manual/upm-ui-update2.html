@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Update an asset package</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-ui-update2.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-ui-update2.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-ui-update2.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-ui-update2.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-ui-update2.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-ui-update2.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-ui-update2.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-ui-update2.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li><a href="Packages.html">Unity's Package Manager</a></li>
+<li><a href="upm-ui.html">Package Manager window</a></li>
+<li><a href="upm-ui-actions-ap.html">Add and remove asset packages</a></li>
+<li>Update an asset package</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-ui-import.html"></a></span><div class="tip">Download and import an asset package</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-ui-remove-asset.html"></a></span><div class="tip">Remove imported assets from a project</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Update an asset package</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can update an asset package that you got from the <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span> by using the <strong>Package Manager</strong> window.</p>
+
+<p>
+<strong>Note:</strong> Follow this task to update an asset package from the Asset Store that’s already in your project. Refer to the following resources for other related tasks:</p>
+
+<ul>
+<li>For information about importing an asset package from the Asset Store that isn’t in your project yet, refer to <a href="upm-ui-import.html">Download and import an asset package</a>.</li>
+<li>For information about updating <span class="tooltip"><strong>UPM packages</strong><span class="tooltiptext">A <strong>Package</strong> managed by the <strong>Unity Package Manager</strong>. Refer to <strong>Packages</strong>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UPMpackage" aria-label="Go to glossary anchor for UPMpackage">Glossary</a></span></span></span> that came from the Asset Store, refer to <a href="upm-ui-update.html">Switch to another version of a UPM package</a>.</li>
+<li>For information about the different package types, refer to <a href="upm-package-types.html">Package types</a>.</li>
+</ul>
+
+<p>To update an asset package:</p>
+
+<ol>
+<li>
+<p>Open the Package Manager window and select <strong>My Assets</strong> from the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-ui-filter.html">Packages</a><span class="tooltiptext">Packages are collections of assets to be shared and re-used in Unity. The <a href="upm-ui.html">Unity Package Manager</a> (UPM) can display, add, and remove packages from your project. These packages are native to the Unity Package Manager and provide a fundamental method of delivering Unity functionality. However, the Unity Package Manager can also display <a href="AssetStorePackages.html">Asset Store packages</a> that you downloaded from the Asset Store. <a href="Packages.html" href="upm-ui-filter.html">Packages</a><span class="tooltiptext">Packages are collections of assets to be shared and re-used in Unity. The <a href="upm-ui.html">Unity Package Manager</a> (UPM) can display, add, and remove packages from your project. These packages are native to the Unity Package Manager and provide a fundamental method of delivering Unity functionality. However, the Unity Package Manager can also display <a href="AssetStorePackages.html">Asset Store packages</a> that you downloaded from the Asset Store. <a href="Packages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Packages" aria-label="Go to glossary anchor for Packages">Glossary</a></span></span></span> menu.</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-myassets.png" alt="Switch the context to My Assets">
+<figcaption>Switch the context to <strong>My Assets</strong></figcaption>
+</figure>
+
+<p>An arrow indicator appears next to any asset packages that have updates available.</p>
+</li>
+<li>
+<p>To see the most recent updates for your Asset Store packages, <a href="upm-ui-sort.html">sort the list</a> by Updated date from latest to oldest.</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-update2-sort.png" alt="Choose Update date descending from the Sort menu">
+<figcaption>Choose <strong>Update date</strong> descending from the <strong>Sort</strong> menu</figcaption>
+</figure>
+</li>
+<li><p>Select the Asset Store package you want to update from the <a href="upm-ui-list.html">list of packages</a>. The package information appears in the <a href="upm-ui-details.html">details view</a>.</p></li>
+<li>
+<p>In the <a href="upm-ui-list.html">list of packages</a>, click the expander icon to the left of the Asset Store package’s name.</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-update2-sorted.png" alt="Available Asset Store package versions">
+<figcaption>Available Asset Store package versions</figcaption>
+</figure>
+
+<p>The newer version displays <strong>Recommended</strong> and the installed version displays <strong>Currently downloaded</strong>.</p>
+</li>
+<li><p>Select the new version for the current Asset Store package and see the details specific to that version in the <a href="upm-ui-details.html">details view</a>.</p></li>
+<li>
+<p>Click the <strong>Update</strong> button.</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-update2.png" alt="Update button in the bottom right corner of the details view">
+<figcaption><strong>Update</strong> button in the bottom right corner of the details view</figcaption>
+</figure>
+
+<p>
+<strong>Note</strong>: If the downloaded version of your package isn’t compatible with your version of the Unity Editor, a message appears in the details view and an alternate <strong>Update</strong> button displays, which lets you download a compatible version of the package.</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-update-alt.png" alt="Update button for incompatible versions">
+<figcaption><strong>Update</strong> button for incompatible versions</figcaption>
+</figure>
+
+<p>When the progress bar finishes, the new Asset Store package version information appears in the <a href="upm-ui-details.html">details view</a>, and is immediately available.</p>
+</li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="upm-package-types.html">Package types</a></li>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetPackages.html">Asset packages</a><span class="tooltiptext">A collection of files and data from Unity projects, or elements of projects, which are compressed and stored in one file, similar to Zip files, with the <code>.unitypackage</code> extension. Asset packages are a handy way of sharing and re-using Unity projects and collections of assets. <a href="AssetPackages.html" href="AssetPackages.html">Asset packages</a><span class="tooltiptext">A collection of files and data from Unity projects, or elements of projects, which are compressed and stored in one file, similar to Zip files, with the <code>.unitypackage</code> extension. Asset packages are a handy way of sharing and re-using Unity projects and collections of assets. <a href="AssetPackages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Assetpackage" aria-label="Go to glossary anchor for Assetpackage">Glossary</a></span></span></span></li>
+<li><a href="upm-ui-update.html">Switch to another version of a UPM package</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-ui-import.html"></a></span><div class="tip">Download and import an asset package</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-ui-remove-asset.html"></a></span><div class="tip">Remove imported assets from a project</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

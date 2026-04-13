@@ -1,0 +1,435 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Rig tab</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/FBXImporter-Rig.html">English</a></li>
+<li><a href="/cn/current/Manual/FBXImporter-Rig.html">中文</a></li>
+<li><a href="/ja/current/Manual/FBXImporter-Rig.html">日本語</a></li>
+<li><a href="/kr/current/Manual/FBXImporter-Rig.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/FBXImporter-Rig.html">English</a></li>
+<li><a href="/cn/current/Manual/FBXImporter-Rig.html">中文</a></li>
+<li><a href="/ja/current/Manual/FBXImporter-Rig.html">日本語</a></li>
+<li><a href="/kr/current/Manual/FBXImporter-Rig.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="models.html">Models</a></li>
+<li><a href="models-importing.html">Importing models into Unity</a></li>
+<li><a href="class-FBXImporter.html">Model Import Settings window</a></li>
+<li>Rig tab</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="FBXImporter-Model.html"></a></span><div class="tip">Model tab</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-Avatar.html"></a></span><div class="tip">Avatar Mapping tab</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Rig tab</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The settings on the <strong>Rig</strong> tab define how Unity maps the deformers to the <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> in the imported Model so that you can animate it. For Humanoid characters, this means <a href="ConfiguringtheAvatar.html">assigning or creating an Avatar</a>. For non-Humanoid (<em>Generic</em>) characters, this means <a href="GenericAnimations.html">identifying a Root bone in the skeleton</a>.</p>
+
+<p>By default, when you select a Model in the <span class="tooltip"><strong>Project</strong><span class="tooltiptext">In Unity, you use a project to design and develop a game. A project stores all of the files that are related to a game, such as the asset and Scene files. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about 2Dor3D.html" href="2Dor3D.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Project" aria-label="Go to glossary anchor for Project">Glossary</a></span></span></span> view, Unity determines which <strong>Animation Type</strong> best matches the selected Model and displays it in the <strong>Rig</strong> tab. If Unity has never imported the file, the Animation Type is set to <strong>None</strong>:</p>
+
+<figure>
+<img src="../uploads/Main/Rig-0.png" alt="No rig mapping">
+<figcaption>No rig mapping</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Animation Type</strong></td>
+	<td style="text-align:left;">Specfiy the type of animation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">No animation present</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Legacy</strong></td>
+	<td style="text-align:left;">Use the <a href="#LegacyRig">Legacy Animation System</a>. Import and use animations as with Unity version 3.x and earlier.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Generic</strong></td>
+	<td style="text-align:left;">Use the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #GenericRig">Generic Animation System</a> if your rig is <em>non-humanoid</em> (quadruped or any entity to be animated). Unity picks a root node but you can identify another bone to use as the <span class="tooltip"><strong>Root node</strong><span class="tooltiptext">A transform in an animation hierarchy that allows Unity to establish consistency between Animation clips for a generic model. It also enables Unity to properly blend between Animations that have not been authored “in place” (that is, where the whole Model moves its world position while animating). <a href="AnimationRootMotionNodeOnImportedClips.html" href="#GenericRig">Generic Animation System</a> if your rig is <em>non-humanoid</em> (quadruped or any entity to be animated). Unity picks a root node but you can identify another bone to use as the <span class="tooltip"><strong>Root node</strong><span class="tooltiptext">A transform in an animation hierarchy that allows Unity to establish consistency between Animation clips for a generic model. It also enables Unity to properly blend between Animations that have not been authored “in place” (that is, where the whole Model moves its world position while animating). <a href="AnimationRootMotionNodeOnImportedClips.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rootnode" aria-label="Go to glossary anchor for Rootnode">Glossary</a></span></span></span> instead.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Humanoid</strong></td>
+	<td style="text-align:left;">Use the <a href="#HumanoidRig">Humanoid Animation System</a> if your rig is <em>humanoid</em> (it has two legs, two arms and a head). Unity usually detects the skeleton and maps it to the Avatar correctly. In some cases, you may need to set a change the <strong>Avatar Definition</strong> and <strong>Configure</strong> the mapping manually.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="GenericRig" aria-hidden="true"></a></p>
+
+<h2>Generic animation types</h2>
+
+<figure>
+<img src="../uploads/Main/Rig-1.png" alt="Your rig is non-humanoid (quadruped or any entity to be animated)">
+<figcaption>Your rig is <em>non-humanoid</em> (quadruped or any entity to be animated)</figcaption>
+</figure>
+
+<p>
+<a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GenericAnimations.html">Generic Animations</a> do not use Avatars like <span class="tooltip"><strong>Humanoid animations</strong><span class="tooltiptext">An animation using humanoid skeletons. Humanoid models generally have the same basic structure, representing the major articulate parts of the body, head and limbs. This makes it easy to map animations from one humanoid skeleton to another, allowing retargeting and inverse kinematics. <a href="ConfiguringtheAvatar.html" href="GenericAnimations.html">Generic Animations</a> do not use Avatars like <span class="tooltip"><strong>Humanoid animations</strong><span class="tooltiptext">An animation using humanoid skeletons. Humanoid models generally have the same basic structure, representing the major articulate parts of the body, head and limbs. This makes it easy to map animations from one humanoid skeleton to another, allowing retargeting and inverse kinematics. <a href="ConfiguringtheAvatar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Humanoidanimation" aria-label="Go to glossary anchor for Humanoidanimation">Glossary</a></span></span></span> do. Since the skeleton can be arbitrary, you must specify which bone is the <strong>Root node</strong>. The Root node allows Unity to establish consistency between <span class="tooltip"><strong>Animation clips</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a href="class-AnimationClip.html" href="Glossary.html#Humanoidanimation" aria-label="Go to glossary anchor for Humanoidanimation">Glossary</a></span></span></span> do. Since the skeleton can be arbitrary, you must specify which bone is the <strong>Root node</strong>. The Root node allows Unity to establish consistency between <span class="tooltip"><strong>Animation clips</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> for a generic model, and blend properly between Animations that have not been authored “in place” (that is, where the whole model moves its world position while animating).</p>
+
+<p>Specifying the root node helps Unity determine between movement of the bones relative to each other, and motion of the Root node in the world (controlled from <a href="../ScriptReference/MonoBehaviour.OnAnimatorMove.html">OnAnimatorMove</a>).</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Avatar Definition</strong></td>
+	<td style="text-align:left;">Choose where to get the Avatar definition.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Create from this model</strong></td>
+	<td style="text-align:left;">Create an Avatar based on this model</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Copy from Other Avatar</strong></td>
+	<td style="text-align:left;">Point to an Avatar set up on another model.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Root node</strong></td>
+	<td style="text-align:left;">Select the bone to use as a root node for this Avatar. <br><br>This setting is only available if you set the <strong>Avatar Definition</strong> to <strong>Create From This Model</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Source</strong></td>
+	<td style="text-align:left;">Copy another Avatar with an identical rig to import its animation clips. <br><br>This setting is only available if you set the <strong>Avatar Definition</strong> to <strong>Copy from Other Avatar</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="SkinWeights" aria-hidden="true"></a><strong>Skin Weights</strong>
+</td>
+	<td style="text-align:left;">Set the maximum number of bones that can influence a single vertex.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Standard (4 Bones)</strong></td>
+	<td style="text-align:left;">Use a maximum influence of four bones. This is the default, and is recommended for performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Custom</strong></td>
+	<td style="text-align:left;">Set your own maximum number of bones. <br><br>When you select this option, the <strong>Max Bones/Vertex</strong> and <strong>Max Bone Weight</strong> properties appear.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Max Bones/Vertex</strong></td>
+	<td style="text-align:left;">Set the maximum number of bones per vertex to influence a given vertex. You can set between 1 and 32 bones per vertex, but the higher the number of bones you use to influence a vertex, the greater the performance cost.<br><br>This setting is only available you set the <strong>Skin Weights</strong> property to <strong>Custom</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Max Bone Weight</strong></td>
+	<td style="text-align:left;">Set the bottom threshold for considering bone weights. The weighting calculation ignores anything smaller than this value, and Unity scales up the bone weights higher than this value to a total of 1.0.<br><br>This setting is only available if the <strong>Skin Weights</strong> property is set to <strong>Custom</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Optimize Game Object</strong></td>
+	<td style="text-align:left;">Remove and store the GameObject Transform hierarchy of the imported character in the Avatar and Animator component. If enabled, the SkinnedMeshRenderers of the character use the Unity animation system’s internal skeleton, which improves the performance of the animated characters. <br><br>Only available if the <strong>Avatar Definition</strong> is set to <strong>Create From This Model</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Extra Transforms to Expose</strong></td>
+	<td style="text-align:left;">Specify which Transform paths you want Unity to ignore when <strong>Optimize Game Object</strong> is enabled. For more information, see <a href="#ExtraTransforms">Including extra Transforms</a>.<br><br>This section only appears when <strong>Optimize Game Object</strong> is enabled.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="HumanoidRig" aria-hidden="true"></a></p>
+
+<h2>Humanoid animation types</h2>
+
+<figure>
+<img src="../uploads/Main/Rig-2.png" alt="Your rig is humanoid (it has two legs, two arms and a head)">
+<figcaption>Your rig is <em>humanoid</em> (it has two legs, two arms and a head)</figcaption>
+</figure>
+
+<p>With rare exceptions, humanoid models have the same basic structure. This structure represents the major articulated parts of the body: the head and limbs. The first step to using Unity’s <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ConfiguringtheAvatar.html">Humanoid animation features</a> is to <a href="class-Avatar.html">set up and configure</a> an <span class="tooltip"><strong>Avatar</strong><span class="tooltiptext">An interface for retargeting animation from one rig to another. <a href="ConfiguringtheAvatar.html" href="ConfiguringtheAvatar.html">Humanoid animation features</a> is to <a href="class-Avatar.html">set up and configure</a> an <span class="tooltip"><strong>Avatar</strong><span class="tooltiptext">An interface for retargeting animation from one rig to another. <a href="ConfiguringtheAvatar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Avatar" aria-label="Go to glossary anchor for Avatar">Glossary</a></span></span></span>. Unity uses the Avatar to map the simplified humanoid bone structure to the actual bones present in the Model’s skeleton. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Avatar Definition</strong></td>
+	<td style="text-align:left;">Choose where to get the Avatar definition.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Create from this model</strong></td>
+	<td style="text-align:left;">Create an Avatar based on this model</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Copy from Other Avatar</strong></td>
+	<td style="text-align:left;">Point to an Avatar set up on another model.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Source</strong></td>
+	<td style="text-align:left;">Copy another Avatar with an identical rig to import its animation clips. <br><br>Only available if the <strong>Avatar Definition</strong> is set to <strong>Copy from Other Avatar</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Configure…</strong></td>
+	<td style="text-align:left;">Open the <a href="class-Avatar.html">Avatar configuration</a>. <br><br>Only available if the <strong>Avatar Definition</strong> is set to <strong>Create From This Model</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Skin Weights</strong></td>
+	<td style="text-align:left;">This property is identical for both Humanoid and Generic Models. See the documentation on <a href="#SkinWeights">Skin Weights</a> above for information about it.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Optimize Game Object</strong></td>
+	<td style="text-align:left;">Remove and store the GameObject Transform hierarchy of the imported character in the Avatar and Animator component. If enabled, the SkinnedMeshRenderers of the character use the Unity animation system’s internal skeleton, which improves the performance of the animated characters. <br><br>Only available if the <strong>Avatar Definition</strong> is set to <strong>Create From This Model</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Extra Transforms to Expose</strong></td>
+	<td style="text-align:left;">Specify which Transform paths you want Unity to ignore when <strong>Optimize Game Object</strong> is enabled. For more information, see <a href="#ExtraTransforms">Including extra Transforms</a>.<br><br>This section only appears when <strong>Optimize Game Object</strong> is enabled.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="ExtraTransforms" aria-hidden="true"></a></p>
+
+<h2>Including extra Transforms</h2>
+
+<p>When you enable the <strong>Optimize Game Object</strong> property, Unity ignores any Transform which is part of the hierarchy but is not mapped in the Avatar, in order to improve CPU performance. However, you can mark specific nodes in the <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> hierarchy to include in calculations using the <strong>Extra Transforms to Expose</strong> section:</p>
+
+<figure>
+<img src="../uploads/Main/ExtraTransforms.png" alt="The Extra Transforms to Expose property appears when Optimize Game Objects is enabled">
+<figcaption>The Extra Transforms to Expose property appears when Optimize Game Objects is enabled</figcaption>
+</figure>
+
+<p>
+<strong>(A)</strong> Enter the full or partial name in the search box to filter the list of Transforms. This makes it easier to navigate through characters with a large number of bones.</p>
+
+<p>
+<strong>(B)</strong> Enable each Transform (bones of a skeleton) you want Unity to include in calculations.</p>
+
+<p>
+<strong>(C)</strong> Use the buttons to help select specific Transforms. For example, the <strong>Toggle All</strong> button selects or deselects everything at once (regardless of the current selection, including filtered items).</p>
+
+<p>
+<strong>(D)</strong> Use the <strong>Revert</strong> button to undo your selections or the <strong>Apply</strong> button to apply the exceptions to the Model.</p>
+
+<p>
+<strong>Note</strong>: In optimized mode, skinned Mesh matrix extraction is multi-threaded.</p>
+
+<p><a name="LegacyRig" aria-hidden="true"></a></p>
+
+<h2>Legacy animation types</h2>
+
+<figure>
+<img src="../uploads/Main/Rig-3.png" alt="Your rig uses the Legacy Animation System">
+<figcaption>Your rig uses the Legacy Animation System</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Generation</strong></td>
+	<td style="text-align:left;">Select the animation import method.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Don’t Import</strong></td>
+	<td style="text-align:left;">Do not import animation</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Store in Original Roots (Deprecated)</strong></td>
+	<td style="text-align:left;">Deprecated. Do not use.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Store in Nodes (Deprecated)</strong></td>
+	<td style="text-align:left;">Deprecated. Do not use.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Store in Root (Deprecated)</strong></td>
+	<td style="text-align:left;">Deprecated. Do not use.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Store in Root (New)</strong></td>
+	<td style="text-align:left;">Import the animation and store it in the Model’s root node. This is the default setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Skin Weights</strong></td>
+	<td style="text-align:left;">See the documentation on <a href="#SkinWeights">Skin Weights</a> above for information about this property.</td>
+</tr>
+</tbody>
+</table>
+
+<p>For more information about legacy animation, see the documentation for <a href="Animations.html">Legacy Animation System</a>.</p>
+
+<hr>
+
+<ul>
+<li><span class="page-history"><strong>Skin Weights</strong> added in <a href="https://docs.unity3d.com/2019.1/Documentation/Manual/30_search.html?q=newin20191">2019.1</a> <span class="search-words">NewIn20191</span></span></li>
+<li><span class="page-history"><span class="tooltip"><strong>Materials</strong><span class="tooltiptext">An asset that defines how a surface should be rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Material.html" href="class-Material.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span> tab added in <a href="https://docs.unity3d.com/2017.2/Documentation/Manual/30_search.html?q=newin20172">2017.2</a> <span class="search-words">NewIn20172</span></span></li>
+</ul>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="FBXImporter-Model.html"></a></span><div class="tip">Model tab</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-Avatar.html"></a></span><div class="tip">Avatar Mapping tab</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

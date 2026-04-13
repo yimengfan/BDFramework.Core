@@ -1,0 +1,293 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Purchase or download a package from the Asset Store</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetPackagesPurchase.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetPackagesPurchase.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetPackagesPurchase.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetPackagesPurchase.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetPackagesPurchase.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetPackagesPurchase.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetPackagesPurchase.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetPackagesPurchase.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AssetStore.html">Unity's Asset Store</a></li>
+<li><a href="AssetStorePackages.html">Asset Store packages</a></li>
+<li>Purchase or download a package from the Asset Store</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetStorePackages.html"></a></span><div class="tip">Asset Store packages</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetPackagesOrganize.html"></a></span><div class="tip">Finding your Asset Store packages</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Purchase or download a package from the Asset Store</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Approximately 10% of the <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span>’s content is free to download. The price of paid content ranges from $5 to $3500, depending on the size and scope of the offering. Many publishers provide a “lite” version of their package. These packages are available for free or at a reduced rate, so you can determine if they meet your needs.</p>
+
+<p>If you don’t have a Unity account, you need to create one before you can get a package from the Asset Store. If you already have a Unity ID for the Unity Hub or the Unity Editor, use the same ID for your Unity Asset Store account.</p>
+
+<p>After you get a package from the Asset Store, sign in to the Hub or Editor with the same Unity ID you used on the Asset Store. Then, use the Package Manager window to add those Asset Store packages to your projects.</p>
+
+<h2>Create a Unity account</h2>
+
+<p>To create a new Unity account, go to <a href="https://id.unity.com/account/new">Create a Unity ID</a> and follow the instructions. You can also open the Unity Asset Store, select the user account icon, then select <strong>Create a Unity Account</strong>:</p>
+
+<figure>
+<img src="../uploads/Main/AssetStoreCreateUnityID.png" alt="If you select Sign In, the Unity ID login appears with another link to Create a Unity Account.">
+<figcaption>If you select <strong>Sign In</strong>, the Unity ID login appears with another link to <strong>Create a Unity Account</strong>.</figcaption>
+</figure>
+
+<h2>Find packages on the Asset Store</h2>
+
+<p>When you open the Asset Store in a web browser, the main page displays current sales promotions and a curated list of <strong>Popular Assets</strong>.</p>
+
+<p>You can browse through the suggestions, or search for something specific. If you’re looking for a specific asset, you can use any of these searching, filtering, and sorting methods alone or in combination:</p>
+
+<ul>
+<li>Search by name or keyword. For example:
+
+<ul>
+<li>Search for something specific, such as “fox family”.</li>
+<li>Search for “FBX” to find any packages containing FBX models or tools.</li>
+<li>Search for “demo” to browse for any packages with “demo” in the title.</li>
+</ul>
+</li>
+<li>Choose a category of related Asset Store packages to browse from, such as <strong>3D</strong>, <strong>Audio</strong>, <strong>VFX</strong>, and more.</li>
+<li>If you choose a category, you can refine the results by using the filter sidebar. For example, you can select the <strong>Audio</strong> main category and then select the <strong>Sound FX</strong> subcategory.</li>
+<li>Use any combination of the items on the filter sidebar to narrow down the list of Asset Store packages. For example, setting the following options narrows down the list of suggestions to include Unity’s 3D packages for <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span>:
+
+<ul>
+<li>
+<strong>All Categories</strong>: select <strong>3D</strong>
+</li>
+<li>
+<strong>Unity Versions</strong>: select <strong>Unity 2019.x</strong>
+</li>
+<li>
+<strong>Publisher</strong>: search for “unity” and select <strong>Unity Technologies</strong>
+</li>
+<li>
+<strong>Platforms</strong>: select <strong>iOS</strong>
+</li>
+</ul>
+</li>
+<li>Choose a sort method from the <strong>Sort by</strong> menu. You can sort by relevance, popularity, rating, publish or update date, name, or price.</li>
+</ul>
+
+<p>
+<strong>Tip</strong>: If you need to start over, select <strong>clear filters</strong> at the top of the filter sidebar to reset all filter options to their default values.</p>
+
+<h2>Get information about an Asset Store package</h2>
+
+<figure>
+<img src="../uploads/Main/AssetPackage-QuickLook.png" alt="Hover over Asset Store package thumbnails (A) to display the Quick Look link (B)">
+<figcaption>Hover over Asset Store package thumbnails (A) to display the <strong>Quick Look</strong> link (B)</figcaption>
+</figure>
+
+<p>When you find an Asset Store package that looks interesting, you can:</p>
+
+<ul>
+<li>Hover over the thumbnail <strong>(A)</strong> and select <strong>QUICK LOOK</strong> <strong>(B)</strong>. A dialog displays a few images or videos and some basic information.</li>
+<li>Select the thumbnail <strong>(A)</strong> to open the Asset Store package’s main information page, which provides a full description and list of package contents. You can add the package to your <strong>Favorites</strong> list, read reviews, follow links to other Asset Store suggestions, and more.</li>
+</ul>
+
+<p>Both the <strong>Quick Look</strong> dialog and the package’s main information page display either of the following buttons:</p>
+
+<ul>
+<li>
+<strong>Buy Now</strong> and <strong>Add to Cart</strong> buttons, to <a href="#buy-paid">buy a paid Asset Store package</a>.</li>
+<li>
+<strong>Add to My Assets</strong>, to <a href="#get-free">get a free Asset Store package</a>.</li>
+</ul>
+
+<p><a name="buy-paid" aria-hidden="true"></a></p>
+
+<h2>Buy a paid Asset Store package</h2>
+
+<p>To buy an Asset Store package:</p>
+
+<ol>
+<li>
+<p>From the <strong>Quick Look</strong> dialog, select <strong>Add to Cart</strong>. From the package’s main information page, select <strong>Buy Now</strong> or select the <strong>Add to Cart</strong> icon. </p>
+
+<figure>
+<img src="../uploads/Main/AssetPackage-Purchase.png" alt="Select Add to Cart to buy an Asset Store package">
+<figcaption>Select <strong>Add to Cart</strong> to buy an Asset Store package</figcaption>
+</figure>
+
+<p>A message confirms that the package is in your shopping cart.</p>
+</li>
+<li>
+<p>When you’re ready to pay for your item(s), select <strong>Proceed to Checkout</strong>, or access your cart and select <strong>Checkout</strong>.</p>
+
+<p>The Checkout page appears.</p>
+
+<figure>
+<img src="../uploads/Main/AssetPackage-Checkout.png" alt="You can access the Checkout page from your shopping cart">
+<figcaption>You can access the Checkout page from your shopping cart</figcaption>
+</figure>
+</li>
+<li>
+<p>On the <strong>Checkout</strong> page, enter the following information:</p>
+
+<ul>
+<li>In the <strong>Address</strong> section, enter your address, email address, and phone number.</li>
+<li>In the <strong>Payment method</strong> section, enter your payment details. You can pay by credit card or PayPal.</li>
+<li>In the <strong>Summary</strong> sidebar, make sure the <strong>Order summary</strong> and quantities are correct.</li>
+<li>Enable the <strong>Asset Store Terms of Service and EULA</strong>.</li>
+<li>If you want to receive information from the Asset Store, enable email notifications.</li>
+<li>If you have any coupons or credits from sales or special promotions, enter the code in the <strong>Enter Coupon/Credit Code to update your price</strong> box and select <strong>Apply</strong>.</li>
+</ul>
+</li>
+<li><p>Select <strong>Pay now</strong>.</p></li>
+<li><p>When the Asset Store finishes processing your payment, it displays your newly purchased package(s) on an invoice page.</p></li>
+<li><p>Save or print this page so you can find the order number in the future. Publishers might request this number so they can confirm your purchase when providing support.</p></li>
+<li><p>When the transaction completes, you can start working with your package by selecting <strong>Open in Unity</strong>. If you open the Unity Editor later, the Package Manager will list your package in the <strong>My Assets</strong> context. </p></li>
+</ol>
+
+<p>After you buy a paid Asset Store package from the Unity Asset Store, it’s immediately available in the Package Manager window. You must log in with the same Unity ID you used on the Asset Store before the Package Manager displays your package.</p>
+
+<p>Information about adding Asset Store packages to your project varies by package type. For information about adding <span class="tooltip"><strong>asset packages</strong><span class="tooltiptext">A collection of files and data from Unity projects, or elements of projects, which are compressed and stored in one file, similar to Zip files, with the <code>.unitypackage</code> extension. Asset packages are a handy way of sharing and re-using Unity projects and collections of assets. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetPackages.html" href="AssetPackages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Assetpackage" aria-label="Go to glossary anchor for Assetpackage">Glossary</a></span></span></span>, refer to <a href="upm-ui-import.html">Download and import an asset package</a>. For information about adding <span class="tooltip"><strong>UPM packages</strong><span class="tooltiptext">A <strong>Package</strong> managed by the <strong>Unity Package Manager</strong>. Refer to <strong>Packages</strong>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UPMpackage" aria-label="Go to glossary anchor for UPMpackage">Glossary</a></span></span></span>, refer to <a href="upm-ui-install2.html">Install a UPM package from Asset Store</a>.</p>
+
+<p><a name="get-free" aria-hidden="true"></a></p>
+
+<h2>Get a free Asset Store package</h2>
+
+<p>To get a free Asset Store package:</p>
+
+<ol>
+<li>
+<p>Select <strong>Add to My Assets</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/AssetPackage-Download.png" alt="Select Add to My Assets button to download a free Asset Store package">
+<figcaption>Select <strong>Add to My Assets</strong> button to download a free Asset Store package</figcaption>
+</figure>
+</li>
+<li><p>Read the <strong>Asset Store Terms of Service and EULA</strong> and select <strong>Accept</strong> if you agree to the terms.</p></li>
+<li><p>A message confirms that the package is now in your <strong>My Assets</strong> library. You can start working with your package by selecting <strong>Open in Unity</strong>. If you open the Unity Editor later, the Package Manager will list your package in the <strong>My Assets</strong> context. </p></li>
+</ol>
+
+<p>After you add a free Asset Store package to your <strong>My Assets</strong> library, it’s immediately available in the Package Manager window. You must log in with the same Unity ID you used on the Asset Store before the Package Manager displays your package.</p>
+
+<p>Information about adding Asset Store packages to your project varies by package type. For information about adding asset packages, refer to <a href="upm-ui-import.html">Download and import an asset package</a>. For information about adding UPM packages, refer to <a href="upm-ui-install2.html">Install a UPM package from Asset Store</a>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="upm-package-types.html">Package types</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetStorePackages.html"></a></span><div class="tip">Asset Store packages</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetPackagesOrganize.html"></a></span><div class="tip">Finding your Asset Store packages</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

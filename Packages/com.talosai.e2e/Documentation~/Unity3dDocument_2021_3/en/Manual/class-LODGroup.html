@@ -1,0 +1,365 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: LOD Group</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-LODGroup.html">English</a></li>
+<li><a href="/cn/current/Manual/class-LODGroup.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-LODGroup.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-LODGroup.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-LODGroup.html">English</a></li>
+<li><a href="/cn/current/Manual/class-LODGroup.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-LODGroup.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-LODGroup.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="mesh.html">Meshes</a></li>
+<li><a href="LevelOfDetail.html">Level of Detail (LOD) for meshes</a></li>
+<li>LOD Group</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="LevelOfDetail.html"></a></span><div class="tip">Level of Detail (LOD) for meshes</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="importing-lod-meshes.html"></a></span><div class="tip">Importing LOD Meshes</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>LOD Group</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/LODGroup.html' title='Go to LODGroup page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <strong>LOD Group</strong> component manages <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LevelOfDetail.html">level of detail</a><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a href="LevelOfDetail.html" href="LevelOfDetail.html">level of detail</a><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a href="LevelOfDetail.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#levelofdetail" aria-label="Go to glossary anchor for levelofdetail">Glossary</a></span></span></span> (LOD) for <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#levelofdetail" aria-label="Go to glossary anchor for levelofdetail">Glossary</a></span></span></span> (LOD) for <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. </p>
+
+<figure>
+<img src="../uploads/Main/InspectorLODGroup.png" alt="LOD Group inspector">
+<figcaption>LOD Group inspector</figcaption>
+</figure>
+
+<p>
+<img src="../uploads/Main/LetterA.png" alt="A"> Controls for <a href="#transitions">transitioning between LOD levels</a>
+</p>
+
+<p>
+<img src="../uploads/Main/LetterB.png" alt="B"> <a href="#LODGroup">LOD Group selection bar</a> for switching between LOD levels and previewing LOD rendering</p>
+
+<p>
+<img src="../uploads/Main/LetterC.png" alt="C"> Information about the <a href="class-QualitySettings.html#LODBias">Lod Bias</a> Quality setting. This message appears if the <strong>Lod Bias</strong> property is set to anything other than 1.</p>
+
+<p>
+<img src="../uploads/Main/LetterD.png" alt="D"> <a href="#width">Fade Transition Width</a> setting for the selected LOD level. This property only appears if you disable the <strong>Animate Cross-fading</strong> property: that is, when you choose to set a transition zone by width instead of time.</p>
+
+<p>
+<img src="../uploads/Main/LetterE.png" alt="E"> <strong>Mesh</strong> <a href="#renderers">Renderers</a> set for the selected LOD level</p>
+
+<p>In addition there are two buttons at the bottom of the component:</p>
+
+<ul>
+<li>Click <strong>Recalculate Bounds</strong> to recalculate the <span class="tooltip"><strong>bounding volume</strong><span class="tooltiptext">A closed shape representing the edges and faces of a collider or trigger. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SpatialMappingComponentsGeneralSettings" href="SpatialMappingComponentsGeneralSettings">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Boundingvolume" aria-label="Go to glossary anchor for Boundingvolume">Glossary</a></span></span></span> of all LOD Mesh GameObjects after a new LOD level is added.</li>
+<li>Click <strong>Recalculate <span class="tooltip"><strong>Lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> Scale</strong> to update the <a href="class-MeshRenderer.html#lightmapping">Scale in Lightmap</a> property on all LOD <span class="tooltip"><strong>Mesh Renderers</strong><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html" href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> Scale</strong> to update the <a href="class-MeshRenderer.html#lightmapping">Scale in Lightmap</a> property on all LOD <span class="tooltip"><strong>Mesh Renderers</strong><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span>, based on the changes you made to the LOD level boundaries.</li>
+</ul>
+
+<p><a name="LODGroup" aria-hidden="true"></a></p>
+
+<h2>LOD Group selection bar</h2>
+
+<p>The LOD Group selection bar represents the different LOD levels as colored boxes. </p>
+
+<p>The percentage that appears in each LOD level box represents the threshold at which that level becomes active, based on the ratio of the GameObject’s screen space height to the total screen height. For example, if the threshold for LOD 1 is set to 50%, then LOD 1 becomes active when the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> pulls back far enough that the GameObject’s height fills half of the view.</p>
+
+<figure>
+<img src="../uploads/Main/LODGroup-selectionbar.png" alt="LOD Group selection bar">
+<figcaption>LOD Group selection bar</figcaption>
+</figure>
+
+<p>
+<img src="../uploads/Main/LetterA.png" alt="A"> The playhead for <a href="#preview">the LOD preview</a>. You can scrub the camera icon back and forth to test the LOD levels and their transitions. At the bottom of the playhead you can see the current percentage. </p>
+
+<p>
+<img src="../uploads/Main/LetterB.png" alt="B"> To select a level, click on the level box. For each LOD level you select, you can <a href="#renderers">pick the Renderer to use</a> or <a href="#width">customize the transition zone</a>.</p>
+
+<p>
+<img src="../uploads/Main/LetterC.png" alt="C"> To add and remove LOD levels from the selection bar, right-click the LOD level box and then choose <strong>Insert Before</strong> or <strong>Delete</strong> from the context menu. </p>
+
+<p>
+<img src="../uploads/Main/LetterD.png" alt="D"> Level adjustment control. To change the percentage value for the LOD level, drag the left border of the LOD level box’s boundary.</p>
+
+<blockquote>
+<p>
+<strong>Note</strong>: If the <a href="class-QualitySettings.html#LODBias">Lod Bias</a> property is not set to 1, the Camera position might not match the position where each LOD level actually transitions from the next. In this case, a warning message appears below the selection bar.</p>
+</blockquote>
+
+<figure>
+<img src="../uploads/Main/LODGroup-BiasWarning.png" alt="Lod Bias warning">
+<figcaption>Lod Bias warning</figcaption>
+</figure>
+
+<p><a name="preview" aria-hidden="true"></a></p>
+
+<h2>Previewing the LOD transitions</h2>
+
+<p>The <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view displays a preview of the transitions between LOD levels when you move the camera icon on the LOD Group selection bar. The camera icon acts like a playhead which you can use to scrub back and forth to control the exact position to preview along the LOD Group selection bar. The preview shows what the Camera will render at each LOD level. </p>
+
+<figure>
+<img src="../uploads/Main/LODGroup-previewing.png" alt="Control transition previews on the LOD Group selection bar">
+<figcaption>Control transition previews on the LOD Group selection bar</figcaption>
+</figure>
+
+<p>The LOD preview playhead shows the exact position as a percentage along the LOD Group selection bar from 100% on the left to 0% on the right. The percentage represents the ratio of the GameObject’s screen space height to the total screen height.</p>
+
+<p>As you move through the levels, the <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> displays the bounding box of the Tree Asset and the overlay indicates which LOD is active:</p>
+
+<figure>
+<img src="../uploads/Main/LODGroup-levels.png" alt="Overlays displaying the active LOD levels">
+<figcaption>Overlays displaying the active LOD levels</figcaption>
+</figure>
+
+<p><a name="renderers" aria-hidden="true"></a></p>
+
+<h2>Renderers for LOD Meshes</h2>
+
+<p>When you select an LOD level box on the <strong>LOD Group</strong> selection bar, a <strong>Renderers</strong> panel appears. </p>
+
+<figure>
+<img src="../uploads/Main/LODGroup-renderers.png" alt="Renderers panel with the Billboard Renderer for LOD 3">
+<figcaption>Renderers panel with the Billboard Renderer for LOD 3</figcaption>
+</figure>
+
+<p>The ‘Renderers’ are actually GameObjects that hold the Mesh for that LOD level. Usually this is a child of the GameObject that has the <strong>LODGroup</strong> component. </p>
+
+<p>To set a renderer Mesh for the current LOD level, click the <strong>Add</strong> box and choose the GameObject for that LOD level from the object picker. </p>
+
+<p>You can choose any GameObject for the renderer, but if you choose a GameObject that isn’t already a child, Unity prompts you to parent it to the <strong>LODGroup</strong> GameObject.</p>
+
+<p><a name="transitions" aria-hidden="true"></a></p>
+
+<h2>Transitioning between LOD levels</h2>
+
+<p>Smooth transitions between LOD levels improves the player’s experience of your game. As the Camera moves closer or farther away, you don’t want players to see an obvious switchover (sometimes called <em>popping</em>) from the current LOD level to the next. </p>
+
+<p>Smooth transitions take place inside <em>transition zones</em>, where Unity renders both the current and next LOD levels separately, and then cross-fades them together. </p>
+
+<p>
+<em>Cross-fading</em> is the technique of rendering two levels at the same time, with a weighting of 1 to 0 for the <em>current</em> LOD level and 0 to 1 for the <em>next</em> LOD level:</p>
+
+<figure>
+<img src="../uploads/Main/LODGroup-blending.png" alt="Cross-fading between the current LOD level and the next">
+<figcaption>Cross-fading between the current LOD level and the next</figcaption>
+</figure>
+
+<p>Unity usually implements the cross-fading by using either screen-space dithering or transparency. For the last LOD level, there is no cross-fading: the current level just fades out.</p>
+
+<p>To set up smooth transitions on your LOD levels:</p>
+
+<ol>
+<li>
+<p>Select the <strong>Fade Mode</strong> drop-down menu and choose <strong>Cross Fade</strong>:</p>
+
+<figure>
+<img src="../uploads/Main/LODGroup-transitions.png" alt="Fade Mode drop-down menu">
+<figcaption>Fade Mode drop-down menu</figcaption>
+</figure>
+
+<p>
+<strong>Note:</strong> If your Tree Asset was made with <a href="https://store.speedtree.com/unity/">SpeedTree</a>, choose the <strong>Speed Tree</strong> mode instead. For more information, see <a href="#SpeedTreeModels">Working with SpeedTree Models</a>.</p>
+</li>
+<li>
+<p>By default, the <strong>Animate Cross-fading</strong> option is enabled, meaning that Unity performs a time-based transition. If you want to define your own transition zone based on the Camera’s position, disable the <strong>Animate Cross-fading</strong> option and set the <strong>Fade Transition Width</strong> property. </p>
+
+<p>For more information, see <a href="#width">Customizing the transition zone</a> value. </p>
+</li>
+</ol>
+
+<p><a name="width" aria-hidden="true"></a></p>
+
+<h3>Customizing the transition zone</h3>
+
+<p>The transition between two LOD levels begins the moment the Model’s height ratio crosses the next LOD threshold. For example, if the LOD 1 threshold is set at 60%, the transition between the LOD 0 and LOD 1 levels always begins as soon as the height of the Model is 60%. The transition lasts for a short period of time:</p>
+
+<figure>
+<img src="../uploads/Main/LODGroup-AnimateCrossFading.png" alt="Animate Cross-fading (by time)">
+<figcaption>Animate Cross-fading (by time)</figcaption>
+</figure>
+
+<p>This behavior is animated by time, so you don’t need to set any properties once you enable the <strong>Animate Cross-fading</strong> property. The exact duration of the cross-fade is the same for every LOD level.</p>
+
+<p>Alternatively, you can manually define transition zones inside each LOD level by its position. Each zone begins and ends before the next LOD level’s threshold. You define what proportion of each LOD level to use as the transition zone; that is, you set how far before the next level’s threshold the transition begins:</p>
+
+<figure>
+<img src="../uploads/Main/LODGroup-FadeTransitionWidth.png" alt="Fade Transition Width (by position)">
+<figcaption>Fade Transition Width (by position)</figcaption>
+</figure>
+
+<p>Use the <strong>Fade Transition Width</strong> property to define the transition zone on each LOD level:</p>
+
+<ol>
+<li><p>Disable the <strong>Animate Cross-fading</strong> option.</p></li>
+<li>
+<p>Click on the specific LOD level box that you want to set. </p>
+
+<p>The <strong>Fade Transition Width</strong> property appears below the <strong>LOD Group</strong> selection bar.</p>
+
+<figure>
+<img src="../uploads/Main/LODGroup-width.png" alt="The Fade Transition Width property appears">
+<figcaption>The Fade Transition Width property appears</figcaption>
+</figure>
+</li>
+<li><p>Set the <strong>Fade Transition Width</strong> property to define the width of the cross-fade transition zone as a proportion (between 0.0 and 1.0) of the current LOD level’s entire length. For example, specify a smaller value to delay the onset of the blending and create a faster transition. </p></li>
+</ol>
+
+<p><a name="SpeedTreeModels" aria-hidden="true"></a></p>
+
+<h3>Working with SpeedTree Models</h3>
+
+<p>SpeedTree geometries store the <em>next</em> LOD position for each vertex. Every vertex then knows how to interpolate between the current LOD position and the next LOD position. When Unity imports Models created in SpeedTree, it automatically sets them to the <strong>Speed Tree</strong> mode. </p>
+
+<figure>
+<img src="../uploads/Main/LODGroup-SpeedTreeModels.png" alt="Speed Tree Fade Mode for a SpeedTree Model">
+<figcaption>Speed Tree Fade Mode for a SpeedTree Model</figcaption>
+</figure>
+
+<p>Unity only needs to render the current LOD geometry and provide a value from 0 to 1 to instruct each vertex to gradually <em>move</em> to the next LOD position. At the end of the transition, the geometries of the current LOD and the next LOD match perfectly.</p>
+
+<p>Blending between two LOD levels begins at 0 and ends at 1. Any point along this zone is the blend factor, which represents the weighting between the current LOD level and the next LOD level:</p>
+
+<figure>
+<img src="../uploads/Main/LODGroup-blend_factor.png" alt="Blending for SpeedTree Models">
+<figcaption>Blending for SpeedTree Models</figcaption>
+</figure>
+
+<p>The <strong>Speed Tree</strong> mode uses the blend factor to interpolate the vertex positions between the current <strong>Mesh LOD level</strong> and the next Mesh LOD level, and then renders the geometry at that position. </p>
+
+<blockquote>
+<p>
+<strong>Note:</strong> The <strong>Speed Tree</strong> mode is only used for blending between two <em>Mesh LOD levels</em>: that is, when both current and next LOD levels have a Mesh Renderer. When transitioning to a <em>Billboard LOD level</em> or when fading out entirely, Unity performs <strong>Cross Fade</strong>-style blending. </p>
+</blockquote>
+
+<h2>Blend Factors in Shader code</h2>
+
+<p>Unity doesn’t provide a default built-in technique to blend LOD geometries. You need to implement your own technique according to your game type and Asset production pipeline. </p>
+
+<p>Unity calculates a blend factor from the GameObject’s screen size and passes it to your <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> in the <a href="SL-UnityShaderVariables.html#unity_LODFade">unity_LODFade.x uniform</a> variable. Depending on the <strong>Fade Mode</strong> you choose, use either the <code>LOD_FADE_PERCENTAGE</code> or <code>LOD_FADE_CROSSFADE</code> keyword for GameObjects rendered with LOD fading.</p>
+
+<p>For time-based (animated) transitions, you can set the exact duration of the transition globally for every LOD level with the <a href="../ScriptReference/LODGroup-crossFadeAnimationDuration.html">LODGroup.crossFadeAnimationDuration</a> member.</p>
+
+<p>For information on LOD naming conventions, see <a href="LevelOfDetail.html">Level of Detail</a>.</p>
+
+<p><br></p>
+
+<hr>
+
+<ul>
+<li><span class="page-edit">2018–02–08 Page published
+</span></li>
+</ul>
+<!-- area:graphics -->
+
+<p><span class="search-words">LODGroup</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="LevelOfDetail.html"></a></span><div class="tip">Level of Detail (LOD) for meshes</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="importing-lod-meshes.html"></a></span><div class="tip">Importing LOD Meshes</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

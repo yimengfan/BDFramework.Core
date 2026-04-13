@@ -1,0 +1,328 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Compressed builds and server configuration</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="platforms" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/webgl-deploying.html">English</a></li>
+<li><a href="/cn/current/Manual/webgl-deploying.html">中文</a></li>
+<li><a href="/ja/current/Manual/webgl-deploying.html">日本語</a></li>
+<li><a href="/kr/current/Manual/webgl-deploying.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/webgl-deploying.html">English</a></li>
+<li><a href="/cn/current/Manual/webgl-deploying.html">中文</a></li>
+<li><a href="/ja/current/Manual/webgl-deploying.html">日本語</a></li>
+<li><a href="/kr/current/Manual/webgl-deploying.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="webgl.html">WebGL</a></li>
+<li><a href="webgl-building-distribution.html">Building and distributing a WebGL project</a></li>
+<li>Compressed builds and server configuration</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="webgl-templates.html"></a></span><div class="tip">WebGL templates</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="webgl-server-configuration-code-samples.html"></a></span><div class="tip">Server configuration code samples</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Compressed builds and server configuration</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To deploy a <span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span> build, you must configure your server and make sure you’re using the correct response headers, so that the browser can receive the proper response and process the response correctly.</p>
+
+<p>There are two main settings in Unity that affect how you set up the server:</p>
+
+<ul>
+<li>
+<strong><span class="tooltip"><strong>Compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> Format</strong>: Determines how Unity compresses files during the build step.</li>
+<li>
+<strong>Decompression Fallback</strong>: Determines how Unity processes downloaded files when the build runs in the browser.</li>
+</ul>
+
+<h2>Compression Format</h2>
+
+<p>
+<a name="compression_format" aria-hidden="true"></a>
+Choose the compression type from the Web Player Settings window (menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong>, then select <strong>Web</strong> and expand the <strong>Publishing Settings</strong> section):</p>
+
+<figure>
+<img src="../uploads/Main/WebGLPublishingWindow.png" alt="Image of WebGL Publishing window ">
+<figcaption>Image of WebGL Publishing window </figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Compression method</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">gzip</td>
+	<td style="text-align:left;">This is the default option. Gzip files are bigger than Brotli files, but faster to build, and natively supported by all browsers over both HTTP and HTTPS.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Brotli</td>
+	<td style="text-align:left;">Brotli compression offers the best compression ratios. Brotli compressed files are smaller than gzip, but take a longer time to compress, which increases your iteration times on release builds. Chrome and Firefox only natively support Brotli compression over HTTPS.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Disabled</td>
+	<td style="text-align:left;">Disables compression. Use this option if you want to implement your own compression in <span class="tooltip"><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span> <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html" href="Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span> <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>. You should also use it if you plan to use static compression on the hosting server.</td>
+</tr>
+</tbody>
+</table>
+
+<p>For more information on browser support for selected compression methods, see documentation on <a href="webgl-browsercompatibility.html">WebGL browser compatibility</a>.</p>
+
+<p>
+<strong>Note</strong>: The <strong>Compression Format</strong> setting applies only to release builds. <span class="tooltip"><strong>Development builds</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview" href="https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DevelopmentBuild" aria-label="Go to glossary anchor for DevelopmentBuild">Glossary</a></span></span></span> aren’t compressed.</p>
+
+<h2>Web server configuration</h2>
+
+<p>You might need to adjust your server configuration to match your specific build setup. In particular, there might be issues if you already have another server-side configuration to compress hosted files, which could interfere with this setup.
+To make the browser perform decompression natively while it downloads your application, append a <a href="#content_encoding_header">Content-Encoding header</a> to the server response. This header must correspond to the type of compression Unity uses at build time.
+For code samples, see <a href="webgl-server-configuration-code-samples.html">Server Configuration Code Samples</a>.</p>
+
+<h2>Decompression fallback</h2>
+
+<p>The decompression fallback option enables Unity to automatically embed a JavaScript decompressor into your build. This decompressor corresponds to your selected compression method, and decompresses your content if the browser fails to do so.</p>
+
+<h3>Enabling decompression fallback</h3>
+
+<p>Enable decompression fallback from the <strong>Player Settings</strong> window (menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong>, then select <strong>WebGL</strong> and expand the <strong>Publishing Settings</strong> section).</p>
+
+<p>When you enable decompression fallback, Unity adds a <code>.unityweb</code> extension to the build files.
+You should consider using <strong>Decompression Fallback</strong> if you have less experience with server configuration, or if server configuration is unavailable to you.</p>
+
+<p>
+<strong>Note</strong>: Using this option results in a larger loader size and a less efficient loading scheme for the build files.</p>
+
+<h3>Disabling decompression fallback</h3>
+
+<p>The <strong>Decompression Fallback</strong> option is disabled by default. Therefore, by default, build files have an extension that corresponds to the compression method you select.</p>
+
+<p>There are two compression methods to choose from: gzip or Brotli. For further information refer to the <a href="#compression_format">compression format</a> section.</p>
+
+<p>To enable browsers to natively decompress Unity build files while they’re downloading, you need to configure your web server to serve the compressed files with the appropriate HTTP headers. This is called native browser decompression. It has the advantage of being faster than the JavaScript decompression fallback, which can reduce your application’s startup time.</p>
+
+<p>The setup process for native browser decompression depends on your web server. For code samples, see <a href="webgl-server-configuration-code-samples.html">Server Configuration Code Samples</a>.</p>
+
+<h2>Content-Encoding headers</h2>
+
+<p><a name="content_encoding_header" aria-hidden="true"></a></p>
+
+<p>A Content-Encoding header tells the browser which type of compression Unity has used for the compressed files. This allows the browser to decompress the files natively.</p>
+
+<p>Set the Content-Encoding response header to the compression method selected in the <span class="tooltip"><strong>Player Settings</strong><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html" href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Compression method</th>
+	<th style="text-align:left;">File extension</th>
+	<th style="text-align:left;">Response header</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">gzip</td>
+	<td style="text-align:left;">.gz</td>
+	<td style="text-align:left;"><code>Content-Encoding: gzip</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Brotli</td>
+	<td style="text-align:left;">.br</td>
+	<td style="text-align:left;"><code>Content-Encoding: br</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2>WebAssembly streaming (higher level header)</h2>
+
+<p>WebAssembly streaming allows the browser to compile the WebAssembly code while it is still downloading the code. This significantly improves loading times.</p>
+
+<p>For WebAssembly streaming compilation to work, the server needs to return WebAssembly files with an <code>application/wasm</code> MIME type.
+To use WebAssembly streaming, you need to serve WebAssembly files with the <code>Content-Type: application/wasm</code> response header.
+A Content-Type header tells the server which media type the content is. This value should be set to <code>application/wasm</code> for WebAssembly files.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">File extension</th>
+	<th style="text-align:left;">Response header</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">.wasm, .wasm.gz, .wasm.br</td>
+	<td style="text-align:left;"><code>Content-Type: application/wasm</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note</strong>: WebAssembly streaming does not work together with JavaScript decompression (when the Decompression Fallback option is enabled). In such cases, the downloaded WebAssembly file must first go through the JavaScript decompressor and therefore the browser cannot stream it during download.</p>
+
+<h2>Additional headers</h2>
+
+<p>If your file contains JavaScript, you should add the <code>application/javascript</code> Content-Type header. Some servers might include this automatically, while others do not.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">File extension</th>
+	<th style="text-align:left;">Response header</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">.js, .js.gz, js.br</td>
+	<td style="text-align:left;"><code>Content-Type: application/javascript</code></td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<ul>
+<li><span class="page-history">Updated page to account for server configuration in 2020.1</span></li>
+<li>2019–09–04 <span class="page-history"> WebAssembly streaming added in 2019.2 </span>
+</li>
+<li><span class="page-history">Updated in 5.6</span></li>
+</ul>
+<!-- area:platforms -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="webgl-templates.html"></a></span><div class="tip">WebGL templates</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="webgl-server-configuration-code-samples.html"></a></span><div class="tip">Server configuration code samples</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Navigation events</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Navigation-Events.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Navigation-Events.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Navigation-Events.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Navigation-Events.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Navigation-Events.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Navigation-Events.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Navigation-Events.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Navigation-Events.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-Events.html">Control behavior with events</a></li>
+<li><a href="UIE-Events-Reference.html">Event reference</a></li>
+<li>Navigation events</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Mouse-Events.html"></a></span><div class="tip">Mouse events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Panel-Events.html"></a></span><div class="tip">Panel events</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Navigation events</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Navigation events occur at runtime when the user presses the D-pad, moves a joystick, or presses the <code>Escape</code>, <code>Enter</code> or arrow keys. They’re an indicator that the user is trying to navigate the <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>, but they’re not limited to a specific input device, such as a keyboard. The difference from a <a href="UIE-Focus-Events.html">Focus</a> event is that the navigation event doesn’t require the focus to move to a new UI element. </p>
+
+<p>The base class for all navigation events is <a href="../ScriptReference/UIElements.NavigationEventBase_1.html">NavigationEventBase</a>.</p>
+
+<p>All navigation events trickle down, bubble up, and are cancellable, but it’s recommended to listen to these events during the bubble-up propagation phase. This is because navigation events are triggered by input events that might also be used to interact with individual controls. For example, a button will react to a press of the <code>Enter</code> key with a button click, and it will cancel the <code>NavigationSubmitEvent</code>. Listening to these events during the bubble-up phase makes sure that they’re navigation events.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Event</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Trickles down</strong></th>
+	<th style="text-align:left;"><strong>Bubbles up</strong></th>
+	<th style="text-align:left;"><strong>Cancellable</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.NavigationMoveEvent.html">NavigationMoveEvent</a></td>
+	<td style="text-align:left;">Sent when user makes a move input.</td>
+	<td style="text-align:left;">✔</td>
+	<td style="text-align:left;">✔</td>
+	<td style="text-align:left;">✔</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.NavigationCancelEvent.html">NavigationCancelEvent</a></td>
+	<td style="text-align:left;">Sent when the user makes a cancel input.</td>
+	<td style="text-align:left;">✔</td>
+	<td style="text-align:left;">✔</td>
+	<td style="text-align:left;">✔</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.NavigationSubmitEvent.html">NavigationSubmitEvent</a></td>
+	<td style="text-align:left;">Sent when the user makes a submit input.</td>
+	<td style="text-align:left;">✔</td>
+	<td style="text-align:left;">✔</td>
+	<td style="text-align:left;">✔</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Event list</h2>
+
+<h3>NavigationMoveEvent</h3>
+
+<p>The <code>NavigationMoveEvent</code> is sent when the user presses the D-pad, moves a joystick, or presses the arrow keys.</p>
+
+<p>Some controls will use the arrow keys for their own functionality. For example, the <a href="UIE-uxml-element-ListView.html">ListView</a> allows the user to select items using the up and down arrow keys. In this case, the control will cancel the <code>NavigationMoveEvent</code> and the event won’t enter the bubble-up phase.</p>
+
+<p>
+<strong><code>direction</code></strong>: The direction of the navigation. (<code>None</code>, <code>Left</code>, <code>Up</code>, <code>Right</code>, <code>Down</code>)</p>
+
+<p>
+<strong><code>move</code></strong>: The move vector. If the event was triggered by an analog axis input, like a joystick, this property gives access to the directional vector.</p>
+
+<h3>NavigationCancelEvent</h3>
+
+<p>The <code>NavigationCancelEvent</code> is triggered when the user cancels the current navigation action, such as by pressing the `Escape`` key on the keyboard. It’s important to note that this event doesn’t affect the currently focused element, which means that the UI element that had focus before the cancellation remains selected.</p>
+
+<h3>NavigationSubmitEvent</h3>
+
+<p>The <code>NavigationSubmitEvent</code> is triggered when the user presses the submit button, such as by pressing the `Enter`` key on the keyboard.</p>
+
+<p>If a control handles the event itself, it cancels the event, preventing it from entering the bubble-up phase. For example, a <a href="UIE-uxml-element-TextField.html">TextField</a> that has the focus will stop the <code>NavigationSubmitEvent</code> from bubbling up. On the other hand, a focusable <a href="UIE-uxml-element-Label.html">Label</a> or <a href="UIE-uxml-element-Image.html">Image</a> will allow the <code>NavigationSubmitEvent</code> to bubble up to its parent elements, allowing them to handle the event if needed.</p>
+
+<h2>Example</h2>
+
+<p>The following code example shows how to register callbacks for navigation events in a runtime UI:</p>
+
+<pre><code class="lang-csharp">using UnityEngine.UIElements;
+
+public class MyNavigationHandler : MonoBehaviour
+{
+  void OnEnable()
+  {
+    // Get a reference to the root visual element
+    var uiDocument = GetComponent&lt;UIDocument&gt;();
+    var rootVisualElement = uiDocument.rootVisualElement;
+
+    // Register for navigation events
+    rootVisualElement.RegisterCallback&lt;NavigationCancelEvent&gt;(OnNavCancelEvent);
+    rootVisualElement.RegisterCallback&lt;NavigationMoveEvent&gt;(OnNavMoveEvent);
+    rootVisualElement.RegisterCallback&lt;NavigationSubmitEvent&gt;(OnNavSubmitEvent);
+  }
+
+  private void OnNavSubmitEvent(NavigationSubmitEvent evt)
+  {
+    Debug.Log($&quot;OnNavSubmitEvent {evt.propagationPhase}&quot;);
+  }
+
+  private void OnNavMoveEvent(NavigationMoveEvent evt)
+  {
+    Debug.Log($&quot;OnNavMoveEvent {evt.propagationPhase} - move {evt.move} - direction {evt.direction}&quot;);
+  }
+
+  private void OnNavCancelEvent(NavigationCancelEvent evt)
+  {
+    Debug.Log($&quot;OnNavCancelEvent {evt.propagationPhase}&quot;);
+  }
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-Events-Dispatching.html">Dispatch events</a></li>
+<li><a href="UIE-Events-Handling.html">Handle events</a></li>
+<li><a href="UIE-Events-Synthesizing.html">Synthesize and send events</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Mouse-Events.html"></a></span><div class="tip">Mouse events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Panel-Events.html"></a></span><div class="tip">Panel events</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,694 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Articulation Body component reference</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-ArticulationBody.html">English</a></li>
+<li><a href="/cn/current/Manual/class-ArticulationBody.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-ArticulationBody.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-ArticulationBody.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-ArticulationBody.html">English</a></li>
+<li><a href="/cn/current/Manual/class-ArticulationBody.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-ArticulationBody.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-ArticulationBody.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PhysicsSection.html">Physics</a></li>
+<li><a href="PhysicsOverview.html">Built-in 3D Physics</a></li>
+<li><a href="articulations-section.html">Articulations</a></li>
+<li>Articulation Body component reference</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="physics-articulations.html"></a></span><div class="tip">Introduction to physics articulations</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ragdoll-physics-section.html"></a></span><div class="tip">Ragdoll physics</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Articulation Body component reference</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/ArticulationBody.html' title='Go to ArticulationBody page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Articulation Bodies enable you to build <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about physics-articulations.html">physics articulations</a> such as robotic arms or kinematic chains with <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="physics-articulations.html">physics articulations</a> such as robotic arms or kinematic chains with <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> that are hierarchically organized. They help you get realistic physics behaviors in the context of simulation for industrial applications.</p>
+
+<h2>Properties</h2>
+
+<p>An Articulation Body allows you to define in one single component the properties that you would similarly define through a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RigidbodiesOverview.html">RigidBody</a><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a href="class-Rigidbody.html" href="RigidbodiesOverview.html">RigidBody</a><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a href="class-Rigidbody.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span> and a <a href="Joints.html">regular Joint</a> in a classic configuration. That said, these properties depend on the GameObject position in the hierarchy:</p>
+
+<ul>
+<li>For the root GameObject of the articulation, you can only set up physical body properties:</li>
+</ul>
+
+<p><img src="../uploads/Main/articulation-body-properties-root.png" alt=""></p>
+
+<ul>
+<li>For any child GameObject within the articulation, you can set up physical body properties as well as the type and properties of the <span class="tooltip"><strong>joint</strong><span class="tooltiptext">A physics component allowing a dynamic connection between Rigidbody components, usually allowing some degree of movement such as a hinge. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Joints.html" href="Joints.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#joint" aria-label="Go to glossary anchor for joint">Glossary</a></span></span></span> that links this GameObject to its parent GameObject:</li>
+</ul>
+
+<p><img src="../uploads/Main/articulation-body-properties-child.png" alt=""></p>
+
+<p>The Articulation Body properties fall into the following main categories:</p>
+
+<ul>
+<li><p><a href="#physical-body-properties">Physical body properties</a></p></li>
+<li><p><a href="#joint-anchor-properties">Joint anchor properties</a></p></li>
+<li><p><a href="#joint-type-selection-and-joint-properties">Joint type selection and properties</a></p></li>
+<li><p><a href="#joint-drive-properties">Joint drive properties</a></p></li>
+</ul>
+
+<p><a name="physical-body-properties" aria-hidden="true"></a></p>
+
+<h3>Physical body properties</h3>
+
+<p>Define the way the Articulation Body responds to the physics environment.</p>
+
+<figure>
+<img src="../uploads/Main/articulation-body-properties-physical-body.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Mass</strong></td>
+	<td style="text-align:left;">The mass of the Articulation Body (in kilograms by default).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Immovable</strong></td>
+	<td style="text-align:left;">Use this property to define whether this articulation body is movable or not. You can set this property only for the root Articulation Body. This property is useful to make the base body of robotic hands immovable, for example. The <span class="tooltip"><strong>physics engine</strong><span class="tooltiptext">A system that simulates aspects of physical systems so that objects can accelerate correctly and be affected by collisions, gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PhysicsSection.html" href="PhysicsSection.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PhysicsEngine" aria-label="Go to glossary anchor for PhysicsEngine">Glossary</a></span></span></span> solves it separately from all the other constraints and guarantees that it is not violated.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Use Gravity</strong></td>
+	<td style="text-align:left;">Use this property to make the gravity affect this Articulation Body or not.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="joint-anchor-properties" aria-hidden="true"></a></p>
+
+<h3>Joint anchor properties</h3>
+
+<p>Define the coordinates of the <a href="#joint-anchors">joint anchors</a> for the Articulation Body and its parent Articulation Body.</p>
+
+<figure>
+<img src="../uploads/Main/articulation-body-properties-joint-anchor.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Compute Parent Anchor</strong></td>
+	<td style="text-align:left;">Enable this property to make the parent-relative anchor match the anchor of the current Articulation Body. If you disable this property, you can separately set values for <strong>Parent Anchor Position</strong> and <strong>Parent Anchor Rotation</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Anchor Position</strong></td>
+	<td style="text-align:left;">The position coordinates of the Anchor, relative to the current Articulation Body.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Anchor Rotation</strong></td>
+	<td style="text-align:left;">The rotation coordinates of the Anchor, relative to the current Articulation Body.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Parent Anchor Position</strong></td>
+	<td style="text-align:left;">The position coordinates of the Parent Anchor, relative to the parent Articulation Body. This property only appears if you disable <strong>Compute Parent Anchor</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Parent Anchor Rotation</strong></td>
+	<td style="text-align:left;">The rotation coordinates of the Parent Anchor, relative to the parent Articulation Body. This property only appears if you disable <strong>Compute Parent Anchor</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Snap Anchor to closest contact</strong></td>
+	<td style="text-align:left;">Computes the point on the surface of this Articulation Body that is closest to the <span class="tooltip"><strong>center of mass</strong><span class="tooltiptext">Represents the average position of all mass in a Rigidbody for the purposes of physics calculations. By default it is computed from all colliders belonging to the Rigidbody, but can be modified via script. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Rigidbody-centerOfMass.html" href="../ScriptReference/Rigidbody-centerOfMass.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#CenterofMass" aria-label="Go to glossary anchor for CenterofMass">Glossary</a></span></span></span> of the parent Articulation Body, and sets the anchor to it. If <strong>Compute Parent Anchor</strong> is enabled, Unity also updates the parent anchor accordingly.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="joint-type-selection-and-joint-properties" aria-hidden="true"></a></p>
+
+<h3>Joint type selection and joint properties</h3>
+
+<p>Select the type of joint that links the current Articulation Body to its parent Articulation Body, and define its common and specific properties.</p>
+
+<figure>
+<img src="../uploads/Main/articulation-body-properties-joint-type.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Articulation Joint Type</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">The type of joint that connects this Articulation Body to its parent Articulation Body. <strong>Note:</strong> All types of joints have in common the properties that this table describes, and some of them have specific additional properties.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Fixed</td>
+	<td style="text-align:left;">Sets a rigid, unbreakable and unstretchable link between bodies. A Fixed articulation joint has no additional properties than the ones that this table describes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Prismatic</td>
+	<td style="text-align:left;">Prevents all motion except sliding along a particular axis. See also the <a href="#prismatic-joint-additional-properties">Prismatic joint additional properties</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Revolute</td>
+	<td style="text-align:left;">Allows rotation around a particular axis (like a hinge). See also the <a href="#revolute-joint-additional-properties">Revolute joint additional properties</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Spherical</td>
+	<td style="text-align:left;">Anatomical joint, which allows two swings and one twist. See also the <a href="#spherical-joint-additional-properties">Spherical joint additional properties</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Linear Damping</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Coefficient that controls the linear slow down.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Angular Damping</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Coefficient that controls the rotational slow down.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Joint Friction</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Coefficient that controls the energy loss caused by friction in the joint.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="prismatic-joint-additional-properties" aria-hidden="true"></a></p>
+
+<h4>Prismatic joint additional properties</h4>
+
+<figure>
+<img src="../uploads/Main/articulation-body-properties-joint-prismatic.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Axis</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Specifies the axis that the prismatic joint allows motion along, relative to the parent anchor.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Motion</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Specifies the motion restriction type along that axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Free</td>
+	<td style="text-align:left;">Allows the Articulation Body to freely move along the selected <strong>Axis</strong> of the parent anchor.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Limited</td>
+	<td style="text-align:left;">Restricts the movement of the Articulation Body along the selected <strong>Axis</strong> of the parent anchor, according to the <strong>Lower Limit</strong> and <strong>Upper Limit</strong> you specify in the <strong>Drive</strong> properties.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>X Drive</strong>, <strong>Y Drive</strong>, or <strong>Z Drive</strong>
+</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">The <a href="#joint-drive-properties">properties of the linear drive</a> that is attached to the joint, according to the selected <strong>Axis</strong> of the parent anchor. <strong>Note:</strong> There is only one Drive section here. Its title automatically adjusts according to the axis selection.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="revolute-joint-additional-properties" aria-hidden="true"></a></p>
+
+<h4>Revolute joint additional properties</h4>
+
+<figure>
+<img src="../uploads/Main/articulation-body-properties-joint-revolute.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Motion</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Specifies the rotation restriction type around the X axis of the parent anchor.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Free</td>
+	<td style="text-align:left;">Allows the Articulation Body to freely rotate around the X axis of the parent anchor.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Limited</td>
+	<td style="text-align:left;">Restricts the rotation of the Articulation Body around the X axis of the parent anchor, according to the <strong>Lower Limit</strong> and <strong>Upper Limit</strong> you specify in the <strong>X Drive</strong> properties.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>X Drive</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">The <a href="#joint-drive-properties">properties of the rotational drive</a> that is attached to the joint, around the X axis of the parent anchor.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="spherical-joint-additional-properties" aria-hidden="true"></a></p>
+
+<h4>Spherical joint additional properties</h4>
+
+<figure>
+<img src="../uploads/Main/articulation-body-properties-joint-spherical.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Swing Y</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Specifies the rotation restriction type around the Y axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Free</td>
+	<td style="text-align:left;">Allows the Articulation Body to freely rotate around the Y axis of the parent anchor.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Limited</td>
+	<td style="text-align:left;">Restricts the rotation of the Articulation Body around the Y axis of the parent anchor, according to the <strong>Lower Limit</strong> and <strong>Upper Limit</strong> you specify in the <strong>Y Drive</strong> properties.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Locked</td>
+	<td style="text-align:left;">Totally locks the rotation of the Articulation Body around the Y axis of the parent anchor. <strong>Note:</strong> You cannot lock more than two degrees of freedom at the same time.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Swing Z</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Specifies the rotation restriction type around the Z axis. The options are the same for all 3 axes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Twist</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Specifies the rotation restriction type around the X axis. The options are the same for all 3 axes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Y Drive</strong>, <strong>Z Drive</strong>, and <strong>X Drive</strong>
+</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">The <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #joint-drive-properties">properties of the rotational drive</a> that is attached to the joint, respectively around the Y, Z and X axes of the parent anchor. <strong>Note:</strong> There is a separate subsection for each drive. If you lock an axe, the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="#joint-drive-properties">properties of the rotational drive</a> that is attached to the joint, respectively around the Y, Z and X axes of the parent anchor. <strong>Note:</strong> There is a separate subsection for each drive. If you lock an axe, the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> does not display its Drive properties.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="joint-drive-properties" aria-hidden="true"></a></p>
+
+<h3>Joint drive properties</h3>
+
+<p>Set up <a href="#joint-degrees-of-freedom-and-limits">joint limits</a> about a specific
+axis, as well as the <a href="#joint-drive-effect">joint drive effect</a> parameters for
+this axis.</p>
+
+<figure>
+<img src="../uploads/Main/articulation-body-properties-joint-drive.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Lower Limit</strong></td>
+	<td style="text-align:left;">The limit below which the joint prevents the body from moving or rotating, depending on the joint type. You can define this property only if you set the related <strong>Motion</strong>, <strong>Swing</strong> or <strong>Twist</strong> property to <strong>Limited</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Upper Limit</strong></td>
+	<td style="text-align:left;">The limit above which the joint prevents the body from moving or rotating, depending on the joint type. You can define this property only if you set the related <strong>Motion</strong>, <strong>Swing</strong> or <strong>Twist</strong> property to <strong>Limited</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Stiffness</strong></td>
+	<td style="text-align:left;">The stiffness of the spring that attracts the joint to the target.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Damping</strong></td>
+	<td style="text-align:left;">The damping of the spring that attracts the joint to the target.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Force limit</strong></td>
+	<td style="text-align:left;">The maximum amount of force or torque this drive can produce.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Target</strong></td>
+	<td style="text-align:left;">The target value this drive aims to reach.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Target velocity</strong><span class="tooltiptext">A joint property to set the desired velocity with which the joint should move to the Target Position under the drive force. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ConfigurableJoint.html" href="class-ConfigurableJoint.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TargetVelocity" aria-label="Go to glossary anchor for TargetVelocity">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">The target velocity this drive aims to reach.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Configuring articulation joints</h2>
+
+<p><a name="joint-drive-effect" aria-hidden="true"></a></p>
+
+<h3>Joint drive effect</h3>
+
+<p>Any drive is an implicit 1D spring that aims to bring the current drive parameters to the target by the application of an effect (forces or torques) computed by this formula:</p>
+
+<p><strong>Effect = stiffness * (drivePosition - targetPosition) - damping * (driveVelocity - targetVelocity)</strong></p>
+
+<p>A drive attached to a linear degree of freedom produces forces. A drive attached to a rotational degree of freedom produces torques. You can set each parameter of this formula through the <a href="#joint-drive-properties">Joint drive properties</a> to fine-tune the desired effect for any axis involved in a joint.</p>
+
+<p>Notice that the effect formula consists of two independent terms that you can balance, and even cancel out. For example:</p>
+
+<ul>
+<li><p>If you set the stiffness to zero, you get a drive that only aims at reaching a specific velocity.</p></li>
+<li><p>If you set the damping to zero, you get a drive that aims at reaching a certain position without trying to reach any particular velocity. In that case, the drive does not try to eventually stop once the target is reached.</p></li>
+</ul>
+
+<p><a name="joint-anchors" aria-hidden="true"></a></p>
+
+<h2>Joint anchors</h2>
+
+<p>There are two anchors per each joint:</p>
+
+<ul>
+<li><p>The <strong>Anchor</strong>, relative to the current Articulation Body</p></li>
+<li><p>The <strong>Parent Anchor</strong>, relative to the parent Articulation Body</p></li>
+</ul>
+
+<p>By default, Unity automatically computes the Parent Anchor to match the pose of the Anchor. However, you can disable the <strong>Compute Parent Anchor</strong> property to manually set the Parent Anchor:</p>
+
+<figure>
+<img src="../uploads/Main/articulation-body-properties-joint-anchors.png" alt="">
+</figure>
+
+<p>Currently, the Unity Editor displays the anchors with a scaled transform tool to differentiate them from the GameObject transform tool:</p>
+
+<figure>
+<img src="../uploads/Main/articulation-body-joint-anchor-tools.png" alt="">
+</figure>
+
+<p>To change the position of the anchors, you can either use the Inspector and edit the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #joint-anchor-properties">Joint anchor properties</a> or directly move and rotate their transform tools in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="#joint-anchor-properties">Joint anchor properties</a> or directly move and rotate their transform tools in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> View.</p>
+
+<p>
+<strong>Note:</strong> When you create a new Articulation Body, Unity positions the anchors at the local zero of their respective bodies. However, the local zero is not an ideal default position for the anchor if the connected bodies have <span class="tooltip"><strong>colliders</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> attached, because the joint might then try to push the bodies into each other. The <strong>Snap Anchor to closest contact</strong> button helps you set a more reasonable default location of the anchors, which works with many articulations.</p>
+
+<p><a name="joint-degrees-of-freedom-and-limits" aria-hidden="true"></a></p>
+
+<h3>Joint degrees of freedom and limits</h3>
+
+<p>
+<strong>Note:</strong> Currently, the <span class="tooltip"><strong>Scene View</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> allows you to visualize the joint limits but not to manipulate them graphically.</p>
+
+<h4>Fixed joint</h4>
+
+<p>A <span class="tooltip"><strong>fixed joint</strong><span class="tooltiptext">A joint type that is completely constrained, allowing two objects to be held together. Implemented as a spring so some motion may still occur. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-FixedJoint.html" href="class-FixedJoint.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#FixedJoint" aria-label="Go to glossary anchor for FixedJoint">Glossary</a></span></span></span> has no degrees of freedom, so the Scene View displays no specific markers.</p>
+
+<h4>Prismatic joint</h4>
+
+<p>A prismatic joint is practically a slider along a specified axis relative to the parent anchor. This axis can only be a basis axis (X, Y, or Z) but you can still <a href="#joint-anchors">rotate the parent anchor</a> to get a different axis orientation in world space.</p>
+
+<p>You can set up a prismatic joint to have a free or limited translation. To do this, use the Inspector and edit the <a href="#prismatic-joint-additional-properties">prismatic joint specific properties</a>.</p>
+
+<p>
+<strong>Note:</strong> You cannot lock a prismatic joint, otherwise this would remove its only degree of freedom and would make it a degenerate joint.</p>
+
+<p>When you set the prismatic joint <strong>Motion</strong> to <strong>Limited</strong>, the Scene View displays markers to represent the translation limits:</p>
+
+<ul>
+<li><p>The small red marker represents the lower limit.</p></li>
+<li><p>The small green marker represents the upper limit.</p></li>
+<li><p>The dotted white line materializes allowed translation between the limits.</p></li>
+</ul>
+
+<p>To manipulate the joint limits, you must use the Inspector and edit their values in the <a href="#joint-drive-properties">Joint drive properties</a>.</p>
+
+<p>
+<img src="../uploads/Main/articulation-body-joint-prismatic-limited.png" alt="">
+<br><em>Example of a limited prismatic joint.</em>
+</p>
+
+<p>
+<strong>Note:</strong> The Scene View displays no specific markers when you set the prismatic joint <strong>Motion</strong> to <strong>Free</strong>.</p>
+
+<p><a name="revolute-joint" aria-hidden="true"></a></p>
+
+<h4>Revolute joint</h4>
+
+<p>A revolute joint is essentially a hinge with a single rotational degree of freedom around the parent anchor’s X axis. You can still <a href="#joint-anchors">rotate the parent anchor</a> to get a different axis orientation in world space.</p>
+
+<p>You can set up a revolute joint to have a free or limited rotation. To do this, use the Inspector and edit the <a href="#revolute-joint-additional-properties">revolute joint specific properties</a>.</p>
+
+<p>
+<strong>Note:</strong> You cannot lock a revolute joint, otherwise this would remove its only degree of freedom and would make it a degenerate joint.</p>
+
+<p>When you set the revolute joint <strong>Motion</strong> to <strong>Free</strong>, the Scene View displays a red disk to represent the free rotation allowed around the X axis.</p>
+
+<p>
+<img src="../uploads/Main/articulation-body-joint-revolute-free.png" alt="">
+<br><em>Example of a free revolute joint.</em>
+</p>
+
+<p>When you set the revolute joint <strong>Motion</strong> to <strong>Limited</strong>, the Scene View displays markers to represent the rotation limits:</p>
+
+<ul>
+<li><p>The small red marker represents the lower limit.</p></li>
+<li><p>The small green marker represents the upper limit.</p></li>
+<li><p>The red circle sector materializes the allowed rotation angle between the limits.</p></li>
+<li><p>The Z axis of the parent anchor serves as the reference (zero) for both limit angles.</p></li>
+</ul>
+
+<p>To manipulate the joint limits, you must use the Inspector and edit their values in the <a href="#joint-drive-properties">Joint drive properties</a>.</p>
+
+<p>
+<img src="../uploads/Main/articulation-body-joint-revolute-limited.png" alt="">
+<br><em>Example of a limited revolute joint.</em>
+</p>
+
+<h4>Spherical joint</h4>
+
+<p>A spherical joint is an anatomical joint that is best suited for simulating humanoid limbs.</p>
+
+<p>This joint type can have up to three rotational degrees of freedom. You can set up each of these rotations to be free, limited, or locked. To do this, use the Inspector and edit the <a href="#revolute-joint-additional-properties">revolute joint specific properties</a>.</p>
+
+<p>
+<strong>Note:</strong> You cannot lock all rotations at the same time for a spherical joint, otherwise this would remove all its degrees of freedom and would make it a degenerate joint. Also, you should not lock both swing axes to mimic a revolute joint, because the simulation would happen differently than with the revolute joint and would be more expensive.</p>
+
+<p>Like with the <a href="#revolute-joint">revolute joint</a>:</p>
+
+<ul>
+<li><p>The Scene View displays free rotations with colored disks and limited rotations with colored circle sectors. Each color (red, green, blue) represents the rotation around the axis of this color (respectively: X, Y, Z).</p></li>
+<li><p>The small red and green markers respectively represent the lower and upper limits.</p></li>
+</ul>
+
+<p>
+<img src="../uploads/Main/articulation-body-joint-spherical-free.png" alt="">
+<br><em>Example of a free spherical joint.</em>
+</p>
+
+<p>
+<img src="../uploads/Main/articulation-body-joint-spherical-limited.png" alt="">
+<br><em>Example of a spherical joint with limited swings.</em>
+</p>
+<!-- area:authoring -->
+
+<p><span class="search-words">ArticulationBody</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="physics-articulations.html"></a></span><div class="tip">Introduction to physics articulations</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ragdoll-physics-section.html"></a></span><div class="tip">Ragdoll physics</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

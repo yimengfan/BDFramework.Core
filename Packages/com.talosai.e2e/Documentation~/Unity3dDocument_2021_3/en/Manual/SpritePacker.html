@@ -1,0 +1,426 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Sprite Packer</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SpritePacker.html">English</a></li>
+<li><a href="/cn/current/Manual/SpritePacker.html">中文</a></li>
+<li><a href="/ja/current/Manual/SpritePacker.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SpritePacker.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SpritePacker.html">English</a></li>
+<li><a href="/cn/current/Manual/SpritePacker.html">中文</a></li>
+<li><a href="/ja/current/Manual/SpritePacker.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SpritePacker.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Unity2D.html">2D game development</a></li>
+<li><a href="Sprites.html">Work with sprites</a></li>
+<li><a href="sprite-atlas.html">Sprite Atlas</a></li>
+<li>Sprite Packer</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SpriteAtlasScenarios.html"></a></span><div class="tip">Resolving different Sprite Atlas scenarios</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="spritepacker-prep-for-deprecation.html"></a></span><div class="tip">Prepare Sprite Packer Legacy packed assets to work after deprecation</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Sprite Packer</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>When designing <span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> graphics, it is convenient to work with a separate Texture file for each character. However, a significant portion of a Sprite Texture will often be taken up by the empty space between the graphic elements and this space will result in wasted video memory at runtime. For optimal performance, it is best to pack graphics from several Sprite textures tightly together within a single Texture known as an atlas. Unity provides a <strong>Sprite Packer</strong> utility to automate the process of generating atlases from the individual Sprite textures.</p>
+
+<p>Unity handles the generation and use of Sprite atlas textures behind the <span class="tooltip"><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> so that the user needs to do no manual assignment. The atlas can optionally be packed on entering Play mode or during a build and the graphics for a Sprite object will be obtained from the atlas once it is generated.</p>
+
+<p>Users are required to specify a Packing Tag in the Texture Importer to enable packing for Sprites of that Texture. </p>
+
+<p>
+<strong>Warning:</strong> Please note that <strong>Sprite Packer</strong> is deprecated for Unity 2020.1 and newer, and will no longer be available as an option from <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SpritePackerModes.html">Sprite Packer Modes</a> from Unity 2020.1 onwards. Any new Project created in 2020.1 onwards will default to the <span class="tooltip"><a href="class-SpriteAtlas.html">Sprite Atlas</a><span class="tooltiptext">A texture that is composed of several smaller textures. Also referred to as a texture atlas, image sprite, sprite sheet or packed texture. <a href="class-SpriteAtlas.html" href="SpritePackerModes.html">Sprite Packer Modes</a> from Unity 2020.1 onwards. Any new Project created in 2020.1 onwards will default to the <span class="tooltip"><a href="class-SpriteAtlas.html">Sprite Atlas</a><span class="tooltiptext">A texture that is composed of several smaller textures. Also referred to as a texture atlas, image sprite, sprite sheet or packed texture. <a href="class-SpriteAtlas.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#spriteatlas" aria-label="Go to glossary anchor for spriteatlas">Glossary</a></span></span></span> system when packing Textures. Refer to <a href="spritepacker-prep-for-deprecation.html">Prepare Sprite Packer Legacy packed assets to work after deprecation</a> for instructions on how to continue using assets packed with the legacy <strong>Sprite Packer</strong>.</p>
+
+<h2>Using the Sprite Packer</h2>
+
+<p>The Sprite Packer is disabled by default but you can configure it from the <a href="class-EditorManager.html">Editor</a> window (menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong>, then select the <strong>Editor</strong> category). The Sprite packing mode can be changed from <strong>Disabled</strong> to <strong>Enabled for Builds</strong> (packing is used for builds but not Play mode) or <strong>Always Enabled</strong> (packing is enabled for both Play mode and builds).</p>
+
+<p>If you open the Sprite Packer window (menu: <strong>Window</strong> &gt; <strong>2D</strong> &gt; <strong>Sprite Packer</strong>) and click the <strong>Pack</strong> button in the top-left corner, you will see the arrangement of the textures packed within the atlas.</p>
+
+<figure>
+<img src="../uploads/Main/SpritePackerMain.jpg" alt="">
+</figure>
+
+<p>If you select a Sprite in the Project panel, this will also be highlighted to show its position in the atlas. The outline is actually the render <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> outline and it also defines the area used for tight packing.</p>
+
+<p>The <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> at the top of the Sprite Packer window has a number of controls that affect packing and viewing. The <strong>Pack</strong> buttons initiates the packing operation but will not force any update if the atlas hasn’t changed since it was last packed. (A related <strong>Repack</strong> button will appear when you implement a custom packing policy as explained in <strong>Customizing the Sprite Packer</strong> below). The <strong>View Atlas</strong> and <strong>Page #</strong> menus allow you to choose which page of which atlas is shown in the window (a single atlas may be split into more than one “page” if there is not enough space for all Sprites in the maximum Texture size). The menu next to the page number selects which “packing policy” is used for the atlas (see below). At the right of the toolbar are two controls to zoom the view and to switch between color and alpha display for the atlas.</p>
+
+<h2>Packing policy</h2>
+
+<p>The Sprite Packer uses a <strong>packing policy</strong> to decide how to assign Sprites into atlases. It is possible to create your own packing policies (see below) but the <strong>Default Packer Policy</strong>, <strong>Tight Packer Policy</strong> and <strong>Tight Rotate Enabled Sprite Packer Policy</strong> options are always available. With these policies, the <strong>Packing Tag</strong> property in the <a href="class-TextureImporter.html">Texture Importer</a> directly selects the name of the atlas where the Sprite will be packed and so all Sprites with the same packing tag will be packed in the same atlas. Atlases are then further sorted by the Texture import settings so that they match whatever the user sets for the source textures. Sprites with the same Texture <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> settings will be grouped into the same atlas where possible.</p>
+
+<ul>
+<li>DefaultPackerPolicy will use rectangle packing by default unless “[TIGHT]” is specified in the <strong>Packing Tag</strong> (i.e. setting your packing tag to “[TIGHT]Character” will allow tight packing).</li>
+<li>TightPackerPolicy will use tight packing by default if Sprite have tight meshes. If “[RECT]” is specified in the <strong>Packing Tag</strong>, rectangle packing will be done (i.e. setting your packing tag to “[RECT]UI_Elements” will force rect packing).</li>
+<li>TightRotateEnabledSpritePackerPolicy will use tight packing by default if Sprite have tight meshes and will enable rotation of Sprites. If “[RECT]” is specified in the <strong>Packing Tag</strong>, rectangle packing will be done (i.e. setting your packing tag to “[RECT]UI_Elements” will force rect packing).</li>
+</ul>
+
+<h2>Customizing the Sprite Packer</h2>
+
+<p>The <strong>DefaultPackerPolicy</strong> option is sufficient for most purposes but you can also implement your own custom packing policy if you need to. To do this, you need to implement the UnityEditor.Sprites.IPackerPolicy interface for a class in an editor script. This interface requires the following methods:</p>
+
+<ul>
+<li>GetVersion - return the version value of your packer policy. Version should be bumped if modifications are done to the policy script and this policy is saved to <span class="tooltip"><strong>version control</strong><span class="tooltiptext">A system for managing file changes. You can use Unity in conjunction with most common version control tools, including Perforce, Git, Mercurial and PlasticSCM. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VersionControl.html" href="VersionControl.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VersionControl" aria-label="Go to glossary anchor for VersionControl">Glossary</a></span></span></span>.</li>
+<li>OnGroupAtlases - implement your packing logic here. Define atlases on the PackerJob and assign Sprites from the given TextureImporters.</li>
+</ul>
+
+<p>DefaultPackerPolicy uses rect packing (see SpritePackingMode) by default. This is useful if you’re doing texture-space effects or would like to use a different mesh for rendering the Sprite. Custom policies can override this and instead use tight packing.</p>
+
+<ul>
+<li>Repack button is only enabled when a custom policy is selected.
+
+<ul>
+<li>OnGroupAtlases will not be called unless TextureImporter metadata or the selected PackerPolicy version values change.</li>
+<li>Use Repack button when working on your custom policy.</li>
+</ul>
+</li>
+<li>Sprites can be packed rotated with TightRotateEnabledSpritePackerPolicy automatically.
+
+<ul>
+<li>SpritePackingRotation is a reserved type for future Unity versions.</li>
+</ul>
+</li>
+</ul>
+
+<h2>Other</h2>
+
+<ul>
+<li>Atlases are cached in Project\Library\AtlasCache.
+
+<ul>
+<li>Deleting this folder and then launching Unity will force atlases to be repacked. Unity must be closed when doing so.</li>
+</ul>
+</li>
+<li>Atlas cache is not loaded at start.
+
+<ul>
+<li>All textures must be checked when packing for the first time after Unity is restarted. This operation might take some time depending on the total number of textures in the project.</li>
+<li>Only the required atlases are loaded.</li>
+</ul>
+</li>
+<li>Default maximum atlas size is 2048x2048.</li>
+<li>When PackingTag is set, Texture will not be compressed so that the SpritePacker can grab original <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> values and then do compression on the atlas.</li>
+</ul>
+
+<h2>DefaultPackerPolicy</h2>
+
+<pre><code>using System;
+using System.Linq;
+using UnityEngine;
+using UnityEditor;
+using System.Collections.Generic;
+
+
+public class DefaultPackerPolicySample : UnityEditor.Sprites.IPackerPolicy
+{
+        protected class Entry
+        {
+            public Sprite            Sprite;
+        public UnityEditor.Sprites.AtlasSettings settings;
+            public string            atlasName;
+            public SpritePackingMode packingMode;
+            public int               anisoLevel;
+        }
+
+        private const uint kDefaultPaddingPower = 3; // Good for base and two mip levels.
+
+        public virtual int GetVersion() { return 1; }
+        protected virtual string TagPrefix { get { return &quot;[TIGHT]&quot;; } }
+        protected virtual bool AllowTightWhenTagged { get { return true; } }
+        protected virtual bool AllowRotationFlipping { get { return false; } }
+
+    public static bool IsCompressedFormat(TextureFormat fmt)
+    {
+        if (fmt &gt;= TextureFormat.DXT1 &amp;&amp; fmt &lt;= TextureFormat.DXT5)
+            return true;
+        if (fmt &gt;= TextureFormat.DXT1Crunched &amp;&amp; fmt &lt;= TextureFormat.DXT5Crunched)
+            return true;
+        if (fmt &gt;= TextureFormat.PVRTC_RGB2 &amp;&amp; fmt &lt;= TextureFormat.PVRTC_RGBA4)
+            return true;
+        if (fmt == TextureFormat.ETC_RGB4)
+            return true;
+        if (fmt &gt;= TextureFormat.ATC_RGB4 &amp;&amp; fmt &lt;= TextureFormat.ATC_RGBA8)
+            return true;
+        if (fmt &gt;= TextureFormat.EAC_R &amp;&amp; fmt &lt;= TextureFormat.EAC_RG_SIGNED)
+            return true;
+        if (fmt &gt;= TextureFormat.ETC2_RGB &amp;&amp; fmt &lt;= TextureFormat.ETC2_RGBA8)
+            return true;
+        if (fmt &gt;= TextureFormat.ASTC_RGB_4x4 &amp;&amp; fmt &lt;= TextureFormat.ASTC_RGBA_12x12)
+            return true;
+        if (fmt &gt;= TextureFormat.DXT1Crunched &amp;&amp; fmt &lt;= TextureFormat.DXT5Crunched)
+            return true;
+        return false;
+    }
+
+    public void OnGroupAtlases(BuildTarget target, UnityEditor.Sprites.PackerJob job, int[] textureImporterInstanceIDs)
+        {
+            List&lt;Entry&gt; entries = new List&lt;Entry&gt;();
+
+            foreach (int instanceID in textureImporterInstanceIDs)
+            {
+                TextureImporter ti = EditorUtility.InstanceIDToObject(instanceID) as TextureImporter;
+
+                TextureFormat desiredFormat;
+                ColorSpace colorSpace;
+                int compressionQuality;
+                ti.ReadTextureImportInstructions(target, out desiredFormat, out colorSpace, out compressionQuality);
+
+                TextureImporterSettings tis = new TextureImporterSettings();
+                ti.ReadTextureSettings(tis);
+
+            Sprite[] Sprites =
+                AssetDatabase.LoadAllAssetRepresentationsAtPath(ti.assetPath)
+                    .Select(x =&gt; x as Sprite)
+                    .Where(x =&gt; x != null)
+                    .ToArray();
+                foreach (Sprite Sprite in Sprites)
+                {
+                    Entry entry = new Entry();
+                    entry.Sprite = Sprite;
+                    entry.settings.format = desiredFormat;
+                    entry.settings.colorSpace = colorSpace;
+                    // Use Compression Quality for Grouping later only for Compressed Formats. Otherwise leave it Empty.
+                entry.settings.compressionQuality = IsCompressedFormat(desiredFormat) ? compressionQuality : 0;
+                entry.settings.filterMode = Enum.IsDefined(typeof(FilterMode), ti.filterMode)
+                    ? ti.filterMode
+                    : FilterMode.Bilinear;
+                    entry.settings.maxWidth = 2048;
+                    entry.settings.maxHeight = 2048;
+                    entry.settings.generateMipMaps = ti.mipmapEnabled;
+                    entry.settings.enableRotation = AllowRotationFlipping;
+                    if (ti.mipmapEnabled)
+                        entry.settings.paddingPower = kDefaultPaddingPower;
+                    else
+                        entry.settings.paddingPower = (uint)EditorSettings.SpritePackerPaddingPower;
+                    #if ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION
+                        entry.settings.allowsAlphaSplitting = ti.GetAllowsAlphaSplitting ();
+                    #endif //ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION
+
+                    entry.atlasName = ParseAtlasName(ti.SpritePackingTag);
+                    entry.packingMode = GetPackingMode(ti.SpritePackingTag, tis.SpriteMeshType);
+                    entry.anisoLevel = ti.anisoLevel;
+
+                    entries.Add(entry);
+                }
+
+                Resources.UnloadAsset(ti);
+            }
+
+            // First split Sprites into groups based on atlas name
+            var atlasGroups =
+                from e in entries
+                group e by e.atlasName;
+            foreach (var atlasGroup in atlasGroups)
+            {
+                int page = 0;
+                // Then split those groups into smaller groups based on texture settings
+                var settingsGroups =
+                    from t in atlasGroup
+                    group t by t.settings;
+                foreach (var settingsGroup in settingsGroups)
+                {
+                    string atlasName = atlasGroup.Key;
+                    if (settingsGroups.Count() &gt; 1)
+                        atlasName += string.Format(&quot; (Group {0})&quot;, page);
+
+                UnityEditor.Sprites.AtlasSettings settings = settingsGroup.Key;
+                    settings.anisoLevel = 1;
+                    // Use the highest aniso level from all entries in this atlas
+                    if (settings.generateMipMaps)
+                        foreach (Entry entry in settingsGroup)
+                            if (entry.anisoLevel &gt; settings.anisoLevel)
+                                settings.anisoLevel = entry.anisoLevel;
+
+                    job.AddAtlas(atlasName, settings);
+                    foreach (Entry entry in settingsGroup)
+                    {
+                        job.AssignToAtlas(atlasName, entry.Sprite, entry.packingMode, SpritePackingRotation.None);
+                    }
+
+                    ++page;
+                }
+            }
+        }
+
+        protected bool IsTagPrefixed(string packingTag)
+        {
+            packingTag = packingTag.Trim();
+            if (packingTag.Length &lt; TagPrefix.Length)
+                return false;
+            return (packingTag.Substring(0, TagPrefix.Length) == TagPrefix);
+        }
+
+        private string ParseAtlasName(string packingTag)
+        {
+            string name = packingTag.Trim();
+            if (IsTagPrefixed(name))
+                name = name.Substring(TagPrefix.Length).Trim();
+            return (name.Length == 0) ? &quot;(unnamed)&quot; : name;
+        }
+
+        private SpritePackingMode GetPackingMode(string packingTag, SpriteMeshType meshType)
+        {
+            if (meshType == SpriteMeshType.Tight)
+                if (IsTagPrefixed(packingTag) == AllowTightWhenTagged)
+                    return SpritePackingMode.Tight;
+            return SpritePackingMode.Rectangle;
+        }
+}
+</code></pre>
+
+<h2>TightPackerPolicy</h2>
+
+<pre><code>using System;
+using System.Linq;
+using UnityEngine;
+using UnityEditor;
+using UnityEditor.Sprites;
+using System.Collections.Generic;
+
+// TightPackerPolicy will tightly pack non-rectangle Sprites unless their packing tag contains &quot;[RECT]&quot;.
+class TightPackerPolicySample : DefaultPackerPolicySample
+{
+        protected override string TagPrefix { get { return &quot;[RECT]&quot;; } }
+        protected override bool AllowTightWhenTagged { get { return false; } }
+        protected override bool AllowRotationFlipping { get { return false; } }
+}
+</code></pre>
+
+<h2>TightRotateEnabledSpritePackerPolicy</h2>
+
+<pre><code>using System;
+using System.Linq;
+using UnityEngine;
+using UnityEditor;
+using UnityEditor.Sprites;
+using System.Collections.Generic;
+
+// TightPackerPolicy will tightly pack non-rectangle Sprites unless their packing tag contains &quot;[RECT]&quot;.
+class TightRotateEnabledSpritePackerPolicySample : DefaultPackerPolicySample
+{
+        protected override string TagPrefix { get { return &quot;[RECT]&quot;; } }
+        protected override bool AllowTightWhenTagged { get { return false; } }
+        protected override bool AllowRotationFlipping { get { return true; } }
+}
+</code></pre>
+
+<h2>Additional Resources</h2>
+
+<ul>
+<li><a href="spritepacker-prep-for-deprecation.md">Prepare Sprite Packer Legacy packed assets to work after deprecation</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SpriteAtlasScenarios.html"></a></span><div class="tip">Resolving different Sprite Atlas scenarios</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="spritepacker-prep-for-deprecation.html"></a></span><div class="tip">Prepare Sprite Packer Legacy packed assets to work after deprecation</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

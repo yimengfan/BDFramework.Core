@@ -1,0 +1,238 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Shadow troubleshooting</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ShadowPerformance.html">English</a></li>
+<li><a href="/cn/current/Manual/ShadowPerformance.html">中文</a></li>
+<li><a href="/ja/current/Manual/ShadowPerformance.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ShadowPerformance.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ShadowPerformance.html">English</a></li>
+<li><a href="/cn/current/Manual/ShadowPerformance.html">中文</a></li>
+<li><a href="/ja/current/Manual/ShadowPerformance.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ShadowPerformance.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="LightingOverview.html">Lighting</a></li>
+<li><a href="Shadows.html">Shadows</a></li>
+<li>Shadow troubleshooting</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="shadow-cascades.html"></a></span><div class="tip">Shadow Cascades</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="lighting-window.html"></a></span><div class="tip">The Lighting window</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Shadow troubleshooting</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>Shadow performance</h2>
+
+<p>Real-time shadows have quite a high rendering overhead; any <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> that might cast shadows must first be rendered into the shadow map and then that map will be used to render objects that might receive shadows.</p>
+
+<p>Soft shadows have a greater rendering overhead than hard shadows, but this only affects the GPU and does not cause much extra CPU work.</p>
+
+<p>If rendering real-time shadows for complex geometry is prohibitively expensive, consider using low <span class="tooltip"><strong>LOD</strong><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LevelOfDetail.html" href="LevelOfDetail.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LOD" aria-label="Go to glossary anchor for LOD">Glossary</a></span></span></span> meshes or even primitives to cast shadows.</p>
+
+<p>If this is too resource-intensive, you can fake shadows using a blurred texture applied to a simple <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> or <span class="tooltip"><strong>quad</strong><span class="tooltiptext">A primitive object that resembles a plane but its edges are only one unit long, it uses only 4 vertices, and the surface is oriented in the XY plane of the local coordinate space. <a href="PrimitiveObjects.html" href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> or <span class="tooltip"><strong>quad</strong><span class="tooltiptext">A primitive object that resembles a plane but its edges are only one unit long, it uses only 4 vertices, and the surface is oriented in the XY plane of the local coordinate space. <a href="PrimitiveObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Quad" aria-label="Go to glossary anchor for Quad">Glossary</a></span></span></span> underneath your characters, or can create blob shadows with custom shaders.</p>
+
+<h2>Shadow acne</h2>
+
+<p>A surface directly illuminated by a Light sometimes appears to be partly in shadow. This is because <strong>pixels</strong> that should be exactly at the distance specified in the shadow map are sometimes calculated as being further away (this is a consequence of using shadow filtering, or a low-resolution image for the shadow map). The result is arbitrary patterns of pixels in shadow when they should be lit, giving a visual effect known as “shadow acne”.</p>
+
+<figure>
+<img src="../uploads/Main/ShadowBiasAcne.jpg" alt="Shadow acne in the form of false self-shadowing artifacts">
+<figcaption>Shadow acne in the form of false self-shadowing artifacts</figcaption>
+</figure>
+
+<p><a name="LightBias" aria-hidden="true"></a></p>
+
+<h3>The light bias settings</h3>
+
+<p>To prevent shadow acne, you can adjust the <strong>light bias</strong> settings.</p>
+
+<p>You can add a bias to the distance in the shadow map to ensure that pixels on the borderline pass the comparison, or you can inset geometry a little bit along its normals. </p>
+
+<p>In the Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>, you can set these values with the <strong>Bias</strong> and <strong>Normal Bias</strong> properties in the <a href="class-Light.html">Light</a> <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>, you can set these values with the <strong>Bias</strong> and <strong>Normal Bias</strong> properties in the <a href="class-Light.html">Light</a> <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window when shadows are enabled.</p>
+
+<p>Do not set the <strong>Bias</strong> value too high, because areas around a shadow near the GameObject casting it are sometimes falsely illuminated. This results in a disconnected shadow, making the GameObject look as if it is flying above the ground.</p>
+
+<figure>
+<img src="../uploads/Main/ShadowBiasPeterPanning.jpg" alt="A high Bias value makes the shadow appear disconnected from the GameObject">
+<figcaption>A high <strong>Bias</strong> value makes the shadow appear “disconnected” from the GameObject</figcaption>
+</figure>
+
+<p>Likewise, setting the <strong>Normal Bias</strong> value too high makes the shadow appear too narrow for the GameObject:</p>
+
+<figure>
+<img src="../uploads/Main/ShadowBiasTooThin.jpg" alt="A high Normal Bias value makes the shadow shape too narrow">
+<figcaption>A high <strong>Normal Bias</strong> value makes the shadow shape too narrow</figcaption>
+</figure>
+
+<p>In some situations, <strong>Normal Bias</strong> can cause an unwanted effect called “light bleeding”, where light bleeds through from nearby geometry into areas that should be shadowed. A potential solution is to open the GameObject’s <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshRenderer.html">Mesh Renderer</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html" href="class-MeshRenderer.html">Mesh Renderer</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span> and change the <strong>Cast Shadows</strong> property to <strong>Two Sided</strong>. This can sometimes help, although it can be more resource-intensive and increase performance overhead when rendering the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span> and change the <strong>Cast Shadows</strong> property to <strong>Two Sided</strong>. This can sometimes help, although it can be more resource-intensive and increase performance overhead when rendering the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<p>The bias values for a Light may need tweaking to make sure that unwanted effects don’t occur. It is generally easier to gauge the right value by eye rather than attempting to calculate it.</p>
+
+<figure>
+<img src="../uploads/Main/ShadowNearOffsetTooLow.jpeg" alt="A low Shadow near plane offset value create the appearance of holes in shadows">
+<figcaption>A low Shadow near plane offset value create the appearance of holes in shadows</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/ShadowNearOffsetOk.jpg" alt="Correct shadowing">
+<figcaption>Correct shadowing</figcaption>
+</figure>
+
+<p><a name="shadow-pancaking" aria-hidden="true"></a></p>
+
+<h3>Shadow pancaking</h3>
+
+<p>To further prevent shadow acne we are using a technique known as <strong>Shadow pancaking</strong>. The idea is to reduce the range of the light space used when rendering the shadow map along the light direction. This leads to an increased precision in the shadow map, reducing shadow acne.</p>
+
+<figure>
+<img src="../uploads/Main/PancakingIdea.png" alt="A diagram showing the shadow pancaking principle">
+<figcaption>A diagram showing the shadow pancaking principle</figcaption>
+</figure>
+
+<p>In the above diagram:</p>
+
+<ul>
+<li>The <strong>light blue circles</strong> represent the shadow casters</li>
+<li>The <strong>dark blue rectangle</strong> represents the original light space</li>
+<li>The <strong>green line</strong> represents the optimized near plane (excluding any shadow casters not visible in the view frustum)</li>
+</ul>
+
+<p>Clamp these shadow casters to the near clip plane of the optimized space (in the Vertex Shader). Note that while this works well in general, it can create artifacts for very large triangles crossing the near clip plane:</p>
+
+<figure>
+<img src="../uploads/Main/PancakingProblem.png" alt="Large triangle problem">
+<figcaption>Large triangle problem</figcaption>
+</figure>
+
+<p>In this case, only one vertex of the blue triangle is behind the near clip plane and gets clamped to it. However, this alters the triangle shape, and can create incorrect shadowing.</p>
+
+<p>You can tweak the <strong>Shadow Near Plane Offset</strong> property from the <a href="class-QualitySettings.html">Quality</a> window to avoid this problem. This pulls back the near clip plane. However, setting this value very high eventually introduces shadow acne, because it raises the range that the shadow map needs to cover in the light direction. Alternatively, you can also tesselate the problematic shadow casting triangles.</p>
+
+<h2>Shadows not appearing</h2>
+
+<p>If you find that one or more objects are not casting shadows then you should check the following points:</p>
+
+<ul>
+<li><p>Real-time shadows can be disabled completely in the <a href="class-QualitySettings.html">Quality</a> window. Make sure that you have the correct quality level enabled and that shadows are switched on for that setting.</p></li>
+<li><p>All <a href="class-MeshRenderer.html">Mesh Renderers</a> in the scene must be set up with their <em>Receive Shadows</em> and <em>Cast Shadows</em> correctly set. Both are enabled by default, but check that they haven’t been disabled unintentionally.</p></li>
+<li><p>Only opaque objects cast and receive shadows, so objects using the built-in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about shader-TransparentFamily.html">Transparent</a> or Particle shaders will neither cast nor receive. Generally, you can use the <a href="shader-TransparentCutoutFamily.html">Transparent Cutout</a> shaders instead for objects with “gaps” such as fences, vegetation, etc. Custom <span class="tooltip"><a href="Shaders.html">Shaders</a><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="shader-TransparentFamily.html">Transparent</a> or Particle shaders will neither cast nor receive. Generally, you can use the <a href="shader-TransparentCutoutFamily.html">Transparent Cutout</a> shaders instead for objects with “gaps” such as fences, vegetation, etc. Custom <span class="tooltip"><a href="Shaders.html">Shaders</a><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> must be pixel-lit and use the <a href="SL-SubShaderTags.html">Geometry render queue</a>.</p></li>
+<li><p>Objects using <strong>VertexLit</strong> shaders can’t receive shadows, but they can cast them.</p></li>
+<li><p>Unity can’t calculate shadows for GameObjects that have materials with “Unlit” type shaders. Unity can only calculate shadows for materials with shaders that support lighting.</p></li>
+<li><p>In the Built-in Render Pipeline, using the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderTech-ForwardRendering.html">Forward rendering path</a>, some shaders allow only the brightest directional light to cast shadows (in particular, this happens with Unity’s built-in shaders from 4.x versions). If you want to have more than one shadow-casting light then you should use the <span class="tooltip"><a href="RenderTech-DeferredShading.html">Deferred Shading</a><span class="tooltiptext">A rendering path in the Built-in Render Pipeline that places no limit on the number of Lights that can affect a GameObject. All Lights are evaluated per-pixel, which means that they all interact correctly with normal maps and so on. Additionally, all Lights can have cookies and shadows. <a href="RenderTech-DeferredShading.html" href="RenderTech-ForwardRendering.html">Forward rendering path</a>, some shaders allow only the brightest directional light to cast shadows (in particular, this happens with Unity’s built-in shaders from 4.x versions). If you want to have more than one shadow-casting light then you should use the <span class="tooltip"><a href="RenderTech-DeferredShading.html">Deferred Shading</a><span class="tooltiptext">A rendering path in the Built-in Render Pipeline that places no limit on the number of Lights that can affect a GameObject. All Lights are evaluated per-pixel, which means that they all interact correctly with normal maps and so on. Additionally, all Lights can have cookies and shadows. <a href="RenderTech-DeferredShading.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Deferredshading" aria-label="Go to glossary anchor for Deferredshading">Glossary</a></span></span></span> <span class="tooltip"><strong>rendering path</strong><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a href="RenderingPaths.html" href="Glossary.html#Deferredshading" aria-label="Go to glossary anchor for Deferredshading">Glossary</a></span></span></span> <span class="tooltip"><strong>rendering path</strong><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a href="RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#RenderingPath" aria-label="Go to glossary anchor for RenderingPath">Glossary</a></span></span></span> instead. You can enable your own shaders to support “full shadows” by using the <code>fullforwardshadows</code> <span class="tooltip"><a href="SL-SurfaceShaders.html">surface shader</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html" href="Glossary.html#RenderingPath" aria-label="Go to glossary anchor for RenderingPath">Glossary</a></span></span></span> instead. You can enable your own shaders to support “full shadows” by using the <code>fullforwardshadows</code> <span class="tooltip"><a href="SL-SurfaceShaders.html">surface shader</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SurfaceShader" aria-label="Go to glossary anchor for SurfaceShader">Glossary</a></span></span></span> directive.</p></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="shadow-cascades.html"></a></span><div class="tip">Shadow Cascades</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="lighting-window.html"></a></span><div class="tip">The Lighting window</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+/*
+Unity standard fonts
+*/
+body{ font-family:Helvetica, Arial, sans-serif; font-size:.9em; }
+
+.nsheading
+{
+font-size:14px;
+text-align:left;
+font-weight:bold;
+}
+
+.apitype
+{
+font-style:italic;
+text-indent:20px;
+}
+.aliveAPI
+{
+color:green;
+text-indent:40px;
+}
+
+.deadAPI
+{
+color:grey;
+text-indent:40px;
+}

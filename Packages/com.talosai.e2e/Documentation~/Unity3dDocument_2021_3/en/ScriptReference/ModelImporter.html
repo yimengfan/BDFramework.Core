@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: ModelImporter</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">ModelImporter</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEditor</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Inherits from:<a href="AssetImporter.html" class="cl">AssetImporter</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Model importer lets you modify <a href="../Manual/class-Mesh.html">model</a> import settings from editor scripts.</p>
+              </div>
+              <div class="subsection">
+        <p>Settings of this class match the ones exposed in <a href="../Manual/class-Mesh.html">Mesh Import Settings</a>.</p>
+      </div>
+              <div class="subsection">
+                <h3>Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="ModelImporter-addCollider.html">addCollider</a></td><td class="desc">Add mesh colliders to imported meshes.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-animationCompression.html">animationCompression</a></td><td class="desc">Animation compression setting.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-animationPositionError.html">animationPositionError</a></td><td class="desc">Allowed error of animation position compression.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-animationRotationError.html">animationRotationError</a></td><td class="desc">Allowed error of animation rotation compression.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-animationScaleError.html">animationScaleError</a></td><td class="desc">Allowed error of animation scale compression.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-animationType.html">animationType</a></td><td class="desc">Animator generation mode.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-animationWrapMode.html">animationWrapMode</a></td><td class="desc">The default wrap mode for the generated animation clips.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-autoGenerateAvatarMappingIfUnspecified.html">autoGenerateAvatarMappingIfUnspecified</a></td><td class="desc">Generate auto mapping if no avatarSetup is provided when importing humanoid animation.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-avatarSetup.html">avatarSetup</a></td><td class="desc">The Avatar generation of the imported model.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-bakeAxisConversion.html">bakeAxisConversion</a></td><td class="desc">Computes the axis conversion on geometry and animation for Models defined in an axis system that differs from Unity's (left handed, Z forward, Y-up). 
+                    When enabled, Unity transforms the geometry and animation data in order to convert the axis. 
+                    When disabled, Unity transforms the root GameObject of the hierarchy in order to convert the axis.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-bakeIK.html">bakeIK</a></td><td class="desc">Bake Inverse Kinematics (IK) when importing.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-clipAnimations.html">clipAnimations</a></td><td class="desc">Animation clips to split animation into. Additional resources: ModelImporterClipAnimation.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-defaultClipAnimations.html">defaultClipAnimations</a></td><td class="desc">Generate a list of all default animation clip based on TakeInfo.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-extraExposedTransformPaths.html">extraExposedTransformPaths</a></td><td class="desc">Animation optimization setting.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-extraUserProperties.html">extraUserProperties</a></td><td class="desc">Additional properties to treat as user properties.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-fileScale.html">fileScale</a></td><td class="desc">Scaling factor used when useFileScale is set to true (Read-only).</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-generateAnimations.html">generateAnimations</a></td><td class="desc">Animation generation options.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-generateSecondaryUV.html">generateSecondaryUV</a></td><td class="desc">Generate secondary UV set for lightmapping.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-globalScale.html">globalScale</a></td><td class="desc">Global scale factor for importing.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-humanDescription.html">humanDescription</a></td><td class="desc">The human description that is used to generate an Avatar during the import process.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-humanoidOversampling.html">humanoidOversampling</a></td><td class="desc">Controls how much oversampling is used when importing humanoid animations for retargeting.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-importAnimatedCustomProperties.html">importAnimatedCustomProperties</a></td><td class="desc">Import animated custom properties from file.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-importAnimation.html">importAnimation</a></td><td class="desc">Import animation from file.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-importBlendShapeNormals.html">importBlendShapeNormals</a></td><td class="desc">Blend shape normal import options.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-importBlendShapes.html">importBlendShapes</a></td><td class="desc">Controls import of BlendShapes.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-importCameras.html">importCameras</a></td><td class="desc">Controls import of cameras. Basic properties like field of view, near plane distance and far plane distance can be animated.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-importConstraints.html">importConstraints</a></td><td class="desc">Import animation constraints.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-importedTakeInfos.html">importedTakeInfos</a></td><td class="desc">Generates the list of all imported take.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-importLights.html">importLights</a></td><td class="desc">Controls import of lights. Note that because light are defined differently in DCC tools, some light types or properties may not be exported. Basic properties like color and intensity can be animated.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-importNormals.html">importNormals</a></td><td class="desc">Vertex normal import options.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-importTangents.html">importTangents</a></td><td class="desc">Vertex tangent import options.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-importVisibility.html">importVisibility</a></td><td class="desc">Use visibility properties to enable or disable MeshRenderer components.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-indexFormat.html">indexFormat</a></td><td class="desc">Format of the imported mesh index buffer data.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-isBakeIKSupported.html">isBakeIKSupported</a></td><td class="desc">Is Bake Inverse Kinematics (IK) supported by this importer.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-isReadable.html">isReadable</a></td><td class="desc">Are mesh vertices and indices accessible from script?</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-isTangentImportSupported.html">isTangentImportSupported</a></td><td class="desc">Is import of tangents supported by this importer.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-isUseFileUnitsSupported.html">isUseFileUnitsSupported</a></td><td class="desc">Is useFileUnits supported for this asset.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-keepQuads.html">keepQuads</a></td><td class="desc">If this is true, any quad faces that exist in the mesh data before it is imported are kept as quads instead of being split into two triangles, for the purposes of tessellation. Set this to false to disable this behavior.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-materialImportMode.html">materialImportMode</a></td><td class="desc">Material creation options.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-materialLocation.html">materialLocation</a></td><td class="desc">Material import location options.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-materialName.html">materialName</a></td><td class="desc">Material naming setting.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-materialSearch.html">materialSearch</a></td><td class="desc">Existing material search setting.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-maxBonesPerVertex.html">maxBonesPerVertex</a></td><td class="desc">The maximum number of bones per vertex stored in this mesh data.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-meshCompression.html">meshCompression</a></td><td class="desc">Mesh compression setting.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-meshOptimizationFlags.html">meshOptimizationFlags</a></td><td class="desc">Options to control the optimization of mesh data during asset import.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-minBoneWeight.html">minBoneWeight</a></td><td class="desc">Minimum bone weight to keep.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-motionNodeName.html">motionNodeName</a></td><td class="desc">The path of the transform used to generation the motion of the animation.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-normalCalculationMode.html">normalCalculationMode</a></td><td class="desc">Normal generation options for ModelImporter.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-normalSmoothingAngle.html">normalSmoothingAngle</a></td><td class="desc">Smoothing angle (in degrees) for calculating normals.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-normalSmoothingSource.html">normalSmoothingSource</a></td><td class="desc">Source of smoothing information for calculation of normals.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-optimizeBones.html">optimizeBones</a></td><td class="desc">Only import bones where they are connected to vertices.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-optimizeGameObjects.html">optimizeGameObjects</a></td><td class="desc">Animation optimization setting.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-optimizeMeshPolygons.html">optimizeMeshPolygons</a></td><td class="desc">Optimize the order of polygons in the mesh to make better use of the GPUs internal caches to improve rendering performance.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-optimizeMeshVertices.html">optimizeMeshVertices</a></td><td class="desc">Optimize the order of vertices in the mesh to make better use of the GPUs internal caches to improve rendering performance.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-preserveHierarchy.html">preserveHierarchy</a></td><td class="desc">If true, always create an explicit Prefab root. Otherwise, if the model has a single root, it is reused as the Prefab root.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-referencedClips.html">referencedClips</a></td><td class="desc">Generates the list of all imported Animations.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-removeConstantScaleCurves.html">removeConstantScaleCurves</a></td><td class="desc">Removes constant animation curves with values identical to the object initial scale value.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-resampleCurves.html">resampleCurves</a></td><td class="desc">If set to false, the importer will not resample curves when possible.
+Read more about animation curve resampling.Notes:- Some unsupported FBX features (such as PreRotation or PostRotation on transforms) will override this setting. In these situations, animation curves will still be resampled even if the setting is disabled. For best results, avoid using PreRotation, PostRotation and GetRotationPivot.- This option was introduced in Version 5.3. Prior to this version, Unity's import behaviour was as if this option was always enabled. Therefore enabling the option gives the same behaviour as pre-5.3 animation import.
+</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-secondaryUVAngleDistortion.html">secondaryUVAngleDistortion</a></td><td class="desc">Threshold for angle distortion (in degrees) when generating secondary UV.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-secondaryUVAreaDistortion.html">secondaryUVAreaDistortion</a></td><td class="desc">Threshold for area distortion when generating secondary UV.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-secondaryUVHardAngle.html">secondaryUVHardAngle</a></td><td class="desc">Hard angle (in degrees) for generating secondary UV.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-secondaryUVMarginMethod.html">secondaryUVMarginMethod</a></td><td class="desc">Method to use for handling margins when generating secondary UV.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-secondaryUVMinLightmapResolution.html">secondaryUVMinLightmapResolution</a></td><td class="desc">The minimum lightmap resolution in texels per unit that the associated model is expected to have.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-secondaryUVMinObjectScale.html">secondaryUVMinObjectScale</a></td><td class="desc">The minimum object scale that the associated model is expected to have.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-secondaryUVPackMargin.html">secondaryUVPackMargin</a></td><td class="desc">Margin to be left between charts when packing secondary UV.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-skinWeights.html">skinWeights</a></td><td class="desc">Skin weights import options.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-sortHierarchyByName.html">sortHierarchyByName</a></td><td class="desc">Sorts the gameObject hierarchy by name.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-sourceAvatar.html">sourceAvatar</a></td><td class="desc">Imports the HumanDescription from the given Avatar.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-strictVertexDataChecks.html">strictVertexDataChecks</a></td><td class="desc">Enables strict checks on imported vertex data.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-swapUVChannels.html">swapUVChannels</a></td><td class="desc">Swap primary and secondary UV channels when importing.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-transformPaths.html">transformPaths</a></td><td class="desc">Generates the list of all imported Transforms.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-useFileScale.html">useFileScale</a></td><td class="desc">Use FileScale when importing.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-useFileUnits.html">useFileUnits</a></td><td class="desc">Detect file units and import as 1FileUnit=1UnityUnit, otherwise it will import as 1cm=1UnityUnit.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-useSRGBMaterialColor.html">useSRGBMaterialColor</a></td><td class="desc">When disabled, imported material albedo colors are converted to gamma space. This property should be disabled when using linear color space in Player rendering settings.
+The default value is true.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter-weldVertices.html">weldVertices</a></td><td class="desc">Combine vertices that share the same position in space.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Public Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="ModelImporter.CreateDefaultMaskForClip.html">CreateDefaultMaskForClip</a></td><td class="desc">Creates a mask that matches the model hierarchy, and applies it to the provided ModelImporterClipAnimation.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter.ExtractTextures.html">ExtractTextures</a></td><td class="desc">Extracts the embedded textures from a model file (such as FBX or SketchUp).</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter.SearchAndRemapMaterials.html">SearchAndRemapMaterials</a></td><td class="desc">Search the project for matching materials and use them instead of the internal materials.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Inherited Members</h3>
+      
+      <div class="subsection"><h3>Properties</h3><table class="list"><thead><tr><th>Property</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="AssetImporter-assetBundleName.html">assetBundleName</a></td><td class="desc">Get or set the AssetBundle name.</td></tr>
+        <tr><td class="lbl"><a href="AssetImporter-assetBundleVariant.html">assetBundleVariant</a></td><td class="desc">Get or set the AssetBundle variant.</td></tr>
+        <tr><td class="lbl"><a href="AssetImporter-assetPath.html">assetPath</a></td><td class="desc">The path name of the asset for this importer. (Read Only)</td></tr>
+        <tr><td class="lbl"><a href="AssetImporter-importSettingsMissing.html">importSettingsMissing</a></td><td class="desc">The value is true when no meta file is provided with the imported asset.</td></tr>
+        <tr><td class="lbl"><a href="AssetImporter-userData.html">userData</a></td><td class="desc">Get or set any user data.</td></tr>
+        <tr><td class="lbl"><a href="Object-hideFlags.html">hideFlags</a></td><td class="desc">Should the object be hidden, saved with the Scene or modifiable by the user?</td></tr>
+        <tr><td class="lbl"><a href="Object-name.html">name</a></td><td class="desc">The name of the object.</td></tr>
+      </table></div>
+      
+      
+      
+      <div class="subsection"><h3>Public Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="AssetImporter.AddRemap.html">AddRemap</a></td><td class="desc">Map a sub-asset from an imported asset (such as an FBX file) to an external Asset of the same type.</td></tr>
+        <tr><td class="lbl"><a href="AssetImporter.GetExternalObjectMap.html">GetExternalObjectMap</a></td><td class="desc">Gets a copy of the external object map used by the AssetImporter.</td></tr>
+        <tr><td class="lbl"><a href="AssetImporter.RemoveRemap.html">RemoveRemap</a></td><td class="desc">Removes an item from the map of external objects.</td></tr>
+        <tr><td class="lbl"><a href="AssetImporter.SaveAndReimport.html">SaveAndReimport</a></td><td class="desc">Save asset importer settings if asset importer is dirty.</td></tr>
+        <tr><td class="lbl"><a href="AssetImporter.SetAssetBundleNameAndVariant.html">SetAssetBundleNameAndVariant</a></td><td class="desc">Set the AssetBundle name and variant.</td></tr>
+        <tr><td class="lbl"><a href="AssetImporter.SupportsRemappedAssetType.html">SupportsRemappedAssetType</a></td><td class="desc">Checks if the AssetImporter supports remapping the given asset type.</td></tr>
+        <tr><td class="lbl"><a href="Object.GetInstanceID.html">GetInstanceID</a></td><td class="desc">Gets  the instance ID of the object.</td></tr>
+        <tr><td class="lbl"><a href="Object.ToString.html">ToString</a></td><td class="desc">Returns the name of the object.</td></tr>
+      </table></div>
+      
+      <div class="subsection"><h3>Static Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="AssetImporter.GetAtPath.html">GetAtPath</a></td><td class="desc">Retrieves the asset importer for the asset at path.</td></tr>
+        <tr><td class="lbl"><a href="Object.Destroy.html">Destroy</a></td><td class="desc">Removes a GameObject, component or asset.</td></tr>
+        <tr><td class="lbl"><a href="Object.DestroyImmediate.html">DestroyImmediate</a></td><td class="desc">Destroys the object obj immediately. You are strongly recommended to use Destroy instead.</td></tr>
+        <tr><td class="lbl"><a href="Object.DontDestroyOnLoad.html">DontDestroyOnLoad</a></td><td class="desc">Do not destroy the target Object when loading a new Scene.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindAnyObjectByType.html">FindAnyObjectByType</a></td><td class="desc">Retrieves any active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindFirstObjectByType.html">FindFirstObjectByType</a></td><td class="desc">Retrieves the first active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectOfType.html">FindObjectOfType</a></td><td class="desc">Returns the first active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectsByType.html">FindObjectsByType</a></td><td class="desc">Retrieves a list of all loaded objects of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectsOfType.html">FindObjectsOfType</a></td><td class="desc">Gets a list of all loaded objects of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.Instantiate.html">Instantiate</a></td><td class="desc">Clones the object original and returns the clone.</td></tr>
+      </table></div>
+      <div class="subsection"><h3>Operators</h3><table class="list"><thead><tr><th>Operator</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object-operator_Object.html">bool</a></td><td class="desc">Does the object exist?</td></tr>
+        <tr><td class="lbl"><a href="Object-operator_ne.html">operator !=</a></td><td class="desc">Compares if two objects refer to a different object.</td></tr>
+        <tr><td class="lbl"><a href="Object-operator_eq.html">operator ==</a></td><td class="desc">Compares two object references to see if they refer to the same object.</td></tr>
+      </table></div>
+      
+      
+      
+    </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

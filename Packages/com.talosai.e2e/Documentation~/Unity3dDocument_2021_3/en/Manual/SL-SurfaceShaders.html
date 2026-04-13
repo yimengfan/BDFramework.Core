@@ -1,0 +1,391 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Writing Surface Shaders</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-SurfaceShaders.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-SurfaceShaders.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-SurfaceShaders.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-SurfaceShaders.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-SurfaceShaders.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-SurfaceShaders.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-SurfaceShaders.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-SurfaceShaders.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-writing.html">Writing shaders</a></li>
+<li>Writing Surface Shaders</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="shader-writing-vertex-fragment.html"></a></span><div class="tip">Example shaders</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-RenderPipeline.html"></a></span><div class="tip">Surface Shaders and rendering paths</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Writing Surface Shaders</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>In the Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>, Surface <span class="tooltip"><strong>Shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>, Surface <span class="tooltip"><strong>Shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> are a streamlined way of writing shaders that interact with lighting.</p>
+
+<h2>Render pipeline compatibility</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature name</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>Universal Render Pipeline (URP)</strong></th>
+	<th style="text-align:left;"><strong>High Definition Render Pipeline (HDRP)</strong></th>
+	<th style="text-align:left;"><strong>Custom SRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Surface Shaders</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>For a streamlined way of creating Shader objects in URP, see <a href="shader-graph.html">Shader Graph</a>.</td>
+	<td style="text-align:left;">No<br><br>For a streamlined way of creating Shader objects in HDRP, see <a href="shader-graph.html">Shader Graph</a>.</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Overview</h2>
+
+<p>Writing shaders that interact with lighting is complex. There are different light types, different shadow options, different <span class="tooltip"><strong>rendering paths</strong><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingPaths.html" href="RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderingPath" aria-label="Go to glossary anchor for RenderingPath">Glossary</a></span></span></span> (forward and deferred rendering), and the shader should somehow handle all that complexity.</p>
+
+<p>Surface Shaders is a code generation approach that makes it much easier to write lit shaders than using low level <a href="SL-ShaderPrograms.html">vertex/pixel shader programs</a>.</p>
+
+<p>For some examples, take a look at <a href="SL-SurfaceShaderExamples.html">Surface Shader Examples</a> and <a href="SL-SurfaceShaderLightingExamples.html">Surface Shader Custom Lighting Examples</a>.</p>
+
+<h2>How it works</h2>
+
+<p>You define a “surface function” that takes any UVs or data you need as input, and fills in output structure <code>SurfaceOutput</code>. SurfaceOutput basically describes <em>properties of the surface</em> (its albedo color, normal, emission, specularity etc.). You write this code in HLSL.</p>
+
+<p>Surface Shader compiler then figures out what inputs are needed, what outputs are filled and so on, and generates actual <a href="SL-ShaderPrograms.html">vertex&amp;pixel shaders</a>, as well as rendering passes to handle forward and deferred rendering.</p>
+
+<p>Standard output structure of <strong>surface shaders</strong> is this:</p>
+
+<pre><code>struct SurfaceOutput
+{
+    fixed3 Albedo;  // diffuse color
+    fixed3 Normal;  // tangent space normal, if written
+    fixed3 Emission;
+    half Specular;  // specular power in 0..1 range
+    fixed Gloss;    // specular intensity
+    fixed Alpha;    // alpha for transparencies
+};
+</code></pre>
+
+<p>In Unity 5, surface shaders can also use physically based lighting models. Built-in Standard and StandardSpecular lighting models (see below) use these output structures respectively:</p>
+
+<pre><code>struct SurfaceOutputStandard
+{
+    fixed3 Albedo;      // base (diffuse or specular) color
+    fixed3 Normal;      // tangent space normal, if written
+    half3 Emission;
+    half Metallic;      // 0=non-metal, 1=metal
+    half Smoothness;    // 0=rough, 1=smooth
+    half Occlusion;     // occlusion (default 1)
+    fixed Alpha;        // alpha for transparencies
+};
+struct SurfaceOutputStandardSpecular
+{
+    fixed3 Albedo;      // diffuse color
+    fixed3 Specular;    // specular color
+    fixed3 Normal;      // tangent space normal, if written
+    half3 Emission;
+    half Smoothness;    // 0=rough, 1=smooth
+    half Occlusion;     // occlusion (default 1)
+    fixed Alpha;        // alpha for transparencies
+};
+</code></pre>
+
+<h2>Samples</h2>
+
+<p>See <a href="SL-SurfaceShaderExamples.html">Surface Shader Examples</a>, <a href="SL-SurfaceShaderLightingExamples.html">Surface Shader Custom Lighting Examples</a> and <a href="SL-SurfaceShaderTessellation.html">Surface Shader Tessellation</a> pages.</p>
+
+<h2>Surface Shader compile directives</h2>
+
+<p>Follow these steps:</p>
+
+<ol>
+<li>Add a <code>CGPROGRAM</code> block to the <code>SubShader</code> block in your shader code, not the <code>Pass</code> block. Unity automatically creates multiple passes when it compiles the surface shader.</li>
+<li>Add a <code>#pragma surface [surfaceFunction] [lightModel]</code> directive.</li>
+</ol>
+
+<p>Surface shaders aren’t compatible with <code>HLSLPROGRAM</code> blocks, but you can use HLSL inside a <code>CGPROGRAM</code> block. For more information, refer to <a href="shader-shaderlab-code-blocks.html">Shader code blocks in ShaderLab reference</a>.</p>
+
+<h3>Required parameters</h3>
+
+<ul>
+<li>
+<code>surfaceFunction</code> - which Cg function has surface shader code. The function should have the form of <code>void surf (Input IN, inout SurfaceOutput o)</code>, where Input is a structure you have defined. Input should contain any texture coordinates and extra automatic variables needed by surface function.</li>
+<li>
+<code>lightModel</code> - lighting model to use. Built-in ones are physically based <code>Standard</code> and <code>StandardSpecular</code>, as well as simple non-physically based <code>Lambert</code> (diffuse) and <code>BlinnPhong</code> (specular). See <a href="SL-SurfaceShaderLighting.html">Custom Lighting Models</a> page for how to write your own.
+
+<ul>
+<li>
+<code>Standard</code> lighting model uses <code>SurfaceOutputStandard</code> output struct, and matches the Standard (metallic workflow) shader in Unity.</li>
+<li>
+<code>StandardSpecular</code> lighting model uses <code>SurfaceOutputStandardSpecular</code> output struct, and matches the Standard (specular setup) shader in Unity.</li>
+<li>
+<code>Lambert</code> and <code>BlinnPhong</code> lighting models are not physically based (coming from Unity 4.x), but the shaders using them can be faster to render on low-end hardware.</li>
+</ul>
+</li>
+</ul>
+
+<h3>Optional parameters</h3>
+
+<p>
+<strong>Transparency and alpha testing</strong> is controlled by <code>alpha</code> and <code>alphatest</code> directives. Transparency can typically be of two kinds: traditional alpha blending (used for fading objects out) or more physically plausible “premultiplied blending” (which allows semitransparent surfaces to retain proper specular reflections). Enabling semitransparency makes the generated surface shader code contain <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-Blend.html">blending</a> commands; whereas enabling alpha cutout will do a fragment discard in the generated <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a href="ShadowPerformance.html" href="SL-Blend.html">blending</a> commands; whereas enabling alpha cutout will do a fragment discard in the generated <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> shader, based on the given variable.</p>
+
+<ul>
+<li>
+<code>alpha</code> or <code>alpha:auto</code> - Will pick fade-transparency (same as <code>alpha:fade</code>) for simple lighting functions, and premultiplied transparency (same as <code>alpha:premul</code>) for physically based lighting functions.</li>
+<li>
+<code>alpha:blend</code> - Enable alpha blending.</li>
+<li>
+<code>alpha:fade</code> - Enable traditional fade-transparency.</li>
+<li>
+<code>alpha:premul</code> - Enable premultiplied alpha transparency.</li>
+<li>
+<code>alphatest:VariableName</code> - Enable alpha cutout transparency. Cutoff value is in a float variable with VariableName. You’ll likely also want to use <code>addshadow</code> directive to generate proper shadow caster pass.</li>
+<li>
+<code>keepalpha</code> - By default opaque surface shaders write 1.0 (white) into alpha channel, no matter what’s output in the Alpha of output struct or what’s returned by the lighting function. Using this option allows keeping lighting function’s alpha value even for opaque surface shaders.</li>
+<li>
+<code>decal:add</code> - Additive decal shader (e.g. terrain AddPass). This is meant for objects that lie atop of other surfaces, and use additive blending. See <a href="SL-SurfaceShaderExamples.html">Surface Shader Examples</a>
+</li>
+<li>
+<code>decal:blend</code> - Semitransparent decal shader. This is meant for objects that lie atop of other surfaces, and use alpha blending. See <a href="SL-SurfaceShaderExamples.html">Surface Shader Examples</a>
+</li>
+</ul>
+
+<p>
+<strong>Custom modifier functions</strong> can be used to alter or compute incoming vertex data, or to alter final computed fragment color.</p>
+
+<ul>
+<li>
+<code>vertex:VertexFunction</code> - Custom vertex modification function. This function is invoked at start of generated <span class="tooltip"><strong>vertex shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-ShaderPrograms.html" href="SL-ShaderPrograms.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span>, and can modify or compute per-vertex data. See <a href="SL-SurfaceShaderExamples.html">Surface Shader Examples</a>.</li>
+<li>
+<code>finalcolor:ColorFunction</code> - Custom final color modification function. See <a href="SL-SurfaceShaderExamples.html">Surface Shader Examples</a>.</li>
+<li>
+<code>finalgbuffer:ColorFunction</code> - Custom deferred path for altering G-buffer content.</li>
+<li>
+<code>finalprepass:ColorFunction</code> - Custom prepass base path.</li>
+</ul>
+
+<p>
+<strong>Shadows and Tessellation</strong> - additional directives can be given to control how shadows and tessellation is handled.</p>
+
+<ul>
+<li>
+<code>addshadow</code> - Generate a shadow caster pass. Commonly used with custom vertex modification, so that shadow casting also gets any procedural vertex animation. Often shaders don’t need any special shadows handling, as they can just use shadow caster pass from their fallback.</li>
+<li>
+<code>fullforwardshadows</code> - Support all light shadow types in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderTech-ForwardRendering.html">Forward</a> rendering path. By default shaders only support shadows from one directional light in <span class="tooltip"><strong>forward rendering</strong><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a href="RenderTech-ForwardRendering.html" href="RenderTech-ForwardRendering.html">Forward</a> rendering path. By default shaders only support shadows from one directional light in <span class="tooltip"><strong>forward rendering</strong><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a href="RenderTech-ForwardRendering.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ForwardRendering" aria-label="Go to glossary anchor for ForwardRendering">Glossary</a></span></span></span> (to save on internal shader variant count). If you need point or Spot Light shadows in forward rendering, use this directive.</li>
+<li>
+<code>tessellate:TessFunction</code> - use DX11 GPU tessellation; the function computes tessellation factors. See <a href="SL-SurfaceShaderTessellation.html">Surface Shader Tessellation</a> for details.</li>
+</ul>
+
+<p>
+<strong>Code generation options</strong> - by default generated surface shader code tries to handle all possible lighting/shadowing/<span class="tooltip"><strong>lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> scenarios. However in some cases you know you won’t need some of them, and it is possible to adjust generated code to skip them. This can result in smaller shaders that are faster to load.</p>
+
+<ul>
+<li>
+<code>exclude_path:deferred</code>, <code>exclude_path:forward</code>, <code>exclude_path:prepass</code> - Do not generate passes for given rendering path (<span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderTech-DeferredShading.html">Deferred Shading</a><span class="tooltiptext">A rendering path in the Built-in Render Pipeline that places no limit on the number of Lights that can affect a GameObject. All Lights are evaluated per-pixel, which means that they all interact correctly with normal maps and so on. Additionally, all Lights can have cookies and shadows. <a href="RenderTech-DeferredShading.html" href="RenderTech-DeferredShading.html">Deferred Shading</a><span class="tooltiptext">A rendering path in the Built-in Render Pipeline that places no limit on the number of Lights that can affect a GameObject. All Lights are evaluated per-pixel, which means that they all interact correctly with normal maps and so on. Additionally, all Lights can have cookies and shadows. <a href="RenderTech-DeferredShading.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Deferredshading" aria-label="Go to glossary anchor for Deferredshading">Glossary</a></span></span></span>, <a href="RenderTech-ForwardRendering.html">Forward</a> and <a href="RenderTech-DeferredLighting.html">Legacy Deferred</a> respectively).</li>
+<li>
+<code>noshadow</code> - Disables all shadow receiving support in this shader.</li>
+<li>
+<code>noambient</code> - Do not apply any ambient lighting or <span class="tooltip"><strong>light probes</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html" href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span>.</li>
+<li>
+<code>novertexlights</code> - Do not apply any light probes or per-vertex lights in Forward rendering.</li>
+<li>
+<code>nolightmap</code> - Disables all lightmapping support in this shader.</li>
+<li>
+<code>nodynlightmap</code> - Disables runtime dynamic <span class="tooltip"><strong>global illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span> support in this shader.</li>
+<li>
+<code>nodirlightmap</code> - Disables directional lightmaps support in this shader.</li>
+<li>
+<code>nofog</code> - Disables all built-in Fog support.</li>
+<li>
+<code>nometa</code> - Does not generate a “meta” pass (that’s used by lightmapping &amp; dynamic global illumination to extract surface information).</li>
+<li>
+<code>noforwardadd</code> - Disables <a href="RenderTech-ForwardRendering.html">Forward</a> rendering additive pass. This makes the shader support one full directional light, with all other lights computed per-vertex/SH. Makes shaders smaller as well.</li>
+<li>
+<code>nolppv</code> - Disables <span class="tooltip"><strong>Light Probe Proxy Volume</strong><span class="tooltiptext">A component that allows you to use more lighting information for large dynamic GameObjects that cannot use baked lightmaps (for example, large Particle Systems or skinned Meshes). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LightProbeProxyVolume.html" href="class-LightProbeProxyVolume.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbeProxyVolume" aria-label="Go to glossary anchor for LightProbeProxyVolume">Glossary</a></span></span></span> support in this shader.</li>
+<li>
+<code>noshadowmask</code> - Disables Shadowmask support for this shader (both <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightMode-Mixed-Shadowmask.html">Shadowmask</a><span class="tooltiptext">A Texture that shares the same UV layout and resolution with its corresponding lightmap. <a href="LightMode-Mixed-Shadowmask.html" href="LightMode-Mixed-Shadowmask.html">Shadowmask</a><span class="tooltiptext">A Texture that shares the same UV layout and resolution with its corresponding lightmap. <a href="LightMode-Mixed-Shadowmask.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shadowmask" aria-label="Go to glossary anchor for Shadowmask">Glossary</a></span></span></span> and <span class="tooltip"><a href="LightMode-Mixed-Shadowmask.html">Distance Shadowmask</a><span class="tooltiptext">A version of the Shadowmask lighting mode that includes high quality shadows cast from static GameObjects onto dynamic GameObjects. <a href="LightMode-Mixed-Shadowmask.html" href="Glossary.html#Shadowmask" aria-label="Go to glossary anchor for Shadowmask">Glossary</a></span></span></span> and <span class="tooltip"><a href="LightMode-Mixed-Shadowmask.html">Distance Shadowmask</a><span class="tooltiptext">A version of the Shadowmask lighting mode that includes high quality shadows cast from static GameObjects onto dynamic GameObjects. <a href="LightMode-Mixed-Shadowmask.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DistanceShadowmask" aria-label="Go to glossary anchor for DistanceShadowmask">Glossary</a></span></span></span>).</li>
+</ul>
+
+<p><strong>Miscellaneous options</strong></p>
+
+<ul>
+<li>
+<code>softvegetation</code> - Makes the surface shader only be rendered when Soft Vegetation is on.</li>
+<li>
+<code>interpolateview</code> - Compute view direction in the vertex shader and interpolate it; instead of computing it in the pixel shader. This can make the pixel shader faster, but uses up one more texture interpolator.</li>
+<li>
+<code>halfasview</code> - Pass half-direction vector into the lighting function instead of view-direction. Half-direction will be computed and normalized per vertex. This is faster, but not entirely correct.</li>
+<li>
+<code>approxview</code> - Removed in Unity 5.0. Use <code>interpolateview</code> instead.</li>
+<li>
+<code>dualforward</code> - Use dual lightmaps in <a href="RenderTech-ForwardRendering.html">forward</a> rendering path.</li>
+<li>
+<code>dithercrossfade</code> - Makes the surface shader support dithering effects. You can then apply this shader to <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> that use an <span class="tooltip"><a href="class-LODGroup.html">LOD Group</a><span class="tooltiptext">A component to manage level of detail (LOD) for GameObjects. <a href="class-LODGroup.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> that use an <span class="tooltip"><a href="class-LODGroup.html">LOD Group</a><span class="tooltiptext">A component to manage level of detail (LOD) for GameObjects. <a href="class-LODGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LODGroup" aria-label="Go to glossary anchor for LODGroup">Glossary</a></span></span></span> component configured for cross-fade transition mode.</li>
+</ul>
+
+<p>To see what exactly is different from using different options above, it can be helpful to use “Show Generated Code” button in the <a href="class-Shader.html">Shader Inspector</a>.</p>
+
+<h2>Surface Shader input structure</h2>
+
+<p>The input structure <code>Input</code> generally has any texture coordinates needed by the shader. Texture coordinates must be named “<code>uv</code>” followed by texture name (or start it with “<code>uv2</code>” to use second texture coordinate set).</p>
+
+<p>Additional values that can be put into Input structure:</p>
+
+<ul>
+<li>
+<code>float3 viewDir</code> - contains view direction, for computing Parallax effects, rim lighting etc.</li>
+<li>
+<code>float4</code> with <code>COLOR</code> semantic - contains interpolated per-vertex color.</li>
+<li>
+<code>float4 screenPos</code> - contains screen space position for reflection or screenspace effects. Note that this is not suitable for <a href="SL-GrabPass.html">GrabPass</a>; you need to compute custom UV yourself using <code>ComputeGrabScreenPos</code> function.</li>
+<li>
+<code>float3 worldPos</code> - contains world space position.</li>
+<li>
+<code>float3 worldRefl</code> - contains world reflection vector <em>if surface shader does not write to o.Normal</em>. See Reflect-Diffuse shader for example.</li>
+<li>
+<code>float3 worldNormal</code> - contains world normal vector <em>if surface shader does not write to o.Normal</em>.</li>
+<li>
+<code>float3 worldRefl; INTERNAL_DATA</code> - contains world reflection vector <em>if surface shader writes to o.Normal</em>. To get the reflection vector based on per-pixel <span class="tooltip"><strong>normal map</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normalmap" aria-label="Go to glossary anchor for Normalmap">Glossary</a></span></span></span>, use <code>WorldReflectionVector (IN, o.Normal)</code>. See Reflect-Bumped shader for example.</li>
+<li>
+<code>float3 worldNormal; INTERNAL_DATA</code> - contains world normal vector <em>if surface shader writes to o.Normal</em>. To get the normal vector based on per-pixel normal map, use <code>WorldNormalVector (IN, o.Normal)</code>.</li>
+</ul>
+
+<p><a name="surface-shaders-directX" aria-hidden="true"></a></p>
+
+<h2>Surface Shaders and DirectX 11 HLSL syntax</h2>
+
+<p>Currently some parts of surface shader compilation pipeline do not understand <a href="UsingDX11GL3Features.html">DirectX 11</a>-specific HLSL syntax, so if you’re using HLSL features like StructuredBuffers, RWTextures and other non-DX9 syntax, you have to wrap it into a DX11-only preprocessor macro.</p>
+
+<p>See <a href="SL-PlatformDifferences.html">Platform Specific Differences</a> and <a href="SL-ShaderPrograms.html">Using HLSL</a> pages for details.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="shader-writing-vertex-fragment.html"></a></span><div class="tip">Example shaders</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-RenderPipeline.html"></a></span><div class="tip">Surface Shaders and rendering paths</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

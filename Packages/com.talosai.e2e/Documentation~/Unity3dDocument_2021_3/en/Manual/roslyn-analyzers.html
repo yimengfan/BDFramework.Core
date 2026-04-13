@@ -1,0 +1,405 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Roslyn analyzers and source generators</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/roslyn-analyzers.html">English</a></li>
+<li><a href="/cn/current/Manual/roslyn-analyzers.html">中文</a></li>
+<li><a href="/ja/current/Manual/roslyn-analyzers.html">日本語</a></li>
+<li><a href="/kr/current/Manual/roslyn-analyzers.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/roslyn-analyzers.html">English</a></li>
+<li><a href="/cn/current/Manual/roslyn-analyzers.html">中文</a></li>
+<li><a href="/ja/current/Manual/roslyn-analyzers.html">日本語</a></li>
+<li><a href="/kr/current/Manual/roslyn-analyzers.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="ScriptingSettingUp.html">Setting Up Your Scripting Environment</a></li>
+<li>Roslyn analyzers and source generators</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="testing-editortestsrunner.html"></a></span><div class="tip">Unit Testing</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ScriptingConcepts.html"></a></span><div class="tip">Scripting concepts</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Roslyn analyzers and source generators</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use Roslyn analyzers, source generators and ruleset files in Unity projects to inspect your code for style, quality, and other issues.</p>
+
+<p>You can use existing analyzer libraries to inspect your code, and write your own analyzers to promote the best practices or conventions within your organization. This page explains how to use Roslyn analyzers and source generators in an empty Unity Project.</p>
+
+<p>
+<strong>Note</strong>: Roslyn analyzers are only compatible with the IDEs that Unity publicly supports, which are Visual Studio and JetBrains Rider.</p>
+
+<p>For more information about how to write and use Roslyn analyzers, refer to Microsoft’s <a href="https://docs.microsoft.com/en-us/visualstudio/code-quality/use-roslyn-analyzers?view=vs-2019">Analyzer Configuration</a> and <a href="https://docs.microsoft.com/en-us/visualstudio/extensibility/getting-started-with-roslyn-analyzers?view=vs-2019">Get started with Roslyn analyzers</a> documentation.</p>
+
+<h2>Source generators</h2>
+
+<p>You can use source generators as an additional step in your script compilation process. You can use source generators to add new code while you compile your existing code. Like analyzers, you can use existing source generators or create your own.</p>
+
+<p>
+<strong>Note</strong>: Unity only supports version 6.0.0-preview of the ‘System.Text.Json’ namespace. If you want to use this namespace in your application, ensure you use version 6.0.0-preview. For more information about <code>System.Text.Json</code>, refer to Microsoft’s <a href="https://docs.microsoft.com/en-us/dotnet/api/system.text.json?view=net-6.0">System.Text.Json Namespace documentation</a>.</p>
+
+<p>To set up a source generator using Visual Studio:</p>
+
+<ol>
+<li><p>In Visual Studio, create a .NET standard library project that targets .NET Standard 2.0.</p></li>
+<li><p>Install the Microsoft.CodeAnalysis NuGet package. Your source generator must use <a href="https://www.nuget.org/packages/Microsoft.CodeAnalysis.CSharp/3.8.0">Microsoft.CodeAnalysis 3.8</a> to work with Unity.</p></li>
+<li>
+<p>In your Visual Studio project, create a new C# file and add the following code:</p>
+
+<pre><code class="csharp">using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Text;
+using System.Text;
+
+namespace ExampleSourceGenerator
+{
+    [Generator]
+    public class ExampleSourceGenerator : ISourceGenerator
+    {
+        public void Execute(GeneratorExecutionContext context)
+        {
+            System.Console.WriteLine(System.DateTime.Now.ToString());
+
+            var sourceBuilder = new StringBuilder(
+            @&quot;
+            using System;
+            namespace ExampleSourceGenerated
+            {
+                public static class ExampleSourceGenerated
+                {
+                    public static string GetTestText()
+                    {
+                        return &quot;&quot;This is from source generator &quot;);
+
+            sourceBuilder.Append(System.DateTime.Now.ToString());
+
+            sourceBuilder.Append(
+                @&quot;&quot;&quot;;
+                    }
+    }
+}
+&quot;);
+
+            context.AddSource(&quot;exampleSourceGenerator&quot;, SourceText.From(sourceBuilder.ToString(), Encoding.UTF8));
+        }
+
+        public void Initialize(GeneratorInitializationContext context) { }
+    }
+}
+</code></pre>
+</li>
+<li><p>Build your source generator for release. To do this, go to <strong>Build</strong> and select the <strong>Batch Build</strong> option.</p></li>
+<li><p>In your source generator’s project folder, find the bin/Release/netstandard2.0/ExampleSourceGenerator.dll file.</p></li>
+<li><p>Copy this file into your Unity project, inside the Assets folder.</p></li>
+<li><p>Inside the Asset Browser, click on the .dll file to open the Plugin <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window.</p></li>
+<li><p>Go to <strong>Select platforms</strong> for plugin and disable <strong>Any Platform</strong>.</p></li>
+<li><p>Go to <strong>Include Platforms</strong> and disable <strong>Editor</strong> and <strong>Standalone</strong>.</p></li>
+<li><p>Go to <strong>Asset Labels</strong> and open the <strong>Asset Labels</strong> sub-menu.</p></li>
+<li><p>Create and assign a new label called <strong>RoslynAnalyzer</strong>. To do this, enter “<strong>RoslynAnalyzer</strong>” into the text input window in the Asset Labels sub-menu. This label must match exactly and is case sensitive. After you create the label for the first analyzer, The label appears in the <strong>Asset Labels</strong> sub-menu. You can click on the name of the label in the menu to assign it to other analyzers.</p></li>
+<li><p>A warning will be printed in the console because this source generator will get injected into more than one assembly. The solution is to make <code>ExampleSourceGenerated</code> in the above example internal or the name itself should be generated.</p></li>
+<li>
+<p>To test the source generator is working, create a new C# script in the editor with the following code:</p>
+
+<pre><code class="csharp">using UnityEngine;
+
+public class HelloFromSourceGenerator : MonoBehaviour
+{
+    static string GetStringFromSourceGenerator()
+    {
+        return ExampleSourceGenerated.ExampleSourceGenerated.GetTestText();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        var output = &quot;Test&quot;;
+        output = GetStringFromSourceGenerator();
+        Debug.Log(output);
+    }
+}
+</code></pre>
+</li>
+<li><p>Add this script to a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> and enter Play mode. A message from the source generator will appear in the <span class="tooltip"><strong>Console window</strong><span class="tooltiptext">A Unity Editor window that shows errors, warnings and other messages generated by Unity, or your own scripts. <a href="Console.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> and enter Play mode. A message from the source generator will appear in the <span class="tooltip"><strong>Console window</strong><span class="tooltiptext">A Unity Editor window that shows errors, warnings and other messages generated by Unity, or your own scripts. <a href="Console.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Consolewindow" aria-label="Go to glossary anchor for Consolewindow">Glossary</a></span></span></span>, including the time stamp. A warning will also appear in the console because this source generator will get injected into more than one assembly. The solution is to make <code>ExampleSourceGenerated</code> in the above example internal or the name itself should be generated.</p></li>
+</ol>
+
+<p>For more information about source generators, refer to Microsoft’s <a href="https://docs.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview">Source Generators documentation</a>.</p>
+
+<h2>
+<a name="analyser-scope-anchor-link" aria-hidden="true"></a> Analyzer scope</h2>
+
+<p>You can limit the scope of analyzers in your project by using assembly definitions, so that they only analyze certain portions of your code.</p>
+
+<p>Unity applies analyzers to all assemblies in your project’s Assets folder, or in any subfolder whose parent folder doesn’t contain an <a href="ScriptCompilationAssemblyDefinitionFiles.html">assembly definition file</a>. If an analyzer is in a folder that contains an assembly definition, or a subfolder of such a folder, the analyzer only applies to the assembly generated from that assembly definition, and to any other assembly that references it.</p>
+
+<p>This means, for example, that a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PackagesList.html">package</a><span class="tooltiptext">A container that stores various types of features and assets for Unity, including Editor or Runtime tools and libraries, Asset collections, and project templates. Packages are self-contained units that the Unity Package Manager can share across Unity projects. Most of the time these are called <em>packages</em>, but occasionally they are called <strong>Unity Package Manager (UPM) packages</strong>. <a href="Packages.html" href="PackagesList.html">package</a><span class="tooltiptext">A container that stores various types of features and assets for Unity, including Editor or Runtime tools and libraries, Asset collections, and project templates. Packages are self-contained units that the Unity Package Manager can share across Unity projects. Most of the time these are called <em>packages</em>, but occasionally they are called <strong>Unity Package Manager (UPM) packages</strong>. <a href="Packages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Package" aria-label="Go to glossary anchor for Package">Glossary</a></span></span></span> can supply analyzers that only analyze code related to the package, which can help package users to use the package API correctly.</p>
+
+<h2>Report analyzer diagnostics</h2>
+
+<p>To view information such as the total execution time of your analyzers and source generators or the relative execution times of each analyzer or source generator, go to <strong>Preferences</strong> &gt; <strong>Diagnostic Switches</strong> and enable <strong>EnableDomainReloadTimings</strong>. When enabled, the information is displayed in the console window.</p>
+
+<h2>Installing an existing Roslyn analyzer or source generator</h2>
+
+<p>Unity doesn’t support the installation of Roslyn Analyzers or source generators through NuGet directly. The below example uses the <a href="https://www.nuget.org/packages/ErrorProne.NET.CoreAnalyzers/">ErrorProne.NET.CoreAnalyzers</a> library to demonstrate how to install Roslyn Analyzers and source generators from NuGet:</p>
+
+<ol>
+<li>Download the library as a .zip file with the <strong>Download package</strong> button.</li>
+<li>Extract the contents of the .zip file.</li>
+<li>Inside the extracted folder, locate the .dll files that contain the analyzers. In this example, navigate to <strong><code>errorprone.net.coreanalyzers&lt;version-number&gt;\analyzers\dotnet\cd</code></strong>. The required files should be in this folder, named <code>ErrorProne.NET.Core.dll</code>, <code>ErrorProne.Net.CoreAnalyzers.dll</code>, and <code>RuntimeContracts.dll</code>.</li>
+<li>Move these files into the Assets folder, or any folder nested inside of the Assets folder, in your Unity project. To do this, either go to <strong>Assets</strong> &gt; <strong>Import new asset</strong> and select the .dll for each of the three files, or copy them into your project’s Assets folder through your device’s file browser.</li>
+<li>Click on the .dll file inside the <strong>Asset Browser</strong> inside Unity to open the <strong><a href="PluginInspector.html">Plugin Inspector</a></strong> window.</li>
+<li>Inside the Plugin Inspector window:
+
+<ul>
+<li>Under the <strong>Select platforms for plugin</strong> heading, disable <strong>Any Platform</strong>.</li>
+<li>Under the <strong>Include Platforms</strong> heading, disable <strong>Editor</strong> and <strong>Standalone</strong>.</li>
+</ul>
+</li>
+<li>Under the <strong>Asset Labels</strong> heading in the Plugin Inspector window, click on the blue label icon to open the <strong>Asset Labels</strong> sub-menu.</li>
+<li>Create and assign a new label called RoslynAnalyzer. To do this, type “RoslynAnalyzer” into the text input window in the <strong>Asset Labels</strong> sub-menu and press <strong>Return</strong>. This label must exactly match the example and is case sensitive. After you create the label for the first analyzer, it appears on the list of available labels in the <strong>Asset Labels</strong> sub-menu. You can click on the name of the label in the menu to assign it to other analyzers.</li>
+</ol>
+
+<p>Unity recognizes the RoslynAnalyzer label and treats assets with this label as Roslyn Analyzers or source generators. When you assign the label to an analyzer, Unity recompiles <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> within the scope of the analyzer and analyzes the code in those scripts according to the rules in the analyzer. Any scripts that are within the same assembly definition as an analyzer are in that analyzer’s scope. For analyzers in the root level of the Assets folder, Unity considers all files in the project to be in scope. For more information about scope, refer to <a href="#analyser-scope-anchor-link">Analyzer scope</a> above.</p>
+
+<p>To test that your analyzers work correctly, follow the example below. If you have installed the analyzers correctly, the ErrorProne.NET analyzer raises warnings when it analyzes the code in the example.</p>
+
+<p>Create a new script file named <code>RethrowError.cs</code>. Copy the following code into this script and save the file:</p>
+
+<pre><code class="lang-C#">using System;
+using UnityEngine;
+
+public class RethrowError : MonoBehaviour
+{
+    void Update()
+    {
+        try
+        {
+            DoSomethingInteresting();
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            throw e;
+        }
+    }
+
+    private void DoSomethingInteresting()
+    {
+        throw new System.NotImplementedException();
+    }
+}
+</code></pre>
+
+<p>When you save the file, Unity recompiles the script and runs any applicable analyzers on the script’s code. When the ErrorProne.NET analyzer is correctly installed, it raises the following warnings in the Console window about the above code:</p>
+
+<p><code>Assets\RethrowError.cs(14,23): warning EPC12: Suspicious exception handling: only e.Message is observed in exception block.</code></p>
+
+<p><code>Assets\RethrowError.cs(15,19): warning ERP021: Incorrect exception propagation. Use throw; instead.</code></p>
+
+<h2>Ruleset files</h2>
+
+<p>To define your own rules on how to handle the various warnings and errors that the analyzers in your project raise, you can create a ruleset file. For more information on how to create a custom ruleset, refer to Microsoft’s Visual Studio documentation on <a href="https://docs.microsoft.com/en-us/visualstudio/code-quality/how-to-create-a-custom-rule-set?view=vs-2019">how to create a custom rule set</a>.</p>
+
+<p>In the Assets root folder, place a ruleset file named Default.ruleset. The rules you define in Default.ruleset apply to all predefined assemblies (for example <code>Assembly-CSharp.dll</code>), and all assemblies that are built using .asmdef files.</p>
+
+<p>To override the rules in Default.ruleset for a predefined assembly, create a .ruleset file in the root folder with the name <code>[PredefinedAssemblyName].ruleset</code>. For example, the rules in <code>Assembly-CSharp.ruleset</code> apply to the code in <code>Assembly-CSharp.dll</code>. Only these .ruleset files are allowed inside the root folder:</p>
+
+<ul>
+<li><code>Default.ruleset</code></li>
+<li><code>Assembly-CSharp.ruleset</code></li>
+<li><code>Assembly-CSharp-firstpass.ruleset</code></li>
+<li><code>Assembly-CSharp-Editor.ruleset</code></li>
+<li><code>Assembly-CSharp-Editor-firstpass.ruleset</code></li>
+</ul>
+
+<h3>Workflow: Testing ruleset files in Unity</h3>
+
+<p>To test ruleset files in Unity, follow these steps:</p>
+
+<h4>Step 1: Set up the ruleset file</h4>
+
+<ol>
+<li>Create a subfolder named “Subfolder” inside your project’s Assets folder.</li>
+<li>Inside <strong>Subfolder</strong>:
+
+<ol>
+<li>Create a new .asmdef file.</li>
+<li>Save a duplicate copy of <code>RethrowError.cs</code>.</li>
+</ol>
+</li>
+<li>Create a Default.ruleset file inside <strong>Assets</strong> with the following code:</li>
+</ol>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;RuleSet Name=&quot;New Rule Set&quot; Description=&quot; &quot; ToolsVersion=&quot;10.0&quot;&gt;
+  &lt;Rules AnalyzerId=&quot;ErrorProne.NET.CodeAnalyzers&quot; RuleNamespace=&quot;ErrorProne.NET.CodeAnalyzers&quot;&gt;
+    &lt;Rule Id=&quot;ERP021&quot; Action=&quot;Error&quot; /&gt;
+  &lt;Rule Id=&quot;EPC12&quot; Action=&quot;None&quot; /&gt;
+  &lt;/Rules&gt;
+&lt;/RuleSet&gt;
+</code></pre>
+
+<p>The <code>Default.ruleset</code> file defines the following rules:</p>
+
+<ul>
+<li>Suppress EPC12, the warning about suspicious exception handling.</li>
+<li>Elevate ERP021, the warning about incorrect exception propagation, to an error.</li>
+</ul>
+
+<h4>Step 2: Reload the project</h4>
+
+<p>After you add the ruleset files to your project, reimport any script that lives in an assembly where the rules should apply. This forces Unity to recompile the assembly using the new ruleset files. After recompilation, two messages will appear in the Console window:</p>
+
+<p><code>Assets\Subfolder\RethrowError.cs(15,19): error ERP021: Incorrect exception propagation. Use throw; instead.</code></p>
+
+<p><code>Assets\RethrowError.cs(15,19): error ERP021: Incorrect exception propagation. Use throw; instead.</code></p>
+
+<p>Notice that Unity applies the rules defined in Default.ruleset to both <code>Assets/RethrowError.cs</code> and <code>Assets/Subfolder/RethrowError.cs</code>.</p>
+
+<h4>Step 3: Add a custom ruleset</h4>
+
+<p>In Assets/Subfolder, create a .ruleset file, and give it any name you like (in this <code>exampleHello.ruleset</code>):</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;RuleSet Name=&quot;New Rule Set&quot; Description=&quot; &quot; ToolsVersion=&quot;10.0&quot;&gt;
+  &lt;Rules AnalyzerId=&quot;ErrorProne.NET.CodeAnalyzers&quot; RuleNamespace=&quot;ErrorProne.NET.CodeAnalyzers&quot;&gt;
+    &lt;Rule Id=&quot;ERP021&quot; Action=&quot;Info&quot; /&gt;
+    &lt;Rule Id=&quot;EPC12&quot; Action=&quot;Info&quot; /&gt;
+  &lt;/Rules&gt;
+&lt;/RuleSet&gt;
+</code></pre>
+
+<p>This new <code>Hello.ruleset</code> file tells Unity to print both EPC12 and ERP021 to the Console, without treating them as warnings or errors.</p>
+
+<p>After Unity compiles the project again, the following messages will appear in the Console window:</p>
+
+<p><code>Assets\Subfolder\RethrowError.cs(14,23): info EPC12: Suspicious exception handling: only e.Message is observed in exception block.</code></p>
+
+<p><code>Assets\Subfolder\RethrowError.cs(15,19): info ERP021: Incorrect exception propagation. Use throw; instead.</code></p>
+
+<p><code>Assets\RethrowError.cs(15,19): error ERP021: Incorrect exception propagation. Use throw; instead.</code></p>
+
+<p>The rules in <code>Default.ruleset</code> still apply to <code>Assets\RethrowError.cs</code>, but they no longer apply to <code>Assets\Subfolder\RethrowError.cs</code>, because the rules in <code>Hello.ruleset</code> override them.</p>
+
+<p>For more information on all the allowed ruleset action files, refer to the Visual Studio documentation on <a href="https://docs.microsoft.com/en-us/visualstudio/code-quality/working-in-the-code-analysis-rule-set-editor?view=vs-2019">Using the code analysis rule set editor</a>.</p>
+
+<h2>More analyzers</h2>
+
+<p>The following are links to Github repositories of other popular Roslyn analyzer libraries:</p>
+
+<ul>
+<li><a href="https://github.com/Cybermaxs/awesome-analyzers">awesome-analyzers</a></li>
+<li><a href="https://github.com/dotnet/roslyn-analyzers">dotnet/roslyn-analyzers</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="testing-editortestsrunner.html"></a></span><div class="tip">Unit Testing</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ScriptingConcepts.html"></a></span><div class="tip">Scripting concepts</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Profiling your application</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/profiler-profiling-applications.html">English</a></li>
+<li><a href="/cn/current/Manual/profiler-profiling-applications.html">中文</a></li>
+<li><a href="/ja/current/Manual/profiler-profiling-applications.html">日本語</a></li>
+<li><a href="/kr/current/Manual/profiler-profiling-applications.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/profiler-profiling-applications.html">English</a></li>
+<li><a href="/cn/current/Manual/profiler-profiling-applications.html">中文</a></li>
+<li><a href="/ja/current/Manual/profiler-profiling-applications.html">日本語</a></li>
+<li><a href="/kr/current/Manual/profiler-profiling-applications.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="Profiler.html">Profiler overview</a></li>
+<li>Profiling your application</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Profiler.html"></a></span><div class="tip">Profiler overview</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="profiler-markers.html"></a></span><div class="tip">Common Profiler markers</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Profiling your application</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>When you use the <a href="Profiler.html">Unity Profiler</a> to profile your application, there are three main ways to record data:</p>
+
+<ul>
+<li>Profile your application in a player on your target platform</li>
+<li>Profile your application in Play mode in the Unity Editor</li>
+<li>Profile the Unity Editor</li>
+</ul>
+
+<p>The best way to get accurate timings about your application is to profile it on the end platform you intend to publish it on. This gives you accurate timings about what impacts the performance of your application.</p>
+
+<p>However, it can be time-consuming to build your application every time you would like to improve elements of its performance. So, to quickly assess the performance of your application you can profile it directly in Play mode in the Editor. Profiling in Play mode doesn’t give you an accurate reflection of what the performance of your application looks like on a real device, but it is a useful tool to quickly check to see if the changes you make improve your application’s performance, after initially profiling on the end platform.</p>
+
+<p>The Unity Editor might affect the performance of your application, because it uses the same resources as your application when it’s running in Play mode, so you can also profile the Editor separately to determine what resources it uses. This is particularly useful if your application has only been designed to work in Play mode, such as for movie making.</p>
+
+<h2>
+<a name="profiling-target-platform" aria-hidden="true"></a> Profile your application on a target platform</h2>
+
+<p>To profile your application on its target release platform, connect the target device to your network or directly to your computer via cable. You can also connect to a device via IP address. You can only profile your application as a <strong>Development Build</strong>. To set this up, go to <strong>Build Settings</strong> (menu: <strong>File</strong> &gt; <strong>Build Settings</strong>) and select your application’s target platform. Enable the <strong>Development Build</strong> setting. When you enable this setting, two settings related to the Profiler become available: <strong>Autoconnect Profiler</strong> and <strong>Deep Profiling Support</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/profiler-build-settings.png" alt="Build Settings window with Profiling options enabled">
+<figcaption>Build Settings window with Profiling options enabled</figcaption>
+</figure>
+
+<p>When you enable the <strong>Autoconnect Profiler</strong> setting, the Unity Editor bakes its IP address into the built Player during the build process. When you start the Player, it attempts to connect to the Profiler in the Editor located at the baked IP address.</p>
+
+<p>If you additionally enable the <strong>Deep Profiling Support</strong> setting, Unity performs <a href="ProfilerWindow.html#deep-profiling">Deep Profiling</a> when the built Player starts, which means that the Profiler profiles every part of your code, and not just code timings explicitly wrapped in <a href="../ScriptReference/Unity.Profiling.ProfilerMarker.html">ProfilerMarkers</a>. This is useful to get Deep Profiling information on your application’s start up times, however, this adds a small amount of overhead to your build.</p>
+
+<h3>Connecting to your Player in the Profiler window</h3>
+
+<p>To use the Profiler to manually connect to a platform running your application, configure the settings in the <strong>Attach to Player</strong> dropdown. You can only do this if <strong>Autoconnect Profiler</strong> is disabled.</p>
+
+<p>For a platform to appear in the <strong>Attach to Player</strong> dropdown, it must meet the following requirements:</p>
+
+<ul>
+<li>The platform is visible on your local network or directly connected to your local machine by cable.</li>
+<li>The platform is running a Player that you built with the <strong><span class="tooltip"><strong>Development Build</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview" href="https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DevelopmentBuild" aria-label="Go to glossary anchor for DevelopmentBuild">Glossary</a></span></span></span></strong> option enabled. For instructions on how to enable this setting for a platform, refer to <a href="#profiling-target-platform">Profile your application on a target platform</a>.</li>
+<li>The platform is running your Player.</li>
+</ul>
+
+<p>The <strong>Attach to Player</strong> dropdown displays all Unity Players that Unity detects through the network or by direct connection. You can identify these Players by <strong>Player Name</strong> and the <strong>Product Name</strong> that is running the Player; for example, iPhonePlayer (My iPhone).</p>
+
+<p>You can also connect to a Player directly via its IP address. To do this, select the <strong>Attach to Player</strong> menu, and then select <strong>&lt;Enter IP&gt;</strong> in the dropdown. In the dialog box that appears, type the IP address and (optionally) the port of the Player you want to connect to.</p>
+
+<p>To collect profiling information on your application, select the Player from the dropdown menu, and then click <strong>Record</strong>.</p>
+
+<p>To continuously collect data while your application runs, enable the <strong>Run In Background</strong> setting in Player Settings (menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong> &gt; <strong>Resolution and Presentation</strong>). When you enable this setting, the Profiler collects data even when you leave your application running in the background. If you disable it, the Profiler only collects data when the application is running in an active window.</p>
+
+<h3>Using the Attach to Player search bar</h3>
+
+<p>The <strong>Attach to Player</strong> dropdown includes a search bar that you can use to find information about your Player. You can search by <strong>Player Name</strong> or device category, for example <strong>Remote</strong>. When you search by category, the result displays all devices in that category.</p>
+
+<p>Select the name of a development Player to view it in the profiler.</p>
+
+<h3>Attach to Player properties</h3>
+
+<figure>
+<img src="../uploads/Main/attach-to-player.png" alt="">
+</figure>
+
+<p>Each column provides the following information about when it is available:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Description:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Player Name</strong></td>
+	<td style="text-align:left;">The name of the device that is running your application.<br><br>To change this name, navigate to <strong>Edit</strong> &gt; <strong>Preferences</strong> &gt; <strong>Analysis</strong> &gt; <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> and enter your desired name in the <strong>Custom Connection ID</strong> field.<br><br>You can also set a Player Name set when you launch a Player from the command line using the <code>-connection-id</code> argument.<br><br>For more information about the categories in this property, see <a href="#device-categories">Player name device categories</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Product Name</strong></td>
+	<td style="text-align:left;">This is the value of the field that you set in <strong>Project</strong> &gt; <strong>PlayerSettings</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>IP</strong></td>
+	<td style="text-align:left;">The IP address of the Player.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Port</strong></td>
+	<td style="text-align:left;">The port of the Player.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a name="device-categories" aria-hidden="true"></a> Player name device categories</h3>
+
+<p>The <strong>Player Name</strong> category includes the following categories that display information about particular device types:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Description:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Play Mode</strong></td>
+	<td style="text-align:left;">Select this property to profile your application in Play Mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Edit Mode</strong></td>
+	<td style="text-align:left;">Select this property to profile the Unity Editor.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Local</strong></td>
+	<td style="text-align:left;">This list contains any device that is running on the local machine, in the Unity Editor or in a standalone player.<br><br>It also displays information for players that are physically connected to the host machine with a cable.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Remote</strong></td>
+	<td style="text-align:left;">This section displays information for devices running on the local network.<br><br>This section only appears when Unity finds a remote device running on the local network.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Connections without ID</strong></td>
+	<td style="text-align:left;">This section includes devices running a version of Unity older than Unity.<br><br>These players do not have <strong>Product Name</strong>, <strong>IP</strong> or <strong>Port</strong> information.<br><br>This section only appears when Unity finds a device running a player older than Unity 2021.2.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Direct Connection</strong></td>
+	<td style="text-align:left;">Use this option to connect to a specific IP and port combination. This category displays the most recent IP you connected to.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Platform specific profiling guidance</h3>
+
+<p>Different platforms behave in different ways when you connect them to the Unity Profiler. The following sections provide guidance on some common behaviors each platform has:</p>
+
+<p><a name="profiling-webgl" aria-hidden="true"></a></p>
+
+<h4>WebGL</h4>
+
+<p>You can use the Unity Profiler in WebGL, but you cannot attach to a running player built with WebGL via the Editor. This is because WebGL uses WebSockets for communication, which does not allow incoming connections on the browser side. To attach to a running player, you need to enable the <strong>Autoconnect Profiler</strong> checkbox in <strong>Build Settings</strong> (menu: <strong>File</strong> &gt; <strong>Build Settings</strong>). Unity cannot profile draw calls for WebGL.</p>
+
+<h4>Profiling on mobile devices</h4>
+
+<p>Both <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> and Android devices support remote profiling over a network. If you are using a firewall, open ports 54998 to 55511 in your firewall’s outbound rules. These are the ports Unity uses for remote profiling.</p>
+
+<p>When you set up remote profiling, the Unity Editor might sometimes not connect to the device automatically. If this happens, you can initiate the Profiler connection manually by selecting the <strong>Attach to Player</strong> dropdown menu in the Profiler window and choosing the appropriate device.</p>
+
+<p>You can also plug the target device directly into your computer, to avoid network or connection issues.</p>
+
+<p><a name="profiling-ios" aria-hidden="true"></a></p>
+
+<p><strong>iOS remote profiling</strong></p>
+
+<p>To enable remote profiling on iOS devices, follow these steps:</p>
+
+<ol>
+<li>Connect your iOS device to your WiFi network. The Profiler uses a local WiFi network to send profiling data from your device to the Unity Editor.</li>
+<li>Attach your device to your computer via cable. In the <strong>Build Settings</strong> window (menu: <strong>File</strong> &gt; <strong>Build Settings</strong>), select the <strong>Development Build</strong> and <strong>Autoconnect Profiler</strong> checkboxes, then click <strong>Build &amp; Run</strong>.</li>
+<li>When the application launches on the device, open the Profiler window in the Unity Editor (menu: <strong>Window</strong> &gt; <strong>Analysis</strong> &gt; <strong>Profiler</strong>).</li>
+</ol>
+
+<p><a name="profiling-android" aria-hidden="true"></a></p>
+
+<p><strong>Android remote profiling</strong></p>
+
+<p>Android devices support two methods of remote profiling: WiFi and <a href="https://developer.android.com/studio/command-line/adb">Android Debug Bridge (adb)</a>.</p>
+
+<p>For WiFi profiling, follow these steps:</p>
+
+<ol>
+<li>Disable mobile data on your Android device.</li>
+<li>Connect your Android device to your WiFi network. The Profiler uses a local WiFi network to send profiling data from your device to the Unity Editor.</li>
+<li>Attach your device to your computer via cable. In the <strong>Build Settings</strong> window (menu: <strong>File</strong> &gt; <strong>Build Settings</strong>), select the <strong>Development Build</strong> and <strong>Autoconnect Profiler</strong> checkboxes, then click <strong>Build &amp; Run</strong>.</li>
+<li>When the application launches on the device, open the Profiler window in the Unity Editor (menu: <strong>Window</strong> &gt; <strong>Analysis</strong> &gt; <strong>Profiler</strong>).</li>
+</ol>
+
+<p>
+<strong>Note</strong>: The Android device and host computer that is running the Unity Editor must both be on the same subnet for device detection to work.</p>
+
+<p>For Android Debug Bridge (adb) profiling, follow these steps:</p>
+
+<ol>
+<li>Make sure the device is in <strong>Development mode</strong> and enable the <strong>USB debugging</strong> setting</li>
+<li>Attach your device to your computer via cable and make sure that it shows in the <span class="tooltip"><strong>adb</strong><span class="tooltiptext">An Android Debug Bridge (ADB). You can use an ADB to deploy an Android package (APK) manually after building. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://developer.android.com/studio/command-line/adb.html" href="https://developer.android.com/studio/command-line/adb.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ADB" aria-label="Go to glossary anchor for ADB">Glossary</a></span></span></span> devices list.</li>
+<li>In the <strong>Build Settings</strong> window (menu: <strong>File</strong> &gt; <strong>Build Settings</strong>), select the <strong>Development Build</strong> checkbox, and then click <strong>Build &amp; Run.</strong>
+</li>
+<li>When the application launches on the device, open the Profiler window in the Unity Editor (menu: <strong>Window</strong> &gt; <strong>Analysis</strong> &gt; <strong>Profiler</strong>).</li>
+<li>From the <strong>Attach to Player</strong> dropdown menu, select <strong>AndroidProfiler(ADB@127.0.0.1:34999)</strong>. The entry in the dropdown menu is only visible when the selected target is Android.</li>
+</ol>
+
+<p>The Unity Editor automatically creates an adb tunnel for your application when you select <strong>Build &amp; Run</strong>. If you want to profile another application, or you restart the adb server, you need to configure this tunnel manually. To do this, open a Terminal window or Command prompt and enter the following:</p>
+
+<ul>
+<li>
+<p>Required when Editor-to-Android connection is established via USB cable</p>
+
+<p><code>adb forward tcp:34999 localabstract:Unity-{insert bundle identifier here}</code></p>
+</li>
+<li>
+<p>Required when Android-to-Editor connection is established via USB cable</p>
+
+<p><code>adb reverse tcp:34998 tcp:34999</code></p>
+</li>
+</ul>
+
+<p>To use Deep Profiling with an Android build, you need to enable the Mono Scripting Backend setting in the <a href="class-PlayerSettingsAndroid.html">Android Player Settings</a> (menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong> &gt; <strong>Android</strong> &gt; <strong>Other Settings</strong>) and enter the following to start the game through an adb command:</p>
+
+<pre><code>~$ adb shell am start -n {insert bundle identifier here}/com.unity3d.player.UnityPlayerActivity -e 'unity' '-deepprofiling'
+</code></pre>
+
+<p><strong>ChromeOS remote profiling</strong></p>
+
+<p>ChromeOS devices support remote profiling through adb over WiFi, unlike Android devices that support remote profiling through both WiFi and adb over USB connection.</p>
+
+<p>To enable WiFi profiling on ChromeOS devices, follow these steps:</p>
+
+<ol>
+<li>Enable <strong>Linux Development Environment</strong> and <strong>ADB debugging</strong> settings on your Chromebook. You need not enable ChromeOS Developer Mode. For more information on how to do this, refer to <a href="https://chromeos.dev/en/android-environment/deploying-apps#enable-adb-debug">Enable ADB Debug</a>.</li>
+<li>Connect your Chromebook and the host computer running Unity Editor to the same WiFi network.</li>
+<li>Establish a connection between your Chromebook and the host computer through adb. For more information on how to do this, refer to <a href="https://chromeos.dev/en/android-environment/deploying-apps#connect-to-adb-over-a-network">Connect to ADB over a network</a>.</li>
+<li>In the <strong>Build Settings</strong> window (menu: <strong>File</strong> &gt; <strong>Build Settings</strong>), select the <strong>Development Build</strong> and <strong>Autoconnect Profiler</strong> checkboxes, and then click <strong>Build &amp; Run.</strong>
+</li>
+<li>When the application launches on the device, open the Profiler window in the Unity Editor (menu: <strong>Window</strong> &gt; <strong>Analysis</strong> &gt; <strong>Profiler</strong>). <br><strong>Note</strong>: If your application is not deploying to the Chromebook, check the <strong>Run Device</strong> dropdown in the <strong>Build Settings</strong>. If your device isn’t listed, but the adb connection between the host computer and Chromebook is established, enter the IP address of the device through the <strong>&lt;Enter IP&gt;</strong> option in the <strong>Run Device</strong> dropdown. After you enter the IP address, you can profile your application as usual.</li>
+</ol>
+
+<h2>Profiling in the Unity Editor</h2>
+
+<p>When you use the Profiler window to run and profile your application in the Editor, the results are only an approximation of your application’s behavior when the target platform runs it. This is because Play mode runs in the same process as the Editor, so you cannot fully isolate your application’s CPU, GPU, and memory usage from the Unity Editor’s usage. This skews the resulting profiling data.</p>
+
+<p>To get better profiling results, you should always profile your application on a target device, and only profile in the Editor to quickly iterate over issues you have already identified on a device.</p>
+
+<p>You can also profile in Play mode or profile the Editor to identify issues unrelated to the performance of your application, such as whether long load times or an unresponsive Editor slows down iteration time, or if your application performs badly in Play mode.</p>
+
+<p>Whenever you profile in the Editor, you should make sure that you open Play mode in maximized view, and reduce the amount of open Editor windows. This ensures that other Editor windows do not use up time on the render thread and GPU, and therefore affect the performance data. When Play mode is in a maximized view it runs your application at a resolution closer to that of your target device, which directly affects performance issues such as those related to fill rate.</p>
+
+<h3>Profiling in Play mode</h3>
+
+<p>The Profiler’s default target is Play mode, which records activities when the Editor is running Play mode. Play mode profiling is useful to test out quick changes without having to rebuild a player, but you should not use it as a replacement for validating builds on your application’s target platform and devices. This is because Play mode runs in the same application and main thread as the Editor, which means that when you profile in Play mode, the Editor’s systems such as the <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>, <span class="tooltip"><strong>Inspectors</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>, <span class="tooltip"><strong>Inspectors</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> View rendering, and asset management affect the performance and memory profiling measurements of your application.</p>
+
+<p>To effectively profile in Play mode, you should regularly make builds of your application and deploy them to a range of target devices (both high and low spec devices), and test and profile your application on these devices. If you identify performance issues with your application on these devices, narrow down the area that needs the most attention.</p>
+
+<p>You can then profile your application in Play mode and quickly iterate over any changes you make to your application. You can use the information you got from profiling your application on target devices to identify if there is any similar behavior after profiling your application in Play mode. You can then make changes to your application and profile again in Play mode to quickly see the effects that your changes made. Once you are satisfied with your changes, build and deploy your application to the target devices again to validate your changes.</p>
+
+<h4>PlayerLoop and EditorLoop samples</h4>
+
+<p>To reduce the amount of noise and misleading measurements in the profiling data that the Editor creates while running Play mode, the CPU and GPU Profiler modules split their timings into those that happen in the <strong>PlayerLoop</strong> and those that happen in the <strong>EditorLoop.</strong> Unity assigns <span class="tooltip"><strong>Profiler samples</strong><span class="tooltiptext">A set of data associated with a Profiler marker, that the Profiler has recorded and collected.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profilersample" aria-label="Go to glossary anchor for Profilersample">Glossary</a></span></span></span> of these types with the <a href="profiler-markers.html">PlayerLoop and EditorLoop markers</a>.</p>
+
+<p>When the Profiler targets Play mode, it only collects timing samples that happened inside the PlayerLoop.</p>
+
+<p>Unity categorizes any EditorLoop samples as <strong>Others</strong> in the <a href="ProfilerCPU.html#charts">CPU Profiler module charts</a>. As a result, EditorLoop samples are the biggest contributors to that category. If you want to see what the Editor does in this time and also get a more detailed breakdown of what else contributes to the <strong>Others</strong> category, change the Profiler target to the Editor instead.</p>
+
+<p>
+<strong>Important:</strong> If you use <a href="ProfilerWindow.html#deep-profiling">Deep Profiling</a>, and target Play mode, it has a performance impact on every function call that happens in both PlayerLoop and EditorLoop. This is because Deep Profiling hooks into the beginning and end of any scripting method call on domain reload and it does not detect which parts are never called from the PlayerLoop. The method calls that happen in the EditorLoop don’t incur the full overhead of creating a sample, but they still check if they should emit one, which causes a smaller but still present overhead.</p>
+
+<h3>Profiling the Editor</h3>
+
+<p>When you change the Profiler’s target to <strong>Editor</strong>, all the samples that were previously hidden under the EditorLoop marker contribute to their respective categories. This means that the information in the CPU Profiler module’s detail pane and its charts changes significantly.</p>
+
+<p>To profile the Editor’s startup times, start the Editor with the command line option <code>-profiler-enable</code>.</p>
+
+<p>To reduce the impact that the Profiler window has on Editor performance, you can use the <a href="ProfilerWindow.html#standalone">Standalone Profiler</a>, which opens the Profiler window in its own process. This is especially useful if you select the Editor as the profiling target, or are <a href="ProfilerWindow.html#deep-profiling">Deep Profiling your application</a>, because the Profiler window itself usually uses resources that might skew the performance data.</p>
+
+<h2>Best practices for profiling your application</h2>
+
+<p>When you profile your application, there are a few things that you can do to ensure consistency across profiling sessions, and to make sure that the processes that Unity uses do not affect your profiling data:</p>
+
+<ul>
+<li>Only add the <a href="ProfilerWindow.html#modules">Profiler modules</a> related to the area that you want to investigate to the Profiler window. To add and remove modules to the Profiler, select the dropdown in the top left of the Profiler window.</li>
+<li>Avoid using <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProfilerWindow.html#deep-profiling">Deep Profiling</a>, because it might create a high overhead when you use it. If you want to see more details on samples with markers such as <code>GC.Alloc</code> or <code>JobFence.Complete</code>, go to the Profiler window <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html" href="ProfilerWindow.html#deep-profiling">Deep Profiling</a>, because it might create a high overhead when you use it. If you want to see more details on samples with markers such as <code>GC.Alloc</code> or <code>JobFence.Complete</code>, go to the Profiler window <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> and enable the <a href="ProfilerWindow.html#controls"><strong>Call Stacks setting</strong></a>. This provides the sample’s full call stack, which gives you the information you need without incurring the overhead of Deep Profiling.</li>
+<li>Disable the <strong>Live</strong> setting, if you do not need to see the <strong>Hierarchy</strong> or <strong>Timeline</strong> view updating as the Profiler collects data. To see the data update in the window, you can stop recording.</li>
+<li>Use the F9 shortcut to enable or disable the Profiler. You can use this shortcut to capture performance data without the Profiler window needing to be open. If you have the Standalone Profiler open, using this shortcut starts recording in this window.</li>
+</ul>
+
+<hr>
+
+<ul>
+<li><span class="page-history">Added Deep Profiling Support in <a href="https://docs.unity3d.com/Manual/30_search.html?q=newin20193">2019.3</a> <span class="search-words">NewIn20193</span></span></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Profiler.html"></a></span><div class="tip">Profiler overview</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="profiler-markers.html"></a></span><div class="tip">Common Profiler markers</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

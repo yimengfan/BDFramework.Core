@@ -1,0 +1,234 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Interaction Components</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIInteractionComponents.html">English</a></li>
+<li><a href="/cn/current/Manual/UIInteractionComponents.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIInteractionComponents.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIInteractionComponents.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIInteractionComponents.html">English</a></li>
+<li><a href="/cn/current/Manual/UIInteractionComponents.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIInteractionComponents.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIInteractionComponents.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="com.unity.ugui.html">Unity UI </a></li>
+<li>Interaction Components</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIVisualComponents.html"></a></span><div class="tip">Visual Components</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIAnimationIntegration.html"></a></span><div class="tip">Animation Integration</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Interaction Components</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This section covers components in the <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> system that handles interaction, such as mouse or touch events and interaction using a keyboard or controller.</p>
+
+<p>The interaction components are not visible on their own, and must be combined with one or more <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIVisualComponents.html">visual components</a><span class="tooltiptext">A component that enables you to easily create GUI-specific functionality. <a href="https://docs.unity3d.com/Packages/com.unity.ugui@latest/index.html?subfolder=/manual/UIVisualComponents.html" href="UIVisualComponents.html">visual components</a><span class="tooltiptext">A component that enables you to easily create GUI-specific functionality. <a href="https://docs.unity3d.com/Packages/com.unity.ugui@latest/index.html?subfolder=/manual/UIVisualComponents.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VisualComponent" aria-label="Go to glossary anchor for VisualComponent">Glossary</a></span></span></span> in order to work correctly. </p>
+
+<h2>Common Functionality</h2>
+
+<p>Most of the interaction components have some things in common. They are selectables, which means they have shared built-in functionality for visualising transitions between states (normal, highlighted, pressed, disabled), and for navigation to other selectables using keyboard or controller. This shared functionality is described on the <a href="script-Selectable.html">Selectable</a> page.</p>
+
+<p>The interaction components have at least one UnityEvent that is invoked when user interacts with the component in specific way. The UI system catches and logs any exceptions that propagate out of code attached to UnityEvent.</p>
+
+<h2>Button</h2>
+
+<p>A Button has an <strong>OnClick</strong> UnityEvent to define what it will do when clicked. </p>
+
+<figure>
+<img src="../uploads/Main/UI_ButtonExample.png" alt="">
+</figure>
+
+<p>See the <a href="script-Button.html">Button</a> page for details on using the Button component.</p>
+
+<h2>Toggle</h2>
+
+<p>A Toggle has an <strong>Is On</strong> checkbox that determines whether the Toggle is currently on or off. This value is flipped when the user clicks the Toggle, and a visual checkmark can be turned on or off accordingly. It also has an <strong>OnValueChanged</strong> UnityEvent to define what it will do when the value is changed.</p>
+
+<figure>
+<img src="../uploads/Main/UI_ToggleExample.png" alt="">
+</figure>
+
+<p>See the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about script-Toggle.html">Toggle</a><span class="tooltiptext">A checkbox that allows the user to switch an option on or off. <a href="UIE-uxml-element-Toggle.html" href="script-Toggle.html">Toggle</a><span class="tooltiptext">A checkbox that allows the user to switch an option on or off. <a href="UIE-uxml-element-Toggle.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toggle" aria-label="Go to glossary anchor for Toggle">Glossary</a></span></span></span> page for details on using the Toggle component.</p>
+
+<h2>Toggle Group</h2>
+
+<p>A Toggle Group can be used to group a set of <a href="script-Toggle.html">Toggles</a> that are mutually exclusive. Toggles that belong to the same group are constrained so that only one of them can be selected at a time - selecting one of them automatically deselects all the others.</p>
+
+<figure>
+<img src="../uploads/Main/UI_ToggleGroupExample.png" alt="">
+</figure>
+
+<p>See the <a href="script-ToggleGroup.html">Toggle Group</a> page for details on using the Toggle Group component.</p>
+
+<h2>Slider</h2>
+
+<p>A Slider has a decimal number <strong>Value</strong> that the user can drag between a minimum and maximum value. It can be either horizontal or vertical. It also has a <strong>OnValueChanged</strong> UnityEvent to define what it will do when the value is changed.</p>
+
+<figure>
+<img src="../uploads/Main/UI_SliderExample.png" alt="">
+</figure>
+
+<p>See the <a href="script-Slider.html">Slider</a> page for details on using the Slider component.</p>
+
+<h2>Scrollbar</h2>
+
+<p>A Scrollbar has a decimal number <strong>Value</strong> between 0 and 1. When the user drags the scrollbar, the value changes accordingly.</p>
+
+<p>Scrollbars are often used together with a <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about script-ScrollRect.html">Scroll Rect</a> and a <span class="tooltip"><a href="script-Mask.html">Mask</a><span class="tooltiptext">Can refer to a Sprite Mask, a UI Mask, or a Layer Mask <a href="script-Mask.html" href="script-ScrollRect.html">Scroll Rect</a> and a <span class="tooltip"><a href="script-Mask.html">Mask</a><span class="tooltiptext">Can refer to a Sprite Mask, a UI Mask, or a Layer Mask <a href="script-Mask.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mask" aria-label="Go to glossary anchor for Mask">Glossary</a></span></span></span> to create a scroll view. The Scrollbar has a <strong>Size</strong> value between 0 and 1 that determines how big the handle is as a fraction of the entire scrollbar length. This is often controlled from another component to indicate how big a proportion of the content in a scroll view is visible. The Scroll Rect component can automatically do this.</p>
+
+<p>The Scrollbar can be either horizontal or vertical. It also has a <strong>OnValueChanged</strong> UnityEvent to define what it will do when the value is changed.</p>
+
+<figure>
+<img src="../uploads/Main/UI_ScrollbarExample.png" alt="">
+</figure>
+
+<p>See the <a href="script-Scrollbar.html">Scrollbar</a> page for details on using the Scrollbar component.</p>
+
+<h2>Dropdown</h2>
+
+<p>A Dropdown has a list of options to choose from. A text string and optionally an image can be specified for each option, and can be set either in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> or dynamically from code. It has a <strong>OnValueChanged</strong> UnityEvent to define what it will do when the currently chosen option is changed.</p>
+
+<figure>
+<img src="../uploads/Main/UI_DropdownExample.png" alt="">
+</figure>
+
+<p>See the <a href="script-Dropdown.html">Dropdown</a> page for details on using the Dropdown component.</p>
+
+<h2>Input Field</h2>
+
+<p>An Input Field is used to make the text of a <a href="script-Text.html">Text Element</a> editable by the user. It has a UnityEvent to define what it will do when the text content is changed, and an another to define what it will do when the user has finished editing it.</p>
+
+<figure>
+<img src="../uploads/Main/UI_InputFieldExample.png" alt="">
+</figure>
+
+<p>See the <a href="script-InputField.html">Input Field</a> page for details on using the Input Field component.</p>
+
+<h2>Scroll Rect (Scroll View)</h2>
+
+<p>A Scroll Rect can be used when content that takes up a lot of space needs to be displayed in a small area. The Scroll Rect provides functionality to scroll over this content.</p>
+
+<p>Usually a Scroll Rect is combined with a <a href="script-Mask.html">Mask</a> in order to create a scroll view, where only the scrollable content inside the Scroll Rect is visible. It can also additionally be combined with one or two <a href="script-Scrollbar.html">Scrollbars</a> that can be dragged to scroll horizontally or vertically.</p>
+
+<figure>
+<img src="../uploads/Main/UI_ScrollRectExample.png" alt="">
+</figure>
+
+<p>See the <a href="script-ScrollRect.html">Scroll Rect</a> page for details on using the Scroll Rect component.</p>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIVisualComponents.html"></a></span><div class="tip">Visual Components</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIAnimationIntegration.html"></a></span><div class="tip">Animation Integration</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Post-processing and full-screen effects</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PostProcessingOverview.html">English</a></li>
+<li><a href="/cn/current/Manual/PostProcessingOverview.html">中文</a></li>
+<li><a href="/ja/current/Manual/PostProcessingOverview.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PostProcessingOverview.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PostProcessingOverview.html">English</a></li>
+<li><a href="/cn/current/Manual/PostProcessingOverview.html">中文</a></li>
+<li><a href="/ja/current/Manual/PostProcessingOverview.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PostProcessingOverview.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="visual-effects.html">Visual effects</a></li>
+<li>Post-processing and full-screen effects</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="visual-effects.html"></a></span><div class="tip">Visual effects</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ParticleSystems.html"></a></span><div class="tip">Particle systems</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Post-processing and full-screen effects</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity provides a number of <strong><strong>post-processing</strong></strong> effects and full-screen effects that can greatly improve the appearance of your application with little set-up time. You can use these effects to simulate physical <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> and film properties, or to create stylised visuals.</p>
+
+<p>This page contains the following information:</p>
+
+<ul>
+<li><a href="#render-pipeline-compatibility">Render pipeline compatibility</a></li>
+<li><a href="#effect-availability-and-location">Effect availability and location</a></li>
+</ul>
+
+<p>The images below demonstrate a <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> with and without post-processing.</p>
+
+<figure>
+<img src="../uploads/Main/PostProcessing-0.jpg" alt="Scene with no post-processing">
+<figcaption>Scene with no post-processing</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/PostProcessing-1.jpg" alt="Scene with post-processing">
+<figcaption>Scene with post-processing</figcaption>
+</figure>
+
+<p><a name="render-pipeline-compatibility" aria-hidden="true"></a></p>
+
+<h2>Render pipeline compatibility</h2>
+
+<p>Which post-processing effects are available and how you apply them depend on which <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html">render pipeline</a><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html" href="render-pipelines.html">render pipeline</a><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> you are using. A post-processing solution from one render pipeline is not compatible with other render pipelines.</p>
+
+<p>This table contains information about which of Unity’s post-processing solutions are compatible with each of Unity’s render pipelines.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Render pipeline</strong></th>
+	<th style="text-align:left;"><strong>Post-processing support</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="SL-RenderPipeline.html"><strong>Built-in Render Pipeline</strong></a></td>
+	<td style="text-align:left;">The Built-in Render Pipeline does not include a post-processing solution by default. To use post-processing effects with the Built-in Render Pipeline, download the <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest">Post-Processing Version 2</a> package. For information on using post-processing effects in the Built-in Render Pipeline, see the <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest">Post-Processing Version 2</a> documentation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html">Universal Render Pipeline (URP)</a></strong></td>
+	<td style="text-align:left;">URP includes its own post-processing solution, which Unity installs when you create a Project using a URP Template. For information on using post-processing effects in URP, see the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/manual/integration-with-post-processing.html">URP post-processing documentation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest/index.html?preview=1">High Definition Render Pipeline (HDRP)</a></strong></td>
+	<td style="text-align:left;">HDRP includes its own post-processing solution, which Unity installs when you create a Project using an HDRP Template. For information on using post-processing effects in HDRP, see the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest/index.html?subfolder=/manual/Post-Processing-Main.html">HDRP post-processing documentation</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note:</strong> Post processing stack version 1 is now deprecated and should not be used.</p>
+
+<p><a name="effect-availability-and-location" aria-hidden="true"></a></p>
+
+<h2>Effect availability and location</h2>
+
+<p>This table contains information on which post-processing effects and full-screen effects are available in Unity’s different post-processing solutions, how to find those effects, and what other effects you can use to achieve a similar result.</p>
+
+<p>In previous versions of Unity, you applied all post-processing effects and full-screen effects in the same way; by adding components to a Camera. In more recent versions of Unity, you can apply these effects in different ways.</p>
+
+<p>Note that Unity implements effects differently depending on the package you are using. This means that effects vary in terms of performance, appearance, and configuration between packages.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Effect Name</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Available in URP integrated solution?</strong></th>
+	<th style="text-align:left;"><strong>Available in HDRP integrated solution?</strong></th>
+	<th style="text-align:left;"><strong>Available in PPv2 package?</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Ambient Occlusion</td>
+	<td style="text-align:left;">The <strong>Ambient Occlusion</strong> effect darkens the areas in your scene that are not exposed to ambient lighting.</td>
+	<td style="text-align:left;">Yes <br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@10.0/manual/post-processing-ssao.html">Universal Render Pipeline: Ambient Occlusion </a> <br><br> You can also apply Ambient Occlusion as part of your baked lighting. For more information, see <a href="https://docs.unity3d.com/Manual/LightingBakedAmbientOcclusion.html">Baked Ambient Occlusion</a>
+</td>
+	<td style="text-align:left;">Yes <br><br>Choose from <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@9.0/manual/Override-Ambient-Occlusion.html">SSAO</a> using a Volume Override, or <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Ray-Traced-Ambient-Occlusion.html?q=ambientocclusion">Ray-Traced Ambient Occlusion</a> <br><br> You can also apply <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Ambient-Occlusion.html?q=ambient">per-Material Ambient Occlusion</a> <br><br> You can also apply Ambient Occlusion as part of your baked lighting. For more information, see <a href="https://docs.unity3d.com/Manual/LightingBakedAmbientOcclusion.html">Baked Ambient Occlusion</a>
+</td>
+	<td style="text-align:left;">Yes <br><br>See<a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Ambient-Occlusion.html"> Post Processing: Ambient Occlusion</a> <br> You can also apply Ambient Occlusion as part of your baked lighting. For more information, see <a href="https://docs.unity3d.com/Manual/LightingBakedAmbientOcclusion.html">Baked Ambient Occlusion</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Anti-aliasing</td>
+	<td style="text-align:left;">The <strong>Anti-aliasing</strong> effect softens the appearance of edges in your scene. <br>Depending on your render pipeline, you can use MSAA (hardware anti-aliasing), or FXAA, SMAA, or TAA (anti-aliasing post-processing effects)</td>
+	<td style="text-align:left;">Yes <br><br>FXAA and SMAA can be enabled in the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest?subfolder=/manual/camera-component-reference.html#rendering">Camera </a>component <br><br>You can also configure MSAA (hardware anti-aliasing) in <a href="https://docs.unity3d.com/Manual/class-QualitySettings.html">Quality Settings</a>
+</td>
+	<td style="text-align:left;">Yes <br><br>FXAA, SMAA, and TAA are implemented in <strong>Project Settings &gt; Frame Settings &gt; HDRP Default Settings</strong>; see <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Anti-Aliasing.html?q=ANTI">Anti-aliasing in the High Definition Render Pipeline</a><br><br>You can also configure MSAA (hardware anti-aliasing) in the HDRP Asset - see <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Anti-Aliasing.html?q=ANTI">Anti-aliasing in the High Definition Render Pipeline</a>.</td>
+	<td style="text-align:left;">Yes <br><br>For FXAA, SMAA, and TAA, see <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Anti-aliasing.html">Post Processing: Anti-aliasing</a> <br><br>You can also configure MSAA (hardware anti-aliasing) in <a href="https://docs.unity3d.com/Manual/class-QualitySettings.html">Quality Settings</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Auto Exposure</td>
+	<td style="text-align:left;">The <strong>Auto Exposure</strong> effect dynamically adjusts the exposure of an image to match its mid-tone.</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes <br><br>In <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Override-Exposure.html">High Definition Render Pipeline: Exposure Volume Override</a>, when <strong>Mode</strong> is set to <strong>Automatic</strong>
+</td>
+	<td style="text-align:left;">Yes <br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Auto-Exposure.html">Post Processing:Auto Exposure</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Bloom</td>
+	<td style="text-align:left;">The <strong>Bloom</strong> effect makes bright areas in your image glow. Note that Bloom works differently in each package, and requires different settings; read the documentation for a given package for more information.</td>
+	<td style="text-align:left;">Yes <br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest?subfolder=/manual/post-processing-bloom.html">Universal Render Pipeline: Bloom</a>
+</td>
+	<td style="text-align:left;">Yes <br><br> See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Post-Processing-Bloom.html">High Definition Render Pipeline: Bloom</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Bloom.html">Post Processing: Bloom</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Channel Mixer</td>
+	<td style="text-align:left;">The <strong>Channel mixer</strong> lets you adjust the balance of each input color.</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest?subfolder=/manual/Post-Processing-Channel-Mixer.html">Universal Render Pipeline: Channel Mixer</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Post-Processing-Channel-Mixer.html">High Definition Render Pipeline: Channel Mixer</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <strong>Channel Mixer</strong> <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Color-Grading.html">in Post Processing: Color Grading </a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Chromatic Aberration</td>
+	<td style="text-align:left;">The <strong>Chromatic Aberration</strong> effect disperses colors along the boundaries between dark and light areas of the image.</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest?subfolder=/manual/post-processing-chromatic-aberration.html">Universal Render Pipeline: Chromatic Aberration</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Post-Processing-Chromatic-Aberration.html">High Definition Render Pipeline: Chromatic Aberration</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Chromatic-Aberration.html">Post Processing: Chromatic Aberration</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Color Adjustments</td>
+	<td style="text-align:left;">The <strong>Color Adjustments</strong> effect lets you change the overall tone, brightness, and contrast of the final rendered image.</td>
+	<td style="text-align:left;">Yes<br><br>See<a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest?subfolder=/manual/Post-Processing-Color-Adjustments.html"> Universal Render Pipeline: Color Adjustments</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Post-Processing-Color-Adjustments.html">High Definition Render Pipeline: Color Adjustments</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <strong>Tone</strong> in <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Color-Grading.html">Post Processing: Color Grading</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Color Curves</td>
+	<td style="text-align:left;">The <strong>Color Curves</strong> effect lets you adjust specific ranges in hue, saturation, or luminosity.</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest?subfolder=/manual/Post-Processing-Color-Curves.html">Universal Render Pipeline: Color Curves</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Post-Processing-Color-Curves.html">High Definition Render Pipeline: Color Curves</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <strong>Grading Curves</strong> in <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Color-Grading.html">Post Processing: Color Grading</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Fog</td>
+	<td style="text-align:left;">The <strong>Fog</strong> effect simulates the look of fog or mist in outdoor environments.</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Override-Fog.html?q=fog">High Definition Render Pipeline: Fog Volume Override</a> (note that this is not implemented as a full-screen effect or post-processing effect)</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Deferred-Fog.html">Post Processing: Deferred Fog</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Depth of Field</td>
+	<td style="text-align:left;">The <strong>Depth of Field</strong> effect blurs the background of your image while the objects in the foreground stay in focus.</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest?subfolder=/manual/post-processing-depth-of-field.html">Universal Render Pipeline: Depth of Field </a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Post-Processing-Depth-of-Field.html">High Definition Render Pipeline: Depth of Field</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Depth-of-Field.html">Post Processing: Depth of Field</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Grain</td>
+	<td style="text-align:left;">The <strong>Grain</strong> effect overlays film noise onto your image.</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest?subfolder=/manual/Post-Processing-Film-Grain.html">Universal Render Pipeline: Film Grain</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Post-Processing-Film-Grain.html">High Definition Render Pipeline: Film Grain</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See<a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@2.3/manual/Grain.html"> Post Processing: Grain</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Lens Distortion</td>
+	<td style="text-align:left;">The <strong>Lens Distortion</strong> effect simulates distortion caused by the shape of a real-world camera lens.</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@8.1/manual/Post-Processing-Lens-Distortion.html">Universal Render Pipeline: Lens Distortion</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@9.0/manual/Post-Processing-Lens-Distortion.html">High Definition Render Pipeline: Lens Distortion</a>
+</td>
+	<td style="text-align:left;">Yes <br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Lens-Distortion.html">Post Processing: Lens Distortion</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Lift, Gamma, Gain</td>
+	<td style="text-align:left;">The <strong>Lift, Gamma, Gain</strong> effect allows you to perform three-way color grading.</td>
+	<td style="text-align:left;">Yes <br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest?subfolder=/manual/Post-Processing-Lift-Gamma-Gain.html">Universal Render Pipeline: Lift, Gamma, Gain</a>
+</td>
+	<td style="text-align:left;">Yes <br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Post-Processing-Lift-Gamma-Gain.html">High Definition Render Pipeline: Lift, Gamma, Gain</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <strong>Trackballs</strong> in <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Color-Grading.html">Post Processing: Color Grading</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Motion Blur</td>
+	<td style="text-align:left;">The <strong>Motion Blur</strong> effect blurs the image in the direction of the <strong>camera’s</strong> movement</td>
+	<td style="text-align:left;">Yes <br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest?subfolder=/manual/Post-Processing-Motion-Blur.html">Universal Render Pipeline: Motion Blur</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Post-Processing-Motion-Blur.html">High Definition Render Pipeline: Motion Blur</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Motion-Blur.html">Post Processing: Motion Blur</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Panini Projection</td>
+	<td style="text-align:left;">The <strong>Panini Projection</strong> effect corrects distortion at the edge of an image caused by a wide field of view.</td>
+	<td style="text-align:left;">Yes <br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest?subfolder=/manual/Post-Processing-Panini-Projection.html">Universal Render Pipeline: Panini Projection</a>
+</td>
+	<td style="text-align:left;">Yes <br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Post-Processing-Panini-Projection.html">High Definition Render Pipeline: Panini Projection</a>
+</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Screen Space Reflection</td>
+	<td style="text-align:left;">The <strong>Screen Space Reflection</strong> effect creates subtle reflections that simulate wet floor surfaces or puddles.</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes <br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Override-Screen-Space-Reflection.html?q=screenspace">High Definition Render Pipeline: Screen Space Reflection</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Screen-Space-Reflections.html">Post Processing: Screen Space Reflection</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Shadows Midtones Highlights</td>
+	<td style="text-align:left;">The <strong>Shadows Midtones Highlights</strong> effect separately controls the tint and brightness of the shadows, midtones, and highlights in your image</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest?subfolder=/manual/Post-Processing-Shadows-Midtones-Highlights.html">Universal Render Pipeline: Shadows, Midtones, Highlights</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Post-Processing-Shadows-Midtones-Highlights.html">High Definition Render Pipeline: Shadows Midtones Highlights</a>
+</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Split Toning</td>
+	<td style="text-align:left;">The <strong>Split Toning</strong> effect maps two different tones in your image to two specific colors.</td>
+	<td style="text-align:left;">Yes <br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest?subfolder=/manual/Post-Processing-Split-Toning.html">Universal Render Pipeline: Split Toning</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@9.0/manual/Post-Processing-Split-Toning.html">High Definition Render Pipeline: Split Toning</a>
+</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Tonemapping</td>
+	<td style="text-align:left;">The <strong>Tonemapping</strong> effect remaps the values of an image to high dynamic range (HDR) colors</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@8.1/manual/post-processing-tonemapping.html">Universal Render Pipeline: Tonemapping</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Post-Processing-Tonemapping.html">High Definition Render Pipeline: Tonemapping</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <strong>Tonemapping</strong> in <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Color-Grading.html">Post Processing: Color Grading</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Vignette</td>
+	<td style="text-align:left;">The <strong>Vignette</strong> effect darkens the edges of an image</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest?subfolder=/manual/post-processing-vignette.html">Universal Render Pipeline: Vignette</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See<a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Post-Processing-Vignette.html"> High Definition Render Pipeline:Vignette</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Vignette.html">Post Processing: Vignette</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">White Balance</td>
+	<td style="text-align:left;">The <strong>White Balance</strong> effect preserves the white areas in your image and balances other tones around the white areas</td>
+	<td style="text-align:left;">Yes<br><br>See<a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest?subfolder=/manual/Post-Processing-White-Balance.html"> Universal Render Pipeline: White Balance</a>
+</td>
+	<td style="text-align:left;">Yes<br><br>See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest?subfolder=/manual/Post-Processing-White-Balance.html">High Definition Render Pipeline: White Balance</a>
+</td>
+	<td style="text-align:left;">Yes<br><br><strong>See White balance</strong> in <a href="https://docs.unity3d.com/Packages/com.unity.postprocessing@latest?subfolder=/manual/Color-Grading.html">Post Processing: Color Grading</a>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="visual-effects.html"></a></span><div class="tip">Visual effects</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ParticleSystems.html"></a></span><div class="tip">Particle systems</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

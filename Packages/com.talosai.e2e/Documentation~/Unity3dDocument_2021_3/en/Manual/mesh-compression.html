@@ -1,0 +1,290 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Compressing mesh data</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/mesh-compression.html">English</a></li>
+<li><a href="/cn/current/Manual/mesh-compression.html">中文</a></li>
+<li><a href="/ja/current/Manual/mesh-compression.html">日本語</a></li>
+<li><a href="/kr/current/Manual/mesh-compression.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/mesh-compression.html">English</a></li>
+<li><a href="/cn/current/Manual/mesh-compression.html">中文</a></li>
+<li><a href="/ja/current/Manual/mesh-compression.html">日本語</a></li>
+<li><a href="/kr/current/Manual/mesh-compression.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="mesh.html">Meshes</a></li>
+<li>Compressing mesh data</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="importing-lod-meshes.html"></a></span><div class="tip">Importing LOD Meshes</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="LoadingTextureandMeshData.html"></a></span><div class="tip">Loading texture and mesh data</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Compressing mesh data</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can compress <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> data in Unity to reduce its size, which can improve performance. Unity provides two ways of compressing meshes. They work differently, and affect different aspects of performance:</p>
+
+<ul>
+<li>
+<a href="#vertex-compression">Vertex Compression</a> is a setting that affects every mesh in your project. It allows you to use lower precision data formats in your meshes. This reduces the size of mesh data in memory, slightly reduces file size, and might improve GPU performance. The potential downside is a loss of precision.</li>
+<li>
+<a href="#mesh-compression">Mesh Compression</a> is a setting that affects individual meshes. It compresses the mesh data on disk, which reduces file size. The potential downsides are increased loading times, increased temporary memory usage when loading, and the possibility of <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> artifacts.</li>
+</ul>
+
+<p>You can use both compression methods in the same project, but not on the same mesh. If you apply Mesh Compression to a mesh, Unity doesn’t apply Vertex Compression to that mesh.</p>
+
+<p>
+<strong>Note:</strong> Unity’s default settings for Vertex Compression and Mesh Compression are suitable for most projects. You should change these settings only if you have a problem, and assess the results to make sure that the changes have helped.</p>
+
+<p><a name="vertex-compression" aria-hidden="true"></a></p>
+
+<h2>Vertex Compression</h2>
+
+<p>The Vertex Compression setting allows you to use lower precision data formats for all the meshes in your project. You do this by configuring the data type for specific data channels.</p>
+
+<p>You can change the data type for a given channel from an FP32 (Floating Point32, a 32-bit floating point number) to an FP16 (Floating Point16, also known as a half-precision float). The FP16 format stores numbers with fewer places after the decimal point than FP32 numbers, which means that it takes up less space but offers slightly less precision.</p>
+
+<p>Data converted from FP32 to FP16 takes up less space in memory, and slightly less space on disk. On the GPU, the data uses less memory bandwidth, which might slightly improve GPU performance.</p>
+
+<p>The vertex compression technique compresses a mesh by a ratio that varies depending on how many vertex attributes you choose to compress. The compression ratio is usually around 1.45x when you compress normals, tangents, color, and three sets of UV coordinates. </p>
+
+<h3>Limitations of Vertex Compression</h3>
+
+<p>The mesh must meet the following requirements to use vertex compression:</p>
+
+<ul>
+<li>The mesh must have its <strong>Read/Write Enabled</strong> property disabled. You can change this property in the Model tab of the Model Import Settings window.</li>
+<li>The mesh must not be a skinned mesh.</li>
+<li>The target platform must support FP16 values.</li>
+<li>The model that contains the mesh must have its <strong>Mesh Compression</strong> value set to “Off”.</li>
+<li>The mesh is not eligible for <span class="tooltip"><strong>dynamic batching</strong><span class="tooltiptext">An automatic Unity process which attempts to render multiple meshes as if they were a single mesh for optimized graphics performance. The technique transforms all of the GameObject vertices on the CPU and groups many similar vertices together. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DrawCallBatching.html" href="DrawCallBatching.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#DynamicBatching" aria-label="Go to glossary anchor for DynamicBatching">Glossary</a></span></span></span> or dynamic batching is turned off in the <span class="tooltip"><strong>player settings</strong><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html" href="Glossary.html#DynamicBatching" aria-label="Go to glossary anchor for DynamicBatching">Glossary</a></span></span></span> or dynamic batching is turned off in the <span class="tooltip"><strong>player settings</strong><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span>.</li>
+</ul>
+
+<p>If a mesh fails to meet any of these requirements, then Unity does not apply vertex compression to that mesh and all data channels on the mesh use FP32 precision numbers.</p>
+
+<h3>Configuring Vertex Compression</h3>
+
+<p>To change the Vertex Compression settings:
+1. Open the Player settings (menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong>).
+1. Open the <strong>Other Settings</strong> submenu and navigate to the <strong>Optimization</strong> heading.
+1. Select the <strong>Vertex Compression</strong> dropdown and select any channel to enable or disable compression for that channel. You can also select <strong>None</strong> to disable compression for all channels, or select <strong>Everything</strong> to enable compression for all channels. </p>
+
+<p>By default, Vertex Compression is set to <strong>Mixed</strong>, which Unity displays when multiple selections are active in the dropdown. By default, Unity uses Vertex Compression for the following channels:</p>
+
+<ul>
+<li>Normal</li>
+<li>Tangent</li>
+<li>Tex Coord 0</li>
+<li>Tex Coord 2</li>
+<li>Tex Coord 3</li>
+</ul>
+
+<p>Unity compresses these channels by default because in most cases this combination of settings provides a good mixture of saved memory without significant changes to how the mesh looks. Unity doesn’t compress the other settings, Position and Tex Coord 1, by default because these are more likely to affect the appearance of the mesh, and do not offer significant reduction in memory use. If you intend to enable Vertex Compression for the Position and Tex Coord 1 channels, you should test the settings to ensure they don’t cause artifacts in your meshes.</p>
+
+<p><a name="mesh-compression" aria-hidden="true"></a></p>
+
+<h2>Mesh Compression</h2>
+
+<p>You can use the Mesh Compression setting to compress the mesh data for a given model asset on disk. The Mesh Compression algorithm is more aggressive than the Vertex Compression technique, which results in higher compression ratios and therefore smaller file sizes. However, it also has more downsides.</p>
+
+<p>When you apply this setting, Unity uses an algorithm to replace the explicit values for each compression channel with a range between the maximum and minimum, where a fixed number of bits represents where each value falls in that range. This reduces the size of the mesh data on disk. When Unity loads the mesh into memory, it decompresses the data, which means it converts this range back into the original values. After this, performance isn’t affected.</p>
+
+<p>This technique can be useful if you need to reduce your final build size or the size of the AssetBundle the mesh is in as much as possible, and if the reduction in performance from the runtime decompression is acceptable.</p>
+
+<h3>Limitations of Mesh Compression</h3>
+
+<p>At runtime, mesh decompression uses additional CPU resources; this means that loading mesh data takes longer. Unity also uses more temporary memory when decompressing meshes.</p>
+
+<p>Additionally, the relatively high compression ratio means that unwanted artifacts can appear when Unity decompresses the mesh. To avoid these artifacts, you should test each option for the mesh you want to compress and check that it appears correctly.</p>
+
+<h3>Configuring Mesh Compression</h3>
+
+<figure>
+<img src="../uploads/Main/mesh-compression-inspector.png" alt="The Mesh Compression setting in the Model Import settings window">
+<figcaption>The Mesh Compression setting in the Model Import settings window</figcaption>
+</figure>
+
+<p>To use the Mesh Compression setting: </p>
+
+<ol>
+<li>Select a Model in your project’s Assets folder to open the Model tab of the Import Settings window.</li>
+<li>Navigate to the Meshes heading and find the Mesh Compression setting.</li>
+<li>Select the dropdown menu to choose a level for all meshes in that Model. You can also change this setting in code with the ModelImporterMeshCompression enumeration.</li>
+</ol>
+
+<p>Available values are High, Medium, Low, or Off. The following table shows typical compression ratios for each of these settings:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Value</strong></th>
+	<th style="text-align:left;"><strong>Vertices</strong></th>
+	<th style="text-align:left;"><strong>Normals</strong></th>
+	<th style="text-align:left;"><strong>Tangents</strong></th>
+	<th style="text-align:left;"><strong>UVs</strong></th>
+	<th style="text-align:left;"><strong>Color</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Off</strong></td>
+	<td style="text-align:left;">1.0</td>
+	<td style="text-align:left;">1.0</td>
+	<td style="text-align:left;">1.0</td>
+	<td style="text-align:left;">1.0</td>
+	<td style="text-align:left;">1.0</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Low</strong></td>
+	<td style="text-align:left;">1.6</td>
+	<td style="text-align:left;">4.6</td>
+	<td style="text-align:left;">4.4</td>
+	<td style="text-align:left;">2.0</td>
+	<td style="text-align:left;">1.0</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Medium</strong></td>
+	<td style="text-align:left;">2.0</td>
+	<td style="text-align:left;">5.6</td>
+	<td style="text-align:left;">5.3</td>
+	<td style="text-align:left;">3.2</td>
+	<td style="text-align:left;">1.3</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>High</strong></td>
+	<td style="text-align:left;">3.2</td>
+	<td style="text-align:left;">7.4</td>
+	<td style="text-align:left;">6.7</td>
+	<td style="text-align:left;">4.0</td>
+	<td style="text-align:left;">2.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>Compression ratios for the mesh compression technique</p>
+
+<p>Note: The “Color” column in the above table shows ratios for a mesh that uses the UNorm8 format. For a mesh that uses the FP32 format for vertex colors, the ratios are 4.0 on the Low setting, 5.3 on the Medium setting, and 8.0 on the High setting.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="importing-lod-meshes.html"></a></span><div class="tip">Importing LOD Meshes</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="LoadingTextureandMeshData.html"></a></span><div class="tip">Loading texture and mesh data</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

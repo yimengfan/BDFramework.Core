@@ -1,0 +1,314 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Input in WebGL</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="platforms" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/webgl-input.html">English</a></li>
+<li><a href="/cn/current/Manual/webgl-input.html">中文</a></li>
+<li><a href="/ja/current/Manual/webgl-input.html">日本語</a></li>
+<li><a href="/kr/current/Manual/webgl-input.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/webgl-input.html">English</a></li>
+<li><a href="/cn/current/Manual/webgl-input.html">中文</a></li>
+<li><a href="/ja/current/Manual/webgl-input.html">日本語</a></li>
+<li><a href="/kr/current/Manual/webgl-input.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="webgl.html">WebGL</a></li>
+<li><a href="webgl-develop.html">WebGL development</a></li>
+<li>Input in WebGL</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="webgl-embeddedresources.html"></a></span><div class="tip">Embedded Resources on WebGL</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="webgl-canvas-size.html"></a></span><div class="tip">Configure a WebGL Canvas size</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Input in WebGL</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity <span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span> supports various types of input from different devices, including gamepads, joysticks, touchscreens, keyboards, and movement sensors.</p>
+
+<ul>
+<li><a href="#gamepad-and-joystick-support">Gamepad and Joystick support</a></li>
+<li><a href="#touch-support">Touch support</a></li>
+<li><a href="#keyboard-input-and-focus-handling">Keyboard input and focus handling</a></li>
+<li><a href="#mobile-sensor-support">Mobile sensor support</a></li>
+<li><a href="#cursor-locking-support">Lock your cursor</a></li>
+<li><a href="#full-screen-mode">Full-screen mode</a></li>
+</ul>
+
+<p><a name="gamepad-and-joystick-support" aria-hidden="true"></a></p>
+
+<h2>Gamepad and Joystick support</h2>
+
+<p>WebGL supports the following inputs for gamepads:</p>
+
+<ul>
+<li><a href="../ScriptReference/Input.html">Input</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@latest">InputSystem</a></li>
+</ul>
+
+<p>WebGL also supports joysticks for browsers that support the <a href="https://developer.mozilla.org/docs/Web/API/Gamepad_API">HTML5 Gamepad API</a>.</p>
+
+<p>Some browsers allow access to input devices only after the user interacts with the device while the application is in focus. This type of security measure prevents the user from using connected devices for browser fingerprinting purposes. Therefore, make sure your application instructs the user to press a button on their gamepad/joystick before you call <a href="../ScriptReference/Input.GetJoystickNames.html">Input.GetJoystickNames()</a> to check for connected devices.</p>
+
+<p><a name="touch-support" aria-hidden="true"></a></p>
+
+<h2>Touch support</h2>
+
+<p>Unity WebGL doesn’t officially support mobile devices (see <a href="webgl-browsercompatibility.html">WebGL browser compatibility</a>) but it does implement <a href="../ScriptReference/Input-touches.html">Input.touches</a> and other related APIs in browsers and devices with touch support.</p>
+
+<p><a name="keyboard-input-and-focus-handling" aria-hidden="true"></a></p>
+
+<h2>Keyboard input and focus handling</h2>
+
+<p>By default, Unity WebGL processes all keyboard input the web page receives, regardless of whether the WebGL canvas has focus or not. This is so the end user can start using a keyboard-based application without the need to click on the WebGL canvas.</p>
+
+<p>
+<strong>Important</strong>: This can cause issues when there are other HTML elements on the page that should receive keyboard input, such as text fields. Unity consumes the input events before the rest of the page can receive them. To have HTML elements receive keyboard input, set <a href="../ScriptReference/WebGLInput-captureAllKeyboardInput.html">WebGLInput.captureAllKeyboardInput</a> to <code>false</code>. When you do this, the application only receives input if the WebGL canvas has focus.</p>
+
+<p><a name="mobile-sensor-support" aria-hidden="true"></a></p>
+
+<h2>Mobile Sensor support</h2>
+
+<p>Unity WebGL doesn’t officially support mobile devices (see <a href="webgl-browsercompatibility.html">WebGL browser compatibility</a>) but, for browsers and mobile devices with touch support, Unity WebGL includes support for the following sensors:</p>
+
+<ul>
+<li>Accelerometer with <a href="../ScriptReference/Input-acceleration.html">Input.acceleration</a>
+</li>
+<li>LinearAcceleration with <a href="../ScriptReference/Gyroscope-userAcceleration.html">Gyroscope.userAcceleration</a>
+</li>
+<li>Gyroscope with <a href="../ScriptReference/Gyroscope-rotationRate.html">Gyroscope.rotationRate</a>
+</li>
+<li>Gravity with <a href="../ScriptReference/Gyroscope-gravity.html">Gyroscope.gravity</a>
+</li>
+<li>Attitude with <a href="../ScriptReference/Gyroscope-attitude.html">Gyroscope.attitude</a>
+</li>
+<li>The <a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@latest">Input System</a> package also supports these sensors.</li>
+</ul>
+
+<p>
+<strong>Important</strong>: Browsers only allow sensor input in secure contexts. This means you must serve the page over <a href="https://en.wikipedia.org/wiki/HTTPS">HTTPS</a>. The single exception is <code>http://localhost</code>, which you can use during development.</p>
+
+<p><a name="cursor-locking-support" aria-hidden="true"></a></p>
+
+<h2>Cursor lock support</h2>
+
+<p>The Unity WebGL platform supports cursor locking, which uses the HTML5 API <code>Element.requestPointerLock</code>. Use cursor lock to lock the mouse cursor to the center of the game window. When the cursor is locked, it appears hidden in Unity and doesn’t move when the mouse moves. This is particularly helpful for first-person games, where the mouse cursor is typically used to control the orientation of the player’s angle. </p>
+
+<p>
+<strong>Note:</strong> As browser support for cursor locking varies, refer to the Mozilla documentation on the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/requestPointerLock">Element: requestPointerLock() method</a>.</p>
+
+<h3>Activate cursor locking</h3>
+
+<p>To lock the cursor, use the <a href="../ScriptReference/Cursor-lockState.html"><code>Cursor.lockState</code></a> property. For example, the following code switches the cursor into the locked state when the user clicks the left mouse button:</p>
+
+<pre><code>void Update()
+{
+    if (Input.GetMouseButtonDown(0))
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+}
+</code></pre>
+
+<p>Cursor locking needs to be activated by user interaction. For more information, refer to <a href="#additional-considerations">Additional considerations for full-screen mode and cursor locking</a>.</p>
+
+<h3>Deactivate cursor locking</h3>
+
+<p>Press the <strong>Esc</strong> key to unlock the cursor. </p>
+
+<h3>Sticky cursor lock</h3>
+
+<p>The <code>stickyCursorLock</code> property is commonly used in first-person games, because it’s useful to maintain the cursor lock mode regardless of the browser behavior.</p>
+
+<p>Use <a href="../ScriptReference/WebGLInput-stickyCursorLock.html"><code>stickyCursorLock</code></a> to ensure that the state of <code>Cursor.lockState</code> is persistent, even if the browser releases the cursor lock from the Unity canvas (typically using the <strong>Esc</strong> key), in which case the cursor is locked again the next time the canvas is in focus. </p>
+
+<p>Therefore, if you set <code>WebGLInput._stickyCursorLock</code> to <code>true</code>, the <code>Cursor.lockState</code> remains in <code>CursorLockMode.Locked</code> state
+even if the Unity canvas HTML element unlocks the cursor. </p>
+
+<p>The following occurs if you set <code>WebGLInput._stickyCursorLock</code> to <code>false</code>:</p>
+
+<ul>
+<li><p>
+<code>Cursor.lockState</code> remains synchronized with the browser’s cursor lock state.</p></li>
+<li><p>If the user presses the <strong>Esc</strong> key to cancel the canvas cursor lock, <code>Cursor.lockState</code> changes to <code>CursorLockMode.None</code>. </p></li>
+</ul>
+
+<p>
+<strong>Note:</strong> In WebGL, <code>stickyCursorLock</code> is set to <code>true</code> by default.</p>
+
+<p><a name="full-screen-mode" aria-hidden="true"></a></p>
+
+<h2>Full-screen mode</h2>
+
+<p>Use full-screen mode in your game to do the following:</p>
+
+<ul>
+<li><p>Use the entire screen for your game.</p></li>
+<li><p>Hide the browser user interface (UI) elements such as the address bar and tabs.</p></li>
+<li><p>Hide the Unity player <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> elements such as the title bar and <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html" href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> elements such as the title bar and <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span>.</p></li>
+</ul>
+
+<p>The Unity WebGL platform supports full-screen mode which uses the HTML5 API, <code>Element.requestFullscreen</code>. </p>
+
+<p>
+<strong>Note:</strong> As browser support for full-screen mode varies, refer to the Mozilla documentation on the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen">Element: requestFullscreen() method</a>.</p>
+
+<h3>Activate full-screen mode in Web</h3>
+
+<p>To enable full-screen mode, use the <code>Screen.fullScreen</code> property. For example, the following code switches the game to full-screen mode when the user presses the <strong>F</strong> key:</p>
+
+<pre><code>
+void Update()
+{
+    if (Input.GetKeyDown(KeyCode.F))
+    {
+        Screen.fullScreen = true;
+    }
+}
+</code></pre>
+
+<p>
+<strong>Note:</strong> The <code>Screen.fullScreen</code> property is set to <code>false</code> by default.</p>
+
+<p>Full-screen mode needs to be activated by user interaction. For more information, refer to <a href="#additional-considerations">Additional considerations for full-screen mode and cursor locking</a>.</p>
+
+<h3>Exit full-screen mode</h3>
+
+<p>To exit full-screen mode, press the <strong>Esc</strong> key again, or hover the mouse pointer to the top of the screen to access the address bar and tabs.</p>
+
+<p><a name="additional-considerations" aria-hidden="true"></a></p>
+
+<h2>Additional considerations for full-screen mode and cursor locking</h2>
+
+<p>Due to security concerns, browsers only allow you to lock your cursor and enable full-screen mode after a user-initiated event such as a mouse-click or key press. </p>
+
+<p>Because Unity doesn’t support separate events and rendering loops, it defers event handling until the browser no longer acknowledges full-screen or cursor lock requests issued from Unity scripting as a direct response to the event which triggered it. </p>
+
+<p>Therefore, Unity triggers the request on the next user-initiated event, instead of the event that triggered the cursor lock or full-screen request.</p>
+
+<p>To enable cursor lock or full-screen modes with better results, use mouse/key down events to trigger responses instead of mouse/key up events. This way you can ensure that the deferred request is guaranteed to be triggered by the corresponding mouse/key up event if not by a user-initiated event earlier.</p>
+
+<p>You can also use Unity’s <a href="https://docs.unity3d.com/Packages/com.unity.ugui@1.0/api/UnityEngine.UI.Button.html">UI.Button</a> component to achieve the desired behavior by creating a subclass of <code>Button</code>, which overrides the <code>OnPointerDown</code> method. </p>
+
+<p>
+<strong>Note:</strong> Some browsers might display a notification message or prompt the user to grant permission before they can enter full-screen mode or lock the cursor.</p>
+
+<h2>Additional resources:</h2>
+
+<ul>
+<li><a href="../ScriptReference/WebGLInput-captureAllKeyboardInput.html">WebGLInput.captureAllKeyboardInput</a></li>
+</ul>
+<!-- area:platforms -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="webgl-embeddedresources.html"></a></span><div class="tip">Embedded Resources on WebGL</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="webgl-canvas-size.html"></a></span><div class="tip">Configure a WebGL Canvas size</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

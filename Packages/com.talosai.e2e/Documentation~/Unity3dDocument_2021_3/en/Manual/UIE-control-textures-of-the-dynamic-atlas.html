@@ -1,0 +1,239 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Control textures of the dynamic atlas</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-control-textures-of-the-dynamic-atlas.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-control-textures-of-the-dynamic-atlas.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-control-textures-of-the-dynamic-atlas.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-control-textures-of-the-dynamic-atlas.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-control-textures-of-the-dynamic-atlas.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-control-textures-of-the-dynamic-atlas.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-control-textures-of-the-dynamic-atlas.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-control-textures-of-the-dynamic-atlas.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-support-for-runtime-ui.html">Support for runtime UI</a></li>
+<li><a href="UIE-performance-consideration-runtime.html">Performance consideration for runtime UI</a></li>
+<li>Control textures of the dynamic atlas</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-use-usage-hints-to-reduce-draw-calls-and-geometry-regeneration.html"></a></span><div class="tip">Use usage hints to reduce draw calls and geometry regeneration</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-platform-and-mesh.html"></a></span><div class="tip">Platform and mesh considerations</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Control textures of the dynamic atlas</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To reduce the number of batches broken by texture changes and achieve good performance, use an atlas to group together textures used at the same time. You can achieve this with either of the following methods:</p>
+
+<ul>
+<li>Use a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-SpriteAtlas.html">sprite atlas</a><span class="tooltiptext">A texture that is composed of several smaller textures. Also referred to as a texture atlas, image sprite, sprite sheet or packed texture. <a href="class-SpriteAtlas.html" href="class-SpriteAtlas.html">sprite atlas</a><span class="tooltiptext">A texture that is composed of several smaller textures. Also referred to as a texture atlas, image sprite, sprite sheet or packed texture. <a href="class-SpriteAtlas.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#spriteatlas" aria-label="Go to glossary anchor for spriteatlas">Glossary</a></span></span></span>. With this method, you have more control over the sprites but you need to manually create the <span class="tooltip"><strong>sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html" href="Glossary.html#spriteatlas" aria-label="Go to glossary anchor for spriteatlas">Glossary</a></span></span></span>. With this method, you have more control over the sprites but you need to manually create the <span class="tooltip"><strong>sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> atlas.</li>
+<li>Use a dynamic atlas. <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit automatically adds textures to, or removes textures from, a dynamic atlas when <span class="tooltip"><strong>visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit automatically adds textures to, or removes textures from, a dynamic atlas when <span class="tooltip"><strong>visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span> reference them.</li>
+</ul>
+
+<h2>Verify textures in dynamic atlas</h2>
+
+<p>When you use dynamic atlas to group together textures, to limit the number of <a href="DrawCallBatching.html">draw calls</a>, make sure that your textures enter the dynamic atlas. To verify, use the <a href="FrameDebugger.html">Frame Debugger</a>. Frame Debugger helps you to observe texture changes and deduce batch breaking.</p>
+
+<p>The following example verifies that the dynamic atlas contains all the textures in runtime UI.</p>
+
+<figure>
+<img src="../uploads/Main/uxml/dynamic-atlas.png" alt="The example Dynamic Atlas window contains all the textures in runtime UI.">
+<figcaption>The example Dynamic Atlas window contains all the textures in runtime UI.</figcaption>
+</figure>
+
+<h2>Apply built-in filters</h2>
+
+<p>The dynamic atlas texture starts from a specified minimum size, and grows as needed, doubling horizontally or vertically, up to a specified maximum size. You can define the <a href="UIE-Runtime-Panel-Settings.html#dynamic-atlas-setting">minimum and maximum atlas sizes</a> in the Panel Settings asset. You can also use the filters in the dynamic atlas to decide whether to add a sub-texture to the atlas. </p>
+
+<p>To enable or disable the filters, in the Panel Settings asset’s Inspector window, select the options from <strong>Dynamic Atlas Settings</strong> &gt; <a href="UIE-Runtime-Panel-Settings.html#active-filters"><strong>Active Filters</strong></a> dropdown list. </p>
+
+<h2>Use custom filters</h2>
+
+<p>You can assign a custom filter to <a href="../ScriptReference/UIElements.DynamicAtlasSettings-customFilter.html"><code>PanelSettings.dynamicAtlasSettings.customFilter</code></a> to add or relax constraints on a global or per-texture basis.</p>
+
+<p>The following custom filter example bypasses a large texture from the <a href="UIE-Runtime-Panel-Settings.html#active-filters"><strong>Size</strong></a> filter while keeping the <a href="UIE-Runtime-Panel-Settings.html#active-filters"><strong>Size</strong></a> filter active for other textures:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.UIElements;
+
+class MyCustomFilter : MonoBehaviour
+{
+    public PanelSettings panelSettings;
+    public Texture2D largeTexture;
+
+    void OnEnable() { panelSettings.dynamicAtlasSettings.customFilter = Filter; }
+
+    void OnDisable() { panelSettings.dynamicAtlasSettings.customFilter = null; }
+
+    bool Filter(Texture2D texture, ref DynamicAtlasFilters filtersToApply)
+    {
+        if (texture == largeTexture)
+        {
+            // Disable the Size check for this one.
+            filtersToApply &amp;= ~DynamicAtlasFilters.Size;
+        }
+        return true;
+    }
+}
+</code></pre>
+
+<h2>Manage dynamic atlas size</h2>
+
+<p>When new elements appear in the UI, their textures are added to the dynamic atlas until the atlas reaches or exceeds the Max Atlas Size specified in the Dynamic Atlas Settings.</p>
+
+<p>On devices with limited memory, you might need to set a lower Max Atlas Size than the default, such as <code>2048</code> <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> instead of <code>4096</code> pixels.</p>
+
+<h2>Manage dynamic atlas fragmentation</h2>
+
+<p>When textures are added or removed from the atlas, it can lead to fragmentation, creating small spaces where previous textures were, which are too small to reallocate to other textures.</p>
+
+<p>To maximize the usage of the atlas and avoid fragmentation, you need to manually reset its contents by calling the <a href="../ScriptReference/UIElements.RuntimePanelUtils-ResetDynamicAtlas.html"><code>RuntimePanelUtils.ResetDynamicAtlas()</code></a> extension method, which requires accessing the <code>panel</code> property of a <code>VisualElement</code>.</p>
+
+<p>Consider resetting the dynamic atlas based on your application’s behaviour, for example when you remove or add large amounts of visual elements.</p>
+
+<p>The following shows to use the <a href="../ScriptReference/UIElements.RuntimePanelUtils-ResetDynamicAtlas.html"><code>RuntimePanelUtils.ResetDynamicAtlas()</code></a> extension method:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.UIElements;
+
+[RequireComponent(typeof(UIDocument))]
+class DynamicAtlasResetExample : MonoBehaviour
+{
+    VisualElement rootVisualElement =&gt; GetComponent&lt;UIDocument&gt;().rootVisualElement;
+
+    public void OnEnable()
+    {
+        rootVisualElement.Add(new Button(ResetAtlas) { text = &quot;Reset Dynamic Atlas&quot;});
+    }
+
+    private void ResetAtlas()
+    {
+        rootVisualElement.panel.ResetDynamicAtlas();
+    }
+
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-Runtime-Panel-Settings.html">Panel Settings asset</a></li>
+<li><a href="FrameDebugger.html">Frame Debugger</a></li>
+<li><a href="DrawCallBatching.html">Draw call batching</a></li>
+<li><a href="class-SpriteAtlas.html">Sprite Atlas</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-use-usage-hints-to-reduce-draw-calls-and-geometry-regeneration.html"></a></span><div class="tip">Use usage hints to reduce draw calls and geometry regeneration</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-platform-and-mesh.html"></a></span><div class="tip">Platform and mesh considerations</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

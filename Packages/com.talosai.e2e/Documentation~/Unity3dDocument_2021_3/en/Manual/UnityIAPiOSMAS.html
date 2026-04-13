@@ -1,0 +1,454 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: iOS &amp; Mac App Stores</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="monetization" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UnityIAPiOSMAS.html">English</a></li>
+<li><a href="/cn/current/Manual/UnityIAPiOSMAS.html">中文</a></li>
+<li><a href="/ja/current/Manual/UnityIAPiOSMAS.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UnityIAPiOSMAS.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UnityIAPiOSMAS.html">English</a></li>
+<li><a href="/cn/current/Manual/UnityIAPiOSMAS.html">中文</a></li>
+<li><a href="/ja/current/Manual/UnityIAPiOSMAS.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UnityIAPiOSMAS.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityServices.html">Unity Services</a></li>
+<li><a href="UnityIAP.html">﻿Unity IAP</a></li>
+<li><a href="UnityIAPStoreGuides.html">Store Guides</a></li>
+<li>iOS &amp; Mac App Stores</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UnityIAPStoreGuides.html"></a></span><div class="tip">Store Guides</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnityIAPUniversalWindows.html"></a></span><div class="tip">Universal Windows Platform</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>iOS &amp; Mac App Stores</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>Extended functionality</h2>
+
+<h3>Reading the App Receipt</h3>
+
+<p>An <a href="https://developer.apple.com/library/ios/releasenotes/General/ValidateAppStoreReceipt/Chapters/ValidateRemotely.html">App Receipt</a> is stored on the device’s local storage and can be read as follows:</p>
+
+<pre><code>var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+string receipt = builder.Configure&lt;IAppleConfiguration&gt;().appReceipt;
+</code></pre>
+
+<h3>Checking for payment restrictions</h3>
+
+<p>In App Purchases may be restricted in a device’s settings, which can be checked for as follows:</p>
+
+<pre><code>var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+bool canMakePayments = builder.Configure&lt;IAppleConfiguration&gt;().canMakePayments;
+</code></pre>
+
+<h3>Restoring transactions</h3>
+
+<p>On Apple platforms users must enter their password to retrieve previous transactions so your application must provide users with a button letting them do so. During this process the <code>ProcessPurchase</code> method of your <code>IStoreListener</code> will be invoked for any items the user already owns.</p>
+
+<pre><code>/// &lt;summary&gt;
+/// Your IStoreListener implementation of OnInitialized.
+/// &lt;/summary&gt;
+public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
+{
+    extensions.GetExtension&lt;IAppleExtensions&gt; ().RestoreTransactions (result =&gt; {
+        if (result) {
+            // This does not mean anything was restored,
+            // merely that the restoration process succeeded.
+        } else {
+            // Restoration failed.
+        }
+    });
+}
+</code></pre>
+
+<h3>Refreshing the App Receipt</h3>
+
+<p>Apple provides a mechanism to fetch a new App Receipt from their servers, typically used when no receipt is currently cached in local storage; <a href="https://developer.apple.com/library/ios/documentation/StoreKit/Reference/SKReceiptRefreshRequest_ClassRef/index.html#/apple_ref/occ/cl/SKReceiptRefreshRequest">SKReceiptRefreshRequest</a>.</p>
+
+<p>Note that this will prompt the user for their password.</p>
+
+<p>Unity IAP makes this method available as follows:</p>
+
+<pre><code>/// &lt;summary&gt;
+/// Your IStoreListener implementation of OnInitialized.
+/// &lt;/summary&gt;
+public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
+{
+    extensions.GetExtension&lt;IAppleExtensions&gt; ().RefreshAppReceipt (receipt =&gt; {
+        // This handler is invoked if the request is successful.
+        // Receipt will be the latest app receipt.
+        Console.WriteLine(receipt);
+    },
+    () =&gt; {
+        // This handler will be invoked if the request fails,
+        // such as if the network is unavailable or the user
+        // enters the wrong password.
+    });
+}
+</code></pre>
+
+<h3>Ask to Buy</h3>
+
+<p>iOS 8 introduced a new parental control feature called <a href="https://developer.apple.com/library/ios/technotes/tn2259/_index.html#/apple_ref/doc/uid/DTS40009578-CH1-UPDATE_YOUR_APP_FOR_ASK_TO_BUY">Ask to Buy</a>. </p>
+
+<p>Ask to Buy purchases defer for parent approval. When this occurs, <span class="tooltip"><strong>Unity IAP</strong><span class="tooltiptext">Abbreviation of Unity <strong>In App Purchase</strong><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UnityIAP" aria-label="Go to glossary anchor for UnityIAP">Glossary</a></span></span></span> sends your app a notification as follows:</p>
+
+<pre><code>/// This is called when Unity IAP has finished initialising.
+public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
+{
+    extensions.GetExtension&lt;IAppleExtensions&gt;().RegisterPurchaseDeferredListener(product =&gt; {
+        Console.WriteLine(product.definition.id);
+    });
+}
+</code></pre>
+
+<h4>Enable “Ask-to-Buy” simulation in the Sandbox App Store</h4>
+
+<p>The sample class below demonstrates how to access <code>IAppleExtensions</code> in order to enable Ask-to-Buy simulation in the Sandbox App Store:</p>
+
+<pre><code>using UnityEngine;
+using UnityEngine.Purchasing;
+
+public class AppleSimulateAskToBuy : MonoBehaviour {
+    public void SetSimulateAskToBuy(bool shouldSimulateAskToBuy) {
+        if (Application.platform == RuntimePlatform.IPhonePlayer) {
+            IAppleExtensions extensions = IAPButton.IAPButtonStoreManager.Instance.ExtensionProvider.GetExtension&lt;IAppleExtensions&gt;();
+            extensions.simulateAskToBuy = shouldSimulateAskToBuy;
+        }
+    }
+}
+</code></pre>
+
+<p>When the purchase is approved or rejected, your store’s normal <code>ProcessPurchase</code> or <code>OnPurchaseFailed</code> listener methods are invoked.</p>
+
+<h3>Transaction Receipts</h3>
+
+<p>Sometimes consumable Ask to Buy purchases don’t show up in the App Receipt, in which case you cannot validate them using that receipt. However, <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> provides a Transaction Receipt that contains all purchases, including Ask to Buy. Access the most recent Transaction Receipt string for a given <code>Product</code> using <code>IAppleExtensions</code>. </p>
+
+<p>
+<strong>Note</strong>: Transaction Receipts are not available for Mac builds. Requesting a Transaction Receipt on a Mac build results in an empty string.</p>
+
+<pre><code>#if UNITY_PURCHASING
+
+using System;
+using UnityEngine;
+using UnityEngine.Purchasing;
+
+public class AskToBuy : MonoBehaviour, IStoreListener
+{
+    // Unity IAP objects
+    private IStoreController m_Controller;
+    private IAppleExtensions m_AppleExtensions;
+
+    public AskToBuy ()
+    {
+        var builder = ConfigurationBuilder.Instance (StandardPurchasingModule.Instance ());
+        builder.AddProduct (&quot;100_gold_coins&quot;, ProductType.Consumable, new IDs {
+            { &quot;100_gold_coins_google&quot;, GooglePlay.Name },
+            { &quot;100_gold_coins_mac&quot;, MacAppStore.Name }
+        });
+
+        UnityPurchasing.Initialize (this, builder);
+    }
+
+    /// &lt;summary&gt;
+    /// This will be called when Unity IAP has finished initialising.
+    /// &lt;/summary&gt;
+    public void OnInitialized (IStoreController controller, IExtensionProvider extensions)
+    {
+        m_Controller = controller;
+        m_AppleExtensions = extensions.GetExtension&lt;IAppleExtensions&gt; ();
+
+        // On Apple platforms we need to handle deferred purchases caused by Apple's Ask to Buy feature.
+        // On non-Apple platforms this will have no effect; OnDeferred will never be called.
+        m_AppleExtensions.RegisterPurchaseDeferredListener (OnDeferred);
+    }
+
+    /// &lt;summary&gt;
+    /// This will be called when a purchase completes.
+    /// &lt;/summary&gt;
+    public PurchaseProcessingResult ProcessPurchase (PurchaseEventArgs e)
+    {
+        if (Application.platform == RuntimePlatform.IPhonePlayer ||
+            Application.platform == RuntimePlatform.tvOS) {
+            string transactionReceipt = m_AppleExtensions.GetTransactionReceiptForProduct (e.purchasedProduct);
+            Console.WriteLine (transactionReceipt);
+            // Send transaction receipt to server for validation
+        }    
+        return PurchaseProcessingResult.Complete;
+    }
+
+    /// &lt;summary&gt;
+    /// Called when Unity IAP encounters an unrecoverable initialization error.
+    ///
+    /// Note that this will not be called if Internet is unavailable; Unity IAP
+    /// will attempt initialization until it becomes available.
+    /// &lt;/summary&gt;
+    public void OnInitializeFailed (InitializationFailureReason error)
+    {
+    }
+
+    /// &lt;summary&gt;
+    /// Called when a purchase fails.
+    /// &lt;/summary&gt;
+    public void OnPurchaseFailed (Product i, PurchaseFailureReason p)
+    {
+    }
+
+    /// &lt;summary&gt;
+    /// iOS Specific.
+    /// This is called as part of Apple's 'Ask to buy' functionality,
+    /// when a purchase is requested by a minor and referred to a parent
+    /// for approval.
+    ///
+    /// When the purchase is approved or rejected, the normal purchase events
+    /// will fire.
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;item&quot;&gt;Item.&lt;/param&gt;
+    private void OnDeferred (Product item)
+    {
+        Debug.Log (&quot;Purchase deferred: &quot; + item.definition.id);
+    }
+}
+
+#endif // UNITY_PURCHASING
+</code></pre>
+
+<p>Unlike App Receipts, you cannot validate Transaction Receipts locally. Instead, you must send the receipt string to a remote server for validation. If you already use a remote server to validate App Receipts, send Transaction Receipts to the same Apple endpoint, to receive a JSON response.</p>
+
+<p>Example JSON response:</p>
+
+<pre><code>{
+    &quot;receipt&quot;: {
+        &quot;original_purchase_date_pst&quot;: &quot;2017-11-15 15:25:20 America/Los_Angeles&quot;,
+        &quot;purchase_date_ms&quot;: &quot;1510788320209&quot;,
+        &quot;unique_identifier&quot;: &quot;0ea7808637555b2c633eb07aa1cb0894c821a6f9&quot;,
+        &quot;original_transaction_id&quot;: &quot;1000000352597239&quot;,
+        &quot;bvrs&quot;: &quot;0&quot;,
+        &quot;transaction_id&quot;: &quot;1000000352597239&quot;,
+        &quot;quantity&quot;: &quot;1&quot;,
+        &quot;unique_vendor_identifier&quot;: &quot;01B57C2E-9E91-42FF-9B0D-4983175D6694&quot;,
+        &quot;item_id&quot;: &quot;1141751870&quot;,
+        &quot;original_purchase_date&quot;: &quot;2017-11-15 23:25:20 Etc/GMT&quot;,
+        &quot;product_id&quot;: &quot;100.gold.coins&quot;,
+        &quot;purchase_date&quot;: &quot;2017-11-15 23:25:20 Etc/GMT&quot;,
+        &quot;is_trial_period&quot;: &quot;false&quot;,
+        &quot;purchase_date_pst&quot;: &quot;2017-11-15 15:25:20 America/Los_Angeles&quot;,
+        &quot;bid&quot;: &quot;com.unity3d.unityiap.demo&quot;,
+        &quot;original_purchase_date_ms&quot;: &quot;1510788320209&quot;
+    },
+    &quot;status&quot;: 0
+}
+</code></pre>
+
+<h2>Intercepting Apple promotional purchases</h2>
+
+<p>Apple allows you to promote <a href="https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/StoreKitGuide/PromotingIn-AppPurchases/PromotingIn-AppPurchases.html">in-game purchases</a> through your app’s product page. Unlike conventional in-app purchases, Apple promotional purchases initiate directly from the App Store on iOS and tvOS. The App Store then launches your app to complete the transaction, or prompts the user to download the app if it isn’t installed. </p>
+
+<p>The <code>IAppleConfiguration</code> <code>SetApplePromotionalPurchaseInterceptor</code> callback method intercepts Apple promotional purchases. Use this callback to present parental gates, send <span class="tooltip"><strong>analytics</strong><span class="tooltiptext">Abbreviation of <strong>Unity Analytics</strong><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Analytics" aria-label="Go to glossary anchor for Analytics">Glossary</a></span></span></span> events, or perform other functions before sending the purchase to Apple. The callback uses the <code>Product</code> that the user attempted to purchase. You must call <code>IAppleExtensions.ContinuePromotionalPurchases()</code> to continue with the promotional purchase. This will initiate any queued-up payments.</p>
+
+<p>If you do not set the callback, promotional purchases go through immediately and call <code>ProcessPurchase</code> with the result. </p>
+
+<p>
+<strong>Note</strong>: Calling these APIs on other platforms has no effect.</p>
+
+<pre><code>private IAppleExtensions m_AppleExtensions;
+
+public void Awake() {
+    var module = StandardPurchasingModule.Instance();
+    var builder = ConfigurationBuilder.Instance(module);
+        // On iOS and tvOS we can intercept promotional purchases that come directly from
+        // the App Store.
+        // On other platforms this will have no effect; OnPromotionalPurchase will never be
+        // called.
+    builder.Configure&lt;IAppleConfiguration&gt;().
+     SetApplePromotionalPurchaseInterceptorCallback(OnPromotionalPurchase);
+    Debug.Log(&quot;Setting Apple promotional purchase interceptor callback&quot;);
+}
+
+public void OnInitialized(IStoreController controller, IExtensionProvider extensions) {
+    m_AppleExtensions = extensions.GetExtension&lt;IAppleExtensions&gt;();
+    foreach (var item in controller.products.all) {
+        if (item.availableToPurchase) {                
+            // Set all these products to be visible in the user's App Store
+            m_AppleExtensions.SetStorePromotionVisibility(item, AppleStorePromotionVisibility.Show);
+        }
+    }
+}
+
+private void OnPromotionalPurchase(Product item) {
+    Debug.Log(&quot;Attempted promotional purchase: &quot; + item.definition.id);
+    // Promotional purchase has been detected. 
+    // Handle this event by, e.g. presenting a parental gate.
+    // Here, for demonstration purposes only, we will wait five seconds before continuing 
+    // the purchase.
+    StartCoroutine(ContinuePromotionalPurchases());
+}
+
+private IEnumerator ContinuePromotionalPurchases() {
+    Debug.Log(&quot;Continuing promotional purchases in 5 seconds&quot;);
+    yield return new WaitForSeconds(5);
+    Debug.Log(&quot;Continuing promotional purchases now&quot;);
+    m_AppleExtensions.ContinuePromotionalPurchases (); // iOS and tvOS only
+}
+
+</code></pre>
+
+<h2>Testing</h2>
+
+<p>To test on Apple stores you must be using an iTunes connect test account, which can be created in iTunes connect.</p>
+
+<p>Sign out of the App Store on the iOS device or laptop, launch your application and you will be prompted to log in when you attempt either a purchase or to restore transactions.</p>
+
+<p>If you receive an initialization failure with a reason of <code>NoProductsAvailable</code>, follow this checklist:</p>
+
+<ul>
+<li>iTunes Connect product identifiers must exactly match the product identifiers supplied to Unity IAP</li>
+<li>In-App purchases must be enabled for your application in iTunes Connect</li>
+<li>Products must be cleared for sale in iTunes Connect</li>
+<li>It may take many hours for newly created iTunes Connect products to be available for purchase</li>
+<li>You must agree to the latest iTunes Connect developer agreements and have active bank details</li>
+</ul>
+
+<h2>Mac App Store</h2>
+
+<p>When building a desktop Mac build you must select <code>Mac App Store validation</code> within Unity’s build settings.</p>
+
+<p>Once you have built your App, you must update its info.plist file with your bundle identifier and version strings. Right click on the <code>.app</code> file and click <code>show package contents</code>, locate the <code>info.plist</code> file and update the <code>CFBundleIdentifier</code> string to your application’s bundle identifier.</p>
+
+<p>You must then sign, package and install your application. You will need to run the following commands from an OSX terminal:</p>
+
+<pre><code>codesign -f --deep -s &quot;3rd Party Mac Developer Application: &quot; your.app/Contents/Plugins/unitypurchasing.bundle
+codesign -f --deep -s &quot;3rd Party Mac Developer Application: &quot; your.app
+productbuild --component your.app /Applications --sign &quot;3rd Party Mac Developer Installer: &quot; your.pkg
+</code></pre>
+
+<p>To sign the bundle, you may first need to remove the Contents.meta file if it exists: <code>your.app/Contents/Plugins/unitypurchasing.bundle/Contents.meta</code>
+</p>
+
+<p>In order to install the package correctly you must delete the unpackaged .app file before running the newly created package.</p>
+
+<p>You must then launch your App from the Applications folder. The first time you do so, you will be prompted to enter your iTunes account details, for which you should enter your iTunes Connect test user account login. You will then be able to make test purchases against the sandbox environment.</p>
+
+<hr>
+
+<ul>
+<li><span class="page-edit">2018–05–30 Page published
+</span></li>
+<li><span class="page-history">Ask to Buy, Transaction Receipts, and Intercepting Receipts added in <a href="https://docs.unity3d.com/2017.3/Documentation/Manual/30_search.html?q=newin20173">2017.3</a> <span class="search-words">NewIn20173</span></span></li>
+</ul>
+<!-- area:monetization -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UnityIAPStoreGuides.html"></a></span><div class="tip">Store Guides</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnityIAPUniversalWindows.html"></a></span><div class="tip">Universal Windows Platform</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

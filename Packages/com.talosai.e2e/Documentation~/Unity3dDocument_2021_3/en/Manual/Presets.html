@@ -1,0 +1,247 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Presets</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Presets.html">English</a></li>
+<li><a href="/cn/current/Manual/Presets.html">中文</a></li>
+<li><a href="/ja/current/Manual/Presets.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Presets.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Presets.html">English</a></li>
+<li><a href="/cn/current/Manual/Presets.html">中文</a></li>
+<li><a href="/ja/current/Manual/Presets.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Presets.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AssetWorkflow.html">Asset Workflow</a></li>
+<li>Presets</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ImportActivityWindow.html"></a></span><div class="tip">Import Activity window</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SupportingPresets.html"></a></span><div class="tip">Supporting presets</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Presets</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Presets are assets that you can use to save and apply identical property settings across multiple components, assets, or <a href="comp-ManagerGroup.html">Project Settings</a> windows. You can also use Presets to specify default settings for new components and default <a href="ImportingAssets.html">import settings</a> for assets in the <a href="class-PresetManager.html">Preset Manager</a>
+The Preset Manager supports any importers, components, or scriptable objects you add to the Unity Editor.</p>
+
+<p>You can only apply Presets in the Editor. Presets have no effect at runtime. You can use scripting to <a href="SupportingPresets.html">support presets</a> in your own Monobehaviour, ScriptableObject or ScriptedImporter classes.</p>
+
+<h2>Saving and applying Presets</h2>
+
+<p>Presets allow you to save the property configuration of a component, asset, or Project Settings window as a Preset asset. You can then use this Preset asset to apply the same settings to a different component, asset, or Project Settings window.</p>
+
+<p>For example, you could edit the properties of a <span class="tooltip"><strong>Rigidbody</strong><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Rigidbody.html" href="class-Rigidbody.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span> component, save these settings to a Preset asset, then apply that Preset asset to Rigidbody components in other <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span> component, save these settings to a Preset asset, then apply that Preset asset to Rigidbody components in other <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. The other components in the GameObjects are not affected; the Preset only applies its settings to the Rigidbody component.</p>
+
+<p>You can store Presets in the <code>Assets</code> folder of your project. Use the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html">Project</a> window to view and select Presets to edit in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="ProjectView.html">Project</a> window to view and select Presets to edit in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/PresetAssets.png" alt="Example of Preset assets in the Project window, organized in a Presets sub-folder">
+<figcaption>Example of Preset assets in the <strong>Project</strong> window, organized in a <em>Presets</em> sub-folder</figcaption>
+</figure>
+
+<h2>Saving property settings to a Preset</h2>
+
+<p>To save property settings to a Preset asset, follow the instructions below. You can save property settings while in Edit mode or in Play mode.</p>
+
+<ol>
+<li><p>Select the GameObject, Asset import settings, or Project Settings window from which you want to reuse settings. When you select it, it appears in the <strong>Inspector</strong> window.</p></li>
+<li><p>In the <strong>Inspector</strong> window, configure the properties as you want to save them.</p></li>
+<li><p>Click the Preset selector (the slider icon) at the top-right of the <strong>Inspector</strong> window. <br><img src="../uploads/Main/preset-icon.png" alt="">
+</p></li>
+<li><p>In the Select Preset window, click <strong>Save current to</strong>. <br><img src="../uploads/Main/presets-select-preset-window.png" alt=""><br>A File Save dialog appears.</p></li>
+<li><p>Choose the location of your new Preset, enter its name, and click <strong>Save</strong>.</p></li>
+</ol>
+
+<h2>Applying settings from a Preset</h2>
+
+<p>There are two ways to apply a Preset: the <strong>Select Preset</strong> window, or for component Presets, you can also drag and drop a Preset from the <span class="tooltip"><strong>Project</strong><span class="tooltiptext">In Unity, you use a project to design and develop a game. A project stores all of the files that are related to a game, such as the asset and Scene files. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about 2Dor3D.html" href="2Dor3D.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Project" aria-label="Go to glossary anchor for Project">Glossary</a></span></span></span> window onto the GameObject that contains that component.</p>
+
+<p>
+<strong>Note:</strong> Applying a Preset copies properties from the Preset to the item. It doesn’t link the Preset to the item. Changes you make to the Preset do not affect the items you have previously applied the Preset to.</p>
+
+<p>To apply a Preset via the <strong>Select Preset</strong> window:</p>
+
+<ol>
+<li><p>For GameObjects or assets you want to apply a Preset to, select them so that they appear in the <strong>Inspector</strong> window. For Project Settings that you want to apply a Preset to, open them in the <span class="tooltip"><strong>Project Settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html" href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span> window.</p></li>
+<li><p>In the <strong>Inspector</strong>, click the Preset selector (the slider icon).</p></li>
+<li>
+<p>In the <strong>Select Preset</strong> window, search for and select the Preset to apply.</p>
+
+<p>Unity applies this Preset to the component, asset, or Project Settings window.</p>
+</li>
+<li><p>Close the <strong>Select Preset</strong> window.</p></li>
+</ol>
+
+<p>If you apply a component Preset via drag-and-drop, Unity’s behavior depends on the state of your GameObject:</p>
+
+<ul>
+<li>If you drop the Preset on an existing GameObject in the Hierarchy window, Unity adds a new component and copies properties from the Preset.</li>
+<li>If you drop the Preset on an empty area in the Hierarchy window, Unity creates a new, empty GameObject and adds a component with properties copied from the Preset.</li>
+<li>If you drop the Preset on the Inspector window onto the title of an existing component, Unity copies properties from the Preset.</li>
+<li>If you drop the Preset on an empty area in the Inspector window, Unity adds a new component and copies properties from the Preset.</li>
+</ul>
+
+<h3>Applying partial Presets</h3>
+
+<p>You can choose to only apply some properties from a Preset and exclude others. To do this:</p>
+
+<ol>
+<li><p>Select your Preset in the <strong>Project</strong> window.</p></li>
+<li><p>In the <strong>Inspector</strong>, right-click a property and choose <strong>Exclude Property</strong>. The window displays a red horizontal line next to excluded properties.<br>
+<img src="../uploads/Main/preset-exclude-property.png" alt="">
+</p></li>
+<li><p>Apply the Preset to the target component, asset, or Project settings.</p></li>
+</ol>
+
+<p>
+<strong>Note:</strong> To select all or clear all checkboxes in a Preset, select the <strong>More items</strong> menu (<strong>⋮</strong>) or right-click the Preset name, and select <strong>Include all properties</strong> or <strong>Exclude all properties</strong>. You can still adjust individual properties if you need to.</p>
+
+<p>You can also use the Exclude option for Presets that you then set as the default configuration for components and asset importers. See <a href="class-PresetManager.html">Preset Manager</a> for more details on how to do this.</p>
+
+<h2>Editing a Preset</h2>
+
+<p>To edit a Preset asset, select it from the <strong>Project</strong> window and view it in the <strong>Inspector</strong> window.</p>
+
+<p>
+<strong>Note:</strong> When you change the properties in a Preset, your changes do not affect items you have already applied the Preset to. For example, if you apply a Preset for a Rigidbody component to a GameObject, and then edit the Preset, the settings in the Rigidbody component do not change.</p>
+
+<figure>
+<img src="../uploads/Main/preset-edit-preset.png" alt="Editing a Preset in the Inspector window">
+<figcaption>Editing a Preset in the Inspector window</figcaption>
+</figure>
+
+<h2>Importing Assets using Presets by folder</h2>
+
+<p>You can use a <a href="DefaultPresetsByFolder.html">script</a> to apply a Preset to an Asset based on the location of the Asset in the <em>Project</em> window.</p>
+
+<h2>Exporting Preset Assets</h2>
+
+<p>Use Presets to streamline your team’s workflows. You can even use Presets to specify settings for <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html">Project Settings</a> windows, including the <strong>Preset</strong> settings themselves. Use this feature to configure a project then <a href="AssetPackagesCreate.html">export it</a> as a custom <span class="tooltip"><strong>asset package</strong><span class="tooltiptext">A collection of files and data from Unity projects, or elements of projects, which are compressed and stored in one file, similar to Zip files, with the <code>.unitypackage</code> extension. Asset packages are a handy way of sharing and re-using Unity projects and collections of assets. <a href="AssetPackages.html" href="comp-ManagerGroup.html">Project Settings</a> windows, including the <strong>Preset</strong> settings themselves. Use this feature to configure a project then <a href="AssetPackagesCreate.html">export it</a> as a custom <span class="tooltip"><strong>asset package</strong><span class="tooltiptext">A collection of files and data from Unity projects, or elements of projects, which are compressed and stored in one file, similar to Zip files, with the <code>.unitypackage</code> extension. Asset packages are a handy way of sharing and re-using Unity projects and collections of assets. <a href="AssetPackages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Assetpackage" aria-label="Go to glossary anchor for Assetpackage">Glossary</a></span></span></span>. Your team members can <a href="AssetPackagesImport.html">import</a> this asset package into their projects.</p>
+
+<ol>
+<li>In the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, select the Presets you want to export .</li>
+<li>In the Unity menu, go to <strong>Assets &gt; Export Package</strong>, or right-click inside the Project window and choose <strong>Export Package</strong>.<br>
+The <strong>Exporting package</strong> window displays the items to export.</li>
+<li>If your Presets contain references to assets you want to include in the package, enable <strong>Include dependencies</strong>. This option includes <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> that are <span class="tooltip"><strong>direct dependencies</strong><span class="tooltiptext">A <strong>direct</strong> dependency occurs when your project “requests” a specific package version. To create a direct dependency, you add that package and version to the <strong>dependencies</strong> property in your project manifest (expressed in the form <code>package_name@package_version</code>). <a href="upm-dependencies.html" href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> that are <span class="tooltip"><strong>direct dependencies</strong><span class="tooltiptext">A <strong>direct</strong> dependency occurs when your project “requests” a specific package version. To create a direct dependency, you add that package and version to the <strong>dependencies</strong> property in your project manifest (expressed in the form <code>package_name@package_version</code>). <a href="upm-dependencies.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Directdependency" aria-label="Go to glossary anchor for Directdependency">Glossary</a></span></span></span> of the selected assets.</li>
+<li>If your Presets contain references to scripts that might depend on other scripts, enable <strong>Include all scripts</strong>. This option reduces the likelihood of compilation errors when using the exported package in another project.</li>
+<li>Click <strong>Export</strong>.</li>
+<li>Choose where you want to store the package, enter a file name, and click <strong>Save</strong>. Unity saves the package as a .unitypackage file.</li>
+</ol>
+
+<h2>Using Presets for transitions of Animation State nodes</h2>
+
+<p>You can save and apply Presets for <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-State.html">Animation State</a> nodes. However, the <span class="tooltip"><a href="class-Transition.html">transitions</a><span class="tooltiptext">The blend from one state to another in a state machine, such as transitioning a character from a walk to a jog animation. Transitions define how long the blend between states should take, and the conditions that activate the blend. <a href="class-Transition.html" href="class-State.html">Animation State</a> nodes. However, the <span class="tooltip"><a href="class-Transition.html">transitions</a><span class="tooltiptext">The blend from one state to another in a state machine, such as transitioning a character from a walk to a jog animation. Transitions define how long the blend between states should take, and the conditions that activate the blend. <a href="class-Transition.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Transition" aria-label="Go to glossary anchor for Transition">Glossary</a></span></span></span> in the Preset are shared among Presets and the nodes that you apply the Preset to. For example, you apply a Preset to two different nodes in the <span class="tooltip"><a href="AnimatorWindow.html">Animator window</a><span class="tooltiptext">The window where the Animator Controller is visualized and edited. <a href="AnimatorWindow.html" href="Glossary.html#Transition" aria-label="Go to glossary anchor for Transition">Glossary</a></span></span></span> in the Preset are shared among Presets and the nodes that you apply the Preset to. For example, you apply a Preset to two different nodes in the <span class="tooltip"><a href="AnimatorWindow.html">Animator window</a><span class="tooltiptext">The window where the Animator Controller is visualized and edited. <a href="AnimatorWindow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorWindow" aria-label="Go to glossary anchor for AnimatorWindow">Glossary</a></span></span></span>. In the Inspector window, you edit the settings for one of the transitions in the first node. Your change also appears in the other node and in the Preset.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ImportActivityWindow.html"></a></span><div class="tip">Import Activity window</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SupportingPresets.html"></a></span><div class="tip">Supporting presets</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Enable optional features for Embedded Linux</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/embedded-linux-optional-features.html">English</a></li>
+<li><a href="/cn/current/Manual/embedded-linux-optional-features.html">中文</a></li>
+<li><a href="/ja/current/Manual/embedded-linux-optional-features.html">日本語</a></li>
+<li><a href="/kr/current/Manual/embedded-linux-optional-features.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/embedded-linux-optional-features.html">English</a></li>
+<li><a href="/cn/current/Manual/embedded-linux-optional-features.html">中文</a></li>
+<li><a href="/ja/current/Manual/embedded-linux-optional-features.html">日本語</a></li>
+<li><a href="/kr/current/Manual/embedded-linux-optional-features.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="embedded-systems.html">Embedded systems</a></li>
+<li><a href="embedded-linux.html">Embedded Linux</a></li>
+<li><a href="embedded-linux-develop.html">Develop for Embedded Linux</a></li>
+<li>Enable optional features for Embedded Linux</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="embedded-linux-autodetect-plugins.html"></a></span><div class="tip">Autodetect plug-ins for Embedded Linux</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="embedded-linux-troubleshooting.html"></a></span><div class="tip">Troubleshooting for Embedded Linux</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Enable optional features for Embedded Linux</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can enable the following optional features to improve performance of your applications.</p>
+
+<h2>Loading screen</h2>
+
+<p>When you start the Embedded Linux player, a separate loading screen appears (typically, within 200 ms on our reference systems) containing the 2D image configured in the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about embedded-linux-player-settings.html">Embedded Linux player settings</a> window. The initial <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="embedded-linux-player-settings.html">Embedded Linux player settings</a> window. The initial <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> content is still available except that it loads behind the loading screen.</p>
+
+<h2>Shader cache persistence for GLES3</h2>
+
+<p>Embedded Linux supports binary <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> caching on the device where the Unity Player is installed for better startup timings. The cache is created at runtime after you load a shader. As this cache is written to the temporary folder:<code>[TEMP]/[COMPANY_NAME]/[PROJECT_NAME]/UnityShaderCache/</code>, it can be wiped when you restart the system.</p>
+
+<p>To use shader caching when your system restarts, copy the cache into the Player data by following these steps:</p>
+
+<ol>
+<li>Deploy the Unity Player to the target system.</li>
+<li>Run the application and make sure all shaders are touched.</li>
+<li>Copy all the files from <code>[TEMP]/[COMPANY_NAME]/[PROJECT_NAME]/UnityShaderCache/</code> to <code>[PATH_TO_PLAYER]/Data/UnityShaderCache/</code>.</li>
+</ol>
+
+<p>
+<strong>Note</strong>:</p>
+
+<ul>
+<li>You must refresh the cache every time the player is updated.</li>
+<li>As the cache is device specific, you must only share it between devices with the exact same hardware and software configuration.</li>
+</ul>
+
+<h2>Pipeline cache persistence for Vulkan</h2>
+
+<p>Embedded Linux supports binary Vulkan pipeline caching on the device where the Unity Player is installed for better startup timings. The binary Vulkan pipeline cache is created at runtime when you use Vulkan pipelines. As this cache is written to the temporary file:<code>[TEMP]/[COMPANY_NAME]/[PROJECT_NAME]/vulkan_pso_cache.bin</code>, you can wipe it when you restart the system.</p>
+
+<p>To use pipeline caching when your system restarts, copy the cache into the Player data by following these steps:</p>
+
+<ol>
+<li>Deploy the Unity Player to the target system.</li>
+<li>Run the application and make sure all pipelines are being used.</li>
+<li>Copy <code>[TEMP]/[COMPANY_NAME]/[PROJECT_NAME]/vulkan_pso_cache.bin</code> file to <code>[PATH_TO_PLAYER]/Data</code>.</li>
+</ol>
+
+<p>
+<strong>Note</strong>:</p>
+
+<ul>
+<li>You must refresh the cache every time the player is updated.</li>
+<li>As the cache is device specific, you must only share it between devices with the exact same hardware and software configuration.</li>
+</ul>
+
+<h2>Startup time logging</h2>
+
+<p>Startup time logging is the length of time that it takes an application to start up. It’s often used as a critical metric for system safety and regulatory requirements.</p>
+
+<p>Startup time logging in Embedded Linux include the duration or total time (in milliseconds) since the application is launched. There are two types of Startup time logging:</p>
+
+<ul>
+<li>
+<strong>Real:</strong> This is the actual wall or clock time, similar to a stopwatch used for calculating the time.</li>
+<li>
+<strong>User:</strong> This is the time an application or one of its threads has spent on a CPU core. This can be higher than the Real time if multiple threads are busy when an application is starting up.</li>
+</ul>
+
+<p>To add a startup timing log from C#, use:</p>
+
+<p><code>HmiPlatform.LogStartupTiming(&quot;log tag&quot;);</code></p>
+
+<p>The results appear in the following <code>Player.log</code> line:</p>
+
+<p><code>[TIMING::STARTUP] log tag: Real: xxx ms | User: yyy ms</code></p>
+
+<p>It contains the <strong>log tag</strong>, <strong>wall time (xxx)</strong>, and <strong>cpu time (yyy)</strong> in milliseconds since the player’s start time.</p>
+
+<p>You can guard the code using <code>#if UNITY_EMBEDDED_LINUX_API ... #endif</code>.</p>
+
+<p>
+<strong>Note:</strong> Use the same terminology as the <strong>Time</strong> command to refer to wall vs. CPU time. For more information, refer to the main <a href="https://man7.org/linux/man-pages/man7/time.7.html">Linux</a> manual.</p>
+
+<h3>Example output</h3>
+
+<pre><code class="plaintext">[TIMING::STARTUP] Initial probing done: Real: 19 ms | User: 11 ms
+[TIMING::STARTUP] SDL Initialized: Real: 64 ms | User: 54 ms
+[TIMING::STARTUP] Scripting runtime loaded: Real: 97 ms | User: 86 ms
+[TIMING::STARTUP] Plugins loaded: Real: 97 ms | User: 87 ms
+[TIMING::STARTUP] Engine initialized (nogfx): Real: 104 ms | User: 94 ms
+[TIMING::STARTUP] Player Prefs loaded: Real: 104 ms | User: 94 ms
+[TIMING::STARTUP] Screen initialized: Real: 139 ms | User: 112 ms
+[TIMING::STARTUP] Engine initialized (gfx): Real: 187 ms | User: 161 ms
+[TIMING::STARTUP] Gfx initialized: Real: 190 ms | User: 163 ms
+[TIMING::STARTUP] Input initialized: Real: 190 ms | User: 163 ms
+[TIMING::STARTUP] SPLASH - Begin: Real: 190 ms | User: 164 ms
+[TIMING::STARTUP] SPLASH - Primary scene assets loaded (async): Real: 2197 ms | User: 1670 ms
+[TIMING::STARTUP] SPLASH - All engine initial states established: Real: 2197 ms | User: 1670 ms
+</code></pre>
+
+<p>Output from a custom event using the Script API</p>
+
+<p><code>[TIMING::STARTUP] HELLO!!: Real: 2198 ms | User: 1671 ms</code></p>
+
+<p>When you specify <code>platform-hmi-quit-after-frame</code> command line argument, the log contains the following information up to frame number <code>X</code>, where, <code>X</code> is the number of frames after which the application quits.</p>
+
+<p><code>[TIMING::STARTUP] Frame 1 rendered: Real: 2209 ms | User: 1687 ms</code></p>
+
+<p><code>[TIMING::STARTUP] Frame 2 rendered: Real: 2210 ms | User: 1692 ms</code></p>
+
+<h2>
+<a name="EVDEV" aria-hidden="true"></a>EVDEV input handling with Wayland</h2>
+
+<p>To enable the <code>EVDEV SDL2</code> input driver while running in Wayland, start the player with the <code>-platform-embedded-linux-wayland-enable-evdev-input</code> argument. </p>
+
+<h2>Force to use Wayland</h2>
+
+<p>In a system where both X11 and Wayland windowing systems are available, you can force the Unity Player to use Wayland by setting the environment variable to <code>SDL_VIDEODRIVER=wayland</code>.</p>
+
+<h2>Command line arguments</h2>
+
+<p>You can launch the Unity Embedded Linux Player from the command line and pass arguments to change how the Player executes.</p>
+
+<p>
+<strong>Note:</strong> All command line arguments have precedence over the settings configured in the Unity Editor.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">CLI argument</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>-platform-hmi-force-srgb-blit</code></td>
+	<td style="text-align:left;">Change the forced <code>srgb-blit</code> setting. For more information, refer to <a href="embedded-linux-player-settings.html"><strong>Player Settings</strong></a> &gt; <strong>Rendering</strong> &gt; <strong>Color Space</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-platform-hmi-quit-after-frame</code></td>
+	<td style="text-align:left;">Enable logging. Refer to <a href="embedded-linux-player-settings.html"><strong>Player Settings</strong></a> &gt; <strong>Configuration</strong> &gt; <strong>Logging</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-platform-hmi-log-startup-times</code></td>
+	<td style="text-align:left;">Enable logging. Refer to <a href="embedded-linux-player-settings.html"><strong>Player Settings</strong></a> &gt; <strong>Configuration</strong> &gt; <strong>Logging</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-platform-hmi-single-gl-context</code></td>
+	<td style="text-align:left;">Disable context sharing for GLES. <strong>Note:</strong> The arguments disable multi-display support.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-platform-hmi-cpu-configuration &lt;configuration&gt;</code></td>
+	<td style="text-align:left;">Specify a CPU configuration for the player. This argument expects a string containing a combination of the letters H (high performance core), L (low performance core) and/or D (disable core). For example, <code>DHLL</code> for disabling the usage of the first core, tagging the second as High and the third and forth as Low performance on 4+ core CPU. Refer to <a href="embedded-linux-player-settings.html"><strong>Player Settings</strong></a> &gt; <strong>Configuration</strong> &gt; <strong>CPU configuration</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-platform-hmi-player-data-path</code></td>
+	<td style="text-align:left;">Enter the directory path on the system where you want to save the <code>.config</code> and log files. Refer to <a href="embedded-linux-player-settings.html"><strong>Player Settings</strong></a> &gt; <strong>Configuration</strong> &gt; <strong>Player Data path</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-platform-hmi-force-vsync-count [C]</code></td>
+	<td style="text-align:left;">The number of vertical syncs that are allowed to pass between each frame. Where, setting 0 disables <span class="tooltip"><strong>vsync</strong><span class="tooltiptext">Vertical synchronization (VSync) is a display setting that caps a game’s frame rate to match the refresh rate of a monitor, to prevent image tearing.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VSync" aria-label="Go to glossary anchor for VSync">Glossary</a></span></span></span> completely, –1 will use the value set in <code>QualitySettings</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-platform-embedded-linux-enable-gamepadinput</code></td>
+	<td style="text-align:left;">Change the game controller setting. Refer to <a href="embedded-linux-player-settings.html"><strong>Player Settings</strong></a> &gt; <strong>Configuration</strong> &gt; <strong>Enable Game Controllers</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-platform-embedded-linux-offscreen-video</code></td>
+	<td style="text-align:left;">Configure player to use offscreen rendering driver from SDL2. This is helpful for simulations and creating a render server. All rendering is offscreen but will still be GPU-accelerated. <strong>Note:</strong> When using this feature, you can cap CPU/GPU usage by setting <code>Application.targetFrameRate</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-platform-embedded-linux-wayland-enable-evdev-input</code></td>
+	<td style="text-align:left;">Enable the EVDEV SDL2 input driver while running in Wayland. For more information, refer to <a href="#EVDEV">EVDEV input handling with Wayland</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Additional resources:</h3>
+
+<ul>
+<li><a href="embedded-linux-player-settings.html">Embedded Linux Player settings</a></li>
+<li><a href="https://man7.org/linux/man-pages/man7/time.7.html">Linux manual pages</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="embedded-linux-autodetect-plugins.html"></a></span><div class="tip">Autodetect plug-ins for Embedded Linux</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="embedded-linux-troubleshooting.html"></a></span><div class="tip">Troubleshooting for Embedded Linux</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

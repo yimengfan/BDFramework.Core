@@ -1,0 +1,358 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: The Background Tasks window</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/BackgroundTasksWindow.html">English</a></li>
+<li><a href="/cn/current/Manual/BackgroundTasksWindow.html">中文</a></li>
+<li><a href="/ja/current/Manual/BackgroundTasksWindow.html">日本語</a></li>
+<li><a href="/kr/current/Manual/BackgroundTasksWindow.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/BackgroundTasksWindow.html">English</a></li>
+<li><a href="/cn/current/Manual/BackgroundTasksWindow.html">中文</a></li>
+<li><a href="/ja/current/Manual/BackgroundTasksWindow.html">日本語</a></li>
+<li><a href="/kr/current/Manual/BackgroundTasksWindow.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="UsingTheEditor.html">Unity's interface</a></li>
+<li>The Background Tasks window</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="StatusBar.html"></a></span><div class="tip">The status bar</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Console.html"></a></span><div class="tip">Console Window</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>The Background Tasks window</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Background Tasks window displays the progress of any running asynchronous tasks. For example, you can see the progress for <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-ShaderCompileTargets.html">shader compilation</a>, <span class="tooltip"><a href="Lightmappers.html">lightmap</a><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a href="Lightmapping.html" href="SL-ShaderCompileTargets.html">shader compilation</a>, <span class="tooltip"><a href="Lightmappers.html">lightmap</a><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> baking, and <span class="tooltip"><a href="OcclusionCulling.html">occlusion culling</a><span class="tooltiptext">A process that disables rendering GameObjects that are hidden (occluded) from the view of the camera. <a href="OcclusionCulling.html" href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> baking, and <span class="tooltip"><a href="OcclusionCulling.html">occlusion culling</a><span class="tooltiptext">A process that disables rendering GameObjects that are hidden (occluded) from the view of the camera. <a href="OcclusionCulling.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Occlusionculling" aria-label="Go to glossary anchor for Occlusionculling">Glossary</a></span></span></span>.</p>
+
+<p>To open the Background Tasks window, do one of the following:</p>
+
+<ul>
+<li>From the menu, select <strong>Window</strong> &gt; <strong>General</strong> &gt; <strong>Progress</strong>.</li>
+<li>From the Unity Editor <a href="StatusBar.html">status bar</a>, click the global progress bar or the activity indicator (spinner).</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/window-bg-tasks-overview.png" alt="The Background Tasks Window">
+<figcaption>The Background Tasks Window</figcaption>
+</figure>
+
+<ol>
+<li><p>
+<strong><span class="tooltip"><strong>Toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span></strong>: Provides options to <a href="#filtering-tasks-by-status">filter tasks</a> and <a href="#clearing-inactive-tasks">clear inactive tasks</a> from the list.</p></li>
+<li>
+<p>
+<strong>Task list</strong>: Displays <a href="#task-information">progress information</a> about each task for the following:</p>
+
+<ul>
+<li>Active tasks, including tasks that have stopped responding.</li>
+<li>Some finished tasks. By default, Unity removes these from the list, but some are designed to stay in the list until you <a href="#clearing-inactive-tasks">clear them</a> manually.</li>
+<li>Failed and cancelled tasks.</li>
+</ul>
+</li>
+</ol>
+
+<p><a name="task-information" aria-hidden="true"></a></p>
+
+<h2>Task information</h2>
+
+<p>Each entry in the Background Tasks window displays the following information about the task.</p>
+
+<figure>
+<img src="../uploads/Main/window-bg-tasks-task.png" alt="Components of a background task entry">
+<figcaption>Components of a background task entry</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Screenshot label</strong></th>
+	<th style="text-align:left;"><strong>Section</strong></th>
+	<th style="text-align:left;"><strong>Displays</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">1</td>
+	<td style="text-align:left;">Task name/description</td>
+	<td style="text-align:left;">A name or short description for the task.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">2</td>
+	<td style="text-align:left;">Progress bar</td>
+	<td style="text-align:left;">Indicates how close the task is to completion.<br><br> If the task is indeterminate, because its progress is not measurable, the bar shows a small filled region that moves from side to side until the task is finished.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">3</td>
+	<td style="text-align:left;">Percent complete</td>
+	<td style="text-align:left;">Shows how close the task is to completion, as a percentage.<br><br> For indeterminate tasks, whose progress is not measurable, this area is empty.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">4</td>
+	<td style="text-align:left;">Cancel</td>
+	<td style="text-align:left;">Click to cancel an active task. <br><br>If the task cannot be cancelled, this icon does not appear.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">5</td>
+	<td style="text-align:left;">Status</td>
+	<td style="text-align:left;">Optionally displays a short description of the current activity for an active task. <br><br> When the task finishes, this area displays its final <a href="#viewing-task-status">status</a> (for example, finished, failed, or cancelled).</td>
+</tr>
+<tr>
+	<td style="text-align:left;">6</td>
+	<td style="text-align:left;">Time elapsed/remaining/total</td>
+	<td style="text-align:left;">When an active task takes longer than a few seconds, displays either the current time elapsed or the estimated time remaining. <br><br>When the task finishes, this area displays the total time elapsed.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Subtasks</h3>
+
+<p>Some tasks spawn subtasks. The progress window displays an overall progress entry in the parent task (1), and a sub progress entry for each child task (2).</p>
+
+<figure>
+<img src="../uploads/Main/window-bg-tasks-subtasks.png" alt="Subtasks in the Background Tasks window">
+<figcaption>Subtasks in the Background Tasks window</figcaption>
+</figure>
+
+<p>Monitor subtasks to determine which part of a complex task takes the most time. This is useful for operations like lightmap baking, which can have hundreds of subtasks.</p>
+
+<p><a name="viewing-task-status" aria-hidden="true"></a></p>
+
+<h2>View task status</h2>
+
+<p>Background tasks can have the following statuses:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Status</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Icon</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Active</td>
+	<td style="text-align:left;">The task is running and reports progress as percent complete, or estimated time remaining.</td>
+	<td style="text-align:left;">None</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Indeterminate</td>
+	<td style="text-align:left;">The task is running and reports progress, but cannot determine how close it is to being complete.</td>
+	<td style="text-align:left;">None</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Finished</td>
+	<td style="text-align:left;">The task finished successfully</td>
+	<td style="text-align:left;">
+<img src="../uploads/Main/CompletedTask@2x.png" alt=""><br>(check mark)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Unresponsive</td>
+	<td style="text-align:left;">The task has not reported any progress for five seconds.</td>
+	<td style="text-align:left;">None</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Cancelled</td>
+	<td style="text-align:left;">The task is no longer active because you cancelled it manually.<br><br>Some tasks cannot be cancelled from the Background Tasks window.</td>
+	<td style="text-align:left;">
+<img src="../uploads/Main/Warning@2x.png" alt=""><br>(warning symbol)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Failed</td>
+	<td style="text-align:left;">The task is no longer active because it failed</td>
+	<td style="text-align:left;">
+<img src="../uploads/Main/Error@2x.png" alt=""><br>(error symbol)</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="filtering-tasks-by-status" aria-hidden="true"></a></p>
+
+<h3>Filter tasks by status</h3>
+
+<p>Use the filter options in the Background Tasks window toolbar to hide and show different types of tasks.</p>
+
+<figure>
+<img src="../uploads/Main/window-bg-tasks-filters.png" alt="Filter toggles in the Background Tasks window">
+<figcaption>Filter toggles in the Background Tasks window</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Filter option</th>
+	<th style="text-align:left;">Shows or hides</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<img src="../uploads/Main/CompletedTask@2x.png" alt=""><br>(check mark)</td>
+	<td style="text-align:left;">Finished tasks</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<img src="../uploads/Main/Warning@2x.png" alt=""><br>(warning symbol)</td>
+	<td style="text-align:left;">Cancelled and unresponsive tasks</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<img src="../uploads/Main/Error@2x.png" alt=""><br>(error symbol)</td>
+	<td style="text-align:left;">Failed tasks</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Cancel active tasks</h2>
+
+<p>You can cancel some running tasks directly from the Background Tasks window. To cancel a running task click the <strong>cancel</strong> (<strong>x</strong>) icon.</p>
+
+<p><a name="clearing-inactive-tasks" aria-hidden="true"></a></p>
+
+<h2>Clear inactive tasks</h2>
+
+<p>Click the <strong>Clear inactive</strong> button in the toolbar to remove all inactive tasks from the list.</p>
+
+<p>Unity automatically clears most finished tasks from the list. However, some tasks are designed to stay in the list until you clear them manually.</p>
+
+<p>Failed and cancelled tasks also stay in the list until you clear them.</p>
+
+<p>To clear unresponsive tasks, you must cancel them first.</p>
+
+<h2>View global progress</h2>
+
+<p>The Unity Editor <a href="StatusBar.html">status bar</a> displays a global progress bar that shows the aggregate overall progress of all active tasks. It does not include finished, failed, or cancelled tasks.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="StatusBar.html"></a></span><div class="tip">The status bar</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Console.html"></a></span><div class="tip">Console Window</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

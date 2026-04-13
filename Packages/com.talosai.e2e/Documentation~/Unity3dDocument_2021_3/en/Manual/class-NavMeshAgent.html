@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: NavMesh Agent</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-NavMeshAgent.html">English</a></li>
+<li><a href="/cn/current/Manual/class-NavMeshAgent.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-NavMeshAgent.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-NavMeshAgent.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-NavMeshAgent.html">English</a></li>
+<li><a href="/cn/current/Manual/class-NavMeshAgent.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-NavMeshAgent.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-NavMeshAgent.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Navigation.html">Navigation and Pathfinding</a></li>
+<li>Navigation Reference</li>
+<li>NavMesh Agent</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="nav-MixingComponents.html"></a></span><div class="tip">Using NavMesh Agent with Other Components</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-NavMeshObstacle.html"></a></span><div class="tip">Nav Mesh Obstacle</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>NavMesh Agent</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>NavMeshAgent components help you to create characters which avoid each other while moving towards their goal. Agents reason about the game world using the <span class="tooltip"><strong>NavMesh</strong><span class="tooltiptext">A mesh that Unity generates to approximate the walkable areas and obstacles in your environment for path finding and AI-controlled navigation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about nav-BuildingNavMesh.html" href="nav-BuildingNavMesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#NavMesh" aria-label="Go to glossary anchor for NavMesh">Glossary</a></span></span></span> and they know how to avoid each other as well as other moving obstacles. Pathfinding and spatial reasoning are handled using the scripting API of the NavMesh Agent.</p>
+
+<figure>
+<img src="../uploads/Main/NavMeshAgent.png" alt="">
+</figure>
+
+<h2>Properties</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><em>Agent Size</em></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Radius</strong></td>
+	<td style="text-align:left;">Radius of the agent, used to calculate <span class="tooltip"><strong>collisions</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span> between obstacles and other agents.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Height</strong></td>
+	<td style="text-align:left;">The height clearance the agent needs to pass below an obstacle overhead.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Base offset</strong></td>
+	<td style="text-align:left;">Offset of the collision cylinder in relation to the transform pivot point.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><em>Steering</em></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Speed</strong></td>
+	<td style="text-align:left;">Maximum movement speed (in world units per second).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Angular Speed</strong></td>
+	<td style="text-align:left;">Maximum speed of rotation (degrees per second).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Acceleration</strong></td>
+	<td style="text-align:left;">Maximum acceleration (in world units per second squared).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Stopping distance</strong></td>
+	<td style="text-align:left;">The agent will stop when this close to the goal location.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Auto Braking</strong></td>
+	<td style="text-align:left;">When enabled, the agent will slow down when reaching the destination. You should disable this for behaviors such patrolling, where the agent should move smoothly between multiple points</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><em>Obstacle Avoidance</em></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Quality</strong></td>
+	<td style="text-align:left;">Obstacle avoidance quality. If you have high number of agents you can save CPU time by reducing the obstacle avoidance quality. Setting avoidance to none, will only resolve collision, but will not try to actively avoid other agents and obstacles.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Priority</strong></td>
+	<td style="text-align:left;">Agents of lower priority will be ignored by this agent when performing avoidance. The value should be in the range 0–99 where lower numbers indicate higher priority.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><em>Path Finding</em></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Auto Traverse OffMesh Link</strong></td>
+	<td style="text-align:left;">Set to true to automatically traverse OffMesh links. You should turn this off when you want to use animation or some specific way to traverse OffMesh links.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Auto Repath</strong></td>
+	<td style="text-align:left;">When enabled the agent will try to find path again when it reaches the end of a partial path. When there is no path to the destination, a partial path is generated to the closest reachable location to the destination.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Area Mask</strong></td>
+	<td style="text-align:left;">Area mask describes which <a href="nav-AreasAndCosts.html">area types</a> the agent will consider when finding a path. When you prepare meshes for NavMesh baking, you can set each meshes area type. For example you can mark stairs with special area type, and forbid some character types from using the stairs.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Details</h2>
+
+<p>The agent is defined by an upright cylinder whose size is specified by the <em>Radius</em> and <em>Height</em> properties. The cylinder moves with the object but always remains upright even if the object itself rotates. The shape of the cylinder is used to detect and respond to collisions between other agents and obstacles. When the <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>’s anchor point is not at the base of the cylinder, you can use the <em>Base Offset</em> property to take up the height difference.</p>
+
+<figure>
+<img src="../uploads/Main/NavMeshAgentOffset.svg" alt="">
+</figure>
+
+<p>The height and radius of the cylinder are actually specified in <em>two</em> different places: the <a href="nav-BuildingNavMesh.html">NavMesh bake settings</a> and the properties of the individual agents.</p>
+
+<ul>
+<li>
+<em>NavMesh bake settings</em> describe how all the NavMesh Agents are colliding or avoiding the static world geometry. In order to keep memory on budget and CPU load in check, only one size can be specified in the bake settings.</li>
+<li>
+<em>NavMesh Agent properties</em> values describe how the agent collides with moving obstacles and other agents.</li>
+</ul>
+
+<p>Most often you set the size of the agent the same in both places. But, for example, a heavy soldier may have larger radius, so that other agents will leave more space around him, but otherwise he’ll avoid the environment just the same.</p>
+
+<h3>Additional resources</h3>
+
+<ul>
+<li>
+<a href="nav-CreateNavMeshAgent.html">Creating a NavMesh Agent</a> – workflow on how to create a NavMesh Agent.</li>
+<li>
+<a href="nav-InnerWorkings.html">Inner Workings of the Navigation System</a> - learn more about how obstacles are used as part of navigation.</li>
+<li>
+<a href="../ScriptReference/AI.NavMeshAgent.html">NavMesh Agent scripting reference</a> - full description of the NavMeshAgent scripting API.</li>
+</ul>
+<!-- area:authoring -->
+
+<p><span class="search-words">NavMeshAgent</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="nav-MixingComponents.html"></a></span><div class="tip">Using NavMesh Agent with Other Components</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-NavMeshObstacle.html"></a></span><div class="tip">Nav Mesh Obstacle</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

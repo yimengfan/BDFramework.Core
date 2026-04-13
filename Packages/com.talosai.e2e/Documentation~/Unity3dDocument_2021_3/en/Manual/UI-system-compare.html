@@ -1,0 +1,588 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Comparison of UI systems in Unity</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UI-system-compare.html">English</a></li>
+<li><a href="/cn/current/Manual/UI-system-compare.html">中文</a></li>
+<li><a href="/ja/current/Manual/UI-system-compare.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UI-system-compare.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UI-system-compare.html">English</a></li>
+<li><a href="/cn/current/Manual/UI-system-compare.html">中文</a></li>
+<li><a href="/ja/current/Manual/UI-system-compare.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UI-system-compare.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li>Comparison of UI systems in Unity</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIToolkits.html"></a></span><div class="tip">User interface (UI)</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIElements.html"></a></span><div class="tip">UI Toolkit</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Comparison of UI systems in Unity</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<a href="UIElements.html">UI Toolkit</a> is intended to become the recommended <strong>UI</strong> system for your new UI development projects. However, in the current release, UI Toolkit does not have some features that <a href="com.unity.ugui.html">Unity UI (uGUI)</a> and <a href="GUIScriptingGuide.html">Immediate Mode GUI (IMGUI)</a> support. uGUI and IMGUI are more appropriate for certain use cases, and are required to support legacy projects.</p>
+
+<p>This page provides a high-level feature comparison of UI Toolkit, uGUI, and IMGUI, and their respective approaches to UI design. </p>
+
+<h2>General consideration</h2>
+
+<p>The following table lists the recommended and alternative system for runtime and Editor:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>2021</strong></th>
+	<th style="text-align:left;"><strong>Recommendation</strong></th>
+	<th style="text-align:left;"><strong>Alternative</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><a href="#runtime">Runtime</a></strong></td>
+	<td style="text-align:left;">Unity UI</td>
+	<td style="text-align:left;">UI Toolkit</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="#editor">Editor</a></strong></td>
+	<td style="text-align:left;">IMGUI</td>
+	<td style="text-align:left;">UI Toolkit</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Roles and skill sets</h2>
+
+<p>Your team’s skill set and comfort level with different technologies is also an important consideration.</p>
+
+<p>The following table lists the recommended system for different roles:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Roles</strong></th>
+	<th style="text-align:left;"><strong>UI Toolkit</strong></th>
+	<th style="text-align:left;"><strong>Unity UI<br>(uGUI)</strong></th>
+	<th style="text-align:left;"><strong>IMGUI</strong></th>
+	<th style="text-align:left;"><strong>Skill sets</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Programmer</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Programmers can use any game development tool or API.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Technical Artist</strong></td>
+	<td style="text-align:left;">Partial</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Technical artists who are familiar with Unity’s GameObject-based tools and workflows are likely to be comfortable working with GameObjects, Components, and the Scene view. <br><br>They might not be comfortable with UI Toolkit’s web-like approach or IMGUI’s pure C# approach.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UI Designer</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Partial</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">UI designers who are familiar with UI creation tools are likely to be comfortable with UI Toolkit’s document-based approach and can use the <a href="UIBuilder.html">UI Builder</a> to visually edit their UI.<br><br>If they are not familiar with GameObject-based workflows, they might require help from programmers or level designers.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Innovation and development</h2>
+
+<p>UI Toolkit is in active development and releases new features frequently. uGUI and IMGUI are established and production-proven UI systems that are updated infrequently.</p>
+
+<p>uGUI and IMGUI might be better choices if you need features that are not yet available in UI Toolkit, or you need to support or reuse older UI content.</p>
+
+<p><a name="runtime" aria-hidden="true"></a></p>
+
+<h2>Runtime</h2>
+
+<p>uGUI is the recommended solution for the following:</p>
+
+<ul>
+<li>UI positioned and lit in a 3D world</li>
+<li>VFX with custom <span class="tooltip"><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> and materials</li>
+<li>Easy referencing from <code>MonoBehaviours</code>
+</li>
+</ul>
+
+<p>UI Toolkit is an alternative to uGUI if you create a screen overlay UI that runs on a wide variety of screen resolutions. Consider UI Toolkit to do the following:</p>
+
+<ul>
+<li>Produce work with a significant amount of user interfaces</li>
+<li>Require familiar authoring workflows for artists and designers</li>
+<li>Seek textureless UI rendering capabilities</li>
+</ul>
+
+<h3>Use Cases</h3>
+
+<p>The following table lists the recommended system for major runtime use cases:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>2021</strong></th>
+	<th style="text-align:left;"><strong>Recommendation</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Multi-resolution menus and HUD in intensive UI projects</strong></td>
+	<td style="text-align:left;">UI Toolkit</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>World space UI and <span class="tooltip"><strong>VR</strong><span class="tooltiptext">Virtual Reality <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VROverview.html" href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VR" aria-label="Go to glossary anchor for VR">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Unity UI</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UI that requires customized shaders and materials</strong></td>
+	<td style="text-align:left;">Unity UI</td>
+</tr>
+</tbody>
+</table>
+
+<h3>In details</h3>
+
+<p>The following table lists the recommended system for detailed runtime features:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>2021</strong></th>
+	<th style="text-align:left;"><strong>UI Toolkit</strong></th>
+	<th style="text-align:left;"><strong>Unity UI</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>WYSIWYG</strong><span class="tooltiptext">What You See Is What You Get. A term used to describe a system where the user interface closely resembles the final output. <br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WYSIWYG" aria-label="Go to glossary anchor for WYSIWYG">Glossary</a></span></span></span> authoring</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Nesting reusable components</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Global style management</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Layout and Styling Debugger</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> integration</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rich text tags</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes*</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scalable text</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes*</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Font fallbacks</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes*</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Adaptive layout</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="com.unity.inputsystem.html">Input system</a> support</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Serialized events</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="com.unity.visualscripting.html">Visual Scripting</a> support</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="render-pipelines.html">Rendering pipelines</a> support</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Screen-space (2D) rendering</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>World-space (3D) rendering</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Custom materials and shaders</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html">Sprites</a><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html" href="Sprites.html">Sprites</a><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> / <span class="tooltip"><a href="class-SpriteAtlas.html">Sprite atlas</a><span class="tooltiptext">A texture that is composed of several smaller textures. Also referred to as a texture atlas, image sprite, sprite sheet or packed texture. <a href="class-SpriteAtlas.html" href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> / <span class="tooltip"><a href="class-SpriteAtlas.html">Sprite atlas</a><span class="tooltiptext">A texture that is composed of several smaller textures. Also referred to as a texture atlas, image sprite, sprite sheet or packed texture. <a href="class-SpriteAtlas.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#spriteatlas" aria-label="Go to glossary anchor for spriteatlas">Glossary</a></span></span></span> support</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Dynamic texture atlas</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Textureless elements</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UI anti-aliasing</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rectangle clipping</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Mask clipping</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Nested masking</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-Transitions.html">UI transition animations</a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Integration with <span class="tooltip"><strong>Animation Clips</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html" href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> and Timeline</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<p>*<em>Requires <a href="https://learn.unity.com/tutorial/textmesh-pro-importing-the-package#">the TextMesh Pro package</a></em>
+</p>
+
+<p><a name="editor" aria-hidden="true"></a></p>
+
+<h2>Editor</h2>
+
+<p>IMGUI is the default solution for most use cases and is especially recommended for the following :</p>
+
+<ul>
+<li>Unrestricted access to editor extensible capabilities</li>
+<li>Some specialized control such as the TreeView</li>
+<li>Light API to quickly render UI on screen</li>
+</ul>
+
+<p>UI Toolkit is an alternative to IMGUI if you create complex editor tools. Consider UI Toolkit for the following:</p>
+
+<ul>
+<li>Better reusability and decoupling</li>
+<li>Visual tools for authoring UI</li>
+<li>Better scalability for code maintenance and performance</li>
+</ul>
+
+<h3>Use Cases</h3>
+
+<p>The following table lists the recommended system for major Editor use cases:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>2021</strong></th>
+	<th style="text-align:left;"><strong>Recommendation</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Complex editor tool</strong></td>
+	<td style="text-align:left;">UI Toolkit</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Property drawers</strong><span class="tooltiptext">A Unity feature that allows you to customize the look of certain controls in the Inspector window by using attributes on your scripts, or by controlling how a specific Serializable class should look <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about editor-PropertyDrawers.html" href="editor-PropertyDrawers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PropertyDrawer" aria-label="Go to glossary anchor for PropertyDrawer">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">IMGUI</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Collaboration with designers</strong></td>
+	<td style="text-align:left;">UI Toolkit</td>
+</tr>
+</tbody>
+</table>
+
+<h3>In details</h3>
+
+<p>The following table lists the recommended system for detailed Editor features:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>2021</strong></th>
+	<th style="text-align:left;"><strong>UI Toolkit</strong></th>
+	<th style="text-align:left;"><strong>IMGUI</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>WYSIWYG authoring</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Nesting reusable components</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Global style management</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Layout and Styling Debugger</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rich text tags</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scalable text</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Font fallbacks</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Adaptive layout</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Default <span class="tooltip"><strong>Inspectors</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Inspector: Edit custom object types</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Inspector: Edit custom property types</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Inspector: Mixed values (multi-editing) support</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-ListView.html">Array and list-view control</a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-Binding.html">Data binding: Serialized properties</a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-Transitioning-From-UGUI.html">Migrate from Unity UI (UGUI) to UI Toolkit</a></li>
+<li><a href="UIE-IMGUI-migration.html">Migrate from Immediate Mode GUI (IMGUI) to UI Toolkit</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIToolkits.html"></a></span><div class="tip">User interface (UI)</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIElements.html"></a></span><div class="tip">UI Toolkit</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

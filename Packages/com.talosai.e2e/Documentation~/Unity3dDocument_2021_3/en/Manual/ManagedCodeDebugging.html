@@ -1,0 +1,380 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Debug C# code in Unity</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ManagedCodeDebugging.html">English</a></li>
+<li><a href="/cn/current/Manual/ManagedCodeDebugging.html">中文</a></li>
+<li><a href="/ja/current/Manual/ManagedCodeDebugging.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ManagedCodeDebugging.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ManagedCodeDebugging.html">English</a></li>
+<li><a href="/cn/current/Manual/ManagedCodeDebugging.html">中文</a></li>
+<li><a href="/ja/current/Manual/ManagedCodeDebugging.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ManagedCodeDebugging.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="ScriptingSettingUp.html">Setting Up Your Scripting Environment</a></li>
+<li>Debug C# code in Unity</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ScriptingToolsIDEs.html"></a></span><div class="tip">Integrated development environment (IDE) support</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="StackTrace.html"></a></span><div class="tip">Stack trace logging</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Debug C# code in Unity</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can use a debugger to inspect your source code while your application is running. Unity supports the following code editors to debug C# code:</p>
+
+<ul>
+<li>Visual Studio (with the Visual Studio Tools for Unity plug-in)</li>
+<li>Visual Studio for Mac</li>
+<li>Jetbrains Rider</li>
+</ul>
+
+<p>Note that while the Visual Studio IDE supports Unity debugging, the Visual Studio Code text editor does not.</p>
+
+<p>Although these code editors vary slightly in the debugging features they support, they all provide basic functionality such as break points, single stepping, and variable inspection. You can attach these code editors to the <a href="#DebugInEditor">Unity Editor</a> or <a href="#DebugInPlayer">Unity Player</a> to debug your code.</p>
+
+<p>Managed code debugging in Unity works on all platforms except <span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span>. It works with both the <span class="tooltip"><a href="Mono.html">Mono</a><span class="tooltiptext">A scripting backend used in Unity. <a href="IL2CPP.html" href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span>. It works with both the <span class="tooltip"><a href="Mono.html">Mono</a><span class="tooltiptext">A scripting backend used in Unity. <a href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Mono" aria-label="Go to glossary anchor for Mono">Glossary</a></span></span></span> and <span class="tooltip"><a href="IL2CPP.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html" href="Glossary.html#Mono" aria-label="Go to glossary anchor for Mono">Glossary</a></span></span></span> and <span class="tooltip"><a href="IL2CPP.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> <span class="tooltip"><strong>scripting backends</strong><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a href="scripting-backends.html" href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> <span class="tooltip"><strong>scripting backends</strong><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a href="scripting-backends.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScriptingBackend" aria-label="Go to glossary anchor for ScriptingBackend">Glossary</a></span></span></span>.</p>
+
+<h2>
+<a name="Configure" aria-hidden="true"></a> Configure the code editor</h2>
+
+<h3>Visual Studio (Windows)</h3>
+
+<p>The Unity Editor installer includes an option to install Visual Studio with the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.microsoft.com/en-us/visualstudio/gamedev/unity/get-started/getting-started-with-visual-studio-tools-for-unity?pivots=windows">Visual Studio Tools for Unity</a> <strong><span class="tooltip"><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a href="Plugins.html" href="https://docs.microsoft.com/en-us/visualstudio/gamedev/unity/get-started/getting-started-with-visual-studio-tools-for-unity?pivots=windows">Visual Studio Tools for Unity</a> <strong><span class="tooltip"><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span></strong>. This is the recommended way to set up Visual Studio for debugging with Unity.</p>
+
+<p>If Visual Studio is already installed on your computer, open it and go to <strong>Tools</strong> &gt; <strong>Get Tools and Features…</strong> to locate and install the <strong>Visual Studio Tools for Unity</strong> plug-in.</p>
+
+<h3>Visual Studio for Mac</h3>
+
+<p>The Unity Editor installer includes an option to install Visual Studio for Mac. This is the recommended way to set up Visual Studio for Mac for debugging with Unity.</p>
+
+<p>If Visual Studio for Mac is already installed on your computer, open it and go to <strong>Visual Studio</strong> &gt; <strong>Extensions</strong> &gt; <strong>Install from file…</strong> to locate and install the Visual Studio Tools for Unity plug-in.</p>
+
+<h3>JetBrains Rider</h3>
+
+<p>You can use the default installation of JetBrains Rider to debug code in Unity on Windows or Mac. Visit the <a href="https://www.jetbrains.com/help/rider/Unity.html">JetBrains website</a> to install it.</p>
+
+<h2>Specify the External Script Editor in Unity</h2>
+
+<p>Once you’ve installed a code editor, open Unity, go to <strong>Preferences</strong> &gt; <strong>External Tools</strong> and set the <strong>External Script Editor</strong> to your code editor.</p>
+
+<figure>
+<img src="../uploads/Main/external-tools.png" alt="The External Tools settings">
+<figcaption>The External Tools settings</figcaption>
+</figure>
+
+<h2>Breakpoints</h2>
+
+<p>Breakpoints allow you to specify points in your code where you want to pause its execution. In your external code editor, you can set a breakpoint on a line of code where you want the debugger to stop. While the code editor is at a breakpoint, you can view the contents of variables step by step.</p>
+
+<p>If you have attached your code editor to the Unity Editor (see <a href="#AttachToEditor">Attach your code editor to the Unity Editor</a>), the Unity Editor becomes unresponsive until you choose the continue option in your code editor, or stop debugging mode.</p>
+
+<p>To see how you can set breakpoints in Visual Studio see <a href="#BreakpointsVS">Set breakpoints in Visual Studio</a>.</p>
+
+<h2>
+<a name="DebugInEditor" aria-hidden="true"></a> Debug in the Unity Editor</h2>
+
+<p>You can debug C# code as it runs in the Unity Editor while the Unity Editor is in Play Mode.</p>
+
+<p>To debug in the Editor, you need to set the Editor’s Code Optimization mode to <strong>Debug Mode</strong>, then you can <a href="#AttachToEditor">attach a code editor with a debugging feature</a>.</p>
+
+<p>To change the Code Optimization mode, select the Debug Button in the bottom right of the <strong>Unity Editor Status Bar</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/debug-mode.png" alt="The Debug Button in the bottom right of the Unity Editor Status Bar">
+<figcaption>The Debug Button in the bottom right of the Unity Editor Status Bar</figcaption>
+</figure>
+
+<p>Unity’s Code Optimization setting has two modes:</p>
+
+<ul>
+<li>
+<strong>Debug Mode</strong>, which you can use to attach external debugger software, but gives slower C# performance when you run your Project in Play Mode in the Editor.</li>
+<li>
+<strong>Release Mode</strong>, which gives faster C# performance when you run your Project in Play Mode in the Editor, but you cannot attach any external debuggers.</li>
+</ul>
+
+<p>When you click the Debug button in the status bar, a small pop-up window opens which contains a button you can use to switch modes. The window also displays information about the current mode, and describes what happens if you switch modes.</p>
+
+<figure>
+<img src="../uploads/Main/debug-popup.png" alt="The Debug Mode popup, which shows the current mode, allows you to switch modes, and describes what happens if you switch mode.">
+<figcaption>The Debug Mode popup, which shows the current mode, allows you to switch modes, and describes what happens if you switch mode.</figcaption>
+</figure>
+
+<p>To change which mode the Unity Editor starts up in, go to <strong>Edit</strong> (macOS: <strong>Unity</strong>) &gt; <strong>Preferences</strong> &gt; <strong>General</strong> &gt; <strong>Code Optimization On Startup</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/code-op-startup.png" alt="In Preferences, you can change the Code Optimization mode that Unity starts in.">
+<figcaption>In Preferences, you can change the Code Optimization mode that Unity starts in.</figcaption>
+</figure>
+
+<p>To control these settings using a script, use the following API:</p>
+
+<ul>
+<li><a href="../ScriptReference/Scripting.ManagedDebugger.html">ManagedDebugger</a></li>
+<li><a href="../ScriptReference/Compilation.CompilationPipeline-codeOptimization.html">Compilation.CompilationPipeline-codeOptimization</a></li>
+<li><a href="../ScriptReference/Compilation.CodeOptimization.html">Compilation.CodeOptimization.</a></li>
+</ul>
+
+<p>You can also override the mode that the Editor starts up in, or turn off the debugger listen socket. To do this, use the following <a href="CommandLineArguments.html">command line arguments</a> when you launch the Editor:</p>
+
+<ul>
+<li>
+<code>-releaseCodeOptimization</code>. Starts the Editor in <strong>Release</strong> code optimization mode.</li>
+<li>
+<code>-debugCodeOptimization</code>. Starts the Editor in <strong>Debug</strong> code optimization mode.</li>
+<li>
+<code>-disableManagedDebugger</code>. Starts the Editor with the debugger listen socket disabled.</li>
+</ul>
+
+<h3>
+<a name="AttachToEditor" aria-hidden="true"></a> Attach your code editor to the Unity Editor</h3>
+
+<p>The way to attach your code editor to the Unity Editor depends on what code editor you use, and is often a different option from your code editor’s normal debugging process. Some code editors allow you to select an instance of Unity to debug. For instructions specific to your code editor, see <a href="#ExternalDocs">Code editor external documentation</a>. To see how you can do this in Visual Studio, see <a href="#AttachVSToEditor">Attach Visual Studio to the Unity Editor</a>.</p>
+
+<p>When you have attached the code editor to the Unity Editor and you are ready to begin debugging, return to the Unity Editor and enter Play Mode.</p>
+
+<h2>
+<a name="DebugInPlayer" aria-hidden="true"></a> Debug in the Unity Player</h2>
+
+<p>To compile a Unity Player for you to debug:</p>
+
+<ol>
+<li>Go to <strong>File</strong> &gt; <strong>Build Settings</strong>.</li>
+<li>Enable the <strong><span class="tooltip"><strong>Development Build</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview" href="https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DevelopmentBuild" aria-label="Go to glossary anchor for DevelopmentBuild">Glossary</a></span></span></span></strong> and <strong>Script Debugging</strong> options before you build the Player. You could also enable the <strong>Wait For Managed Debugger</strong> option to make the Player wait for a debugger to be attached before the Player executes any script code.</li>
+<li>Select <strong>Build And Run</strong>.</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/debug-build.png" alt="The Build Settings menu with Development Build, Script Debugging, and Wait for Managed Debugger enabled.">
+<figcaption>The <strong>Build Settings</strong> menu with <strong>Development Build</strong>, <strong>Script Debugging</strong>, and <strong>Wait for Managed Debugger</strong> enabled.</figcaption>
+</figure>
+
+<h3>Attach your code editor to the Unity Player</h3>
+
+<p>To attach your code editor to the Unity Player, in your code editor, select the IP address (or machine name) and port of your Player. For an example of where to find this in Visual Studio, see <a href="#AttachVSToEditor">Attach Visual Studio to the Unity Editor</a>.</p>
+
+<p>
+<strong>Note</strong>: Your code editor will show all instances of Unity that are available to debug. Make sure you attach the code editor to the correct instance of the Unity Player, and not to the Unity Editor if both are running. </p>
+
+<p>When you have attached the debugger, you can begin debugging normally. For instructions on how to attach the Unity Player to your specific code editor, see <a href="#ExternalDocs">Code editor external documentation</a>. For an example of how to attach a Unity Player that runs on a mobile device to Visual Studio, see <a href="#DebugMobile">Debug Android and iOS devices with Visual Studio</a>.</p>
+
+<h2>
+<a name="BreakpointsVS" aria-hidden="true"></a> Set breakpoints in Visual Studio</h2>
+
+<p>To set a breakpoint in Visual Studio, click on the column to the left of your code, on the line you want to stop the debugger. A red circle appears next to the line number and the line is highlighted.</p>
+
+<figure>
+<img src="../uploads/Main/vs-breakpoint.png" alt="A breakpoint in Visual Studio.">
+<figcaption>A breakpoint in Visual Studio.</figcaption>
+</figure>
+
+<h2>
+<a name="AttachVSToEditor" aria-hidden="true"></a> Attach Visual Studio to the Unity Editor</h2>
+
+<p>To attach the Unity Editor to your Visual Studio script, open Visual Studio, go to <strong>Debug</strong> &gt; <strong>Attach Unity Debugger</strong> and select the instance of the Unity Editor you would like to debug.</p>
+
+<p>In the following example image, there is one instance of Unity running in the Editor and one instance of Unity running as an Android Player</p>
+
+<figure>
+<img src="../uploads/Main/attach-vs-to-editor.png" alt="Visual Studio lists the current instances of Unity that are available to debug.">
+<figcaption>Visual Studio lists the current instances of Unity that are available to debug.</figcaption>
+</figure>
+
+<h2>
+<a name="DebugMobile" aria-hidden="true"></a> Debug Android and iOS devices with Visual Studio</h2>
+
+<h3>Android</h3>
+
+<p>To debug a Unity Player running on an Android device, connect to the device using USB or TCP. For example, to connect to an Android device in Visual Studio, select <strong>Debug</strong> &gt; <strong>Attach Unity Debugger</strong> option. A list of devices running a Player instance appears.</p>
+
+<figure>
+<img src="../uploads/Main/debug-android.png" alt="">
+</figure>
+
+<p>In this example, the android device is connected using USB and Wi-Fi on the same network as the workstation running the Unity Editor and Visual Studio.</p>
+
+<h4>Android on Chrome OS</h4>
+
+<p>Unity can’t automatically discover Chrome OS devices. To initiate a connection, connect to the device through Android Debug Bridge (adb). For more information about how to use <span class="tooltip"><strong>adb</strong><span class="tooltiptext">An Android Debug Bridge (ADB). You can use an ADB to deploy an Android package (APK) manually after building. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://developer.android.com/studio/command-line/adb.html" href="https://developer.android.com/studio/command-line/adb.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ADB" aria-label="Go to glossary anchor for ADB">Glossary</a></span></span></span>, refer to the <a href="https://developer.android.com/studio/command-line/adb">Android Studio User Guide</a>.</p>
+
+<h3>iOS</h3>
+
+<p>To debug a Unity Player running on an iOS device, connect to the device using TCP. For example, to connect to an iOS device in Visual Studio for Mac, select <strong>Debug</strong> &gt; <strong>Attach Unity Debugger</strong>. A list of devices running a Player instance appears.</p>
+
+<figure>
+<img src="../uploads/Main/debug-ios.png" alt="">
+</figure>
+
+<p>Ensure that the device only has one active network interface (Wi-Fi recommended, turn off cellular data) and that there is no firewall between the IDE and the device blocking the TCP port (port number 56000 in the above screenshot).</p>
+
+<p>
+<strong>Important</strong>: <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> doesn’t support debugging over USB.</p>
+
+<h2>Troubleshoot the debugger</h2>
+
+<p>Most problems with the debugger occur because the code editor is unable to locate the Unity Editor or the Unity Player. This means that the Unity Editor or Player can’t attach the debugger properly. Because the debugger uses a TCP connection to the Editor or Player, connection issues are often caused by the network. Below are a few steps you can take to troubleshoot basic connection issues.</p>
+
+<h3>Ensure you attach the debugger to the correct Unity instance</h3>
+
+<p>You can attach your code editor to any instance of the Unity Editor or Unity Player on the local network that has debugging enabled. When you attach the debugger, ensure that you attach it to the correct Unity instance. If you know the IP address or machine name of the device on which you are running the Unity Player, this helps to locate the correct instance.</p>
+
+<h3>Verify the network connection to the Unity instance</h3>
+
+<p>The code editor uses the same mechanism to locate a Unity instance to debug as the Unity <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span>. If the code editor can’t find the Unity instance you expect, try to attach the Unity Profiler to that instance. If the Unity Profiler cannot find the Unity instance either, there might be a firewall on the machine you are running the code editor or Unity instance on. If a firewall is in place, see <a href="#Firewall">Check the firewall settings</a>.</p>
+
+<h3>Ensure the device only has one active network interface</h3>
+
+<p>Many devices have multiple network interfaces. For example, a mobile phone might have both an active cellular connection and an active Wi-Fi connection. To properly connect the debugger to the Unity instance using TCP, the IDE needs to make a network connection to the correct interface on the device. If you plan to debug over Wi-Fi, for example, make sure you put the device in airplane mode to disable all other interfaces, then enable Wi-Fi.</p>
+
+<p>You can determine which IP address the Unity Player tells the IDE to use by looking in the <span class="tooltip"><strong>Player Log</strong><span class="tooltiptext">The .log file created by a Standalone Player that contains a record of events, such as script execution times, the compiler version, and AssetImport time. Log files can help diagnose problems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LogFiles.html#Player" href="LogFiles.html#Player">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerLog" aria-label="Go to glossary anchor for PlayerLog">Glossary</a></span></span></span>. Look for a part of the log like this:</p>
+
+<p><code>Multi-casting &quot;[IP] 10.0.1.152 [Port] 55000 [Flags] 3 [Guid] 2575380029 [EditorId] 4264788666 [Version] 1048832 [Id] iPhonePlayer(Example-iPhone):56000 [Debug] 1 [PackageName] iPhonePlayer&quot; to [225.0.0.222:54997]...</code></p>
+
+<p>This message indicates the IDE will try to use the IP address 10.0.1.152 and port 56000 to connect to the device. This IP address and port must be reachable from the computer running the IDE.</p>
+
+<h3>
+<a name="Firewall" aria-hidden="true"></a> Check the firewall settings</h3>
+
+<p>The Unity instance communicates with the code editor using a TCP connection. On most Unity platforms, this TCP connection occurs on an arbitrarily chosen port. Normally, you shouldn’t need to know this port, as the code editor should detect it automatically. If that doesn’t work, use a network analysis tool to determine which ports might be blocked either on the machine where you are running the code editor, or the machine or device where you are running the Unity instance. When you find the ports, make sure that your firewall allows access to the port on both the machine running the code editor, and the machine running the Unity instance.</p>
+
+<h3>Verify the managed debugging information is available</h3>
+
+<p>If the debugger attaches to the Unity instance but breakpoints don’t load, the debugger might not be able to locate the managed debugging information for the code. Managed code debugging information is stored in files named .pdb, next to the managed assembly (.dll file) on the disk.</p>
+
+<p>When you enable the correct preferences and build options (see <a href="#Configure">Configure the code editor</a>), Unity generates this debugging information automatically. However, Unity cannot generate debugging information for managed plugins in your project. You can only debug code from managed plugins if the associated .pdb files are next to the managed plugins in the Unity project on disk.</p>
+
+<h3>Prevent the device from locking</h3>
+
+<p>Disable any screen locks on the device you are using to debug your application. Screen locks cause the debugger to disconnect, and prevent it from re-connecting. Don’t lock the screen during managed code debugging. If the screen locks, restart the application on the device so the debugger can connect again.</p>
+
+<h3>Memory and thread leaks due to the debugger</h3>
+
+<p>The implementation of the managed debugger will leak some OS-level thread handles and some memory related to threads in order to handle some race conditions related to thread startup and shutdown. In practice these leaks are small, and should not impact the resource usage of an application. However, when many threads are created and destroyed, the leaks can be noticeable. This behavior can also make it difficult to track down actual memory leaks, so we recommend disabling scripting debugging when troubleshooting memory leaks.</p>
+
+<h2>
+<a name="ExternalDocs" aria-hidden="true"></a> Code editor external documentation</h2>
+
+<ul>
+<li>Visual Studio - <a href="https://docs.microsoft.com/en-us/visualstudio/gamedev/unity/get-started/using-visual-studio-tools-for-unity?pivots=windows#unity-debugging">Using Visual Studio Tools for Unity (Windows)</a>
+</li>
+<li>Visual Studio for Mac - <a href="https://docs.microsoft.com/en-us/visualstudio/gamedev/unity/get-started/using-visual-studio-tools-for-unity?pivots=macos#unity-debugging">Using Visual Studio Tools for Unity (macOS)</a>
+</li>
+<li>Jetbrains Rider - <a href="https://www.jetbrains.com/help/rider/Debugging_Unity_Applications.html">Debug Unity Applications</a>
+</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ScriptingToolsIDEs.html"></a></span><div class="tip">Integrated development environment (IDE) support</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="StackTrace.html"></a></span><div class="tip">Stack trace logging</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

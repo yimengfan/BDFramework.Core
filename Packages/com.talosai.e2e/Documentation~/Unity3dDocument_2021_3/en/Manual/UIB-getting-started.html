@@ -1,0 +1,436 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Get started with UI Builder</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIB-getting-started.html">English</a></li>
+<li><a href="/cn/current/Manual/UIB-getting-started.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIB-getting-started.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIB-getting-started.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIB-getting-started.html">English</a></li>
+<li><a href="/cn/current/Manual/UIB-getting-started.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIB-getting-started.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIB-getting-started.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIBuilder.html">UI Builder</a></li>
+<li>Get started with UI Builder</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIB-interface-overview.html"></a></span><div class="tip">UI Builder interface overview</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIB-structuring-ui-elements.html"></a></span><div class="tip">Work with elements</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Get started with UI Builder</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Want to learn how to create <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> with UI Builder? Use this example to get started.</p>
+
+<p>To create UI in the UI Builder:</p>
+
+<ol>
+<li>Create a new UI Document (UXML).</li>
+<li>Add elements to create your UI hierarchy.</li>
+<li>Set up attributes and style properties in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>.</li>
+<li>When more than one element starts to need the same style properties, <a href="#create-a-uss-class-for-the-border-style">create USS style sheets and selectors</a>.</li>
+<li>Test your UI and if you are satisfied with the results, <a href="#extract-inline-styles">extract inline style properties to USS classes</a>.</li>
+<li>Save the UI Document (UXML).</li>
+</ol>
+
+<h2>Prerequisites</h2>
+
+<p>Before you start, get familiar with the following:</p>
+
+<ul>
+<li><a href="UIE-VisualTree.html">Introduction to visual elements and visual tree</a></li>
+<li><a href="UIE-WritingUXMLTemplate.html">Introduction to UXML</a></li>
+<li><a href="UIE-about-uss.html">Introduction to USS</a></li>
+<li><a href="UIB-interface-overview.html">UI Builder interface overview</a></li>
+</ul>
+
+<h2>Example overview</h2>
+
+<p>This example creates the main view for the <a href="UIE-HowTo-CreateRuntimeUI.html">Create a list view runtime UI</a> example. It creates a root element as the background, with two containers. One container holds the character name list and another holds the character details. In the character details container, you add background and foreground frames. Finally, you add two labels for the character name. This example won’t create the character name list entry UI.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-runtimeUI-finalMainView.png" alt="Final main view layout">
+<figcaption>Final main view layout</figcaption>
+</figure>
+
+<h2>Create the root element</h2>
+
+<p>Create a new project and then create a root <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span> that covers the entire screen. Set your root element to have a background color and center all child elements in the middle of the screen.</p>
+
+<ol>
+<li><p>Create a project in Unity with any template.</p></li>
+<li><p>Select <strong>Window</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>UI Builder</strong>. </p></li>
+<li>
+<p>In the UI Builder window, at the top left of the <strong>Viewport</strong> window, select <strong>File</strong> &gt; <strong>New</strong> to create a new UXML document.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-fileMenu.png" alt="UI Builder file menu">
+<figcaption>UI Builder file menu</figcaption>
+</figure>
+</li>
+<li><p>Name it as <code>MainView.uxml</code> and save.</p></li>
+<li>
+<p>Drag <strong>VisualElement</strong> from <strong>Library</strong> into the Hierarchy window. </p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-newVisualElement.png" alt="Create new elements by dragging from the Library">
+<figcaption>Create new elements by dragging from the Library</figcaption>
+</figure>
+
+<p>
+<strong>Tip</strong>: You can also double-click a control to add it to the Hierarchy window. </p>
+</li>
+<li><p>Select the element from the Hierarchy window.</p></li>
+<li>
+<p>In the Inspector window, set <strong>Flex</strong> &gt; <strong>Grow</strong> to <code>1</code>. This sets the <code>flex-grow</code> property to <code>1</code>, making it cover the entire screen.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-flexGrow.png" alt="Set the Flex property">
+<figcaption>Set the Flex property</figcaption>
+</figure>
+</li>
+<li>
+<p>To center all child elements, set both <strong>Align Items</strong> and <strong>Justify Content</strong> to <code>Center</code>.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-alignCenter.png" alt="Center children">
+<figcaption>Center children</figcaption>
+</figure>
+</li>
+<li>
+<p>Set <strong>Background</strong> &gt; <strong>Color</strong> to <code>#732526</code>.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-backgroundColor.png" alt="Root element background color">
+<figcaption>Root element background color</figcaption>
+</figure>
+</li>
+</ol>
+
+<h2>Create the parent container</h2>
+
+<p>Create a new VisualElement underneath the root element. This element becomes the parent container for the left and right sections of the UI.</p>
+
+<ol>
+<li>
+<p>Drag <strong>VisualElement</strong> from <strong>Library</strong> to the root VisualElement in the Hierarchy window.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-secondaryContainer.png" alt="Add a child VisualElement">
+<figcaption>Add a child VisualElement</figcaption>
+</figure>
+</li>
+<li><p>Select the element from the Hierarchy window.</p></li>
+<li><p>In the Inspector window, set <strong>Flex</strong> &gt; <strong>Direction</strong> to <code>row</code>.</p></li>
+<li>
+<p>Set <strong>Size</strong> &gt; <strong>Height</strong> to <code>350</code> pixels.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-centerContainer.png" alt="Center container properties">
+<figcaption>Center container properties</figcaption>
+</figure>
+</li>
+</ol>
+
+<h2>Create the character names list container</h2>
+
+<p>Add a ListView as the child element of the container to hold the character names.</p>
+
+<ol>
+<li><p>Drag a <strong>ListView</strong> from the <strong>Library</strong> to the container VisualElement in the Hierarchy window.</p></li>
+<li><p>Select the element from the Hierarchy window.</p></li>
+<li>
+<p>In the Inspector window, set <strong>Name</strong> to <code>CharacterList</code>.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-setElementName.png" alt="Background container with the empty element inside">
+<figcaption>Background container with the empty element inside</figcaption>
+</figure>
+</li>
+<li><p>Set <strong>Size</strong> &gt; <strong>Width</strong> to <code>230</code> pixels. </p></li>
+<li>
+<p>Set <strong>Margin &amp; Padding</strong> &gt; <strong>Margin</strong> &gt; <strong>Right</strong> to <code>6</code> pixels. </p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-sizeAndMargin.png" alt="Size and Margin foldouts for the character list">
+<figcaption>Size and Margin foldouts for the character list</figcaption>
+</figure>
+</li>
+<li><p>Set <strong>Background</strong> &gt; <strong>Color</strong> to <code>#6E3925</code>.</p></li>
+<li><p>Set <strong>Border</strong> &gt; <strong>Color</strong> to <code>#311A11</code>.</p></li>
+<li><p>Set <strong>Border</strong> &gt; <strong>Width</strong> to <code>4</code> pixels.</p></li>
+<li>
+<p>Set <strong>Border</strong> &gt; <strong>Radius</strong> to <code>15</code> pixels.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-characterListStyling.png" alt="Styled character list">
+<figcaption>Styled character list</figcaption>
+</figure>
+</li>
+</ol>
+
+<h2>Create the character details container</h2>
+
+<p>Add a new VisualElement under the same parent as the <code>#CharacterList</code> to hold the character details container. The purpose is that when the user selects a character from the list on the left, it displays the character’s portrait, name, and class.</p>
+
+<ol>
+<li><p>Drag a <strong>VisualElement</strong> from the <strong>Library</strong> to the container element in the Hierarchy window. This is the container to hold all the elements on the right.</p></li>
+<li><p>Select the element from the Hierarchy window.</p></li>
+<li><p>In the Inspector window, set <strong>Align</strong> &gt; <strong>Align Items</strong> to <code>flex-end</code>.</p></li>
+<li>
+<p>Set <strong>Align</strong> &gt; <strong>Justify Content</strong> to <code>space-between</code>.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-justifySpaceBetween.png" alt="Justify content property">
+<figcaption>Justify content property</figcaption>
+</figure>
+</li>
+<li><p>Add another <strong>VisualElement</strong> as the child of the right container.</p></li>
+<li><p>Select the element from the Hierarchy window.</p></li>
+<li><p>Set <strong>Size</strong> &gt; <strong>Width</strong> to <code>276</code> pixels.</p></li>
+<li><p>In the <strong>Align</strong> section, set both <strong>Align Items</strong> and <strong>Justify Content</strong> to <code>center</code>. </p></li>
+<li>
+<p>Set <strong>Margin &amp; Padding</strong> &gt; <strong>Padding</strong> to <code>8</code> pixels.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-characterDetailsProperties.png" alt="Properties of the character details container">
+<figcaption>Properties of the character details container</figcaption>
+</figure>
+</li>
+<li><p>Set <strong>Background</strong> &gt; <strong>Color</strong> to <code>#AA5939</code>.</p></li>
+<li><p>Set <strong>Border</strong> &gt; <strong>Color</strong> to <code>#311A11</code>.</p></li>
+<li><p>Set <strong>Border</strong> &gt; <strong>Width</strong> to <code>4</code> pixels.</p></li>
+<li><p>Set <strong>Border</strong> &gt; <strong>Radius</strong> to <code>15</code> pixels.</p></li>
+</ol>
+
+<p>Your UI layout should now look like the following:</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-intermediate02.png" alt="Empty character details panel">
+<figcaption>Empty character details panel</figcaption>
+</figure>
+
+<h2>Create the character portrait background</h2>
+
+<p>Add the individual UI controls to the character details container. The first step is to add the character portrait background.</p>
+
+<ol>
+<li><p>Drag <strong>VisualElement</strong> from <strong>Library</strong> to the character details container. </p></li>
+<li><p>Select the element from the Hierarchy window.</p></li>
+<li><p>In the <strong>Size</strong> section, set both <strong>Width</strong> and <strong>Height</strong> to <code>120</code> <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span>.</p></li>
+<li><p>Set <strong>Margin &amp; Padding</strong> &gt; <strong>Padding</strong> to <code>4</code> pixels. </p></li>
+<li>
+<p>Set <strong>Background</strong> &gt; <strong>Color</strong> to <code>#FF8554</code>.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-pictureFrame.png" alt="Background frame for the character portrait">
+<figcaption>Background frame for the character portrait</figcaption>
+</figure>
+</li>
+</ol>
+
+<p><a name="create-a-uss-class-for-the-border-style" aria-hidden="true"></a></p>
+
+<h2>Create a USS class for the border style</h2>
+
+<p>The character details container will use the same border styles as the character names list container. Create a USS class to apply to both containers.</p>
+
+<ol>
+<li>In the StyleSheet window, select <strong>+</strong> &gt; <strong>Create New USS</strong>.</li>
+<li>Name it as <code>MainView.uss</code> and save.</li>
+<li>Click on the <strong>Add new selector…</strong> field and enter <code>.border</code>. A <strong><code>.border</code></strong> selector appears in the StyleSheet window.</li>
+<li>In the StyleSheet window, select <strong><code>.border</code></strong>.</li>
+<li>In the Inspector window, set <strong>Border</strong> &gt; <strong>Color</strong> to <code>#311A11</code>.</li>
+<li>Set <strong>Border</strong> &gt; <strong>Width</strong> to <code>2</code> pixels.</li>
+<li>Set <strong>Border</strong> &gt; <strong>Radius</strong> to <code>15</code> pixels.</li>
+<li>Drag <strong><code>.border</code></strong> from the StyleSheet window to the character details container <strong>VisualElement</strong>.</li>
+<li>Drag <strong><code>.border</code></strong> from the StyleSheet window to the character names list container <strong>VisualElement</strong>.</li>
+<li>Select the character names list container <strong>VisualElement</strong>.</li>
+<li>In the Inspector window, right-click <strong>Border</strong> and select <strong>Unset</strong> to remove the inline style you set earlier.</li>
+</ol>
+
+<h2>Create the character portrait foreground</h2>
+
+<p>Next in the character details container is to add the foreground for an actual image.</p>
+
+<ol>
+<li><p>Drag <strong>VisualElement</strong> from <strong>Library</strong> to the character details container. </p></li>
+<li><p>Select the element from the Hierarchy window.</p></li>
+<li><p>Set <strong>Name</strong> to <code>CharacterPortrait</code>.</p></li>
+<li><p>Set <strong>Flex</strong> &gt; <strong>Grow</strong> to <code>1</code>, so that the image can use all the available space. </p></li>
+<li>
+<p>Set <strong>Background &gt; Scale Mode</strong> to <code>scale-to-fit</code>, so that you can scale the image to match the element size while keeping the correct aspect ratio.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-portraitElement.png" alt="VisualElement for the portrait image">
+<figcaption>VisualElement for the portrait image</figcaption>
+</figure>
+</li>
+</ol>
+
+<h2>Create labels</h2>
+
+<p>Add two label controls to the character details container to display the selected character’s name and class. </p>
+
+<ol>
+<li><p>Drag <strong>Label</strong> from <strong>Library</strong> to the character details container in the Hierarchy window.</p></li>
+<li><p>Set <code>Name</code> to <code>CharacterName</code>.</p></li>
+<li><p>Drag <strong>Label</strong> from <strong>Library</strong> to the character details container in the Hierarchy window.</p></li>
+<li>
+<p>Set <code>Name</code> to <code>CharacterClass</code>.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-characterLabels.png" alt="Add labels for name and class">
+<figcaption>Add labels for name and class</figcaption>
+</figure>
+</li>
+<li><p>Select the <code>#CharacterName</code> element.</p></li>
+<li><p>Set <strong>Text</strong> &gt; <strong>Font Style</strong> to <code>B</code>.</p></li>
+<li>
+<p>Set <strong>Text</strong> &gt; <strong>Size</strong> to <code>18</code> pixels.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/uie-howto-runtimeUI-labelSettings.png" alt="Change font settings">
+<figcaption>Change font settings</figcaption>
+</figure>
+</li>
+<li><p>In the <strong>Viewport</strong> window, select <strong>File</strong> &gt; <strong>Save</strong> to save the changes to <code>MainView.uxml</code>. </p></li>
+</ol>
+
+<p><a name="extract-inline-styles" aria-hidden="true"></a></p>
+
+<h2>Extract inline styles</h2>
+
+<p>In UI Builder, you can create elements and use inline styles only to experiment while the number of elements is still small. As you build a more complex UI, it’s easier to manage styles using style sheets. You can extract inline styles to a style sheet in UI Builder. </p>
+
+<ol>
+<li>Select the root visual element.</li>
+<li>In the Inspector window, in the <strong>Style Class List</strong> field, enter <code>.background</code> as the class name.</li>
+<li>Select <strong>Extract Inlined Styles to New Class</strong>. This creates a <code>.background</code> class selector with the inline styles you set for the root element and updates the UI Document (UXML) for the root visual element to use the class selector instead of the inline styles.</li>
+<li>In the <strong>Viewport</strong> window, select <strong>File</strong> &gt; <strong>Save</strong>.</li>
+</ol>
+
+<p>If you want to continue to work on the <a href="UIE-HowTo-CreateRuntimeUI.html">Create a list view runtime UI</a> example, you can repeat the steps to extract styles for all the other elements, and follow the instructions to create the example.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIB-styling-ui-using-uss-selectors.html">Style elements with UI Builder</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIB-interface-overview.html"></a></span><div class="tip">UI Builder interface overview</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIB-structuring-ui-elements.html"></a></span><div class="tip">Work with elements</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

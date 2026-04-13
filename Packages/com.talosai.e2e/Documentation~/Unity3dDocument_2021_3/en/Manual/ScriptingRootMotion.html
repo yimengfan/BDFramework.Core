@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Tutorial: Scripting Root Motion for &quot;in-place&quot; humanoid animations</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ScriptingRootMotion.html">English</a></li>
+<li><a href="/cn/current/Manual/ScriptingRootMotion.html">中文</a></li>
+<li><a href="/ja/current/Manual/ScriptingRootMotion.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ScriptingRootMotion.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ScriptingRootMotion.html">English</a></li>
+<li><a href="/cn/current/Manual/ScriptingRootMotion.html">中文</a></li>
+<li><a href="/ja/current/Manual/ScriptingRootMotion.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ScriptingRootMotion.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AnimationSection.html">Animation</a></li>
+<li><a href="AnimatorControllers.html">Animator Controllers</a></li>
+<li><a href="AnimationStateMachines.html">Animation State Machines</a></li>
+<li><a href="RootMotion.html">Root Motion - how it works</a></li>
+<li>Tutorial: Scripting Root Motion for &quot;in-place&quot; humanoid animations</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="RootMotion.html"></a></span><div class="tip">Root Motion - how it works</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-BlendTree.html"></a></span><div class="tip">Blend Trees</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Tutorial: Scripting Root Motion for “in-place” humanoid animations</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Sometimes your animation comes as “in-place”, which means if you put it in a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, it will not move the character that it’s on. In other words, the animation does not contain “<span class="tooltip"><strong>root motion</strong><span class="tooltiptext">Motion of character’s root node, whether it’s controlled by the animation itself or externally. <a href="RootMotion.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, it will not move the character that it’s on. In other words, the animation does not contain “<span class="tooltip"><strong>root motion</strong><span class="tooltiptext">Motion of character’s root node, whether it’s controlled by the animation itself or externally. <a href="RootMotion.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RootMotion" aria-label="Go to glossary anchor for RootMotion">Glossary</a></span></span></span>”. For this, we can modify root motion from script. To put everything together follow the steps below (note there are many variations of achieving the same result, this is just one recipe). </p>
+
+<ul>
+<li>Open the <span class="tooltip"><strong>inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> for the FBX file that contains the in-place animation, and go to the <strong>Animation</strong> tab</li>
+<li>Make sure the <span class="tooltip"><strong>Muscle Definition</strong><span class="tooltiptext">This allows you to have more intuitive control over the character’s skeleton. When an Avatar is in place, the Animation system works in muscle space, which is more intuitive than bone space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about MuscleDefinitions.html" href="MuscleDefinitions.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Muscledefinition" aria-label="Go to glossary anchor for Muscledefinition">Glossary</a></span></span></span> is set to the <span class="tooltip"><strong>Avatar</strong><span class="tooltiptext">An interface for retargeting animation from one rig to another. <a href="ConfiguringtheAvatar.html" href="Glossary.html#Muscledefinition" aria-label="Go to glossary anchor for Muscledefinition">Glossary</a></span></span></span> is set to the <span class="tooltip"><strong>Avatar</strong><span class="tooltiptext">An interface for retargeting animation from one rig to another. <a href="ConfiguringtheAvatar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Avatar" aria-label="Go to glossary anchor for Avatar">Glossary</a></span></span></span> you intend to control (let’s say this avatar is called <em>Dude</em>, and it has already been added to the <strong>Hierarchy View</strong>).</li>
+<li>Select the <span class="tooltip"><strong>animation clip</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html" href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> from the available clips</li>
+<li>Make sure <span class="tooltip"><strong>Loop Pose</strong><span class="tooltiptext">An animation clip setting that blends the end and start of an animation to create a seamless join. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html" href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LoopPose" aria-label="Go to glossary anchor for LoopPose">Glossary</a></span></span></span> is properly aligned (the light next to it is green), and that the checkbox for <strong>Loop Pose</strong> is clicked</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/MecanimRootMotionChristmasTree.png" alt="">
+</figure>
+
+<ul>
+<li>Preview the animation in the animation viewer to make sure the beginning and the end of the animation align smoothly, and that the character is moving “in-place”</li>
+<li>On the animation clip <a href="animeditor-AnimationCurves.html">create a curve</a> that will control the speed of the character (you can add a curve from the <strong>Animation Import inspector</strong> <strong>Curves-&gt; +</strong>)</li>
+<li>Name that curve something meaningful, like “Runspeed”</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/MecanimRootMotionCurve.png" alt="">
+</figure>
+
+<ul>
+<li>Create a new <span class="tooltip"><strong>Animator Controller</strong><span class="tooltiptext">Controls animation through Animation Layers with Animation State Machines and Animation Blend Trees, controlled by Animation Parameters. The same Animator Controller can be referenced by multiple models with Animator components. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimatorController.html" href="class-AnimatorController.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorController" aria-label="Go to glossary anchor for AnimatorController">Glossary</a></span></span></span>, (let’s call it <strong>RootMotionController</strong>)</li>
+<li>Drop the desired animation clip into it, this should create a state with the name of the animation (say <strong>Run</strong>)</li>
+<li>Add a parameter to the Controller with the same name as the curve (in this case, “Runspeed”)</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/MecanimRootMotionController.png" alt="">
+</figure>
+
+<ul>
+<li>Select the character <strong>Dude</strong> in the <strong>Hierarchy</strong>, whose inspector should already have an <strong>Animator</strong> component.</li>
+<li>Drag <strong>RootMotionController</strong> onto the <strong>Controller</strong> property of the Animator</li>
+<li>If you press play now, you should see the “Dude” running in place</li>
+</ul>
+
+<p>Finally, to control the motion, we will need to create a script (RootMotionScript.cs), that implements the <a href="../ScriptReference/MonoBehaviour.OnAnimatorMove.html">OnAnimatorMove</a> callback:-</p>
+
+<pre><code>using UnityEngine;
+using System.Collections;
+
+[RequireComponent(typeof(Animator))]
+    
+public class RootMotionScript : MonoBehaviour {
+            
+    void OnAnimatorMove()
+    {
+            Animator animator = GetComponent&lt;Animator&gt;(); 
+                              
+            if (animator)
+            {
+     Vector3 newPosition = transform.position;
+               newPosition.z += animator.GetFloat(&quot;Runspeed&quot;) * Time.deltaTime; 
+     transform.position = newPosition;
+            }
+    }
+}
+
+
+</code></pre>
+
+<p>You should attach RootMotionScript.cs to the “Dude” object. When you do this, the <span class="tooltip"><strong>Animator component</strong><span class="tooltiptext">A component on a model that animates that model using the Animation system. The component has a reference to an Animator Controller asset that controls the animation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimatorController.html" href="class-AnimatorController.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorComponent" aria-label="Go to glossary anchor for AnimatorComponent">Glossary</a></span></span></span> will detect that the script has an <a href="../ScriptReference/MonoBehaviour.OnAnimatorMove.html">OnAnimatorMove</a> function and show the <strong>Apply Root Motion</strong> property as <em>Handled by Script</em>
+</p>
+
+<figure>
+<img src="../uploads/Main/MecanimRootMotionDude.png" alt="">
+</figure>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="RootMotion.html"></a></span><div class="tip">Root Motion - how it works</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-BlendTree.html"></a></span><div class="tip">Blend Trees</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

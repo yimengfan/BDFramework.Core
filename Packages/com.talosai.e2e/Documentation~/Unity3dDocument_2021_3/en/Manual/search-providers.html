@@ -1,0 +1,319 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Search Providers</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/search-providers.html">English</a></li>
+<li><a href="/cn/current/Manual/search-providers.html">中文</a></li>
+<li><a href="/ja/current/Manual/search-providers.html">日本語</a></li>
+<li><a href="/kr/current/Manual/search-providers.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/search-providers.html">English</a></li>
+<li><a href="/cn/current/Manual/search-providers.html">中文</a></li>
+<li><a href="/ja/current/Manual/search-providers.html">日本語</a></li>
+<li><a href="/kr/current/Manual/search-providers.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="search-overview.html">Unity Search</a></li>
+<li>Search Providers</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="search-advanced-object-picker.html"></a></span><div class="tip">Search Object Picker</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="search-assets.html"></a></span><div class="tip">Search Project Assets</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Search Providers</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Each type of search has its own Search Provider. A Search Provider allows you to search and filter content. Each Search Provider has a unique <a href="search-filters.html#search-tokens">search token</a>. A search token is a text string that you can use in the search field to search using only a specific Search Provider.</p>
+
+<p>By default, all searches use Project, Hierarchy, and Settings Search Providers unless you exclude them.</p>
+
+<p>Search provides additional opt-in Search Providers. Search ignores opt-in Search Providers unless you explicitly use them. Opt-in Search Providers differ from default Search Providers in the following ways:</p>
+
+<p>You can only execute them using their search tokens.
+You cannot combine an opt-in Search Provider with any other Search Provider.</p>
+
+<ul>
+<li><p>To perform a search using all default Search Providers, enter the search terms in the search field. Results appear as you type.</p></li>
+<li><p>To perform a search using an opt-in Search Provider, prefix the search terms with the Search Provider’s search token.<br><br>
+Open the <strong>More</strong>(<strong>⋮</strong>) menu to view a list of Search Providers and their prefixes.<br>
+</p></li>
+</ul>
+
+<p><a name="providers" aria-hidden="true"></a></p>
+
+<h2>Default Search Providers</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Provider:</th>
+	<th style="text-align:left;">Function:</th>
+	<th style="text-align:left;">Search token:</th>
+	<th style="text-align:left;">Example:</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about search-assets.html">Project</a><span class="tooltiptext">In Unity, you use a project to design and develop a game. A project stores all of the files that are related to a game, such as the asset and Scene files. <a href="2Dor3D.html" href="search-assets.html">Project</a><span class="tooltiptext">In Unity, you use a project to design and develop a game. A project stores all of the files that are related to a game, such as the asset and Scene files. <a href="2Dor3D.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Project" aria-label="Go to glossary anchor for Project">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Searches Project Assets.</td>
+	<td style="text-align:left;">
+<code>p:</code> (for “project”)</td>
+	<td style="text-align:left;">
+<code>p:Player</code> <br><br>Searches for Assets that match the term “Player”.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="search-scene.html">Hierarchy</a></td>
+	<td style="text-align:left;">Searches GameObjects in the Scene.</td>
+	<td style="text-align:left;">
+<code>h:</code> (for “hierarchy”)</td>
+	<td style="text-align:left;">
+<code>h:Main Camera</code> <br><br> Searches the current Scene for GameObjects that match the term “Main Camera”.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="search-settings.html">Settings</a></td>
+	<td style="text-align:left;">Searches all <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html">Project Settings</a><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a href="comp-ManagerGroup.html" href="comp-ManagerGroup.html">Project Settings</a><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span> and <a href="Preferences.html">Preferences</a>.</td>
+	<td style="text-align:left;"><code>set:</code></td>
+	<td style="text-align:left;">
+<code>set:VFX</code> <br><br> Finds Project Settings and Preferences pages that match the term “VFX”.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Opt-in Search Providers</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Provider:</th>
+	<th style="text-align:left;">Function:</th>
+	<th style="text-align:left;">Search token:</th>
+	<th style="text-align:left;">Example:</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="search-expressions.html">Expression</a></td>
+	<td style="text-align:left;">This token is not required. Search expressions are recognized without a token.</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="search-menu.html">Menus</a></td>
+	<td style="text-align:left;">Searches the Unity main menu.</td>
+	<td style="text-align:left;"><code>m:</code></td>
+	<td style="text-align:left;">
+<code>m:TextMesh Pro</code><br><br>Searches the Unity main menu for commands that contain “TextMesh Pro.”</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Asset Database</td>
+	<td style="text-align:left;">Searches the AssetDatabase. This is useful when searching the Editor resource bundle (containing all icons/resources used to build the editor) because those binary resources are not indexed.</td>
+	<td style="text-align:left;"><code>adb:</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="search-help.html">Help</a></td>
+	<td style="text-align:left;">Searches the help.</td>
+	<td style="text-align:left;"><code>?</code></td>
+	<td style="text-align:left;">
+<code>?asset</code> <br><br>Searches for help entries containing the word “Asset”.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="search-calculator.html">Calculator</a></td>
+	<td style="text-align:left;">Computes mathematical expressions.</td>
+	<td style="text-align:left;"><code>=</code></td>
+	<td style="text-align:left;">
+<code>=2*3+29/2</code> <br><br>Calculates the answer to the expression <code>2*3+29/2</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="search-files.html">Files</a></td>
+	<td style="text-align:left;">Searches for files</td>
+	<td style="text-align:left;"><code>find:</code></td>
+	<td style="text-align:left;">
+<code>find:Paint Mat</code><br><br>Searches for all assets paths containing the words paint AND the word mat (e.g.: PaintBrush_Mat.mat, DryWallPainted_Mat.mat)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="search-api.html">Static API Method</a></td>
+	<td style="text-align:left;">Finds and executes static API methods.</td>
+	<td style="text-align:left;"><code>api</code></td>
+	<td style="text-align:left;">
+<code>#Mesh</code> <br><br>Searches for static API methods with “Mesh” in their names.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about search-packages.html">Packages</a><span class="tooltiptext">Packages are collections of assets to be shared and re-used in Unity. The <a href="upm-ui.html">Unity Package Manager</a> (UPM) can display, add, and remove packages from your project. These packages are native to the Unity Package Manager and provide a fundamental method of delivering Unity functionality. However, the Unity Package Manager can also display <a href="AssetStorePackages.html">Asset Store packages</a> that you downloaded from the Asset Store. <a href="Packages.html" href="search-packages.html">Packages</a><span class="tooltiptext">Packages are collections of assets to be shared and re-used in Unity. The <a href="upm-ui.html">Unity Package Manager</a> (UPM) can display, add, and remove packages from your project. These packages are native to the Unity Package Manager and provide a fundamental method of delivering Unity functionality. However, the Unity Package Manager can also display <a href="AssetStorePackages.html">Asset Store packages</a> that you downloaded from the Asset Store. <a href="Packages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Packages" aria-label="Go to glossary anchor for Packages">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Searches the Unity package database.</td>
+	<td style="text-align:left;"><code>pkg:</code></td>
+	<td style="text-align:left;">
+<code>pkg:vector</code><br><br>Searches the Unity package database for packages that match the term “vector”.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about search-asset-store.html">Asset Store</a><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a href="AssetStore.html" href="search-asset-store.html">Asset Store</a><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Searches the <a href="https://assetstore.unity.com">Unity Asset Store</a>.</td>
+	<td style="text-align:left;"><code>store:</code></td>
+	<td style="text-align:left;">
+<code>store:texture</code> <br><br>Searches the Unity Asset Store for Assets that match the term “texture”.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Performance</td>
+	<td style="text-align:left;">Searches all the performance trackers available in Unity. This is useful for searching for performance bottlenecks.</td>
+	<td style="text-align:left;"><code>performance:</code></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="search-saved-queries.html">Saved Queries</a></td>
+	<td style="text-align:left;">Searches for saved queries</td>
+	<td style="text-align:left;"><code>q:</code></td>
+	<td style="text-align:left;">
+<code>q:enemies</code> <br><br> Searches all Search Query assets containing the word enemies.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Logs</td>
+	<td style="text-align:left;">Searches the <code>Editor.log</code> file</td>
+	<td style="text-align:left;"><code>log:</code></td>
+	<td style="text-align:left;">
+<code>log:cache</code><br><br>Searches the <code>Editor.log</code> file for information that matches “cache”.</td>
+	<td style="text-align:left;"></td>
+</tr>
+</tbody>
+</table>
+
+<p>You can also <a href="api.html">create your own Search Providers</a>.</p>
+
+<p><a name="excluding-search-providers" aria-hidden="true"></a></p>
+
+<h2>Exclude Search Providers</h2>
+
+<p>You can exclude specific Search Providers from a regular search. To exclude a provider, do one of the following:</p>
+
+<ul>
+<li>
+<a href="search-filters.html#persistent-search-filters">Mute a provider from the Filters pane</a>. When you mute a provider, Search does not use it in searches, but its background activities (such as indexing parts of Unity) continue to run.</li>
+<li>
+<a href="Preferences.html#search">Disable a provider from the preferences</a>. When you disable a provider, Search does not use it at all, and stops all of its background activities.</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="search-advanced-object-picker.html"></a></span><div class="tip">Search Object Picker</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="search-assets.html"></a></span><div class="tip">Search Project Assets</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

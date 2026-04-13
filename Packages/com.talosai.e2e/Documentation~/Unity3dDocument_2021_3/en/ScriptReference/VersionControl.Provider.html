@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Provider</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">Provider</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEditor.VersionControl</p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>This class provides access to the version control API.</p>
+              </div>
+              <div class="subsection">
+        <p>Note that the Version Control window is refreshed after every version control operation. This means that looping through multiple assets and doing an individual operation on each (i.e. Checkout) will be slower than passing an <a href="VersionControl.AssetList.html">AssetList</a> containing all of the assets and performing a version control operation on it once.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using System.Collections.Generic;
+using <a href="UnityEditor.html">UnityEditor</a>;
+using UnityEditor.VersionControl;
+using UnityEngine;<br /><br />public class EditorScript : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    [<a href="MenuItem.html">MenuItem</a>("VC/Checkout")]
+    public static void TestCheckout()
+    {
+        <a href="VersionControl.AssetList.html">AssetList</a> assets = new <a href="VersionControl.AssetList.html">AssetList</a>();
+        assets.Add(new <a href="VersionControl.Asset.html">Asset</a>("Assets/"));<br /><br />        <a href="VersionControl.Task.html">Task</a> t = <a href="VersionControl.Provider.Checkout.html">Provider.Checkout</a>(assets, <a href="VersionControl.CheckoutMode.Both.html">CheckoutMode.Both</a>);
+        t.Wait();
+    }
+}
+</pre>
+      </div>
+              <div class="subsection">
+        <p>Also note that Provider operations just execute the VCS commands, and do not automatically refresh the Version Control window. To update this window, use <a href="VersionControl.Task.SetCompletionAction.html">Task.SetCompletionAction</a>.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using System.Collections.Generic;
+using <a href="UnityEditor.html">UnityEditor</a>;
+using UnityEditor.VersionControl;
+using UnityEngine;<br /><br />public class EditorScript : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    [<a href="MenuItem.html">MenuItem</a>("VC/ChangeSetMove")]
+    static void ChangeSetMove()
+    {
+        <a href="VersionControl.AssetList.html">AssetList</a> assets = new <a href="VersionControl.AssetList.html">AssetList</a>();
+        assets.Add(<a href="VersionControl.Provider.GetAssetByPath.html">Provider.GetAssetByPath</a>("Assets/testMaterial.mat"));
+        <a href="VersionControl.Task.html">Task</a> task = <a href="VersionControl.Provider.ChangeSetMove.html">Provider.ChangeSetMove</a>(assets, "ChangeSetID");
+        task.SetCompletionAction(<a href="VersionControl.CompletionAction.UpdatePendingWindow.html">CompletionAction.UpdatePendingWindow</a>);
+    }
+}
+</pre>
+      </div>
+              <div class="subsection">
+                <h3>Static Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="VersionControl.Provider-activeTask.html">activeTask</a></td><td class="desc">Gets the currently executing task.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider-enabled.html">enabled</a></td><td class="desc">Returns true if the version control provider is enabled and a valid Unity Pro License was found.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider-hasCheckoutSupport.html">hasCheckoutSupport</a></td><td class="desc">This is true if the currently selected version control plugin supports the Checkout method.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider-hasLockingSupport.html">hasLockingSupport</a></td><td class="desc">This is true if the currently selected version control plugin supports the Lock and Unlock methods.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider-isActive.html">isActive</a></td><td class="desc">Returns true if a version control plugin has been selected and configured correctly.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider-offlineReason.html">offlineReason</a></td><td class="desc">Returns the reason for the version control provider being offline (if it is offline).</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider-onlineState.html">onlineState</a></td><td class="desc">Returns the OnlineState of the version control provider.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider-preCheckoutCallback.html">preCheckoutCallback</a></td><td class="desc">User-supplied callback to be called before Version Control check out operation.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider-preSubmitCallback.html">preSubmitCallback</a></td><td class="desc">User-supplied callback to be called before Version Control Submit operation.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider-requiresNetwork.html">requiresNetwork</a></td><td class="desc">This is true if a network connection is required by the currently selected version control plugin to perform any action.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="VersionControl.Provider.Add.html">Add</a></td><td class="desc">Allows you to add files to version control via script.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.AddIsValid.html">AddIsValid</a></td><td class="desc">Given a list of assets this function returns true if Provider.Add is a valid task to perform on at least one of the assets in the list.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.ChangeSetDescription.html">ChangeSetDescription</a></td><td class="desc">Given a changeset only containing the changeset ID, this will start a task for quering the description of the changeset.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.ChangeSetMove.html">ChangeSetMove</a></td><td class="desc">Move an Asset or a list of Assets from their current changeset to a new changeset.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.ChangeSets.html">ChangeSets</a></td><td class="desc">Gets a list of pending changesets owned by the current user.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.ChangeSetStatus.html">ChangeSetStatus</a></td><td class="desc">Retrieves a list of assets belonging to a changeset.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.Checkout.html">Checkout</a></td><td class="desc">Checkout an asset or a list of assets from the version control system.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.CheckoutIsValid.html">CheckoutIsValid</a></td><td class="desc">Given an asset or a  list of assets this function returns true if Provider.Checkout is a valid task to perform on at least one of the given assets.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.ClearCache.html">ClearCache</a></td><td class="desc">This will invalidate the cached state information for all assets.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.Delete.html">Delete</a></td><td class="desc">Starts a task to delete an Asset or a list of Assets from the disk and from the version control system.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.DeleteChangeSets.html">DeleteChangeSets</a></td><td class="desc">Starts a task that will attempt to delete the given changesets.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.DeleteChangeSetsIsValid.html">DeleteChangeSetsIsValid</a></td><td class="desc">Tests if deleting the given changesets is a valid task to perform.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.DiffHead.html">DiffHead</a></td><td class="desc">Starts a task for showing a diff of the given assest versus their head revision.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.DiffIsValid.html">DiffIsValid</a></td><td class="desc">Returns true if starting a Diff task is a valid operation for at least one asset in the given AssetList.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.GetActiveConfigFields.html">GetActiveConfigFields</a></td><td class="desc">Returns the configuration fields for the currently active version control plugin.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.GetActivePlugin.html">GetActivePlugin</a></td><td class="desc">Gets the current, user selected verson control Plugin.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.GetAssetByGUID.html">GetAssetByGUID</a></td><td class="desc">Returns version control information about an asset from a given GUID.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.GetAssetByPath.html">GetAssetByPath</a></td><td class="desc">Returns the version control information about an asset. Can be used with "AssetList.Add" to add assets to a list for further version control actions.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.GetAssetListFromSelection.html">GetAssetListFromSelection</a></td><td class="desc">Returns the version control information about the currently selected Assets.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.GetLatest.html">GetLatest</a></td><td class="desc">Start a task for getting the latest version of an out of sync asset from the version control server.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.GetLatestIsValid.html">GetLatestIsValid</a></td><td class="desc">The task tests the given asset list and returns true if Provider.GetLatest is valid operation for one or more assets.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.Incoming.html">Incoming</a></td><td class="desc">Starts a task that queries the version control server for incoming changes.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.IncomingChangeSetAssets.html">IncomingChangeSetAssets</a></td><td class="desc">Given an incoming changeset this will start a task to query the version control server for which assets are part of the changeset.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.IsOpenForEdit.html">IsOpenForEdit</a></td><td class="desc">Returns true if an asset can be edited.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.Lock.html">Lock</a></td><td class="desc">Attempt to lock an asset for exclusive editing.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.LockIsValid.html">LockIsValid</a></td><td class="desc">Returns true if the Provider.Lock task can be executed on one or more assets from the given asset list.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.Merge.html">Merge</a></td><td class="desc">Initiates a merge task to handle the merging of conflicting Assets. This invokes a merge tool, which you can set in the External Tools section of the Preferences window, on the conflicting Assets. When the merge task finishes, the AssetList only contains the Assets that the tool could merge.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.Move.html">Move</a></td><td class="desc">Uses the version control plugin to move an asset from one path to another.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.Resolve.html">Resolve</a></td><td class="desc">Starts a task that will resolve the conflicting assets in version control.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.ResolveIsValid.html">ResolveIsValid</a></td><td class="desc">Tests if any of the assets in the list have the conflicted state and can be resolved.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.Revert.html">Revert</a></td><td class="desc">Reverts the specified assets by undoing any changes done since the last time you synced.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.RevertIsValid.html">RevertIsValid</a></td><td class="desc">Returns true if Provider.Revert is a valid task to perform on at least one of the given assets in the list.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.Status.html">Status</a></td><td class="desc">Starts a task that will fetch the most recent status about the asset or assets from the revision control system.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.Submit.html">Submit</a></td><td class="desc">Starts a task that submits the assets to version control.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.SubmitIsValid.html">SubmitIsValid</a></td><td class="desc">Returns true if submitting the assets is a valid operation.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.UnlockIsValid.html">UnlockIsValid</a></td><td class="desc">Returns true if unlocking the assets is a valid operation.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.UpdateSettings.html">UpdateSettings</a></td><td class="desc">Starts a task that sends the version control settings to the version control system.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Delegates</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Delegate</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="VersionControl.Provider.PreCheckoutCallback.html">PreCheckoutCallback</a></td><td class="desc">Delegate for a user-supplied callback to be called before Version Control Checkout.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.PreSubmitCallback.html">PreSubmitCallback</a></td><td class="desc">Delegate for a user-supplied callback to be called before Version Control Submit.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

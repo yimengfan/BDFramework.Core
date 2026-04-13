@@ -1,0 +1,385 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Input Manager</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="platforms" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-InputManager.html">English</a></li>
+<li><a href="/cn/current/Manual/class-InputManager.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-InputManager.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-InputManager.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-InputManager.html">English</a></li>
+<li><a href="/cn/current/Manual/class-InputManager.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-InputManager.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-InputManager.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Input.html">Input</a></li>
+<li>Input Manager</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Input.html"></a></span><div class="tip">Input</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="MobileInput.html"></a></span><div class="tip">Mobile device input</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Input Manager</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <strong>Input Manager</strong> window allows you to define input axes and their associated actions for your Project. To access it, from Unity’s main menu, go to <strong>Edit &gt; Project Settings</strong>, then select <strong>Input Manager</strong> from the navigation on the right.</p>
+
+<p>The <strong>Input Manager</strong> uses the following types of controls:</p>
+
+<ul>
+<li>
+<strong>Key</strong> refers to any key on a physical keyboard, such as W, Shift, or the space bar.</li>
+<li>
+<strong>Button</strong> refers to any button on a physical controller (for example, gamepads), such as the X button on a remote control.</li>
+<li>A <strong>virtual axis</strong> (plural: <strong>axes</strong>) is mapped to a control, such as a button or a key. When the user activates the control, the axis receives a value in the range of [–1..1]. You can use this value in your <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>.</li>
+</ul>
+
+<h2>Physical keys</h2>
+
+<p>The Physical keys option allows you to map key codes to the physical keyboard layout, rather than to the language-specific layout that may vary between users in different regions.</p>
+
+<p>For example, on some keyboards the first row of letters reads “QWERTY”, and on others it reads “AZERTY”. This means if you scripted specific controls to use the well known “WASD” keys for movement, they would not be in the correct physical arrangement (like the arrow-key arrangement) on an AZERTY-layout keyboard.</p>
+
+<p>With Physical Keys enabled, Unity uses a generic ANSI/ISO “Qwerty” layout to represent the <strong>physical location</strong> of the keys regardless of the user’s actual layout. This means if you specify the “Q” key, it will always be the left-most letter on the first row of letter keys, even if the user’s keyboard has a different letter in that position.</p>
+
+<p>Note, you should not read key input for in-game text input, because this will not allow users to enter non-Latin characters. Instead, use <a href="../ScriptReference/Input-compositionString.html"><code>Input.compositionString</code></a>.</p>
+
+<h2>Virtual axes</h2>
+
+<p>Every Project you create has a number of input axes created by default. These axes enable you to use keyboard, mouse, and joystick input in your Project straight away.</p>
+
+<p>To see more about these axes, open the <strong>Input Manager</strong> window, and click the arrow next to any axis name to expand its properties.</p>
+
+<p>Each input axis has the following properties:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;">Axis name. You can use this to access the axis from scripts.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Descriptive Name, Descriptive Negative Name</strong></td>
+	<td style="text-align:left;">These values are deprecated and do not work. Previously, they displayed for the user on the Rebind Controls screen at startup, but this screen has also been deprecated.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Negative Button, Positive Button</strong></td>
+	<td style="text-align:left;">The controls to push the axis in the negative and positive direction respectively. These can be keys on a keyboard, or buttons on a joystick or mouse.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alt Negative Button, Alt Positive Button</strong></td>
+	<td style="text-align:left;">Alternative controls to push the axis in the negative and positive direction respectively.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Gravity</strong></td>
+	<td style="text-align:left;">Speed in units per second that the axis falls toward neutral when no input is present.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Dead</strong></td>
+	<td style="text-align:left;">How far the user needs to move an analog stick before your application registers the movement. At runtime, input from all analog devices that falls within this range will be considered null.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Sensitivity</strong></td>
+	<td style="text-align:left;">Speed in units per second that the axis will move toward the target value. This is for digital devices only.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Snap</strong></td>
+	<td style="text-align:left;">If enabled, the axis value will reset to zero when pressing a button that corresponds to the opposite direction.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Type</strong></td>
+	<td style="text-align:left;">The type of input that controls the axis. Select from these values:<br><br>- Key or Mouse button<br>- Mouse Movement<br>- Joystick Axis</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Axis</strong></td>
+	<td style="text-align:left;">The axis of a connected device that controls this axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>JoyNum</strong></td>
+	<td style="text-align:left;">The connected Joystick that controls this axis. You can select a specific joystick, or query input from all joysticks.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Axis values can be:</p>
+
+<ul>
+<li>Between –1 and 1 for joystick and keyboard input. The neutral position for these axes is 0. Some types of controls, such as buttons on a keyboard, aren’t sensitive to input intensity, so they can’t produce values other than –1, 0, or 1.</li>
+<li>Mouse delta (how much the mouse has moved during the last frame) for mouse input. The values for mouse input axes can be larger than 1 or smaller than –1 when the user moves the mouse quickly.</li>
+</ul>
+
+<h3>Adding, removing, and copying virtual axes</h3>
+
+<p>To add a virtual axis, increase the number in the <strong>Size</strong> field. This creates a new axis at the bottom of the list. The new axis copies the properties of the previous axis in the list.</p>
+
+<p>To remove a virtual axis, you can either:</p>
+
+<ul>
+<li>Decrease the number in the <strong>Size</strong> field. This removes the last axis in the list.</li>
+<li>Right-click any axis, and select <strong>Delete Array Element</strong>.<br>
+<strong>Note:</strong> You can’t undo this action.</li>
+</ul>
+
+<p>To copy a virtual axis, right-click it and select <strong>Duplicate Array Element</strong>.</p>
+
+<h3>Mapping virtual axes to controls</h3>
+
+<p>To map a key or button to an axis, enter its name in the <strong>Positive Button</strong> or <strong>Negative Button</strong> property in the Input Manager.</p>
+
+<p>Key names follow these naming conventions:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Key family</strong></th>
+	<th style="text-align:left;"><strong>Naming convention</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Letter keys</td>
+	<td style="text-align:left;">
+<code>a</code>, <code>b</code>, <code>c</code>…</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Number keys</td>
+	<td style="text-align:left;">
+<code>1</code>, <code>2</code>, <code>3</code>…</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Arrow keys</td>
+	<td style="text-align:left;">
+<code>up</code>, <code>down</code>, <code>left</code>, <code>right</code>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Numpad keys</td>
+	<td style="text-align:left;">
+<code>[1]</code>, <code>[2]</code>, <code>[3]</code>, <code>[+]</code>, <code>[equals]</code>…</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Modifier keys</td>
+	<td style="text-align:left;">
+<code>right shift</code>, <code>left shift</code>, <code>right ctrl</code>, <code>left ctrl</code>, <code>right alt</code>, <code>left alt</code>, <code>right cmd</code>, <code>left cmd</code>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Special keys</td>
+	<td style="text-align:left;">
+<code>backspace</code>, <code>tab</code>, <code>return</code>, <code>escape</code>, <code>space</code>, <code>delete</code>, <code>enter</code>, <code>insert</code>, <code>home</code>, <code>end</code>, <code>page up</code>, <code>page down</code>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Function keys</td>
+	<td style="text-align:left;">
+<code>f1</code>, <code>f2</code>, <code>f3</code>…</td>
+</tr>
+</tbody>
+</table>
+
+<p>Mouse buttons are named <code>mouse 0, mouse 1, mouse 2,</code> and so on.</p>
+
+<p>Joystick buttons follow these naming conventions:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Button origin</strong></th>
+	<th style="text-align:left;"><strong>Naming convention</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">A specific button on any joystick</td>
+	<td style="text-align:left;">
+<code>joystick button 0</code>, <code>joystick button 1</code>, <code>joystick button 2</code>…</td>
+</tr>
+<tr>
+	<td style="text-align:left;">A specific button on a specific joystick</td>
+	<td style="text-align:left;">
+<code>joystick 1 button 0</code>, <code>joystick 1 button 1</code>, <code>joystick 2 button 0</code>…</td>
+</tr>
+</tbody>
+</table>
+
+<p>You can also query input for a specific key or button with <a href="../ScriptReference/Input.GetKey.html"><code>Input.GetKey</code></a> and the naming conventions specified above. For example:</p>
+
+<pre><code class="csharp">Input.GetKey(&quot;a&quot;);
+</code></pre>
+
+<p>Another way to access keys is to use the <a href="../ScriptReference/KeyCode.html"><code>KeyCode</code></a> enumeration.</p>
+
+<h3>Using virtual axes in scripts</h3>
+
+<p>To access virtual axes from scripts, you can use the axis name.</p>
+
+<p>For example, to query the current value of the Horizontal axis and store it in a variable, you can use <a href="../ScriptReference/Input.GetAxis.html"><code>Input.GetAxis</code></a> like this:</p>
+
+<pre><code class="csharp">float horizontalInput = Input.GetAxis (&quot;Horizontal&quot;); 
+</code></pre>
+
+<p>For axes that describe an event rather than a movement (for example, firing a weapon in a game), use <a href="../ScriptReference/Input.GetButtonDown.html"><code>Input.GetButtonDown</code></a> instead.</p>
+
+<p>If two or more axes have the same name, the query returns the axis with the largest absolute value. This makes it possible to assign more than one input device to an axis name.</p>
+
+<p>For example, you can create two axes named Horizontal and assign one to keyboard input and the other to joystick input. If the user is using the joystick, input comes from the joystick and keyboard input is null. Otherwise, input comes from the keyboard and joystick input is null. This enables you to write a single script that covers input from multiple controllers.</p>
+
+<p><strong>Example</strong></p>
+
+<p>You can use input from the <strong>Horizontal</strong> and <strong>Vertical</strong> axes and the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Transform.Translate.html"><code>transform.Translate</code></a> method to move a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="../ScriptReference/Transform.Translate.html"><code>transform.Translate</code></a> method to move a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in XZ space (forward, back, left, or right). Add the following code to the <code>update()</code> method on a script attached to the GameObject you want to move:</p>
+
+<pre><code>float moveSpeed = 10;
+//Define the speed at which the object moves.
+
+float horizontalInput = Input.GetAxis(&quot;Horizontal&quot;);
+//Get the value of the Horizontal input axis.
+
+float verticalInput = Input.GetAxis(&quot;Vertical&quot;);
+//Get the value of the Vertical input axis.
+
+transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * moveSpeed * Time.deltaTime);
+//Move the object to XYZ coordinates defined as horizontalInput, 0, and verticalInput respectively.
+</code></pre>
+
+<p>
+<a href="../ScriptReference/Time-deltaTime.html"><code>Time.deltaTime</code></a> represents the time that passed since the last frame. Multiplying the <code>moveSpeed</code> variable by <code>Time.deltaTime</code> ensures that the GameObject moves at a constant speed every frame.</p>
+<!-- area:platforms -->
+
+<p><span class="search-words">InputManager</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Input.html"></a></span><div class="tip">Input</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="MobileInput.html"></a></span><div class="tip">Mobile device input</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: ShaderLab: assigning tags to a Pass</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-PassTags.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-PassTags.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-PassTags.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-PassTags.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-PassTags.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-PassTags.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-PassTags.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-PassTags.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-writing.html">Writing shaders</a></li>
+<li><a href="SL-Reference.html">ShaderLab</a></li>
+<li><a href="SL-Pass.html">ShaderLab: defining a Pass</a></li>
+<li>ShaderLab: assigning tags to a Pass</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-Name.html"></a></span><div class="tip">ShaderLab: assigning a name to a Pass</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="shader-predefined-pass-tags-built-in.html"></a></span><div class="tip">ShaderLab: Predefined Pass tags in the Built-in Render Pipeline</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>ShaderLab: assigning tags to a Pass</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page contains information on using a <code>Tags</code> block in your <span class="tooltip"><strong>ShaderLab</strong><span class="tooltiptext">Unity’s language for defining the structure of Shader objects. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-Shader.html" href="SL-Shader.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span> code to assign tags to a Pass. It also contains information on using the <code>LightMode</code> tag.</p>
+
+<p>For information on how a <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> object works, and the relationship between <span class="tooltip"><strong>Shader objects</strong><span class="tooltiptext">An instance of the Shader class, a Shader object is container for shader programs and GPU instructions, and information that tells Unity how to use them. Use them with materials to determine the appearance of your scene. <a href="shader-objects.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> object works, and the relationship between <span class="tooltip"><strong>Shader objects</strong><span class="tooltiptext">An instance of the Shader class, a Shader object is container for shader programs and GPU instructions, and information that tells Unity how to use them. Use them with materials to determine the appearance of your scene. <a href="shader-objects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shaderobject" aria-label="Go to glossary anchor for Shaderobject">Glossary</a></span></span></span>, SubShaders and Passes, see <a href="ShadersOverview.html">Shader object fundamentals</a>.</p>
+
+<h2>Overview</h2>
+
+<p>Tags are key-value pairs of data that you can assign to a Pass. Unity uses predefined tags and values to determine how and when to render a given Pass. You can also create your own custom Pass tags with custom values, and access them from C# code. </p>
+
+<p>The most commonly used predefined Pass tag is the <code>LightMode</code> tag; this is used in all render pipelines. Other Pass tags vary by <span class="tooltip"><strong>render pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>. For more information, see the following pages:</p>
+
+<ul>
+<li>For predefined Pass tags in the Built-in Render Pipeline, see <a href="shader-predefined-pass-tags-built-in.html">Predefined Pass tags in the Built-in Render Pipeline</a>.</li>
+<li>For predefined Pass tags in the Universal Render Pipeline (URP), see <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@11.0/manual/urp-shaders/urp-shaderlab-pass-tags.html#urp-pass-tags-lightmode">URP Pass tags</a>.</li>
+</ul>
+
+<h2>Render pipeline compatibility</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature name</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>Universal Render Pipeline (URP)</strong></th>
+	<th style="text-align:left;"><strong>High Definition Render Pipeline (HDRP)</strong></th>
+	<th style="text-align:left;"><strong>Custom SRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>ShaderLab: Pass Tags block</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ShaderLab: LightMode Pass tag</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Using the Tags block</h2>
+
+<p>To assign Tags to a Pass in ShaderLab, you place a <code>Tags</code> block inside a <code>Pass</code> block.</p>
+
+<p>Note that both SubShaders and Passes use the <code>Tags</code> block, but they work differently. Assigning SubShader tags to a Pass has no effect, and vice versa. The difference is where you put the <code>Tags</code> block:</p>
+
+<ul>
+<li>To define Pass tags, place the <code>Tags</code> block inside a <code>Pass</code> block.</li>
+<li>To define SubShader tags, place the <code>Tags</code> block inside a <code>SubShader</code> block but outside a <code>Pass</code> block.</li>
+</ul>
+
+<p>For information on assigning tags to a SubShader, see <a href="SL-SubShader.html">Assigning tags to a SubShader</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>Tags {&quot;&lt;name1&gt;&quot; = &quot;&lt;value1&gt;&quot; &quot;&lt;name2&gt;&quot; = &quot;&lt;value2&gt;&quot;}</code></td>
+	<td style="text-align:left;">Applies the given tags to the Pass.<br><br>You can define as many tags as you like.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Using Pass tags with C# scripts</h2>
+
+<p>To access the value of a Pass tag from C# <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>, you can use the <a href="../ScriptReference/Shader.FindPassTagValue.html">Shader.FindPassTagValue</a> API. This works for Unity’s predefined Pass tags, and for custom Pass tags that you have created.</p>
+
+<p>
+<strong>Note:</strong> There are several APIs that work directly with the LightMode Pass tag. For more information, see <a href="#lightmode-tag-scripts">Using the LightMode tag with C# scripts</a>.</p>
+
+<p><a name="lightmode-tag" aria-hidden="true"></a></p>
+
+<h2>LightMode tag</h2>
+
+<p>The <code>LightMode</code> tag is a predefined Pass tag that Unity uses to determine whether to execute the Pass during a given frame, when during the frame Unity executes the Pass, and what Unity does with the output.</p>
+
+<p>
+<strong>Note:</strong> The <code>LightMode</code> tag is not related to the <a href="../ScriptReference/Experimental.GlobalIllumination.LightMode.html">LightMode</a> enum, which relates to lighting.</p>
+
+<p>Every render pipeline uses the <code>LightMode</code> tag, but the predefined values and their meanings vary. For more information, see <a href="#lightmode-tag-syntax">Syntax and valid values</a>.</p>
+
+<p>In the Built-in Render Pipeline, if you do not set a <code>LightMode</code> tag, Unity renders the Pass without any lighting or shadows; this essentially the same as having a <code>LightMode</code> value of <code>Always</code>. In the Scriptable Render Pipeline, you can use the <code>SRPDefaultUnlit</code> value to reference Passes without a LightMode tag.</p>
+
+<p><a name="lightmode-tag-syntax" aria-hidden="true"></a></p>
+
+<h3>Syntax and valid values</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">“LightMode” = “[value]”</td>
+	<td style="text-align:left;">Sets the LightMode value for this Pass.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Valid values for this tag depend on the render pipeline.</p>
+
+<ul>
+<li>For LightMode Pass tag values in the Built-in Render Pipeline, see <a href="shader-predefined-pass-tags-built-in.html">Predefined Pass tags in the Built-in Render Pipeline</a>.</li>
+<li>For LightMode Pass tag values in the Universal Render Pipeline (URP), see <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@11.0/manual/urp-shaders/urp-shaderlab-pass-tags.html#urp-pass-tags-lightmode">URP Pass tags: LightMode</a>.</li>
+</ul>
+
+<p><a name="lightmode-tag-scripts" aria-hidden="true"></a></p>
+
+<h3>Using the LightMode tag with C# scripts</h3>
+
+<p>
+<a href="../ScriptReference/Material.SetShaderPassEnabled.html">Material.SetShaderPassEnabled</a> and <a href="../ScriptReference/Rendering.ShaderTagId.html">ShaderTagId</a> use the value of the <code>LightMode</code> tag to determine how Unity handles a given Pass.</p>
+
+<p>In the Scriptable Render Pipeline, you can create custom values for the <code>LightMode</code> tag. You can then use these custom values to determine which Passes to draw during a given call to <a href="../ScriptReference/Rendering.ScriptableRenderContext.DrawRenderers.html">ScriptableRenderContext.DrawRenderers</a>, by configuring a <a href="../ScriptReference/Rendering.DrawingSettings.html">DrawingSettings</a> struct. For more information and a code example, see <a href="srp-creating-simple-render-loop.html">Creating a simple render loop in a custom Scriptable Render Pipeline</a>.</p>
+
+<h3>Examples</h3>
+
+<pre><code>Shader &quot;Examples/ExampleLightMode&quot;
+{
+    SubShader
+    {
+        Pass
+        {    
+              Tags { &quot;LightMode&quot; = &quot;Always&quot; }
+            
+              // The rest of the code that defines the Pass goes here.
+        }
+    }
+}
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-Name.html"></a></span><div class="tip">ShaderLab: assigning a name to a Pass</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="shader-predefined-pass-tags-built-in.html"></a></span><div class="tip">ShaderLab: Predefined Pass tags in the Built-in Render Pipeline</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

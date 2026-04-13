@@ -1,0 +1,612 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Common Profiler markers</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/profiler-markers.html">English</a></li>
+<li><a href="/cn/current/Manual/profiler-markers.html">中文</a></li>
+<li><a href="/ja/current/Manual/profiler-markers.html">日本語</a></li>
+<li><a href="/kr/current/Manual/profiler-markers.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/profiler-markers.html">English</a></li>
+<li><a href="/cn/current/Manual/profiler-markers.html">中文</a></li>
+<li><a href="/ja/current/Manual/profiler-markers.html">日本語</a></li>
+<li><a href="/kr/current/Manual/profiler-markers.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="Profiler.html">Profiler overview</a></li>
+<li>Common Profiler markers</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="profiler-profiling-applications.html"></a></span><div class="tip">Profiling your application</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ProfilerWindow.html"></a></span><div class="tip">The Profiler window</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Common Profiler markers</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity’s code is instrumented with a large number of <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> markers that give you insight into what is taking up time in your application. The following tables explain what some of the common markers do:</p>
+
+<ul>
+<li><a href="#main-thread">Main thread base markers</a></li>
+<li><a href="#script-update">Script update markers</a></li>
+<li><a href="#rendering">Rendering and VSync markers</a></li>
+<li><a href="#backend">Back end scripting markers</a></li>
+<li><a href="#multithreading">Multithreading markers</a></li>
+<li><a href="#physics">Physics markers</a></li>
+<li><a href="#animation">Animation markers</a></li>
+<li><a href="#warnings">Performance warnings</a></li>
+</ul>
+
+<p><a name="main-thread" aria-hidden="true"></a></p>
+
+<h2>Main thread base markers</h2>
+
+<p>The main thread base markers provide a clear separation between the time spent on your application and time spent on the Editor and Profiler activities. The <a href="../ScriptReference/Unity.Profiling.ProfilerRecorder.html">ProfilerRecorder</a> can also use these markers to get the timing of a frame on the main thread.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Marker</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>PlayerLoop</strong></td>
+	<td style="text-align:left;">Contains any samples that originate from your application’s main loop. If you target the Editor instead of Play mode while the Player is running within the Editor in active Play mode, PlayerLoop samples nest under the EditorLoop.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>EditorLoop</strong><br><em>(Editor only marker)</em>
+</td>
+	<td style="text-align:left;">Contains any samples that originate from the Editor’s main loop. This is only present while you profile a player in the Editor. When you target Play mode with the Profiler, EditorLoop samples show the amount of time spent rendering and running the Editor that contains the Player.<br><br>The Profiler does not record any further detailed data under the EditorLoop marker. This is because the samples that Editor code emits while the Profiler is profiling Play mode create a large profiling overhead.<br><br>Unity categorizes any samples from the EditorLoop marker as <strong>Others</strong> in the <a href="ProfilerCPU.html#charts">CPU Profiler module charts</a>. As a result, EditorLoop samples are usually the biggest contributor to that category. If you want to see what the Editor does in this time and also get a more detailed breakdown of what else contributes to the <strong>Others</strong> category, <a href="profiler-profiling-applications.html">change the Profiler target to the Editor instead</a>.<br><br>Switching the Profiler’s target to <strong>Editor</strong> changes what the Profiler displays in the CPU Profiler module’s detail pane, as well as the Category breakdown in the CPU Profiler module’s charts. This is because the samples that were previously hidden under the EditorLoop sample then contribute towards their respective categories.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Profiler.CollectEditorStats</strong><br><em>(Editor only marker)</em>
+</td>
+	<td style="text-align:left;">Contains any samples that relate to collecting statistics for different active Profiler modules.<br><br>Samples that are nested under the Profiler.CollectGlobalStats marker indicate how much overhead the Player incurs when it collects the statistics of a particular module. All other child samples only reflect their effect in the Editor.<br><br>To remove the overhead that a particular module incurs, close the module’s chart, or call Profiler.SetAreaEnabled.<br><br><strong>Note:</strong> Custom Profiler modules that use built-in counters enable the built-in counter’s area, even if the module it belongs to has been disabled. To prevent the Profiler from collecting these statistics and creating collection overhead, make sure that both the built-in Profiler module and your custom Profiler module are disabled.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Editor-only markers</h3>
+
+<p>There are certain markers that only appear when you profile in the Unity Editor. These markers do not appear in Player-related activity, and only relate to Editor activity. Editor-only markers include security checks like the GetComponentNullErrorWrapper, which helps to identify a null component usage; CheckConsistency, which validates object setup; CheckAllowDestructionRecursive, which is a destruction check; and Prefab-related activities.</p>
+
+<p>By default, in the CPU Profiler module’s <strong>Hierarchy</strong> view, sample stacks with Editor-only markers are collapsed and are named <code>EditorOnly [SampleName]</code>. While these sample stacks or their child samples might cause managed allocations that can lead to garbage collection getting triggered, they do not contribute to the GC.Alloc value of their parent sample if they are collapsed.</p>
+
+<p>To change the default behavior, in the top right of the module details pane, select the context menu and disable the <a href="ProfilerCPU.html#hierarchy">Collapse EditorOnly Samples</a> setting. When you do this, you can expand the sample and contribute its GC.Alloc value to the enclosing marker.</p>
+
+<p>This option does not affect the <strong>Timeline</strong> view, and the samples and their children appear expanded. You can usually ignore the samples with these markers, because they relate to Editor-only activity and don’t have any impact on reducing managed allocations. However, they can be useful to investigate if you are having serious issues with the performance impact they have on Play mode.</p>
+
+<p><a name="script-update" aria-hidden="true"></a></p>
+
+<h2>Script update markers</h2>
+
+<p>Unless you are using the <a href="JobSystem.html">Job System</a>, most of your scripting code is nested underneath the following markers. For information on Job System samples, see the <a href="#multithreading">Multi threading markers</a> section of this page.</p>
+
+<p>For further details on Unity’s Update Loop, see the documentation on <a href="https://docs.unity3d.com/Manual/ExecutionOrder.html">Order of Execution of Event Functions</a>. If you have inserted your own callbacks into the <a href="https://docs.unity3d.com/ScriptReference/LowLevel.PlayerLoop.html">Player Loop</a> via <a href="https://docs.unity3d.com/ScriptReference/LowLevel.PlayerLoop.SetPlayerLoop.html">PlayerLoop.SetPlayerLoop</a>, your script update samples appear under the respective main PlayerLoopSystem marker, if entered as a subsystem, or on their own, if entered directly into the main loop.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Marker</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>BehaviourUpdate</strong></td>
+	<td style="text-align:left;">Contains all samples of <a href="../ScriptReference/MonoBehaviour.Update.html">MonoBehaviour.Update</a> methods.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CoroutinesDelayedCalls</strong></td>
+	<td style="text-align:left;">Contains all samples of <a href="../ScriptReference/Coroutine.html">Coroutines</a> after their first yield.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>FixedBehaviourUpdate</strong></td>
+	<td style="text-align:left;">Contains all samples of <a href="../ScriptReference/MonoBehaviour.FixedUpdate.html">Monobehaviour.FixedUpdate</a> methods.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PreLateUpdate.ScriptRunBehaviourLateUpdate</strong></td>
+	<td style="text-align:left;">Contains all samples of <a href="../ScriptReference/MonoBehaviour.LateUpdate.html">Monobehaviour.LateUpdate</a> methods.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Update.ScriptRunBehaviourUpdate</strong></td>
+	<td style="text-align:left;">Contains all samples of <a href="../ScriptReference/MonoBehaviour.Update.html">MonoBehaviour.Update</a> and <a href="../ScriptReference/Coroutine.html">Coroutines</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="rendering" aria-hidden="true"></a></p>
+
+<h2>Rendering and VSync markers</h2>
+
+<p>These markers contain the samples where the CPU spends time processing data for the GPU, or where it might be waiting for the GPU to finish. If the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProfilerGPU.html">GPU Profiler module</a> is not available, or it adds too much overhead, the <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html" href="ProfilerGPU.html">GPU Profiler module</a> is not available, or it adds too much overhead, the <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> in the Profiler module details pane does not show this information. The samples under these markers can give you a good idea of whether your application is CPU-bound or GPU-bound.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Marker</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>WaitForTargetFPS</strong></td>
+	<td style="text-align:left;">Indicates how much time your application spent waiting for the targeted FPS that <a href="../ScriptReference/Application-targetFrameRate.html">Application.targetFrameRate</a> specifies.<br><br>If the sample is a subsample of Gfx.WaitForPresentOnGfxThread, it represents the amount of time that your application spent waiting for the GPU. For example, this could be time that the GPU spent waiting for the next VSync, if that is configured in <a href="../ScriptReference/QualitySettings-vSyncCount.html">QualitySettings.vSyncCount</a>, or if vSync is enforced on your target platform. However, samples with this marker are also emitted if the GPU hasn’t finished computing the frame.<br><br>To determine what is causing samples with this marker to use a lot of time, switch to the <a href="ProfilerCPU.html#timeline">Timeline view in the CPU Profiler module</a>. In this view, you can check what happened on the render thread and how much time passed between this sample ending in the current frame and the same sample ending in surrounding frames.<br><br>If the duration is larger than your application’s frame time should be (based on the targeted frame rate or vSync) your frames are taking too long to render or compute. If that’s the case, investigate the render thread and see how much time it spent on Gfx.PresentFrame over other work it did to prepare and issue commands to the GPU. If the render thread spent a large amount of time in Gfx.PresentFrame, your rendering work is GPU-bound. If the render thread’s time was spent preparing commands, your application is CPU-bound.<br><br>To find out what to focus on, if your application is GPU bound, profile the GPU work with the Unity Profiler or a platform profiler. For more information, see the User manual documentation on how to <a href="https://docs.unity3d.com/Manual/OptimizingGraphicsPerformance.html">optimize graphics performance</a>.<br><br><strong>Note:</strong> The Editor doesn’t VSync on the GPU and instead uses WaitForTargetFPS to simulate the delay for VSync. Some platforms, in particular Android and iOS, enforce VSync or have a default frame rate cap of 30 or 60.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Gfx.PresentFrame</strong></td>
+	<td style="text-align:left;">Represents the time your application spent waiting for the GPU to render and present the frame, which includes waiting for VSync.<br><br>Samples with the WaitForTargetFPS marker on the main thread show how much time is spent waiting for VSync.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Gfx.ProcessCommands</strong></td>
+	<td style="text-align:left;">Contains all processing of the rendering commands on the render thread. Your application might have spent some of this processing time waiting for <span class="tooltip"><strong>VSync</strong><span class="tooltiptext">Vertical synchronization (VSync) is a display setting that caps a game’s frame rate to match the refresh rate of a monitor, to prevent image tearing.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VSync" aria-label="Go to glossary anchor for VSync">Glossary</a></span></span></span> or new commands from the main thread, which you can see from its child sample Gfx.WaitForPresentOnGfxThread.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Gfx.WaitForCommands</strong></td>
+	<td style="text-align:left;">Indicates that the render thread was ready for new commands. If you see this marker, it might indicate a bottleneck on the main thread.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>&lt;GraphicsAPIName&gt;.WaitForLastPresent</code> for example:<br><strong>GfxDeviceD3D11.WaitForLastPresent</strong><br><strong>GfxDeviceD3D12.WaitForLastPresent</strong><br><strong>GfxDeviceMetal.WaitForLastPresent</strong>
+</td>
+	<td style="text-align:left;">Samples with this marker appear when the main thread waited for the GPU to flip the frame number to the screen (<code>Time.frameCount - QualitySettings.maxQueuedFrames + 1</code>). This means that if QualitySettings.maxQueuedFrames is greater than one, this time is spent waiting for the GPU to flip a frame that your application requested to render in a previous main thread frame.<br><br>For more details on this sample and an overview of Unity’s Frame Pipeline, see <a href="https://unity.com/blog/engine-platform/fixing-time-deltatime-in-unity-2020-2-for-smoother-gameplay">Unity’s blog post on fixing Delta Time</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Gfx.WaitForPresentOnGfxThread</strong></td>
+	<td style="text-align:left;">Indicates that the main thread was ready to start rendering the next frame, but the render thread did not finish waiting for the GPU to present the frame. This might indicate that your application is GPU-bound. To see what the render thread is simultaneously spending time on, check the <a href="ProfilerCPU.html#timeline">CPU Profiler module’s Timeline view</a>.<br><br>If the render thread spends time in Camera.Render, your application is CPU-bound and might be spending too much time sending draw calls or textures to the GPU.<br><br>If the render thread spends time in Gfx.PresentFrame, your application is GPU-bound, or it might be waiting for VSync on the GPU. A WaitForTargetFPS sub-sample of Gfx.WaitForPresentOnGfxThread represents the portion of the Present phase that your application spent waiting for VSync. The Present phase is the portion of time between Unity instructing the graphics API to swap the buffers, to the time that this operation completed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Gfx.WaitForRenderThread</strong></td>
+	<td style="text-align:left;">Indicates that the main thread was waiting for the render thread to process all the commands in its command stream. Samples with this marker only appear in multithreaded rendering.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="backend" aria-hidden="true"></a></p>
+
+<h2>Back end scripting markers</h2>
+
+<p>The samples highlight Mono or <span class="tooltip"><strong>IL2CPP</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html" href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> <span class="tooltip"><strong>scripting backend</strong><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a href="scripting-backends.html" href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> <span class="tooltip"><strong>scripting backend</strong><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a href="scripting-backends.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScriptingBackend" aria-label="Go to glossary anchor for ScriptingBackend">Glossary</a></span></span></span> activities and are useful for troubleshooting issues with garbage collection and allocation.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Marker</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>GC.Alloc</strong></td>
+	<td style="text-align:left;">Represents an allocation in the managed heap that contains managed allocations that are subject to automatic garbage collection. To reduce the time your application spends on automatic garbage collection, you should minimize these types of samples.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GC.Collect</strong></td>
+	<td style="text-align:left;">Represents samples that relate to garbage collection. Whenever Unity needs to perform garbage collection, it stops running your program code and only resumes normal execution when the garbage collector has finished all its work. <strong>Note:</strong> If you have enabled <a href="performance-incremental-garbage-collection.html">Incremental Garbage Collection</a> the garbage collector might not finish its work in a single frame.<br><br>This interruption might cause delays in the execution of your application that last anywhere from less than one millisecond to hundreds of milliseconds. This depends on how much memory the garbage collector needs to process and the platform your application is running on. For more information, see the documentation on <a href="performance-managed-memory.html">Understanding automatic memory management</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Mono.JIT</strong><br><em>Mono-only</em>
+</td>
+	<td style="text-align:left;">Contains samples that relate to just-in-time compilation of a scripting method. When a function is executed for the first time, Mono compiles it and Mono.JIT represents this compilation overhead.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UnsafeUtility.Malloc</strong></td>
+	<td style="text-align:left;">Contains samples that call UnsafeUtility.Malloc to allocate unmanaged memory. While the Garbage Collector does not track this memory, allocating memory might have a significant performance impact which is shown with this sample. To investigate the source of this call, you can enable <span class="tooltip"><a href="ProfilerCPU.html#call-stacks">Call Stack</a><span class="tooltiptext">A list of methods that were called at run time, organized as a last-in-first-out stack. <br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#callstack" aria-label="Go to glossary anchor for callstack">Glossary</a></span></span></span> recording for this marker in the Profiler window.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="multithreading" aria-hidden="true"></a></p>
+
+<h2>Multithreading markers</h2>
+
+<p>These markers contain samples that do not measure the CPU cycles consumed, but instead highlight information that relates to thread synchronization and the Job System. When you see these samples, use the CPU Profiler module’s <a href="ProfilerCPU.html#timeline">Timeline view</a> to check what’s happening on other threads at the same time.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Marker</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Idle</strong></td>
+	<td style="text-align:left;">Contains samples that indicate the length of time that a Worker Thread is inactive for. A worker thread is inactive any time that the Job System does not utilize it, and it goes into wait mode, where it waits on the semaphore.<br><br>Small gaps between Idle samples usually happen when the Job System wakes them up, for example, to schedule new jobs. Longer gaps might indicate that a native job that has not been instrumented is running on the thread.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>JobHandle.Complete</strong></td>
+	<td style="text-align:left;">Contains samples that indicate when a sync point on a job happened. Sync points might have a performance impact on your application and might interfere with the execution of multi-threaded job code. To make it easier to find where exactly the sync point happened, enable <a href="ProfilerCPU.html#call-stacks">Call Stack</a> recording for this sample. In the CPU Profiler module’s <strong>Timeline</strong> view you can enable <a href="ProfilerCPU.html#flow-events">Flow Events</a> to see which jobs finished at this point.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Semaphore.WaitForSignal</strong></td>
+	<td style="text-align:left;">Contains a sample that depicts a synchronization point on a thread. To find the thread it is waiting for, check the Timeline view for samples that ended shortly before this one.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>WaitForJobGroupID</strong></td>
+	<td style="text-align:left;">A Sync Fence on a JobHandle was triggered. This might lead to <a href="../ScriptReference/Unity.Jobs.IJobParallelFor.html">work stealing</a>, which happens when a worker finishes its work and then looks at other workers’ jobs to complete. These show up as job samples executed under this marker. Jobs that were “stolen” are not necessarily the jobs that were being waited for.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="physics" aria-hidden="true"></a></p>
+
+<h2>Physics markers</h2>
+
+<p>The following table outlines some of the high-level physics <span class="tooltip"><strong>Profiler markers</strong><span class="tooltiptext">Placed in code to describe a CPU or GPU event that is then displayed in the Unity Profiler window. Added to Unity code by default, or you can use <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.profiling.core@latest/index.html?subfolder=/manual/profilermarker-guide.html">ProfilerMarker API</a> to add your own custom markers. <a href="profiler-markers.html" href="https://docs.unity3d.com/Packages/com.unity.profiling.core@latest/index.html?subfolder=/manual/profilermarker-guide.html">ProfilerMarker API</a> to add your own custom markers. <a href="profiler-markers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profilermarker" aria-label="Go to glossary anchor for Profilermarker">Glossary</a></span></span></span>. <a href="../ScriptReference/MonoBehaviour.FixedUpdate.html">FixedUpdate</a> calls all of these measurements.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Marker</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Physics.FetchResults</strong></td>
+	<td style="text-align:left;">Contains samples that collect the results of the physics simulation from the <span class="tooltip"><strong>physics engine</strong><span class="tooltiptext">A system that simulates aspects of physical systems so that objects can accelerate correctly and be affected by collisions, gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PhysicsSection.html" href="PhysicsSection.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#PhysicsEngine" aria-label="Go to glossary anchor for PhysicsEngine">Glossary</a></span></span></span>, such as contact streams, trigger overlaps, and <span class="tooltip"><strong>joint</strong><span class="tooltiptext">A physics component allowing a dynamic connection between Rigidbody components, usually allowing some degree of movement such as a hinge. <a href="Joints.html" href="Glossary.html#PhysicsEngine" aria-label="Go to glossary anchor for PhysicsEngine">Glossary</a></span></span></span>, such as contact streams, trigger overlaps, and <span class="tooltip"><strong>joint</strong><span class="tooltiptext">A physics component allowing a dynamic connection between Rigidbody components, usually allowing some degree of movement such as a hinge. <a href="Joints.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#joint" aria-label="Go to glossary anchor for joint">Glossary</a></span></span></span> breakage events.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Physics.Interpolation</strong></td>
+	<td style="text-align:left;">Contains samples that measure the execution time of the Physics.Interpolation method. This method manages the interpolation of positions and rotations for all the physics objects in your application.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Physics.Processing</strong></td>
+	<td style="text-align:left;">Contains samples that spent time waiting on the main thread until the physics simulation completed across all threads. If your application spends a lot of time in Physics.Processing but only has a few physics related <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, it might indicate that worker threads picked up other systems tasks due to job stealing and reported as physics. This is because while waiting, the main thread picks up jobs from the high priority queue.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Physics.ProcessingCloth</strong></td>
+	<td style="text-align:left;">Contains samples that measure the execution time of the Physics.ProcessingCloth method. This method processes all cloth physics jobs. Expand this sample to show the low-level detail of the work done internally in the physics engine.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Physics.ProcessReports</strong></td>
+	<td style="text-align:left;">Contains samples that correspond to time spent forwarding physics data to scripts via callbacks such as OnTriggerEnter. <strong>Note:</strong> These samples do not compute the data required because they have already been prepared during FetchResults.<br><br>There are four distinct sub-stages:</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Physics.Contacts</strong></td>
+	<td style="text-align:left;">Contains samples that measure the execution time of Physics.Contacts. This processes OnCollisionEnter, OnCollisionExit, and OnCollisionStay events.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Physics.JointBreaks</strong></td>
+	<td style="text-align:left;">Contains samples that measure the execution time of Physics.JointBreaks. This processes updates and messages related to broken joints.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Physics.TriggerEnterExits</strong></td>
+	<td style="text-align:left;">Contains samples that measure the execution time of Physics.TriggerEnterExits. This processes OnTriggerEnter and OnTriggerExit events.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Physics.TriggerStays</strong></td>
+	<td style="text-align:left;">Contains samples that measure the execution time of Physics.TriggerStays. This processes OnTriggerStay events.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Physics.Simulate</strong></td>
+	<td style="text-align:left;">Contains samples that measure the amount of time spent working on the pre-requisites for the <a href="../ScriptReference/Physics.Simulate.html">Physics.Simulate</a> method. This method instructs the physics engine to run its simulation, which updates the state of the current physics.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Physics.UpdateBodies</strong></td>
+	<td style="text-align:left;">Contains samples that update all the physics bodies’ positions and rotations. For each gameObject that has a <span class="tooltip"><strong>Rigidbody</strong><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Rigidbody.html" href="class-Rigidbody.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span> component, samples with this marker read the pose from the physics engine and write it to the Transform.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Physics.UpdateCloth</strong></td>
+	<td style="text-align:left;">Contains samples that measure the execution time of the Physics.UpdateCloth method. This method processes updates that relate to cloth and their Skinned Meshes.</td>
+</tr>
+</tbody>
+</table>
+
+<p>For more information about script life cycles and general samples within a script life cycle, see the documentation on <a href="ExecutionOrder.html#UpdateOrder">Order of Execution for Event Functions</a>.</p>
+
+<p><a name="animation" aria-hidden="true"></a></p>
+
+<h2>Animation markers</h2>
+
+<p>The following tables contain markers from the <a href="class-Animator.html">Animation system</a>. For general information on Animation system performance, see the <a href="MecanimPeformanceandOptimization.html">Mecanim Performance and and Optimization</a> page.</p>
+
+<h3>PreLateUpdate.DirectorUpdateAnimationBegin stage</h3>
+
+<p>In this stage, every Animator that is active and enabled is processed. Active Animators are processed regardless of Culling Mode and visibility. </p>
+
+<p>Markers that start with <code>Director.</code> can also cover <span class="tooltip"><strong>Playables</strong><span class="tooltiptext">An API that provides a way to create tools, effects or other gameplay mechanisms by organizing and evaluating data sources in a tree-like structure known as the PlayableGraph. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Playables.html" href="Playables.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Playables" aria-label="Go to glossary anchor for Playables">Glossary</a></span></span></span> and Timeline.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Marker</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Director.PrepareFrame</strong></td>
+	<td style="text-align:left;">Set up, schedule, and await <code>Director.PrepareFrameJob</code> jobs. These jobs evaluate the <span class="tooltip"><strong>state machines</strong><span class="tooltiptext">The set of states in an Animator Controller that a character or animated GameObject can be in, along with a set of transitions between those states and a variable to remember the current state. The states available will depend on the type of gameplay, but typical states include things like idling, walking, running and jumping. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about StateMachineBasics.html" href="StateMachineBasics.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#StateMachine" aria-label="Go to glossary anchor for StateMachine">Glossary</a></span></span></span> for all active <span class="tooltip"><strong>Animator components</strong><span class="tooltiptext">A component on a model that animates that model using the Animation system. The component has a reference to an Animator Controller asset that controls the animation. <a href="class-AnimatorController.html" href="Glossary.html#StateMachine" aria-label="Go to glossary anchor for StateMachine">Glossary</a></span></span></span> for all active <span class="tooltip"><strong>Animator components</strong><span class="tooltiptext">A component on a model that animates that model using the Animation system. The component has a reference to an Animator Controller asset that controls the animation. <a href="class-AnimatorController.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorComponent" aria-label="Go to glossary anchor for AnimatorComponent">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Director.PrepareFrameJob <em>(job)</em></strong></td>
+	<td style="text-align:left;">Evaluate the state machine of a single active Animator. The amount of time taken to process an Animator grows with the complexity of its state machine (i.e. the number of states, transitions, properties, and layers).<br><br>Evaluation of state machines with <a href="StateMachineBehaviours.html">StateMachineBehaviours</a> that implement <a href="../ScriptReference/StateMachineBehaviour.OnStateMachineEnter.html">OnStateMachineEnter</a> or <a href="../ScriptReference/StateMachineBehaviour.OnStateMachineExit.html">OnStateMachineExit</a> listeners will be constrained to the main thread.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Animators.PrepareFirstPass</strong></td>
+	<td style="text-align:left;">Prepare for the next processing steps.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Animators.ProcessGraphJob</strong></td>
+	<td style="text-align:left;">Build, schedule, and await the results of <code>Animator.ProcessGraph</code> jobs.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Animators.ProcessGraph <em>(job)</em></strong></td>
+	<td style="text-align:left;">Evaluate all properties across all connected AnimationClips.<br><br>Calculate the root motion displacements by blending the root motion properties from all clips together.<br><br>Collect new animation events for the current <a href="../ScriptReference/Time-deltaTime.html">deltaTime</a>.<br><br>When evaluating AnimationClips’ properties, the curve segments are cached locally between frames to avoid reading from the AnimationClips’ memory more than necessary.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Animators.FireAnimationEventsAndBehaviours</strong></td>
+	<td style="text-align:left;">Fire all <span class="tooltip"><strong>animation events</strong><span class="tooltiptext">Allows you to add data to an imported clip which determines when certain actions should occur in time with the animation. For example, for an animated character you might want to add events to walk and run cycles to indicate when the footstep sounds should play. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationEventsOnImportedClips.html" href="AnimationEventsOnImportedClips.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationEvent" aria-label="Go to glossary anchor for AnimationEvent">Glossary</a></span></span></span> messages on <a href="StateMachineBehaviours.html">StateMachineBehaviours</a> and MonoBehaviours, except <a href="../ScriptReference/StateMachineBehaviour.OnStateMachineEnter.html">OnStateMachineEnter</a> or <a href="../ScriptReference/StateMachineBehaviour.OnStateMachineExit.html">OnStateMachineExit</a> listeners which have already been fired in <code>Director.PrepareFrameJob</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Animators.ApplyOnAnimatorMove</strong></td>
+	<td style="text-align:left;">Apply <span class="tooltip"><strong>root motion</strong><span class="tooltiptext">Motion of character’s root node, whether it’s controlled by the animation itself or externally. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RootMotion.html" href="RootMotion.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RootMotion" aria-label="Go to glossary anchor for RootMotion">Glossary</a></span></span></span> and trigger the <a href="../ScriptReference/MonoBehaviour.OnAnimatorMove.html">OnAnimatorMove</a> message on MonoBehaviours.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>PreLateUpdate.DirectorUpdateAnimationEnd</h3>
+
+<p>In this stage, only Animators with the Culling Mode <code>Always Update</code> and visible Animators with the Culling Mode <code>UpdateTransform</code> or <code>Cull Completely</code> get processed. Animators with <code>Cull Completely</code> that were moved out of frame by the Root Motion do not participate in this phase. Neither do Animators that were disabled by user code triggered by StateMachineBehaviours and AnimationEvents</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Marker</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Animators.PrepareSecondPass</strong></td>
+	<td style="text-align:left;">Set up the next processing steps. This includes filtering out Animators based on their Culling Mode and visibility status.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Animators.SortWriteJob</strong></td>
+	<td style="text-align:left;">The Transform system only allows a single thread to modify a Transform Hierarchy at a time. To accommodate this constraint, <code>Animators.SortWriteJob</code> groups <code>Animators.WriteTransforms</code> jobs by their <a href="../ScriptReference/Transform-root.html">Transform.root</a>.<br><br>For the best performance, avoid having multiple Animators in the same transform hierarchy to increase the granularity at which jobs can be scheduled and parallelized.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Animators.ProcessAnimationsJob</strong></td>
+	<td style="text-align:left;">Build, schedule, and await the results of <code>Animators.ProcessAnimations</code> jobs.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Animator.ProcessAnimations (<em>job</em>)</strong></td>
+	<td style="text-align:left;">Blend all properties on current active AnimationClips for a single Animator, except for root motion. Apply them to the internal avatar representation.<br><br>The length of this marker scales with animation and blending complexity.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>OnAnimatorIK</strong></td>
+	<td style="text-align:left;">Sets up animation IK. This is called once for each <span class="tooltip"><strong>Animator Controller</strong><span class="tooltiptext">Controls animation through Animation Layers with Animation State Machines and Animation Blend Trees, controlled by Animation Parameters. The same Animator Controller can be referenced by multiple models with Animator components. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimatorController.html" href="class-AnimatorController.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorController" aria-label="Go to glossary anchor for AnimatorController">Glossary</a></span></span></span> layer with IK pass enabled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Animators.WriteJob</strong></td>
+	<td style="text-align:left;">Build, schedule, and await the results of <code>Animator.WriteTransform</code> jobs. These jobs write transform poses from Animation <span class="tooltip"><strong>avatars</strong><span class="tooltiptext">An interface for retargeting animation from one rig to another. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ConfiguringtheAvatar.html" href="ConfiguringtheAvatar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Avatar" aria-label="Go to glossary anchor for Avatar">Glossary</a></span></span></span> to the related GameObject transform hierarchy.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Animators.WriteTransforms <em>(job)</em></strong></td>
+	<td style="text-align:left;">Writes all animated transforms to the scene from worker threads.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Animator.WriteProperties</strong></td>
+	<td style="text-align:left;">Write any animated property that is not a transform pose to the target object.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="warnings" aria-hidden="true"></a></p>
+
+<h2>Performance warnings</h2>
+
+<p>The CPU Profiler detects some common performance issues and warns you about them. These appear in the Warning column of the <a href="ProfilerCPU.html#hierarchy">CPU Profiler module’s Hierarchy</a> view in the module details pane.</p>
+
+<p>The Profiler detects some specific calls that you should avoid in performance-critical contexts. It displays the warnings with the reasons the operations are affecting performance as follows:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Warning</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<strong>Animation.DestroyAnimationClip</strong><br><strong>Animation.AddClip</strong><br><strong>Animation.RemoveClip</strong><br><strong>Animation.Clone</strong><br><strong>Animation.Deactivate</strong>
+</td>
+	<td style="text-align:left;">Indicates that RebuildInternalState has been triggered. RebuildInternalState is an operation that goes through the list of curves for each clip in the Animation component, and then rebinds each curve to a value on a component, on a GameObject.<br><br>This is a resource-intensive operation, so you should avoid calling these methods at runtime as much as possible.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AssetBundle.asset/allAssets</strong></td>
+	<td style="text-align:left;">Indicates that Unity called the AssetBundleRequest.assets/allAssets API while the AssetBundle loading was not complete (AssetBundleRequest.isDone is false). This causes a stall on the main thread and waits for the loading operation to complete.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>AsyncUploadManager.AsyncBufferResized</strong><br><strong>AsyncUploadManager.AsyncBufferDelete</strong>
+</td>
+	<td style="text-align:left;">Indicates that the internal buffer for uploading data to the GPU is resized because it’s not big enough. This resizing is slow and causes spikes in CPU activity.<br><br>You can avoid this warning if you can spare the memory to allocate a larger size up front.<br><br>You can use <strong>Async Upload Buffer Size</strong> setting in <a href="class-QualitySettings.html">Quality Settings</a> to set the default size.<br><br>The AsyncUploadManager.AsyncBufferResized marker indicates the newly allocated size which you can use as a guide for the default buffer size.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rigidbody.SetKinematic</strong></td>
+	<td style="text-align:left;">Recreate non-convex MeshCollider for Rigidbody.</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="profiler-profiling-applications.html"></a></span><div class="tip">Profiling your application</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ProfilerWindow.html"></a></span><div class="tip">The Profiler window</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

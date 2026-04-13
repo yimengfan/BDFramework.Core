@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Debug generated C++ code</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/uwp-debug-generated-cpp.html">English</a></li>
+<li><a href="/cn/current/Manual/uwp-debug-generated-cpp.html">中文</a></li>
+<li><a href="/ja/current/Manual/uwp-debug-generated-cpp.html">日本語</a></li>
+<li><a href="/kr/current/Manual/uwp-debug-generated-cpp.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/uwp-debug-generated-cpp.html">English</a></li>
+<li><a href="/cn/current/Manual/uwp-debug-generated-cpp.html">中文</a></li>
+<li><a href="/ja/current/Manual/uwp-debug-generated-cpp.html">日本語</a></li>
+<li><a href="/kr/current/Manual/uwp-debug-generated-cpp.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="WindowsStore.html">Universal Windows Platform</a></li>
+<li><a href="uwp-developing.html">Develop for Universal Windows Platform</a></li>
+<li><a href="uwp-il2cpp-scripting.html">IL2CPP scripting backend for UWP</a></li>
+<li><a href="uwp-il2cpp-debugging.html">Debug UWP applications with IL2CPP</a></li>
+<li>Debug generated C++ code</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="uwp-debug-c-sharp.html"></a></span><div class="tip">Debug C# code</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="windowsstore-scripts.html"></a></span><div class="tip">WinRT API in C# scripts for UWP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Debug generated C++ code</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can debug generated C++ code for your Universal Windows Platform (UWP) application using Visual Studio.</p>
+
+<h2>Understand class and method naming in generated C++ code</h2>
+
+<h3>IL2CPP classes</h3>
+
+<p>IL2CPP classes follow the format of <code>&lt;ClassName&gt;_t#number</code>, where:</p>
+
+<ul>
+<li>
+<code>&lt;ClassName&gt;</code> is the class name</li>
+<li>The optional <code>#number</code> is a unique type number</li>
+</ul>
+
+<p>Example <span class="tooltip"><strong>IL2CPP</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html" href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> classes:</p>
+
+<ul>
+<li>
+<code>String_t</code> - <a href="https://learn.microsoft.com/en-us/dotnet/api/system.string">String class</a>
+</li>
+<li>
+<code>Object_t</code> - <a href="https://learn.microsoft.com/en-us/dotnet/api/system.object">Object class</a>
+</li>
+<li>
+<code>Type_t</code> - <a href="https://learn.microsoft.com/en-us/dotnet/api/system.type">Type class</a>
+</li>
+<li>
+<code>StringBuilder_t26</code> - <a href="https://learn.microsoft.com/en-us/dotnet/api/system.text.stringbuilder">StringBuilder class</a>
+</li>
+</ul>
+
+<h3>IL2CPP methods</h3>
+
+<p>IL2CPP methods follow the format of <code>&lt;ClassName&gt;_&lt;MethodName&gt;_m#number</code>, where:</p>
+
+<ul>
+<li>
+<code>&lt;ClassName&gt;</code> is the class name of the method’s declaring type</li>
+<li>
+<code>&lt;MethodName&gt;</code> is the method name</li>
+<li>
+<code>#number</code> is a unique method number</li>
+</ul>
+
+<p>Example IL2CPP methods:</p>
+
+<ul>
+<li>
+<code>ConfigurationSection_DoDeserializeSection_m1275</code> - <a href="https://learn.microsoft.com/en-us/dotnet/api/system.configuration.configurationsection.deserializesection">DeserializationSection method of the ConfigurationSection class</a>
+</li>
+<li>
+<code>String_Format_m4102</code> - <a href="https://learn.microsoft.com/en-us/dotnet/api/system.string.format">Format method of the String class</a>
+</li>
+<li>
+<code>Mathf_Sqrt_m289</code> - <a href="https://learn.microsoft.com/en-us/dotnet/api/system.mathf.sqrt">Sqrt method of the Mathf class</a>
+</li>
+</ul>
+
+<h3>IL2CPP static field structures</h3>
+
+<p>Static fields structures follow the format of <code>&lt;ClassName&gt;_t#number_StaticFields</code>, where the first part of the structure name is the same as the declaring type.</p>
+
+<p>Example static fields structures:</p>
+
+<ul>
+<li><code>StringBuilder_t26_StaticFields</code></li>
+<li><code>Thing_t24_StaticFields</code></li>
+</ul>
+
+<h3>C++ comments</h3>
+
+<p>Preceding each class or method definition, C++ automatically generates a comment stating the full class or method name.</p>
+
+<p>Example C++ comment:</p>
+
+<pre><code>    // System.Text.StringBuilder
+    struct StringBuilder_t26  : public Object_t
+    {
+        // System.Int32 System.Text.StringBuilder::_length
+        int32_t length_1;
+        // System.Int32 System.Text.StringBuilder::_maxCapacity
+        int32_t maxCapacity_2;
+    };
+</code></pre>
+
+<h2>Observe variable values</h2>
+
+<p>You can debug your generated C++ code by observing the values of your variables <a href="https://learn.microsoft.com/en-us/visualstudio/gamedev/unity/get-started/using-visual-studio-tools-for-unity?pivots=windows#unity-debugging">using the Visual Studio debugger</a>. </p>
+
+<p>You can <a href="ManagedCodeDebugging.html#BreakpointsVS">set breakpoints in Visual Studio</a> where you want the debugger to stop so you can observe your variables. Visual Studio allows you to observe your variable values by either mousing over the variable or <a href="https://learn.microsoft.com/en-us/visualstudio/debugger/watch-and-quickwatch-windows?">using a Watch window</a>.</p>
+
+<h2>Observe a static field</h2>
+
+<p>In IL2CPP, Unity stores static fields in an Il2CppClass instance. To observe the values of the static field, you need to:</p>
+
+<ol>
+<li>Find the <a href="https://learn.microsoft.com/en-us/cpp/cpp/pointers-cpp">pointer</a> to the Il2CppClass structure of that type in your code.
+<br><strong>Note:</strong> These pointers are in scope of the methods that use them, but after observing it once, it will remain at the same memory address during the application run.</li>
+<li>Retrieve the value of the <code>static_fields</code> field from that pointer. This is a pointer to a memory block containing static fields for that particular type.</li>
+<li>Cast the value to the corresponding static field structure.</li>
+<li>Observe the value in <a href="https://learn.microsoft.com/en-us/visualstudio/gamedev/unity/get-started/using-visual-studio-tools-for-unity?pivots=windows#unity-debugging">the Visual Studio debugger</a>.</li>
+</ol>
+
+<h2>Investigate exceptions</h2>
+
+<p>IL2CPP uses native C++ exceptions to implement .NET exceptions.</p>
+
+<p>To investigate the exceptions in your code, you can:</p>
+
+<ul>
+<li>Inspect the exception objects in the <a href="https://learn.microsoft.com/en-us/visualstudio/debugger/watch-and-quickwatch-windows?">watch window</a>
+</li>
+<li>
+<a href="https://learn.microsoft.com/en-us/visualstudio/debugger/managing-exceptions-with-the-debugger">Enable the debugger to break</a> on C++ exceptions</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/visualstudio/debugger/getting-started-with-the-debugger-cpp?">Microsoft documentation on how to Debug C++ code using Visual Studio</a></li>
+<li><a href="https://learn.microsoft.com/en-us/visualstudio/gamedev/unity/get-started/using-visual-studio-tools-for-unity?pivots=windows#unity-debugging">Microsoft documentation on Unity debugging with Visual Studio</a></li>
+<li><a href="IL2CPP.html">IL2CPP overview</a></li>
+<li><a href="uwp-il2cpp-scripting.html">IL2CPP scripting backend for UWP</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="uwp-debug-c-sharp.html"></a></span><div class="tip">Debug C# code</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="windowsstore-scripts.html"></a></span><div class="tip">WinRT API in C# scripts for UWP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

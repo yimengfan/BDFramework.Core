@@ -1,0 +1,287 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Grass and other details</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/terrain-Grass.html">English</a></li>
+<li><a href="/cn/current/Manual/terrain-Grass.html">中文</a></li>
+<li><a href="/ja/current/Manual/terrain-Grass.html">日本語</a></li>
+<li><a href="/kr/current/Manual/terrain-Grass.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/terrain-Grass.html">English</a></li>
+<li><a href="/cn/current/Manual/terrain-Grass.html">中文</a></li>
+<li><a href="/ja/current/Manual/terrain-Grass.html">日本語</a></li>
+<li><a href="/kr/current/Manual/terrain-Grass.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="CreatingEnvironments.html">World building</a></li>
+<li><a href="script-Terrain.html">Terrain</a></li>
+<li>Grass and other details</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-WindZone.html"></a></span><div class="tip">Wind Zones</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="terrain-Heightmaps.html"></a></span><div class="tip">Working with Heightmaps</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Grass and other details</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A <span class="tooltip"><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> might have grass clumps and other small objects (such as rocks) covering its surface. Unity renders these objects using textured <span class="tooltip"><strong>quads</strong><span class="tooltiptext">A primitive object that resembles a plane but its edges are only one unit long, it uses only 4 vertices, and the surface is oriented in the XY plane of the local coordinate space. <a href="PrimitiveObjects.html" href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> might have grass clumps and other small objects (such as rocks) covering its surface. Unity renders these objects using textured <span class="tooltip"><strong>quads</strong><span class="tooltiptext">A primitive object that resembles a plane but its edges are only one unit long, it uses only 4 vertices, and the surface is oriented in the XY plane of the local coordinate space. <a href="PrimitiveObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Quad" aria-label="Go to glossary anchor for Quad">Glossary</a></span></span></span> or full meshes, depending on the <span class="tooltip"><strong>level of detail</strong><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a href="LevelOfDetail.html" href="Glossary.html#Quad" aria-label="Go to glossary anchor for Quad">Glossary</a></span></span></span> or full meshes, depending on the <span class="tooltip"><strong>level of detail</strong><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a href="LevelOfDetail.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#levelofdetail" aria-label="Go to glossary anchor for levelofdetail">Glossary</a></span></span></span> and performance you require.</p>
+
+<p>Prior to 2021.2, grass and other details only worked in the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Manual/built-in-render-pipeline.html">built-in render pipeline</a> and <a href="https://docs.unity3d.com/Manual/universal-render-pipeline.html">Universal Render Pipeline</a> (URP). In 2021.2, Unity introduced instancing details that work with all <span class="tooltip"><strong>render pipelines</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html" href="https://docs.unity3d.com/Manual/built-in-render-pipeline.html">built-in render pipeline</a> and <a href="https://docs.unity3d.com/Manual/universal-render-pipeline.html">Universal Render Pipeline</a> (URP). In 2021.2, Unity introduced instancing details that work with all <span class="tooltip"><strong>render pipelines</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>, including the <a href="https://docs.unity3d.com/Manual/high-definition-render-pipeline.html">High Definition Render Pipeline</a> (HDRP).</p>
+
+<figure>
+<img src="../uploads/Main/TerrainWithGrass.png" alt="Terrain with grass">
+<figcaption>Terrain with grass</figcaption>
+</figure>
+
+<p>Terrain details are available in several modes, where each mode has a different use during game development.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Mode</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Instanced mesh</td>
+	<td style="text-align:left;">Unity recommends you use this mode because it’s best suited for most scenarios that require the placement of any number of arbitrary meshes on Terrain.<br><br>To add an instanced mesh, select <strong>Add Detail Mesh</strong> and enable the <strong>Use GPU Instancing</strong> option.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Vertex Lit mesh</td>
+	<td style="text-align:left;">Doesn’t use GPU instancing for rendering. Instead, it combines all detail instances into one mesh, which results in simple shading and limitations to the number of instances you can achieve.<br><br>To add a Vertex Lit mesh, select <strong>Add Detail Mesh</strong> and set the <strong>Render Mode</strong> to <strong>Vertex Lit</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Grass mesh</td>
+	<td style="text-align:left;">Works similar to the vertex list mesh, but Unity treats these meshes as grass so they always have up-facing normals and move in the wind.<br><br>To add a grass mesh, select <strong>Add Detail Mesh</strong> and set the <strong>Render Mode</strong> to <strong>Grass</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Grass Texture</td>
+	<td style="text-align:left;">Lets you create grass quad meshes directly from Texture, which move in the wind. You don’t need to specify any custom meshes, and there’s also an option you can enable to make grass quads always face the camera for a billboard effect.<br><br>Select <strong>Add Grass Texture</strong> for this option.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Paint Details</h2>
+
+<p>To enable grass and detail painting, select the <strong>Paint Details</strong> button on the Terrain <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html" href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/TerrainDetailsPaintTool.png" alt="Paint Details in the Terrain Inspector">
+<figcaption>Paint Details in the Terrain Inspector</figcaption>
+</figure>
+
+<p>Initially, a Terrain has no grass or details available. In the Inspector, click the <strong>Edit Details</strong> button to display a menu with the <strong>Add Detail <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span></strong> and <strong>Add Grass Texture</strong> options. Click either option to bring up a window that lets you choose <strong>Assets</strong> to add to the Terrain for painting.</p>
+
+<h3>Add Detail Mesh</h3>
+
+<figure>
+<img src="../uploads/Main/TerrainDetailAddWindow.png" alt="The Add Detail Mesh window">
+<figcaption>The Add Detail Mesh window</figcaption>
+</figure>
+
+<p>Use the <strong>Detail <span class="tooltip"><strong>Prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span></strong> field to select a Prefab from your Project. To create an authentic look, each mesh is affected by a random factor to determine the size and color. Unity uses the Perlin noise algorithm to generate such random factors.</p>
+
+<p>The <strong>Min Width</strong>, <strong>Max Width</strong>, <strong>Min Height</strong>, and <strong>Max Height</strong> values specify the upper and lower scalings along the X and Y axes with which the meshes are randomly generated.</p>
+
+<p>The <strong>Noise Seed</strong> setting sets the random number generator seed. Each seed value represents a unique generation. If you set the same seed for two types of details, the generated instances become identical. The <strong>Noise Spread</strong> value refers to the scaling of the noise pattern over the X-Z plane, with higher values indicating more variations within a given area. </p>
+
+<p>The <strong>Hole Edge Padding (%)</strong> setting controls how far away detail objects are from the edge of the hole area. For more information, see <a href="https://docs.unity3d.com/2021.2/Documentation/ScriptReference/DetailPrototype-holeEdgePadding.html">DetailPrototype.holeEdgePadding</a>.</p>
+
+<p>
+<strong>Healthy Color</strong> and <strong>Dry Color</strong> settings control the color variation. Unity performs linear interpolation between the healthy and dry colors, and selects a color based on the size of the mesh. For example, the system considers bigger-sized meshes to be healthier, thus the linear interpolation results for such meshes lean more towards the <strong>Healthy Color</strong> tint. These color settings disappear when you select <strong>Use GPU Instancing</strong> because they have no effect on instanced meshes.</p>
+
+<p>You can set the <strong>Render Mode</strong> to <strong>Vertex Lit</strong> or <strong>Grass</strong>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Render Mode</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Vertex Lit</strong></td>
+	<td style="text-align:left;">Renders detail meshes as solid, vertex lit <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, which don’t move in the wind.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Grass</strong></td>
+	<td style="text-align:left;">Renders detail meshes in the scene with simplified lighting similar to Grass Textures, and do move in the wind.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<em><strong>Note</strong>: To apply a texture on a detail using Vertex Lit or Grass render mode, their material should have a texture assigned to the</em> **<em>MainTex** </em>material property (default property name for Base Color Map in built-in/URP). No other material properties are considered for non-instanced details._</p>
+
+<h4>Use GPU Instancing</h4>
+
+<p>In addition, you can specify if you want to use GPU instancing to render your detail meshes. With GPU instancing, Unity uses the material and the <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> specified on the prefab for rendering. This lets you perform more customization in the shader, and potentially use <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@latest">Shader Graph</a>.</p>
+
+<p>Unity still applies the Width and Height noise to each instance, but disables the <strong>Healthy Color</strong>/<strong>Dry Color</strong> noise. You can use your own color variation technique, along with many other randomizations, in the shader.</p>
+
+<p>Under the hood, some of the Unity <a href="GPUInstancing.html">GPU instancing</a> limitations do affect rendering. For example:</p>
+
+<ul>
+<li>Your target platform needs to support GPU instancing.</li>
+<li>Your shader must support GPU instancing. (Most shaders do support it.)</li>
+<li>Objects are rendered in batches of 1,023 or fewer.</li>
+<li>Instanced <span class="tooltip"><strong>light probe</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html" href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span> lighting or <span class="tooltip"><strong>lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a href="Lightmapping.html" href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span> lighting or <span class="tooltip"><strong>lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> lighting are not supported.</li>
+</ul>
+
+<p>Unlike regular instancing where Unity dynamically builds up the instancing constant buffer every frame, instancing details have persistent constant buffers for better CPU and GPU performance when the target hardware allows for it, at the cost of moderately increased GPU memory usage.</p>
+
+<p>If you select <strong>Use GPU Instancing</strong>, the <strong>Render Mode</strong> setting becomes grayed out and unavailable.</p>
+
+<h3>Add Grass Texture</h3>
+
+<figure>
+<img src="../uploads/Main/TerrainGrassAddWindow.png" alt="The Add Grass Texture window">
+<figcaption>The Add Grass Texture window</figcaption>
+</figure>
+
+<p>The Add Grass Texture window</p>
+
+<p>
+<strong>Detail Texture</strong> is the Texture that represents the grass. You can download Textures from the <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span>, or create your own Textures. A Texture is a small image with alpha set to zero for the empty areas. Note that “Grass” is a generic term; it is possible for a Texture to represent flowers or man-made objects such as barbed wire coils.</p>
+
+<p>The <strong>Min Width</strong>, <strong>Max Width</strong>, <strong>Min Height</strong>, <strong>Max Height</strong>, <strong>Noise Seed</strong>, <strong>Noise Spread</strong>, <strong>Hole Edge Padding (%)</strong>, <strong>Healthy Color</strong>, and <strong>Dry Color</strong> settings work the same as they do for meshes, and are described in the Add Detail Mesh section above.</p>
+
+<p>Finally, when you enable the <strong><span class="tooltip"><strong>Billboard</strong><span class="tooltiptext">A textured 2D object that rotates so that it always faces the Camera. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-BillboardRenderer.html" href="class-BillboardRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Billboard" aria-label="Go to glossary anchor for Billboard">Glossary</a></span></span></span></strong> option, the grass images rotate so that they always face the <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="Glossary.html#Billboard" aria-label="Go to glossary anchor for Billboard">Glossary</a></span></span></span></strong> option, the grass images rotate so that they always face the <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>. This is useful when you want to show a dense field of grass because clumps are two-dimensional, and not visible from the side. However, with sparse grass, the rotations of individual clumps might become apparent to the viewer, creating a strange effect.</p>
+
+<h2>Remove details</h2>
+
+<p>To remove a detail, select the detail to remove, click the <strong>Edit Details</strong> button, then select <strong>Remove</strong>. When you remove a detail, Unity clears the data that represents the Terrain area on which you scattered that detail.</p>
+
+<hr>
+
+<ul>
+<li><span class="page-edit">2021–11–24 Page amended
+</span></li>
+<li><span class="page-history">Added information about instancing details</span></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-WindZone.html"></a></span><div class="tip">Wind Zones</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="terrain-Heightmaps.html"></a></span><div class="tip">Working with Heightmaps</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Remove a UPM package from a project</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-ui-remove.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-ui-remove.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-ui-remove.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-ui-remove.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-ui-remove.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-ui-remove.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-ui-remove.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-ui-remove.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li><a href="Packages.html">Unity's Package Manager</a></li>
+<li><a href="upm-ui.html">Package Manager window</a></li>
+<li><a href="upm-ui-actions.html">Add and remove UPM packages or feature sets</a></li>
+<li>Remove a UPM package from a project</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-ui-quick.html"></a></span><div class="tip">Install a UPM package by name</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-ui-update.html"></a></span><div class="tip">Switch to another version of a UPM package</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Remove a UPM package from a project</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>When you “remove” a <span class="tooltip"><strong>UPM package</strong><span class="tooltiptext">A <strong>Package</strong> managed by the <strong>Unity Package Manager</strong>. Refer to <strong>Packages</strong>.<br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#UPMpackage" aria-label="Go to glossary anchor for UPMpackage">Glossary</a></span></span></span> from your project, the Package Manager is actually removing the project’s <span class="tooltip"><strong>direct dependency</strong><span class="tooltiptext">A <strong>direct</strong> dependency occurs when your project “requests” a specific package version. To create a direct dependency, you add that package and version to the <strong>dependencies</strong> property in your project manifest (expressed in the form <code>package_name@package_version</code>). <a href="upm-dependencies.html" href="Glossary.html#UPMpackage" aria-label="Go to glossary anchor for UPMpackage">Glossary</a></span></span></span> from your project, the Package Manager is actually removing the project’s <span class="tooltip"><strong>direct dependency</strong><span class="tooltiptext">A <strong>direct</strong> dependency occurs when your project “requests” a specific package version. To create a direct dependency, you add that package and version to the <strong>dependencies</strong> property in your project manifest (expressed in the form <code>package_name@package_version</code>). <a href="upm-dependencies.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Directdependency" aria-label="Go to glossary anchor for Directdependency">Glossary</a></span></span></span> from your <span class="tooltip"><a href="upm-manifestPrj.html">project manifest</a><span class="tooltiptext">Each Unity project has a <em>project manifest</em>, which acts as an entry point for the Package Manager. This file must be available in the <code>&lt;project&gt;/Packages</code> directory. The Package Manager uses it to configure many things, including a list of dependencies for that project, as well as any package repository to query for packages. <a href="upm-manifestPrj.html" href="Glossary.html#Directdependency" aria-label="Go to glossary anchor for Directdependency">Glossary</a></span></span></span> from your <span class="tooltip"><a href="upm-manifestPrj.html">project manifest</a><span class="tooltiptext">Each Unity project has a <em>project manifest</em>, which acts as an entry point for the Package Manager. This file must be available in the <code>&lt;project&gt;/Packages</code> directory. The Package Manager uses it to configure many things, including a list of dependencies for that project, as well as any package repository to query for packages. <a href="upm-manifestPrj.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectmanifest" aria-label="Go to glossary anchor for Projectmanifest">Glossary</a></span></span></span>. The result of removing the direct dependency varies, based on the dependencies for the package you are removing:</p>
+
+<ul>
+<li>If there are no other packages or feature sets that have a dependency on this package, any Editor or run-time functionality that it implemented is no longer available in your project. For more information about direct and <span class="tooltip"><strong>indirect dependencies</strong><span class="tooltiptext">An <strong>indirect</strong>, or transitive dependency occurs when your project requests a package which itself “depends on” another package. For example, if your project depends on the <code>alembic@1.0.7</code> package which in turn depends on the <code>timeline@1.0.0</code> package, then your project has an direct dependency on Alembic and an indirect dependency on Timeline. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-dependencies.html" href="upm-dependencies.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Indirectdependency" aria-label="Go to glossary anchor for Indirectdependency">Glossary</a></span></span></span>, see <a href="upm-dependencies.html">Dependency and resolution</a>.</li>
+<li>If another installed package or an installed feature set depends on the package you are trying to remove, this procedure removes only the dependency from your project manifest. The package itself and all its functionality is still installed in your project, even though it might not appear in the <a href="upm-ui-filter.html">In Project</a> list context. For example, the <strong>Show Dependencies</strong> setting is disabled by default, so packages that are installed as indirect dependencies don’t appear until you enable this setting. For more information, including an illustrated comparison, see <a href="class-PackageManager.html#advanced_dependencies">Show Dependencies</a>.</li>
+</ul>
+
+<p><a name="prereqs" aria-hidden="true"></a></p>
+
+<h2>Before you begin</h2>
+
+<p>Make sure you understand these important notes before you begin:</p>
+
+<ul>
+<li>Use this procedure to remove a package only if you added it to the current project by <em>installing</em> it, such as (but not limited to) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about fs-install.html">Install a feature set</a>, <a href="upm-ui-install.html">Install a UPM package from a registry</a>, <a href="upm-ui-install2.html">Install a UPM package from the Asset Store</a>, and installing custom packages. Don’t use this procedure to attempt to remove <span class="tooltip"><strong>asset packages</strong><span class="tooltiptext">A collection of files and data from Unity projects, or elements of projects, which are compressed and stored in one file, similar to Zip files, with the <code>.unitypackage</code> extension. Asset packages are a handy way of sharing and re-using Unity projects and collections of assets. <a href="AssetPackages.html" href="fs-install.html">Install a feature set</a>, <a href="upm-ui-install.html">Install a UPM package from a registry</a>, <a href="upm-ui-install2.html">Install a UPM package from the Asset Store</a>, and installing custom packages. Don’t use this procedure to attempt to remove <span class="tooltip"><strong>asset packages</strong><span class="tooltiptext">A collection of files and data from Unity projects, or elements of projects, which are compressed and stored in one file, similar to Zip files, with the <code>.unitypackage</code> extension. Asset packages are a handy way of sharing and re-using Unity projects and collections of assets. <a href="AssetPackages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Assetpackage" aria-label="Go to glossary anchor for Assetpackage">Glossary</a></span></span></span> that you <em>downloaded</em> <em>and</em> <em>imported</em> to your project, by using <a href="upm-ui-import.html">Download and import an asset package</a>. For information about removing asset packages that you downloaded and imported, see <a href="upm-ui-remove-asset.html">Remove imported assets from a project</a>.</li>
+<li>If you use this procedure to remove a UPM package that you <a href="upm-ui-install.html">installed from a registry</a> or <a href="upm-ui-install2.html">installed from the Asset Store</a>, the operation removes the package from the current project. It doesn’t remove the same package that might exist in other projects. It also doesn’t remove the package from the global cache; this action isn’t supported by the Package Manager, and manually manipulating the global cache is discouraged.</li>
+<li>If you use this procedure to remove a package that you <a href="upm-concepts.html#Embedded">embedded in your project</a>, the Package Manager deletes the entire package folder from your computer. However, removing packages installed from any other source (including <a href="upm-concepts.html#Local">local</a> packages) removes only the reference to the package in the manifest but leaves the package itself and its contents intact.</li>
+</ul>
+
+<h2>Procedure</h2>
+
+<p>To remove an installed package:</p>
+
+<ol>
+<li>
+<p>Open the Package Manager window and select <strong>In Project</strong> from the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-ui-filter.html">Packages</a><span class="tooltiptext">Packages are collections of assets to be shared and re-used in Unity. The <a href="upm-ui.html">Unity Package Manager</a> (UPM) can display, add, and remove packages from your project. These packages are native to the Unity Package Manager and provide a fundamental method of delivering Unity functionality. However, the Unity Package Manager can also display <a href="AssetStorePackages.html">Asset Store packages</a> that you downloaded from the Asset Store. <a href="Packages.html" href="upm-ui-filter.html">Packages</a><span class="tooltiptext">Packages are collections of assets to be shared and re-used in Unity. The <a href="upm-ui.html">Unity Package Manager</a> (UPM) can display, add, and remove packages from your project. These packages are native to the Unity Package Manager and provide a fundamental method of delivering Unity functionality. However, the Unity Package Manager can also display <a href="AssetStorePackages.html">Asset Store packages</a> that you downloaded from the Asset Store. <a href="Packages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Packages" aria-label="Go to glossary anchor for Packages">Glossary</a></span></span></span> drop-down menu.</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-inproject.png" alt="Switch the context to In Project">
+<figcaption>Switch the context to <strong>In Project</strong></figcaption>
+</figure>
+</li>
+<li><p>Select the package you want to remove from the <a href="upm-ui-list.html">list of packages</a>. The <a href="upm-ui-details.html">details view</a> now displays that package’s information.</p></li>
+<li>
+<p>Click the <strong>Remove</strong> button. If this button is:</p>
+
+<ul>
+<li>Not displayed, you might be viewing the <strong>My Assets</strong> list. See <a href="#prereqs">Before you begin</a>.</li>
+<li>Disabled, you can’t remove this package. Hover over the button to find out why you can’t remove the package. For more information, see <a href="#noremovals">Locked and non-removable packages</a>.</li>
+</ul>
+
+<p><img src="../uploads/Main/upm-ui-remove.png" alt="Remove button in the bottom right corner of the details view"></p>
+
+<p>When the progress bar finishes, the package disappears from the list.</p>
+</li>
+<li><p>If you want to restore a removed UPM package, follow the instructions to <a href="upm-ui-install.html">install a UPM package from a registry</a> or <a href="upm-ui-install2.html">install a UPM package from the Asset Store</a>.</p></li>
+</ol>
+
+<p><a name="noremovals" aria-hidden="true"></a></p>
+
+<h2>Locked and non-removable packages</h2>
+
+<p>You can only remove packages which are not required by another package or a feature set. The Package Manager enforces this by disabling the <strong>Remove</strong> button for all required packages.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Required by:</strong></th>
+	<th style="text-align:left;"><strong>Description:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="FeatureSets.html">A feature set</a></td>
+	<td style="text-align:left;">If a feature set requires the package, it displays a lock icon (<img src="../uploads/Main/iconLock.png" alt="">) in both the list view and in the details view. The details view also displays the name of the feature set that requires the package below the package name in the details view. <br><br>However, even if you click the <strong>Unlock</strong> button, you still can’t remove the package from your project until you remove all feature sets which require it. Unlocking the package lets you <a href="upm-ui-update.html">request a different version</a> for your project, but it still doesn’t let you remove it.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="upm-dependencies.html">Another package</a></td>
+	<td style="text-align:left;">If one or more packages require the selected package, the <strong>Remove</strong> button is disabled. You can find the name of the package that has the dependency from the <strong>Dependencies</strong> section of the details view. If you don’t need the other packages, you can remove them and the Package Manager automatically removes this package too.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Tip</strong>: If you don’t see the <strong>Dependencies</strong> section, follow these instructions to enable the <strong>Show Dependencies</strong> setting:</p>
+
+<ol>
+<li>
+<p>Select <strong>Advanced Project Settings</strong> under the <a href="upm-ui.html#Advanced">advanced settings</a> <img src="../uploads/Main/iconSettings.png" alt=""> icon.</p>
+
+<figure>
+<img src="../uploads/Main/upm-settings.png" alt="Advanced Project Settings opens up the Package Manager project settings window">
+<figcaption>Advanced Project Settings opens up the Package Manager project settings window</figcaption>
+</figure>
+
+<p>The <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PackageManager.html">Package Manager</a> <span class="tooltip"><strong>project settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a href="comp-ManagerGroup.html" href="class-PackageManager.html">Package Manager</a> <span class="tooltip"><strong>project settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span> window appears.</p>
+</li>
+<li><p>Under the <strong>Advanced Settings</strong> group, enable the <strong>Show Dependencies</strong> option.</p></li>
+<li><p>Close the <strong>Project Settings</strong> window. Any packages that are only installed as dependencies in your project now appear in the package list and the detail view now displays a <strong>Dependencies</strong> section.</p></li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="upm-package-types.html">Package types</a></li>
+<li><a href="upm-ui-actions.html">Add and remove UPM packages or feature sets</a></li>
+<li><a href="upm-ui-actions-ap.html">Add and remove asset packages</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-ui-quick.html"></a></span><div class="tip">Install a UPM package by name</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-ui-update.html"></a></span><div class="tip">Switch to another version of a UPM package</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

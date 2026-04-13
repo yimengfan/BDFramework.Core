@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Concepts</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-concepts.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-concepts.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-concepts.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-concepts.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-concepts.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-concepts.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-concepts.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-concepts.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li><a href="Packages.html">Unity's Package Manager</a></li>
+<li>Concepts</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-overview.html"></a></span><div class="tip">How Unity works with packages</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-package-types.html"></a></span><div class="tip">Package types</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Concepts</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This section explains many of the concepts surrounding the Unity Package Manager functionality:</p>
+
+<ul>
+<li><a href="#Versions">Versions</a></li>
+<li><span class="tooltip"><a href="#Manifests">Manifests</a><span class="tooltiptext">There are two types of manifest files: <strong>project manifest</strong><strong>s</strong> and <strong>package manifest</strong><strong>s</strong>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Manifest" aria-label="Go to glossary anchor for Manifest">Glossary</a></span></span></span></li>
+<li><a href="#Registry">Registry</a></li>
+<li><a href="#Management">Package Management</a></li>
+<li><a href="#Sources">Package sources</a></li>
+<li><a href="upm-package-types.html">Package types</a></li>
+<li><a href="upm-lifecycle.html">Package states and lifecycle</a></li>
+<li><a href="upm-dependencies.html">Dependency and resolution</a></li>
+<li><a href="upm-cache.html">Global cache</a></li>
+</ul>
+
+<p><a name="Versions" aria-hidden="true"></a></p>
+
+<h2>Versions</h2>
+
+<p>Multiple versions of each package are available, marking changes to that package along its lifecycle. Every time a developer updates the package, they <a href="upm-semver.html">give it a new version number</a>. A change in package version tells you whether it contains a breaking change (major), new backward-compatible functionality (minor), or bug fixes only (patch). These indicators follow <a href="http://semver.org/">Semantic Versioning</a> rules.</p>
+
+<p>To view the list of versions available for a specific package, refer to <a href="upm-ui-find.html#VersionList">Finding a specific version</a>.</p>
+
+<p><a name="Manifests" aria-hidden="true"></a></p>
+
+<h2>Manifests</h2>
+
+<p>There are two types of manifest files:</p>
+
+<ul>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-manifestPrj.html">Project manifests</a><span class="tooltiptext">Each Unity project has a <em>project manifest</em>, which acts as an entry point for the Package Manager. This file must be available in the <code>&lt;project&gt;/Packages</code> directory. The Package Manager uses it to configure many things, including a list of dependencies for that project, as well as any package repository to query for packages. <a href="upm-manifestPrj.html" href="upm-manifestPrj.html">Project manifests</a><span class="tooltiptext">Each Unity project has a <em>project manifest</em>, which acts as an entry point for the Package Manager. This file must be available in the <code>&lt;project&gt;/Packages</code> directory. The Package Manager uses it to configure many things, including a list of dependencies for that project, as well as any package repository to query for packages. <a href="upm-manifestPrj.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectmanifest" aria-label="Go to glossary anchor for Projectmanifest">Glossary</a></span></span></span> (<code>manifest.json</code>) store information that the Package Manager needs to locate and load the right packages, including a list of packages and versions declared as dependencies.</li>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-manifestPkg.html">Package manifests</a><span class="tooltiptext">Each package has a <em>manifest</em>, which provides information about the package to the Package Manager. The manifest contains information such as the name of the package, its version, a description for users, dependencies on other packages (if any), and other details. <a href="upm-manifestPkg.html" href="upm-manifestPkg.html">Package manifests</a><span class="tooltiptext">Each package has a <em>manifest</em>, which provides information about the package to the Package Manager. The manifest contains information such as the name of the package, its version, a description for users, dependencies on other packages (if any), and other details. <a href="upm-manifestPkg.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Packagemanifest" aria-label="Go to glossary anchor for Packagemanifest">Glossary</a></span></span></span> (<code>package.json</code>) store information about a specific package, and a list of packages and versions that the package requires.</li>
+</ul>
+
+<p>Both files use <a href="https://json.org">JSON</a> (JavaScript Object Notation) syntax.</p>
+
+<p><a name="Registry" aria-hidden="true"></a></p>
+
+<h2>Registry</h2>
+
+<p>In the domain of Unity’s Package Manager, a package registry is a server that stores package contents and information (metadata) on each package version. Unity maintains a central registry of official packages that are available for distribution. By default, all projects use the official Unity package registry. But you can <a href="upm-scoped.html">add additional registries</a> to store and distribute private packages or stage custom packages while you are developing them.</p>
+
+<p><a name="Management" aria-hidden="true"></a></p>
+
+<h2>Package management</h2>
+
+<p>The Unity Package Manager is a tool that manages the entire package system. Its primary tasks include the following:</p>
+
+<ul>
+<li>It <a href="upm-dependencies.html">communicates with the Unity package registry server</a> and any <a href="upm-scoped.html">additional registries</a> you specify.</li>
+<li>It reads your <a href="upm-manifestPrj.html">project manifest</a> and fetches package contents and metadata.</li>
+<li>It <a href="upm-ui-install.html">installs</a>, <a href="upm-ui-update.html">updates</a>, and <a href="upm-ui-remove.html">removes</a> <span class="tooltip"><strong>UPM packages</strong><span class="tooltiptext">A <strong>Package</strong> managed by the <strong>Unity Package Manager</strong>. Refer to <strong>Packages</strong>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UPMpackage" aria-label="Go to glossary anchor for UPMpackage">Glossary</a></span></span></span>, whether they’re dependencies of the project or one of the installed packages.</li>
+<li>It <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-ui-import.html">downloads and imports asset packages</a> that you previously acquired from the <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a href="AssetStore.html" href="upm-ui-import.html">downloads and imports asset packages</a> that you previously acquired from the <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span>.</li>
+<li>It <a href="upm-ui-disable.html">enables and disables</a> Unity’s built-in packages.</li>
+<li>It <a href="upm-ui-details.html">displays information</a> about every version of every package.</li>
+<li>It <a href="upm-conflicts.html">resolves conflicts</a> when the project and its packages require more than one package version.</li>
+</ul>
+
+<p>The Unity Package Manager installs samples, tools, and assets on a per-project basis, rather than installing them across all projects for a specific machine or device. It uses a <a href="upm-cache.html">global cache</a> to store downloaded package metadata and contents. Once installed in a project, Unity treats <a href="upm-assets.html">package assets</a> similarly to other assets in the project. The only difference is that these assets are stored <a href="upm-assets.html">inside the package folder</a> and are <span class="tooltip"><strong>immutable</strong><span class="tooltiptext">You cannot change the contents of an immutable (read-only) package. This is the opposite of <strong>mutable</strong>. Most packages are immutable, including packages downloaded from the package registry or by Git URL.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Immutable" aria-label="Go to glossary anchor for Immutable">Glossary</a></span></span></span>. You can permanently change content only from <a href="#Local">Local</a> and <a href="#Embedded">Embedded</a> package sources.</p>
+
+<p><a name="Sources" aria-hidden="true"></a></p>
+
+<h2>Package sources</h2>
+
+<p>Sources describe where the package came from:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Source</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Registry</strong></td>
+	<td style="text-align:left;">The Unity Package Manager downloads most packages from a package registry server into a <a href="upm-cache.html">global cache</a> on your computer as you request them. These packages are immutable, so you can use them in your project, but you can’t modify them or change their package manifests.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="BuiltIn" aria-hidden="true"></a><strong>Built-in</strong>
+</td>
+	<td style="text-align:left;">These packages allow you to enable or disable Unity features (for example, Terrain Physics, Animation, etc.). Built-in packages are immutable. For more information, refer to <span class="tooltip"><a href="pack-build.html">Built-in packages</a><span class="tooltiptext"><em>Built-in</em> packages allow users to toggle Unity features on or off through the Package Manager. Enabling or disabling a package reduces the run-time build size. For example, most projects don’t use the legacy Particle System. By removing the abstracted package of this feature, the related code and resources are not part of the final built product. Typically, these packages contain only the package manifest and are bundled with Unity (rather than available on the package registry).<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Built-inpackage" aria-label="Go to glossary anchor for Built-inpackage">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Embedded" aria-hidden="true"></a><strong>Embedded</strong>
+</td>
+	<td style="text-align:left;">An <span class="tooltip"><a href="upm-embed.html">embedded package</a><span class="tooltiptext"><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Embeddedpackage" aria-label="Go to glossary anchor for Embeddedpackage">Glossary</a></span></span></span> is any package stored inside your project folder. This source corresponds with the <a href="upm-lifecycle.html#Develop">Custom</a> state because you typically put all the scripts, libraries, samples, and other assets your new package needs in a folder under your project folder when you begin development on a custom package.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Local" aria-hidden="true"></a><strong>Local</strong>
+</td>
+	<td style="text-align:left;">You can <a href="upm-ui-local.html">install a package from any folder</a> on your computer (for example, if you have cloned a development repository locally).</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Tarball" aria-hidden="true"></a><strong>Tarball (local)</strong>
+</td>
+	<td style="text-align:left;">You can <a href="upm-ui-tarball.html">install a package from a tarball file</a> on your computer. The Package Manager extracts the package from the tarball and stores it in the cache. However, these packages are immutable, unlike installations from a local folder.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="Git" aria-hidden="true"></a><strong>Git</strong>
+</td>
+	<td style="text-align:left;">The Package Manager installs <strong>Git</strong>-based packages directly from a Git repository instead of from the package registry server.</td>
+</tr>
+</tbody>
+</table>
+
+<p>To edit the package manifest for a package, refer to <a href="upm-inspect.html">Inspecting packages</a>.</p>
+
+<p>The Package Manager window displays a label that corresponds to some of these sources. For more information, refer to <span class="no tooltip"><a href="upm-ui-details.html#Tags">Labels</a></span>.</p>
+
+<p>
+<strong>Note</strong>: The Package Manager stores packages that you download from the Asset Store in different caches, depending on the package type. </p>
+
+<ul>
+<li>For information about <span class="tooltip"><strong>asset packages</strong><span class="tooltiptext">A collection of files and data from Unity projects, or elements of projects, which are compressed and stored in one file, similar to Zip files, with the <code>.unitypackage</code> extension. Asset packages are a handy way of sharing and re-using Unity projects and collections of assets. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetPackages.html" href="AssetPackages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Assetpackage" aria-label="Go to glossary anchor for Assetpackage">Glossary</a></span></span></span>, refer to <a href="AssetStorePackages.html">Asset Store packages</a>.</li>
+<li>For information about UPM packages, refer to <a href="upm-cache.html">Global cache</a>.</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-overview.html"></a></span><div class="tip">How Unity works with packages</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-package-types.html"></a></span><div class="tip">Package types</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

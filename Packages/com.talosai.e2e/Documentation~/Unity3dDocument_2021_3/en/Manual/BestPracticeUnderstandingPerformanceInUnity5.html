@@ -1,0 +1,322 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Strings and text</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="core" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/BestPracticeUnderstandingPerformanceInUnity5.html">English</a></li>
+<li><a href="/cn/current/Manual/BestPracticeUnderstandingPerformanceInUnity5.html">中文</a></li>
+<li><a href="/ja/current/Manual/BestPracticeUnderstandingPerformanceInUnity5.html">日本語</a></li>
+<li><a href="/kr/current/Manual/BestPracticeUnderstandingPerformanceInUnity5.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/BestPracticeUnderstandingPerformanceInUnity5.html">English</a></li>
+<li><a href="/cn/current/Manual/BestPracticeUnderstandingPerformanceInUnity5.html">中文</a></li>
+<li><a href="/ja/current/Manual/BestPracticeUnderstandingPerformanceInUnity5.html">日本語</a></li>
+<li><a href="/kr/current/Manual/BestPracticeUnderstandingPerformanceInUnity5.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="BestPracticeUnderstandingPerformanceInUnity.html">Understanding optimization in Unity</a></li>
+<li>Strings and text</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="BestPracticeUnderstandingPerformanceInUnity4.html"></a></span><div class="tip">Asset auditing</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="BestPracticeUnderstandingPerformanceInUnity6.html"></a></span><div class="tip">The Resources folder</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Strings and text</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Handling strings and text is a common source of performance problems in Unity projects. In C#, all strings are <span class="tooltip"><strong>immutable</strong><span class="tooltiptext">You cannot change the contents of an immutable (read-only) package. This is the opposite of <strong>mutable</strong>. Most packages are immutable, including packages downloaded from the package registry or by Git URL.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Immutable" aria-label="Go to glossary anchor for Immutable">Glossary</a></span></span></span>. Any manipulation of a string results in the allocation of a full new string. This is relatively expensive, and repeated string concatenations can develop into performance problems when performed on large strings, on large datasets, or in tight loops.</p>
+
+<p>Further, as N string concatenations require the allocation of N–1 intermediate strings, serial concatenations can also be a major cause of managed memory pressure.</p>
+
+<p>For cases where strings must be concatenated in tight loops or during each frame, use a StringBuilder to perform the actual concatenation operations. The StringBuilder instance can also be reused to further minimize unnecessary memory allocation.</p>
+
+<p>Microsoft maintains a list of best practices for working with strings in C#, which can be found here on the MSDN website: <a href="https://msdn.microsoft.com/en-us/library/dd465121(v=vs.110).aspx">msdn.microsoft.com</a>. </p>
+
+<h2>Locale coercion and ordinal comparisons</h2>
+
+<p>One of the core performance problems often found in string-related code is the unintended use of the slow, default string APIs. These APIs were built for business applications, and attempt to deal with handling strings from many different cultural and linguistic rules with regards to the characters found in text.</p>
+
+<p>For example, the following example code returns true when run under the US-English locale, but returns false for many European locales.</p>
+
+<p>
+<strong>Note</strong>:
+As of Unity 5.3 and 5.4, Unity’s scripting runtimes always run under the US English (en-US) locale:</p>
+
+<pre><code>    String.Equals(&quot;encyclopedia&quot;, “encyclopædia”);
+</code></pre>
+
+<p>For most Unity projects, this is entirely unnecessary. It’s roughly ten times faster to use the ordinal comparison type, which compares strings in a manner familiar to C and C++ programmers: by simply comparing each sequential byte of the string, without regard for the character represented by that byte.</p>
+
+<p>Switching to ordinal string comparison is as simple as supplying <code>StringComparison.Ordinal</code> as the final argument to <code>String.Equals</code>:</p>
+
+<pre><code>myString.Equals(otherString, StringComparison.Ordinal);
+
+</code></pre>
+
+<h2>Inefficient built-in string APIs</h2>
+
+<p>Beyond switching to ordinal comparisons, certain C# <code>String</code> APIs are known to be extremely inefficient. Among these are <code>String.Format</code>, <code>String.StartsWith</code> and <code>String.EndsWith</code>. <code>String.Format</code> is difficult to replace, but the inefficient string comparison methods are trivially optimized away.</p>
+
+<p>While Microsoft’s recommendation is to pass <code>StringComparison.Ordinal</code> into any string comparison that doesn’t need to be adjusted for localization, Unity benchmarks show that the impact of this is relatively minimal compared to a custom implementation.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Method</th>
+	<th style="text-align:left;">Time (ms) for 100k short strings</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<code>String.StartsWith</code>, default culture</td>
+	<td style="text-align:left;">137</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>String.EndsWith</code>, default culture</td>
+	<td style="text-align:left;">542</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>String.StartsWith</code>, ordinal</td>
+	<td style="text-align:left;">115</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>String.EndsWith</code>, ordinal</td>
+	<td style="text-align:left;">34</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Custom <code>StartsWith</code> replacement</td>
+	<td style="text-align:left;">4.5</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Custom <code>EndsWith</code> replacement</td>
+	<td style="text-align:left;">4.5</td>
+</tr>
+</tbody>
+</table>
+
+<p>Both <code>String.StartsWith</code> and <code>String.EndsWith</code> can be replaced with simple hand-coded versions, similar to the example attached below.</p>
+
+<pre><code>
+    public static bool CustomEndsWith(this string a, string b)
+    {
+        int ap = a.Length - 1;
+        int bp = b.Length - 1;
+    
+        while (ap &gt;= 0 &amp;&amp; bp &gt;= 0 &amp;&amp; a [ap] == b [bp])
+        {
+            ap--;
+            bp--;
+        }
+    
+        return (bp &lt; 0);
+    }
+
+    public static bool CustomStartsWith(this string a, string b)
+    {
+        int aLen = a.Length;
+        int bLen = b.Length;
+    
+        int ap = 0; int bp = 0;
+    
+        while (ap &lt; aLen &amp;&amp; bp &lt; bLen &amp;&amp; a [ap] == b [bp])
+        {
+            ap++;
+            bp++;
+        }
+    
+        return (bp == bLen);
+    }
+
+</code></pre>
+
+<h2>Regular Expressions</h2>
+
+<p>While Regular Expressions are a powerful way to match and manipulate strings, they can be extremely performance-intensive. Further, due to the C# library’s implementation of Regular Expressions, even simple Boolean <code>IsMatch</code> queries allocate large transient datastructures “under the hood.” This transient managed memory churn should be deemed unacceptable, except during initialization.</p>
+
+<p>If regular expressions are necessary, it’s strongly recommended to not use the static <code>Regex.Match</code> or <code>Regex.Replace</code> methods, which accept the regular expression as a string parameter. These methods compile the regular expression on-the-fly and don’t cache the generated object.</p>
+
+<p>This example code is an innocuous one-liner.</p>
+
+<pre><code>
+Regex.Match(myString, &quot;foo&quot;);
+
+</code></pre>
+
+<p>However, each time it’s executed, it generates 5 kilobytes of garbage. A simple refactoring can eliminate much of this garbage:</p>
+
+<pre><code>
+var myRegExp = new Regex(&quot;foo&quot;);
+
+myRegExp.Match(myString);
+
+</code></pre>
+
+<p>In this example, each call to <code>myRegExp.Match</code> “only” results in 320 bytes of garbage. While this is still expensive for a simple matching operation, it’s a considerable improvement over the previous example.</p>
+
+<p>Therefore, if the regular expressions are invariant string literals, it’s considerably more efficient to precompile them by passing them as the first parameter of the Regex object’s constructor. These precompiled Regexes should then be reused.</p>
+
+<h2>XML, JSON and other long-form text parsing</h2>
+
+<p>Parsing text is often one of the heaviest operations that occurs at loading time. Sometimes, the time spent parsing text can outweigh the time spent loading and instantiating Assets.</p>
+
+<p>The reasons behind this depend on the specific parser used. C#’s built-in XML parser is extremely flexible, but as a result, it’s not optimizable for specific data layouts.</p>
+
+<p>Many third-party parsers are built on reflection. While reflection is an excellent choice during development (because it allows the parser to rapidly adapt to changing data layouts), it’s notoriously slow.</p>
+
+<p>Unity has introduced a partial solution with its built-in <a href="../ScriptReference/JsonUtility.html">JSONUtility</a> API, which provides an interface to Unity’s serialization system that reads/emits JSON. In most benchmarks, it’s faster than pure C# JSON parsers, but it has the same limitations as other interfaces to Unity’s serialization system – it can’t serialized many complex data types, such as Dictionaries, without additional code.</p>
+
+<p>
+<strong>Note</strong>: See the <a href="../ScriptReference/ISerializationCallbackReceiver.html">ISerializationCallbackReceiver</a> interface for one way to add the additional processing necessary to convert to/from complex data types during Unity’s serialization process.</p>
+
+<p>When encountering performance problems that arise from textual data parsing, consider three alternative resolutions.</p>
+
+<h3>Option 1: Parse at build time</h3>
+
+<p>The best way to avoid the cost of text parsing is to entirely eliminate the parsing of text at runtime. In general, this means “baking” the textual data into a binary format via some sort of build step.</p>
+
+<p>Most developers who opt for this route move their data to some sort of ScriptableObject-derived class hierarchy and then distribute the data via AssetBundles. For an excellent discussion of using ScriptableObjects, see <a href="https://www.youtube.com/watch?v=VBA1QCoEAX4">Richard Fine’s Unite 2016 talk</a> on youtube.</p>
+
+<p>This strategy offers the best possible performance, but is only suitable for data that doesn’t need to be generated dynamically. it’s best suited for game design parameters and other content.</p>
+
+<h3>Option 2: Split and lazy load</h3>
+
+<p>A second possibility is to split up the data that must be parsed into smaller chunks. Once split, the cost of parsing the data can be spread across several frames. In the ideal case, identify the specific portions of the data that are required to present the desired experience to the user and load only those portions.</p>
+
+<p>In a simple example: if the project were a platform game, it would not be necessary to serialize data for all the levels together into one giant blob. If the data were split into individual Assets for each level, and perhaps segmented the levels into regions, the data could be parsed as the player approached it.</p>
+
+<p>While this sounds easy, in practice it requires a substantial investment in tool code and may require data structures to be reorganized. </p>
+
+<h3>Option 3: Threads</h3>
+
+<p>For data that’s parsed entirely into plain C# objects, and doesn’t require any interaction with Unity APIs, it’s possible to move the parsing operations to worker threads.</p>
+
+<p>This option can be extremely powerful on platforms with a significant number of cores. However, it requires careful programming to avoid creating deadlocks and race conditions.</p>
+
+<p>
+<strong>Note</strong>: <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> devices have at most 2 cores. Most Android devices have from 2 to 4. This technique of more interest when building for standalone and console build targets.</p>
+
+<p>Projects that choose to implement threading use the built-in C# <a href="https://msdn.microsoft.com/en-us/library/system.threading.thread(v=vs.110).aspx">Thread</a> and <a href="https://msdn.microsoft.com/en-us/library/system.threading.threadpool(v=vs.110).aspx">ThreadPool</a> classes (see <a href="https://msdn.microsoft.com/en-us/library/system.threading.thread(v=vs.110).aspx">msdn.microsoft.com</a>) to manage their worker threads, along with the standard C# synchronization classes.</p>
+<!-- area:core -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="BestPracticeUnderstandingPerformanceInUnity4.html"></a></span><div class="tip">Asset auditing</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="BestPracticeUnderstandingPerformanceInUnity6.html"></a></span><div class="tip">The Resources folder</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

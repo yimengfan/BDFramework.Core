@@ -1,0 +1,506 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Grid snapping</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/GridSnapping.html">English</a></li>
+<li><a href="/cn/current/Manual/GridSnapping.html">中文</a></li>
+<li><a href="/ja/current/Manual/GridSnapping.html">日本語</a></li>
+<li><a href="/kr/current/Manual/GridSnapping.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/GridSnapping.html">English</a></li>
+<li><a href="/cn/current/Manual/GridSnapping.html">中文</a></li>
+<li><a href="/ja/current/Manual/GridSnapping.html">日本語</a></li>
+<li><a href="/kr/current/Manual/GridSnapping.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="UsingTheEditor.html">Unity's interface</a></li>
+<li><a href="UsingTheSceneView.html">The Scene view</a></li>
+<li><a href="PositioningGameObjects.html">Position GameObjects</a></li>
+<li>Grid snapping</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="PositioningGameObjects.html"></a></span><div class="tip">Position GameObjects</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SceneViewNavigation.html"></a></span><div class="tip">Scene view navigation</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Grid snapping</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity provides a visual grid in the Editor’s <strong><span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view</strong> window, which can help precisely align <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view</strong> window, which can help precisely align <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> by snapping (moving) them to the nearest grid location.</p>
+
+<figure>
+<img src="../uploads/Main/SceneGrids.png" alt="The same view displaying the grid lines along the x, y, and z axes">
+<figcaption>The same view displaying the grid lines along the x, y, and z axes</figcaption>
+</figure>
+
+<p>You can snap a GameObject to a grid projected along the X, Y, or Z axes in several ways:</p>
+
+<ul>
+<li>
+<a href="#grid-align">Align selected GameObjects</a> to the nearest grid point.</li>
+<li>
+<a href="#grid-snap">Turn on grid snapping</a> while you move, rotate, or scale a GameObject.</li>
+</ul>
+
+<p>You can also <a href="#snap-increments">transform a GameObject in increments</a> without aligning it with the gridlines. If you need to change how much you are moving, rotating, or scaling, you can change the increment snap values.</p>
+
+<p>By default, the grid is hidden, but you can <a href="#grid-toggle">make it visible</a> and <a href="#grid-axis">change which axis</a> it appears along. You can customize the grid in appearance and behavior by changing the following:</p>
+
+<ul>
+<li>The <a href="#grid-resize">size</a> of the grid (adjust the distance between the lines).</li>
+<li>The <a href="#grid-color">color</a> of the grid lines themselves.</li>
+<li>How <a href="#grid-opacity">transparent or opaque</a> the grid lines appear.</li>
+<li>The <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #grid-location">position</a> of the grid in the <strong><span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html" href="#grid-location">position</a> of the grid in the <strong><span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span></strong> window (move it closer or farther).</li>
+</ul>
+
+<p>Many of these <a href="#grid-custom">actions support keyboard shortcuts</a>. You can see which key combinations are assigned to these actions and use the <a href="ShortcutsManager.html">Shortcuts Manager</a> to customize them.</p>
+
+<p><a name="grid-and-snap" aria-hidden="true"></a></p>
+
+<h2>Grid and Snap toolbar Overlay</h2>
+
+<figure>
+<img src="../uploads/Main/scene-grids-overlay.png" alt="Grid and Snap toolbar Overlay">
+<figcaption>Grid and Snap toolbar Overlay</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Icon</th>
+	<th style="text-align:left;">Actions</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<img src="../uploads/Main/SceneGrids-Vis-icon.png" alt=""> Grid visibility</td>
+	<td style="text-align:left;">
+<a href="#grid-toggle">Toggle grid on or off</a><br><a href="#grid-axis">Change grid axis</a><br> <a href="#grid-opacity">Change grid opacity</a><br> <a href="#grid-move-to-handle">Move grid to gizmo handle or back to origin</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<img src="../uploads/Main/SceneGrids-Mode-icon.png" alt=""> Grid snapping</td>
+	<td style="text-align:left;">
+<a href="#grid-snap">Toggle grid snapping on or off</a><br><a href="#grid-resize">Change grid size</a> <br> <a href="#grid-align">Align a GameObject to an axis</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<img src="../uploads/Main/scene-grids-increment-icon.png" alt=""> Snap increment</td>
+	<td style="text-align:left;"><a href="#snap-increments">Change the default increment snap values</a></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note</strong>: The settings on the <strong>Grid and Snap</strong> <a href="overlays.html">Overlay</a> are global to all Scene views.</p>
+
+<h2>Align, snap, and incremental movements</h2>
+
+<p>This section provides information on how to perform these actions:</p>
+
+<ul>
+<li><a href="#grid-align">Aligning (pushing) to the grid</a></li>
+<li><a href="#grid-snap">Activating auto-snapping</a></li>
+<li><a href="#snap-increments">Moving, rotating, and scaling in increments</a></li>
+</ul>
+
+<p><a name="grid-align" aria-hidden="true"></a></p>
+
+<h3>Align (push) to the grid</h3>
+
+<p>You can align a GameObject to either the closest grid point on a single axis, or on all axes at once.</p>
+
+<p>To align a GameObject to the closest point on a grid for a specific axis:</p>
+
+<ol>
+<li><p>In the <strong>Grid and Snap</strong> Overlays <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span>, open the grid snapping drop-down menu (<img src="../uploads/Main/SceneGrids-Mode-icon-inline.png" alt="">).</p></li>
+<li>
+<p>In the <strong>Align Selected</strong> section, click the <strong>X</strong>, <strong>Y</strong>, or <strong>Z</strong> button that matches the axis you want to push to.</p>
+
+<figure>
+<img src="../uploads/Main/scene-grid-align-selection.png" alt="Align Selection to Grid section of the Grid and Snap window">
+<figcaption>Align Selection to Grid section of the Grid and Snap window</figcaption>
+</figure>
+</li>
+</ol>
+
+<p>To align a GameObject on all axes at once:</p>
+
+<ol>
+<li><p>Select the GameObject(s) you want to align to the grid.</p></li>
+<li>
+<p>Use the <strong>Ctrl</strong>+<strong>\</strong> (Windows) or <strong>Cmd</strong>+<strong>\</strong> (macOS) shortcut to push the GameObject(s) onto the grids on all axes.</p>
+
+<p>Alternatively, from the <strong>Grid and Snap</strong> Overlays toolbar, open the grid visibility drop-down menu (<img src="../uploads/Main/SceneGrids-Mode-icon-inline.png" alt="">) and in the <strong>Align Selected</strong> section, click <strong>All Axes</strong>.</p>
+</li>
+</ol>
+
+<p><a name="grid-snap" aria-hidden="true"></a></p>
+
+<h3>Activate auto-snapping</h3>
+
+<p>To turn on automatic snapping to the grid:</p>
+
+<ol>
+<li>Activate the <strong>Move</strong> tool and make sure the handle orientation in the Tool Settings Overlay is set to <a href="PositioningGameObjects.html#GizmoHandlePositions">Global</a> (<img src="../uploads/Main/SceneGrids-Global-icon.png" alt="">).</li>
+<li>Click the grid snapping icon (<img src="../uploads/Main/SceneGrids-Mode-icon-inline.png" alt="">) in the <strong>Grid and Snap</strong> toolbar Overlay. The icon is blue when activated.</li>
+</ol>
+
+<p>When you enable automatic grid snapping, the <strong>Move</strong>, <strong>Rotate</strong>, and <strong>Scale</strong> transform tools snap the selected GameObject(s) to the grid along the active <span class="tooltip"><strong>gizmo</strong><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GizmosMenu.html#GizmosIcons" href="GizmosMenu.html#GizmosIcons">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Gizmo" aria-label="Go to glossary anchor for Gizmo">Glossary</a></span></span></span> axis. If you need the GameObject to move in smaller increments, you can also <a href="#snap-increments">transform it incrementally</a>.</p>
+
+<p><a name="snap-increments" aria-hidden="true"></a></p>
+
+<h3>Move, rotate, and scale in increments</h3>
+
+<p>To move, rotate, or scale by increment snap values:</p>
+
+<ul>
+<li>Hold down the <strong>Control</strong> key (Windows) or <strong>Command</strong> key (macOS) while using one of the <a href="PositioningGameObjects.html">transform gizmos</a>.</li>
+</ul>
+
+<p>To change the default increment snap values:</p>
+
+<ol>
+<li><p>From the <strong>Grid and Snap</strong> Overlays toolbar, open the snap increment drop-down menu (<img src="../uploads/Main/scene-grids-increment-icon-inline.png" alt="">).</p></li>
+<li>
+<p>The <strong>Increment Snap</strong> section contains several properties that let you set the same value for all axes or different values:</p>
+
+<figure>
+<img src="../uploads/Main/scene-grid-snapping-increment.png" alt="Increment Snap section of the Grid and Snap window">
+<figcaption>Increment Snap section of the Grid and Snap window</figcaption>
+</figure>
+
+<p>
+<strong>Move</strong>: With the link icon selected, enter a uniform increment snap value for all axes, or unlink the axes and set different increment snap values in the <strong>X</strong>, <strong>Y</strong>, and <strong>Z</strong> axis properties.</p>
+
+<p>
+<strong>Rotate</strong>: Enter a rotation increment value in degrees.</p>
+
+<p>
+<strong>Scale</strong>: Enter a scale increment value as a scale factor. For example, if the Scale value is 2, the selected GameObject will scale at an increment of twice its original size.</p>
+</li>
+</ol>
+
+<h2>Customize the grid</h2>
+
+<p>This section provides information on customizing the following:</p>
+
+<ul>
+<li><a href="#grid-toggle">Show and hide grid lines</a></li>
+<li><a href="#grid-axis">Change the axis where the grid appears</a></li>
+<li><a href="#grid-resize">Resize the grid</a></li>
+<li><a href="#grid-color">Change the default color of the grid lines</a></li>
+<li><a href="#grid-opacity">Change the opacity of the grid</a></li>
+<li><a href="#grid-move-to-handle">Move the grid to the handle of a GameObject</a></li>
+<li><a href="#grid-reset">Reset values and settings to default</a></li>
+</ul>
+
+<p><a name="grid-toggle" aria-hidden="true"></a></p>
+
+<h3>Show and hide grid lines</h3>
+
+<p>Toggle grid visibility by clicking the grid visibility icon (<img src="../uploads/Main/SceneGrids-Vis-icon-inline.png" alt="">) on the Grid and Snap <a href="overlays.html">Overlay</a> toolbar to display or hide the grid on any axis (X, Y, Z). If you are in <a href="SceneViewNavigation.html">orthographic mode</a> (Iso), Unity chooses the view.</p>
+
+<figure>
+<img src="../uploads/Main/SceneGridsAxis.png" alt="The grid appears in the Scene view window when you click the grid visibility button">
+<figcaption>The grid appears in the <strong>Scene view</strong> window when you click the grid visibility button</figcaption>
+</figure>
+
+<p><a name="grid-axis" aria-hidden="true"></a></p>
+
+<h3>Change the axis where the grid appears</h3>
+
+<p>To change which axis the grid appears on:</p>
+
+<ol>
+<li><p>From the <strong>Grid and Snap</strong> Overlays toolbar, open the grid visibility drop-down menu (<img src="../uploads/Main/SceneGrids-Vis-icon-inline.png" alt="">).</p></li>
+<li>
+<p>From the <strong>Grid Plane</strong> section, select the axis you want to appear.</p>
+
+<figure>
+<img src="../uploads/Main/scene-grids-select-axis.png" alt="The Grid Axis section under the grid visibility drop-down menu">
+<figcaption>The Grid Axis section under the grid visibility drop-down menu</figcaption>
+</figure>
+</li>
+</ol>
+
+<p><a name="grid-resize" aria-hidden="true"></a></p>
+
+<h3>Resize the grid</h3>
+
+<p>You can set the size of the gridlines as they appear in the <strong>Scene view</strong> window. This affects the appearance of the grid and how your GameObjects <a href="#grid-snap">automatically snap to the grid</a>, but doesn’t affect how much your GameObject(s) <a href="#snap-increments">move, rotate, or scale in increments</a>.</p>
+
+<p>If you set a size for all axes at once, a uniform (square-based) grid appears. However, you can also use different values on any of the three axes to see a non-uniform (rectangular-based) grid. By default, the grid is set to a uniform distance (1 on all axes).</p>
+
+<p>To resize the grid:</p>
+
+<ol>
+<li><p>From the <strong>Grid and Snap</strong> Overlays toolbar, open the snap increment drop-down menu (<img src="../uploads/Main/scene-grids-increment-icon-inline.png" alt="">).</p></li>
+<li>
+<p>Use the <strong>Size</strong> property with the link icon selected to enter a uniform value for the visual grid (all grid lines the same length), or unlink the axes and specify a non-uniform distance between the grid lines for the <strong>X</strong>, <strong>Y</strong>, and <strong>Z</strong>.</p>
+
+<p>For example, to create a rectangular grid on the x and y axes, unlink the axes and set <strong>X</strong> and <strong>Y</strong> to 1, and set <strong>Z</strong> to 2.</p>
+</li>
+<li>
+<p>If you want to switch back to a uniform value between the grid lines:</p>
+
+<ul>
+<li>Select the link icon.</li>
+<li>The <strong>Size</strong> property now displays the value of all axes with the value entered in <strong>X</strong>.</li>
+</ul>
+</li>
+</ol>
+
+<p>
+<strong>Note</strong>: You can use the following keyboard shortcuts to increase or decrease the size of the grid:</p>
+
+<ul>
+<li>To increase the grid size, press <strong>Ctrl</strong>+<strong>]</strong> (MacOS: <strong>Cmd</strong>+<strong>]</strong>).</li>
+<li>To decrease the grid size, press <strong>Ctrl</strong>+<strong>[</strong> (MacOS: <strong>Cmd</strong>+<strong>[</strong>).</li>
+</ul>
+
+<p><a name="grid-color" aria-hidden="true"></a></p>
+
+<h3>Change the default color of the grid lines</h3>
+
+<p>To change the color of the visible grid lines in the <strong>Scene view</strong> window:</p>
+
+<ol>
+<li><p>Open the Unity <a href="Preferences.html">Preferences</a> page (go to <strong>Edit</strong> &gt; <strong>Preferences</strong> on Windows or <strong>Unity</strong> &gt; <strong>Preferences</strong> on macOS).</p></li>
+<li>
+<p>Click on the Colors category from the list to see the <strong>Colors</strong> page.</p>
+
+<figure>
+<img src="../uploads/Main/SceneGridsPrefs.png" alt="The grid preference properties on the Preferences page">
+<figcaption>The grid preference properties on the Preferences page</figcaption>
+</figure>
+</li>
+<li><p>Select a new color using the <strong>Grid</strong> property’s color picker.</p></li>
+</ol>
+
+<p><a name="grid-opacity" aria-hidden="true"></a></p>
+
+<h3>Change the opacity of the grid</h3>
+
+<p>If the grid lines are too light or too dark, you can adjust them:</p>
+
+<ol>
+<li><p>From the <strong>Grid and Snap</strong> Overlays toolbar, open the grid visibility drop-down menu (<img src="../uploads/Main/SceneGrids-Vis-icon-inline.png" alt="">).</p></li>
+<li>
+<p>Adjust the <strong>Opacity</strong> using the slider.</p>
+
+<figure>
+<img src="../uploads/Main/scene-grids-opacity.png" alt="Adjust opacity in the grid visibility drop-down menu">
+<figcaption>Adjust opacity in the grid visibility drop-down menu</figcaption>
+</figure>
+</li>
+</ol>
+
+<p><a name="grid-move-to-handle" aria-hidden="true"></a></p>
+
+<h3>Move the grid to the handle of a GameObject</h3>
+
+<p>From the grid visibility drop-down menu (<img src="../uploads/Main/SceneGrids-Vis-icon-inline.png" alt="">) in the Grid and Snap Overlay toolbar, use the <strong>Move To</strong> section to move the grid to the handle of the selected GameObject (<strong>Handle</strong>) or back to the default position (<strong>Origin</strong>).</p>
+
+<p><a name="grid-reset" aria-hidden="true"></a></p>
+
+<h3>Reset values and settings to default</h3>
+
+<p>To reset the grid axis and opacity settings to their defaults:</p>
+
+<ol>
+<li><p>From the <strong>Grid and Snap</strong> Overlays toolbar, open the grid visibility drop-down menu (<img src="../uploads/Main/SceneGrids-Vis-icon-inline.png" alt="">).</p></li>
+<li><p>Click the <strong>More</strong> menu (⋮) and then click <strong>Reset</strong>.</p></li>
+</ol>
+
+<p>To reset the size of the grid to the default:</p>
+
+<ol>
+<li><p>From the <strong>Grid and Snap</strong> Overlays toolbar, open the grid snapping drop-down menu (<img src="../uploads/Main/SceneGrids-Mode-icon-inline.png" alt="">).</p></li>
+<li><p>Click the <strong>More</strong> menu (⋮) and then click <strong>Reset</strong>.</p></li>
+</ol>
+
+<p>To reset the increment snap values to the default:</p>
+
+<ol>
+<li><p>From the <strong>Grid and Snap</strong> Overlays toolbar, open the snap increment drop-down menu (<img src="../uploads/Main/scene-grids-increment-icon-inline.png" alt="">).</p></li>
+<li>
+<p>Click the <strong>More</strong> menu (⋮) and then click <strong>Reset</strong>.</p>
+
+<p>Only the values under the <strong>Increment Snap</strong> section return to their original default values.</p>
+</li>
+</ol>
+
+<p><a name="grid-custom" aria-hidden="true"></a></p>
+
+<h2>Shortcut defaults</h2>
+
+<p>You can perform the following actions with these default Unity shortcuts:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Action</strong></th>
+	<th style="text-align:left;"><strong>Default shortcut</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="#grid-resize">Increase Grid Size</a></td>
+	<td style="text-align:left;">
+<strong>Ctrl</strong>+<strong>]</strong> (Windows) or <br><strong>Command</strong>+<strong>]</strong> (macOS)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#grid-resize">Decrease Grid Size</a></td>
+	<td style="text-align:left;">
+<strong>Ctrl</strong>+<strong>[</strong> (Windows) or <br><strong>Command</strong>+<strong>[</strong> (macOS)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#grid-align">Push to Grid (Align Selection to Grid)</a></td>
+	<td style="text-align:left;">
+<strong>Ctrl</strong>+<strong>\</strong> (Windows) or <br><strong>Command</strong>+<strong>\</strong> (macOS)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#grid-reset">Reset Grid</a></td>
+	<td style="text-align:left;">(no shortcut by default)</td>
+</tr>
+</tbody>
+</table>
+
+<p>To change these default keyboard shortcuts, use the <a href="ShortcutsManager.html">Shortcuts Manager</a>.</p>
+
+<hr>
+
+<ul>
+<li><span class="page-history">Native grid improvements updated in <a href="https://docs.unity3d.com/2019.3/Documentation/Manual/30_search.html?q=newin20193">2019.3</a> <span class="search-words">NewIn20193</span></span></li>
+<li><span class="page-history">Grid and snap moved to Overlays toolbar updated in <a href="https://docs.unity3d.com/2021.2/Documentation/Manual/30_search.html?q=newin20212">2021.2</a> <span class="search-words">NewIn20212</span></span></li>
+</ul>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="PositioningGameObjects.html"></a></span><div class="tip">Position GameObjects</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SceneViewNavigation.html"></a></span><div class="tip">Scene view navigation</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

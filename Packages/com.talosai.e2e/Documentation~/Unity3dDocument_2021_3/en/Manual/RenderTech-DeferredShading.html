@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Deferred Shading rendering path</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/RenderTech-DeferredShading.html">English</a></li>
+<li><a href="/cn/current/Manual/RenderTech-DeferredShading.html">中文</a></li>
+<li><a href="/ja/current/Manual/RenderTech-DeferredShading.html">日本語</a></li>
+<li><a href="/kr/current/Manual/RenderTech-DeferredShading.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/RenderTech-DeferredShading.html">English</a></li>
+<li><a href="/cn/current/Manual/RenderTech-DeferredShading.html">中文</a></li>
+<li><a href="/ja/current/Manual/RenderTech-DeferredShading.html">日本語</a></li>
+<li><a href="/kr/current/Manual/RenderTech-DeferredShading.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="render-pipelines.html">Render pipelines</a></li>
+<li><a href="built-in-render-pipeline.html">Using the Built-in Render Pipeline</a></li>
+<li><a href="RenderingPaths.html">Rendering paths in the Built-in Render Pipeline</a></li>
+<li>Deferred Shading rendering path</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="RenderTech-ForwardRendering.html"></a></span><div class="tip">Forward rendering path</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="RenderTech-DeferredLighting.html"></a></span><div class="tip">Legacy Deferred rendering path</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Deferred Shading rendering path</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page details the <strong>Deferred Shading</strong> <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingPaths.html">rendering path</a><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a href="RenderingPaths.html" href="RenderingPaths.html">rendering path</a><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a href="RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#RenderingPath" aria-label="Go to glossary anchor for RenderingPath">Glossary</a></span></span></span> in Unity’s Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html" href="Glossary.html#RenderingPath" aria-label="Go to glossary anchor for RenderingPath">Glossary</a></span></span></span> in Unity’s Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>. See <a href="http://en.wikipedia.org/wiki/Deferred_shading">Wikipedia: deferred shading</a> for an introductory technical overview of deferred shading.</p>
+
+<h2>Overview</h2>
+
+<p>When using deferred shading, there is no limit on the number of lights that can affect a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. All lights are evaluated per-pixel, which means that they all interact correctly with <span class="tooltip"><strong>normal maps</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normalmap" aria-label="Go to glossary anchor for Normalmap">Glossary</a></span></span></span>, etc. Additionally, all lights can have cookies and shadows.</p>
+
+<p>Deferred shading has the advantage that the processing overhead of lighting is proportional to the number of <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> the light shines on. This is determined by the size of the light volume in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> the light shines on. This is determined by the size of the light volume in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> regardless of how many GameObjects it illuminates. Therefore, performance can be improved by keeping lights small. Deferred shading also has highly consistent and predictable behaviour. The effect of each light is computed per-pixel, so there are no lighting computations that break down on large triangles.</p>
+
+<p>On the downside, deferred shading has no real support for anti-aliasing and can’t handle semi-transparent GameObjects (these are rendered using <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderTech-ForwardRendering.html">forward</a> rendering). There is also no support for the <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html" href="RenderTech-ForwardRendering.html">forward</a> rendering). There is also no support for the <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> Renderer’s Receive Shadows flag and <span class="tooltip"><strong>culling masks</strong><span class="tooltiptext">Allows you to include or omit objects to be rendered by a Camera, by Layer.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#CullingMask" aria-label="Go to glossary anchor for CullingMask">Glossary</a></span></span></span> are only supported in a limited way. You can only use up to four culling masks. That is, your culling <span class="tooltip"><strong>layer mask</strong><span class="tooltiptext">A value defining which layers to include or exclude from an operation, such as rendering, collision or your own code. <a href="Layers.html" href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> Renderer’s Receive Shadows flag and <span class="tooltip"><strong>culling masks</strong><span class="tooltiptext">Allows you to include or omit objects to be rendered by a Camera, by Layer.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#CullingMask" aria-label="Go to glossary anchor for CullingMask">Glossary</a></span></span></span> are only supported in a limited way. You can only use up to four culling masks. That is, your culling <span class="tooltip"><strong>layer mask</strong><span class="tooltiptext">A value defining which layers to include or exclude from an operation, such as rendering, collision or your own code. <a href="Layers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LayerMask" aria-label="Go to glossary anchor for LayerMask">Glossary</a></span></span></span> must at least contain all layers minus four arbitrary layers, so 28 of the 32 layers must be set. Otherwise you get graphical artifacts.</p>
+
+<h2>Requirements</h2>
+
+<p>It requires a graphics card with Multiple Render Targets (MRT), <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> Model 3.0 (or later) and support for Depth <span class="tooltip"><strong>render textures</strong><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a href="class-RenderTexture.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> Model 3.0 (or later) and support for Depth <span class="tooltip"><strong>render textures</strong><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span>. Most PC graphics cards made after 2006 support deferred shading, starting with GeForce 8xxx, Radeon X2400, Intel G45.</p>
+
+<p>On mobile, deferred shading is supported on all devices running at least OpenGL ES 3.0.</p>
+
+<p>
+<strong>Note</strong>: Deferred rendering isn’t supported when using Orthographic projection. If the <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>’s projection mode is set to Orthographic, the Camera falls back to Forward rendering.</p>
+
+<p>
+<strong>Note</strong>: Deferred Rendering doesn’t support Single Pass Stereo Instancing in the Built-in Render Pipeline..</p>
+
+<h2>Performance considerations</h2>
+
+<p>The rendering overhead of real-time lights in deferred shading is proportional to the number of pixels illuminated by the light and <em>not</em> dependent on Scene complexity. So small Point Lights or Spot Lights are very cheap to render and if they are fully or partially occluded by Scene GameObjects then they are even cheaper.</p>
+
+<p>Of course, lights with shadows are much more expensive than lights without shadows. In deferred shading, shadow-casting GameObjects still need to be rendered once or more for each shadow-casting light. Furthermore, the lighting shader that applies shadows has a higher rendering overhead than the one used when shadows are disabled.</p>
+
+<h2>Implementation details</h2>
+
+<p>Objects with Shaders that do not support deferred shading are rendered after deferred shading is complete, using the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderTech-ForwardRendering.html">forward rendering</a><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a href="RenderTech-ForwardRendering.html" href="RenderTech-ForwardRendering.html">forward rendering</a><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a href="RenderTech-ForwardRendering.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ForwardRendering" aria-label="Go to glossary anchor for ForwardRendering">Glossary</a></span></span></span> path.</p>
+
+<p>The default layout of the render targets (RT0 - RT4) in the G-buffer is listed below. Data types are placed in the various channels of each render target. The channels used are shown in parentheses.</p>
+
+<ul>
+<li>RT0, ARGB32 format: Diffuse color (RGB), occlusion (A).</li>
+<li>RT1, ARGB32 format: <span class="tooltip"><strong>Specular color</strong><span class="tooltiptext">The color of a specular highlight.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#specularcolor" aria-label="Go to glossary anchor for specularcolor">Glossary</a></span></span></span> (RGB), smoothness (A).</li>
+<li>RT2, ARGB2101010 format: World space normal (RGB), unused (A).</li>
+<li>RT3, ARGB2101010 (non-HDR) or ARGBHalf (HDR) format: Emission + lighting + <span class="tooltip"><strong>lightmaps</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> + <span class="tooltip"><strong>reflection probes</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html" href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> + <span class="tooltip"><strong>reflection probes</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span> buffer.</li>
+<li>Depth+<span class="tooltip"><strong>Stencil buffer</strong><span class="tooltiptext">A memory store that holds an 8-bit per-pixel value. In Unity, you can use a stencil buffer to flag pixels, and then only render to pixels that pass the stencil operation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#stencilbuffer" aria-label="Go to glossary anchor for stencilbuffer">Glossary</a></span></span></span>.</li>
+</ul>
+
+<p>So the default G-buffer layout is 160 bits/pixel (non-HDR) or 192 bits/pixel (HDR).</p>
+
+<p>If using the <a href="LightMode-Mixed-Shadowmask.html">Shadowmask</a> or <a href="LightMode-Mixed-Shadowmask.html">Distance Shadowmask</a> modes for Mixed lighting, a fifth target is used:</p>
+
+<ul>
+<li>RT4, ARGB32 format: Light occlusion values (RGBA).</li>
+</ul>
+
+<p>And thus the G-buffer layout is 192 bits/pixel (non-HDR) or 224 bits/pixel (HDR).</p>
+
+<p>If the hardware does not support five concurrent rendertargets then objects using shadowmasks will fallback to the forward rendering path.
+Emission+lighting buffer (RT3) is logarithmically encoded to provide greater dynamic range than is usually possible with an ARGB32 texture, when the Camera is not using <span class="tooltip"><strong>HDR</strong><span class="tooltiptext">high dynamic range<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#HDR" aria-label="Go to glossary anchor for HDR">Glossary</a></span></span></span>.</p>
+
+<p>Note that when the Camera is using HDR rendering, there’s no separate rendertarget being created for Emission+lighting buffer (RT3); instead the rendertarget that the Camera renders into (that is, the one that is passed to the image effects) is used as RT3.</p>
+
+<h3>G-Buffer pass</h3>
+
+<p>The G-buffer pass renders each GameObject once. Diffuse and specular colors, surface smoothness, world space normal, and emission+ambient+reflections+lightmaps are rendered into G-buffer textures. The G-buffer textures are setup as global shader properties for later access by shaders (<em>CameraGBufferTexture0 .. </em>CameraGBufferTexture3 names).</p>
+
+<h3>Lighting pass</h3>
+
+<p>The lighting pass computes lighting based on G-buffer and depth. Lighting is computed in screen space, so the time it takes to process is independent of Scene complexity. Lighting is added to the emission buffer.</p>
+
+<p>Point Lights and Spot Lights that do not cross the Camera’s near plane are rendered as 3D shapes, with the Z buffer’s test against the Scene enabled. This makes partially or fully occluded Point Lights and Spot Lights very cheap to render. Directional Lights and Point or Spot Lights that cross the near plane are rendered as fullscreen <span class="tooltip"><strong>quads</strong><span class="tooltiptext">A primitive object that resembles a plane but its edges are only one unit long, it uses only 4 vertices, and the surface is oriented in the XY plane of the local coordinate space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PrimitiveObjects.html" href="PrimitiveObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Quad" aria-label="Go to glossary anchor for Quad">Glossary</a></span></span></span>.</p>
+
+<p>If a light has shadows enabled then they are also rendered and applied in this pass. Note that shadows do not come for “free”; shadow casters need to be rendered and a more complex light shader must be applied.</p>
+
+<p>The only lighting model available is Standard. If you need a different lighting model, you can create a customized version of the default deferred shader file. Follow these steps:</p>
+
+<ol>
+<li>
+<a href="StandardShaderMakeYourOwn.html">Download the source code</a> for the Built-In Render Pipeline shaders.</li>
+<li>Find the <code>Internal-DeferredShading.shader</code> file in the <code>DefaultResourcesExtra</code> folder.</li>
+<li>Edit the file to change the lighting model.</li>
+<li>In the <strong>Project</strong> window, add the file to your <strong>Assets</strong> folder, in a folder called <strong>Resources</strong>.</li>
+<li>From the main menu, select <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Graphics</strong>.</li>
+<li>In the <strong>Built-in Shader Settings</strong> section, set <strong>Deferred</strong> to <strong>Custom shader</strong>, then select your shader file.</li>
+</ol>
+
+<hr>
+
+<ul>
+<li><p><span class="page-edit"> 2017–06–08 Page published
+</span></p></li>
+<li><p><span class="page-history">Light Modes (<span class="tooltip"><strong>Shadowmask</strong><span class="tooltiptext">A Texture that shares the same UV layout and resolution with its corresponding lightmap. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightMode-Mixed-Shadowmask.html" href="LightMode-Mixed-Shadowmask.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shadowmask" aria-label="Go to glossary anchor for Shadowmask">Glossary</a></span></span></span> and <span class="tooltip"><strong>Distance Shadowmask</strong><span class="tooltiptext">A version of the Shadowmask lighting mode that includes high quality shadows cast from static GameObjects onto dynamic GameObjects. <a href="LightMode-Mixed-Shadowmask.html" href="Glossary.html#Shadowmask" aria-label="Go to glossary anchor for Shadowmask">Glossary</a></span></span></span> and <span class="tooltip"><strong>Distance Shadowmask</strong><span class="tooltiptext">A version of the Shadowmask lighting mode that includes high quality shadows cast from static GameObjects onto dynamic GameObjects. <a href="LightMode-Mixed-Shadowmask.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DistanceShadowmask" aria-label="Go to glossary anchor for DistanceShadowmask">Glossary</a></span></span></span>) added in 5.6</span></p></li>
+</ul>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="RenderTech-ForwardRendering.html"></a></span><div class="tip">Forward rendering path</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="RenderTech-DeferredLighting.html"></a></span><div class="tip">Legacy Deferred rendering path</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Uploading assets to your package</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetStoreUpload.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetStoreUpload.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetStoreUpload.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetStoreUpload.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetStoreUpload.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetStoreUpload.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetStoreUpload.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetStoreUpload.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AssetStore.html">Unity's Asset Store</a></li>
+<li><a href="AssetStorePublishing.html">Publishing to the Asset Store</a></li>
+<li>Uploading assets to your package</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetStoreDeletePkg.html"></a></span><div class="tip">Deleting a package draft</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetStorePkgDetails.html"></a></span><div class="tip">Filling in the package details</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Uploading assets to your package</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>After you create a package draft, you can add your assets and upload them to this package draft. There are two ways to do this:</p>
+
+<ul>
+<li>Open the Project containing the assets you want to upload inside the Unity Editor.</li>
+<li>Go to the <strong>Create new package</strong> page, navigate to the <a href="AssetStorePkgDetails.html#upload">Package upload</a> section, and click the <strong>Launch Unity</strong> button to launch Unity and open your Project.</li>
+</ul>
+
+<p>To prevent confusion during upload and import for your users, make sure that the assets you want to upload are inside a top-level folder with the same title as your submission. This folder contains all of the components for your Project:</p>
+
+<figure>
+<img src="../uploads/Main/AssetStoreUpload-prj.png" alt="Your Unity Project with the assets inside a top-level folder">
+<figcaption>Your Unity Project with the assets inside a top-level folder</figcaption>
+</figure>
+
+<p>
+<strong>Note</strong>: If your package contains audio or video files, you must upload samples of your media assets in the <a href="AssetStorePkgDetails.html#audvid">Audio/Video section</a> of your package draft’s <strong>Package Detail</strong> section.</p>
+
+<p>To upload assets to your package:</p>
+
+<ol>
+<li><p>Download the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://assetstore.unity.com/packages/tools/utilities/asset-store-publishing-tools-115">Asset Store Tools</a> package from the <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a href="AssetStore.html" href="https://assetstore.unity.com/packages/tools/utilities/asset-store-publishing-tools-115">Asset Store Tools</a> package from the <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span>.</p></li>
+<li><p>Open the Unity Project containing the content you want to submit to the Asset Store and import the Asset Store Tools into it.</p></li>
+<li>
+<p>From the main menu of the Unity Editor, select <strong>Asset Store Tools</strong> &gt; <strong>Package Upload</strong>.</p>
+
+<p>The <strong>Publisher Login</strong> dialog box appears, prompting you to enter your publisher credentials:</p>
+
+<figure>
+<img src="../uploads/Main/AssetStoreUpload-login.png" alt="Enter the Email and Password you used to create your publisher account. If you dont have a publisher account, you can click the Create Publisher ID button to create one.">
+<figcaption>Enter the Email and Password you used to create your publisher account. If you don’t have a publisher account, you can click the Create Publisher ID button to create one.</figcaption>
+</figure>
+
+<p>The Package Upload tool displays your drafts and packages in the <strong>Package Upload</strong> window:</p>
+
+<figure>
+<img src="../uploads/Main/AssetStoreUpload-upload.png" alt="Select the package draft and the Asset folder to upload to it">
+<figcaption>Select the package draft and the Asset folder to upload to it</figcaption>
+</figure>
+</li>
+<li><p>If you don’t see your package draft in the list, click the <strong>Refresh Packages</strong> button in the top right corner.</p></li>
+<li><p>Select the package draft you want to use from the list.</p></li>
+<li><p>Click the <strong>Select</strong> button to choose the folder that contains the assets you want to upload from the file browser. You can only select one folder, and if the selected folder is empty, an error message appears when you click the <strong>Validate</strong> or <strong>Upload</strong> button. <a name="ValidatorTool" aria-hidden="true"></a>
+</p></li>
+<li>
+<p>Click the <strong>Validate</strong> button to display the Validator window. </p>
+
+<figure>
+<img src="../uploads/Main/AssetStoreUpload-validate.png" alt="Click the Scan button to see Validation results">
+<figcaption>Click the <strong>Scan</strong> button to see Validation results</figcaption>
+</figure>
+</li>
+<li><p>Click the <strong>Scan</strong> button to check your package for any problems. You should fix these problems before submitting your package for approval. When you are finished, close the window to return to the <strong>Package Upload</strong> window. </p></li>
+<li><p>Click <strong>Upload</strong> to connect your assets to your package. The status bar next to the title of your selected folder shows the progress of the upload. When the upload is finished, a dialog box appears letting you know whether or not the upload was successful.</p></li>
+<li><p>To test out the newly created <code>.unitypackage</code> file, create a new Unity Project and import the package into it.</p></li>
+</ol>
+
+<p>You can close the window and return to your Publisher Account page where you can <a href="AssetStorePkgDetails.html">make any final changes</a> to your package draft and <a href="AssetStoreSubmit.html">submit your package for final approval</a>.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetStoreDeletePkg.html"></a></span><div class="tip">Deleting a package draft</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetStorePkgDetails.html"></a></span><div class="tip">Filling in the package details</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

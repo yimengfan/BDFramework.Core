@@ -1,0 +1,337 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Model tab</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SpeedTreeImporter-Model.html">English</a></li>
+<li><a href="/cn/current/Manual/SpeedTreeImporter-Model.html">中文</a></li>
+<li><a href="/ja/current/Manual/SpeedTreeImporter-Model.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SpeedTreeImporter-Model.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SpeedTreeImporter-Model.html">English</a></li>
+<li><a href="/cn/current/Manual/SpeedTreeImporter-Model.html">中文</a></li>
+<li><a href="/ja/current/Manual/SpeedTreeImporter-Model.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SpeedTreeImporter-Model.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="models.html">Models</a></li>
+<li><a href="models-importing.html">Importing models into Unity</a></li>
+<li><a href="class-SpeedTreeImporter.html">SpeedTree Import Settings window</a></li>
+<li>Model tab</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-SpeedTreeImporter.html"></a></span><div class="tip">SpeedTree Import Settings window</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SpeedTreeImporter-Materials.html"></a></span><div class="tip">Materials tab</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Model tab</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<figure>
+<img src="../uploads/Main/class-SpeedTreeImporter-Model.png" alt="SpeedTree Importer Model tab">
+<figcaption>SpeedTree Importer Model tab</figcaption>
+</figure>
+
+<p>The <strong>Model</strong> tab of the <strong>SpeedTree Import Settings</strong> window contains these sections:</p>
+
+<p>
+<strong>(A)</strong> The <strong>Meshes</strong> section allows you to set the <strong>Scale Factor</strong> value to apply a global scale on the imported SpeedTree Model. By default, Unity sets this value to 0.3048 (the conversion ratio for feet to meters) because SpeedTree Models generally use 1 foot per unit, and Unity uses 1 meter per unit.</p>
+
+<p>
+<strong>(B)</strong> The <strong>Materials</strong> section allows you to set the <strong>Main Color</strong> value, which modulates the diffuse lighting component, and the <strong>Hue Color</strong>, which Unity uses when the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #hue">Hue Variation effect</a> is enabled. If your SpeedTree Model contains <span class="tooltip"><strong>Billboard</strong><span class="tooltiptext">A textured 2D object that rotates so that it always faces the Camera. <a href="class-BillboardRenderer.html" href="#hue">Hue Variation effect</a> is enabled. If your SpeedTree Model contains <span class="tooltip"><strong>Billboard</strong><span class="tooltiptext">A textured 2D object that rotates so that it always faces the Camera. <a href="class-BillboardRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Billboard" aria-label="Go to glossary anchor for Billboard">Glossary</a></span></span></span> Assets, the <strong>Alpha Cutoff</strong> property also appears. Unity uses the alpha cutoff (or reference value) to compute the values it needs to preserve alpha MIP map coverage on Textures.</p>
+
+<p>
+<strong>(C)</strong> The <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #LODs">LODs</a> section contains a specialized variation of the <span class="tooltip"><a href="class-LODGroup.html">LOD Group</a><span class="tooltiptext">A component to manage level of detail (LOD) for GameObjects. <a href="class-LODGroup.html" href="#LODs">LODs</a> section contains a specialized variation of the <span class="tooltip"><a href="class-LODGroup.html">LOD Group</a><span class="tooltiptext">A component to manage level of detail (LOD) for GameObjects. <a href="class-LODGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LODGroup" aria-label="Go to glossary anchor for LODGroup">Glossary</a></span></span></span> component for importing SpeedTree Models. You can set smooth transitions between LOD levels, adjust thresholds for each LOD level, and use the <a href="#LOD-options">LOD Options</a> to turn off resource-heavy effects on each LOD level.</p>
+
+<p>
+<strong>(D)</strong> The <strong>Revert</strong> and <strong>Apply</strong> buttons always appear, but you can only select them after you make changes to the settings on the <strong>Model</strong> tab. If you change settings on both the <a href="SpeedTreeImporter-Materials.html">Material mapping</a> and the <strong>Model</strong> tab, the <strong>Apply &amp; Generate Materials</strong> button appears. If you only change settings on the Material mapping, the <strong>Regenerate Materials</strong> button appears.</p>
+
+<p>
+<strong>(E)</strong> The properties for the <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> (read-only) appear at the bottom of the <strong><span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> (read-only) appear at the bottom of the <strong><span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> view, including a preview of the SpeedTree Model with its Material applied.</p>
+
+<p><a name="LODs" aria-hidden="true"></a></p>
+
+<h2>LODs and their options</h2>
+
+<blockquote>
+<p>
+<strong>Note:</strong> This section assumes you have already read the documentation on the <a href="class-LODGroup.html">LOD Group</a> component. Please read it if you haven’t already; especially the section on <a href="class-LODGroup.html#SpeedTreeModels">Working with SpeedTree Models</a>. It explains key concepts and workflow information that are crucial for understanding how to import SpeedTree Models.</p>
+</blockquote>
+
+<p>The <span class="tooltip"><strong>LODs</strong><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LevelOfDetail.html" href="LevelOfDetail.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#LOD" aria-label="Go to glossary anchor for LOD">Glossary</a></span></span></span> and <strong>LOD Options</strong> sections manage <a href="LevelOfDetail.html">level of details</a> (LOD) for importing <strong><span class="tooltip"><strong>Model files</strong><span class="tooltiptext">A file containing a 3D data, which may include definitions for meshes, bones, animation, materials and textures. <a href="3D-formats.html" href="Glossary.html#LOD" aria-label="Go to glossary anchor for LOD">Glossary</a></span></span></span> and <strong>LOD Options</strong> sections manage <a href="LevelOfDetail.html">level of details</a> (LOD) for importing <strong><span class="tooltip"><strong>Model files</strong><span class="tooltiptext">A file containing a 3D data, which may include definitions for meshes, bones, animation, materials and textures. <a href="3D-formats.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Modelfile" aria-label="Go to glossary anchor for Modelfile">Glossary</a></span></span></span></strong> created in SpeedTree. When the importer detects a SpeedTree Asset, it automatically sets the LOD <strong>Fade Mode</strong> to <a href="class-LODGroup.html#SpeedTreeModels">Speed Tree</a>.</p>
+
+<p>The LOD Group component for the SpeedTree Model Importer is different from the generic LOD Group component that appears on a SpeedTree instance in Unity:</p>
+
+<ul>
+<li>The <a href="class-LODGroup.html#transitions">Fade Mode</a> drop-down menu is not available, because the <strong>Fade Mode</strong> is already set to <strong>Speed Tree</strong>.</li>
+<li>The playhead for the preview is missing, because you cannot <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LODGroup.html#preview">preview the LOD transitions</a> in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="class-LODGroup.html#preview">preview the LOD transitions</a> in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view before importing.</li>
+<li>There are four options which control whether and how cross-fading happens: <strong>Smooth LOD</strong>, <strong>Animate Cross-fading</strong>, <strong>Crossfade Width</strong>, and <strong>Fade Out Width</strong>. Only <strong>Smooth LOD</strong> is always available.</li>
+<li>Each LOD level has its own set of options that allow you to enable or disable resource-heavy effects, such as shadow casting or receiving, and wind quality.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/SpeedTreeImporterModel-LODGroup.png" alt="LODs with LOD Group selection bar and LOD Options section">
+<figcaption>LODs with LOD Group selection bar and LOD Options section</figcaption>
+</figure>
+
+<p>The <strong>LODs</strong> group, the LOD Group selection bar, and the <strong>LOD Options</strong> group are tightly integrated and inter-dependent:</p>
+
+<p>
+<strong>(A)</strong> To set smooth transitions between LOD levels, enable the <strong>Smooth LOD</strong> option. When you enable <strong>Smooth LOD</strong>, another setting appears underneath it, called <strong>Animate Cross-fading</strong>. For more information about this property, see <a href="class-LODGroup.html#width">Customizing the transition zone</a>. This is enabled by default.</p>
+
+<figure>
+<img src="../uploads/Main/SpeedTreeImporterModel-transitions1.png" alt="Use Animate Cross-fading">
+<figcaption>Use Animate Cross-fading</figcaption>
+</figure>
+
+<p>If you disable Animate Cross-fading, two more settings appear: <strong>Crossfade Width</strong> and <strong>Fade Out Width</strong>. For more information on what these settings do, see <a href="#smooth">Setting smooth transitions</a>.</p>
+
+<figure>
+<img src="../uploads/Main/SpeedTreeImporterModel-transitions2.png" alt="Use Crossfade Width and Fade Out Width">
+<figcaption>Use Crossfade Width and Fade Out Width</figcaption>
+</figure>
+
+<p>These are global settings for the entire GameObject, meaning they don’t change as you move between different LOD levels.</p>
+
+<p>
+<strong>(B)</strong> Use the <a href="#LODGroup">LOD Group selection bar</a> to select a specific LOD level and access its <strong>LOD Options</strong>. You can also adjust the LOD level boundaries; to do this, drag the left border of a LOD level box’s boundary.</p>
+
+<p>
+<strong>(C)</strong> Use the <a href="#LOD-options">LOD Options</a> section to enable or disable level-specific effects to optimize performance.</p>
+
+<p><a name="smooth" aria-hidden="true"></a></p>
+
+<h3>Setting smooth transitions</h3>
+
+<p>Smooth transitions require a blend between levels, so that as the current LOD fades out, the next LOD fades in.</p>
+
+<p>You don’t need to set up blending between two <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> LOD levels, because SpeedTree Models always use the <a href="class-LODGroup.html#SpeedTreeModels">Speed Tree mode</a>. However, even SpeedTree Models use cross-fading for the last Mesh LOD level (with the lowest resolution) and the Billboard level. For these levels, you can choose to <a href="class-LODGroup.html#width">animate cross-fading by time or position</a>.</p>
+
+<p>To use smooth transitions, follow these instructions:</p>
+
+<ol>
+<li>Enable the <strong>Smooth LOD</strong> option. The <strong>Animate Cross-fading</strong> option appears below it, enabled by default.</li>
+<li>If you want to animate the cross-fading by time, enable the <strong>Animate Cross-fading</strong> option. If you want to specify a position-based transition zone, disable the <strong>Animate Cross-fading</strong> option and define the following:
+
+<ul>
+<li>Set the <strong>Crossfade Width</strong> property to specify what proportion of the last LOD level to use as the transition zone. For example, if you want to delay the cross-fading until halfway through the level, set this property to 0.5.</li>
+<li>Set how long it takes the final level to fade out by setting a proportion with the <strong>Fade Out Width</strong> property.</li>
+</ul>
+</li>
+<li>If you want to optimize performance, use the <a href="#LODGroup">LOD Group selection bar</a> to disable selected features on each LOD level.</li>
+</ol>
+
+<p><a name="LODGroup" aria-hidden="true"></a></p>
+
+<h3>Using the LOD Group selection bar</h3>
+
+<p>The LOD Group selection bar represents the different LOD levels as colored boxes. When a level box is selected, a blue outline appears around it:</p>
+
+<figure>
+<img src="../uploads/Main/SpeedTreeImporterModel-selectionbar.png" alt="The LOD Group selection bar">
+<figcaption>The LOD Group selection bar</figcaption>
+</figure>
+
+<p>The percentage that appears in each LOD level box represents the threshold at which that level becomes active, based on the ratio of the GameObject’s screen space height to the total screen height.</p>
+
+<p>To select a level, click on the level box. To change the percentage value for a level, drag the boundary to the left of the level container. You can also customize which <strong>LOD Options</strong> are enabled or disabled on each level, as an optimization strategy.</p>
+
+<p><a name="LOD-options" aria-hidden="true"></a></p>
+
+<h3>LOD Options</h3>
+
+<p>For each LOD level defined on your SpeedTree Asset (tree), you can customize a variety of properties.</p>
+
+<p>Many of these settings come with an increased performance overhead. To improve performance, you can enable the more costly effects only on the Trees that are nearest to the <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>, and disable them on some of the less detailed LOD levels. For example, if your Tree has three LOD levels, you could enable shadow casting and receiving, subsurface scattering, normal mapping, and wind quality on the first two LOD levels, but disable it on the third. This way, the costly effects are disabled where the Models are far enough away from the Camera that the absence of this effect is not noticeable.</p>
+
+<p>To set <strong>LOD Options</strong> on a specific LOD level, click the LOD level box on the <a href="#LODGroup">LOD Group</a> selection bar. The following options appear for that LOD level:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Description:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Cast Shadows</strong></td>
+	<td style="text-align:left;">Enable this option if you want the Tree to cast shadows.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Receive Shadows</strong></td>
+	<td style="text-align:left;">Enable this option if you want the Tree to receive shadows from other GameObjects in your Scene.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Use Light Probes</strong></td>
+	<td style="text-align:left;">Enable this option if you want the Tree to use <strong><span class="tooltip"><strong>Light Probes</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html" href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span> rendering</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><span class="tooltip"><strong>Normal Map</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normalmap" aria-label="Go to glossary anchor for Normalmap">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Enable this option if you want to use a <span class="tooltip"><strong>Bump map</strong><span class="tooltiptext">An image texture used to represent geometric detail across the surface of a mesh, for example bumps and grooves. Can be represented as a heightmap or a normal map. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about StandardShaderMaterialParameterNormalMap.html" href="StandardShaderMaterialParameterNormalMap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Bumpmap" aria-label="Go to glossary anchor for Bumpmap">Glossary</a></span></span></span> on the Tree.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="hue" aria-hidden="true"></a><strong>Enable Hue Variation</strong>
+</td>
+	<td style="text-align:left;">Enable this option to adjust the color between the <strong>Main Color</strong> and <strong>Hue Color</strong> values.<br>The color of each Tree is randomly varied (based on the world space position) towards this Hue Variation color, to break up a large forest of Trees and make it look more natural.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Enable Subsurface</strong></td>
+	<td style="text-align:left;">Enable this option to use subsurface scattering effects. This setting controls the light scattered out the back side of leaves and other two-sided SpeedTree materials.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Wind Quality</strong></td>
+	<td style="text-align:left;">Choose the level of wind quality to use for this Asset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">Off (no control).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Fastest</strong></td>
+	<td style="text-align:left;">Lowest quality.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Faster</strong></td>
+	<td style="text-align:left;">Lower quality.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Better</strong></td>
+	<td style="text-align:left;">Better quality.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Best</strong></td>
+	<td style="text-align:left;">Best quality.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Palm</strong></td>
+	<td style="text-align:left;">Only available on palm-like Trees.</td>
+</tr>
+</tbody>
+</table>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-SpeedTreeImporter.html"></a></span><div class="tip">SpeedTree Import Settings window</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SpeedTreeImporter-Materials.html"></a></span><div class="tip">Materials tab</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

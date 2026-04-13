@@ -1,0 +1,247 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Tilemap Collider 2D</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-TilemapCollider2D.html">English</a></li>
+<li><a href="/cn/current/Manual/class-TilemapCollider2D.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-TilemapCollider2D.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-TilemapCollider2D.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-TilemapCollider2D.html">English</a></li>
+<li><a href="/cn/current/Manual/class-TilemapCollider2D.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-TilemapCollider2D.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-TilemapCollider2D.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Unity2D.html">2D game development</a></li>
+<li><a href="Tilemap.html">Tilemaps</a></li>
+<li><a href="Tilemap-workflow.html">Tilemap workflow</a></li>
+<li>Tilemap Collider 2D</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="TilemapPainting-SelectionTool.html"></a></span><div class="tip">Select Tool</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Tilemap-Hexagonal.html"></a></span><div class="tip">Hexagonal Tilemaps</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Tilemap Collider 2D</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <strong>Tilemap <span class="tooltip"><strong>Collider</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> 2D</strong> component generates <strong>Collider</strong> shapes for <span class="tooltip"><a href="Tilemap-TileAsset.html">Tiles</a><span class="tooltiptext">A simple class that allows a sprite to be rendered on a Tilemap. <a href="Tilemap-ScriptableTiles-Tile.html" href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> 2D</strong> component generates <strong>Collider</strong> shapes for <span class="tooltip"><a href="Tilemap-TileAsset.html">Tiles</a><span class="tooltiptext">A simple class that allows a sprite to be rendered on a Tilemap. <a href="Tilemap-ScriptableTiles-Tile.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Tile" aria-label="Go to glossary anchor for Tile">Glossary</a></span></span></span> on a <span class="tooltip"><a href="class-Tilemap.html">Tilemap</a><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a href="class-Tilemap.html" href="Glossary.html#Tile" aria-label="Go to glossary anchor for Tile">Glossary</a></span></span></span> on a <span class="tooltip"><a href="class-Tilemap.html">Tilemap</a><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a href="class-Tilemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Tilemap" aria-label="Go to glossary anchor for Tilemap">Glossary</a></span></span></span> component on the same <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Tilemap" aria-label="Go to glossary anchor for Tilemap">Glossary</a></span></span></span> component on the same <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. When you add or remove Tiles on the Tilemap component, the Tilemap Collider 2D updates the Collider shapes during <code>LateUpdate</code>. It batches multiple Tile changes together to ensure minimal impact on performance.</p>
+
+<h2>Tilemap Collider 2D properties</h2>
+
+<figure>
+<img src="../uploads/Main/TilemapCollider2DPropertiesNov.png" alt="Tilemap Collider 2D window">
+<figcaption>Tilemap Collider 2D window</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Max Tile Change Count</strong></td>
+	<td style="text-align:left;">The maximum number of Tile changes (such as adding/removing Tiles to the Tilemap) to accumulate before doing a full Collider rebuild instead of an incremental rebuild.<br><br>A high number of accumulated changes can cause the incremental rebuild of the <strong>Tilemap Collider 2D</strong> to be slower than a full rebuild. Decrease this value to resolve this issue.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Extrusion Factor</strong></td>
+	<td style="text-align:left;">Set the amount (in Unity world space units) to extrude the Collider shape of each Tile. This minimizes the gaps between the Collider shapes of neighboring Tiles and brings them to within the minimum <strong>Vertex Distance</strong> set in the <strong>Composite Collider 2D</strong>, which can then compose the Tile Colliders together. <br><br>This property is grayed out and disabled by default. It is only available when <a href="#composite">Used by Composite</a> is enabled, and a <a href="class-CompositeCollider2D.html">Composite Collider 2D</a> is attached to the same GameObject.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Material</strong></td>
+	<td style="text-align:left;">A Physics Material that determines properties of <strong><span class="tooltip"><strong>collisions</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span></strong>, such as friction and bounce.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Is Trigger</strong></td>
+	<td style="text-align:left;">Select this check box to have the Tilemap Collider 2D behave as a trigger.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Used by Effector</strong></td>
+	<td style="text-align:left;">Select this check box to make the Tilemap Collider 2D be used by an attached <a href="Effectors2D.html">Effector 2D</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Used by Composite</strong><a name="composite" aria-hidden="true"></a>
+</td>
+	<td style="text-align:left;">Select this check box to make this Collider be used by an attached Composite Collider 2D.<br><br>When <strong>Used by Composite</strong> is enabled, all properties except Offset are no longer available in the Tilemap Collider 2D component. Instead, the properties are controlled by the attached Composite Collider 2D component.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Offset</strong></td>
+	<td style="text-align:left;">The local offset of the Tilemap Collider 2D geometry.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Collider Type’s effect on Collider generation</h2>
+
+<p>The Collider shapes generated for each Tile in the Tilemap depend on the desired Collider type set in the <a href="Tilemap-TileAsset.html">Tile Asset’s</a> properties. The component’s shape generation behavior corresponds to the Collider Types in the following ways:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Collider Type</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">The Tilemap Collider 2D component does not generate any Collider shapes for this Tile.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">The Tilemap Collider 2D component generates a Collider shape based on the Sprite assigned to the Tile. The Collider shape is based on the <a href="CustomPhysicsShape.html">Custom Physics Shape</a> set for the Sprite.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Grid</strong></td>
+	<td style="text-align:left;">The Tilemap Collider 2D component generates a Collider shape based on the shape of the Grid cell, which is determined by the selected Cell Layout of the Grid component.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Tilemap and Composite Colliders</h2>
+
+<p>You can use the Tilemap Collider 2D component together with the <a href="class-CompositeCollider2D.html">Composite Collider 2D</a> component. When you add both components to the same Tilemap, Unity composites the Collider shapes of neighboring Tiles together. This smoothens the corners and edges between Collider shapes in neighboring Tiles.</p>
+
+<p>Using both components together reduces the number of individual Collider shapes involved in a physics update, which reduces the amount of calculations required, and minimizes the impact on performance.</p>
+
+<h2>Scripting API tips</h2>
+
+<p>If you require immediate changes to happen to the Collider, use <a href="../ScriptReference/Tilemaps.TilemapCollider2D.ProcessTilemapChanges.html">Tilemaps.TilemapCollider2D.ProcessTilemapChanges</a> to process them immediately. You can use <a href="../ScriptReference/Tilemaps.TilemapCollider2D-hasTilemapChanges.html">Tilemaps.TilemapCollider2D-hasTilemapChanges</a> to check if any processing is required.</p>
+
+<hr>
+
+<ul>
+<li><span class="page-history">New properties added in Unity 2020.1</span></li>
+<li><span class="page-history">Tilemaps added in <a href="https://docs.unity3d.com/2017.2/Documentation/Manual/30_search.html?q=newin20172">2017.2</a> <span class="search-words">NewIn20172</span></span></li>
+</ul>
+<!-- area:authoring -->
+
+<p><span class="search-words">TilemapCollider2D</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="TilemapPainting-SelectionTool.html"></a></span><div class="tip">Select Tool</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Tilemap-Hexagonal.html"></a></span><div class="tip">Hexagonal Tilemaps</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: XR SDK Display subsystem</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xrsdk-display.html">English</a></li>
+<li><a href="/cn/current/Manual/xrsdk-display.html">中文</a></li>
+<li><a href="/ja/current/Manual/xrsdk-display.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xrsdk-display.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xrsdk-display.html">English</a></li>
+<li><a href="/cn/current/Manual/xrsdk-display.html">中文</a></li>
+<li><a href="/ja/current/Manual/xrsdk-display.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xrsdk-display.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="XR.html">XR</a></li>
+<li><a href="xr-sdk.html">Unity XR SDK</a></li>
+<li><a href="xrsdk-subsystems-landing.html">Subsystems</a></li>
+<li>XR SDK Display subsystem</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="xrsdk-input.html"></a></span><div class="tip">XR SDK Input subsystem</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="xrsdk-meshing.html"></a></span><div class="tip">XR SDK Meshing subsystem</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>XR SDK Display subsystem</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <span class="tooltip"><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html" href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> SDK Display subsystem provides an interface for texture allocation, frame lifecycle, and blocking for cadence.</p>
+
+<p>
+<strong>Note:</strong> The Unity XR SDK is no longer available as we have focused our investments towards <a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@latest">OpenXR</a>.</p>
+
+<h2>Texture allocation</h2>
+
+<p>Several device SDKs require that a texture is allocated through the SDK itself rather than the usual graphics APIs. If you use the XR SDK Display subsystem, you no longer need to rely on external <span class="tooltip"><strong>plug-ins</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Plugins.html" href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> to <span class="tooltip"><strong>blit</strong><span class="tooltiptext">A shorthand term for “bit block transfer”. A blit operation is the process of transferring blocks of data from one place in memory to another.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#blit" aria-label="Go to glossary anchor for blit">Glossary</a></span></span></span> or copy into the SDK texture.</p>
+
+<p>The Display subsystem enables a plug-in provider to allocate the texture. Where possible, Unity renders directly to the texture to avoid unnecessary copies. Unity can also allocate the texture for you if needed.</p>
+
+<p>In the following cases, Unity can’t render directly to the texture and instead renders to intermediate textures and then blits or copies to your texture:</p>
+
+<ul>
+<li>If image effects are in use, your texture will be last in the chain.</li>
+<li>On PC with MSAA, Unity renders to a multisampled texture and then resolves into your texture at the end of the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> stack.</li>
+<li>On mobile, with the multisample auto resolve extension, the texture will be implicitly resolved when the texture is flushed or used as a source or destination for any operation other than drawing to it. See <code>EXT_multisampled_render_to_texture</code> extension.</li>
+<li>Deferred rendering, <span class="tooltip"><strong>HDR</strong><span class="tooltiptext">high dynamic range<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#HDR" aria-label="Go to glossary anchor for HDR">Glossary</a></span></span></span>, and command buffers cause Unity to render to intermediate textures.</li>
+<li>If rendering to a subset of the screen, Unity renders to intermediate textures.</li>
+<li>If the “texture layout” doesn’t match what Unity is rendering to (for example, Unity is rendering each eye to separate textures, but the RenderPass is configured to render to a texture array or a single texture).</li>
+<li>If the <code>kUnityXRRenderTextureFlagsLockedWidthHeight</code> flag is set and renderScale is not 1.0.</li>
+<li>If the <code>kUnityXRRenderTextureFlagsWriteOnly</code> flag is set and Unity needs to read back from the texture.</li>
+</ul>
+
+<h3>MSAA</h3>
+
+<p>On both PC and mobile, the engine always resolves to the provider’s texture. The engine performs implicit resolve (on mobiles with multi-sample render to texture extension) or explicit resolve.</p>
+
+<p>On mobile, providers should enable the <code>kUnityXRRenderTextureFlagsAutoResolve</code> flag and create their textures with 1 sample.</p>
+
+<h3>sRGB</h3>
+
+<p>Use <code>UnityXRFrameSetupHints.appSetup.sRGB</code> to check if Unity expects to render to sRGB texture formats. The provider ultimately selects the output <span class="tooltip"><strong>texture format</strong><span class="tooltiptext">A file format for handling textures during real-time rendering by 3D graphics hardware, such as a graphics card or mobile device. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporterOverride.html" href="class-TextureImporterOverride.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TextureFormat" aria-label="Go to glossary anchor for TextureFormat">Glossary</a></span></span></span> from the <code>colorFormat</code> field of <code>UnityXRRenderTextureDesc</code>. If the format is an sRGB type, Unity turns sRGB writes on or off depending on the color space that the active project selects. You should always sample from any sRGB textures with sRGB to linear conversion in your compositor.</p>
+
+<h3>Depth textures</h3>
+
+<p>If your SDK needs depth information, you can obtain the <span class="tooltip"><strong>depth buffer</strong><span class="tooltiptext">A memory store that holds the z-value depth of each pixel in an image, where the z-value is the depth for each rendered pixel from the projection plane. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#depthbuffer" aria-label="Go to glossary anchor for depthbuffer">Glossary</a></span></span></span> in the same way as the color buffer above. The <code>nativeDepthTex</code> value on the <code>UnityXRRenderTextureDesc</code> specifies the native resource. By default, Unity tries to share the depth buffer between textures with a similar desc if <code>nativeDepthTex</code> is set to <code>kUnityXRRenderTextureIdDontCare</code>.</p>
+
+<p>If your SDK does not need depth information, you should set <code>UnityXRRenderTextureDesc::depthFormat</code> to <code>kUnityXRDepthTextureFormatNone</code> to avoid unnecessary resolves.</p>
+
+<h3>Handling double and triple buffering</h3>
+
+<p>During submission (see the <a href="#submitting-frames-in-flight">Submitting frames in-flight</a> section below), you can specify a different texture ID each frame in order to handle the case where the SDK needs to double- or triple-buffer images that Unity is rendering to. The provider plug-in is responsible for managing the collection of <code>UnityXRRenderTextureId</code>s.</p>
+
+<h2>Frame lifecycle</h2>
+
+<p>There are two methods responsible for the lifecycle of a frame: <code>PopulateNextFrameDesc</code>, which happens right before rendering begins, and <code>SubmitCurrentFrame</code>, which happens immediately after rendering has completed. Both methods are called on the graphics thread.</p>
+
+<p>During <code>PopulateNextFrameDesc</code>, the display provider is expected to do the following:</p>
+
+<ul>
+<li>Wait for cadence (wait until Unity should start submitting rendering commands again). Alternatively, this can be done in <code>SubmitCurrentFrame</code>.</li>
+<li>Acquire the next image and tell Unity what texture IDs to render to next via the <code>nextFrame</code> parameter.</li>
+</ul>
+
+<p>During the <code>SubmitCurrentFrame</code> method, the display provider is expected to do the following:</p>
+
+<ul>
+<li>Submit the last frame in-flight (for example, eye textures or depth textures) to display on the screen.</li>
+<li>Wait for cadence, as an alternative to waiting during <code>PopulateNextFrameDesc</code>.</li>
+</ul>
+
+<h3>Blocking for cadence</h3>
+
+<p>To maintain the lowest possible latency and maximal throughput when rendering to an HMD display, you need to ensure precise timing when you obtain poses and submit textures. Each HMD has a native refresh rate that their compositor runs at. Rendering any faster than that rate results in a sub-optimal experience because of mismatched timing or redundant work.</p>
+
+<p>Unity expects the display provider to block, or wait for frame cadence, during the frame lifecycle. Unity starts submitting rendering commands shortly after ‘waking up’ from the blocking call. You should synchronize the wake-up time to your compositor within a particular window. Some SDKs provide a floating wake-up time window based on heuristics. Meta/Oculus calls this the “queue ahead” (see <a href="https://developer.oculus.com/documentation/pcsdk/latest/concepts/dg-render/?locale=en_US#adaptive-queue-ahead">Oculus developer documentation</a> for more information). Valve calls it “running start” (see slides 18 and 19 of <a href="http://media.steampowered.com/apps/valve/2015/Alex_Vlachos_Advanced_VR_Rendering_GDC2015.pdf">this presentation</a>).</p>
+
+<p>Unity waits on the frame lifecycle to complete before it starts submitting pose-dependent graphics commands.</p>
+
+<h4>Where to wait for cadence</h4>
+
+<p>Providers can wait for cadence in either <code>PopulateNextFrameDesc</code> or in <code>SubmitCurrentFrame</code>.</p>
+
+<p>While Unity submits graphics commands for a frame on the graphics thread, the next frame’s simulation loop is running on the main thread. It contains physics, script logic, etc. <code>PopulateNextFrameDesc</code> is called on the graphics thread after all rendering commands have been submitted, and only after the simulation of the next frame and all graphics jobs scheduled on it are complete. One of the graphics job that <code>PopulateNextFrameDesc</code> waits for is <code>SubmitCurrentFrame</code> for the current frame. This is why it’s valid to wait for cadence in <code>SubmitCurrentFrame</code>. Furthermore, Unity doesn’t start rendering until <code>PopulateNextFrameDesc</code> is complete.</p>
+
+<p>With these details in mind, there are some trade-offs to waiting for cadence in <code>SubmitCurrentFrame</code> as opposed to <code>PopulateNextFrameDesc</code>. For example, waiting for cadence in <code>SubmitCurrentFrame</code> can cause performance issues if the application schedules expensive graphics jobs during simulation. Because <code>SubmitCurrentFrame</code> is scheduled to run after rendering, the graphics jobs that the application scheduled will run after <code>SubmitCurrentFrame</code>, but before <code>PopulateNextFrameDesc</code>. In this case, the provider is waiting in <code>SubmitCurrentFrame</code>, then it wakes up expecting Unity to begin rendering. However, Unity processes the graphics jobs the application scheduled before it calls <code>PopulateNextFrameDesc</code>, which in turn allows Unity to start rendering. This delay between waking up for rendering and processing the graphics jobs scheduled in the update method could cause latency. Developers can optimize this by scheduling their graphics jobs <a href="../ScriptReference/MonoBehaviour.OnPostRender.html">after rendering</a> to ensure the graphics jobs are scheduled before <code>SubmitCurrentFrame</code>.</p>
+
+<p>While the Provider waiting for cadence in <code>SubmitCurrentFrame</code> allows computing graphics jobs to run in parallel to the main thread, waiting for cadence in <code>PopulateNextFrameDesc</code> blocks the Unity main thread entirely. This is acceptable because simulation and other graphics jobs have already completed. Problems might occur when the simulation or graphics thread take up far too much time and exceed the device’s target frame rate. This can cause frame rates to be cut in half while <code>PopulateNextFrameDesc</code> waits for the next cycle in the cadence.</p>
+
+<p><a id="submitting-frames-in-flight" aria-hidden="true"></a></p>
+
+<h3>Submitting frames in-flight</h3>
+
+<p>When Unity calls <code>SubmitCurrentFrame</code>, the textures that you’ve set up last frame have been rendered to, or Unity has submitted render commands to the graphics driver to render them. Unity is now done with them and you can pass them on to your compositor.</p>
+
+<h3>Filling out next frame descriptor</h3>
+
+<p>After blocking or acquiring the next frame to render to, you must tell Unity which textures to render to in the next frame, and what’s the layout of the render passes (see Render Passes below).</p>
+
+<h4>Render passes</h4>
+
+<p>A <code>UnityXRRenderPass</code> can involve a culling pass and a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> graph traversal. This is a resource-intensive operation, and you should try to limit the number of times Unity performs it via tricks like single-pass rendering.</p>
+
+<p>Each <code>UnityXRRenderPass</code> contains an output texture (which can be a texture array), and output <code>UnityXRRenderParams</code> such as view, projection matrices, and the rect to render to or the texture array slice.</p>
+
+<p>For each frame, the display Provider sets up a <code>UnityXRRenderPass</code> and fills out the <code>UnityXRRenderTextureId</code>s that Unity will render to the next frame.</p>
+
+<p>Use cases for <code>UnityXRRenderPass</code> include the following:</p>
+
+<ul>
+<li>Two-pass stereo rendering (2 RenderPass x 1 RenderParams)</li>
+<li>Single-pass stereo rendering (1 RenderPass x 2 RenderParams)</li>
+</ul>
+
+<p>The API supports these additional cases (but Unity might not react correctly right now):</p>
+
+<ul>
+<li><span class="tooltip"><strong>Quad</strong><span class="tooltiptext">A primitive object that resembles a plane but its edges are only one unit long, it uses only 4 vertices, and the surface is oriented in the XY plane of the local coordinate space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PrimitiveObjects.html" href="PrimitiveObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Quad" aria-label="Go to glossary anchor for Quad">Glossary</a></span></span></span> pass wide FOV stereo rendering (4 RenderPass x 1 RenderParams)</li>
+<li>Single-pass + wide FOV stereo rendering (1 RenderPass x 2 RenderParams + 2 RenderPass x 1 RenderParams)</li>
+<li>Foveated rendering:
+
+<ul>
+<li>Two separate textures for each eye (inner and outer)</li>
+<li>One texture, UV fitting</li>
+</ul>
+</li>
+<li>External view scenario (HoloLens BEV, Mayo 3rd eye) (extra RenderPass)</li>
+<li>Near / far rendering for compositing objects or people in scene (2 RenderPass, different projections, different targets)</li>
+</ul>
+
+<p>It’s safe to make these assumptions:</p>
+
+<ul>
+<li>One texture per pass (singlepass is a one texture-array)</li>
+<li>If single-pass, two pose / projections per pass (or foveated rendering)</li>
+</ul>
+
+<p>
+<strong>Note:</strong> The Unity project and XR SDK must use the same setting (enabled/disabled) for single-pass rendering, because this setting affects user <span class="tooltip"><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>. To check if single-pass rendering is enabled, use <code>UnityXRFrameSetupHints.appSetup.singlePassRendering</code>.</p>
+
+<h4>Culling passes</h4>
+
+<p>Two rendering passes can share a culling pass if their <code>cullingPassIndex</code>es are set to the same value. The <code>cullingPassIndex</code> selects which <code>UnityXRCullingPass</code> to use. Culling passes must be filled out in <code>UnityXRNextFrameDesc</code>.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="xrsdk-input.html"></a></span><div class="tip">XR SDK Input subsystem</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="xrsdk-meshing.html"></a></span><div class="tip">XR SDK Meshing subsystem</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

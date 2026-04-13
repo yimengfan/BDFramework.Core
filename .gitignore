@@ -1,3 +1,9 @@
+# 全局 gitignore 的 *~ 规则会误匹配 Playwright~ 目录，显式排除
+!Packages/com.talosai.e2e/Playwright~/
+!Packages/com.talosai.e2e/Playwright~/**
+!Packages/com.talosai.e2e/Documentation~/
+!Packages/com.talosai.e2e/Documentation~/**
+
 /BDFramework/Library
 /BDFramework/.vs
 /BDFramework/Temp
@@ -69,3 +75,12 @@ DevOps/PublishAssets/
 Assets/StreamingAssets.meta
 Assets/StreamingAssets/
 *.pyc
+
+Packages/com.talosai.e2e/Playwright~/node_modules
+Packages/com.talosai.e2e/Playwright~/test-results
+Packages/com.talosai.e2e/Documentation~/
+.unity3d
+
+# Talos E2E 与 Unity 运行产物
+talos_e2e_results.json
+mono_crash.*.json

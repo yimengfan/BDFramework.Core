@@ -1,0 +1,286 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Movie Textures</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-MovieTexture.html">English</a></li>
+<li><a href="/cn/current/Manual/class-MovieTexture.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-MovieTexture.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-MovieTexture.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-MovieTexture.html">English</a></li>
+<li><a href="/cn/current/Manual/class-MovieTexture.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-MovieTexture.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-MovieTexture.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Textures.html">Textures</a></li>
+<li>Movie Textures</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-CustomRenderTexture.html"></a></span><div class="tip">Custom Render Textures</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-Texture3D.html"></a></span><div class="tip">3D textures</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Movie Textures</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/MovieTexture.html' title='Go to MovieTexture page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Note:</strong> MovieTexture is due to be deprecated in a future version of Unity. You should use <a href="../ScriptReference/Video.VideoPlayer.html">VideoPlayer</a> for video download and movie playback.</p>
+
+<p>
+<strong>Movie Textures</strong> are animated <span class="tooltip"><strong>Textures</strong><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html" href="class-TextureImporter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#texture" aria-label="Go to glossary anchor for texture">Glossary</a></span></span></span> that Unity creates from a video file. </p>
+
+<p>To create a Movie Texture, place a video file in your project’s <strong>Assets Folder</strong>. Unity uses this video file in the same way as a regular <a href="class-TextureImporter.html">Texture</a>.</p>
+
+<p>Unity imports video files using Apple QuickTime. On Windows, you need to install Quicktime to import a video file. Download Quicktime from <a href="https://support.apple.com/downloads/quicktime">Apple Support Downloads</a>. Unity supports the same file types as your QuickTime installation (usually <strong>.mov</strong>, <strong>.mpg</strong>, <strong>.mpeg</strong>, <strong>.mp4</strong>, <strong>.avi</strong>, <strong>.asf</strong>).</p>
+
+<h2>Properties</h2>
+
+<p>The Movie Texture <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> is similar to the <a href="class-TextureImporter.html">Texture</a> Inspector:</p>
+
+<figure>
+<img src="../uploads/Main/MovieTextureInInspector.png" alt="Video files are Movie Textures in Unity">
+<figcaption>Video files are Movie Textures in Unity</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Aniso Level</strong><span class="tooltiptext">The anisotropic filtering (AF) level of a texture. Allows you to increase texture quality when viewing a texture at a steep angle. Good for floor and ground textures. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about TextureTypes.html" href="TextureTypes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnisoLevel" aria-label="Go to glossary anchor for AnisoLevel">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Increases Texture quality when viewing the texture at a steep angle. Good for floor and ground textures</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Filtering Mode</strong></td>
+	<td style="text-align:left;">Selects how the Texture is filtered when it gets stretched by 3D transformations</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Loop</strong></td>
+	<td style="text-align:left;">If enabled, the movie will loop when it finishes playing</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Quality</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> of the Ogg Theora video file. A higher value means higher quality, but larger file size</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Details</h2>
+
+<p>When you add a video file to your Project, Unity automatically imports it and converts it to <strong>Ogg Theora</strong> format. Once Unity has imported your Movie Texture, you can attach it to any <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> or <span class="tooltip"><strong>Material</strong><span class="tooltiptext">An asset that defines how a surface should be rendered. <a href="class-Material.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> or <span class="tooltip"><strong>Material</strong><span class="tooltiptext">An asset that defines how a surface should be rendered. <a href="class-Material.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span> in the same way as a regular Texture.</p>
+
+<h3>Playing the Movie</h3>
+
+<p>Your Movie Texture will not play automatically when the game begins running. You must use a short script to tell it when to play.</p>
+
+<pre><code>// this line of code will make the Movie Texture begin playing
+((MovieTexture)GetComponent&lt;Renderer&gt;().material.mainTexture).Play();
+
+
+</code></pre>
+
+<p>Attach the following script to toggle Movie playback when the space bar is pressed:</p>
+
+<pre><code>public class PlayMovieOnSpace : MonoBehaviour {
+    void Update () {
+        if (Input.GetButtonDown (&quot;Jump&quot;)) {
+            
+            Renderer r = GetComponent&lt;Renderer&gt;();
+            MovieTexture movie = (MovieTexture)r.material.mainTexture;
+            
+            if (movie.isPlaying) {
+                movie.Pause();
+            }
+            else {
+                movie.Play();
+            }
+        }
+    }
+}
+
+
+</code></pre>
+
+<p>For more information about playing Movie Textures, see the <a href="../ScriptReference/MovieTexture.html">Movie Texture Script Reference</a> page</p>
+
+<h3>Movie Audio</h3>
+
+<p>When you import a Movie Texture, Unity also imports the accompanying audio track. This audio appears as an <strong>AudioClip</strong> child of the Movie Texture.</p>
+
+<figure>
+<img src="../uploads/Main/MovieTextureAudio.png" alt="The videos audio track appears as a child of the Movie Texture in the Project View">
+<figcaption>The video’s audio track appears as a child of the Movie Texture in the Project View</figcaption>
+</figure>
+
+<p>To play this audio, the <span class="tooltip"><strong>Audio Clip</strong><span class="tooltiptext">A container for audio data in Unity. Unity supports mono, stereo and multichannel audio assets (up to eight channels). Unity can import .aif, .wav, .mp3, and .ogg audio file format, and .xm, .mod, .it, and .s3m tracker module formats. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioClip.html" href="class-AudioClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AudioClip" aria-label="Go to glossary anchor for AudioClip">Glossary</a></span></span></span> must be attached to a GameObject. Drag the Audio Clip from the Project View onto any GameObject in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#AudioClip" aria-label="Go to glossary anchor for AudioClip">Glossary</a></span></span></span> must be attached to a GameObject. Drag the Audio Clip from the Project View onto any GameObject in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> or Hierarchy View. Usually, this will be the same GameObject that is showing the Movie. Then use <a href="../ScriptReference/AudioSource.Play.html">AudioSource.Play()</a> to make the the movie’s audio track play along with its video.</p>
+
+<h2>iOS</h2>
+
+<p>Movie Textures are not supported on <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span>. Instead, full-screen streaming playback is provided using <a href="../ScriptReference/Handheld.PlayFullScreenMovie.html">Handheld.PlayFullScreenMovie</a>.</p>
+
+<p>Keep your videos inside the <strong>StreamingAssets</strong> folder located in the <strong>Assets</strong> folder of your project.</p>
+
+<p>Unity iOS supports any movie file types that play correctly on an iOS device, implying files with the extensions <strong>.mov</strong>, <strong>.mp4</strong>, <strong>.mpv</strong>, and <strong>.3gp</strong> and using one of the following compression standards:</p>
+
+<ul>
+<li>H.264 Baseline Profile Level 3.0 video</li>
+<li>MPEG–4 Part 2 video</li>
+</ul>
+
+<p>For more information about supported compression standards, consult the iPhone SDK <a href="http://developer.apple.com/library/ios/#documentation/MediaPlayer/Reference/MPMoviePlayerController_Class/MPMoviePlayerController/MPMoviePlayerController.html">MPMoviePlayerController Class Reference</a>.</p>
+
+<p>As soon as you call <a href="../ScriptReference/Handheld.PlayFullScreenMovie.html">Handheld.PlayFullScreenMovie</a> the screen fades from your current content to the designated background color. It might take some time before the movie is ready to play. In the meantime, the player continues displaying the background color and may also display a progress indicator to let the user know the movie is loading. When playback finishes, the screen fades back to your content.</p>
+
+<h3>The video player does not respect switching to mute while playing videos</h3>
+
+<p>Unity plays video files using Apple’s embedded player (as of SDK 3.2 and iPhone OS 3.1.2 and earlier). This contains a bug that prevents Unity from switching to mute.</p>
+
+<h3>The video player does not respect the device’s orientation</h3>
+
+<p>The Apple video player and iPhone SDK do not provide a way to adjust the orientation of the video. To fix this, you can manually create two copies of each movie in landscape and portrait orientations. Then, the orientation of the device can be determined before playback so the right version of the movie can be chosen.</p>
+
+<h2>Android</h2>
+
+<p>Movie Textures are not supported on Android. Instead, full-screen streaming playback is provided using <a href="../ScriptReference/Handheld.PlayFullScreenMovie.html">Handheld.PlayFullScreenMovie</a>.</p>
+
+<p>Keep your videos inside the <strong>StreamingAssets</strong> folder located in the <strong>Assets</strong> folder of your project.</p>
+
+<p>Unity Android supports any movie file type supported by Android, (ie, files with the extensions <strong>.mp4</strong> and <strong>.3gp</strong>) and using one of the following compression standards:</p>
+
+<ul>
+<li>H.263</li>
+<li>H.264 AVC</li>
+<li>MPEG–4 SP</li>
+</ul>
+
+<p>However, device vendors are keen on expanding this list, so some Android devices are able to play formats other than those listed, such as HD videos.</p>
+
+<p>For more information about the supported compression standards, consult the Android SDK <a href="http://developer.android.com/guide/appendix/media-formats.html">Core Media Formats documentation</a>.</p>
+
+<p>As soon as you call <a href="../ScriptReference/Handheld.PlayFullScreenMovie.html">Handheld.PlayFullScreenMovie</a> the screen fades from your current content to the designated background color. It might take some time before the movie is ready to play. In the meantime, the player continues displaying the background color and may also display a progress indicator to let the user know the movie is loading. When playback finishes, the screen fades back to your content.</p>
+<!-- area:graphics -->
+
+<p><span class="search-words">MovieTexture</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-CustomRenderTexture.html"></a></span><div class="tip">Custom Render Textures</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-Texture3D.html"></a></span><div class="tip">3D textures</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

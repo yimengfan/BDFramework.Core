@@ -1,0 +1,270 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Configuring for Google Play Store</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UnityIAPGoogleConfiguration.html">English</a></li>
+<li><a href="/cn/current/Manual/UnityIAPGoogleConfiguration.html">中文</a></li>
+<li><a href="/ja/current/Manual/UnityIAPGoogleConfiguration.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UnityIAPGoogleConfiguration.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UnityIAPGoogleConfiguration.html">English</a></li>
+<li><a href="/cn/current/Manual/UnityIAPGoogleConfiguration.html">中文</a></li>
+<li><a href="/ja/current/Manual/UnityIAPGoogleConfiguration.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UnityIAPGoogleConfiguration.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityServices.html">Unity Services</a></li>
+<li><a href="UnityIAP.html">﻿Unity IAP</a></li>
+<li><a href="UnityIAPSettingUp.html">Setting up Unity IAP</a></li>
+<li>Configuring for Google Play Store</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UnityIAPAppleConfiguration.html"></a></span><div class="tip">Configuring for Apple App Store and Mac App Store</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnityIAPWindowsConfiguration.html"></a></span><div class="tip">Configuring for Windows Store</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Configuring for Google Play Store</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>Introduction</h2>
+
+<p>This guide describes the process of establishing the digital records and relationships necessary for a Unity game to interact with an In-App Purchase Store. The <span class="tooltip"><a href="UnityIAP.html">Unity IAP</a><span class="tooltiptext">Abbreviation of Unity <strong>In App Purchase</strong><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UnityIAP" aria-label="Go to glossary anchor for UnityIAP">Glossary</a></span></span></span> purchasing API is targeted. </p>
+
+<p>In-App Purchase (IAP) is the process of transacting money for digital goods. A platform’s Store allows the purchase of Products, representing digital goods. These Products have an Identifier, typically of string datatype. Products have Types to represent their durability: <em>subscription</em>, <em>consumable</em> (capable of being rebought), and <em>non-consumable</em> (capable of being bought once) are the most common. </p>
+
+<h2>Google Play Store</h2>
+
+<h3>Getting Started</h3>
+
+<ol>
+<li><p>Write a game implementing Unity IAP. See <a href="UnityIAPInitialization.html">Unity IAP Initialization</a> and <a href="https://forum.unity.com/threads/sample-iap-project.529555/">the Sample IAP Project</a>.</p></li>
+<li>
+<p>Keep the game’s product identifiers on-hand for <a href="UnityIAPGooglePlay.html">Google Play</a> Developer Console use later. </p>
+
+<figure>
+<img src="../uploads/Main/IAPGoogleImage0.png" alt="gold50">
+<figcaption>gold50</figcaption>
+</figure>
+</li>
+<li>
+<p>Build a <a href="android.html">signed non-Development Build Android APK</a> from your game. </p>
+
+<p>
+<strong>TIP:</strong> Make sure you safely store your <span class="tooltip"><strong>keystore</strong><span class="tooltiptext">An Android system that lets you store cryptographic key entries for enhanced device security. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettingsAndroid.html#projectkeystore" href="class-PlayerSettingsAndroid.html#projectkeystore">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Keystore" aria-label="Go to glossary anchor for Keystore">Glossary</a></span></span></span> file. The original keystore is always required to update a published Google Play application. </p>
+
+<p>
+<strong>TIP:</strong> Reuse the Bundle Version Code from your last uploaded <span class="tooltip"><strong>APK</strong><span class="tooltiptext">The Android Package format output by Unity. An APK is automatically deployed to your device when you select File &gt; Build &amp; Run. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about android-BuildProcess.html" href="android-BuildProcess.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#APK" aria-label="Go to glossary anchor for APK">Glossary</a></span></span></span> during local testing to permit side-loading without first being required to upload the changed APK to the Developer Console. See the settings for the <a href="class-PlayerSettingsAndroid.html">Android platform Player</a>.</p>
+</li>
+</ol>
+
+<h3>Register the Application</h3>
+
+<p>From the Google Account that will publish the game, register the Android application with the <a href="https://play.google.com/apps/publish">Google Play Developer Console</a>.</p>
+
+<p>
+<strong>NOTE:</strong> This guide uses the <a href="http://developer.android.com/google/play/billing/billing_testing.html">Google Play License Testing approach</a> for testing in-app purchase integration. </p>
+
+<ol>
+<li>
+<p>Choose <strong>Create app</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/IAPGoogleImage1.png" alt="All apps">
+<figcaption>All apps</figcaption>
+</figure>
+</li>
+<li>
+<p>Give the application an App name and select the appropriate options for your game. </p>
+
+<figure>
+<img src="../uploads/Main/IAPGoogleImage2.png" alt="Create app">
+<figcaption>Create app</figcaption>
+</figure>
+</li>
+<li>
+<p>Navigate to <strong>Testing/Closed testing</strong> in the left nav and choose <strong>Create track</strong>. Select your APK and upload it. Also complete the basic Dashboard requirements, upload screenshots and add a Short and Full description. You can also create an Internal test track.</p>
+
+<figure>
+<img src="../uploads/Main/IAPGoogleImage3.png" alt="Closed testing">
+<figcaption>Closed testing</figcaption>
+</figure>
+</li>
+</ol>
+
+<h3>Add In-App Purchases</h3>
+
+<p>Now that you have uploaded our first binary, you can add the IAP products.</p>
+
+<ol>
+<li>
+<p>Navigate to <strong>In-app Products</strong> and choose <strong>Create product</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/IAPGoogleImage4.png" alt="In-app products">
+<figcaption>In-app products</figcaption>
+</figure>
+</li>
+<li>
+<p>Define the <strong>Product ID</strong> , product details and price. Remember to activate the product after saving. </p>
+
+<p>You can specify a consumable or non-consumable Product Type in <strong>Managed product</strong>. <strong>Subscription</strong> is also supported by Unity IAP.</p>
+</li>
+</ol>
+
+<p>
+<strong>NOTE</strong>: The “Product ID” here is the same identifier used in the game source code, added to the [Unity IAP ConfigurationBuilder] instance via <code>AddProduct()</code> or <code>AddProducts()</code>, like “gold50”. </p>
+
+<figure>
+<img src="../uploads/Main/IAPGoogleImage5.png" alt="50goldcoins">
+<figcaption>50goldcoins</figcaption>
+</figure>
+
+<h3>Test IAP</h3>
+
+<p>Add your testers to License Testing. </p>
+
+<ol>
+<li><p>Navigate to All Apps on your Google Developer dashboard. </p></li>
+<li><p>Select <strong>Settings/License Testing</strong>. Add each Google Account email address. Save changes. </p></li>
+</ol>
+
+<p><img src="../uploads/Main/IAPGoogleImage6.png" alt="License testing"></p>
+
+<pre><code>NOTE: There may be a delay of several hours from the time you publish the APK. 
+</code></pre>
+
+<ol>
+<li>When available, share the <strong>Join on Android</strong> link with testers. Ensure that testers can install the application from the store.</li>
+</ol>
+
+<p>
+<strong>Note:</strong> To test updates retaining permission to purchase IAPS’s for free, you may side-load applications, updating the existing store-downladed APK install.</p>
+
+<figure>
+<img src="../uploads/Main/IAPGoogleImage7.png" alt="My closed Track">
+<figcaption>My closed Track</figcaption>
+</figure>
+
+<ol>
+<li>
+<p>To test the IAP, make a purchase on a device logged in with a Tester Google Account. A modified purchase dialog box appears to confirm the fact this product is under test and is free.</p>
+
+<p>
+<strong>WARNING</strong>: If this dialog box does not appear, then the Tester Google Account will be charged real money for the product.</p>
+
+<figure>
+<img src="../uploads/Main/IAPGoogleImage8.png" alt="">
+</figure>
+</li>
+</ol>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UnityIAPAppleConfiguration.html"></a></span><div class="tip">Configuring for Apple App Store and Mac App Store</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnityIAPWindowsConfiguration.html"></a></span><div class="tip">Configuring for Windows Store</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

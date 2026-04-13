@@ -1,0 +1,512 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Editor</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-EditorManager.html">English</a></li>
+<li><a href="/cn/current/Manual/class-EditorManager.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-EditorManager.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-EditorManager.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-EditorManager.html">English</a></li>
+<li><a href="/cn/current/Manual/class-EditorManager.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-EditorManager.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-EditorManager.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="EditorFeatures.html">Editor Features</a></li>
+<li><a href="comp-ManagerGroup.html">Project Settings</a></li>
+<li>Editor</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-AudioManager.html"></a></span><div class="tip">Audio</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-GraphicsSettings.html"></a></span><div class="tip">Graphics</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Editor</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use the <strong>Editor</strong> settings (main menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong>, the select the <strong>Editor</strong> category) to apply global settings for working in Unity’s Editor. </p>
+
+<p>
+<img src="../uploads/Main/EditorSettings2020_1a.png" alt="Editor settings">
+<img src="../uploads/Main/EditorSettings2020_1b.png" alt="Editor settings">
+</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2">Property</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="3"><span class="tooltip"><strong>Unity Remote</strong><span class="tooltiptext">A downloadable app designed to help with Android, iOS and tvOS development. The app connects with Unity while you are running your project in Play Mode from the Unity Editor. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UnityRemote5.html" href="UnityRemote5.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UnityRemote" aria-label="Go to glossary anchor for UnityRemote">Glossary</a></span></span></span><br><br><strong>Note</strong>: Unity Remote is deprecated in 2020.1 and future versions. To test your app on mobile devices, use the <a href="https://docs.unity3d.com/Packages/com.unity.device-simulator@latest">Device Simulator package</a> instead.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Device</strong></td>
+	<td style="text-align:left;">Choose the device type you want to use for Unity Remote testing. <br><a href="UnityRemote5.html">Unity Remote</a> is a downloadable app designed to help with Android, iOS and tvOS development.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><span class="tooltip"><strong>Compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Choose the type of image compression to use when transmitting the game screen to the device via Unity Remote. Default is <em>JPEG</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>JPEG</em></td>
+	<td style="text-align:left;">JPEG usually gives higher compression and performance, but the graphics quality is a little lower. This is the default option.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>PNG</em></td>
+	<td style="text-align:left;">PNG gives a more accurate representation of the game display, but can result in lower performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Resolution</strong></td>
+	<td style="text-align:left;">Choose the resolution the game should run at on Unity Remote. Default is <em>Downsize</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Downsize</em></td>
+	<td style="text-align:left;">Display the game at a lower resolution. This results in better performance, but lower graphical accuracy. This is the default option.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Normal</em></td>
+	<td style="text-align:left;">Display the game at normal resolution. This results in better graphical accuracy, but lower performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Joystick Source</strong></td>
+	<td style="text-align:left;">Choose the connection source for the joysticks you are using. Default is <em>Remote</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Remote</em></td>
+	<td style="text-align:left;">Use joysticks that are connected to a device running Unity Remote. This is the default option.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Local</em></td>
+	<td style="text-align:left;">Use joysticks that are connected to the computer running the Editor.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><span class="tooltip"><strong>Version Control</strong><span class="tooltiptext">A system for managing file changes. You can use Unity in conjunction with most common version control tools, including Perforce, Git, Mercurial and PlasticSCM. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VersionControl.html" href="VersionControl.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VersionControl" aria-label="Go to glossary anchor for VersionControl">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="Mode" aria-hidden="true"></a><strong>Mode</strong>
+</td>
+	<td style="text-align:left;">Choose the visibility of meta files. You can use Unity in conjunction with most common <a href="VersionControl.html">version control tools</a>, including Perforce and PlasticSCM. Default is <em>Hidden Meta Files</em>. <br> For more information on showing or hiding meta files, see <a href="http://answers.unity3d.com/questions/932348/visible-or-hidden-meta-files-with-git.html">Visible or hidden meta files</a> at Unity Answers.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Hidden Meta Files</em></td>
+	<td style="text-align:left;">Hide meta files. This is the default option.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Visible Meta Files</em></td>
+	<td style="text-align:left;">Display meta files. This is useful when using version control, because it allows other users and machines to view these meta files.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Perforce</em></td>
+	<td style="text-align:left;">Use <span class="tooltip"><strong>Perforce</strong><span class="tooltiptext">A version control system for file change management. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about perForceIntegration.html" href="perForceIntegration.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Perforce" aria-label="Go to glossary anchor for Perforce">Glossary</a></span></span></span> version control system.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>PlasticSCM</em></td>
+	<td style="text-align:left;">Use PlasticSCM version control system.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong>Asset Serialization</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Mode</strong></td>
+	<td style="text-align:left;">Choose which format to use for storing serialized Assets. This is set to <em>Force Text</em> by default. <br>Unity uses <a href="script-Serialization.html">serialization</a> to load and save Assets and AssetBundles to and from your computer’s hard drive. To help with version control merges, Unity can store Scene files in a <a href="TextSceneFormat.html">text-based format</a>. If you are not merging Scenes, Unity can store Scenes in a more space-efficient binary format, or allow both text and binary Scene files to exist at the same time.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Mixed</em></td>
+	<td style="text-align:left;">Assets in Binary mode remain in Binary mode, and Assets in Text mode remain in Text mode. Unity uses Binary mode by default for new Assets.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Force Binary</em></td>
+	<td style="text-align:left;">Convert all Assets to Binary mode, including new Assets.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Force Text</em></td>
+	<td style="text-align:left;">Convert all Assets to Text mode, including new Assets. This is the default option.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Serialize Inline Mappings On One Line</strong></td>
+	<td style="text-align:left;">Enable this setting to make Unity write references and inline mappings on one line. If this setting is disabled, Unity splits text serialized references over multiple lines when the total characters in a line reach over 80 characters.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong>Default Behavior Mode</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Mode</strong></td>
+	<td style="text-align:left;">Choose the default <a href="2DAnd3DModeSettings.html">2D or 3D development</a> mode. Unity sets up the certain default behaviors according to the mode you choose to make development easier. Default is <em>3D</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>3D</em></td>
+	<td style="text-align:left;">Set Unity up for 3D development. This is the default option.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>2D</em></td>
+	<td style="text-align:left;">Set Unity up for 2D development.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong>Asset Pipeline</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Mode</strong></td>
+	<td style="text-align:left;">Choose which Asset Pipeline version to use.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Version 1 (deprecated)</em></td>
+	<td style="text-align:left;">Use Asset Pipeline version 1. This feature is deprecated and is no longer supported.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Version 2</em></td>
+	<td style="text-align:left;">Use Asset Pipeline version 2. This is the default option.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Active version</strong></td>
+	<td style="text-align:left;">Displays the active Asset Pipeline version. For a change to take effect, you must save and restart the project.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong>Cache Server (project specific)</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Mode</strong></td>
+	<td style="text-align:left;">Choose which Cache Server to use.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Use global settings (stored in preferences)</em></td>
+	<td style="text-align:left;">The default Cache Server set in the <strong>Preferences</strong> window is used.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Enabled</em></td>
+	<td style="text-align:left;">Choose a specific Cache Server to use instead of the default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Disabled</em></td>
+	<td style="text-align:left;">No Cache Server is used.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong>Prefab Editing Environments</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Regular Environment</strong></td>
+	<td style="text-align:left;">Assign a Scene as an editing environment in Prefab Mode for <em>regular</em> Prefabs (that is, Prefabs with a regular <a href="class-Transform.html">Transform</a> component). This allows you to edit your Prefab against a backdrop of your choosing rather than an empty Scene.<br>See <a href="EditingInPrefabMode.html">Editing a Prefab in Prefab Mode</a> for more information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>UI Environment</strong></td>
+	<td style="text-align:left;">Assign a Scene as an editing environment in Prefab Mode for <em>UI</em> Prefabs (that is, Prefabs with a <a href="class-RectTransform.html">Rect Transform</a> component). This allows you to edit your Prefab against a backdrop of your choosing rather than an empty Scene.<br>See <a href="EditingInPrefabMode.html">Editing a Prefab in Prefab Mode</a> for more information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong>Graphics</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Show lightmap resolution overlay</strong></td>
+	<td style="text-align:left;">This setting relates to Draw Modes in the Baked Global Illumination category. When this is enabled, Unity draws a checkerboard overlay on top of these Draw Modes, where each checker tile corresponds to one texel. Use this to check the texel density of your Scene when lightmapping.<br><br>You can also toggle this setting from the Draw Mode drop-down menu, when the active Draw Mode is from the Baked Global Illumination category.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<strong>Use legacy </strong>Light Probe__ sample counts__</td>
+	<td style="text-align:left;">Uses fixed Light Probe sample counts for baking with the Progressive <span class="tooltip"><strong>Lightmapper</strong><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmapper" aria-label="Go to glossary anchor for Lightmapper">Glossary</a></span></span></span>. The sample counts are: 64 direct samples, 2048 indirect samples, and 2048 environment samples.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Enable baked cookies support</strong></td>
+	<td style="text-align:left;">For Projects created in Unity 2020.1 or above, baked <a href="Cookies.html">cookies</a> are enabled for Baked Lights and Mixed Lights in the <a href="progressive-lightmapper.html">Progressive Lightmapper</a> by default. For Projects created in versions of Unity prior to 2020.1, baked cookies are disabled for Baked Lights and Mixed Lights in the Progressive Lightmapper by default. This is to provide backwards compatibility.<br><br>Enable this to enable baked cookies for Baked Lights and Mixed Lights in the Progressive Lightmapper.<br><br>For more information, see <a href="Cookies.html">Cookies</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><span class="tooltip"><strong>Sprite Packer</strong><span class="tooltiptext">A facility that packs graphics from several sprite textures tightly together within a single texture known as an atlas. Unity provides a Sprite Packer utility to automate the process of generating atlases from the individual sprite textures. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SpritePacker.html" href="SpritePacker.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SpritePacker" aria-label="Go to glossary anchor for SpritePacker">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Mode</strong></td>
+	<td style="text-align:left;">Choose a mode to configure the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SpritePacker.html">Sprite Packer</a> tool. The <span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html" href="SpritePacker.html">Sprite Packer</a> tool. The <span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> Packer tool automates the process of generating <a href="class-SpriteAtlas.html">sprite atlases</a> from individual Sprite Textures. Default is <em>Disabled</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Disabled</em></td>
+	<td style="text-align:left;">Unity does not pack Atlases. This is the default setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Enabled For Builds(Legacy Sprite Packer)</em></td>
+	<td style="text-align:left;">Unity packs Atlases for builds only, and not in-Editor Play mode. This <strong>Legacy Sprite Packer</strong> option refers to the Tag-based version of the Sprite Packer, rather than the <span class="tooltip"><strong>Sprite Atlas</strong><span class="tooltiptext">A texture that is composed of several smaller textures. Also referred to as a texture atlas, image sprite, sprite sheet or packed texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-SpriteAtlas.html" href="class-SpriteAtlas.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#spriteatlas" aria-label="Go to glossary anchor for spriteatlas">Glossary</a></span></span></span> version.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Always Enabled(Legacy Sprite Packer)</em></td>
+	<td style="text-align:left;">Unity packs Atlases for builds, and before entering in-Editor Play mode. This <strong>Legacy Sprite Packer</strong> option refers to the Tag-based version rather than the Sprite Atlas version.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Enabled For Builds</em></td>
+	<td style="text-align:left;">Unity packs Atlases for builds only, and not in-Editor Play mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Always Enabled</em></td>
+	<td style="text-align:left;">Unity packs Atlases for builds and before entering in-Editor Play mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Padding Power (Legacy Sprite Packer)</strong></td>
+	<td style="text-align:left;">Choose the value that the packing algorithm uses when calculating the amount of space or “padding” to allocate between packed Sprites, and between Sprites and the edges of the generated atlas. This setting is only available with the Legacy Sprite Packer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>1</em></td>
+	<td style="text-align:left;">Represents the value 2<sup>1</sup>. Use this setting to allocate 2 <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> between packed Sprites and atlas edges. This is the default setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>2</em></td>
+	<td style="text-align:left;">Represents the value 2<sup>2</sup>. Use this setting to allocate 4 pixels between packed Sprites and atlas edges.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>3</em></td>
+	<td style="text-align:left;">Represents the value 2<sup>3</sup>. Use this setting to allocate 8 pixels between packed Sprites and atlas edges.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong>C# Project Generation</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Additional extensions to include</strong></td>
+	<td style="text-align:left;">Include a list of additional file types to add to the C# Project. Separate each file type with a semicolon. By default, this field contains <code>txt;xml;fnt;cd</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Root namespace</strong></td>
+	<td style="text-align:left;">Fill in the namespace to use for the C# project <code>RootNamespace</code> property. See <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties?view=vs-2022">Common MSBuild Project Properties</a> for more information. This field is blank by default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong>ETC Texture Compressor</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Behavior</strong></td>
+	<td style="text-align:left;">Specify the compression tool to use for different compression qualities of ETC Textures.<br>The compression tools available are <a href="https://bitbucket.org/wolfpld/etcpak/wiki/Home">etcpak</a>, <a href="https://github.com/Ericsson/ETCPACK">ETCPACK</a> and <a href="https://github.com/google/etc2comp">Etc2Comp</a>. These are all third-party compressor libraries.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Legacy</strong></td>
+	<td style="text-align:left;">Use the configuration that was available before ETC Texture compression became configurable. This sets the following properties: <br> - <strong>Fast</strong>: ETCPACK Fast <br> - <span class="tooltip"><strong>Normal</strong><span class="tooltiptext">The direction perpendicular to the surface of a mesh, represented by a Vector. Unity uses normals to determine object orientation and apply shading. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VectorCookbook.html" href="VectorCookbook.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normal" aria-label="Go to glossary anchor for Normal">Glossary</a></span></span></span>: ETCPACK Fast <br> - <strong>Best</strong>: ETCPACK Best</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Default</em></td>
+	<td style="text-align:left;">Use the default configuration for Unity. This sets the following properties: <br> - <strong>Fast</strong>: etcpack <br> - <strong>Normal</strong>: ETCPACK Fast <br> - <strong>Best</strong>: Etc2Comp Best</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Custom</em></td>
+	<td style="text-align:left;">Customize the ETC Texture compression configuration. When you choose this option, the <strong>Fast</strong>, <strong>Normal</strong>, and <strong>Best</strong> properties are enabled. This maps to the <strong>Compressor Quality </strong>setting in the <a href="class-TextureImporter.html">Texture Importer</a> for the supported platforms.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Fast</strong></td>
+	<td style="text-align:left;">Define the compression quality tool to use for Fast compression.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Normal</strong></td>
+	<td style="text-align:left;">Define the compression quality tool to use for Normal compression.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Best</strong></td>
+	<td style="text-align:left;">Define the compression quality tool to use for Best compression.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong>Line Endings For New Scripts</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Mode</strong></td>
+	<td style="text-align:left;">Choose the file line endings to apply to new <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> created within the Editor. Note that configuring these settings does not convert existing scripts.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>OS Native</strong></td>
+	<td style="text-align:left;">Apply line endings based on the operating system the Editor is running on.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Unix</strong></td>
+	<td style="text-align:left;">Apply line endings based on the Unix operating system.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Windows</strong></td>
+	<td style="text-align:left;">Apply line endings based on the Windows operating system.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong>Streaming Settings</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Enable Texture Streaming in Play Mode</strong></td>
+	<td style="text-align:left;">Enable <a href="TextureStreaming.html">Mipmap Streaming</a> in Play Mode. <br>The <a href="class-QualitySettings.html">Quality</a> <strong>Texture Streaming</strong> setting must also be enabled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong>Shader Compilation</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<strong>Asynchronous </strong>Shader__ Compilation__</td>
+	<td style="text-align:left;">Enable this checkbox to make Unity compile shaders in the background. While compiling, the Unity engine uses a dummy Shader to render geometry in the Editor. When Shader compilation has finished, the engine swaps your Shader Variant back in. This means the Editor runs seamlessly, without having to wait for the Unity engine to compile every single Shader variant before rendering. For more information, see <a href="AsynchronousShaderCompilation.html">Asynchronous Shader compilation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong>Numbering Scheme</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Game Object Naming</strong></td>
+	<td style="text-align:left;">Naming scheme for duplicated <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. Duplicated or instantiated GameObjects are named by appending successive numbers to the original object name.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Game Object Digits</strong></td>
+	<td style="text-align:left;">Sets the amount of digits to use for duplicated GameObject numbers.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Space Before Number in Asset Names</strong></td>
+	<td style="text-align:left;">Controls whether to insert a space before a number in duplicated Asset names.</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<ul>
+<li><span class="page-history">2019–03–07 Asynchronous Shader Compilation setting added in 2019.1</span></li>
+<li><span class="page-history">2018–09–28 New Unified Settings updates</span></li>
+<li><span class="page-history">2017–11–03 Documentation updated to reflect multiple changes since 5.6</span></li>
+</ul>
+
+<p><span class="search-words">EditorManager</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-AudioManager.html"></a></span><div class="tip">Audio</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-GraphicsSettings.html"></a></span><div class="tip">Graphics</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

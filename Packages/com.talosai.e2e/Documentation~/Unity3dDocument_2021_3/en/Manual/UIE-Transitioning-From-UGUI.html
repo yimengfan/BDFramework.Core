@@ -1,0 +1,424 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Migrate from Unity UI (uGUI) to UI Toolkit</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Transitioning-From-UGUI.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Transitioning-From-UGUI.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Transitioning-From-UGUI.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Transitioning-From-UGUI.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Transitioning-From-UGUI.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Transitioning-From-UGUI.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Transitioning-From-UGUI.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Transitioning-From-UGUI.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-migration-guides.html">Migration guides</a></li>
+<li>Migrate from Unity UI (uGUI) to UI Toolkit</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-migration-guides.html"></a></span><div class="tip">Migration guides</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-IMGUI-migration.html"></a></span><div class="tip">Migrate from Immediate Mode GUI (IMGUI) to UI Toolkit</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Migrate from Unity UI (uGUI) to UI Toolkit</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page guides developers with experience in Unity <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> (uGUI) to transition to the new UI Toolkit system. It explores the similarities and differences between uGUI and the UI Toolkit.</p>
+
+<p>As uGUI is a runtime-only UI system, this page focuses on runtime UI. UI Toolkit can create both runtime and Editor UI. This guide applies to both use cases for UI Toolkit.</p>
+
+<h2>UI hierarchy</h2>
+
+<p>Both uGUI and UI Toolkit build and maintain the UI inside a hierarchy tree structure. In uGUI, all elements in this hierarchy are visible as individual <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the hierarchy view panel. In UI Toolkit, <span class="tooltip"><strong>visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the hierarchy view panel. In UI Toolkit, <span class="tooltip"><strong>visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span> organize into a <span class="tooltip"><a href="UIE-VisualTree.html">visual tree</a><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualtree" aria-label="Go to glossary anchor for Visualtree">Glossary</a></span></span></span>. The <a href="UIE-VisualTree.html">visual tree</a> isn’t visible in the panel.</p>
+
+<p>To view and debug the UI hierarchy in UI Toolkit, you can use the UI Debugger. You can find UI Debugger in the Editor toolbar, under <strong>Window &gt; UI Toolkit &gt; Debugger</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/UIEDebugger.png" alt="UI Debugger">
+<figcaption>UI Debugger</figcaption>
+</figure>
+
+<h2>Key differences</h2>
+
+<h3>Canvas versus UIDocument</h3>
+
+<p>The <code>Canvas</code> component in uGUI is similar to the <code>UIDocument</code> component in UI Toolkit. Both are MonoBehaviours that attach to GameObjects.</p>
+
+<p>In uGUI, a <code>Canvas</code> component sits at the root of the UI tree. It works with the <code>Canvas Scaler</code> component to determine the sort order, rendering, and scaling mode of the UI underneath.</p>
+
+<p>In UI Toolkit, the <code>UIDocument</code> component contains a reference to a <code>PanelSettings</code> object. The <code>PanelSettings</code> contains the rendering settings for the UI, including the scale mode and the sort order. Multiple <code>UIDocument</code> components can point to the same <code>PanelSettings</code> object, which optimizes performance when using multiple UI screens in the same <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/UIEPanelSettings.png" alt="Panel Settings">
+<figcaption>Panel Settings</figcaption>
+</figure>
+
+<p>In uGUI, the UI tree hierarchy sits underneath the GameObject holding the <code>Canvas</code> component. In UI Toolkit, the <code>UIDocument</code> component holds a reference to the root element of the Visual Tree.</p>
+
+<p>The <code>UIDocument</code> component also contains a reference to the UXML file that defines the UI layout from which the Visual Tree is built at runtime. See <a href="#creating-ui">Creating UI</a> section for more information.</p>
+
+<p>
+<strong>Note:</strong> For Editor UI, no <code>UIDocument</code> component is needed. You can derive your custom class from <code>EditorWindow</code>, then implement <code>CreateGUI()</code>. For a practical example, see the guide on <a href="UIE-HowTo-CreateEditorWindow.html">Creating custom Editor windows</a>.</p>
+
+<h2>GameObject components vs visual elements</h2>
+
+<p>UI Toolkit refers to UI elements as controls or visual elements. Examples of UI elements are:</p>
+
+<ul>
+<li>Controls</li>
+<li>Buttons</li>
+<li>Text labels</li>
+</ul>
+
+<p>uGUI builds the UI hierarchy from GameObjects. Adding new UI elements requires adding new GameObjects to the hierarchy. The individual controls are implemented as <code>MonoBehaviour</code> components.</p>
+
+<p>In UI Toolkit, the <a href="UIE-VisualTree.html">visual tree</a> is virtual and doesn’t use GameObjects. You can no longer build or view the UI hierarchy in the hierarchy view, but it removes the overhead of using a GameObject for each UI element.</p>
+
+<p>In uGUI, UI elements derive (directly or indirectly) from the <code>UIBehavior</code> base class. Similarly, in UI Toolkit all UI elements derive from a base class called <code>VisualElement</code>. The key difference is the <code>VisualElement</code> class doesn’t derive from <code>MonoBehaviour</code>. You can not attach visual elements to GameObjects.</p>
+
+<p>Working with UI Toolkit controls in script is similar to working with uGUI controls.
+The following table shows common script interactions with UI controls in uGUI, and their UI Toolkit counterparts.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Action</strong></th>
+	<th style="text-align:left;"><strong>uGUI</strong></th>
+	<th style="text-align:left;"><strong>UI Toolkit</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Write text into a label</td>
+	<td style="text-align:left;"><code>m_Label.text = &quot;My Text&quot;;</code></td>
+	<td style="text-align:left;"><code>m_Label.text = &quot;My Text&quot;;</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Read the state of a toggle</td>
+	<td style="text-align:left;"><code>bool isToggleChecked = m_Toggle.isOn;</code></td>
+	<td style="text-align:left;"><code>bool isToggleChecked = m_Toggle.value;</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Assign a callback to a button</td>
+	<td style="text-align:left;"><code>m_Button.onClick.AddListener(MyCallbackFunc);</code></td>
+	<td style="text-align:left;">
+<code>m_Button.clicked += MyCallbackFunc_1;</code><br>or<br><code>m_Button.RegisterCallback&lt;ClickEvent&gt;(MyCallbackFunc_2);</code>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p>To learn more about controls and their properties and events, please see the <strong><a href="UIE-Controls.html">Controls Overview</a></strong> page.</p>
+
+<h3>Access UI elements</h3>
+
+<p>In uGUI, there are two ways <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> can access UI elements:</p>
+
+<ul>
+<li>Assigning a reference to the UI components in the Editor.</li>
+<li>Finding the components in the hierarchy using helper functions such as <code>GetComponentInChildren&lt;T&gt;()</code>.</li>
+</ul>
+
+<p>Since there are no GameObject or components in UI Toolkit, you can’t directly assign references to a control in the Editor. They must be resolved at runtime using a query function.
+Instead, access the Visual Tree via the <code>UIDocument</code> component.</p>
+
+<p>
+<code>UIDocument</code> is a <code>MonoBehaviour</code>, so you can assign it as a reference and make it part of a <span class="tooltip"><strong>Prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span>. The <code>UIDocument</code> component holds a reference to the root visual element. From the root, scripts can find child elements by type or by name, similar to uGUI.</p>
+
+<p>The table below shows a direct comparison of accessing UI controls in Unity UI and UI Toolkit</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Action</strong></th>
+	<th style="text-align:left;"><strong>uGUI</strong></th>
+	<th style="text-align:left;"><strong>UI Toolkit</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Find UI element by name</td>
+	<td style="text-align:left;"><code>transform.FindChild(&quot;childName&quot;);</code></td>
+	<td style="text-align:left;"><code>rootVisualElement.Query(&quot;childName&quot;);</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Find UI element by type</td>
+	<td style="text-align:left;"><code>transform.GetComponentInChildren&lt;Button&gt;();</code></td>
+	<td style="text-align:left;"><code>rootVisualElement.Query&lt;Button&gt;();</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Direct assignment of a reference in Editor</td>
+	<td style="text-align:left;">Possible</td>
+	<td style="text-align:left;">Not possible</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="creating-ui" aria-hidden="true"></a></p>
+
+<h2>Create UI</h2>
+
+<p>One of the biggest differences between uGUI and UI Toolkit is the creation of user interfaces.</p>
+
+<p>Both uGUI and UI Toolkit allow you to visually build the UI and preview it in the Editor. In uGUI, the UI is then saved inside a Prefab, along with any logic scripts attached to individual UI controls.</p>
+
+<p>In UI Toolkit, The UI layout is created in UI Builder, then saved as one or multiple UXML files. At runtime, <code>UIDocument</code> components load the UXML files that the Visual Tree assembles in memory.</p>
+
+<p>For a method similar to uGUI, you can create UI controls directly from a script, then add them to a Visual Tree at runtime.</p>
+
+<h3>Prefabs</h3>
+
+<p>uGUI uses GameObjects for individual UI controls and Prefabs that both contain visuals and logic. UI Toolkit takes a different approach to re-usability, as it separates logic and layout. You can create reusable UI components through UXML and custom controls.</p>
+
+<p>To create a similar template to a Prefab in UI Toolkit:</p>
+
+<ol>
+<li>Create a UXML file for the partial UI element.</li>
+<li>Create a GameObject with a <code>UIDocument</code> component.</li>
+<li>Reference the UXML file in the GameObject.</li>
+<li>Add a script to handle the UI component logic to the same GameObject.</li>
+<li>Save the GameObject as a Prefab.</li>
+</ol>
+
+<h3>UI layout</h3>
+
+<p>Arranging individual UI elements on screen in uGUI is a manual process. By default, UI controls are free floating and are only affected by their direct parent. Other UI controls under the same parent don’t affect their siblings positions or sizes. Pivots and anchors control the position and size of an element.</p>
+
+<p>The UI Toolkit layout system is influenced by web design, and based on automatic layout generation. The automatic layout system affects all elements by default, and an element’s size and position will affect other elements under the same parent.</p>
+
+<p>The default behavior in UI Toolkit is comparable to placing all elements inside a <code>VerticalLayoutGroup</code> in uGUI, and adding a <code>LayoutElement</code> component to each.</p>
+
+<p>You can disable automatic layout generation by changing the <a href="../ScriptReference/UIElements.IStyle.html">IStyle</a> <code>position</code> property of the visual element. All visual elements have this property. See <a href="UIE-VisualTree.html">Visual Tree</a> for a code sample.</p>
+
+<p>UI Toolkit has no direct equivalents for anchoring and pivots of UI elements, due to the fundamental layout differences compared to uGUI.</p>
+
+<p>The size and position of an element is controlled by the layout engine. For more information, see <a href="UIE-LayoutEngine.html">Layout Engine</a> and <a href="UIE-coordinate-and-position-system.html">Coordinate and position systems</a>.</p>
+
+<h3>Rendering order</h3>
+
+<p>In uGUI, the order of the GameObjects in the hierarchy determines the rendering order. Objects further down in the hierarchy render last and appear on top. In a scene with multiple Canvases, the <code>Sort Order</code> on the root <code>Canvas</code> component determines the render order of the individual UI trees.</p>
+
+<p>The render order in a <a href="UIE-VisualTree.html">visual tree</a> in UI Toolkit operates the same way. Parent elements render before their children, and children render from the first to the last, so that the last appears on top. In a scene with multiple UI Documents, the render order is determined by the <code>Sort Order</code> setting on the root <code>UIDocument</code> component.</p>
+
+<p>To change the rendering order of an element in uGUI, such as making an element appear on top, you can call the sibling functions on the <code>Transform</code> component of the GameObject. The <code>VisualElement</code> class offers comparable functions to control the rendering order. As all UI Toolkit controls derive from this class, all controls have access to this function.</p>
+
+<p>The table below shows the uGUI functions to control render order and the equivalent functions in UI Toolkit:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Action</strong></th>
+	<th style="text-align:left;"><strong>uGUI</strong></th>
+	<th style="text-align:left;"><strong>UI Toolkit</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Make element render underneath all other siblings</td>
+	<td style="text-align:left;"><code>transform.SetAsFirstSibling();</code></td>
+	<td style="text-align:left;"><code>myVisualElement.SendToBack();</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Make element render on top of all other siblings</td>
+	<td style="text-align:left;"><code>transform.SetAsLastSibling();</code></td>
+	<td style="text-align:left;"><code>myVisualElement.BringToFront();</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Manually control the element’s render order relative to its siblings</td>
+	<td style="text-align:left;"><code>transform.SetSiblingIndex(newIndex);</code></td>
+	<td style="text-align:left;">
+<code>myVisualElement.PlaceBehind(sibling);</code><br><code>myVisualElement.PlaceInFront(sibling);</code>
+</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Events</h2>
+
+<p>Just like in uGUI, user interactions in UI Toolkit trigger events. The code can subscribe to receive a callback on events, such as pressing a button or moving a slider.</p>
+
+<p>In uGUI, all UI elements are based on MonoBehaviour, and can expose their events in the Editor. This allows to set up logic with other GameObjects, for example to hide or show other UI elements, or to assign callback functions.</p>
+
+<figure>
+<img src="../uploads/Main/uie-uGUI-button-callback.png" alt="uGUI Button OnClick Inspector">
+<figcaption>uGUI Button OnClick Inspector</figcaption>
+</figure>
+
+<p>In UI Toolkit, logic and UI layout are stored separately. Callbacks can no longer be set up directly on GameObjects or stored in Prefabs. You must set up all callbacks at runtime, and handle them via scripting.</p>
+
+<pre><code class="lang-csharp">Button playButton = new Button(&quot;Play&quot;);
+playButton.RegisterCallback&lt;ClickEvent&gt;(OnPlayButtonPressed);
+...
+private void OnPlayButtonPressed(ClickEvent evt)
+{
+  // Handle button press  
+}
+</code></pre>
+
+<p>The event dispatching system in UI Toolkit differs from events in uGUI. Depending on the event type, events aren’t just sent to the target UI control, but also to all the parent controls.</p>
+
+<p>To learn more about this, see <a href="UIE-Events-Dispatching.html">Dispatch events</a>.</p>
+
+<p><a name="use-ugui-and-ui-toolkit-in-the-same-project" aria-hidden="true"></a></p>
+
+<h2>Use uGUI and UI Toolkit in the same project</h2>
+
+<p>It’s possible that you use uGUI and UI Toolkit in the same project. </p>
+
+<p>In its current version, UI Toolkit doesn’t support 3D world space picking and rendering. You should make your entire game menu and <a href="class-NetworkManagerHUD">Network Manager HUD</a> with UI Toolkit, and make your <a href="https://docs.unity3d.com/Packages/com.unity.ugui@1.0/manual/HOWTO-UIWorldSpace.html">3D world space</a> with uGUI.</p>
+
+<p>You can also make your entire project with uGUI and only make some menu items with UI Toolkit. </p>
+
+<p>You can use either UI Toolkit or uGUI for any item that doesn’t interact outside of its own boundaries. For example, for a runtime UI, you can use uGUI to create on-screen buttons, such as the joystick for mobile, and use UI Toolkit to create a modal window.</p>
+
+<p>However, advanced interactions between mixed UI don’t work:</p>
+
+<ul>
+<li>You can’t only use a keyboard to navigate freely between focused element in UI Toolkit and a uGUI selected object. To navigate, you must use C# scripts to register events on the boundary elements, and manually select or focus the next element from the other domain.</li>
+<li>You can’t embed uGUI inside a UI Toolkit hierarchy or UI Toolkit in a uGUI hierarchy. You can use a <code>RenderTexture</code> to draw, but the events won’t catch up.</li>
+<li>Styling and event conventions in UI Toolkit are different from uGUI. It is difficult to make a project that has a UI that feels unified if you use a scattered mixture of uGUI and UI Tookit.</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-simple-ui-toolkit-workflow.html">Get started with UI Toolkit</a></li>
+<li><a href="UIE-UXML.html">UXML</a></li>
+<li><a href="UIE-USS.html">Unity style sheets (USS)</a></li>
+<li><a href="UIE-examples.html">Examples</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-migration-guides.html"></a></span><div class="tip">Migration guides</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-IMGUI-migration.html"></a></span><div class="tip">Migrate from Immediate Mode GUI (IMGUI) to UI Toolkit</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

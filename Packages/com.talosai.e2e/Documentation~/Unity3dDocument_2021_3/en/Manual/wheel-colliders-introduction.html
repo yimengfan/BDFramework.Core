@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Introduction to Wheel colliders</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/wheel-colliders-introduction.html">English</a></li>
+<li><a href="/cn/current/Manual/wheel-colliders-introduction.html">中文</a></li>
+<li><a href="/ja/current/Manual/wheel-colliders-introduction.html">日本語</a></li>
+<li><a href="/kr/current/Manual/wheel-colliders-introduction.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/wheel-colliders-introduction.html">English</a></li>
+<li><a href="/cn/current/Manual/wheel-colliders-introduction.html">中文</a></li>
+<li><a href="/ja/current/Manual/wheel-colliders-introduction.html">日本語</a></li>
+<li><a href="/kr/current/Manual/wheel-colliders-introduction.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PhysicsSection.html">Physics</a></li>
+<li><a href="PhysicsOverview.html">Built-in 3D Physics</a></li>
+<li><a href="collision-section.html">Collision</a></li>
+<li><a href="collider-shapes.html">Collider shapes</a></li>
+<li><a href="wheel-colliders.html">Wheel colliders</a></li>
+<li>Introduction to Wheel colliders</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="wheel-colliders.html"></a></span><div class="tip">Wheel colliders</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="wheel-colliders-friction.html"></a></span><div class="tip">Wheel collider friction</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Introduction to Wheel colliders</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To simulate accurate wheel behavior in Unity, you use a Wheel <span class="tooltip"><strong>collider</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> for each wheel. <span class="tooltip"><strong>Wheel colliders</strong><span class="tooltiptext">A special collider for grounded vehicles. It has built-in collision detection, wheel physics, and a slip-based tire friction model. It can be used for objects other than wheels, but it is specifically designed for vehicles with wheels. <a href="class-WheelCollider.html" href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> for each wheel. <span class="tooltip"><strong>Wheel colliders</strong><span class="tooltiptext">A special collider for grounded vehicles. It has built-in collision detection, wheel physics, and a slip-based tire friction model. It can be used for objects other than wheels, but it is specifically designed for vehicles with wheels. <a href="class-WheelCollider.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WheelCollider" aria-label="Go to glossary anchor for WheelCollider">Glossary</a></span></span></span> manage wheel rotation and vehicle movement, and also have properties that simulate a suspension system.</p>
+
+<p>The Wheel collider component is represented in the API as the <a href="../ScriptReference/WheelCollider.html"><code>WheelCollider</code></a> class.</p>
+
+<h2>Wheel collider raycast</h2>
+
+<p>The Wheel collider appears in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view as a 2D circle (see <a href="#wheel-collider-visualization">Wheel collider visualization</a>). However, it is actually a single <a href="../ScriptReference/Physics.Raycast.html">Physics raycast</a>. PhysX casts the ray down the local Y-axis along the direction of suspension through the center of the wheel. The start and end of the raycast are at the following points:</p>
+
+<ul>
+<li>The raycast starts just above the top of the wheel at maximum suspension <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> (that is, just outside the <strong>Radius</strong>, at the top of the <strong>Suspension Distance</strong> on the Y axis).</li>
+<li>The raycast ends just below the bottom of the wheel at maximum suspension extension (that is, just outside the <strong>Radius</strong>, at the bottom of the <strong>Suspension Distance</strong> on the Y axis).</li>
+</ul>
+
+<p>This raycast configuration means that a Wheel collider does not actually roll across other surfaces (such as the ground) while moving. In Play mode, the rotation of the Wheel collider does not change. However, the rotation of the wheel model does need to change so that the wheel appears to roll along the ground. To achieve this, the model and the collider need to be on two separate <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. The Wheel colliders’ Transform should be fixed relative to the vehicle, and the models should be able to rotate. You can then configure the Wheel collider to send its global position to the wheel model and rotate the wheel model via script. For an example of this workflow, refer to the walkthrough <a href="WheelColliderTutorial.html">Create an example vehicle with Wheel colliders</a>. </p>
+
+<p>For more details on the Wheel collider raycast setup in PhysX, refer to the <a href="https://gameworksdocs.nvidia.com/PhysX/4.1/documentation/physxguide/Index.html">PhysX 4.1 Vehicles SDK documentation</a>.</p>
+
+<h3>Prepare the ground for raycast Wheel colliders</h3>
+
+<p>An important implication of the raycast setup is that wheels don’t always smoothly roll up or step down variations in road level (for example, rolling up from the road onto a step). When encountering a step or curb, the wheel is likely to clip and then “pop” up only as the center line crosses the step:</p>
+
+<figure>
+<img src="../uploads/Main/wheel-colliders-introduction-raycast-demo-step.png" alt="Two frames of a Wheel collider vehicle navigating a step (a sharp increase in the ground surface). In the first frame, the wheel appears to clip through the step. This is because the raycast at the center of the wheel model has not yet reached the step. In the second frame, the wheel model appears correctly on the step. This change happens when the raycast at the center of the wheel detects a change in height, causing the wheel to appear to “pop” up the step rather than roll realistically.">
+<figcaption>Two frames of a Wheel collider vehicle navigating a step (a sharp increase in the ground surface). In the first frame, the wheel appears to clip through the step. This is because the raycast at the center of the wheel model has not yet reached the step. In the second frame, the wheel model appears correctly on the step. This change happens when the raycast at the center of the wheel detects a change in height, causing the wheel to appear to “pop” up the step rather than roll realistically.</figcaption>
+</figure>
+
+<p>The raycast can also slip down into small drops or steps in the road when the center point reaches them:</p>
+
+<figure>
+<img src="../uploads/Main/wheel-colliders-introduction-raycast-demo-drop.png" alt="Two frames of a Wheel collider vehicle navigating a drop (a sharp decrease in the ground surface). In the first frame, the wheel appears to sit correctly over the drop. This is because the raycast at the center of the wheel model has not yet reached the drop. In the second frame, the wheel model appears to have fallen into the drop. This change happens when the raycast at the center of the wheel detects a change in height, causing the wheel to appear to drop suddenly rather than roll realistically.">
+<figcaption>Two frames of a Wheel collider vehicle navigating a drop (a sharp decrease in the ground surface). In the first frame, the wheel appears to sit correctly over the drop. This is because the raycast at the center of the wheel model has not yet reached the drop. In the second frame, the wheel model appears to have fallen into the drop. This change happens when the raycast at the center of the wheel detects a change in height, causing the wheel to appear to drop suddenly rather than roll realistically.</figcaption>
+</figure>
+
+<p>For this reason, the ground <span class="tooltip"><strong>collision</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span> geometry must be as smooth as possible to ensure a smooth and accurate simulation. If you have bumps or dips in the ground, you must test and iterate on them to make sure you are happy with the wheels’ behavior.</p>
+
+<p><a name="wheel-collider-visualization" aria-hidden="true"></a></p>
+
+<h2>Wheel collider visualization</h2>
+
+<p>When you select a Wheel collider, the <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> displays a <span class="tooltip"><a href="GizmosMenu.html">gizmo</a><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a href="GizmosMenu.html#GizmosIcons" href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> displays a <span class="tooltip"><a href="GizmosMenu.html">gizmo</a><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a href="GizmosMenu.html#GizmosIcons">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Gizmo" aria-label="Go to glossary anchor for Gizmo">Glossary</a></span></span></span> which provides a visualization of some key Wheel collider properties. </p>
+
+<figure>
+<img src="../uploads/Main/wheel-collider-gizmo.png" alt="A single Wheel collider gizmo in the Scene view. In this screenshot, all meshes are disabled in order to clearly display the gizmo.">
+<figcaption>A single Wheel collider gizmo in the Scene view. In this screenshot, all meshes are disabled in order to clearly display the gizmo.</figcaption>
+</figure>
+
+<p>The gizmo’s visual indicators are as follows:</p>
+
+<ul>
+<li>Large 2D circle: Represents the size of the physics wheel. To change the size, use the Wheel collider’s <strong>Radius</strong> property.</li>
+<li>Horizontal green line: Represents the halfway point of the Wheel collider along the X axis. The angle of this line represents the rotation of the wheel.</li>
+<li>Small 3D sphere: Represents the point where the wheel forces are applied. To change this value, use the Wheel collider’s <strong>Force App Point Distance</strong> property.</li>
+<li>Vertical orange line: The top and bottom points of the line represent the maximum distances that the wheel can move up and down (along the vertical Y axis) from its central point as a result of forces applied to it. To change this value, use the Wheel collider’s <strong>Suspension Distance</strong> property. The point where the orange line intersects the green line represents the “resting” point where the wheel sits when there are no forces or equal forces acting upon it. To change this value, use the Wheel collider’s <strong><span class="tooltip"><strong>Target Position</strong><span class="tooltiptext">A joint property to set the target position that the joint’s drive force should move it to. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ConfigurableJoint.html" href="class-ConfigurableJoint.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TargetPosition" aria-label="Go to glossary anchor for TargetPosition">Glossary</a></span></span></span></strong> property.</li>
+</ul>
+
+<p>You can use the gizmo visualization for quick reference and debugging.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="wheel-colliders.html"></a></span><div class="tip">Wheel colliders</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="wheel-colliders-friction.html"></a></span><div class="tip">Wheel collider friction</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

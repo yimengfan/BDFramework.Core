@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: BuiltinShaderDefine</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">BuiltinShaderDefine</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">enumeration</p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Defines set by editor when compiling shaders, based on the target platform and <a href="Rendering.GraphicsTier.html">GraphicsTier</a>.</p>
+              </div>
+              <div class="subsection">
+        <p>Additional resources: <a href="Rendering.GraphicsSettings.HasShaderDefine.html">GraphicsSettings.HasShaderDefine</a>.</p>
+      </div>
+              <div class="subsection">
+                <h3>Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_NO_DXT5nm.html">UNITY_NO_DXT5nm</a></td><td class="desc">UNITY_NO_DXT5nm is set when compiling shader for platform that do not support DXT5NM, meaning that normal maps will be encoded in RGB instead.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_NO_RGBM.html">UNITY_NO_RGBM</a></td><td class="desc">UNITY_NO_RGBM is set when compiling shader for platform that do not support RGBM, so dLDR will be used instead.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_ENABLE_REFLECTION_BUFFERS.html">UNITY_ENABLE_REFLECTION_BUFFERS</a></td><td class="desc">UNITY_ENABLE_REFLECTION_BUFFERS is set when deferred shading renders reflection probes in deferred mode. With this option set reflections are rendered into a per-pixel buffer. This is similar to the way lights are rendered into a per-pixel buffer. UNITY_ENABLE_REFLECTION_BUFFERS is on by default when using deferred shading, but you can turn it off by setting “No support” for the Deferred Reflections shader option in Graphics Settings. When the setting is off, reflection probes are rendered per-object, similar to the way forward rendering works.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_FRAMEBUFFER_FETCH_AVAILABLE.html">UNITY_FRAMEBUFFER_FETCH_AVAILABLE</a></td><td class="desc">UNITY_FRAMEBUFFER_FETCH_AVAILABLE is set when compiling shaders for platforms where framebuffer fetch is potentially available.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_ENABLE_NATIVE_SHADOW_LOOKUPS.html">UNITY_ENABLE_NATIVE_SHADOW_LOOKUPS</a></td><td class="desc">UNITY_ENABLE_NATIVE_SHADOW_LOOKUPS enables use of built-in shadow comparison samplers on OpenGL ES 2.0.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_METAL_SHADOWS_USE_POINT_FILTERING.html">UNITY_METAL_SHADOWS_USE_POINT_FILTERING</a></td><td class="desc">UNITY_METAL_SHADOWS_USE_POINT_FILTERING is set if shadow sampler should use point filtering on iOS Metal.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_NO_SCREENSPACE_SHADOWS.html">UNITY_NO_SCREENSPACE_SHADOWS</a></td><td class="desc">UNITY_NO_SCREENSPACE_SHADOWS is set when screenspace cascaded shadow maps are disabled.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS.html">UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS</a></td><td class="desc">UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS is set when Semitransparent Shadows are enabled.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_PBS_USE_BRDF1.html">UNITY_PBS_USE_BRDF1</a></td><td class="desc">UNITY_PBS_USE_BRDF1 is set if Standard Shader BRDF1 should be used.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_PBS_USE_BRDF2.html">UNITY_PBS_USE_BRDF2</a></td><td class="desc">UNITY_PBS_USE_BRDF2 is set if Standard Shader BRDF2 should be used.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_PBS_USE_BRDF3.html">UNITY_PBS_USE_BRDF3</a></td><td class="desc">UNITY_PBS_USE_BRDF3 is set if Standard Shader BRDF3 should be used.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_NO_FULL_STANDARD_SHADER.html">UNITY_NO_FULL_STANDARD_SHADER</a></td><td class="desc">UNITY_NO_FULL_STANDARD_SHADER is set if Standard shader BRDF3 with extra simplifications should be used.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_SPECCUBE_BOX_PROJECTION.html">UNITY_SPECCUBE_BOX_PROJECTION</a></td><td class="desc">UNITY_SPECCUBE_BLENDING is set if Reflection Probes Box Projection is enabled.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_SPECCUBE_BLENDING.html">UNITY_SPECCUBE_BLENDING</a></td><td class="desc">UNITY_SPECCUBE_BLENDING is set if Reflection Probes Blending is enabled.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_ENABLE_DETAIL_NORMALMAP.html">UNITY_ENABLE_DETAIL_NORMALMAP</a></td><td class="desc">UNITY_ENABLE_DETAIL_NORMALMAP is set if Detail Normal Map should be sampled if assigned.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.SHADER_API_MOBILE.html">SHADER_API_MOBILE</a></td><td class="desc">SHADER_API_MOBILE is set when compiling shader for mobile platforms.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.SHADER_API_DESKTOP.html">SHADER_API_DESKTOP</a></td><td class="desc">SHADER_API_DESKTOP is set when compiling shader for "desktop" platforms.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_HARDWARE_TIER1.html">UNITY_HARDWARE_TIER1</a></td><td class="desc">UNITY_HARDWARE_TIER1 is set when compiling shaders for GraphicsTier.Tier1.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_HARDWARE_TIER2.html">UNITY_HARDWARE_TIER2</a></td><td class="desc">UNITY_HARDWARE_TIER2 is set when compiling shaders for GraphicsTier.Tier2.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_HARDWARE_TIER3.html">UNITY_HARDWARE_TIER3</a></td><td class="desc">UNITY_HARDWARE_TIER3 is set when compiling shaders for GraphicsTier.Tier3.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_COLORSPACE_GAMMA.html">UNITY_COLORSPACE_GAMMA</a></td><td class="desc">UNITY_COLORSPACE_GAMMA is set when compiling shaders for Gamma Color Space.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_LIGHT_PROBE_PROXY_VOLUME.html">UNITY_LIGHT_PROBE_PROXY_VOLUME</a></td><td class="desc">UNITY_LIGHT_PROBE_PROXY_VOLUME is set when Light Probe Proxy Volume feature is supported by the current graphics API and is enabled in the Graphics Tier settings. You can only set a Graphics Tier in the Built-in Render Pipeline.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_HALF_PRECISION_FRAGMENT_SHADER_REGISTERS.html">UNITY_HALF_PRECISION_FRAGMENT_SHADER_REGISTERS</a></td><td class="desc">UNITY_HALF_PRECISION_FRAGMENT_SHADER_REGISTERS is set automatically for platforms that don't require full floating-point precision support in fragment shaders.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_LIGHTMAP_DLDR_ENCODING.html">UNITY_LIGHTMAP_DLDR_ENCODING</a></td><td class="desc">UNITY_LIGHTMAP_DLDR_ENCODING is set when lightmap textures are using double LDR encoding to store the values in the texture.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_LIGHTMAP_RGBM_ENCODING.html">UNITY_LIGHTMAP_RGBM_ENCODING</a></td><td class="desc">UNITY_LIGHTMAP_RGBM_ENCODING is set when lightmap textures are using RGBM encoding to store the values in the texture.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_LIGHTMAP_FULL_HDR.html">UNITY_LIGHTMAP_FULL_HDR</a></td><td class="desc">UNITY_LIGHTMAP_FULL_HDR is set when lightmap textures are not using any encoding to store the values in the texture.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_VIRTUAL_TEXTURING.html">UNITY_VIRTUAL_TEXTURING</a></td><td class="desc">Is virtual texturing enabled and supported on this platform.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_PRETRANSFORM_TO_DISPLAY_ORIENTATION.html">UNITY_PRETRANSFORM_TO_DISPLAY_ORIENTATION</a></td><td class="desc">Unity enables UNITY_PRETRANSFORM_TO_DISPLAY_ORIENTATION when Vulkan pre-transform is enabled and supported on the target build platform.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_ASTC_NORMALMAP_ENCODING.html">UNITY_ASTC_NORMALMAP_ENCODING</a></td><td class="desc">Unity enables UNITY_ASTC_NORMALMAP_ENCODING when DXT5nm-style normal maps are used on Android, iOS or tvOS.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.SHADER_API_GLES30.html">SHADER_API_GLES30</a></td><td class="desc">SHADER_API_ES30 is set when the Graphics API is OpenGL ES 3 and the minimum supported OpenGL ES 3 version is OpenGL ES 3.0.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.BuiltinShaderDefine.UNITY_UNIFIED_SHADER_PRECISION_MODEL.html">UNITY_UNIFIED_SHADER_PRECISION_MODEL</a></td><td class="desc">Unity sets UNITY_UNIFIED_SHADER_PRECISION_MODEL if, in Player Settings, you set Shader Precision Model to Unified.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

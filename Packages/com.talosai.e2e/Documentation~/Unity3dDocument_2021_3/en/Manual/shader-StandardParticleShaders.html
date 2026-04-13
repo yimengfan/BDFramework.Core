@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Standard Particle Shaders</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/shader-StandardParticleShaders.html">English</a></li>
+<li><a href="/cn/current/Manual/shader-StandardParticleShaders.html">中文</a></li>
+<li><a href="/ja/current/Manual/shader-StandardParticleShaders.html">日本語</a></li>
+<li><a href="/kr/current/Manual/shader-StandardParticleShaders.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/shader-StandardParticleShaders.html">English</a></li>
+<li><a href="/cn/current/Manual/shader-StandardParticleShaders.html">中文</a></li>
+<li><a href="/ja/current/Manual/shader-StandardParticleShaders.html">日本語</a></li>
+<li><a href="/kr/current/Manual/shader-StandardParticleShaders.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-built-in.html">Built-in shaders</a></li>
+<li>Standard Particle Shaders</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="StandardShaderMakeYourOwn.html"></a></span><div class="tip">Customize the Standard shader source code in the Built-In Render Pipeline</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Shader-Autodesk-Interactive.html"></a></span><div class="tip">Autodesk Interactive shader</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Standard Particle Shaders</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Unity Standard Particle Shaders are built-in shaders that enable you to render a variety of <span class="tooltip"><strong>Particle System</strong><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ParticleSystem.html" href="class-ParticleSystem.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#particlesystem" aria-label="Go to glossary anchor for particlesystem">Glossary</a></span></span></span> effects. These shaders provide various particle-specific features that aren’t available with the Standard <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#particlesystem" aria-label="Go to glossary anchor for particlesystem">Glossary</a></span></span></span> effects. These shaders provide various particle-specific features that aren’t available with the Standard <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>.</p>
+
+<p>To use a Particle Shader:</p>
+
+<ol>
+<li><p>Select the Material you want to apply the shader to. For example, you could apply a Flame Material to a Fire Particle System effect.</p></li>
+<li><p>In the Material’s <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, select <strong>Shader Particles</strong>.</p></li>
+<li><p>Choose the Particle Shader that you want to use, such as <strong>Standard Surface</strong>.</p></li>
+<li><p>Enable and disable the various Particle Shader properties in the Inspector.</p></li>
+</ol>
+
+<h2>Properties</h2>
+
+<p>The Standard Particle Shaders have the same set of properties as the <a href="shader-StandardShader.html">Standard Shader</a> (or a subset of those properties, depending on the Shader). This page describes the properties and options that are additional to the Standard Shader properties. For information on the Standard Shader properties, see documentation on <a href="StandardShaderMaterialParameters.html">Material parameters</a>.</p>
+
+<h3>Blending Options</h3>
+
+<p>All of the Standard Particle Shaders have <strong>Blending Options</strong> that enable you to blend particles with the objects surrounding them in different ways. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property:</th>
+	<th style="text-align:left;">Function:</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Rendering Mode</strong></td>
+	<td style="text-align:left;">The Standard Particle Shaders can have the following <a href="StandardShaderMaterialParameterRenderingMode.html">Rendering Mode</a> options, which control how the final color from the shader is combined with the background color:<br><br><strong>Additive</strong>: Adds the background and final particle color together. This is useful for glow effects, like those you might use for fire or magic spells.<br><br><strong>Subtractive</strong>: Subtracts the final particle color from the background, which darkens the particles against the background. This is useful for foggy effects, like those you might use for steam, or thick black smoke.<br><br><strong>Modulate</strong>: Multiplies the final particle color with the background color. This is useful for portals and light-rays.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color Mode</strong></td>
+	<td style="text-align:left;">Control how the albedo texture is combined with the particle color. The <strong>Color Mode</strong> options are:<br><br><strong>Multiply</strong>: Multiplies the particle albedo color with the particle texture. <br><br><strong>Additive</strong>: Preserves a hot spot, such as a white part of the particle texture, while adding the particle albedo color to the darker pixels of the texture. <br><br><strong>Subtractive</strong>: Subtracts the particle albedo color from the particle texture. <br><br><strong>Overlay</strong>: Gives more contrast to the original color and adds the particle albedo color to the gray values. This is similar to Additive, but preserves the original colors.<br><br><strong>Color</strong>: Uses the alpha channel from the particle texture and the albedo color from the particle itself. This is useful for overwriting particles with the same color, while keeping their original “shape”.<br><br><strong>Difference</strong>: Subtracts the particle albedo color from the texture, or the texture from the color, to get a positive value. This is useful for a range of effects where you want a more dynamic color change. <br><br>See image below table for a demonstration of this effect.</td>
+</tr>
+</tbody>
+</table>
+
+<figure>
+<img src="../uploads/Main/SPSSColorModes.png" alt="Color Modes allow for different ways of combining the particle color with the albedo texture">
+<figcaption>Color Modes allow for different ways of combining the particle color with the albedo texture</figcaption>
+</figure>
+
+<h3>Main Options</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Flip-Book Mode</strong></td>
+	<td style="text-align:left;">Render flip-books as individual frames or blend the frames together to give smoother animations. Set to either:<br><strong>Simple</strong> - Render frames in a flip-book as a sequence of individual frames.<br><strong>Blended</strong> - Blend the frames in a flip-book to render the flip-book as a smooth animation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Two Sided</strong></td>
+	<td style="text-align:left;">Render both the front and back faces of the particle. When disabled, Unity only renders the front face of the geometry, which is the face in the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>’s view.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Enable Soft Particles</strong></td>
+	<td style="text-align:left;">Fade out particles when they get close to the surface of objects written into the depth buffer. This is useful for avoiding hard edges when particles intersect with opaque geometry. For example, by enabling soft particles, you can make the particle system emit particles close to an opaque surface without causing harsh intersections with the surface:<br><br><img src="../uploads/Main/SPSSSoftParticles.png" alt="">
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Enable Camera Fading</strong></td>
+	<td style="text-align:left;">Fade out particles when they get close to the camera. Set to:<br><strong>Near fade</strong> - The distance from the camera where particles are completely faded away.<br><strong>Far fade</strong> - The distance from the camera where particles start to fade as they get nearer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Enable Distortion</strong></td>
+	<td style="text-align:left;">Make particles perform fake refraction with the objects drawn before them. Distortion is ideal for creating heat haze effects for fire, for example:<br><br><img src="../uploads/Main/SPSSEnableDistortion.png" alt=""><br>This effect can be quite expensive because it captures the current frame to a texture.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Standard Particles Surface Shader</h2>
+
+<p>This shader comes with functionality similar to the Standard Shader, but works especially well with particles. Like the Standard Shader, it supports <span class="tooltip"><strong>Physically Based Shading</strong><span class="tooltiptext">An advanced lighting model that simulates the interactions between materials and light in a way that mimics reality. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about shader-StandardShader.html" href="shader-StandardShader.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PhysicallyBasedShading" aria-label="Go to glossary anchor for PhysicallyBasedShading">Glossary</a></span></span></span>. It does not include features that are unsuitable for dynamic particles, such as lightmapping.</p>
+
+<figure>
+<img src="../uploads/Main/SPSSStandardSurfaceShaderProperties.png" alt="">
+</figure>
+
+<figure>
+<img src="../uploads/Main/SPSSBillboardParticles.png" alt="An example of billboard particles using the Standard Particle Surface Shader with a normal map">
+<figcaption>An example of billboard particles using the Standard Particle Surface Shader with a normal map</figcaption>
+</figure>
+
+<h2>Standard Particles Unlit Shader</h2>
+
+<p>This simple shader is faster than the <span class="tooltip"><strong>Surface Shader</strong><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-SurfaceShaders.html" href="SL-SurfaceShaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SurfaceShader" aria-label="Go to glossary anchor for SurfaceShader">Glossary</a></span></span></span>. It supports all of the generic particle controls, such as flipbook blending and distortion, but does not perform any lighting calculations.</p>
+
+<figure>
+<img src="../uploads/Main/SPSSStandardUnlitShader.png" alt="">
+</figure>
+
+<hr>
+
+<ul>
+<li><p><span class="page-edit">2017–10–16 Page published
+</span></p></li>
+<li><p><span class="page-history">Standard Particle Shaders added in <a href="https://docs.unity3d.com/2017.3/Documentation/Manual/30_search.html?q=newin20173">2017.3</a> <span class="search-words">NewIn20173</span></span></p></li>
+</ul>
+<!-- area:graphics -->
+
+<p><span class="search-words">StandardParticleShaders</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="StandardShaderMakeYourOwn.html"></a></span><div class="tip">Customize the Standard shader source code in the Built-In Render Pipeline</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Shader-Autodesk-Interactive.html"></a></span><div class="tip">Autodesk Interactive shader</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

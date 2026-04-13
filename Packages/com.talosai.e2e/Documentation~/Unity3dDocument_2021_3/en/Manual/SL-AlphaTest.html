@@ -1,0 +1,352 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: ShaderLab: legacy alpha testing</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-AlphaTest.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-AlphaTest.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-AlphaTest.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-AlphaTest.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-AlphaTest.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-AlphaTest.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-AlphaTest.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-AlphaTest.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-writing.html">Writing shaders</a></li>
+<li><a href="SL-Reference.html">ShaderLab</a></li>
+<li><a href="shader-shaderlab-commands.html">ShaderLab: commands</a></li>
+<li><a href="shader-shaderlab-legacy.html">ShaderLab legacy functionality</a></li>
+<li>ShaderLab: legacy alpha testing</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-Material.html"></a></span><div class="tip">ShaderLab: legacy lighting</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-SetTexture.html"></a></span><div class="tip">ShaderLab: legacy texture combining</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>ShaderLab: legacy alpha testing</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Note</strong>: The <span class="tooltip"><strong>ShaderLab</strong><span class="tooltiptext">Unity’s language for defining the structure of Shader objects. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-Shader.html" href="SL-Shader.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span> functionality on this page is legacy, and is documented for backwards compatibility only. If your <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span> functionality on this page is legacy, and is documented for backwards compatibility only. If your <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> source file includes HLSL code, Unity ignores these commands completely. If your shader source file does not include HLSL code, Unity compiles these commands into regular shader programs on import.</p>
+
+<h2>Render pipeline compatibility</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature name</strong></th>
+	<th style="text-align:left;"><strong>Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span></strong></th>
+	<th style="text-align:left;"><strong>Universal Render Pipeline (URP)</strong></th>
+	<th style="text-align:left;"><strong>High Definition Render Pipeline (HDRP)</strong></th>
+	<th style="text-align:left;"><strong>Custom SRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Legacy alpha testing</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<h1>Overview</h1>
+
+<p>After the final output color has been calculated, the color can optionally have its alpha value compared to a fixed value. If the test fails, the <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> is not written to the display.</p>
+
+<h2>Syntax</h2>
+
+<pre><code>AlphaTest Off
+</code></pre>
+
+<p>Render all pixels (default) or…</p>
+
+<pre><code>AlphaTest comparison AlphaValue
+</code></pre>
+
+<p>Set up the alpha test to only render pixels whose alpha value is within a certain range.</p>
+
+<h3>Comparison</h3>
+
+<p>Comparison is one of the following words:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Greater</strong></td>
+	<td style="text-align:left;">Only render pixels whose alpha is greater than <em>AlphaValue</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GEqual</strong></td>
+	<td style="text-align:left;">Only render pixels whose alpha is greater than or equal to <em>AlphaValue</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Less</strong></td>
+	<td style="text-align:left;">Only render pixels whose alpha value is less than <em>AlphaValue</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LEqual</strong></td>
+	<td style="text-align:left;">Only render pixels whose alpha value is less than or equal to from <em>AlphaValue</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Equal</strong></td>
+	<td style="text-align:left;">Only render pixels whose alpha value equals <em>AlphaValue</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NotEqual</strong></td>
+	<td style="text-align:left;">Only render pixels whose alpha value differs from <em>AlphaValue</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Always</strong></td>
+	<td style="text-align:left;">Render all pixels. This is functionally equivalent to <em>AlphaTest Off</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Never</strong></td>
+	<td style="text-align:left;">Don’t render any pixels.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>AlphaValue</h3>
+
+<p>A floating-point number between 0 and 1. This can also be a variable reference to a float or range property, in which case it should be written using the standard square bracket notation (<em>[VariableName]</em>).</p>
+
+<h2>Details</h2>
+
+<p>The alpha test is important when rendering concave objects with transparent parts. The graphics card maintains a record of the depth of every pixel written to the screen. If a new pixel is further away than one already rendered, the new pixel is not written to the display. This means that even with <a href="SL-Blend.html">Blending</a>, objects will not show through.</p>
+
+<figure>
+<img src="../uploads/Main/sl-alphatest2.jpg" alt="">
+</figure>
+
+<p>In this figure, the tree on the left is rendered using <strong>AlphaTest</strong>. Note how the pixels in it are either completely transparent or opaque. The center tree is rendered using only <strong>Alpha Blending</strong> - notice how transparent parts of nearby branches cover the distant leaves because of the <span class="tooltip"><strong>depth buffer</strong><span class="tooltiptext">A memory store that holds the z-value depth of each pixel in an image, where the z-value is the depth for each rendered pixel from the projection plane. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#depthbuffer" aria-label="Go to glossary anchor for depthbuffer">Glossary</a></span></span></span>. The tree on the right is rendered using the last example shader - which implements a combination of blending and alpha testing to hide any artifacts.</p>
+
+<h2>Examples</h2>
+
+<p>The simplest possible example, assign a texture with an alpha channel to it. The object will only be visible where alpha is greater than 0.5</p>
+
+<pre><code>Shader &quot;Simple Alpha Test&quot; {
+    Properties {
+        _MainTex (&quot;Base (RGB) Transparency (A)&quot;, 2D) = &quot;&quot; {}
+    }
+    SubShader {
+        Pass {
+            // Only render pixels with an alpha larger than 50%
+            AlphaTest Greater 0.5
+            SetTexture [_MainTex] { combine texture }
+        }
+    }
+}
+</code></pre>
+
+<p>This is not much good by itself. Let us add some lighting and make the cutoff value tweakable:</p>
+
+<pre><code>Shader &quot;Cutoff Alpha&quot; {
+    Properties {
+        _MainTex (&quot;Base (RGB) Transparency (A)&quot;, 2D) = &quot;&quot; {}
+        _Cutoff (&quot;Alpha cutoff&quot;, Range (0,1)) = 0.5
+    }
+    SubShader {
+        Pass {
+            // Use the Cutoff parameter defined above to determine
+            // what to render.
+            AlphaTest Greater [_Cutoff]
+            Material {
+                Diffuse (1,1,1,1)
+                Ambient (1,1,1,1)
+            }
+            Lighting On
+            SetTexture [_MainTex] { combine texture * primary }
+        }
+    }
+}
+</code></pre>
+
+<p>When rendering plants and trees, many games have the hard edges typical of alpha testing. A way around that is to render the object twice. In the first pass, we use alpha testing to only render pixels that are more than 50% opaque. In the second pass, we alpha-blend the graphic in the parts that were cut away, without recording the depth of the pixel. We might get a bit of confusion as further away branches overwrite the nearby ones, but in practice, that is hard to see as leaves have a lot of visual detail in them.</p>
+
+<pre><code>Shader &quot;Vegetation&quot; {
+    Properties {
+        _Color (&quot;Main Color&quot;, Color) = (.5, .5, .5, .5)
+        _MainTex (&quot;Base (RGB) Alpha (A)&quot;, 2D) = &quot;white&quot; {}
+        _Cutoff (&quot;Base Alpha cutoff&quot;, Range (0,.9)) = .5
+    }
+    SubShader {
+        // Set up basic lighting
+        Material {
+            Diffuse [_Color]
+            Ambient [_Color]
+        }
+        Lighting On
+
+        // Render both front and back facing polygons.
+        Cull Off
+
+        // first pass:
+        // render any pixels that are more than [_Cutoff] opaque
+        Pass {
+            AlphaTest Greater [_Cutoff]
+            SetTexture [_MainTex] {
+                combine texture * primary, texture
+            }
+        }
+
+        // Second pass:
+        // render in the semitransparent details.
+        Pass {
+            // Dont write to the depth buffer
+            ZWrite off
+            // Don't write pixels we have already written.
+            ZTest Less
+            // Only render pixels less or equal to the value
+            AlphaTest LEqual [_Cutoff]
+
+            // Set up alpha blending
+            Blend SrcAlpha OneMinusSrcAlpha
+
+            SetTexture [_MainTex] {
+                combine texture * primary, texture
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>Note that we have some setup inside the SubShader, rather than in the individual passes. Any state set in the SubShader is inherited as defaults in passes inside it.</p>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-Material.html"></a></span><div class="tip">ShaderLab: legacy lighting</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-SetTexture.html"></a></span><div class="tip">ShaderLab: legacy texture combining</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

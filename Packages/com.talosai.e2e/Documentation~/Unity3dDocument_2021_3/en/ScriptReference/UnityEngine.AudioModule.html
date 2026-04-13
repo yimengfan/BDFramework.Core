@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: UnityEngine.AudioModule</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">UnityEngine.AudioModule</h1>
+                <div class="clear">
+                </div>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>The Audio module implements Unity's audio system.</p>
+              </div>
+              <div class="subsection">
+                <h3>Classes</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Class</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="AudioChorusFilter.html">AudioChorusFilter</a></td><td class="desc">The Audio Chorus Filter takes an Audio Clip and processes it creating a chorus effect.</td></tr>
+      <tr><td class="lbl"><a href="AudioClip.html">AudioClip</a></td><td class="desc">A container for audio data.</td></tr>
+      <tr><td class="lbl"><a href="AudioDistortionFilter.html">AudioDistortionFilter</a></td><td class="desc">The Audio Distortion Filter distorts the sound from an AudioSource or sounds reaching the AudioListener.</td></tr>
+      <tr><td class="lbl"><a href="AudioEchoFilter.html">AudioEchoFilter</a></td><td class="desc">The Audio Echo Filter repeats a sound after a given Delay, attenuating the repetitions based on the Decay Ratio.</td></tr>
+      <tr><td class="lbl"><a href="AudioHighPassFilter.html">AudioHighPassFilter</a></td><td class="desc">The Audio High Pass Filter passes high frequencies of an AudioSource, and cuts off signals with frequencies lower than the Cutoff Frequency.</td></tr>
+      <tr><td class="lbl"><a href="AudioListener.html">AudioListener</a></td><td class="desc">Representation of a listener in 3D space.</td></tr>
+      <tr><td class="lbl"><a href="AudioLowPassFilter.html">AudioLowPassFilter</a></td><td class="desc">The Audio Low Pass Filter passes low frequencies of an AudioSource or all sounds reaching an AudioListener, while removing frequencies higher than the Cutoff Frequency.</td></tr>
+      <tr><td class="lbl"><a href="Audio.AudioMixer.html">AudioMixer</a></td><td class="desc">AudioMixer asset.</td></tr>
+      <tr><td class="lbl"><a href="Audio.AudioMixerGroup.html">AudioMixerGroup</a></td><td class="desc">Object representing a group in the mixer.</td></tr>
+      <tr><td class="lbl"><a href="Audio.AudioMixerSnapshot.html">AudioMixerSnapshot</a></td><td class="desc">Object representing a snapshot in the mixer.</td></tr>
+      <tr><td class="lbl"><a href="Audio.AudioPlayableBinding.html">AudioPlayableBinding</a></td><td class="desc">A PlayableBinding that contains information representing an AudioPlayableOutput.</td></tr>
+      <tr><td class="lbl"><a href="AudioRenderer.html">AudioRenderer</a></td><td class="desc">Allow recording the main output of the game or specific groups in the AudioMixer.</td></tr>
+      <tr><td class="lbl"><a href="AudioReverbFilter.html">AudioReverbFilter</a></td><td class="desc">The Audio Reverb Filter takes an Audio Clip and distorts it to create a custom reverb effect.</td></tr>
+      <tr><td class="lbl"><a href="AudioReverbZone.html">AudioReverbZone</a></td><td class="desc">Reverb Zones are used when you want to create location based ambient effects in the Scene.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Audio.AudioSampleProvider.html">AudioSampleProvider</a></td><td class="desc">Provides access to the audio samples generated by Unity objects such as VideoPlayer.</td></tr>
+      <tr><td class="lbl"><a href="AudioSettings.html">AudioSettings</a></td><td class="desc">Controls the global audio settings from script.</td></tr>
+      <tr><td class="lbl"><a href="AudioSource.html">AudioSource</a></td><td class="desc">A representation of audio sources in 3D.</td></tr>
+      <tr><td class="lbl"><a href="Microphone.html">Microphone</a></td><td class="desc">Use this class to record to an AudioClip using a connected microphone.</td></tr>
+      <tr><td class="lbl"><a href="WebCamTexture.html">WebCamTexture</a></td><td class="desc">WebCam Textures are textures onto which the live video input is rendered.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Structs</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Struct</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Audio.AudioClipPlayable.html">AudioClipPlayable</a></td><td class="desc">An implementation of IPlayable that controls an AudioClip.</td></tr>
+      <tr><td class="lbl"><a href="AudioConfiguration.html">AudioConfiguration</a></td><td class="desc">Specifies the current properties or desired properties to be set for the audio system.</td></tr>
+      <tr><td class="lbl"><a href="Audio.AudioMixerPlayable.html">AudioMixerPlayable</a></td><td class="desc">An implementation of IPlayable that controls an audio mixer.</td></tr>
+      <tr><td class="lbl"><a href="Audio.AudioPlayableOutput.html">AudioPlayableOutput</a></td><td class="desc">A IPlayableOutput implementation that will be used to play audio.</td></tr>
+      <tr><td class="lbl"><a href="WebCamDevice.html">WebCamDevice</a></td><td class="desc">A structure describing the webcam device.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Enumerations</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Enumeration</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="AudioClipLoadType.html">AudioClipLoadType</a></td><td class="desc">Determines how the audio clip is loaded in.</td></tr>
+      <tr><td class="lbl"><a href="AudioCompressionFormat.html">AudioCompressionFormat</a></td><td class="desc">An enum containing different compression types.</td></tr>
+      <tr><td class="lbl"><a href="AudioDataLoadState.html">AudioDataLoadState</a></td><td class="desc">Value describing the current load state of the audio data associated with an AudioClip.</td></tr>
+      <tr><td class="lbl"><a href="Audio.AudioMixerUpdateMode.html">AudioMixerUpdateMode</a></td><td class="desc">The mode in which an AudioMixer should update its time.</td></tr>
+      <tr><td class="lbl"><a href="AudioReverbPreset.html">AudioReverbPreset</a></td><td class="desc">Reverb presets used by the Reverb Zone class and the audio reverb filter.</td></tr>
+      <tr><td class="lbl"><a href="AudioRolloffMode.html">AudioRolloffMode</a></td><td class="desc">Rolloff modes that a 3D sound can have in an audio source.</td></tr>
+      <tr><td class="lbl"><a href="AudioSourceCurveType.html">AudioSourceCurveType</a></td><td class="desc">This defines the curve type of the different custom curves that can be queried and set within the AudioSource.</td></tr>
+      <tr><td class="lbl"><a href="AudioSpeakerMode.html">AudioSpeakerMode</a></td><td class="desc">These are speaker types defined for use with AudioSettings.speakerMode.</td></tr>
+      <tr><td class="lbl"><a href="AudioVelocityUpdateMode.html">AudioVelocityUpdateMode</a></td><td class="desc">Describes when an AudioSource or AudioListener is updated.</td></tr>
+      <tr><td class="lbl"><a href="FFTWindow.html">FFTWindow</a></td><td class="desc">Spectrum analysis windowing types.</td></tr>
+      <tr><td class="lbl"><a href="GamepadSpeakerOutputType.html">GamepadSpeakerOutputType</a></td><td class="desc">Gamepad audio output types.</td></tr>
+      <tr><td class="lbl"><a href="WebCamKind.html">WebCamKind</a></td><td class="desc">Enum representing the different types of web camera device.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

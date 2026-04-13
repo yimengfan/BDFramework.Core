@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Example: creating a quad</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Example-CreatingaBillboardPlane.html">English</a></li>
+<li><a href="/cn/current/Manual/Example-CreatingaBillboardPlane.html">中文</a></li>
+<li><a href="/ja/current/Manual/Example-CreatingaBillboardPlane.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Example-CreatingaBillboardPlane.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Example-CreatingaBillboardPlane.html">English</a></li>
+<li><a href="/cn/current/Manual/Example-CreatingaBillboardPlane.html">中文</a></li>
+<li><a href="/ja/current/Manual/Example-CreatingaBillboardPlane.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Example-CreatingaBillboardPlane.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="mesh.html">Meshes</a></li>
+<li><a href="GeneratingMeshGeometryProcedurally.html">Using meshes with C# scripts</a></li>
+<li>Example: creating a quad</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UsingtheMeshClass.html"></a></span><div class="tip">Using the Mesh Class</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="LevelOfDetail.html"></a></span><div class="tip">Level of Detail (LOD) for meshes</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Example: creating a quad</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To represent flat surfaces, Unity includes the Plane and <span class="tooltip"><strong>Quad</strong><span class="tooltiptext">A primitive object that resembles a plane but its edges are only one unit long, it uses only 4 vertices, and the surface is oriented in the XY plane of the local coordinate space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PrimitiveObjects.html" href="PrimitiveObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Quad" aria-label="Go to glossary anchor for Quad">Glossary</a></span></span></span> <a href="PrimitiveObjects.html">primitive GameObjects</a> that you can instantiate in your <span class="tooltip"><strong>Scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Quad" aria-label="Go to glossary anchor for Quad">Glossary</a></span></span></span> <a href="PrimitiveObjects.html">primitive GameObjects</a> that you can instantiate in your <span class="tooltip"><strong>Scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. However, it is useful to understand how to use a script to construct a quadrilateral <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. However, it is useful to understand how to use a script to construct a quadrilateral <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> yourself. This is essential for procedural mesh generation. </p>
+
+<p>Note: Unity processes and displays geometry in triangles, and not quads. This means that the Quad primitive consists of two triangles.</p>
+
+<h2>Vertex array</h2>
+
+<p>The first thing you need to do is set up the array of vertices that your shape uses. </p>
+
+<p>This example assumes that the quad lies on the x-axis and y-axis, and that your script contains the variables width and height. </p>
+
+<pre><code>Vector3[] vertices = new Vector3[4]
+{
+    new Vector3(0, 0, 0),
+    new Vector3(width, 0, 0),
+    new Vector3(0, height, 0),
+    new Vector3(width, height, 0)
+};
+mesh.vertices = vertices;
+</code></pre>
+
+<p>This example supplies the vertices in the following order:
+Bottom-left
+Bottom-right
+Top-left
+Top-right</p>
+
+<p>Due to the way that Unity retrieves Mesh data properties, it is much more efficient to set up data in your own array and then assign the array to a property (for example, to <code>Mesh.vertices</code> or <code>Mesh.normals</code>), rather than access the property array via individual elements.</p>
+
+<h2>Triangles</h2>
+
+<p>Next, you need to set up the triangles. A quad consists of two triangles, each made up of three points in the vertex array you created earlier. To specify the points, you define each triangle as three indices of the the vertex array. For example, the lower left triangle for this quad uses index 0, 2, and 1 which corresponds to coordinates (0, 0, 0), (0, height, 0), and (width, 0, 0) from the vertex array. The ordering is important because you must order the corners clockwise. The upper right triangle uses index 2, 3, and 1.</p>
+
+<pre><code>int[] tris = new int[6]
+{
+    // lower left triangle
+    0, 2, 1,
+    // upper right triangle
+    2, 3, 1
+};
+mesh.triangles = tris;
+</code></pre>
+
+<h2>Normals</h2>
+
+<p>A Mesh with vertices and triangles is visible in the Scene, but Unity does not shade it correctly because it has no normals yet. The normals for this example are simple because they are all identical. Every normal points in the negative z-axis direction in the quad’s local space. When you add the normals, Unity correctly shades the quad, but you need a Light in the Scene to see the effect.</p>
+
+<pre><code>Vector3[] normals = new Vector3[4]
+{
+    -Vector3.forward,
+    -Vector3.forward,
+    -Vector3.forward,
+    -Vector3.forward
+};
+mesh.normals = normals;
+</code></pre>
+
+<p>If you do not want to define the normals yourself, you can use <a href="../ScriptReference/Mesh.RecalculateNormals.html">Mesh.RecalculateNormals()</a>.</p>
+
+<h2>Texture coordinates</h2>
+
+<p>Finally, to display Textures on the Mesh’s Material correctly, add texture coordinates to the Mesh. Texture coordinates are between 0 and 1. Each vertex in the Mesh has a texture coordinate which specifies where on the Material’s Texture to sample from. To show the whole Texture across the quad, the texture coordinate values on each vertex should all be 0 or 1 so that each corner of the quad corresponds to a corner of the Texture.</p>
+
+<pre><code>Vector2[] uv = new Vector2[4]
+{
+      new Vector2(0, 0),
+      new Vector2(1, 0),
+      new Vector2(0, 1),
+      new Vector2(1, 1)
+};
+mesh.uv = uv;
+</code></pre>
+
+<h2>Final script</h2>
+
+<p>The following script combines everything above to create a quad in your Scene. To use it:
+Create a new C# script (menu: Assets &gt; Create &gt; C# Script) and name it QuadCreator.
+Open the QuadCreator script, copy the example code into it, and save the script.
+Back in the Editor, create a new GameObject in your Scene (menu: GameObject &gt; Create Empty).
+In the Inspector, select Add Component &gt; Scripts &gt; Quad Creator.
+Position the <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> wherever you want in the Scene.
+Enter Play Mode. If you can not see the quad in the Scene or Game view, make sure you are viewing it from the correct side; Unity does not render the back face of this Mesh.</p>
+
+<pre><code>using UnityEngine;
+
+public class QuadCreator : MonoBehaviour
+{
+    public float width = 1;
+    public float height = 1;
+
+    public void Start()
+    {
+        MeshRenderer meshRenderer = gameObject.AddComponent&lt;MeshRenderer&gt;();
+        meshRenderer.sharedMaterial = new Material(Shader.Find(&quot;Standard&quot;));
+
+        MeshFilter meshFilter = gameObject.AddComponent&lt;MeshFilter&gt;();
+
+        Mesh mesh = new Mesh();
+
+        Vector3[] vertices = new Vector3[4]
+        {
+            new Vector3(0, 0, 0),
+            new Vector3(width, 0, 0),
+            new Vector3(0, height, 0),
+            new Vector3(width, height, 0)
+        };
+        mesh.vertices = vertices;
+
+        int[] tris = new int[6]
+        {
+            // lower left triangle
+            0, 2, 1,
+            // upper right triangle
+            2, 3, 1
+        };
+        mesh.triangles = tris;
+
+        Vector3[] normals = new Vector3[4]
+        {
+            -Vector3.forward,
+            -Vector3.forward,
+            -Vector3.forward,
+            -Vector3.forward
+        };
+        mesh.normals = normals;
+
+        Vector2[] uv = new Vector2[4]
+        {
+            new Vector2(0, 0),
+            new Vector2(1, 0),
+            new Vector2(0, 1),
+            new Vector2(1, 1)
+        };
+        mesh.uv = uv;
+
+        meshFilter.mesh = mesh;
+    }
+}
+
+</code></pre>
+
+<p>Note: This example code is in the Start function, which means that it executes once when you enter Play Mode, and the Mesh does not change throughout the application. However, you can add code in the Update function to make the Mesh change each frame. Be aware that this greatly increases the resource intensity of the Mesh generation.</p>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UsingtheMeshClass.html"></a></span><div class="tip">Using the Mesh Class</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="LevelOfDetail.html"></a></span><div class="tip">Level of Detail (LOD) for meshes</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

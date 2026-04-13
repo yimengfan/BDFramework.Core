@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Physics2D</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">Physics2D</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEngine</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Implemented in:<a href="UnityEngine.Physics2DModule.html" class="cl">UnityEngine.Physics2DModule</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Global settings and helpers for 2D physics.</p>
+              </div>
+              <div class="subsection">
+                <h3>Static Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Physics2D.AllLayers.html">AllLayers</a></td><td class="desc">Layer mask constant that includes all layers.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-alwaysShowColliders.html">alwaysShowColliders</a></td><td class="desc">Enable to always show the Collider Gizmos even when they are not selected.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-angularSleepTolerance.html">angularSleepTolerance</a></td><td class="desc">A Rigidbody cannot sleep if its angular velocity is above this tolerance threshold.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-autoSyncTransforms.html">autoSyncTransforms</a></td><td class="desc">Set whether to automatically sync changes to the Transform component with the physics engine.
+                </td></tr>
+      <tr><td class="lbl"><a href="Physics2D-baumgarteScale.html">baumgarteScale</a></td><td class="desc">The scale factor that controls how fast overlaps are resolved.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-baumgarteTOIScale.html">baumgarteTOIScale</a></td><td class="desc">The scale factor that controls how fast TOI overlaps are resolved.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-callbacksOnDisable.html">callbacksOnDisable</a></td><td class="desc">Use this to control whether or not the appropriate OnCollisionExit2D or OnTriggerExit2D callbacks should be called when a Collider2D is disabled.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-colliderAABBColor.html">colliderAABBColor</a></td><td class="desc">Set the color used by the Gizmos to show all Collider axis-aligned bounding boxes (AABBs).</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-colliderAsleepColor.html">colliderAsleepColor</a></td><td class="desc">The color used by the Gizmos to show all asleep Colliders (Collider is asleep when the body is asleep).</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-colliderAwakeColor.html">colliderAwakeColor</a></td><td class="desc">The color used by the Gizmos to show all awake Colliders (Collider is awake when the body is awake).</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-colliderContactColor.html">colliderContactColor</a></td><td class="desc">The color used by the Gizmos to show all Collider contacts.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-contactArrowScale.html">contactArrowScale</a></td><td class="desc">The scale of the contact arrow used by the Collider Gizmos.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-defaultContactOffset.html">defaultContactOffset</a></td><td class="desc">The default contact offset of the newly created Colliders.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-defaultPhysicsScene.html">defaultPhysicsScene</a></td><td class="desc">The PhysicsScene2D automatically created when Unity starts.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.DefaultRaycastLayers.html">DefaultRaycastLayers</a></td><td class="desc">Layer mask constant that includes all layers participating in raycasts by default.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-gravity.html">gravity</a></td><td class="desc">Acceleration due to gravity.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.IgnoreRaycastLayer.html">IgnoreRaycastLayer</a></td><td class="desc">Layer mask constant for the default layer that ignores raycasts.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-jobOptions.html">jobOptions</a></td><td class="desc">A set of options that control how physics operates when using the job system to multithread the physics simulation.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-linearSleepTolerance.html">linearSleepTolerance</a></td><td class="desc">A rigid-body cannot sleep if its linear velocity is above this tolerance.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-maxAngularCorrection.html">maxAngularCorrection</a></td><td class="desc">The maximum angular position correction used when solving constraints.  This helps to prevent overshoot.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-maxLinearCorrection.html">maxLinearCorrection</a></td><td class="desc">The maximum linear position correction used when solving constraints.  This helps to prevent overshoot.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.MaxPolygonShapeVertices.html">MaxPolygonShapeVertices</a></td><td class="desc">The maximum number of vertices allowed per primitive polygon shape type (PhysicsShapeType2D.Polygon). (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-maxRotationSpeed.html">maxRotationSpeed</a></td><td class="desc">The maximum angular speed of a rigid-body per physics update.  Increasing this can cause numerical problems.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-maxTranslationSpeed.html">maxTranslationSpeed</a></td><td class="desc">The maximum linear speed of a rigid-body per physics update.  Increasing this can cause numerical problems.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-positionIterations.html">positionIterations</a></td><td class="desc">The number of iterations of the physics solver when considering objects' positions.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-queriesHitTriggers.html">queriesHitTriggers</a></td><td class="desc">Do raycasts detect Colliders configured as triggers?</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-queriesStartInColliders.html">queriesStartInColliders</a></td><td class="desc">Set the raycasts or linecasts that start inside Colliders to detect or not detect those Colliders.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-reuseCollisionCallbacks.html">reuseCollisionCallbacks</a></td><td class="desc">Determines whether the garbage collector should reuse only a single instance of a Collision2D type for all collision callbacks.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-showColliderAABB.html">showColliderAABB</a></td><td class="desc">Should the Collider Gizmos show the AABBs for each Collider?</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-showColliderContacts.html">showColliderContacts</a></td><td class="desc">Should the Collider Gizmos show current contacts for each Collider?</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-showColliderSleep.html">showColliderSleep</a></td><td class="desc">Should the Collider Gizmos show the sleep-state for each Collider?</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-simulationMode.html">simulationMode</a></td><td class="desc">Controls when Unity executes the 2D physics simulation.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-timeToSleep.html">timeToSleep</a></td><td class="desc">The time in seconds that a rigid-body must be still before it will go to sleep.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-velocityIterations.html">velocityIterations</a></td><td class="desc">The number of iterations of the physics solver when considering objects' velocities.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D-velocityThreshold.html">velocityThreshold</a></td><td class="desc">Any collisions with a relative linear velocity below this threshold will be treated as inelastic.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Physics2D.BoxCast.html">BoxCast</a></td><td class="desc">Casts a box against Colliders in the Scene, returning the first Collider to contact with it.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.BoxCastAll.html">BoxCastAll</a></td><td class="desc">Casts a box against Colliders in the Scene, returning all Colliders that contact with it.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.BoxCastNonAlloc.html">BoxCastNonAlloc</a></td><td class="desc">Casts a box into the Scene, returning Colliders that contact with it into the provided results array. Note: This method will be deprecated in a future build and it is recommended to use BoxCast instead.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.CapsuleCast.html">CapsuleCast</a></td><td class="desc">Casts a capsule against Colliders in the Scene, returning the first Collider to contact with it.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.CapsuleCastAll.html">CapsuleCastAll</a></td><td class="desc">Casts a capsule against Colliders in the Scene, returning all Colliders that contact with it.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.CapsuleCastNonAlloc.html">CapsuleCastNonAlloc</a></td><td class="desc">Casts a capsule into the Scene, returning Colliders that contact with it into the provided results array. Note: This method will be deprecated in a future build and it is recommended to use CapsuleCast instead.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.CircleCast.html">CircleCast</a></td><td class="desc">Casts a circle against Colliders in the Scene, returning the first Collider to contact with it.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.CircleCastAll.html">CircleCastAll</a></td><td class="desc">Casts a circle against Colliders in the Scene, returning all Colliders that contact with it.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.CircleCastNonAlloc.html">CircleCastNonAlloc</a></td><td class="desc">Casts a circle into the Scene, returning Colliders that contact with it into the provided results array. Note: This method will be deprecated in a future build and it is recommended to use CircleCast instead.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.ClosestPoint.html">ClosestPoint</a></td><td class="desc">Returns a point on the perimeter of the Collider that is closest to the specified position.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.Distance.html">Distance</a></td><td class="desc">Calculates the minimum distance between two Colliders.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.GetContacts.html">GetContacts</a></td><td class="desc">Retrieves all Colliders in contact with the Collider.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.GetIgnoreCollision.html">GetIgnoreCollision</a></td><td class="desc">Checks whether the collision detection system will ignore all collisions/triggers between collider1 and collider2 or not.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.GetIgnoreLayerCollision.html">GetIgnoreLayerCollision</a></td><td class="desc">Checks whether collisions between the specified layers be ignored or not.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.GetLayerCollisionMask.html">GetLayerCollisionMask</a></td><td class="desc">Get the collision layer mask that indicates which layer(s) the specified layer can collide with.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.GetRayIntersection.html">GetRayIntersection</a></td><td class="desc">Cast a 3D ray against the Colliders in the Scene returning the first Collider along the ray.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.GetRayIntersectionAll.html">GetRayIntersectionAll</a></td><td class="desc">Cast a 3D ray against the Colliders in the Scene returning all the Colliders along the ray.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.GetRayIntersectionNonAlloc.html">GetRayIntersectionNonAlloc</a></td><td class="desc">Cast a 3D ray against the Colliders in the Scene returning the Colliders along the ray. Note: This method will be deprecated in a future build and it is recommended to use GetRayIntersection instead.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.IgnoreCollision.html">IgnoreCollision</a></td><td class="desc">Makes the collision detection system ignore all collisions/triggers between collider1 and collider2.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.IgnoreLayerCollision.html">IgnoreLayerCollision</a></td><td class="desc">Choose whether to detect or ignore collisions between a specified pair of layers.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.IsTouching.html">IsTouching</a></td><td class="desc">Checks whether the passed Colliders are in contact or not.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.IsTouchingLayers.html">IsTouchingLayers</a></td><td class="desc">Checks whether the Collider is touching any Colliders on the specified layerMask or not.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.Linecast.html">Linecast</a></td><td class="desc">Casts a line segment against Colliders in the Scene.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.LinecastAll.html">LinecastAll</a></td><td class="desc">Casts a line against Colliders in the Scene.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.LinecastNonAlloc.html">LinecastNonAlloc</a></td><td class="desc">Casts a line against Colliders in the Scene. Note: This method will be deprecated in a future build and it is recommended to use Linecast instead.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.OverlapArea.html">OverlapArea</a></td><td class="desc">Checks if a Collider falls within a rectangular area.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.OverlapAreaAll.html">OverlapAreaAll</a></td><td class="desc">Get a list of all Colliders that fall within a rectangular area.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.OverlapAreaNonAlloc.html">OverlapAreaNonAlloc</a></td><td class="desc">Get a list of all Colliders that fall within a specified area. Note: This method will be deprecated in a future build and it is recommended to use OverlapArea instead.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.OverlapBox.html">OverlapBox</a></td><td class="desc">Checks if a Collider falls within a box area.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.OverlapBoxAll.html">OverlapBoxAll</a></td><td class="desc">Get a list of all Colliders that fall within a box area.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.OverlapBoxNonAlloc.html">OverlapBoxNonAlloc</a></td><td class="desc">Get a list of all Colliders that fall within a box area. Note: This method will be deprecated in a future build and it is recommended to use OverlapBox instead.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.OverlapCapsule.html">OverlapCapsule</a></td><td class="desc">Checks if a Collider falls within a capsule area.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.OverlapCapsuleAll.html">OverlapCapsuleAll</a></td><td class="desc">Get a list of all Colliders that fall within a capsule area.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.OverlapCapsuleNonAlloc.html">OverlapCapsuleNonAlloc</a></td><td class="desc">Get a list of all Colliders that fall within a capsule area. Note: This method will be deprecated in a future build and it is recommended to use OverlapCapsule instead.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.OverlapCircle.html">OverlapCircle</a></td><td class="desc">Checks if a Collider falls within a circular area.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.OverlapCircleAll.html">OverlapCircleAll</a></td><td class="desc">Get a list of all Colliders that fall within a circular area.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.OverlapCircleNonAlloc.html">OverlapCircleNonAlloc</a></td><td class="desc">Get a list of all Colliders that fall within a circular area. Note: This method will be deprecated in a future build and it is recommended to use OverlapCircle instead.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.OverlapCollider.html">OverlapCollider</a></td><td class="desc">Gets a list of all Colliders that overlap the given Collider.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.OverlapPoint.html">OverlapPoint</a></td><td class="desc">Checks if a Collider overlaps a point in space.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.OverlapPointAll.html">OverlapPointAll</a></td><td class="desc">Get a list of all Colliders that overlap a point in space.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.OverlapPointNonAlloc.html">OverlapPointNonAlloc</a></td><td class="desc">Get a list of all Colliders that overlap a point in space. Note: This method will be deprecated in a future build and it is recommended to use OverlapPoint instead.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.Raycast.html">Raycast</a></td><td class="desc">Casts a ray against Colliders in the Scene.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.RaycastAll.html">RaycastAll</a></td><td class="desc">Casts a ray against Colliders in the Scene, returning all Colliders that contact with it.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.RaycastNonAlloc.html">RaycastNonAlloc</a></td><td class="desc">Casts a ray into the Scene. Note: This method will be deprecated in a future build and it is recommended to use Raycast instead.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.SetLayerCollisionMask.html">SetLayerCollisionMask</a></td><td class="desc">Set the collision layer mask that indicates which layer(s) the specified layer can collide with.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.Simulate.html">Simulate</a></td><td class="desc">Simulate physics in the Scene.</td></tr>
+      <tr><td class="lbl"><a href="Physics2D.SyncTransforms.html">SyncTransforms</a></td><td class="desc">Synchronizes.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

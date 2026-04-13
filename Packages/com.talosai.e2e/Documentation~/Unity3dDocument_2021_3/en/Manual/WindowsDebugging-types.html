@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Introduction to debugging Unity in Windows </title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/WindowsDebugging-types.html">English</a></li>
+<li><a href="/cn/current/Manual/WindowsDebugging-types.html">中文</a></li>
+<li><a href="/ja/current/Manual/WindowsDebugging-types.html">日本語</a></li>
+<li><a href="/kr/current/Manual/WindowsDebugging-types.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/WindowsDebugging-types.html">English</a></li>
+<li><a href="/cn/current/Manual/WindowsDebugging-types.html">中文</a></li>
+<li><a href="/ja/current/Manual/WindowsDebugging-types.html">日本語</a></li>
+<li><a href="/kr/current/Manual/WindowsDebugging-types.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="Windows.html">Windows</a></li>
+<li><a href="WindowsDebugging.html">Unity debugging guide for Windows</a></li>
+<li>Introduction to debugging Unity in Windows </li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="WindowsDebugging.html"></a></span><div class="tip">Unity debugging guide for Windows</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="WindowsDebugging-instructions.html"></a></span><div class="tip">Configure your debugging tool to debug Unity in Windows</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Introduction to debugging Unity in Windows</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can use various tools and techniques to debug Unity applications on Windows and identify and resolve runtime issues. </p>
+
+<p>This guide covers practical debugging types, such as live debugging and forensic debugging. It also covers vital concepts like symbols and managed exceptions, which support and enhance your debugging process.</p>
+
+<ul>
+<li><a href="#symbols">Unity symbols</a></li>
+<li><a href="#native-debugging">Built-in debugging tools</a></li>
+<li><a href="#c-managed-debugging">C# managed debugging</a></li>
+<li><a href="#live-debugging">Live debugging</a></li>
+<li><a href="#forensic-debugging">Forensic debugging</a></li>
+<li><a href="#plug-in">The UnityMixedCallstack plug-in</a></li>
+</ul>
+
+<p><a name="symbols" aria-hidden="true"></a></p>
+
+<h2>Unity symbols</h2>
+
+<p>Symbols provide debugging information including function names, variable names, and source code line numbers. This information helps a debugger (like WinDbg or Visual Studio) map low-level memory addresses back to readable, human-friendly data.</p>
+
+<p>Unity’s Symbol Store (<code>http://symbolserver.unity3d.com/</code>) provides debugging symbols specific to Unity applications and development. You can configure Windows Debugger (WinDbg) or Visual Studio (2019 and later) to automatically download and resolve these symbols to help you debug Unity applications.</p>
+
+<p>For instructions on how to set up WinDbg or Visual Studio to resolve Unity symbols, refer to <a href="WindowsDebugging-instructions.html">Configure your debugging tool to debug Unity in Windows</a>.</p>
+
+<p>
+<strong>Note</strong>: By design, the Unity Symbol Store URL isn’t a browsable web page. If you visit the link directly in a browser, it doesn’t display any content. The symbols are accessible only via debugging tools.</p>
+
+<p><a name="native-debugging" aria-hidden="true"></a></p>
+
+<h2>Built-in debugging tools</h2>
+
+<p>In Unity development, built-in debugging refers to the process of debugging unmanaged code, which is code written in low-level languages such as C, C++, or Assembly. This type of debugging is usually needed for Unity’s engine code, built-in <span class="tooltip"><strong>plug-ins</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Plugins.html" href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span>, or external libraries. </p>
+
+<p>On Windows, debugging tools use Program Database (PDB) files (with the .pdb extension). These files store symbol information, such as function names and line numbers, for associated binary files like executables (.exe) or libraries (.dll).</p>
+
+<p>Use this debugging type to analyze low-level issues like memory corruption, access violations, or performance-related issues. </p>
+
+<p>To effectively use built-in debugging tools for Unity, you must configure them to work with Unity symbols, which provide additional visibility into Unity-specific unmanaged code. For instructions, refer to <a href="WindowsDebugging-instructions.html">Configure your debugging tool to debug Unity in Windows</a>.</p>
+
+<p><a name="c-managed-debugging" aria-hidden="true"></a></p>
+
+<h2>C# managed debugging</h2>
+
+<p>Managed debugging refers to debugging high-level code that runs within a managed runtime environment. In Unity, this primarily involves debugging the logic of C# <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> written to extend game behavior using MonoBehaviour classes and other Unity APIs.</p>
+
+<p>You can use debugging tools such as Visual Studio to debug your Unity managed code, but you can also use the Unity <span class="tooltip"><strong>console window</strong><span class="tooltiptext">A Unity Editor window that shows errors, warnings and other messages generated by Unity, or your own scripts. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Console.html" href="Console.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Consolewindow" aria-label="Go to glossary anchor for Consolewindow">Glossary</a></span></span></span>. The Console window displays errors, warnings, and console messages if you enter Play mode in the Unity Editor. </p>
+
+<p><a name="live-debugging" aria-hidden="true"></a></p>
+
+<h2>Live debugging</h2>
+
+<p>Live debugging is the process in which you attach a debugger to a process that’s already running, or to a process where an exception is caught. For the debugger to spot the issue, you must set up your debugging tool to use Unity symbols in the build. For instructions, refer to <a href="WindowsDebugging-instructions.html#vs-setup">Set up Visual Studio to debug Unity</a>. </p>
+
+<p>For instructions on how to use live debugging in Unity, refer to <a href="WindowsDebugging-live.html">Set up live debugging for Unity</a>.</p>
+
+<p>
+<strong>Note:</strong> If your game executable has the same name as your game name, the debugger might struggle to find the correct .pdb file. This is especially true if the debugger doesn’t have access to the renamed executable.</p>
+
+<p><a name="forensic-debugging" aria-hidden="true"></a></p>
+
+<h2>Forensic debugging</h2>
+
+<p>When applications terminate due to a crash, they sometimes produce a crash dump file. Forensic debugging (or post-mortem debugging) is when you analyze this file to investigate the cause of the crash. </p>
+
+<p>By default, Windows is configured to send application crash reports to Microsoft’s Dr. Watson or Windows Error Reporting services. However, if you have Visual Studio or WinDbg installed, Microsoft provides an option to <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb204634(v=vs.85).aspx">debug the crashes</a>. </p>
+
+<p>Windows provides facilities to investigate crash dump files (.dmp or .mdmp). Depending on the crash dump, you might either find stack information or the entire process memory. The crash dump file contains information that helps determine the cause of the crash. It typically includes a stack trace, provided the stack is intact and valid for analysis.</p>
+
+<p>To investigate a dump file, you can load it in Visual Studio or WinDbg. While Visual Studio is easier to use, WinDbg provides additional features, which makes it a preferred debugging tool.</p>
+
+<p>To learn how to make your application create a dump file, refer to <a href="WindowsDebugging-forensic.html">Set up forensic debugging for Unity</a>. </p>
+
+<p><a name="plug-in" aria-hidden="true"></a></p>
+
+<h2>The UnityMixedCallstack plug-in</h2>
+
+<p>When you run Visual Studio, you can use the <a href="https://github.com/Unity-Technologies/UnityMixedCallstack">UnityMixedCallstack</a> extension for Visual Studio Code by Unity. This extension translates unreadable Mono-managed stack frames into readable ones, which simplifies built-in code debugging.</p>
+
+<h3>Managed Exceptions in Unity</h3>
+
+<p>Managed exceptions occur when errors happen within managed code, for example, C# code that executes under Mono or the .NET runtime. The managed runtime’s exception-handling mechanism handles these exceptions.</p>
+
+<p>For example, a NullReferenceException occurs when code attempts to access a member on a null object reference.</p>
+
+<h3>Example: Debugging a null reference exception</h3>
+
+<p>The following samples show an example of what a null reference with a built-in debugger attached can look like. </p>
+
+<p>This example shows a Unity C# script that triggers a null reference exception:</p>
+
+<pre><code class="lang-cs">    private string name = null;
+
+    void Start()
+    {
+        Debug.Log(name.Length);
+    }
+</code></pre>
+
+<p>When this code runs with a built-in debugger (such as Visual Studio), the output window displays:</p>
+
+<pre><code class="lang-shell">Exception thrown at 0x00000142725F6438 in Unity.exe: 0xC0000005: Access violation reading location 0x0000000000000010.
+</code></pre>
+
+<p>If you use Visual Studio with the <code>UnityMixedCallstack</code> plug-in enabled, the managed stack frames become readable, as seen in this call stack: </p>
+
+<pre><code>    [Assembly-CSharp.dll] SpinMe:Start ()   Unknown
+    [mscorlib.dll] (wrapper runtime-invoke) object:runtime_invoke_void__this__ (object,intptr,intptr,intptr)    Unknown
+    mono-2.0-bdwgc.dll!mono_jit_runtime_invoke(_MonoMethod * method, void * obj, void * * params, _MonoObject * * exc, _MonoError * error) Line 3445    C
+    mono-2.0-bdwgc.dll!do_runtime_invoke(_MonoMethod * method, void * obj, void * * params, _MonoObject * * exc, _MonoError * error) Line 3068  C
+    [Inline Frame] mono-2.0-bdwgc.dll!mono_runtime_try_invoke(_MonoMethod *) Line 3175  C
+    mono-2.0-bdwgc.dll!mono_runtime_invoke(_MonoMethod * method, void * obj, void * * params, _MonoObject * * exc) Line 3115    
+</code></pre>
+
+<p>The <code>SpinMe:Start()</code> appears in the call stack because of the mixed call stack plug-in. Without the plug-in, the method name is unreadable. </p>
+
+<h4>Resolve unreadable managed frames</h4>
+
+<p>Managed frames are stack trace lines that lack detailed information, such as file names or line numbers. Instead, they display <code>Unknown</code>.</p>
+
+<p>To retrieve more detailed information, you can use the built-in <code>mono_pmip</code> function. This function accepts the address of a stack frame and returns a char* with information. You can invoke <code>mono_pmip</code> in the Visual Studio’s <strong>Immediate</strong> window (<strong>Debug</strong> &gt; <strong>Windows</strong> &gt; <strong>Immediate</strong>) for debugging. For more information about this function, refer to <a href="https://www.mono-project.com/docs/debug+profile/debug/#debugging-with-visual-studio-on-windows">Debugging With Visual Studio on Windows</a> (Mono).</p>
+
+<pre><code class="lang-plain">&gt; `?(char*){,,mono-2.0-bdwgc.dll}mono_pmip((void*)0x1b45558c)`  
+0x26a296c0 &quot; Tiles:OnPostRender () + 0x1e4 (1B4553A8 1B4555DC) [065C6BD0 - Unity Child Domain]&quot;`
+</code></pre>
+
+<p>
+<strong>Note:</strong> This works only where <code>mono-2.0-bdwgc.dll</code> symbols load fully.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="WindowsDebugging.html">Unity debugging guide for Windows</a></li>
+<li><a href="WindowsDebugging-instructions.html">Configure your debugging tool to debug Unity in Windows</a></li>
+<li><a href="WindowsDebugging-live.html">Set up live debugging for Unity</a></li>
+<li><a href="WindowsDebugging-forensic.html">Set up forensic debugging for Unity</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="WindowsDebugging.html"></a></span><div class="tip">Unity debugging guide for Windows</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="WindowsDebugging-instructions.html"></a></span><div class="tip">Configure your debugging tool to debug Unity in Windows</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Sorting Groups</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-SortingGroup.html">English</a></li>
+<li><a href="/cn/current/Manual/class-SortingGroup.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-SortingGroup.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-SortingGroup.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-SortingGroup.html">English</a></li>
+<li><a href="/cn/current/Manual/class-SortingGroup.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-SortingGroup.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-SortingGroup.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Unity2D.html">2D game development</a></li>
+<li><a href="Sprites.html">Work with sprites</a></li>
+<li>Sorting Groups</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SpriteEditor-SecondaryTextures.html"></a></span><div class="tip">Sprite Editor: Secondary Textures</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="9SliceSprites.html"></a></span><div class="tip">9-slicing Sprites </div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Sorting Groups</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Sorting Groups</strong> allow you to group <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> with <span class="tooltip"><a href="class-SpriteRenderer.html">Sprite Renderers</a><span class="tooltiptext">A component that lets you display images as Sprites for use in both 2D and 3D scenes. <a href="class-SpriteRenderer.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> with <span class="tooltip"><a href="class-SpriteRenderer.html">Sprite Renderers</a><span class="tooltiptext">A component that lets you display images as Sprites for use in both 2D and 3D scenes. <a href="class-SpriteRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#SpriteRenderer" aria-label="Go to glossary anchor for SpriteRenderer">Glossary</a></span></span></span> together, and control the order in which they render their Sprites. Unity renders <span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html" href="Glossary.html#SpriteRenderer" aria-label="Go to glossary anchor for SpriteRenderer">Glossary</a></span></span></span> together, and control the order in which they render their Sprites. Unity renders <span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> Renderers in the same Sorting Group together, as if they are a single GameObject. </p>
+
+<h2>Set up a Sorting Group</h2>
+
+<p>To place a GameObject into a Sorting Group, add the Sorting Group component to it. To do this, select the GameObject and go to <strong>Component &gt; Rendering &gt; Sorting Group</strong>, or select the <a href="UsingComponents.html">Add Component</a> button in the Inspector window of the GameObject. </p>
+
+<p>When you add a Sorting Group component to a GameObject, Unity applies the same <a href="#SGProperties">Sorting Group</a> to all child GameObjects of the GameObject the component is attached to.</p>
+
+<figure>
+<img src="../uploads/Main/SortingGroup_component.png" alt="The ‘Sprite’ child objects belong to the empty parent GameObject’s Sorting Group.">
+<figcaption>The ‘Sprite’ child objects belong to the empty parent GameObject’s <strong>Sorting Group</strong>.</figcaption>
+</figure>
+
+<p>Unity uses the Sorting Group’s settings to determine how to sort its Renderers among other Renderers and Sorting Groups in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. See <a href="2DSorting.html">2D sorting</a> for more information. </p>
+
+<p>To sort Renderers within a Sorting Group, Unity uses the individual sort settings of the Renderers in the Sorting Group. See <a href="#InternalSort">Sorting Renderers within a Sorting Group</a> for more information.</p>
+
+<h2>Sorting Group properties<a name="SGProperties" aria-hidden="true"></a>
+</h2>
+
+<p>Unity uses a <strong>Sorting Group__’s <a href="https://docs.unity3d.com/Manual/class-TagManager.html#SortingLayers">Sorting Layer</a> and </strong>Order in Layer__ values to determine its priority in the rendering queue among other Sorting Groups and GameObjects in the Scene.</p>
+
+<figure>
+<img src="../uploads/Main/SGonly_properties.png" alt="The Sorting Group component">
+<figcaption>The Sorting Group component</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Sorting Layer</strong></td>
+	<td style="text-align:left;">Select or add a <a href="https://docs.unity3d.com/Manual/class-TagManager.html#SortingLayers">Sorting Layer</a> from this drop-down menu to determine the Sorting Group’s position in the render queue. Unity determines the Sorting Layer order by its place in the Sorting Layer settings; it renders Sorting Layers in the order they appear in the list. See <a href="https://docs.unity3d.com/Manual/class-TagManager.html#SortingLayers">Tags and Layers</a> for information on setting up Sorting Layers.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Order in Layer</strong></td>
+	<td style="text-align:left;">Set the render order of this Sorting Group within its <strong>Sorting Layer</strong>. Unity queues Renderers with lower values first in the render queue, so they appear before Renderers with higher values.</td>
+</tr>
+</tbody>
+</table>
+
+<p>See <a href="2DSorting.html">2D Sorting</a> for more information on using Sorting Layers to sort Sprites, and Unity’s Renderer sorting criteria.</p>
+
+<h2>Sorting Renderers within a Sorting Group<a name="InternalSort" aria-hidden="true"></a>
+</h2>
+
+<p>Unity sorts all Renderers within the same Sorting Group by their individual <strong>Sorting Layer</strong> and <strong>Order in Layer</strong> <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-SpriteRenderer.html">Renderer properties</a>. Unity does not consider each Renderer’s individual <strong>Distance to Camera</strong> property during this sorting process. Instead, it sets a Distance to <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="class-SpriteRenderer.html">Renderer properties</a>. Unity does not consider each Renderer’s individual <strong>Distance to Camera</strong> property during this sorting process. Instead, it sets a Distance to <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> value for the whole Sorting Group (including all its child Renderers), based on the position of the root GameObject that contains the Sorting Group component. </p>
+
+<p>The Sorting Group’s internal sort order remains constant when Unity sorts the Sorting Group among other Renderers and Sorting Groups in the Scene.</p>
+
+<p>The following diagram shows the sorting process.</p>
+
+<figure>
+<img src="../uploads/Main/SG_diagram1.png" alt="Internal Sorting Group sorting process.">
+<figcaption>Internal Sorting Group sorting process.</figcaption>
+</figure>
+
+<p>Unity treats all Renderers that belong to the same Sorting Group as a single layer, and sorts non-grouped Renderers based on their <strong>Sorting Layer</strong> and <strong>Order in Layer</strong> property settings.</p>
+
+<h3>Particle System</h3>
+
+<p>The Editor treats a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ParticleSystem.html">Particle System</a><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a href="class-ParticleSystem.html" href="class-ParticleSystem.html">Particle System</a><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a href="class-ParticleSystem.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#particlesystem" aria-label="Go to glossary anchor for particlesystem">Glossary</a></span></span></span> that is a child of a Sorting Group as another Renderer within that Sorting Group, and sorts it internally among other Renderers based on its <strong>Sorting Layer</strong> and <strong>Order in Layer</strong> property settings.</p>
+
+<p>When Unity sorts the Particle System with the other Renderers within the Sorting Group, it ignores the Particle System’s <strong>Sorting Fudge</strong> value.</p>
+
+<h3>Nested Sorting Groups</h3>
+
+<p>A nested Sorting Group is a Sorting Group that has a parent Sorting Group. Unity sorts Renderers within a nested Sorting Group first, before their parent (see <a href="#InternalSort">Sorting Renderers within a Sorting Group</a>. </p>
+
+<p>After Unity determines the internal sort order of the nested Sorting Group, it sorts the nested Sorting Group with other Renderers or Sorting Groups within the parent Sorting Group. A nested Sorting Group can have a nested Sorting Group as a child. Unity sorts the innermost child Groups first, before their respective parents.</p>
+
+<p>The following diagram gives you an example of the nested Sorting Group sorting process.</p>
+
+<figure>
+<img src="../uploads/Main/SG_diagram2.png" alt="Nested Sorting Group sorting process.">
+<figcaption>Nested Sorting Group sorting process.</figcaption>
+</figure>
+
+<h2>Using Sorting Groups</h2>
+
+<p>The most common way to create a 2D multi-Sprite character is to arrange and parent multiple Sprite Renderers together in the Hierarchy window to form a character. You can use <strong>Sorting Groups</strong> to help manage this kind of complex multi-Sprite character.</p>
+
+<p>In the example below, the Sprite Renderers belong to the same <strong>Sorting Layer,</strong> but with different <strong>Order in Layer</strong> values. Unity sorts the different parts of a character in the order that you want them to appear. </p>
+
+<figure>
+<img src="../uploads/Main/character_hierarchy.png" alt="A character Prefab with its parts in a hierarchy.">
+<figcaption>A character Prefab with its parts in a hierarchy.</figcaption>
+</figure>
+
+<p>After you’ve configured the Sorting Groups and Sorting Layers, you can save your character as a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html">Prefab</a><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html" href="Prefabs.html">Prefab</a><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span>, and clone it as many times as you need to.</p>
+
+<p>However, Prefab Sprites all have the same <strong>Sorting Layer</strong> and <strong>Order in Layer</strong> values and render to the same layers as other Prefabs, which can cause different parts of a Prefab character to intersect and layer incorrectly. </p>
+
+<figure>
+<img src="../uploads/Main/part_intersect.png" alt="Sprites from two Prefabs intersect incorrectly, because Unity is rendering the Sprites on the same layers.">
+<figcaption>Sprites from two Prefabs intersect incorrectly, because Unity is rendering the Sprites on the same layers.</figcaption>
+</figure>
+
+<p>To make sure Prefabs keep their own render order consistent so they appear correctly, add the Sorting Group component to the root GameObject of each Prefab. Save the edited Prefab, so that all current and future instances of the Prefab also have the Sorting Group component.</p>
+
+<p>Each Prefab should have a Sorting Group component with the same <strong>Sorting Layer</strong> and <strong>Order in Layer</strong> property settings. This might cause Renderers in the Prefabs that are on the same <strong>Sorting Layer</strong> to render in inconsistent ways, because they have the same priority in the <a href="SL-SubShaderTags.html">Render Queue</a>.</p>
+
+<p>To prevent this issue, give each Prefab’s Sorting Group component a unique <strong>Order in Layer</strong> value. Unity renders Sorting Groups with lower <strong>Order in Layer</strong> values first and those with higher values overlap the Sorting Groups that are lower. Refer to <a href="class-TagManager.html">Tags and Layers</a> for more information about editing and reordering <strong>Sorting Layers</strong>.
+<img src="../uploads/Main/unique_orderlayer.png" alt="">
+</p>
+
+<p>Each Prefab has a Sorting Group component with a unique <strong>Order in Layer</strong> value to ensure that Unity renders each character and their parts correctly.</p>
+<!-- area:authoring -->
+
+<p><span class="search-words">SortingGroup</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SpriteEditor-SecondaryTextures.html"></a></span><div class="tip">Sprite Editor: Secondary Textures</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="9SliceSprites.html"></a></span><div class="tip">9-slicing Sprites </div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

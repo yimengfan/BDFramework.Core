@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Overview of .NET in Unity</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/overview-of-dot-net-in-unity.html">English</a></li>
+<li><a href="/cn/current/Manual/overview-of-dot-net-in-unity.html">中文</a></li>
+<li><a href="/ja/current/Manual/overview-of-dot-net-in-unity.html">日本語</a></li>
+<li><a href="/kr/current/Manual/overview-of-dot-net-in-unity.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/overview-of-dot-net-in-unity.html">English</a></li>
+<li><a href="/cn/current/Manual/overview-of-dot-net-in-unity.html">中文</a></li>
+<li><a href="/ja/current/Manual/overview-of-dot-net-in-unity.html">日本語</a></li>
+<li><a href="/kr/current/Manual/overview-of-dot-net-in-unity.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="unity-architecture.html">Unity architecture</a></li>
+<li>Overview of .NET in Unity</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="unity-architecture.html"></a></span><div class="tip">Unity architecture</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="dotnetProfileSupport.html"></a></span><div class="tip">.NET profile support</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Overview of .NET in Unity</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity uses the open-source .NET platform to ensure that applications you make with Unity can run on a wide variety of different hardware configurations. The .NET platform supports a range of languages and API libraries.</p>
+
+<h2>Scripting backends</h2>
+
+<p>Unity has two scripting backends; Mono, and <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html" href="IL2CPP.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> (Intermediate Language To C++), each of which uses a different compilation technique:</p>
+
+<ul>
+<li>Mono uses just-in-time (JIT) compilation and compiles code on demand at runtime.</li>
+<li>IL2CPP uses ahead-of-time (AOT) compilation and compiles your entire application before it runs.</li>
+</ul>
+
+<p>The benefit of using a JIT-based scripting backend is that the compilation time is typically much faster than AOT.</p>
+
+<p>By default, Unity uses the Mono backend on platforms that support Mono. When you build a player for your application, you can choose which scripting backend to use. To do this through the Editor, go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong>, open the <strong>Other Settings</strong> panel, then click on the <strong>Scripting Backend</strong> dropdown and select which backend you want. For more information, see <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about scripting-backends.html">Scripting backends</a><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a href="scripting-backends.html" href="scripting-backends.html">Scripting backends</a><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a href="scripting-backends.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScriptingBackend" aria-label="Go to glossary anchor for ScriptingBackend">Glossary</a></span></span></span>.</p>
+
+<h2>Managed code stripping</h2>
+
+<p>When you build an application, Unity compiles and then searches the assemblies (.DLLs) in your project to detect and remove unused code. This process of stripping code reduces the final binary size of your build, but increases build time.</p>
+
+<p>Code stripping is disabled by default when you use Mono but code stripping can’t be disabled for IL2CPP. You can control how much code Unity strips with the <strong>Managed Stripping Level</strong> property.</p>
+
+<p>To change this property, go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong>, open the <strong>Other Settings</strong> panel, then click on the <strong>Managed Stripping Level</strong> dropdown and select a stripping level.</p>
+
+<p>As you increase the <strong>Managed Stripping Level</strong>, Unity removes more code. This increases the risk that Unity might remove code that your application relies on, especially if you use reflection or generate code at runtime.</p>
+
+<p>You can use annotations on certain elements of your code to prevent Unity from stripping it. For more information, see <a href="ManagedCodeStripping.html">Managed Code Stripping</a>.</p>
+
+<h2>Garbage collection</h2>
+
+<p>Unity uses the <a href="https://en.wikipedia.org/wiki/Boehm_garbage_collector">Boehm garbage collector</a> for both the Mono and IL2CPP backends. Unity uses the <strong>Incremental</strong> mode by default. You can disable the <strong>Incremental</strong> mode to use stop-the-world garbage collection, although Unity recommends the <strong>Incremental</strong> mode.</p>
+
+<p>To toggle between Incremental mode and stop-the-world, go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong>, open the <strong>Other Settings</strong> panel and click on the <strong>Use incremental GC</strong> checkbox. In <strong>Incremental</strong> mode, Unity’s garbage collector only runs for a limited period of time and doesn’t necessarily collect all objects in one pass. This spreads the time it takes to collect objects over multiple frames and reduces stuttering and CPU spikes. For more information, see <a href="performance-managed-memory.html">Managed memory</a>.</p>
+
+<p>To check the number of allocations and possible CPU spikes in your application, use the <a href="Profiler.html">Unity Profiler</a>. You can also use the <a href="../ScriptReference/Scripting.GarbageCollector.html">GarbageCollector</a> API to completely disable garbage collection in Players. When the collector is disabled, be careful to avoid allocating excess memory.</p>
+
+<h2>.NET system libraries</h2>
+
+<p>Unity supports many platforms and might use different scripting backends depending on the platform. The .NET system libraries require platform-specific implementations to work correctly in some cases. While Unity tries its best to support as much of the .NET ecosystem as possible, there are some exceptions to parts of the .NET system libraries that Unity explicitly doesn’t support.</p>
+
+<p>Unity makes no performance or allocation guarantees for the .NET system libraries across Unity versions. Generally, Unity doesn’t fix any performance regressions in the .NET system libraries.</p>
+
+<p>Unity doesn’t support the System.Drawing library and it isn’t guaranteed to work on all platforms.</p>
+
+<p>The JIT compilation that the Mono scripting backend uses enables you to emit dynamic C#/.NET Intermediate Language (IL) code generation during the runtime of your application. The <span class="tooltip"><strong>AOT compilation</strong><span class="tooltiptext">Ahead of Time (AOT) compilation is an iOS optimization method for optimizing the size of the built iOS player <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone-playerSizeOptimization.html" href="iphone-playerSizeOptimization.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AOTCompilation" aria-label="Go to glossary anchor for AOTCompilation">Glossary</a></span></span></span> that the IL2CPP scripting backend uses doesn’t support dynamic code generation.</p>
+
+<p>This is important to consider when you use third-party libraries, because they might have different code paths for JIT and AOT, or they might use code paths that rely on dynamically generated code. For more information on how to generate code at runtime, see Microsoft’s <a href="https://docs.microsoft.com/en-us/dotnet/api/system.reflection.emit.modulebuilder?view=netcore-3.1">ModuleBuilder</a> documentation.</p>
+
+<p>Although Unity supports multiple .NET API profiles, you should use the .NET Standard <a href="../ScriptReference/ApiCompatibilityLevel.html">API Compatibility Level</a> for all new projects for the following reasons:</p>
+
+<ul>
+<li>.NET Standard is a smaller API surface and so has a smaller implementation. This reduces the size of your final executable file.</li>
+<li>.NET Standard has better cross-platform support, so your code is more likely to work across all platforms.</li>
+<li>All .NET runtimes support .NET Standard, so your code works across more VM/runtime environments (for example, .NET Framework. .NET Core, Xamarin, Unity) when you use .NET Standard.</li>
+<li>.NET Standard moves more errors to compile time. A number of APIs in .NET Framework are available at compile time, but have implementations on some platforms that throw an exception at runtime.</li>
+</ul>
+
+<p>Other profiles can be useful if, for example, you need to provide support for an older existing application. To change the <strong>Api Compatibility Level</strong> setting, go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong>. Under the <strong>Other Settings</strong> heading, set the <strong>Api Compatibility Level</strong> to the desired setting.</p>
+
+<p>For more information, see <a href="dotnetProfileSupport.html">.NET Profile Support</a>.</p>
+
+<h2>Using third-party .NET libraries</h2>
+
+<p>You should only use third-party .NET libraries that have been extensively tested on a wide range of Unity configurations and platforms.</p>
+
+<p>The performance characteristics of JIT and AOT code paths in third-party libraries might be significantly different. AOT generally reduces startup times and is suited to larger applications for this reason but increases the binary file size to accommodate the compiled code. AOT also takes longer to build during development.</p>
+
+<p>JIT adjusts at runtime based on the platform it’s running on, which can increase running performance at the cost of a potentially longer application startup time. As such, you should profile your application in both the Editor, and on your target platform. For more information, see <a href="Profiler.html">Profiler overview</a>.</p>
+
+<p>You should profile the usage of your .NET system libraries on all target platforms because their performance characteristics might vary depending on the scripting backends, .NET versions, and profiles you use.</p>
+
+<p>When you review a third-party library, consider the following areas:</p>
+
+<ul>
+<li>Compatibility: Third-party libraries might not be compatible with some Unity platforms and scripting backends.</li>
+<li>Performance: Third-party libraries might have vastly different performance characteristics in Unity compared to other .NET runtimes.</li>
+<li>AOT binary size: Third-party libraries might increase AOT binary size significantly because of the number of dependencies the library uses.</li>
+</ul>
+
+<h2>C# reflection overhead</h2>
+
+<p>Mono and IL2CPP internally cache all C# reflection (System.Reflection) objects and by design, Unity doesn’t garbage collect them. The result of this behavior is that the garbage collector continuously scans the cached C# reflection objects during the lifetime of your application, which causes unnecessary and potentially significant garbage collector overhead.</p>
+
+<p>To minimize the garbage collector overhead, avoid methods such as <a href="https://docs.microsoft.com/en-us/dotnet/api/system.reflection.assembly.gettypes">Assembly.GetTypes</a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/system.type.getmethods">Type.GetMethods()</a> in your application, which create a lot of C# reflection objects at runtime. Instead, you should scan assemblies in the Editor for the required data and serialize and/or codegen it for use at runtime.</p>
+
+<h2>UnityEngine.Object special behavior</h2>
+
+<p>
+<a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Object.html">UnityEngine.Object</a> is a special type of C# object in Unity, because it’s linked to a native C++ counterpart object. For example, when you use a <span class="tooltip"><a href="../ScriptReference/Camera.html">Camera</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="class-Object.html">UnityEngine.Object</a> is a special type of C# object in Unity, because it’s linked to a native C++ counterpart object. For example, when you use a <span class="tooltip"><a href="../ScriptReference/Camera.html">Camera</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> component, Unity stores the state of the object on the object’s native C++ counterpart, not on the C# object itself.</p>
+
+<figure>
+<img src="../uploads/Main/unity-engine-object.png" alt="">
+</figure>
+
+<p>Unity doesn’t currently support the use of the C# WeakReference class with instances of UnityEngine.Object. For this reason, you shouldn’t use a WeakReference to reference a loaded asset. See Microsoft’s <a href="https://docs.microsoft.com/en-us/dotnet/api/system.weakreference?view=netcore-3.1">WeakReference documentation</a> for more information on the WeakReference class.</p>
+
+<h3>Unity C# and Unity C++ share UnityEngine Objects</h3>
+
+<p>When you use a method such as <a href="../ScriptReference/Object.Destroy.html">Object.Destroy</a> or <a href="../ScriptReference/Object.DestroyImmediate.html">Object.DestroyImmediate</a> to destroy a UnityEngine.Object derived object, Unity destroys (unloads) the native counter object. You can’t destroy the C# object with an explicit call, because the garbage collector manages the memory. Once there are no longer any references to the managed object, the garbage collector collects and destroys it.</p>
+
+<p>If your application tries to access a destroyed UnityEngine.Object again, Unity recreates the native counterpart object for most types. Two exceptions to this recreation behavior are <a href="../ScriptReference/MonoBehaviour.html">MonoBehaviour</a> and <a href="ScriptableObject">ScriptableObject</a>: Unity never reloads them once they have been destroyed.</p>
+
+<p>MonoBehaviour and ScriptableObject override the equality (==) and inequality (!=) operators. If you compare a destroyed MonoBehaviour or ScriptableObject against <code>null</code>, the operators return true when the managed object still exists and hasn’t yet been garbage collected.</p>
+
+<p>Because you can’t overload the ?? and ?. operators, they aren’t compatible with objects that derive from UnityEngine.Object. The operators don’t return the same results as the equality and inequality operators when you use them on a destroyed MonoBehaviour or ScriptableObject while the managed object still exists.</p>
+
+<h2>Limitations of async and await tasks</h2>
+
+<p>The Unity API isn’t thread safe and therefore, you should only use async and await tasks from inside the UnitySynchronizationContext. Async tasks often allocate objects when invoked, which might cause performance issues if you overuse them. </p>
+
+<p>Unity overwrites the default <a href="https://docs.microsoft.com/en-us/archive/msdn-magazine/2011/february/msdn-magazine-parallel-computing-it-s-all-about-the-synchronizationcontext">SynchronizationContext</a> with a custom <a href="https://github.com/Unity-Technologies/UnityCsReference/blob/master/Runtime/Export/Scripting/UnitySynchronizationContext.cs">UnitySynchronizationContext</a> and runs all the tasks on the main thread in both <strong>Edit</strong> and <strong>Play</strong> modes by default. To use async tasks, you must manually create and handle your own threads with the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task.run?view=net-5.0">Task.Run</a> API, and use the default SynchronizationContext instead of the Unity version.</p>
+
+<p>Unity doesn’t automatically stop async tasks that run on managed threads when you exit Play mode. To listen for enter and exit Play mode events to stop the tasks manually, use <a href="../ScriptReference/EditorApplication.playModeStateChanged.html">EditorApplication.playModeStateChanged</a>. If you take this approach, most of the Unity scripting APIs aren’t available to use unless you migrate the context back to the UnitySynchronizationContext.</p>
+
+<p>In <span class="tooltip"><strong>development builds</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview" href="https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DevelopmentBuild" aria-label="Go to glossary anchor for DevelopmentBuild">Glossary</a></span></span></span>, Unity displays the following error message if you try to use Unity APIs in multithreaded code:</p>
+
+<pre><code class="lang-csharp">
+UnityException: Internal_CreateGameObject can only be called from the main thread. \
+
+Constructors and field initializers will be executed from the loading thread when loading a scene. \
+
+Don't use this function in the constructor or field initializers, instead move initialization code to the Awake or Start function.
+
+</code></pre>
+
+<p>For performance reasons, Unity doesn’t perform checks for multithreaded behavior in non-development builds and doesn’t display this error in live builds. This means that while Unity doesn’t prevent execution of multithreaded code on live builds, random crashes and other unpredictable errors are likely if you do use multiple threads. </p>
+
+<p>For this reason, you shouldn’t use your own multithreading and instead use Unity’s <a href="JobSystem.html">job system</a>. The job system uses multiple threads safely to execute jobs in parallel and achieve the performance benefits of multithreading. For more information, see <a href="JobSystemOverview.html">Job system overview</a>.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="unity-architecture.html"></a></span><div class="tip">Unity architecture</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="dotnetProfileSupport.html"></a></span><div class="tip">.NET profile support</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

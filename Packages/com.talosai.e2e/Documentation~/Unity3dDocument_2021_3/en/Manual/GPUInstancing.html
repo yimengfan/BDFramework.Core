@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: GPU instancing</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/GPUInstancing.html">English</a></li>
+<li><a href="/cn/current/Manual/GPUInstancing.html">中文</a></li>
+<li><a href="/ja/current/Manual/GPUInstancing.html">日本語</a></li>
+<li><a href="/kr/current/Manual/GPUInstancing.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/GPUInstancing.html">English</a></li>
+<li><a href="/cn/current/Manual/GPUInstancing.html">中文</a></li>
+<li><a href="/ja/current/Manual/GPUInstancing.html">日本語</a></li>
+<li><a href="/kr/current/Manual/GPUInstancing.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="graphics-performance-profiling.html">Graphics performance and profiling</a></li>
+<li><a href="optimizing-draw-calls.html">Optimizing draw calls</a></li>
+<li>GPU instancing</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="optimizing-draw-calls.html"></a></span><div class="tip">Optimizing draw calls</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="gpu-instancing-shader.html"></a></span><div class="tip">Creating shaders that support GPU instancing</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>GPU instancing</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>GPU instancing is a <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about optimizing-draw-calls.html">draw call optimization</a> method that renders multiple copies of a <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html" href="optimizing-draw-calls.html">draw call optimization</a> method that renders multiple copies of a <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> with the same material in a single draw call. Each copy of the mesh is called an instance. This is useful for drawing things that appear multiple times in a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> with the same material in a single draw call. Each copy of the mesh is called an instance. This is useful for drawing things that appear multiple times in a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, for example, trees or bushes. </p>
+
+<p>GPU instancing renders identical meshes in the same draw call. To add variation and reduce the appearance of repetition, each instance can have different properties, such as <strong>Color</strong> or <strong>Scale</strong>. Draw calls that render multiple instances appear in the <a href="FrameDebugger.html">Frame Debugger</a> as <strong>Draw Mesh (instanced)</strong>.</p>
+
+<p><a name="requirements-and-compatibility" aria-hidden="true"></a></p>
+
+<h2>Requirements and compatibility</h2>
+
+<p>This section includes information about the platform, <span class="tooltip"><strong>render pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>, and SRP Batcher compatibility of GPU instancing.</p>
+
+<h3>Platform compatibility</h3>
+
+<p>GPU instancing is available on every platform except <span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span> 1.0.</p>
+
+<h3>Render pipeline compatibility</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>Universal Render Pipeline (URP)</strong></th>
+	<th style="text-align:left;"><strong>High Definition Render Pipeline (HDRP)</strong></th>
+	<th style="text-align:left;"><strong>Custom Scriptable Render Pipeline (SRP)</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>GPU instancing</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes (1)</td>
+	<td style="text-align:left;">Yes (1)</td>
+	<td style="text-align:left;">Yes (1)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Notes</strong>:</p>
+
+<ol>
+<li>Only if the shader isn’t compatible with the <a href="SRPBatcher.html">SRP Batcher</a>.</li>
+</ol>
+
+<p><a name="srp-batcher" aria-hidden="true"></a></p>
+
+<h3>SRP Batcher</h3>
+
+<p>GPU instancing isn’t compatible with the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SRPBatcher.html">SRP Batcher</a>. The SRP Batcher takes priority over GPU instancing. If a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="SRPBatcher.html">SRP Batcher</a>. The SRP Batcher takes priority over GPU instancing. If a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> is compatible with the SRP Batcher, Unity uses the SRP Batcher to render it, not GPU instancing. For more information about optimization method priority, see <a href="optimizing-draw-calls.html#optimization-priority">Optimization priority</a>. </p>
+
+<p>If your project uses the SRP Batcher and you want to use GPU instancing for a GameObject, you can do one of the following:</p>
+
+<ul>
+<li>Use <a href="../ScriptReference/Graphics.DrawMeshInstanced.html">Graphics.DrawMeshInstanced</a>. This API bypasses the use of GameObjects and uses the specified parameters to directly draw a mesh on screen.</li>
+<li>Manually remove SRP Batcher compatibility. For information on how to do this, see <a href="SRPBatcher.html#intentionally-removing-compatibility">Intentionally removing compatibility</a>.</li>
+</ul>
+
+<h2>Using GPU instancing</h2>
+
+<p>Unity uses GPU instancing for GameObjects that share the same mesh and material. To instance a mesh and material:</p>
+
+<ul>
+<li>The material’s <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html">shader</a><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Shaders.html">shader</a><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> must support GPU instancing. Unity’s <a href="shader-StandardShader.html">Standard Shader</a> supports GPU instancing, as do all <span class="tooltip"><a href="SL-SurfaceShaders.html">surface shaders</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> must support GPU instancing. Unity’s <a href="shader-StandardShader.html">Standard Shader</a> supports GPU instancing, as do all <span class="tooltip"><a href="SL-SurfaceShaders.html">surface shaders</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a href="SL-SurfaceShaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SurfaceShader" aria-label="Go to glossary anchor for SurfaceShader">Glossary</a></span></span></span>. To add GPU instancing support to any other shader, see <a href="gpu-instancing-shader.html">Creating shaders that support GPU instancing</a>.</li>
+<li>The mesh must come from one of the following sources, grouped by behavior:
+
+<ul>
+<li>A <a href="class-MeshRenderer.html">MeshRenderer</a> component or a <a href="../ScriptReference/Graphics.RenderMesh.html">Graphics.RenderMesh</a> call.
+ <br>Behavior: Unity adds these meshes to a list and then checks to see which meshes it can instance.
+ <br>Unity does not support GPU instancing for <a href="class-SkinnedMeshRenderer.html">SkinnedMeshRenderers</a> or MeshRenderer components attached to GameObjects that are SRP Batcher compatible. For more information, see <a href="#srp-batcher">SRP Batcher compatibility</a>.</li>
+<li>A <a href="../ScriptReference/Graphics.RenderMeshInstanced.html">Graphics.RenderMeshInstanced</a> or <a href="../ScriptReference/Graphics.RenderMeshIndirect.html">Graphics.RenderMeshIndirect</a> call. These methods render the same mesh multiple times using the same shader. Each call to these methods issues a separate draw call. Unity does not merge these draw calls.</li>
+</ul>
+</li>
+</ul>
+
+<p>To use GPU instancing for a material, select the <strong>Enable GPU Instancing</strong> option in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/enable-gpu-instancing-inspector.png" alt="The Enable GPU Instancing option as it appears in the material Inspector.">
+<figcaption>The Enable GPU Instancing option as it appears in the material Inspector.</figcaption>
+</figure>
+
+<h3>Lighting</h3>
+
+<p>GPU instancing supports Unity’s <a href="GI-Enlighten.html">Baked Global Illumination system</a>. Unity Standard Shaders and surface shaders support GPU instancing and Unity’s Baked <span class="tooltip"><strong>Global Illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span> system by default. </p>
+
+<p>Each GPU instance supports global illumination from one of the following sources:</p>
+
+<ul>
+<li>Any number of <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html">Light Probes</a><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html" href="LightProbes.html">Light Probes</a><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span>.</li>
+<li>One <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html">lightmap</a><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a href="Lightmapping.html" href="Lightmapping.html">lightmap</a><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span>.
+ <br><strong>Note</strong>: An instance can use multiple atlas regions in the lightmap.</li>
+<li>One <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LightProbeProxyVolume.html">Light Probe Proxy Volume</a><span class="tooltiptext">A component that allows you to use more lighting information for large dynamic GameObjects that cannot use baked lightmaps (for example, large Particle Systems or skinned Meshes). <a href="class-LightProbeProxyVolume.html" href="class-LightProbeProxyVolume.html">Light Probe Proxy Volume</a><span class="tooltiptext">A component that allows you to use more lighting information for large dynamic GameObjects that cannot use baked lightmaps (for example, large Particle Systems or skinned Meshes). <a href="class-LightProbeProxyVolume.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbeProxyVolume" aria-label="Go to glossary anchor for LightProbeProxyVolume">Glossary</a></span></span></span>(LPPV) component.
+ <br><strong>Note</strong>: You must bake the LPPV for the space volume that contains all the instances.</li>
+</ul>
+
+<p>GPU instancing automatically works with:</p>
+
+<ul>
+<li>Dynamic <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshRenderer.html">Mesh Renderers</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html" href="class-MeshRenderer.html">Mesh Renderers</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span> affected by Light Probes.</li>
+<li>Static Mesh Renderers you bake to the same lightmap texture. A Mesh Renderer is static in this context if it includes <strong>Contribute GI</strong> in its <a href="StaticObjects.html">Static Editor Flags</a>.</li>
+</ul>
+
+<p>To enable Light Probe rendering for <code>Graphics.DrawMeshInstanced</code>, set the <a href="../ScriptReference/Rendering.LightProbeUsage.html">LightProbeUsage</a> parameter to <a href="../ScriptReference/Rendering.LightProbeUsage.CustomProvided.html">CustomProvided</a> and provide a <a href="../ScriptReference/MaterialPropertyBlock.html">MaterialPropertyBlock</a> that includes the Probe data. For more information and code examples, see <a href="../ScriptReference/LightProbes.CalculateInterpolatedLightAndOcclusionProbes.html">LightProbes.CalculateInterpolatedLightAndOcclusionProbes</a>.</p>
+
+<p>Alternatively, you can pass an LPPV component reference and <a href="../ScriptReference/Rendering.LightProbeUsage.UseProxyVolume.html">LightProbeUsage.UseProxyVolume</a> to <code>Graphics.DrawMeshInstanced</code>. When you do this, all instances sample the volume for the <a href="LightProbes-TechnicalInformation.html">L0 and L1 bands</a> of the Light Probe data. If you want to supplement L2 data and occlusion data, use a <code>MaterialPropertyBlock</code>. For more information, see <a href="LightProbes-TechnicalInformation.html">Light Probes: Technical Information</a>.</p>
+
+<p><a name="performance-implications" aria-hidden="true"></a></p>
+
+<h2>Performance implications</h2>
+
+<p>Meshes that have a low number of vertices can’t be processed efficiently using GPU instancing because the GPU can’t distribute the work in a way that fully uses the GPU’s resources. This processing inefficiency can have a detrimental effect on performance. The threshold at which inefficiencies begin depends on the GPU, but as a general rule, don’t use GPU instancing for meshes that have fewer than 256 vertices.</p>
+
+<p>If you want to render a mesh with a low number of vertices many times, best practice is to create a single buffer that contains all the mesh information and use that to draw the meshes.</p>
+
+<hr>
+
+<ul>
+<li><p><span class="page-edit">2017–10–24 Page amended
+</span></p></li>
+<li><p><span class="page-history">Enable instancing checkbox guidance, DrawMeshInstancedIndirect, #pragma multi-compile added in 5.6</span></p></li>
+<li><p><span class="page-history">Shader warm up for GPU instancing added in <a href="https://docs.unity3d.com/2017.3/Documentation/Manual/30_search.html?q=newin20173">2017.3</a> <span class="search-words">NewIn20173</span></span></p></li>
+<li><p><span class="page-history">Global Illumination (GI) support in GPU instancing added in <a href="https://docs.unity3d.com/2018.1/Documentation/Manual/30_search.html?q=newin20181">2018.1</a> <span class="search-words">NewIn20181</span></span></p></li>
+</ul>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="optimizing-draw-calls.html"></a></span><div class="tip">Optimizing draw calls</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="gpu-instancing-shader.html"></a></span><div class="tip">Creating shaders that support GPU instancing</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

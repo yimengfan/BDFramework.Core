@@ -1,0 +1,287 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Embedded Linux Build Settings reference</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/embedded-linux-build-settings.html">English</a></li>
+<li><a href="/cn/current/Manual/embedded-linux-build-settings.html">中文</a></li>
+<li><a href="/ja/current/Manual/embedded-linux-build-settings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/embedded-linux-build-settings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/embedded-linux-build-settings.html">English</a></li>
+<li><a href="/cn/current/Manual/embedded-linux-build-settings.html">中文</a></li>
+<li><a href="/ja/current/Manual/embedded-linux-build-settings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/embedded-linux-build-settings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="embedded-systems.html">Embedded systems</a></li>
+<li><a href="embedded-linux.html">Embedded Linux</a></li>
+<li><a href="embedded-linux-build-and-deliver.html">Build and deliver for Embedded Linux</a></li>
+<li>Embedded Linux Build Settings reference</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="embedded-linux-build-and-deliver.html"></a></span><div class="tip">Build and deliver for Embedded Linux</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="embedded-linux-build-command-line.html"></a></span><div class="tip">Build for Embedded Linux from the command line</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Embedded Linux Build Settings reference</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To create a build for Embedded Linux, go to <strong>File &gt; Build Settings</strong>… from Unity’s main menu. In the Platform list, select <strong>Embedded Linux</strong> and then click <strong>Switch Platform</strong>.</p>
+
+<p>When you have configured the Build Settings, choose from the following two options:</p>
+
+<ul>
+<li><p>
+<strong>Build</strong> builds your application into a Player.</p></li>
+<li><p>
+<strong>Build and Run</strong> builds your application in a Player, and opens that Player on your target platform.</p></li>
+</ul>
+
+<p><img src="../uploads/Main/embedded-linux-build-settings.png" alt="Build Settings for Embedded Linux"></p>
+
+<h2>Scenes in Build</h2>
+
+<p>The Scenes In Build pane displays a list of the Scenes from your Project that Unity includes in the build. If you can’t view any Scenes in this pane, select <strong>Add Open Scenes</strong> to add all the currently open Scenes to the build. You can also drag <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> Assets from your <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a href="ProjectView.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> Assets from your <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span> into this window.</p>
+
+<p>To exclude a Scene in the list from the build, clear the checkbox next to that scene. This removes the Scene from the build, but not from the list. To remove a Scene from the list, select it and press the <strong>Delete</strong> key on your keyboard.</p>
+
+<p>When you select <strong>Build</strong> or <strong>Build and Run</strong>, Unity creates a build that includes all Scenes in the Scenes in Build list. Unity uses the list of Scenes to locate the order that it loads the Scenes in. To adjust the order of the Scenes, drag them up or down the list.</p>
+
+<h2>Platform list</h2>
+
+<p>The Platform pane lists all platforms available in your Unity Editor. When you select a platform, the Unity icon appears next to the name of the platform you selected as the target platform.</p>
+
+<p>Unity determines the platforms available to you depending on the platform modules you have installed. You can add additional platform modules to your project and change the target platform depending on your requirement.</p>
+
+<p>To install additional platform modules to your Project, you can do the following:</p>
+
+<ul>
+<li>Go to the <strong>Unity Hub</strong> and select the version of Unity you want to add the module to.</li>
+<li>Click the vertical ellipses and select <strong>Add Modules</strong>.</li>
+</ul>
+
+<p>To change the target platform, select the platform you want to switch to, then select <strong>Switch Platforms</strong>. This might take some time, because Unity might need to re-import your Assets in formats that match your target platform.</p>
+
+<p>When you select a platform, Unity displays a list of options that you can adjust for the build. Each platform has unique settings which are listed on each <a href="PlatformSpecific.html">platform-specific</a> manual page.</p>
+
+<p>Additionally, the Unity build system for Embedded Linux supports the following settings:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;" colspan="2"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Architecture</strong></td>
+	<td style="text-align:left;" colspan="2">Select from the following CPU architectures to build (only applies to <strong>Build And Run</strong>) for the Embedded Linux platform.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>x86</strong></td>
+	<td style="text-align:left;">32-bit CPU.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>x64</strong></td>
+	<td style="text-align:left;">64-bit CPU.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>arm32</strong></td>
+	<td style="text-align:left;">32-bit ARM CPU.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>arm64</strong></td>
+	<td style="text-align:left;">64-bit ARM CPU.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Remote Device</strong></td>
+	<td style="text-align:left;" colspan="2">Deploys and launches the app to a connected device on a remote device based on the connection and authentication information you provide.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Address (required)</strong></td>
+	<td style="text-align:left;">The address of the remote device. You can also specify a port by adding a colon after the address (for example, 10.110.91.3:2121).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Username (optional)</strong></td>
+	<td style="text-align:left;">The user name on the remote device.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Exports</strong></td>
+	<td style="text-align:left;">Specify the additional exports, if they’re required to launch the device remotely. Multiple environment variables are separated by a space. For example, <code>ENV_VAR1=1 ENV_VAR2=2</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Install Path</strong></td>
+	<td style="text-align:left;">The installation path for the application. If not set, the default value ~tmp/unity/test will be used.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Development Build</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview" href="https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DevelopmentBuild" aria-label="Go to glossary anchor for DevelopmentBuild">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;" colspan="2">Enable this setting to include scripting debug symbols and the <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> in your build. When you enable this, Unity sets the <code>DEVELOPMENT_BUILD</code> scripting define. You must use this setting only when you want to test your application. Note that development builds don’t minify content, which means the development builds are large to distribute.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Autoconnect Profiler</strong></td>
+	<td style="text-align:left;" colspan="2">When enabled, this setting allows you to automatically connect the Unity Profiler to your build. For this setting to be available, you must enable the Development Build option.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Deep Profiling</strong></td>
+	<td style="text-align:left;" colspan="2">Enable this setting to enable <a href="ProfilerWindow.html">Deep Profiling</a> in the Profiler. This makes the Profiler instrument every function call in your application and returns more detailed profiling data. When you enable Deep Profiling Support, it might slow down script execution. This option is only available if you enable the Development Build setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Script Debugging</strong></td>
+	<td style="text-align:left;" colspan="2">Attach script debuggers to the Player remotely. Only available if you enable the Development Build setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> Method</strong></td>
+	<td style="text-align:left;" colspan="2">Compress the data in your Project at build time. This includes Assets, Scenes, <span class="tooltip"><strong>Player settings</strong><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html" href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span>, and <span class="tooltip"><strong>global illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span> data.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Default</strong></td>
+	<td style="text-align:left;">The default compression method is None.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>LZ4</strong></td>
+	<td style="text-align:left;">A fast compression format for development builds. LZ4 compression can significantly improve the loading time of your application. For more information, refer to <a href="../ScriptReference/BuildOptions.CompressWithLz4.html">BuildOptions.CompressWithLz4</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>LZ4HC</strong></td>
+	<td style="text-align:left;">A high compression variant of LZ4 that’s slower to build but produces better results for release builds. LZ4HC compression can significantly improve the loading time of your application. For more information, refer to <a href="../ScriptReference/BuildOptions.CompressWithLz4HC.html">BuildOptions.CompressWithLz4HC</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Additional resources</h3>
+
+<ul>
+<li><a href="BuildSettings.html">Build Settings</a></li>
+<li><a href="comp-ManagerGroup.html">Projects Settings</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="embedded-linux-build-and-deliver.html"></a></span><div class="tip">Build and deliver for Embedded Linux</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="embedded-linux-build-command-line.html"></a></span><div class="tip">Build for Embedded Linux from the command line</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

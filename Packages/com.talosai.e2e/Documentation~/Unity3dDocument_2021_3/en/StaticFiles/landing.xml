@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root LongForm="false">
+  <Model>
+    <Intro></Intro>
+  </Model>
+  <website_terms>
+    <unity_tech>Unity Technologies</unity_tech>
+    <overview>Overview</overview>
+    <manual>Manual</manual>
+    <scripting_api>Scripting API</scripting_api>
+    <learn>Learn</learn>
+    <tutorials>Tutorials</tutorials>
+    <tutorials_url>https://unity3d.com/learn</tutorials_url>
+    <terms_of_use>Terms of use</terms_of_use>
+    <terms_of_use_url>https://docs.unity3d.com/Manual/TermsOfUse.html</terms_of_use_url>
+    <legal>Legal</legal>
+    <legal_url>https://unity.com/legal</legal_url>
+    <privacy_policy>Privacy Policy</privacy_policy>
+    <privacy_policy_url>https://unity.com/legal/privacy-policy</privacy_policy_url>
+    <cookie>Cookies</cookie>
+    <cookie_url>https://unity.com/legal/cookie-policy</cookie_url>
+    <personal_info>Do Not Sell or Share My Personal Information</personal_info>
+    <personal_info_url>https://unity.com/legal/do-not-sell-my-personal-information</personal_info_url>
+    <your_privacy_choices>Your Privacy Choices (Cookie Settings)</your_privacy_choices>
+    <live_training>Live Training</live_training>
+    <premium_support>Premium Support</premium_support>
+    <community>Community</community>
+    <forums>Forums</forums>
+    <forums_url>https://forum.unity3d.com</forums_url>
+    <answers>Answers</answers>
+    <issuetracker>Issue Tracker</issuetracker>
+    <issuetracker_url>https://issuetracker.unity3d.com</issuetracker_url>
+    <issuetracker_title>issuetracker.unity3d.com</issuetracker_title>
+    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+    <unity_manual>Unity Manual</unity_manual>
+    <unity_dash_manual>Unity - Manual</unity_dash_manual>
+    <full_table_of_contents>Full table of contents</full_table_of_contents>
+    <copyright>Copyright ©</copyright>
+    <unity>Unity</unity>
+    <gallery>Gallery</gallery>
+    <asset_store>Asset Store</asset_store>
+    <assetstore_url>https://unity3d.com/asset-store</assetstore_url>
+    <buy>Buy</buy>
+    <download>Download</download>
+    <knowledgebase>Knowledge Base</knowledgebase>
+    <knowledgebase_url>https://support.unity3d.com/hc/en-us</knowledgebase_url>
+    <community_answers>Community Answers</community_answers>
+    <community_answers_url>https://answers.unity3d.com</community_answers_url>
+    <download>Download</download>
+    <language>Language</language>
+    <previous>Previous</previous>
+    <next>Next</next>
+    <script_language>Script language</script_language>
+    <script_language_body>Select your preferred scripting language. All code snippets will be displayed in this language.</script_language_body>
+    <history>History</history>
+    <inherits_from>Inherits from:</inherits_from>
+    <implemented_in>Implemented in:</implemented_in>
+    <implements_interfaces>Implements interfaces:</implements_interfaces>
+    <suggest_a_change>Suggest a change</suggest_a_change>
+    <suggest_success>Success!</suggest_success>
+    <suggest_success_body>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</suggest_success_body>
+    <suggest_clone>Close</suggest_clone>
+    <suggest_failed>Submission failed</suggest_failed>
+    <suggest_failed_body>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</suggest_failed_body>
+    <suggest_name>Your name</suggest_name>
+    <suggest_email>Your email</suggest_email>
+    <suggest_body>Suggestion</suggest_body>
+    <suggest_submit>Submit suggestion</suggest_submit>
+    <suggest_cancel>Cancel</suggest_cancel>
+    <signature>Declaration</signature>
+    <parameters>Parameters</parameters>
+    <parameter>Parameter</parameter>
+    <returns>Returns</returns>
+    <description>Description</description>
+    <static_variables>Static Properties</static_variables>
+    <variables>Properties</variables>
+    <variable>Property</variable>
+    <constructors>Constructors</constructors>
+    <constructor>Constructor</constructor>
+    <public_functions>Public Methods</public_functions>
+    <protected_functions>Protected Methods</protected_functions>
+    <static_functions>Static Methods</static_functions>
+    <function>Method</function>
+    <operators>Operators</operators>
+    <operator>Operator</operator>
+    <messages>Messages</messages>
+    <message>Message</message>
+    <delegates>Delegates</delegates>
+    <delegate>Delegate</delegate>
+    <events>Events</events>
+    <event>Event</event>
+    <inherited_members>Inherited Members</inherited_members>
+    <structs>Structs</structs>
+    <struct>Struct</struct>
+    <intro>Welcome to the Unity Scripting Reference!</intro>
+    <intro_body_1>This section of the documentation contains details of the scripting API that Unity provides. To use this information, you should be familiar with the basic theory and practice of scripting in Unity which is explained in the &lt;a href="../Manual/ScriptingSection.html"&gt;Scripting section&lt;/a&gt; of our manual.</intro_body_1>
+    <intro_body_2>The scripting reference is organised according to the classes available to scripts which are described along with their methods, properties and any other information relevant to their use.</intro_body_2>
+    <intro_body_3>The pages are extensively furnished with example code ("examples"); notwithstanding anything in the &lt;a href="https://unity3d.com/legal"&gt;Terms of Service&lt;/a&gt; to the contrary, Unity grants you a non-exclusive, non-transferable, non-sublicensable, royalty-free license to access, to use, to modify, and to distribute the examples without crediting Unity.</intro_body_3>
+    <intro_body_4>API are grouped by namespaces they belong to, and can be selected from the sidebar to the left. For most users, the &lt;b&gt;UnityEngine&lt;/b&gt; section will be the main port of call.</intro_body_4>
+    <classes>Classes</classes>
+    <class>Class</class>
+    <enumerations>Enumerations</enumerations>
+    <enum>Enumeration</enum>
+    <attribute>Attribute</attribute>
+    <attributes>Attributes</attributes>
+    <api_histroy>API History</api_histroy>
+    <api_histroy_body>Overview of additions to (and removals from) Unity's scripting API in each version.</api_histroy_body>
+    <api_histroy_name>Name</api_histroy_name>
+    <api_histroy_type>Type</api_histroy_type>
+    <api_histroy_namespace>Namespace</api_histroy_namespace>
+    <api_histroy_status>Status</api_histroy_status>
+    <api_histroy_version>Version</api_histroy_version>
+    <api_histroy_added>added</api_histroy_added>
+    <api_histroy_obsolete>obsolete</api_histroy_obsolete>
+    <api_histroy_removed>removed</api_histroy_removed>
+    <rate_content>Did you find this page useful? Please give it a rating:</rate_content>
+    <rate_thanks>Thanks for rating this page!</rate_thanks>
+    <report_problem>Report a problem on this page</report_problem>
+    <problem_type>What kind of problem would you like to report?</problem_type>
+    <problem_needcode>This page needs code samples</problem_needcode>
+    <problem_code>Code samples do not work</problem_code>
+    <problem_missing>Information is missing</problem_missing>
+    <problem_incorrect>Information is incorrect</problem_incorrect>
+    <problem_unclear>Information is unclear or confusing</problem_unclear>
+    <problem_language>There is a spelling/grammar error on this page</problem_language>
+    <problem_other>Something else</problem_other>
+    <problem_thanks>Thanks for letting us know! This page has been marked for review based on your feedback.</problem_thanks>
+    <problem_more_info>If you have time, you can provide more information to help us fix the problem faster.</problem_more_info>
+    <problem_more_info_link>Provide more information</problem_more_info_link>
+    <problem_needcode_form_description>You've told us this page needs code samples. If you'd like to help us further, you could provide a code sample, or tell us about what kind of code sample you'd like to see:</problem_needcode_form_description>
+    <problem_code_form_description>You've told us there are code samples on this page which don't work. If you know how to fix it, or have something better we could use instead, please let us know:</problem_code_form_description>
+    <problem_missing_form_description>You've told us there is information missing from this page. Please tell us more about what's missing:</problem_missing_form_description>
+    <problem_incorrect_form_description>You've told us there is incorrect information on this page. If you know what we should change to make it correct, please tell us:</problem_incorrect_form_description>
+    <problem_unclear_form_description>You've told us this page has unclear or confusing information. Please tell us more about what you found unclear or confusing, or let us know how we could make it clearer:</problem_unclear_form_description>
+    <problem_language_form_description>You've told us there is a spelling or grammar error on this page. Please tell us what's wrong:</problem_language_form_description>
+    <problem_other_form_description>You've told us this page has a problem. Please tell us more about what's wrong:</problem_other_form_description>
+    <problem_more_info_thanks>Thanks for helping to make the Unity documentation better!</problem_more_info_thanks>
+    <leave_feedback>Leave feedback</leave_feedback>
+  </website_terms>
+</Root>

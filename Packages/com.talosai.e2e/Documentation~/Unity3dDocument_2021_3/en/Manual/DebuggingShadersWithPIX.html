@@ -1,0 +1,252 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Debugging DirectX 12 shaders with PIX</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/DebuggingShadersWithPIX.html">English</a></li>
+<li><a href="/cn/current/Manual/DebuggingShadersWithPIX.html">中文</a></li>
+<li><a href="/ja/current/Manual/DebuggingShadersWithPIX.html">日本語</a></li>
+<li><a href="/kr/current/Manual/DebuggingShadersWithPIX.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/DebuggingShadersWithPIX.html">English</a></li>
+<li><a href="/cn/current/Manual/DebuggingShadersWithPIX.html">中文</a></li>
+<li><a href="/ja/current/Manual/DebuggingShadersWithPIX.html">日本語</a></li>
+<li><a href="/kr/current/Manual/DebuggingShadersWithPIX.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-performance-debugging.html">Understanding shader performance</a></li>
+<li>Debugging DirectX 12 shaders with PIX</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-DebuggingD3D11ShadersWithVS.html"></a></span><div class="tip">Debugging shaders using Visual Studio</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Materials.html"></a></span><div class="tip">Materials</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Debugging DirectX 12 shaders with PIX</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>PIX is a performance tuning and debugging tool by Microsoft, for Windows developers. It offers a range of modes for analyzing an application’s performance, and includes the ability to capture frames of DirectX projects from an application for debugging.</p>
+
+<p>Use PIX to investigate issues in Windows 64-bit (x86_64) Standalone or Universal Windows Platform applications.</p>
+
+<p>To install PIX, <a href="https://blogs.msdn.microsoft.com/pix/download/">download and run the Microsoft PIX installer</a> and follow the instructions.</p>
+
+<p>For more information about PIX, see Microsoft’s <a href="https://blogs.msdn.microsoft.com/pix/introduction/">PIX Introduction</a> and <a href="https://blogs.msdn.microsoft.com/pix/documentation/">PIX Documentation</a>.</p>
+
+<h2>Debugging DirectX shaders with PIX</h2>
+
+<p>You should use a built version of your Unity application to capture frames, rather than a version running in the Unity Editor. This is because you need to launch the target application from within PIX to capture GPU frames.</p>
+
+<p>Using a development build adds additional information to PIX, which makes navigating the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> capture easier.</p>
+
+<h3>Create a project with a debug-enabled Shader</h3>
+
+<p>To debug the shader with source code in PIX, you need to insert the following pragma into the shader code: <code>#pragma enable_d3d11_debug_symbols</code>
+</p>
+
+<h3>Example</h3>
+
+<p>The following walkthrough uses a basic example to demonstrate the entire process.</p>
+
+<h4>Create a basic project:</h4>
+
+<ol>
+<li><p>Create a new Unity project (see the Hub documentation on <a href="https://docs.unity3d.com/hub/manual/Projects.html">Projects</a>).</p></li>
+<li><p>In the top menu, go to <span class="tooltip"><strong>Assets</strong><span class="tooltiptext">Any media or data that can be used in your game or project. An asset may come from a file created outside of Unity, such as a 3D Model, an audio file or an image. You can also create some asset types in Unity, such as an Animator Controller, an Audio Mixer or a Render Texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetWorkflow.html" href="AssetWorkflow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Asset" aria-label="Go to glossary anchor for Asset">Glossary</a></span></span></span> &gt; <strong>Create</strong> &gt; <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#Asset" aria-label="Go to glossary anchor for Asset">Glossary</a></span></span></span> &gt; <strong>Create</strong> &gt; <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> &gt; <strong>Standard Surface Shader</strong>. This creates a new shader file in your <span class="tooltip"><strong>Project</strong><span class="tooltiptext">In Unity, you use a project to design and develop a game. A project stores all of the files that are related to a game, such as the asset and Scene files. <a href="2Dor3D.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> &gt; <strong>Standard Surface Shader</strong>. This creates a new shader file in your <span class="tooltip"><strong>Project</strong><span class="tooltiptext">In Unity, you use a project to design and develop a game. A project stores all of the files that are related to a game, such as the asset and Scene files. <a href="2Dor3D.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Project" aria-label="Go to glossary anchor for Project">Glossary</a></span></span></span> folder.</p></li>
+<li><p>Select the shader file, and in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window, click <strong>Open</strong>. This opens the shader file in your scripting editor. Insert <code>#pragma enable_d3d11_debug_symbols</code> into the shader code, underneath the other <code>#pragma</code> lines.</p></li>
+<li><p>Create a new Material (menu: <strong>Assets</strong> &gt; <strong>Create</strong> &gt; <span class="tooltip"><strong>Material</strong><span class="tooltiptext">An asset that defines how a surface should be rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Material.html" href="class-Material.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span>).</p></li>
+<li><p>In the Material’s Inspector window, select the <strong>Shader</strong> dropdown, go to <strong>Custom</strong>, and select the shader you just created. </p></li>
+<li><p>Create a 3D cube GameObject (menu: <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> &gt; <span class="tooltip"><strong>3D Object</strong><span class="tooltiptext">A 3D GameObject such as a cube, terrain or ragdoll. <a href="GameObjects.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> &gt; <span class="tooltip"><strong>3D Object</strong><span class="tooltiptext">A 3D GameObject such as a cube, terrain or ragdoll. <a href="GameObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#3DObject" aria-label="Go to glossary anchor for 3DObject">Glossary</a></span></span></span> &gt; <strong>Cube</strong>).</p></li>
+<li><p>Assign your new Material to your new GameObject. To do this, drag the Material from the <strong>Project</strong> window to the 3D cube.</p></li>
+</ol>
+
+<h3>Capture a frame from a Windows Standalone application:</h3>
+
+<ol>
+<li>
+<p>Go to <strong>File</strong> &gt; <strong>Build Settings</strong>, and under <strong>Platform</strong>, select <strong>Windows, Mac, Linux</strong>. Set the <strong>Target Platform</strong> to <strong>Windows</strong>, set the <strong>Architecture</strong> to <strong>Intel 64-bit</strong>, and click the <span class="tooltip"><strong>Development Build</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview" href="https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DevelopmentBuild" aria-label="Go to glossary anchor for DevelopmentBuild">Glossary</a></span></span></span> checkbox.</p>
+
+<figure>
+<img src="../uploads/Main/PIXDebugBuildSettings.png" alt="">
+</figure>
+</li>
+<li><p>Click <span class="tooltip"><strong>Build</strong><span class="tooltiptext">The process of compiling your project into a format that is ready to run on a specific platform or platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about BuildSettings.html" href="BuildSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#build" aria-label="Go to glossary anchor for build">Glossary</a></span></span></span>.</p></li>
+<li><p>Launch <strong>PIX.</strong>
+</p></li>
+<li><p>Click on <strong>Home</strong>, then <strong>Connect</strong>
+</p></li>
+<li><p>Select Computer <strong>localhost </strong>to use your PC for capturing, and click <strong>connect</strong>.</p></li>
+<li><p>In the <strong>Select Target Process</strong> box, select the <strong>Launch Win32</strong> tab and use the <strong>Browse</strong> button to select your application’s executable file. Note that here, “Win32” means a non-UWP application; your application file must be a 64-bit binary file.</p></li>
+<li>
+<p>Enable <strong>Launch for GPU Capture</strong>, then use the <strong>Launch</strong> button to start the application.</p>
+
+<figure>
+<img src="../uploads/Main/PIXDebugTargetProcess.png" alt="">
+</figure>
+</li>
+<li>
+<p>Use your application as normal until you are ready to capture a frame. To capture a frame, press <strong>Print Screen</strong> on your keyboard, or click the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> icon on the GPU Capture Panel. A thumbnail of the capture appears in the panel. To open the capture, click the thumbnail.</p>
+
+<figure>
+<img src="../uploads/Main/PIXDebugGPUCapture.png" alt="">
+</figure>
+</li>
+<li>
+<p>To start analysis on the capture, click the highlighted text or the small <strong>Play</strong> icon on the menu bar.</p>
+
+<figure>
+<img src="../uploads/Main/PIXDebugAnalysisArrow.png" alt="">
+</figure>
+</li>
+<li>
+<p>Select the <strong>Pipeline </strong>tab and use the__ Events__ window to navigate to a draw call you are interested in.</p>
+
+<figure>
+<img src="../uploads/Main/PIXDebugPiplineTab.png" alt="">
+</figure>
+</li>
+<li><p>In the lower half of the <strong>Pipeline</strong> tab, select a render target from the <strong>OM</strong> (Output Merger) list to view the output of draw call. Select a <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> on the object you want to debug. Note that you can right-click a pixel to view the draw call history, as a way of finding draw calls you are interested in.</p></li>
+<li>
+<p>Select <strong>Debug Pixel</strong> on the <strong>Pixel Details</strong> panel.</p>
+
+<figure>
+<img src="../uploads/Main/PIXDebugPixelDetails.png" alt="">
+</figure>
+</li>
+<li>
+<p>On the debug panel, use the Shader Options to select which shader stage to debug.</p>
+
+<figure>
+<img src="../uploads/Main/PIXDebugShaderOptions.png" alt="">
+</figure>
+</li>
+<li>
+<p>Use the <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> or keyboard shortcuts to step through the code.</p>
+
+<figure>
+<img src="../uploads/Main/PIXDebugShaderDebugger.png" alt="">
+</figure>
+</li>
+</ol>
+
+<p>For more information on debugging shaders with PIX, see Microsoft’s video series <a href="https://www.youtube.com/playlist?list=PLeHvwXyqearWuPPxh6T03iwX-McPG5LkB">PIX on Windows</a>, particularly <a href="https://www.youtube.com/watch?v=jRflMYmXv2g">Part 5 - Debug Tab</a>.</p>
+
+<p>For more information on GPU capture in PIX, see Microsoft’s documentation on <a href="https://blogs.msdn.microsoft.com/pix/gpu-captures/">GPU Captures</a>. </p>
+
+<ul>
+<li><span class="page-edit">2018–09–17 Page published
+</span></li>
+</ul>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-DebuggingD3D11ShadersWithVS.html"></a></span><div class="tip">Debugging shaders using Visual Studio</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Materials.html"></a></span><div class="tip">Materials</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

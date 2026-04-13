@@ -1,0 +1,385 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: XR SDK Meshing subsystem</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xrsdk-meshing.html">English</a></li>
+<li><a href="/cn/current/Manual/xrsdk-meshing.html">中文</a></li>
+<li><a href="/ja/current/Manual/xrsdk-meshing.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xrsdk-meshing.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xrsdk-meshing.html">English</a></li>
+<li><a href="/cn/current/Manual/xrsdk-meshing.html">中文</a></li>
+<li><a href="/ja/current/Manual/xrsdk-meshing.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xrsdk-meshing.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="XR.html">XR</a></li>
+<li><a href="xr-sdk.html">Unity XR SDK</a></li>
+<li><a href="xrsdk-subsystems-landing.html">Subsystems</a></li>
+<li>XR SDK Meshing subsystem</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="xrsdk-display.html"></a></span><div class="tip">XR SDK Display subsystem</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="xrsdk-pre-init-interface.html"></a></span><div class="tip">XR SDK PreInit interface</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>XR SDK Meshing subsystem</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Meshing subsystem extracts <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> data from an external Provider and converts it to a <a href="../ScriptReference/Mesh.html">UnityEngine.Mesh</a>. It can also generate an optional <a href="../ScriptReference/MeshCollider.html">UnityEngine.MeshCollider</a> without incurring any main thread stalls.</p>
+
+<p>The main use case for the Meshing subsystem is to surface procedurally-generated meshes, generally from a <span class="tooltip"><strong>spatial mapping</strong><span class="tooltiptext">The process of mapping real-world surfaces into the virtual world.<br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#SpatialMapping" aria-label="Go to glossary anchor for SpatialMapping">Glossary</a></span></span></span> algorithm like the one generated from a depth <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="Glossary.html#SpatialMapping" aria-label="Go to glossary anchor for SpatialMapping">Glossary</a></span></span></span> algorithm like the one generated from a depth <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>. There is no limit on the size of the mesh, or the frequency of updates.</p>
+
+<p>Mesh generation occurs asynchronously on a background thread, so extracting data from an external provider doesn’t block the main thread to, for example, bake the mesh <span class="tooltip"><strong>collider</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span>.</p>
+
+<p>
+<strong>Note:</strong> The Unity <span class="tooltip"><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html" href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> SDK is no longer available as we have focused our investments towards <a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@latest">OpenXR</a>.</p>
+
+<h2>Control flow</h2>
+
+<p>The Meshing subsystem has two basic queries:</p>
+
+<ul>
+<li>Get the state of all tracked meshes (for example, New, Changed, Unchanged, Removed).</li>
+<li>Generate a particular mesh. Meshes are identified using the <a href="../ScriptReference/XR.MeshId.html">MeshId</a> identifier.</li>
+</ul>
+
+<h3>Getting MeshInfos</h3>
+
+<p>C# users can get the mesh infos from the <code>XRMeshSubsystem</code> instance method:</p>
+
+<pre><code class="csharp">public bool TryGetMeshInfos(List&lt;MeshInfo&gt; meshInfosOut);
+</code></pre>
+
+<p>This maps directly to the C call to <code>UnityXRMeshProvider::GetMeshInfos</code> and is typically called once per frame to obtain the current list of tracked meshes.</p>
+
+<p>The following C implementation can use the provided <code>allocator</code> object to allocate an array of <code>UnityXRMeshInfo</code>s which it should then fill out:</p>
+
+<pre><code class="c">UnitySubsystemErrorCode(UNITY_INTERFACE_API * GetMeshInfos)(
+        UnitySubsystemHandle handle, void* pluginData, UnityXRMeshInfoAllocator * allocator);
+</code></pre>
+
+<p>The allocated memory is owned by Unity (typically using a stack allocator, so allocations are very fast):</p>
+
+<pre><code class="c">typedef struct UnityXRMeshInfo
+{
+    UnityXRMeshId meshId;
+    bool updated;
+    int priorityHint;
+} UnityXRMeshInfo;
+</code></pre>
+
+<p>If nothing has changed since the last call to <a href="../ScriptReference/XR.XRMeshSubsystem.TryGetMeshInfos.html">TryGetMeshInfos</a>, you can return false to avoid filling out the array each frame.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Field</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>meshId</strong></td>
+	<td style="text-align:left;">A 128-bit unique identifier. The Provider generates these values, which can be a pointer to mesh data, but you need to be able to generate a specific mesh by its ID.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>updated</strong></td>
+	<td style="text-align:left;">The only state Unity needs is whether the mesh has been updated since the last time it was generated. Determining whether the mesh was added or removed is done automatically; reporting the existence of a mesh that Unity doesn’t know about is surfaced as Added, while not reporting a mesh that was previously reported marks the mesh as Removed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>priorityHint</strong></td>
+	<td style="text-align:left;">C# interprets this value, but you might want to, for example, provide a C# component that prioritizes which mesh to generate based on it. Unity doesn’t use this value.</td>
+</tr>
+</tbody>
+</table>
+
+<p>In C#, <a href="../ScriptReference/XR.XRMeshSubsystem.TryGetMeshInfos.html">TryGetMeshInfos</a> populates a <code>List&lt;MeshInfo&gt;</code>, which includes the <a href="../ScriptReference/XR.MeshChangeState.html">mesh state</a>:</p>
+
+<pre><code class="csharp">public enum MeshChangeState
+{
+    Added,
+    Updated,
+    Removed,
+    Unchanged
+}
+</code></pre>
+
+<p>Based on the mesh change state and the priority hint value, a C# component can then decide which mesh(es) to generate next.</p>
+
+<h3>Mesh generation</h3>
+
+<p>From C#, you can generate a specific mesh asynchronously using the <a href="../ScriptReference/XR.XRMeshSubsystem.GenerateMeshAsync.html">XRMeshSubsystem</a> instance method:</p>
+
+<pre><code class="csharp">public extern void GenerateMeshAsync(
+    MeshId meshId,
+    Mesh mesh,
+    MeshCollider meshCollider,
+    MeshVertexAttributes attributes,
+    Action&lt;MeshGenerationResult&gt; onMeshGenerationComplete);
+</code></pre>
+
+<p>This enqueues a mesh for generation. You can enqueue as many meshes as you need, but you might want to limit the number of meshes that are concurrently generated to a few at a time.</p>
+
+<p>Unity always calls the provided <code>onMeshGenerationComplete</code> delegate, even if an error occurs.</p>
+
+<p>Meshes are generated in two phases, following an acquire and release model:</p>
+
+<figure>
+<img src="../uploads/Main/acquire_release.png" alt="">
+</figure>
+
+<pre><code class="c">UnitySubsystemErrorCode(UNITY_INTERFACE_API * AcquireMesh)(
+    UnitySubsystemHandle handle,
+    void* pluginData,
+    const UnityXRMeshId * meshId,
+    UnityXRMeshDataAllocator * allocator);
+</code></pre>
+
+<p>
+<code>AcquireMesh</code> is called on a background thread, so you can do as much processing in this method as you like, including computationally-intensive work such as generating the mesh itself. This function can return immediately or span several frames.</p>
+
+<p>If you provide a <code>MeshCollider</code> to <code>GenerateMeshAsync</code>, Unity also computes the MeshCollider’s acceleration structure (“Bake Physics” in the above diagram). This can be time-consuming for large meshes, so it also occurs on the worker thread.</p>
+
+<p>Finally, when the data is ready, Unity writes it to the <code>UnityEngine.Mesh</code> and/or <code>UnityEngine.MeshCollider</code> on the main thread. Afterwards, Unity calls <code>ReleaseMesh</code>, also on the main thread:</p>
+
+<pre><code class="c">UnitySubsystemErrorCode(UNITY_INTERFACE_API * ReleaseMesh)(
+    UnitySubsystemHandle handle,
+    void* pluginData,
+    const UnityXRMeshId * meshId,
+    const UnityXRMeshDescriptor * mesh,
+    void* userData);
+</code></pre>
+
+<p>Because<code>ReleaseMesh</code> is called on the main thread, it should return quickly. Typically, this is used to free resources allocated during <code>AcquireMesh</code>.</p>
+
+<h3>Memory management</h3>
+
+<p>
+<code>AcquireMesh</code> offers two means of providing mesh data to Unity: Unity-managed and provider-managed.</p>
+
+<h4>Unity-managed memory</h4>
+
+<p>To let Unity manage the memory, use:</p>
+
+<pre><code class="c">UnityXRMeshDescriptor* (UNITY_INTERFACE_API * MeshDataAllocator_AllocateMesh)(
+    UnityXRMeshDataAllocator * allocator,
+    size_t vertexCount,
+    size_t indexCount,
+    UnityXRIndexFormat indexFormat,
+    UnityXRMeshVertexAttributeFlags attributes,
+    UnityXRMeshTopology topology);
+</code></pre>
+
+<p>This returns a struct with pointers to buffers based on an intersection of these <code>attributes</code> and the vertex attributes requested from C#. The provider should then copy the appropriate data to the buffers.</p>
+
+<p>When you use this paradigm, you don’t have to free the memory, because Unity will recycle the memory after the call to <code>ReleaseMesh</code>.</p>
+
+<h4>Provider-managed memory</h4>
+
+<p>Instead of letting Unity manage the memory, you can point it at your own data. The data must remain valid until <code>ReleaseMesh</code> is called.</p>
+
+<p>Use <code>MeshDataAllocator_SetMesh</code> to provide your own <code>UnityXRMeshDescriptor</code> whose non-null pointers point to valid data:</p>
+
+<pre><code class="c">void(UNITY_INTERFACE_API * MeshDataAllocator_SetMesh)(
+    UnityXRMeshDataAllocator * allocator, const UnityXRMeshDescriptor * meshDescriptor);
+</code></pre>
+
+<h4>User data</h4>
+
+<p>Your <code>AcquireMesh</code> implementation can call:</p>
+
+<pre><code class="c">void(UNITY_INTERFACE_API * MeshDataAllocator_SetUserData)(
+    UnityXRMeshDataAllocator * allocator, void* userData);
+</code></pre>
+
+<p>Unity passes the <code>userData</code> pointer back to your <code>ReleaseMesh</code> implementation. This is particularly useful when you’re using provider-managed memory.</p>
+
+<h2>Example C# component</h2>
+
+<pre><code class="csharp">void Update()
+{
+    if (s_MeshSubsystem.TryGetMeshInfos(s_MeshInfos))
+    {
+        foreach (var meshInfo in s_MeshInfos)
+        {
+            switch (meshInfo.ChangeState)
+            {
+                case MeshChangeState.Added:
+                case MeshChangeState.Updated:
+                    AddToQueueIfNecessary(meshInfo);
+                    break;
+
+                case MeshChangeState.Removed:
+                    RaiseMeshRemoved(meshInfo.MeshId);
+
+                    // Remove from processing queue
+                    m_MeshesNeedingGeneration.Remove(meshInfo.MeshId);
+
+                    // Destroy the GameObject
+                    GameObject meshGameObject;
+                    if (meshIdToGameObjectMap.TryGetValue(meshInfo.MeshId, out meshGameObject))
+                    {
+                        Destroy(meshGameObject);
+                        meshIdToGameObjectMap.Remove(meshInfo.MeshId);
+                    }
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
+    // ...
+
+    while (m_MeshesBeingGenerated.Count &lt; meshQueueSize &amp;&amp; m_MeshesNeedingGeneration.Count &gt; 0)
+    {
+        // Get the next mesh to generate. Could be based on the mesh's
+        // priorityHint, whether it is new vs updated, etc.
+        var meshId = GetNextMeshToGenerate();
+
+        // Gather the necessary Unity objects for the generation request
+        var meshGameObject = GetOrCreateGameObjectForMesh(meshId);
+        var meshCollider = meshGameObject.GetComponent&lt;MeshCollider&gt;();
+        var mesh = meshGameObject.GetComponent&lt;MeshFilter&gt;().mesh;
+        var meshAttributes = shouldComputeNormals ? MeshVertexAttributes.Normals : MeshVertexAttributes.None;
+
+        // Request generation
+        s_MeshSubsystem.GenerateMeshAsync(meshId, mesh, meshCollider, meshAttributes, OnMeshGenerated);
+
+        // Update internal state
+        m_MeshesBeingGenerated.Add(meshId, m_MeshesNeedingGeneration[meshId]);
+        m_MeshesNeedingGeneration.Remove(meshId);
+    }
+}
+
+void OnMeshGenerated(MeshGenerationResult result)
+{
+    if (result.Status != MeshGenerationStatus.Success)
+    {
+        // Handle error, regenerate, etc.
+    }
+
+    m_MeshesBeingGenerated.Remove(result.MeshId);
+}
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="xrsdk-display.html"></a></span><div class="tip">XR SDK Display subsystem</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="xrsdk-pre-init-interface.html"></a></span><div class="tip">XR SDK PreInit interface</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

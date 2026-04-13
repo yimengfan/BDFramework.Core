@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Replacing shaders at runtime</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-ShaderReplacement.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-ShaderReplacement.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-ShaderReplacement.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-ShaderReplacement.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-ShaderReplacement.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-ShaderReplacement.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-ShaderReplacement.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-ShaderReplacement.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="ShadersOverview.html">Shaders core concepts</a></li>
+<li>Replacing shaders at runtime</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="shader-loading.html"></a></span><div class="tip">How Unity loads and uses shaders</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-ComputeShader.html"></a></span><div class="tip">Compute shaders</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Replacing shaders at runtime</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>In the Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>, you can tell a <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>, you can tell a <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> to change the shader that it uses to render certain geometry at runtime. You might do this to achieve a visual effect such as edge detection.</p>
+
+<p>Shader replacement is done from <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> with either the <a href="../ScriptReference/Camera.RenderWithShader.html">Camera.RenderWithShader</a> or <a href="../ScriptReference/Camera.SetReplacementShader.html">Camera.SetReplacementShader</a> function. Both functions take a <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> with either the <a href="../ScriptReference/Camera.RenderWithShader.html">Camera.RenderWithShader</a> or <a href="../ScriptReference/Camera.SetReplacementShader.html">Camera.SetReplacementShader</a> function. Both functions take a <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> and a <strong>replacementTag</strong>.</p>
+
+<p>It works like this: the camera renders the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> as it normally would. The objects still use their materials, but the shader they use changes:</p>
+
+<ul>
+<li>If <strong>replacementTag</strong> is empty (must be an empty string not null), then all objects in the scene are rendered with the given replacement shader.</li>
+<li>If <strong>replacementTag</strong> is not empty, then for each object that would be rendered:
+
+<ul>
+<li>The real object’s shader is queried for the <a href="SL-SubShaderTags.html">tag value</a>.</li>
+<li>If it does not have that tag, object is <strong>not rendered</strong>.</li>
+<li>A <a href="SL-SubShader.html">subshader</a> is found in the replacement shader that has a given tag with the found value. If no such subshader is found, object is <strong>not rendered</strong>.</li>
+<li>Now that subshader is used to render the object.</li>
+</ul>
+</li>
+</ul>
+
+<p>So if all shaders would have, for example, a “RenderType” tag with values like “Opaque”, “Transparent”, “Background”, “Overlay”, you could write a replacement shader that only renders solid objects by using one subshader with RenderType=Solid <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-SubShaderTags.html">tag</a><span class="tooltiptext">A reference word which you can assign to one or more GameObjects to help you identify GameObjects for scripting purposes. For example, you might define and “Edible” Tag for any item the player can eat in your game. <a href="Tags.html" href="SL-SubShaderTags.html">tag</a><span class="tooltiptext">A reference word which you can assign to one or more GameObjects to help you identify GameObjects for scripting purposes. For example, you might define and “Edible” Tag for any item the player can eat in your game. <a href="Tags.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Tag" aria-label="Go to glossary anchor for Tag">Glossary</a></span></span></span>. The other tag types would not be found in the replacement shader, so the objects would be not rendered. Or you could write several subshaders for different “RenderType” tag values. Incidentally, all built-in <span class="tooltip"><strong>Shader objects</strong><span class="tooltiptext">An instance of the Shader class, a Shader object is container for shader programs and GPU instructions, and information that tells Unity how to use them. Use them with materials to determine the appearance of your scene. <a href="shader-objects.html" href="Glossary.html#Tag" aria-label="Go to glossary anchor for Tag">Glossary</a></span></span></span>. The other tag types would not be found in the replacement shader, so the objects would be not rendered. Or you could write several subshaders for different “RenderType” tag values. Incidentally, all built-in <span class="tooltip"><strong>Shader objects</strong><span class="tooltiptext">An instance of the Shader class, a Shader object is container for shader programs and GPU instructions, and information that tells Unity how to use them. Use them with materials to determine the appearance of your scene. <a href="shader-objects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shaderobject" aria-label="Go to glossary anchor for Shaderobject">Glossary</a></span></span></span> have a “RenderType” tag set.</p>
+
+<h2>Lit shader replacement</h2>
+
+<p>When using shader replacement the scene is rendered using the render path that is configured on the camera. This means that the shader used for replacement can contain shadow and lighting passes (you can use surface shaders for shader replacement). This can be useful for doing rendering of special effects and scene debugging.</p>
+
+<h2>Shader replacement tags in built-in shaders</h2>
+
+<p>All built-in shaders have a “<strong>RenderType</strong>” tag set that can be used when rendering with replaced shaders. Tag values are the following:</p>
+
+<ul>
+<li>
+<strong>Opaque</strong>: most of the shaders (<span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about shader-NormalFamily.html">Normal</a><span class="tooltiptext">The direction perpendicular to the surface of a mesh, represented by a Vector. Unity uses normals to determine object orientation and apply shading. <a href="VectorCookbook.html" href="shader-NormalFamily.html">Normal</a><span class="tooltiptext">The direction perpendicular to the surface of a mesh, represented by a Vector. Unity uses normals to determine object orientation and apply shading. <a href="VectorCookbook.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normal" aria-label="Go to glossary anchor for Normal">Glossary</a></span></span></span>, <a href="shader-SelfIllumFamily.html">Self Illuminated</a>, <a href="shader-ReflectiveFamily.html">Reflective</a>, terrain shaders).</li>
+<li>
+<strong>Transparent</strong>: most semitransparent shaders (<a href="shader-TransparentFamily.html">Transparent</a>, Particle, Font, terrain additive pass shaders).</li>
+<li>
+<strong>TransparentCutout</strong>: masked transparency shaders (<a href="shader-TransparentCutoutFamily.html">Transparent Cutout</a>, two pass vegetation shaders).</li>
+<li>
+<strong>Background</strong>: <span class="tooltip"><strong>Skybox</strong><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Skybox.html" href="class-Skybox.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skybox" aria-label="Go to glossary anchor for Skybox">Glossary</a></span></span></span> shaders.</li>
+<li>
+<strong>Overlay</strong>: Halo, Flare shaders.</li>
+<li>
+<strong>TreeOpaque</strong>: <span class="tooltip"><strong>terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> engine tree bark.</li>
+<li>
+<strong>TreeTransparentCutout</strong>: terrain engine tree leaves.</li>
+<li>
+<strong>TreeBillboard</strong>: terrain engine billboarded trees.</li>
+<li>
+<strong>Grass</strong>: terrain engine grass.</li>
+<li>
+<strong>GrassBillboard</strong>: terrain engine billboarded grass.</li>
+</ul>
+
+<h2>Built-in scene depth/normals texture</h2>
+
+<p>A Camera has a built-in capability to render depth or depth+normals texture, if you need that in some of your effects. See <a href="SL-CameraDepthTexture.html">Camera Depth Texture</a> page. Note that in some cases (depending on the hardware), the depth and depth+normals textures can internally be rendered using shader replacement. So it is important to have the correct “<strong>RenderType</strong>” tag in your shaders.</p>
+
+<h2>Code Example</h2>
+
+<p>Your Start() function specifies the replacement shaders:</p>
+
+<pre><code>void Start() {
+    camera.SetReplacementShader (EffectShader, &quot;RenderType&quot;);
+}
+</code></pre>
+
+<p>This requests that the EffectShader will use the RenderType key. The EffectShader will have key-value tags for each RenderType that you want. The Shader will look something like:</p>
+
+<pre><code>Shader &quot;EffectShader&quot; {
+     SubShader {
+         Tags { &quot;RenderType&quot;=&quot;Opaque&quot; }
+         Pass {
+             ...
+         }
+     }
+     SubShader {
+         Tags { &quot;RenderType&quot;=&quot;SomethingElse&quot; }
+         Pass {
+             ...
+         }
+     }
+ ...
+ }
+</code></pre>
+
+<p>SetReplacementShader will look through all the objects in the scene and, instead of using their normal shader, use the first subshader which has a matching value for the specified key. In this example, any objects whose shader has Rendertype=“Opaque” tag will be replaced by first subshader in EffectShader, any objects with RenderType=“SomethingElse” shader will use second replacement subshader and so one. Any objects whose shader does not have a matching tag value for the specified key in the replacement shader will not be rendered.</p>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="shader-loading.html"></a></span><div class="tip">How Unity loads and uses shaders</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-ComputeShader.html"></a></span><div class="tip">Compute shaders</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

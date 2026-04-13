@@ -1,0 +1,333 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Unity Standalone Player command line arguments</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PlayerCommandLineArguments.html">English</a></li>
+<li><a href="/cn/current/Manual/PlayerCommandLineArguments.html">中文</a></li>
+<li><a href="/ja/current/Manual/PlayerCommandLineArguments.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PlayerCommandLineArguments.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PlayerCommandLineArguments.html">English</a></li>
+<li><a href="/cn/current/Manual/PlayerCommandLineArguments.html">中文</a></li>
+<li><a href="/ja/current/Manual/PlayerCommandLineArguments.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PlayerCommandLineArguments.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="EditorFeatures.html">Editor Features</a></li>
+<li><a href="CommandLineArguments.html">Command-line arguments</a></li>
+<li>Unity Standalone Player command line arguments</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="EditorCommandLineArguments.html"></a></span><div class="tip">Unity Editor command line arguments</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="CLIBatchmodeCoroutines.html"></a></span><div class="tip">Batch mode and built-in coroutine compatibility</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Unity Standalone Player command line arguments</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can launch Unity Players from the command line and pass in arguments to change how the Player executes. These arguments work on all standalone platforms except for the <a href="webgl.html">Web platform</a>. The following table specifies any additional platform requirements.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Command</strong></th>
+	<th style="text-align:left;"><strong>Details:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>-batchmode</code></td>
+	<td style="text-align:left;">Run the application in “headless” mode. In this mode, the application doesn’t display anything or accept user input. This is useful for running servers for <a href="UnityWebRequest.html">networked applications</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-disable-gpu-skinning</code></td>
+	<td style="text-align:left;">Disables Graphics Processing Unit (GPU) <span class="tooltip"><strong>skinning</strong><span class="tooltiptext">The process of binding bone joints to the vertices of a character’s mesh or ‘skin’. Performed with an external tool, such as Blender or Autodesk Maya. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingHumanoidChars.html" href="UsingHumanoidChars.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skinning" aria-label="Go to glossary anchor for Skinning">Glossary</a></span></span></span> at startup.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-force-clamped</code></td>
+	<td style="text-align:left;">Use this together with <code>-force-glcoreXY</code> to prevent checks for additional OpenGL extensions, allowing the application to run between platforms with the same code paths.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-force-d3d11-singlethreaded</code></td>
+	<td style="text-align:left;">Force DirectX 11.0 to be created with a <code>D3D11_CREATE_DEVICE_SINGLETHREADED</code> flag.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-force-device-index</code></td>
+	<td style="text-align:left;">Make the Standalone Player use a specific GPU device by passing it the index of that GPU. This option is supported for D3D11, D3D12, Metal, and Vulkan graphics APIs, but isn’t supported for OpenGL.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-force-gfx-direct</code></td>
+	<td style="text-align:left;">Force single threaded rendering.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-force-glcore</code></td>
+	<td style="text-align:left;">Force the application to use the OpenGL core profile for rendering. The Editor tries to use the most recent OpenGL version available, and all OpenGL extensions exposed by the OpenGL drivers. Unity uses Direct3D if the platform doesn’t support OpenGL.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-force-glcoreXY</code></td>
+	<td style="text-align:left;">Similar to <code>-force-glcore</code>, but requests a specific OpenGL context version. Accepted values for XY: 32, 33, 40, 41, 42, 43, 44, or 45.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-force-vulkan</code></td>
+	<td style="text-align:left;">Force the application to use Vulkan for rendering.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-max-async-pso-job-count</code></td>
+	<td style="text-align:left;">Set the number of parallel threads Unity uses to create pipeline state objects (PSOs) when you use <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Experimental.Rendering.ShaderWarmup.html">Experimental.Rendering.ShaderWarmup</a> to prewarm <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="../ScriptReference/Experimental.Rendering.ShaderWarmup.html">Experimental.Rendering.ShaderWarmup</a> to prewarm <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> variants. This only has an effect if your application runs on a platform that uses the DirectX 12, Metal, or Vulkan graphics API.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-monitor N</code></td>
+	<td style="text-align:left;">Run Standalone Player on the specified monitor, indicated by a 1-based index number.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-nographics</code></td>
+	<td style="text-align:left;">When you use this argument in batch mode, Unity doesn’t initialize a graphics device. This makes it possible to run your automated workflows on machines that don’t have a GPU. <br> <strong>Note</strong>: Output logs are turned off in this mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-logFile &lt;pathname&gt;</code></td>
+	<td style="text-align:left;">Specify where Unity writes the standalone Player log file. To output to the console, specify <code>-</code> for the path name. On Windows, use <code>-logfile</code> to direct the output to <code>stdout</code>, which by default is not the console.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-nolog</code></td>
+	<td style="text-align:left;">Do not produce an output log. When you don’t use this argument, Unity writes the <code>output_log.txt</code> in the <a href="LogFiles.html">Log Files</a> folder, where the <a href="../ScriptReference/Debug.Log.html">Debug.Log</a> output is printed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-no-stereo-rendering</code></td>
+	<td style="text-align:left;">Turn off stereo rendering.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-popupwindow</code></td>
+	<td style="text-align:left;">Create the window as a pop-up window, without a frame. This command isn’t supported on macOS.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-screen-fullscreen</code></td>
+	<td style="text-align:left;">Override the default full-screen state. This must be 0 or 1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-screen-height</code></td>
+	<td style="text-align:left;">Override the default screen height. This must be an integer from a supported resolution.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-screen-width</code></td>
+	<td style="text-align:left;">Override the default screen width. This width value must be an integer from a supported resolution.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-screen-quality</code></td>
+	<td style="text-align:left;">Override the default screen quality. Example usage would be: <code>/path/to/myGame -screen-quality Beautiful</code>. The supported options match the <a href="class-QualitySettings.html">Quality Settings</a> names.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-dontConnectAcceleratorEvent</code> (UWP only)</td>
+	<td style="text-align:left;">Disable connecting to AcceleratorKeyEvent. This may help if you have issues with input in XAML elements. <br><strong>Note:</strong> Unity cannot handle some keyboard keys, such as F10, Ctrl, Alt, and Tab.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-force-d3d11</code> (Windows only)</td>
+	<td style="text-align:left;">Force the application to use Direct3D 11 for rendering.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-force-d3d12</code> (Windows only)</td>
+	<td style="text-align:left;">Force the application to use Direct3D 12 for rendering.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-force-d3d11-bitblt-model</code> (Windows only)</td>
+	<td style="text-align:left;">Force the application to use DXGI BitBlt model swapchain when using Direct3D 11. For more information, see <a href="../ScriptReference/PlayerSettings-useFlipModelSwapchain.html">PlayerSettings.useFlipModelSwapchain</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-force-d3d11-flip-model</code> (Windows only)</td>
+	<td style="text-align:left;">Force the application to use DXGI flip model swapchain when using Direct3D 11. For more information, see <a href="../ScriptReference/PlayerSettings-useFlipModelSwapchain.html">PlayerSettings.useFlipModelSwapchain</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-force-d3d11-no-singlethreaded</code> (Windows and UWP only)</td>
+	<td style="text-align:left;">Force DirectX 11.0 to be created without a <code>D3D11_CREATE_DEVICE_SINGLETHREADED</code> flag.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-force-d3d11-singlethreaded</code> (Windows and UWP only)</td>
+	<td style="text-align:left;">Force DirectX 11.0 to be created with a <code>D3D11_CREATE_DEVICE_SINGLETHREADED</code> flag.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-force-driver-type-warp</code> (Windows and UWP only)</td>
+	<td style="text-align:left;">Force the DirectX 11.0 driver type WARP device. For more information, see Microsoft’s documentation on <a href="https://docs.microsoft.com/en-gb/windows/win32/direct3darticles/directx-warp?redirectedfrom=MSDN">Windows Advanced Rasterization Platform</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-force-feature-level-10-0</code> (Windows and UWP only)</td>
+	<td style="text-align:left;">Force DirectX 11.0 feature level 10.0.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-force-feature-level-10-1</code> (Windows and UWP only)</td>
+	<td style="text-align:left;">Force DirectX 11.0 feature level 10.1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-force-feature-level-11-0</code> (Windows and UWP only)</td>
+	<td style="text-align:left;">Force DirectX 11.0 feature level 11.0.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-force-low-power-device</code> (macOS only)</td>
+	<td style="text-align:left;">Make the Standalone Player use a low power device.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-force-metal</code> (macOS only)</td>
+	<td style="text-align:left;">Make the Standalone Player use Metal as the default graphics API.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-forceTextBoxBasedKeyboard</code> (UWP only)</td>
+	<td style="text-align:left;">Use TextBox-based implementation for TouchScreenKeyboard. This implementation allows switching to different implementations, in case there are issues with the default. <br><br><strong>Note:</strong> This implementation has an effect only on UWP XAML applications.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-force-wayland</code> (Linux only)</td>
+	<td style="text-align:left;">Activate experimental Wayland support when running a Linux player.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>--parentHWND &lt;HWND&gt; delayed</code> (Windows only)</td>
+	<td style="text-align:left;">Embed the Windows Standalone application into another application. When you use this argument, you need to pass the parent application’s window handle (‘HWND’) to the Windows Standalone application.<br><br>When you pass <code>-parentHWND 'HWND' delayed</code>, the Unity application is hidden while it runs. You must also call <a href="https://docs.microsoft.com/en-gb/windows/win32/api/winuser/nf-winuser-setparent?redirectedfrom=MSDN">SetParent</a> from the <a href="https://docs.microsoft.com/en-gb/">Microsoft Developer library</a> for Unity in the application. Microsoft’s <code>SetParent</code> embeds the Unity window. When it creates Unity processes, the Unity window respects the position and size provided as part of Microsoft’s <a href="https://docs.microsoft.com/en-gb/windows/win32/api/processthreadsapi/ns-processthreadsapi-startupinfoa?redirectedfrom=MSDN">STARTUPINFO</a> structure.<br><br>To resize the Unity window, check its <a href="https://docs.microsoft.com/en-gb/windows/win32/api/winuser/nf-winuser-getwindowlongptra?redirectedfrom=MSDN">GWLP_USERDATA</a> in Microsoft’s <code>GetWindowLongPtr</code> function. Its lowest bit is set to 1 when the graphics initialize and it’s safe to resize. Its second lowest bit is set to 1 after the Unity splash screen finishes displaying.<br><br>For more information, see this downloadable example: <a href="https://docs.unity3d.com/uploads/Examples/EmbeddedWindow.zip">EmbeddedWindow.zip</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-single-instance</code> (Linux and Windows only)</td>
+	<td style="text-align:left;">Run only one instance of the application at the time. If another instance is already running then launching the application again with <code>-single-instance</code> focuses the existing one.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>-window-mode</code> (Windows only)</td>
+	<td style="text-align:left;">Override fullscreen windowed mode. Accepted values are <code>exclusive</code> or <code>borderless</code>. For more information, see <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html">Player settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html" href="class-PlayerSettings.html">Player settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-systemallocator</code></td>
+	<td style="text-align:left;">Forces the platform to use the system allocator. This can be useful if you want to use tools like address sanitizers to debug memory issues. You should only use this option for debugging purposes.</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="EditorCommandLineArguments.html"></a></span><div class="tip">Unity Editor command line arguments</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="CLIBatchmodeCoroutines.html"></a></span><div class="tip">Batch mode and built-in coroutine compatibility</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

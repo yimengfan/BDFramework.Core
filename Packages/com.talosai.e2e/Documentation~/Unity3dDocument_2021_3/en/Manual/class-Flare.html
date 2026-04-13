@@ -1,0 +1,302 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Flare asset</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Flare.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Flare.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Flare.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Flare.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Flare.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Flare.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Flare.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Flare.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="visual-effects.html">Visual effects</a></li>
+<li><a href="visual-effects-lens-flares.html">Lens flares and halos</a></li>
+<li>Flare asset</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="visual-effects-lens-flares.html"></a></span><div class="tip">Lens flares and halos</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-LensFlare.html"></a></span><div class="tip">Lens Flare component</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Flare asset</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/Flare.html' title='Go to Flare page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A Flare asset allows you to create and configure the appearance of lens flares. Lens flares simulate the effect of lights refracting inside a camera lens. Use them to represent bright lights or to add a bit more atmosphere to your <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<p>
+<strong>Note:</strong> This workflow is compatible only with the Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>. For similar functionality in other render pipelines, see <a href="visual-effects-lens-flares.html">Lens flares and halos</a>.</p>
+
+<h2>Using Flare assets</h2>
+
+<ol>
+<li>Assign the Flare asset to a <a href="class-Light.html">Light component</a> or a <a href="class-LensFlare.html">Lens flare component</a>.
+
+<ul>
+<li>If you assign it to the <strong>Flare</strong> property of a <a href="class-Light.html">Light component</a>, Unity automatically tracks the position and direction of the Light and uses those values to configure the appearance of the lens flare.</li>
+<li>If you assign it to the <strong>Flare</strong> property of a <a href="class-LensFlare.html">Lens flare component</a>, you can use the Lens Flare component to configure additional values for more precise control.</li>
+</ul>
+</li>
+<li>If you want a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Camera.html">Camera</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="class-Camera.html">Camera</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> to see lens flares, attach a <a href="class-FlareLayer.html">Flare Layer</a> component to the Camera’s <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> to see lens flares, attach a <a href="class-FlareLayer.html">Flare Layer</a> component to the Camera’s <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>.</li>
+<li>To see the lens flare effect in the <span class="tooltip"><strong>Scene View</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>, enable the Effect toggle in the Scene View <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html" href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>, enable the Effect toggle in the Scene View <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> and, in the drop-down, enable <strong>Flares</strong>.</li>
+</ol>
+
+<h2>Flare Inspector reference</h2>
+
+<p>Flares work by containing several Flare <strong>Elements</strong> on a single <span class="tooltip"><strong>Texture</strong><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html" href="class-TextureImporter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#texture" aria-label="Go to glossary anchor for texture">Glossary</a></span></span></span>. Within the Flare, you pick and choose which <strong>Elements</strong> you want to include from any of the Textures.</p>
+
+<figure>
+<img src="../uploads/Main/FlareInspector.png" alt="The Flare Inspector">
+<figcaption>The Flare Inspector</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property:</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function:</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Elements</strong></td>
+	<td style="text-align:left;">The number of Flare images included in the Flare.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Image Index</strong>
+</td>
+	<td style="text-align:left;">Which Flare image to use from the <strong>Flare Texture</strong> for this Element. See the <em>Flare Textures</em> section below for more information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Position</strong>
+</td>
+	<td style="text-align:left;">The Element’s offset along a line running from the containing GameObject’s position through the screen center. 0 = GameObject position, 1 = screen center.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Size</strong>
+</td>
+	<td style="text-align:left;">The size of the element.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Color</strong>
+</td>
+	<td style="text-align:left;">Color tint of the element.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Use Light Color</strong>
+</td>
+	<td style="text-align:left;">If the Flare is attached to a Light, enabling this will tint the Flare with the Light’s color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Rotate</strong>
+</td>
+	<td style="text-align:left;">If enabled, bottom of the Element will always face the center of the screen, making the Element spin as the Lens Flare moves around on the screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <span class="tooltip"><strong>Zoom</strong><span class="tooltiptext">A camera control that lets you scale the view on your screen. To zoom a camera in the Unity Editor, press Alt + right click and drag. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SceneViewNavigation.html" href="SceneViewNavigation.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#zoom" aria-label="Go to glossary anchor for zoom">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">If enabled, the Element will scale up when it becomes visible and scale down again when it isn’t.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Fade</strong>
+</td>
+	<td style="text-align:left;">If enabled, the Element will fade in to full strength when it becomes visible and fade out when it isn’t.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Flare Texture</strong></td>
+	<td style="text-align:left;">A texture containing images used by this Flare’s <strong>Elements</strong>. It must be arranged according to one of the <strong>TextureLayout</strong> options.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Texture Layout</strong></td>
+	<td style="text-align:left;">How the individual Flare Element images are laid out inside the <strong>Flare Texture</strong> (see <em>Texture Layouts</em> below for further details).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Use Fog</strong></td>
+	<td style="text-align:left;">If enabled, the Flare will fade away with distance fog. This is used commonly for small Flares.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Configuring Flare assets</h2>
+
+<p>A Flare consists of multiple <strong>Elements</strong>, arranged along a line. The line is calculated by comparing the position of the GameObject containing the Lens Flare to the center of the screen. The line extends beyond the containing GameObject and the screen center. All Flare <strong>Elements</strong> are strung out on this line.</p>
+
+<p>For performance reasons, all <strong>Elements</strong> of one Flare must share the same Texture. This Texture contains a collection of the different images that are available as Elements in a single Flare. The <strong>Texture Layout</strong> defines how the <strong>Elements</strong> are laid out in the <strong>Flare Texture</strong>. If you use many different Flare assets, using a shared single <strong>Flare Texture</strong> that contains all the <strong>Elements</strong> will give you best rendering performance.</p>
+
+<p>Lens Flares are blocked by <span class="tooltip"><strong>Colliders</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span>. A Collider in-between the Flare GameObject and the Camera will hide the Flare, even if the Collider does not have a <span class="tooltip"><strong>Mesh Renderer</strong><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html" href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span>. A Collider in-between the Flare GameObject and the Camera will hide the Flare, even if the Collider does not have a <span class="tooltip"><strong>Mesh Renderer</strong><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span>. If the in-between Collider is marked as Trigger it will block the flare if and only if <strong>Physics.queriesHitTriggers</strong> is true.</p>
+
+<p>To override the <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> used for Flares, open the <a href="class-GraphicsSettings.html">Graphics</a> window and set <span class="tooltip"><strong>Lens Flares</strong><span class="tooltiptext">A component that simulates the effect of lights refracting inside a camera lens. Use a Lens Flare to represent very bright lights or add atmosphere to your scene. <a href="class-LensFlare.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> used for Flares, open the <a href="class-GraphicsSettings.html">Graphics</a> window and set <span class="tooltip"><strong>Lens Flares</strong><span class="tooltiptext">A component that simulates the effect of lights refracting inside a camera lens. Use a Lens Flare to represent very bright lights or add atmosphere to your scene. <a href="class-LensFlare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LensFlare" aria-label="Go to glossary anchor for LensFlare">Glossary</a></span></span></span> to the shader that you would like to use as the override.</p>
+
+<h2>Texture Layouts</h2>
+
+<p>These are the options you have for different Flare <strong>Texture Layouts</strong>. The numbers in the images correspond to the <strong>Image Index</strong> property for each <strong>Element</strong>.</p>
+
+<h3>1 Large 4 Small</h3>
+
+<figure>
+<img src="../uploads/Main/FlaresLayout0.png" alt="">
+</figure>
+
+<p>Designed for large sun-style Flares where you need one of the <strong>Elements</strong> to have a higher fidelity than the others. This is designed to be used with Textures that are twice as high as they are wide.</p>
+
+<h3>1 Large 2 Medium 8 Small</h3>
+
+<figure>
+<img src="../uploads/Main/FlaresLayout1.png" alt="">
+</figure>
+
+<p>Designed for complex flares that require 1 high-definition, 2 medium and 8 small images. This is used in the standard assets “50mm Zoom Flare” where the two medium Elements are the rainbow-colored circles. This is designed to be used with textures that are twice as high as they are wide.</p>
+
+<h3>1 Texture</h3>
+
+<figure>
+<img src="../uploads/Main/FlaresLayout2.png" alt="">
+</figure>
+
+<p>A single image.</p>
+
+<h2>2x2 grid</h2>
+
+<figure>
+<img src="../uploads/Main/FlaresLayout3.png" alt="">
+</figure>
+
+<p>A simple 2x2 grid.</p>
+
+<h3>3x3 grid</h3>
+
+<figure>
+<img src="../uploads/Main/FlaresLayout4.png" alt="">
+</figure>
+
+<p>A simple 3x3 grid.</p>
+
+<h3>4x4 grid</h3>
+
+<figure>
+<img src="../uploads/Main/FlaresLayout5.png" alt="">
+</figure>
+
+<p>A simple 4x4 grid.</p>
+
+<p><span class="search-words">Flare</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="visual-effects-lens-flares.html"></a></span><div class="tip">Lens flares and halos</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-LensFlare.html"></a></span><div class="tip">Lens Flare component</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

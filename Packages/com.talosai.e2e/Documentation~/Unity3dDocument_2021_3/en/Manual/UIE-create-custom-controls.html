@@ -1,0 +1,288 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create a custom control</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-create-custom-controls.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-create-custom-controls.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-create-custom-controls.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-create-custom-controls.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-create-custom-controls.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-create-custom-controls.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-create-custom-controls.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-create-custom-controls.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-structure-ui.html">Structure UI</a></li>
+<li><a href="UIE-custom-controls.html">Custom controls</a></li>
+<li>Create a custom control</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-custom-controls.html"></a></span><div class="tip">Custom controls</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-expose-custom-control-to-uxml.html"></a></span><div class="tip">Expose custom control to UXML and UI Builder</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create a custom control</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To create a custom control, you must create a custom control C# class and initialize it. You can expose it for use in UXML and <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Builder. You can also bind it to data.</p>
+
+<p><a name="create-a-custom-control-class" aria-hidden="true"></a></p>
+
+<h2>Create a custom control class</h2>
+
+<p>Create a C# class derived from the <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class or a subclass of the <code>VisualElement</code> class. For example, you can create a bindable custom control derived from the <a href="../ScriptReference/UIElements.BaseField_1.html"><code>BaseField</code></a> generic base class instead of <a href="../ScriptReference/UIElements.BindableElement.html"><code>BindableElement</code></a>. This provides the following advantages:</p>
+
+<ul>
+<li>Implements the <code>INotifyValueChanged</code> interface for the generic parameter type that you specify</li>
+<li>Makes the control focusable by default</li>
+<li>Provides a horizontal layout with a label element on the left and input on the right</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/base-field-example.png" alt="FloatField is a built-in UI Toolkit control which inherits from BaseField.&lt;br/&gt;A. The label element.&lt;br/&gt;B. The input element.">
+<figcaption>FloatField is a built-in UI Toolkit control which inherits from <code>BaseField</code>.<br>A. The label element.<br>B. The input element.</figcaption>
+</figure>
+
+<p>
+<strong>Note</strong>: It’s possible to create custom controls derived from built-in UI controls, if you understand their internal hierarchy and existing USS classes. Unity discourages this practice because your custom controls might be dependent on their internal structure, which is subject to change in the future.</p>
+
+<h2>Initialize a custom control</h2>
+
+<p>Custom controls inherit from <code>VisualElement</code>. A <code>VisualElement</code> isn’t bound to the lifetime of a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> and doesn’t receive any of these callbacks:</p>
+
+<ul>
+<li><code>Awake()</code></li>
+<li><code>OnEnable()</code></li>
+<li><code>OnDisable()</code></li>
+<li><code>OnDestroy()</code></li>
+</ul>
+
+<p>You can initialize a custom control in its constructor. However, if your application needs, you can delay initialization until the custom control is added to the UI. To do this, register a callback for an <a href="../ScriptReference/UIElements.AttachToPanelEvent.html"><code>AttachToPanelEvent</code></a>. To detect that your custom control has been removed from the UI, use the <a href="../ScriptReference/UIElements.DetachFromPanelEvent.html"><code>DetachFromPanelEvent</code></a> callback.</p>
+
+<pre><code class="lang-cs">public CustomControl()
+{
+    RegisterCallback&lt;AttachToPanelEvent&gt;(e =&gt;
+        { /* do something here when element is added to UI */ });
+    RegisterCallback&lt;DetachFromPanelEvent&gt;(e =&gt;
+        { /* do something here when element is removed from UI */ });
+}
+</code></pre>
+
+<p>UI Toolkit dispatches these two events for all elements and doesn’t need a custom <code>VisualElement</code> subclass. For more information, see <a href="UIE-Panel-Events.html">Panel events</a>.</p>
+
+<h2>Expose custom controls to UXML and UI Builder</h2>
+
+<p>To use your custom controls with UXML and UI Builder, you must expose them. To expose custom controls, <a href="UIE-expose-custom-control-to-uxml.html#define-a-factory">define a factory class derived from <code>UxmlFactory&lt;T&gt;</code></a>.</p>
+
+<p>You can add new attributes to a custom control to use in UXML. To add new attributes to a custom control, define a traits class derived from <code>UxmlTraits</code> and override the <code>Init()</code> method as described in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-expose-custom-control-to-uxml.html#define-attributes-on-elements">Define attributes on elements</a>. The UI Builder relies on this to ensure that the <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="UIE-expose-custom-control-to-uxml.html#define-attributes-on-elements">Define attributes on elements</a>. The UI Builder relies on this to ensure that the <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span> created for the <strong><span class="tooltip"><strong>Viewport</strong><span class="tooltiptext">The user’s visible area of an app on their screen.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Viewport" aria-label="Go to glossary anchor for Viewport">Glossary</a></span></span></span></strong> updates when you change the value of a UXML property in the <strong><span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span> created for the <strong><span class="tooltip"><strong>Viewport</strong><span class="tooltiptext">The user’s visible area of an app on their screen.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Viewport" aria-label="Go to glossary anchor for Viewport">Glossary</a></span></span></span></strong> updates when you change the value of a UXML property in the <strong><span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong>. </p>
+
+<p>To use your custom controls’ UXML properties in the <strong>Inspector</strong> of the UI Builder, you must match property names between UXML and C# script. Use standard kebab case notation for UXML, and camel case or Pascal case for C#. For example, a property named <code>MyFloat</code> or <code>myFloat</code> in C# should be <code>my-float</code> in UXML.</p>
+
+<h2>Bind custom controls to data</h2>
+
+<p>You bind custom controls to serialized properties to synchronize values between the control and the property. </p>
+
+<p>To <a href="UIE-Binding.html">bind</a> custom controls to data:</p>
+
+<ul>
+<li>Implement the <a href="../ScriptReference/UIElements.INotifyValueChanged_1.html"><code>INotifyValueChanged</code></a> interface and listen for <a href="../ScriptReference/UIElements.ChangeEvent_1.html"><code>ChangeEvent</code></a>s as needed.</li>
+<li>Inherit from the <a href="../ScriptReference/UIElements.BindableElement.html"><code>BindableElement</code></a> class or implement the <a href="../ScriptReference/UIElements.IBindable.html"><code>IBindable</code></a> interface.</li>
+</ul>
+
+<p>See <a href="UIE-Binding.html">SerializedObject data binding</a> for more details.</p>
+
+<p>For a bindable custom control example, see <a href="UIE-create-bindable-custom-control.html">Create a bindable custom control</a>.</p>
+
+<h2>Style custom controls with USS</h2>
+
+<p>Use USS to customize the look of a custom control the same way as a built-in control. You can also create <a href="UIE-USS-CustomProperties.html">USS custom properties</a> to style a custom control. </p>
+
+<p>
+<strong>Note</strong>: The Inspector window in the UI Builder doesn’t show USS custom properties. To edit USS custom properties, use a text editor to edit your USS file directly.</p>
+
+<p>To interact with custom USS properties for a custom control in C#, use the <a href="../ScriptReference/UIElements.CustomStyleProperty_1.html"><code>CustomStyleProperty</code></a> structure and the <a href="../ScriptReference/UIElements.CustomStyleResolvedEvent.html"><code>CustomStylesResolvedEvent</code></a> event.</p>
+
+<p>
+<a href="../ScriptReference/UIElements.CustomStyleProperty_1.html"><code>CustomStyleProperty</code></a> describes the name and type of the property you read from the stylesheet.</p>
+
+<p>UI Toolkit dispatches <a href="../ScriptReference/UIElements.CustomStyleResolvedEvent.html"><code>CustomStylesResolvedEvent</code></a> for any element that directly receives a custom USS property. It dispatches the event for any element that a selector matches, for selectors for which the rule contains the value of the custom property. UI Toolkit doesn’t dispatch the event for elements that inherit the value. The event holds a reference to an <a href="../ScriptReference/UIElements.ICustomStyle.html"><code>ICustomStyle</code></a> object. You must use its <a href="../ScriptReference/UIElements.ICustomStyle.TryGetValue.html"><code>TryGetValue()</code></a> method to read the effective value of a <a href="../ScriptReference/UIElements.CustomStyleProperty_1.html"><code>CustomStyleProperty</code></a>. This method has overloads for different types of <a href="../ScriptReference/UIElements.CustomStyleProperty_1.html"><code>CustomStyleProperty</code></a>.</p>
+
+<p>For a custom style with a custom control example, see <a href="UIE-create-custom-style-custom-control.html">Create custom style for a custom control</a>.</p>
+
+<p>
+<strong>Note</strong>: You can’t define transitions for custom style properties.</p>
+
+<h2>Handle event for custom controls</h2>
+
+<p>For detailed information on how to handle events for custom controls, see <a href="UIE-Events-Handling.html">Handle events</a>.</p>
+
+<p>
+<strong>Note</strong>: </p>
+
+<ul>
+<li>Unity dispatches keyboard events to the currently focused element. To handle <a href="UIE-Keyboard-Events.html">keyboard events</a> for a custom control, set properties related to <code>focus</code>.</li>
+<li>To handle touch and mouse input events, register callbacks for the relevant event types, such as <a href="UIE-Pointer-Events.html">pointer events</a> and <a href="UIE-Mouse-Events.html">mouse events</a>, in the constructor.</li>
+</ul>
+
+<h2>Use custom controls in UI Builder</h2>
+
+<p>To add a custom control to a <span class="tooltip"><strong>visual tree</strong><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualtree" aria-label="Go to glossary anchor for Visualtree">Glossary</a></span></span></span> in UI Builder:</p>
+
+<ol>
+<li>Select <strong>Library</strong> &gt; <strong>Project</strong> &gt; <strong>Custom Controls (C#)</strong>.</li>
+<li>Drag the custom control into the <strong>Hierarchy</strong> window.</li>
+</ol>
+
+<h2>Best practices and tips</h2>
+
+<p>
+<strong>Best practices</strong>:</p>
+
+<ul>
+<li>Expose properties that a custom control represents and other functional aspects of its behavior as UXML properties, and expose properties that affect the look of a custom control as USS properties.</li>
+<li>Use a namespace that’s unique, short, and readable to avoid name <span class="tooltip"><strong>collisions</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span> with other elements.</li>
+<li>Keep UXML attributes primitive. Data that you can specify in UXML is limited to the set of primitive data types. UXML doesn’t support complex data structures or collections. Pass complex data to your custom controls at runtime via C# <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> or data binding, not in UXML.</li>
+<li>In C#, expose USS classes or names as constants. This allows you to locate elements by class or name using <a href="UIE-UQuery.html">UQuery</a>.</li>
+<li>Adopt the <a href="https://sparkbox.com/foundry/bem_by_example">BEM standard</a> for USS classes. This allows you to address every element with a class list selector.</li>
+<li>Use static callbacks for a lower memory footprint. When you register an instance method to be used as a callback, you might create unnecessary allocations. To avoid allocations, use anonymous static lambda functions that call into regular C# static methods. You can retrieve the context of the current element through the <a href="../ScriptReference/UIElements.EventBase-currentTarget.html"><code>EventBase.currentTarget</code></a> property.</li>
+</ul>
+
+<p>
+<strong>Tips</strong>:</p>
+
+<ul>
+<li><p>Render custom geometry through the <a href="../ScriptReference/UIElements.VisualElement-generateVisualContent.html"><code>generateVisualContent</code></a> callback for custom controls. For an example usage that renders a partially filled circle, see <a href="UIE-radial-progress.html">RadialProgress example</a>.</p></li>
+<li>
+<p>Custom controls are convenient. However, you might achieve the same outcomes with the following:</p>
+
+<ul>
+<li>Assemble your UI from existing elements, and change their styles and properties.</li>
+<li>Use UXML templates. Use regular C# <code>MonoBehaviour</code>s to add logic that pertains to the specific UI Document that holds your UI. (To learn how to use <code>MonoBehaviour</code>s to control UI in a UI Document, see <a href="UIE-HowTo-CreateRuntimeUI.html">Create your first runtime UI</a>.) To achieve encapsulation, create properties and methods inside your <code>MonoBehaviour</code> that internally fetch <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a>s with <a href="UIE-UQuery.html">UQuery</a> and manipulate their properties.</li>
+</ul>
+</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-expose-custom-control-to-uxml.html">Expose custom controls to UXML and UI Builder</a></li>
+<li><a href="UIB-structuring-ui-custom-elements.html">Create a custom control with two attributes</a></li>
+<li><a href="UIE-slide-toggle.html">Create a slide toggle custom control</a></li>
+<li><a href="UIE-radial-progress.html">Create a radial progress indicator</a></li>
+<li><a href="UIE-create-bindable-custom-control.html">Create a bindable custom control</a></li>
+<li><a href="UIE-create-custom-style-custom-control.html">Create a custom style for a custom control</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-custom-controls.html"></a></span><div class="tip">Custom controls</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-expose-custom-control-to-uxml.html"></a></span><div class="tip">Expose custom control to UXML and UI Builder</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Shader keywords</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/shader-keywords.html">English</a></li>
+<li><a href="/cn/current/Manual/shader-keywords.html">中文</a></li>
+<li><a href="/ja/current/Manual/shader-keywords.html">日本語</a></li>
+<li><a href="/kr/current/Manual/shader-keywords.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/shader-keywords.html">English</a></li>
+<li><a href="/cn/current/Manual/shader-keywords.html">中文</a></li>
+<li><a href="/ja/current/Manual/shader-keywords.html">日本語</a></li>
+<li><a href="/kr/current/Manual/shader-keywords.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="ShadersOverview.html">Shaders core concepts</a></li>
+<li><a href="shader-variants-and-keywords.html">Branching, variants, and keywords</a></li>
+<li>Shader keywords</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="shader-how-many-variants.html"></a></span><div class="tip">Check how many shader variants you have</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="shader-keywords-scripts.html"></a></span><div class="tip">Using shader keywords with C# scripts</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Shader keywords</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Shader keywords allow you to use <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about shader-conditionals.html">conditional behavior</a> in your <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html" href="shader-conditionals.html">conditional behavior</a> in your <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> code. You can create shaders that share some common code, but have different functionality when a given <strong>keyword</strong> is enabled or disabled. You use with <span class="tooltip"><a href="shader-variants.html">Shader variants</a><span class="tooltiptext">A verion of a shader program that Unity generates according to a specific combination of shader keywords and their status. A Shader object can contain multiple shader variants. <a href="shader-variants.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> code. You can create shaders that share some common code, but have different functionality when a given <strong>keyword</strong> is enabled or disabled. You use with <span class="tooltip"><a href="shader-variants.html">Shader variants</a><span class="tooltiptext">A verion of a shader program that Unity generates according to a specific combination of shader keywords and their status. A Shader object can contain multiple shader variants. <a href="shader-variants.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shadervariant" aria-label="Go to glossary anchor for Shadervariant">Glossary</a></span></span></span>.</p>
+
+<p>This page contains the following information:</p>
+
+<ul>
+<li>
+<a href="#using-keywords">Using shader keywords</a>
+
+<ul>
+<li><a href="#declaring-keywords">Declaring shader keywords</a></li>
+<li><a href="#conditional-keywords">Making behavior conditional with shader keywords</a></li>
+<li><a href="#enabling-disabling-keywords">Enabling and disabling shader keywords</a></li>
+</ul>
+</li>
+<li><a href="#predefined-shader-keywords">Unity’s predefined shader keywords</a></li>
+<li><a href="#keyword-limits">Shader keyword limits</a></li>
+</ul>
+
+<p><a name="using-keywords" aria-hidden="true"></a></p>
+
+<h2>Using shader keywords</h2>
+
+<p><a name="declaring-keywords" aria-hidden="true"></a></p>
+
+<h3>Declaring shader keywords</h3>
+
+<p>You declare shader keywords in sets. A set contains mutually exclusive keywords.</p>
+
+<p>For example, the following set contains three keywords:</p>
+
+<ul>
+<li>COLOR_RED</li>
+<li>COLOR_GREEN</li>
+<li>COLOR_BLUE</li>
+</ul>
+
+<pre><code class="lang-hlsl">#pragma shader_feature RED GREEN
+</code></pre>
+
+<p>
+<strong>Note:</strong> In Shader Graph, the terminology is different: a set of keywords is called a <strong>Keyword</strong>, and the keywords in a set are called <strong>states</strong>. Internally, the functionality is the same: Unity compiles them in the same way, you work with them the same way with C# <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>, and so on.</p>
+
+<p>The way that you declare shader keywords affects a number of things:</p>
+
+<ul>
+<li>The <a href="#declaring-keywords-definition-type">type</a> affects how Unity creates shader variants for the keywords.</li>
+<li>The <a href="#declaring-keywords-scope">scope</a> affects whether the keywords are local or global. This determines their behavior at runtime.</li>
+<li>The <a href="#stage-specific-keywords">stage</a> affects which shader stage the keywords affect (where applicable).</li>
+</ul>
+
+<p><a name="declaring-keywords-definition-type" aria-hidden="true"></a></p>
+
+<h4>Definition type: “multi compile” or “shader feature”</h4>
+
+<p>When you declare a set of keywords, you must also choose how Unity defines the keywords internally; this affects the number of variants that Unity compiles.</p>
+
+<ul>
+<li>“multi compile” or “shader feature”: Use this to create a set of keywords for use with shader variants. Internally, Unity uses these keyword to create <code>#define</code> preprocessor directives.
+
+<ul>
+<li>“multi compile” declares a set of keywords for use with shader variants.<br><br>Unity compiles shader variants for all keywords in the set.</li>
+<li>“shader feature” declares a set of keywords for use with shader variants, and also instructs the compiler to compile variants where none of these keywords are enabled.<br><br>Unity examines the state of your project at build time, and only compiles variants for keywords that are in use. A keyword is in use if a material that is included in the build has that keyword enabled.</li>
+</ul>
+</li>
+</ul>
+
+<p>Whether to choose “multi compile” or “shader feature” depends on how you use the keywords. If you use the keywords to configure materials in your project and do not change their value from C# scripts at runtime, then you should use “shader feature” to reduce the number of shader keywords and variants in your project. If you enable and disable keywords at runtime using C# scripts, then you should use “multi compile” to prevent variants being stripped in error. For more information on shader stripping, see <a href="shader-variant-stripping.html">Shader variant stripping</a>.</p>
+
+<p>
+<strong>Note:</strong> If you add a shader to the list of <a href="class-GraphicsSettings.html#Always"><strong>Always Included Shaders</strong></a> in the Graphics settings window, Unity includes all keywords from all sets in the build, even if they were declared with “shader feature”.</p>
+
+<p>To set this value, see the following documentation:</p>
+
+<ul>
+<li>In hand-coded shaders, see <a href="SL-MultipleProgramVariants.html">Declaring and using shader keywords in HLSL</a>
+</li>
+<li>In Shader Graph, see <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@latest?subfolder=/manual/Keywords.html">Keywords</a>.</li>
+</ul>
+
+<p><a name="declaring-keywords-scope" aria-hidden="true"></a></p>
+
+<h4>Local or global scope</h4>
+
+<p>When you declare a set of keywords, you choose whether the keywords in the set have local or global <strong>scope</strong>. This determines whether you can override the state of this keyword at runtime using a global shader keyword.</p>
+
+<p>By default, you declare keywords with global scope. This means that you can override the state of this keyword at runtime using a global shader keyword. If you declare keywords with local scope, this means that you cannot override the state of this keyword at runtime using a global shader keyword. For more information and a code example, see <a href="shader-keywords-scripts.html">Using shader keywords with C# scripts</a>.</p>
+
+<p>
+<strong>Note:</strong> If a keyword with the same name exists in a shader source file and its dependencies, the scope of the keyword in the source file overrides the scope in the dependencies. Dependencies comprise all Shaders that are included via the <a href="SL-Fallback.html">Fallback command</a>, and Passes that are included via the <a href="SL-UsePass.html">UsePass command</a>.</p>
+
+<p>To set this value, see the following documentation:</p>
+
+<ul>
+<li>In hand-coded shaders, see <a href="SL-MultipleProgramVariants.html">Declaring and using shader keywords in HLSL</a>
+</li>
+<li>In Shader Graph, see <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@latest?subfolder=/manual/Keywords.html">Keywords</a>
+</li>
+</ul>
+
+<p><a name="stage-specific-keywords" aria-hidden="true"></a></p>
+
+<h4>Stage-specific keywords</h4>
+
+<p>By default, Unity generates keyword variants for each stage of your shader. For example, if your shader contains a vertex stage and a fragment stage, Unity generates variants for every keyword combination for both the vertex and the fragment shader programs. If a set of keywords is only used in one of those stages, this results in identical variants for the other stage. Unity automatically identifies and <a href="shader-variants.html#deduplication">deduplicates</a> identical variants so that they do not increase build size, but they still result in wasted compilation time, increased shader loading times, and increased runtime memory usage. </p>
+
+<p>To avoid this problem, when you declare a set of keywords in a hand-coded shader, you can instruct Unity to compile them only for a given shader stage. You are then responsible for ensuring that the keywords are only used in the specified shader stages. </p>
+
+<p>
+<strong>Note:</strong> The following graphics APIs do not fully support stage-specific keywords. In OpenGL and Vulkan, at compile time, Unity automatically converts all stage-specific keyword directives to regular keyword directives. In Metal, any keyword targeting vertex stages also affects tessellation stages, and vice versa. </p>
+
+<p>To set this value:</p>
+
+<ul>
+<li>In hand-coded shaders, see <a href="SL-MultipleProgramVariants.html">Declaring and using shader keywords in HLSL</a>
+</li>
+<li>In Shader Graph, you cannot set this value. By default, all keywords affect all stages.</li>
+</ul>
+
+<p><a name="conditional-keywords" aria-hidden="true"></a></p>
+
+<h3>Making behavior conditional with shader keywords</h3>
+
+<p>You can use shader keywords to make parts of your shader conditional, so that certain behaviors only execute when a given keyword is in a given state.</p>
+
+<p>To do this:</p>
+
+<ul>
+<li>In hand-coded shaders, see <a href="SL-MultipleProgramVariants.html">Defining and using shader keywords</a>.</li>
+<li>In Shader Graph, see <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@latest?subfolder=/manual/Keyword-Node.html">Shader Graph: Keyword Node</a>.</li>
+</ul>
+
+<p><a name="enabling-disabling-keywords" aria-hidden="true"></a></p>
+
+<h3>Enabling and disabling shader keywords</h3>
+
+<p>You can enable or disable shader keywords. When you enable or disable a shader keyword, Unity renders the appropriate shader variant, or the GPU executes the appropriate branch.</p>
+
+<p>There are two ways to enable and disable shader keywords:</p>
+
+<ul>
+<li>Use scripts, either at runtime or in the Unity Editor. For more information, see <a href="shader-keywords-scripts.html">Using shader keywords with C# scripts</a>.</li>
+<li>Use the Material <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> in the Unity Editor. For more information, see <a href="shader-keywords-material-inspector.html">Using shader keywords with the Material Inspector</a>.</li>
+</ul>
+
+<p><a name="predefined-shader-keywords" aria-hidden="true"></a></p>
+
+<h2>Unity’s predefined shader keywords</h2>
+
+<p>Unity uses predefined sets of shader keywords to generate shader variants that enable common functionality.</p>
+
+<p>Unity adds the following sets of shader variant keywords at compile time:</p>
+
+<ul>
+<li>By default, Unity adds this set of keywords to all graphics shader programs: STEREO_INSTANCING_ON, STEREO_MULTIVIEW_ON, STEREO_CUBEMAP_RENDER_ON, UNITY_SINGLE_PASS_STEREO. You can strip these keywords using an Editor script. For more information, see <a href="shader-variant-stripping.html">Shader variant stripping</a>.</li>
+<li>By default, Unity adds this set of keywords to the Standard Shader: LIGHTMAP_ON, DIRLIGHTMAP_COMBINED, DYNAMICLIGHTMAP_ON, LIGHTMAP_SHADOW_MIXING, SHADOWS_SHADOWMASK. You can strip these keywords using the <a href="class-GraphicsSettings.html">Graphics settings</a> window.</li>
+<li>In the Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>, if your project uses <a href="graphics-tiers.html#tier-settings">tier settings</a> that differ from each other, Unity adds this set of keywords to all graphics shaders: UNITY_HARDWARE_TIER1, UNITY_HARDWARE_TIER2, UNITY_HARDWARE_TIER3. For more information, see <a href="graphics-tiers.html#shader-variants">Graphics tiers: Graphics tiers and shader variants</a>.</li>
+</ul>
+
+<p><a name="keyword-limits" aria-hidden="true"></a></p>
+
+<h2>Shader keyword limits</h2>
+
+<p>Unity can use up to 4,294,967,294 global shader keywords. Individual shaders and compute shaders can use up to 65,534 local shader keywords.</p>
+
+<p>Every keyword declared in the shader source file and its dependencies count towards this limit. Dependencies include <a href="SL-Pass.html">Passes</a> that the shader includes with <a href="SL-UsePass.html">UsePass</a>, and <a href="SL-Fallback.html">fallbacks</a>.</p>
+
+<p>If Unity encounters a shader keyword with the same name multiple times, it only counts towards the limit once.</p>
+
+<p>If a shader uses more than 128 keywords in total, it incurs a small runtime performance penalty; therefore, it is best to keep the number of keywords low. Unity always reserves 4 keywords per shader.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="shader-how-many-variants.html"></a></span><div class="tip">Check how many shader variants you have</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="shader-keywords-scripts.html"></a></span><div class="tip">Using shader keywords with C# scripts</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

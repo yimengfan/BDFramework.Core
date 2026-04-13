@@ -1,0 +1,737 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: XR SDK Input subsystem</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xrsdk-input.html">English</a></li>
+<li><a href="/cn/current/Manual/xrsdk-input.html">中文</a></li>
+<li><a href="/ja/current/Manual/xrsdk-input.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xrsdk-input.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xrsdk-input.html">English</a></li>
+<li><a href="/cn/current/Manual/xrsdk-input.html">中文</a></li>
+<li><a href="/ja/current/Manual/xrsdk-input.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xrsdk-input.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="XR.html">XR</a></li>
+<li><a href="xr-sdk.html">Unity XR SDK</a></li>
+<li><a href="xrsdk-subsystems-landing.html">Subsystems</a></li>
+<li>XR SDK Input subsystem</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="xrsdk-subsystems-landing.html"></a></span><div class="tip">Subsystems</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="xrsdk-display.html"></a></span><div class="tip">XR SDK Display subsystem</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>XR SDK Input subsystem</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <span class="tooltip"><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html" href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> SDK Input Subsystem is an interface for reporting button, axis, and tracking device information. This is the core subsystem for getting user-controlled data into the various input endpoints of the Unity engine. Unity reports your input information to <a href="../ScriptReference/XR.InputDevices.html">InputDevices</a> and the <a href="https://github.com/Unity-Technologies/InputSystem">Input System</a> depending on the type of information available.</p>
+
+<p>
+<strong>Note:</strong> The Unity XR SDK is no longer available as we have focused our investments towards <a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@latest">OpenXR</a>.</p>
+
+<h2>Creating a basic XR Input provider</h2>
+
+<p>To create a basic, working XR Input provider, follow these steps:</p>
+
+<ol>
+<li><a href="#device-connection-and-disconnection">Report your device connections and disconnections</a></li>
+<li><a href="#device-definitions">Fill in all connected device’s definition information</a></li>
+<li><a href="#device-states">Update the device’s state whenever Unity requests this</a></li>
+<li><a href="#event-handling">Respond to all relevant events and queries</a></li>
+<li><a href="#new-input-system-device-layout">Report your device layouts to the new input system</a></li>
+</ol>
+
+<h2>Terms</h2>
+
+<p>This guide uses the following terms:</p>
+
+<h3>Devices</h3>
+
+<p>Most Input Subsystem APIs rely on devices. A device is a container of input features referenced by a unique ID that you choose. This can be something concrete, like a gamepad or headset, or it can represent abstract objects such as a detected hand skeleton. A device has a fixed number of features that you cannot change while the device is connected.</p>
+
+<h3>Feature</h3>
+
+<p>Input Features are anything you can get sensor or user modified data from. That can be a button, or a positional tracking element, or battery life. They are grouped into various types of data, identified by UnityXRInputFeatureType. These are the currently supported data types that can be on an input device:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>UnityXRInputFeatureType</strong></th>
+	<th style="text-align:left;"><strong>Data Type</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">kUnityXRInputFeatureTypeCustom</td>
+	<td style="text-align:left;">char[] (up to 1024 elements)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">kUnityXRInputFeatureTypeBinary</td>
+	<td style="text-align:left;">bool</td>
+</tr>
+<tr>
+	<td style="text-align:left;">kUnityXRInputFeatureTypeDiscreteStates</td>
+	<td style="text-align:left;">unsigned int</td>
+</tr>
+<tr>
+	<td style="text-align:left;">kUnityXRInputFeatureTypeAxis1D</td>
+	<td style="text-align:left;">float</td>
+</tr>
+<tr>
+	<td style="text-align:left;">kUnityXRInputFeatureTypeAxis2D</td>
+	<td style="text-align:left;">UnityXRVector2</td>
+</tr>
+<tr>
+	<td style="text-align:left;">kUnityXRInputFeatureTypeAxis3D</td>
+	<td style="text-align:left;">UnityXRVector3</td>
+</tr>
+<tr>
+	<td style="text-align:left;">kUnityXRInputFeatureTypeRotation</td>
+	<td style="text-align:left;">UnityXRVector4</td>
+</tr>
+<tr>
+	<td style="text-align:left;">kUnityXRInputFeatureTypeHand</td>
+	<td style="text-align:left;">UnityXRHand</td>
+</tr>
+<tr>
+	<td style="text-align:left;">kUnityXRInputFeatureTypeBone</td>
+	<td style="text-align:left;">UnityXRBone</td>
+</tr>
+<tr>
+	<td style="text-align:left;">kUnityXRInputFeatureTypeEyes</td>
+	<td style="text-align:left;">UnityXREyes</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Usage</h3>
+
+<p>A usage provides context to a feature. It identifies how the developer should use the feature. For example, the feature can be a 2D axis, but the usage tells the developer it’s a touchpad. Usage can also inform the developer that a one-dimensional axis feature is reporting battery life. You can create your own usages, but you need to use as many Unity-developed usages as possible, because they enable cross-platform utility for developers. For a list of common usages available to all, see the <a href="#feature-usages">Feature usages</a> section below.</p>
+
+<h3>UnityXRInternalInputDeviceId</h3>
+
+<p>A UnityXRInternalInputDeviceId identifies all devices. Consider these identifiers to be unique IDs that both Unity and a provider share to reference a specific device. You define which Ids map to which devices, with the only constraint being that you cannot use the same Id for two devices connected at the same time. When you report a specific Id as connecting, Unity requests information about what the device is capable of and the current state of that device using that Id, and sends device-specific events using that Id.</p>
+
+<p><a name="device-connection-and-disconnection" aria-hidden="true"></a></p>
+
+<h2>Device connection and disconnection</h2>
+
+<p>Two APIs on the IUnityXRInputInterface handle device connection and disconnection:</p>
+
+<h4>IUnityXRInputInterface.InputSubsystem_DeviceConnected</h4>
+
+<p>This reports a new device. The <code>UnityXRInternalInputDeviceId</code> the provider supplies can be any value, so long as it represents an internally unique device and no two devices are connected with the same Id from the same provider. Devices can only be connected between the Start and Stop events of the input provider’s lifecycle. Any device that is already connected when <strong>IUnityXRInputProvider.Start</strong> is called should be reported during that callback.</p>
+
+<p>Once a device is reported as connected, Unity calls<strong>IUnityXRInputProvider.FillDeviceDefinition</strong> on the next input update loop with the supplied <strong>UnityXRInternalInputDeviceId</strong> in order to get specific information about that device.</p>
+
+<h4>IUnityXRInputInterface.InputSubsystem_DeviceDisconnected</h4>
+
+<p>This reports that an input device is no longer available. You can only report an input device as disconnected after you have already reported it as connected. When you receive <strong>IUnityXRInputProvider.Stop</strong>, you must report all input devices currently connected as disconnected.</p>
+
+<p>The two calls above are thread safe, and can be called at any time.</p>
+
+<p><a name="device-definitions" aria-hidden="true"></a></p>
+
+<h2>Device definitions</h2>
+
+<p>A Device Definition describes the features that your device can report to Unity. Features consist of device identifying information, such as the device name, role, manufacturer, and serial number. A Device Definition also contains an indexed list of all individual input features available.</p>
+
+<p>When a device is reported as being connected, Unity calls your provider via <strong>IUnityXRInputProvider.FillDeviceDefinition</strong>. The <strong>UnityXRInputDeviceDefinition</strong> parameter acts as a handle that can be passed into any methods prefixed with <strong>DeviceDefinition</strong> on <strong>IUnityXRInputInterface</strong>. Those methods are as follows:</p>
+
+<h3>Setting identifying information</h3>
+
+<p>Developers use some data on the device to identify specific devices or the general functionality of a newly connected device.</p>
+
+<h4>IUnityXRInputInterface.DeviceDefinition_SetName</h4>
+
+<p>This allows the provider to set the device name. The name must be clear, succinct, and recognizable by mass market consumers. This should not include the manufacturer’s name. This name is available to developers via <strong>UnityEngine.XR.InputDevice.name</strong> and as <strong>InputDevice.product</strong> in the Input System. Don’t leave this blank.</p>
+
+<h4>IUnityXRInputInterface.DeviceDefinition_SetCharacteristics</h4>
+
+<p>This allows the provider to specify the type of device that connected. <strong>UnityXRInputDeviceCharacteristics</strong> are a series of flags that help define what a device is capable of. These change the Input System usage of the <strong>InputDevice</strong>.</p>
+
+<h4>IUnityXRInputInterface.DeviceDefinition_SetManufacturer</h4>
+
+<p>This allows the provider to set the manufacturer of the device. The manufacturer must be clear, succinct, and recognizable by mass market consumers. This string is available to developers via <strong>UnityEngine.XR.InputDevice.manufacturer</strong> and as <strong>InputDevice.manufacturer</strong> in the Input System. Don’t leave this blank.</p>
+
+<h4>IUnityXRInputInterface.DeviceDefinition_SetSerialNumber</h4>
+
+<p>This allows the provider to set the serial number of the device. This string is available to developers via <strong>UnityEngine.XR.InputDevice.serialNumber</strong> and as <strong>InputDevice.serialNumber</strong> in the Input System. This must be an identifier unique to this specific device, or you should leave it blank.</p>
+
+<h3>Adding Features</h3>
+
+<p>You can add Input Features to your device definition via the following API calls.</p>
+
+<h4>IUnityXRInputInterface.DeviceDefinition_AddFeature</h4>
+
+<p>This adds a feature of a set type (except <strong>kUnityXRInputFeatureTypeCustom</strong>), and returns the <strong>UnityXRInputFeatureIndex</strong> of that new feature.</p>
+
+<h4>IUnityXRInputInterface.DeviceDefinition_AddCustomFeature</h4>
+
+<p>This adds a <strong>kUnityXRInputFeatureTypeCustom</strong> feature. These are variable buffers, up to 1024 bytes. You can use these to create custom types, unknown to Unity, and require an explicit size. This method returns the <strong>UnityXRInputFeatureIndex</strong> of that new feature.</p>
+
+<h4>IUnityXRInputInterface.DeviceDefinition_AddFeatureWithUsage</h4>
+
+<p>This adds a feature, but also includes one <a href="#feature-usages">feature usage</a>. This method is a helper that combines <strong>DeviceDefinition_AddFeature</strong> and <strong>DeviceDefinition_AddUsageAtIndex</strong>, and returns the <strong>UnityXRInputFeatureIndex</strong> of that new feature.</p>
+
+<h4>IUnityXRInputInterface.DeviceDefinition_AddUsageAtIndex</h4>
+
+<p>This adds a <a href="#feature-usages">feature usage</a> to an existing feature. It takes the <strong>UnityXRInputFeatureIndex</strong> from one of the methods that adds a feature. You can add as many usages to a single feature as required.</p>
+
+<p>
+<strong>Note:</strong> Returned <strong>UnityXRInputFeatureIndex</strong> values are all in the sequential order they are added.</p>
+
+<p><a name="device-states" aria-hidden="true"></a></p>
+
+<h2>Device states</h2>
+
+<p>Device states are data structures that contain the current state of the device. The structure of the <strong>UnityXRInputDeviceState</strong> is described by the <strong>UnityXRInputDeviceDefinition</strong>.</p>
+
+<p>
+<strong>Note:</strong> Features contained within the Device State are accessed with a <strong>UnityXRInputFeatureIndex</strong> as reported when declaring that feature in the device definition.</p>
+
+<h3>Device state update types</h3>
+
+<p>Once a definition is declared, Unity requests device states twice a frame via <strong>IUnityXRInputProvider.UpdateDeviceState</strong>. The <strong>UnityXRInputUpdateType</strong> parameter specifies what kind of update Unity expects:</p>
+
+<ul>
+<li>
+<strong>kUnityXRInputUpdateTypeDynamic</strong> is an update before Unity iterates over <strong>MonoBehaviour.Update</strong> calls and coroutine continuations. These should represent where the device currently is.</li>
+<li>
+<strong>kUnityXRInputUpdateTypeBeforeRender</strong> is called right before Unity prepares to render to the headset, and just before <strong>Application.OnBeforeRender</strong> is invoked. These calls should use a forward predicted tracking position, and represent where you’d like to render the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> at the time it takes to display it.</li>
+</ul>
+
+<h3>Device state methods</h3>
+
+<p>The <strong>UnityXRInputDeviceState</strong> parameter acts as a handle that can be passed into any methods prefixed with <strong>DeviceState</strong> on <strong>IUnityXRInputInterface</strong>.</p>
+
+<h4>IUnityXRInputInterface.DeviceState_SetCustomValue</h4>
+
+<p>This sets a feature of type <strong>kUnityXRInputFeatureTypeCustom</strong> at the supplied <strong>UnityXRInputFeatureIndex</strong>. When setting custom value features, the provider must always set the value with the full size of the declared feature; there is no partial value setting. Also, you must declare all custom features to Unity during submission with a detailed explanation of what kind of data they contain and why they cannot exist using the other individual feature types.</p>
+
+<h4>IUnityXRInputInterface.DeviceState_SetBinaryValue</h4>
+
+<p>This sets a boolean (on/off) feature of type <strong>kUnityXRInputFeatureTypeBinary</strong>. The default, resting, or unused state of this feature must be false.</p>
+
+<h4>IUnityXRInputInterface.DeviceState_SetDiscreteStateValue</h4>
+
+<p>This sets a 32-bit unsigned integer value. This can also be used to represent enumerations. The default, unused value must be 0, and if used for an enumeration, 0 must represent the value of null, none, unset, or invalid.</p>
+
+<h4>IUnityXRInputInterface.DeviceState_SetAxis1DValue</h4>
+
+<p>This sets a 32-bit floating point value. The default, unused value must be 0.0.</p>
+
+<h4>IUnityXRInputInterface.DeviceState_SetAxis2DValue</h4>
+
+<p>This sets a value of type <strong>UnityXRVector2</strong>. UnityXRVector2 structures are a pair of (X, Y) 32-bit floats. The default, unused value must be (0.0, 0.0).</p>
+
+<h4>IUnityXRInputInterface.DeviceState_SetAxis3DValue</h4>
+
+<p>This sets a value of type <strong>UnityXRVector3</strong>. UnityXRVector2 structures are a pair of (X, Y, Z) 32-bit floats. The default, unused value must be (0.0, 0.0, 0.0).</p>
+
+<h4>IUnityXRInputInterface.DeviceState_SetRotationValue</h4>
+
+<p>This sets a value of type <strong>UnityXRVector4</strong>, formatted as a quaternion. The default, unused value must be (0, 0, 0, 1). See documentation on <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/Quaternion.html">quaternions</a><span class="tooltiptext">Unity’s standard way of representing rotations as data. When writing code that deals with rotations, you should usually use the Quaternion class and its methods. <a href="QuaternionAndEulerRotationsInUnity.html" href="../ScriptReference/Quaternion.html">quaternions</a><span class="tooltiptext">Unity’s standard way of representing rotations as data. When writing code that deals with rotations, you should usually use the Quaternion class and its methods. <a href="QuaternionAndEulerRotationsInUnity.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Quaternion" aria-label="Go to glossary anchor for Quaternion">Glossary</a></span></span></span> for more information.</p>
+
+<h4>IUnityXRInputInterface.DeviceState_SetBoneValue</h4>
+
+<p>This sets a value of type <strong><a href="#unityxrbone">UnityXRBone</a></strong>.</p>
+
+<h4>IUnityXRInputInterface.DeviceState_SetHandValue</h4>
+
+<p>This sets a value of type <strong><a href="#unityxrhand">UnityXRHand</a></strong>.</p>
+
+<h4>IUnityXRInputInterface.DeviceState_SetEyesValue</h4>
+
+<p>This sets a value of type <strong><a href="#unityxreyes">UnityXREyes</a></strong>.</p>
+
+<p>
+<strong>Note:</strong> The <strong>UnityXRInputFeatureUsageIndex</strong> passed in is the same one returned when adding that individual feature to the device definition when filling out the <strong>UnityXRInputFeatureDefinition</strong>.</p>
+
+<h3>Feature-specific structs</h3>
+
+<p>The following advanced types are special feature types that are used to contain data from multiple data sources.</p>
+
+<p><a name="unityxrbone" aria-hidden="true"></a></p>
+
+<h4>UnityXRBone</h4>
+
+<p>These represent a bone or one element of a hierarchical pose in space. The <strong>position</strong> member represents a three-dimensional position in meters, using left-handed coordinates where Y is up. The <strong>rotation</strong> member represents an orientation in space for that bone, represented by a normalized quaternion in radians. The <strong>parentBoneIndex</strong> is a <strong>UnityXRInputFeatureIndex</strong> that must point to the <strong>UnityXRBone</strong> that is upwards in the hierarchy, or <strong>kUnityInvalidXRInputFeatureIndex</strong> if it is the root for this skeleton.</p>
+
+<p><a name="unityxrhand" aria-hidden="true"></a></p>
+
+<h4>UnityXRHand</h4>
+
+<p>These represent a hand-like structure of bones. They organize the bone hierarchy into fingers and root for easy traversal. The <strong>rootBoneIndex</strong> must always point to a valid index that is of type <strong>kUnityXRInputFeatureTypeBone</strong>, which represents the palm or center of the hand. <strong>fingerBoneIndices</strong> must be stacked such that the first dimension or the array maps to individual fingers, following <strong>UnityXRHandFinger</strong> enumeration values, and the second dimension of the array are the individual finger bones from root to tip.</p>
+
+<p><a name="unityxreyes" aria-hidden="true"></a></p>
+
+<h4>UnityXREyes</h4>
+
+<p>These represent a pair of eyes, their fixation point, and current blink data. The <strong>leftEyePose</strong> and <strong>rightEyePose</strong> are of type <strong>UnityXRPose</strong>, where the <strong>position</strong> member represents a three-dimensional position in meters, using left-handed coordinates, where Y is up, and the <strong>rotation</strong> member represents a normalized quaternion in radians. The <strong>fixationPoint</strong> represents where the left and right eyes converge, and is also a three-dimensional position in meters, using left-handed coordinates, where Y is up. The <strong>leftOpenAmount</strong> and <strong>rightOpenAmount</strong> represent the openness of the eyes, where 0 is closed, and 1 is fully open. They cannot exceed the [0,1] range.</p>
+
+<p><a name="event-handling" aria-hidden="true"></a></p>
+
+<h2>Event handling</h2>
+
+<p>Outside of device state and definition updating, Unity expects you to react and respond to various events.</p>
+
+<h3>Generic event</h3>
+
+<h4>UnityXRInputProvider.HandleEvent</h4>
+
+<p>This is for private events, specific to this provider. The <strong>eventType</strong> parameter is a custom code used to identify the payload. If the provider does not understand that event, it must return <strong>kUnitySubsystemErrorCodeFailure</strong>.</p>
+
+<h3>Tracking origin events</h3>
+
+<p>The tracking origin refers to a point in real-world space that tracked devices are relative to. It is effectively the point in real-world space where a device would report a position of (0, 0, 0). Unity supports a variety of tracking origin modes, and providers can choose to opt into those that they support. The tracking origin modes are listed under <strong>UnityXRInputTrackingOriginModeFlags</strong>.</p>
+
+<p>
+<strong>kUnityXRInputTrackingOriginModeDevice</strong> places the origin at the primary device’s location and yaw at the time of startup, or at the location of the last <strong>UnityXRInputProvider.HandleRecenter</strong> event.</p>
+
+<p>
+<strong>kUnityXRInputTrackingOriginModeFloor</strong> places the origin somewhere on the floor. The location on the floor is up to the provider, so long as it lets the developer understand the height difference between the floor and various devices.</p>
+
+<p>
+<strong>kUnityXRInputTrackingOriginModeTrackingReference</strong> places the origin at the location of a specific InputDevice with the <strong>kUnityXRInputDeviceCharacteristicsTrackingReference</strong> characteristic.</p>
+
+<p>Finally, <strong>kUnityXRInputTrackingOriginModeUnknown</strong> is an error case, and should not be returned by the provider.</p>
+
+<h4>UnityXRInputProvider.HandleRecenter</h4>
+
+<p>When the tracking origin mode is set to <strong>kUnityXRInputTrackingOriginModeDevice</strong>, a call to recenter should set the current location of the primary device to be the new origin.</p>
+
+<h4>UnityXRInputProvider.QueryTrackingOriginMode</h4>
+
+<p>This is a request from Unity to get the current tracking origin mode that the provider is using. The provider is expected to set the <strong>trackingOriginMode</strong> parameter and return <strong>kUnitySubsystemErrorCodeSuccess</strong>. The returned parameter must only be a single flag value.</p>
+
+<h4>UnityXRInputProvider.QuerySupportedTrackingOriginModes</h4>
+
+<p>This is a request for which tracking origin modes are supported. The provider is expected to set the <strong>supportedTrackingOriginModes</strong> parameter and return <strong>kUnitySubsystemErrorCodeSuccess</strong>. The returned parameter should be a cumulative list of all <strong>UnityXRInputTrackingOriginModeFlags</strong> that <strong>UnityXRInputProvider.HandleSetTrackingOriginMode</strong> is able to support.</p>
+
+<h4>UnityXRInputProvider.HandleSetTrackingOriginMode</h4>
+
+<p>This is a request from Unity to change the current tracking origin mode. The <strong>trackingOriginMode</strong> parameter is the desired tracking origin mode. The provider is expected to return <strong>kUnitySubsystemErrorCodeSuccess</strong> if the origin was able to be changed, and <strong>kUnitySubsystemErrorCodeSuccess</strong> otherwise. If the tracking origin mode is already the desired mode, the provider should do nothing and return <strong>kUnitySubsystemErrorCodeSuccess</strong>.</p>
+
+<h4>IUnityXRInputInterface.InputSubsystem_TrackingOriginUpdated</h4>
+
+<p>This is an event the provider can send that notifies Unity that the location of the tracking origin has changed. This must be called when <strong>UnityXRInputProvider.HandleSetTrackingOriginMode</strong> succeeds and moves the origin. This can also be called if the provider has had to change the origin due to a change in overall tracking information.</p>
+
+<h4>IUnityXRInputInterface.InputSubsystem_SetTrackingBoundary</h4>
+
+<p>This is an event the provider can send that notifies Unity that there is a tracking boundary available, or that the tracking boundary has changed. This must be called if there is a boundary, and the tracking origin has changed such that it has moved the relative position of the boundary. This can be called with null, and 0 points in order to remove an existing tracking boundary.</p>
+
+<h3>Haptic events</h3>
+
+<h4>UnityXRInputProvider.QueryHapticCapabilities</h4>
+
+<p>This is a request for the haptic capabilities of a given device that the provider fills in. Setting <strong>supportsImpulse</strong> to true enables events for <strong>UnityXRInputProvider.HandleHapticImpulse</strong>. Setting <strong>supportsBuffer</strong> to true enables events for <strong>UnityXRInputProvider.HandleHapticBuffer</strong>.</p>
+
+<p>
+<strong>Note:</strong> The capabilities structure allows the provider to set the number of channels and requests to start and stop haptics containing a channel index. This allows the provider to have multiple motors inside of a single device that can be rumbled independently. The first channel should be the most common motor to use, but subsequent ordering is provider-dependent.</p>
+
+<h4>UnityXRInputProvider.HandleHapticImpulse</h4>
+
+<p>This is a request for a device to rumble at a set amplitude, for a set duration. Unity fills in the data for this request. The buffer parameter is of type <strong>UnityXRHapticImpulse</strong>.</p>
+
+<h4>UnityXRInputProvider.HandleHapticBuffer</h4>
+
+<p>This is a request for a device to rumble a pattern, given a set buffer. Unity fills in the data for this request. The buffer parameter is of type <strong>UnityXRHapticUpdate</strong>.</p>
+
+<p>The bufferSize is never more than the <strong>UnityXRHapticCapabilities.bufferMaxSize</strong> returned from the <strong>UnityXRInputProvider.QueryHapticCapabilities</strong> event.</p>
+
+<h4>UnityXRInputProvider.HandleHapticStop</h4>
+
+<p>This is a request from Unity for any haptic effects to stop. This should stop either impulse or buffered haptic effects on the supplied <strong>UnityXRInternalInputDeviceId</strong>.</p>
+
+<p><a id="feature-usages" aria-hidden="true"></a></p>
+
+<h2>Feature Usages</h2>
+
+<p>Feature usages are simple string tags that provide context about your features and help Unity developers access your device in a generic way. You can declare your device as having a trigger, a device position, a menu button, or other shared concept of an input feature. Developers can access these and interact with your device without knowing exactly what it is. These are also used to route input data into <strong>UnityEngine.Input</strong> and <strong>UnityEngine.XR.InputTracking</strong> and decide on indices. A single input feature can have multiple usages, but each input feature you declare must have at least one usage assigned. If you chose to not use the usages Unity provides by default, you must let Unity know what you’ve used when submitting for certification, and be prepared to update your usage strings based on Unity’s feedback.</p>
+
+<p>All world space usages are in meters, m/s, m/s<sup>2</sup>, or radians where appropriate. Space should be oriented as left-handed, z-forward, y-up. The space origin should be the position of the device on connection. This space is your own, and does not map directly into Unity world space.</p>
+
+<p>These are the common usages available within Unity:</p>
+
+<h3>Pose and tracking</h3>
+
+<p>The following features are for devices that supply tracking in the real world. They are useful for identifying the current tracking capability:</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsageIsTracked</strong> is a boolean that specifies if the device is currently tracking properly. True means fully tracked, false means either partially or not tracked.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsageTrackingState</strong> is a discrete state feature, backed by the <strong>UnityXRInputTrackingStateFlags</strong> enumeration, that identifies which actual tracking features are currently available and updating. This value must never be above <strong>kUnityXRInputTrackingStateAll</strong>.</p>
+
+<p>The remaining tracking features relay individual data about specific ‘nodes’, such as the device, left eye, or a colour <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>. They are grouped into sets of six, depending on the type of data. These must be updated in conjunction with the current value in <strong>kUnityXRInputFeatureUsageTrackingState</strong>. That is, if the tracking state says position is available, all position usages must be updating correctly.</p>
+
+<p>The usage prefixes are as follows:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Prefix</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>kUnityXRInputFeatureUsageDevice</strong></td>
+	<td style="text-align:left;">Generalized position of the input device</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>kUnityXRInputFeatureUsageCenterEye</strong></td>
+	<td style="text-align:left;">Centralized average of all eye rendering locations</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>kUnityXRInputFeatureUsageLeftEye</strong></td>
+	<td style="text-align:left;">Rendering location for a left eye</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>kUnityXRInputFeatureUsageRightEye</strong></td>
+	<td style="text-align:left;">Rendering location for a right eye</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>kUnityXRInputFeatureUsageColorCamera</strong></td>
+	<td style="text-align:left;">Location of any incoming camera feed</td>
+</tr>
+</tbody>
+</table>
+
+<p>Each of those prefixes has a series of available suffixes that represent various tracking attributes, and are as follows:
+* <strong>Position</strong>
+* <strong>Rotation</strong>
+* <strong>Velocity</strong>
+* <strong>AngularVelocity</strong>
+* <strong>Acceleration</strong>
+* <strong>AngularAcceleration</strong>
+</p>
+
+<p>Not including these in the definition means they are never available. Including them, but tagging them as not available via a <strong>kUnityXRInputFeatureUsageTrackingState</strong> feature, means that feature is not available currently, but could be available later.</p>
+
+<h3>Device information</h3>
+
+<p>These contain generalized device information rather than user-actuated controls. They are features of the device that the user does not have direct control over.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsageBatteryLevel</strong> is a 1D axis feature that represents the current battery level of the device, where 0 is no battery, and 1 is fully charged. It must always be within the [0–1] range.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsageUserPresence</strong> is a boolean that returns true when a user is currently wearing the headset.</p>
+
+<h3>2D axes</h3>
+
+<p>These are two-dimensional analog float values, such as touchpads and joysticks. These controls are usually moved with the thumb. They provide both an X and Y, and should always be in the range of ([–1,1],[–1,1]).</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsagePrimary2DAxis</strong> is a 2D axis feature that represents a touchpad or joystick. 0,0 is the idle position and Y-positive is away from the controller user.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsageSecondary2DAxis</strong> is a 2D axis representing a second joystick or touchpad, used in addition to <strong>kUnityXRInputFeatureUsagePrimary2DAxis</strong>. 0,0 is the idle position and Y-positive is away from the controller user.</p>
+
+<h3>1D Axes</h3>
+
+<p>These are all single dimensional, analog float values. Buttons, triggers, and other controls that can be ‘half pressed’ are identified here.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsageTrigger</strong> is a 1D axis that maps to an index-actuated trigger. This must always be within the range of [0,1] where 0 is open and 1 is fully squeezed. If this is implemented, the device must also implement <strong>kUnityXRInputFeatureUsageTriggerButton</strong>.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsageGrip</strong> is a 1D axis that maps to a hand squeeze activated grip. This must always be within the range of [0,1] where 0 is open and 1 is fully squeezed. If this is implemented, the device must also implement <strong>kUnityXRInputFeatureUsageGripButton</strong>.</p>
+
+<h3>Binary</h3>
+
+<p>These are single dimensional, digital values. They can be actuated or not, but there is no further granularity.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsagePrimaryButton</strong> is a binary feature representing the primary button on a controller. This would commonly be used as an accept or advance button in menus. If this is actuated, then <strong>kUnityXRInputFeatureUsagePrimaryTouch</strong> must be actuated as well, if it exists.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsagePrimaryTouch</strong> is a binary feature representing the touch state of a primary button on the controller. If this is implemented, the device must implement <strong>kUnityXRInputFeatureUsagePrimaryButton</strong>.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsageSecondaryButton</strong> is a binary feature representing the secondary button on a controller. This would commonly be used as a back or alternate button. If this is actuated, then <strong>kUnityXRInputFeatureUsageSecondaryTouch</strong> must be actuated as well if it exists.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsageSecondaryTouch</strong> is a binary feature representing the touch state of a secondary button on the controller. If this is implemented, the device must implement <strong>kUnityXRInputFeatureUsageSecondaryButton</strong>.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsageGripButton</strong> is a binary feature representing whether a hand-actuated squeeze is triggered. If this is implemented, the device must also implement <strong>kUnityXRInputFeatureUsageGrip</strong>.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsageTriggerButton</strong> is a boolean feature representing whether a hand-actuated squeeze is triggered. If this is implemented, the device must also implement <strong>kUnityXRInputFeatureUsageTrigger</strong>.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsageMenuButton</strong> is a binary feature representing a non-gameplay pause or menu button. This is normally not in easy reach for the user.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsagePrimary2DAxisClick</strong> is a binary feature representing a depression or click of the <strong>kUnityXRInputFeatureUsagePrimary2DAxis</strong> 2D axis. If this is implemented, the device must implement <strong>kUnityXRInputFeatureUsagePrimary2DAxis</strong>. If this is actuated, then <strong>kUnityXRInputFeatureUsagePrimary2DAxisTouch</strong> must be actuated as well, if it exists.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsagePrimary2DAxisTouch</strong> is a binary feature representing a light touch of the <strong>kUnityXRInputFeatureUsagePrimary2DAxis</strong> 2D axis. If this is implemented, the device must implement <strong>kUnityXRInputFeatureUsagePrimary2DAxis</strong>.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsageSecondary2DAxisClick</strong> is a binary feature representing a depression or click of the <strong>kUnityXRInputFeatureUsageSecondary2DAxis</strong> 2D axis. If this is implemented, the device must implement <strong>kUnityXRInputFeatureUsageSecondary2DAxis</strong>. If this is actuated, then <strong>kUnityXRInputFeatureUsageSecondary2DAxisTouch</strong> must be actuated as well, if it exists.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsageSecondary2DAxisTouch</strong> is a binary feature representing a light touch of the <strong>kUnityXRInputFeatureUsageSecondary2DAxis</strong> 2D axis. If this is implemented, the device must implement <strong>kUnityXRInputFeatureUsageSecondary2DAxis</strong>.</p>
+
+<h3>Sensor Based</h3>
+
+<p>These represent individual sensor types. They are used as shorthand to search for hand and eye type data.</p>
+
+<p>
+<strong>kUnityXRInputFeatureUsageHandData</strong> is a <strong>UnityXRHands</strong> feature representing hand tracking data.
+<strong>kUnityXRInputFeatureUsageEyesData</strong> is a <strong>UnityXREyes</strong> feature representing eye tracking data.</p>
+
+<p><a name="new-input-system-device-layout" aria-hidden="true"></a></p>
+
+<h1>New Input System device layouts</h1>
+
+<p>To enable users to bind to and use code to access your device properties when using the new Input System, you need to provide device layout descriptions as part of your input provider.</p>
+
+<p>You should provide a device layout for each device type you define in the input provider.
+If you don’t provide an explicit device layout for a device you register, users won’t be able to use the new Input System <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> to bind to features on your device. The Input System will still receive device data, and users will be able to manually create bindings to your new device features.</p>
+
+<p>For more information on Input System device layouts, see the Input System <a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/Layouts.html">documentation</a>. An example is provided below for ease of implementation.</p>
+
+<h2>Example device layout</h2>
+
+<p>This example provides a layout for a new Example <span class="tooltip"><strong>VR</strong><span class="tooltiptext">Virtual Reality <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VROverview.html" href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VR" aria-label="Go to glossary anchor for VR">Glossary</a></span></span></span> Controller.
+The Example VR Controller’s XRSDK layout definition is described as having:
+- An Additional <code>kUnityXRInputFeatureTypeBinary</code> which is called <code>exampleButton</code>
+- A <code>kUnityXRInputFeatureTypeAxis3D</code> value called <code>examplePosition</code>
+- A <code>kUnityXRInputFeatureTypeRotation</code> value called <code>exampleRotation</code>
+</p>
+
+<p>To allow users to bind and control the device using the new Input System, you must provide a device layout for your new Example VR Controller.</p>
+
+<p>First, you need to provide an <code>InputControlLayout</code> attribute, and also provide an explicit name for use with the New Input System UI. Use the <code>[Preseve]</code> attribute to ensure that these elements are not stripped from the compilation step.</p>
+
+<pre><code>[Preserve]
+[InputControlLayout(displayName = &quot;Example VR Controller&quot;)]
+public class ExampleVRController : XRController
+{
+</code></pre>
+
+<p>Next, provide <code>InputControl</code> mappings for the various elements defined in the XRSDK Layout.
+Use <code>[Preserve]</code> again to ensure that these elements are not stripped from the build. The use of the <code>aliases</code> keyword allows the new Input System to perform common matching based on the aliases you provide.</p>
+
+<pre><code>        [Preserve]
+        [InputControl(aliases = new[] { &quot;PrimaryButton&quot; })]
+        public ButtonControl exampleButton { get; private set; }
+        [Preserve]
+        [InputControl]
+        public Vector3Control examplePosition { get; private set; }
+        [Preserve]
+        [InputControl]
+        public QuaternionControl exampleRotation { get; private set; }
+</code></pre>
+
+<p>Finally, provide an implementation of the <code>FinishSetup</code> method which binds the control mapping to the instance of the control. Ensure you also call the base class’s <code>FinishSetup</code>, otherwise the base controls are not bound.</p>
+
+<pre><code>        protected override void FinishSetup()
+        {
+            base.FinishSetup();
+
+            exampleButton = GetChildControl&lt;ButtonControl&gt;(&quot;exampleButton&quot;);
+            examplePosition = GetChildControl&lt;Vector3Control&gt;(&quot;examplePosition&quot;);
+            exampleRotation = GetChildControl&lt;QuaternionControl&gt;(&quot;exampleRotation&quot;);            
+        }
+
+</code></pre>
+
+<h2>Registering your layouts</h2>
+
+<p>The last step you need to perform is to register the new device layouts with the New Input System when you start the XRSDK Loader for these devices. The following code is an example of this implementation.</p>
+
+<p>You must fill out the <code>REGEX THAT MATCHES YOUR DEVICE</code> section with the correct matching strings to the product, or other strings provided by your XRSDK Input Provider when the device is connected.</p>
+
+<pre><code>        public override bool Initialize()
+        {
+#if UNITY_INPUT_SYSTEM
+            InputLayoutLoader.RegisterInputLayouts();
+#endif
+
+#if UNITY_INPUT_SYSTEM
+#if UNITY_EDITOR
+    [InitializeOnLoad]
+#endif
+    static class InputLayoutLoader
+    {
+        static InputLayoutLoader()
+        {
+            RegisterInputLayouts();
+        }
+
+        public static void RegisterInputLayouts()
+        {
+            UnityEngine.InputSystem.InputSystem.RegisterLayout&lt;ExampleVRController&gt;(
+                matches: new InputDeviceMatcher()
+                    .WithInterface(XRUtilities.InterfaceMatchAnyVersion)
+                    .WithProduct(&quot;&lt;REGEX THAT MATCHES YOUR DEVICE&gt;&quot;)
+            );
+
+</code></pre>
+
+<hr>
+
+<h2>Checklist for creating your own input provider</h2>
+
+<ul>
+<li>Set up basic lifecycle registration:
+
+<ul>
+<li>
+<strong>IUnityXRInputInterface.RegisterLifecycleProvider</strong> with function pointers for Initialize, Start, Stop, Shutdown.</li>
+<li>
+<strong>IUnityXRInputInterface.RegisterInputProvider</strong> called from <strong>UnityLifecycleProvider.Initialize</strong> callback with Input Provider calls filled out.</li>
+</ul>
+</li>
+<li>Call <strong>IUnityXRInputInterface.InputSubsystem_DeviceConnected</strong> with a unique Id for each connected device.</li>
+<li>Fill out valid device definitions for each device in <strong>UnityXRInputProvider.FillDeviceDefinition</strong>:
+
+<ul>
+<li>Add a valid name.</li>
+<li>Add a valid role.</li>
+<li>Add at least one Input Feature.</li>
+</ul>
+</li>
+<li>Update the device state in <strong>UnityXRInputProvider.UpdateDeviceState</strong> for each connected device.
+
+<ul>
+<li>If you can forward predict tracking positions for rendering, do so when an update is of type <strong>kUnityXRInputUpdateTypeBeforeRender</strong>.</li>
+</ul>
+</li>
+<li>Call <strong>IUnityXRInputInterface.InputSubsystem_SetBoundaryPoints</strong> with any bounding box.</li>
+<li>Implement <strong>UnityXRInputProvider.QueryTrackingOriginMode</strong>, <strong>UnityXRInputProvider.QuerySupportedTrackingOriginModes</strong>, and <strong>UnityXRInputProvider.HandleSetTrackingOriginMode</strong>.</li>
+<li>Implement <strong>UnityXRInputProvider.TryRecenter</strong>.</li>
+<li>Provide new Input System device layouts for your devices.</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="xrsdk-subsystems-landing.html"></a></span><div class="tip">Subsystems</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="xrsdk-display.html"></a></span><div class="tip">XR SDK Display subsystem</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

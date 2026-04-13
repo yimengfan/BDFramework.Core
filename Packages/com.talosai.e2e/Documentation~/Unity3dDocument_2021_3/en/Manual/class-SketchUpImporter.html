@@ -1,0 +1,481 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: SketchUp Import Settings window</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-SketchUpImporter.html">English</a></li>
+<li><a href="/cn/current/Manual/class-SketchUpImporter.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-SketchUpImporter.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-SketchUpImporter.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-SketchUpImporter.html">English</a></li>
+<li><a href="/cn/current/Manual/class-SketchUpImporter.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-SketchUpImporter.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-SketchUpImporter.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="models.html">Models</a></li>
+<li><a href="models-importing.html">Importing models into Unity</a></li>
+<li>SketchUp Import Settings window</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="FBXImporter-Materials.html"></a></span><div class="tip">Materials tab</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-SpeedTreeImporter.html"></a></span><div class="tip">SpeedTree Import Settings window</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>SketchUp Import Settings window</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/SketchUpImporter.html' title='Go to SketchUpImporter page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>SketchUp is software that is commonly used for architecture modeling.
+Unity reads SketchUp files directly and supports the following SketchUp features:</p>
+
+<ul>
+<li>Textures and Materials, which Unity imports according to the settings on the <a href="FBXImporter-Materials.html">Materials tab</a>.</li>
+<li>Component Definitions and Groups, which are converted into meshes, instanced as <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> which you can place in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> which you can place in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</li>
+<li><span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> data for each scene in the file.</li>
+</ul>
+
+<p>
+<strong>Tip</strong>: For a list of known issues and limitations with importing from SketchUp, see the <a href="#limitations">Limitations</a> section below.</p>
+
+<figure>
+<img src="../uploads/Main/class-SketchUpImporter.png" alt="The SketchUp Import Settings window">
+<figcaption>The SketchUp Import Settings window</figcaption>
+</figure>
+
+<p>
+<strong>(A)</strong> You can switch between the <strong>Sketch Up</strong> tab and the <strong>Materials</strong> tab. SketchUp import settings for Materials work exactly the same way as for standard FBX Models. For reference documentation on properties on the Materials tab, see the <a href="FBXImporter-Materials.html">Materials tab</a> documentation.</p>
+
+<p>
+<strong>(B)</strong> The <a href="#modelprops">SketchUp</a> section provides settings that are specific to SketchUp Models.</p>
+
+<p>
+<strong>(C)</strong> The <a href="#meshprops">Meshes</a> section provides the same settings as <a href="FBXImporter-Model.html#meshprops">those available for FBX Models</a>.</p>
+
+<p>
+<strong>(D)</strong> The <a href="#geoprops">Geometry</a> section provides a subset of the <a href="FBXImporter-Model.html#geoprops">settings available for FBX Models</a>, dealing with indexing and UVs.</p>
+
+<p>
+<strong>(E)</strong> Use the <strong>Revert</strong> button to cancel any changes you make on the SketchUp Import Settings window or <strong>Apply</strong> to accept the changes and continue.</p>
+
+<p><a name="modelprops" aria-hidden="true"></a></p>
+
+<h2>SketchUp section</h2>
+
+<p>To import a SketchUp file directly into Unity, drag it into the Assets folder using the Finder (macOS) or the File Manager (Windows). Then select the Asset file from the Project view inside the Unity Editor.</p>
+
+<figure>
+<img src="../uploads/Main/class-SketchUpImporter-modelprops.png" alt="The SketchUp properties section">
+<figcaption>The SketchUp properties section</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Generate Back Face</strong></td>
+	<td style="text-align:left;">Generate back-facing polygons in Unity. By default, Unity only imports the front-facing polygons to reduce polygon counts unless there is Material assigned to the back-facing polygons in SketchUp.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Merge Coplanar Faces</strong></td>
+	<td style="text-align:left;">Merge coplanar faces when generating meshes in Unity.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Unit Conversion</strong></td>
+	<td style="text-align:left;">Length measurement to unit conversion.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Unit drop-down box</strong></td>
+	<td style="text-align:left;">Choose the unit to use for the conversion. Defaults to <em>Meters</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Value to convert</strong></td>
+	<td style="text-align:left;">This value determines how the <strong>Scale Factor</strong> is calculated (see <a href="#UnitConversion">Unit conversion</a> below).</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Longitude</strong></td>
+	<td style="text-align:left;">Read-only value from the <em>Geo Coordinate</em> system, used to identify a position on a geographic system.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Latitude</strong></td>
+	<td style="text-align:left;">Read-only value from the <em>Geo Coordinate</em> system, used to identify a position on a geographic system.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>North Correction</strong></td>
+	<td style="text-align:left;">Read-only value from the <em>Geo Coordinate</em> system, used to describe the angle needed to rotate North to the Z axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Select Nodes</strong></td>
+	<td style="text-align:left;">Open a window where you can specify which nodes to import. A node represents an Entity, Group, or Component Instance in SketchUp. For example, if you have one file containing several couches, you can select the one you want to import. For more information, see <a href="#SelectingNodes">Selecting SketchUpNodes</a> below.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Import Cameras</strong></td>
+	<td style="text-align:left;">Import cameras from your .skp file. See <a href="#CameraImportProperties">Importing Cameras</a> below for details.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="UnitConversion" aria-hidden="true"></a></p>
+
+<h3>Unit conversion</h3>
+
+<p>By default, Unity scales SketchUp models to 1 meter (0.0254 inches) to 1 unit length.</p>
+
+<figure>
+<img src="../uploads/Main/sketchup4.png" alt="SketchUp file with a cube set to 1m in height">
+<figcaption>SketchUp file with a cube set to 1m in height</figcaption>
+</figure>
+
+<p>Changing the default <strong>Unit Conversion</strong> values affects the scale of the imported file:</p>
+
+<figure>
+<img src="../uploads/Main/sketchup5.png" alt=" The green square is placed as reference where the size of the square is set to 1x1 unit length.">
+<figcaption> The green square is placed as reference where the size of the square is set to 1x1 unit length.</figcaption>
+</figure>
+
+<p><a name="SelectingNodes" aria-hidden="true"></a></p>
+
+<h3>Selecting SketchUp Nodes</h3>
+
+<p>Unity supports the visibility setting in the SketchUp file for each node. If a node is hidden in the SketchUp file, Unity does not import the node by default. However, you can override this behavior by clicking the <strong>Select Nodes</strong> button to display the SketchUp node hierarchy in the <strong>SketchUp Node Selection Dialog</strong> window.</p>
+
+<figure>
+<img src="../uploads/Main/sketchup3.png" alt="SketchUp Node Selection Dialog window">
+<figcaption>SketchUp Node Selection Dialog window</figcaption>
+</figure>
+
+<p>Each group and component instance in the file appears in the hierarchy as a node, which you can select or deselect. When you are finished selecting the nodes to include, click the OK button to import only the checked nodes.</p>
+
+<p><a name="CameraImportProperties" aria-hidden="true"></a></p>
+
+<h3>Importing cameras</h3>
+
+<p>When Unity imports cameras from a .skp file, it converts these SketchUp camera types to the following:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>SketchUp Camera type:</strong></th>
+	<th style="text-align:left;"><strong>Unity Camera:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Parallel Projection</strong></td>
+	<td style="text-align:left;">Camera in <a href="CamerasOverview.html">orthographic mode</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Perspective</strong></td>
+	<td style="text-align:left;">Camera in <a href="CamerasOverview.html">perspective mode</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Two Point</strong></td>
+	<td style="text-align:left;">
+<a href="PhysicalCameras.html">Physical Camera</a> with a non-zero <a href="PhysicalCameras.html#LensShift">lens shift</a>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="meshprops" aria-hidden="true"></a></p>
+
+<h2>Meshes property section</h2>
+
+<figure>
+<img src="../uploads/Main/class-SketchUpImporter-meshprops.png" alt="The Meshes properties section">
+<figcaption>The Meshes properties section</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Mesh Compression</strong></td>
+	<td style="text-align:left;">Set the level of compression ratio to reduce the file size of the Mesh. When you increase the compression ratio lowers the precision of the Mesh by using the mesh bounds and a lower bit depth per component to compress the mesh data.<br><br>To <a href="ReducingFilesize.html">optimize game size</a>, turn Mesh Compression up as high as possible without the Mesh looking too different from the uncompressed version.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Off</strong></td>
+	<td style="text-align:left;">Don’t use <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Low</strong></td>
+	<td style="text-align:left;">Use a low compression ratio.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Medium</strong></td>
+	<td style="text-align:left;">Use a medium compression ratio.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>High</strong></td>
+	<td style="text-align:left;">Use a high compression ratio.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Read/Write Enabled</strong></td>
+	<td style="text-align:left;">When you enable this option, Unity uploads the Mesh data to GPU-addressable memory, but also keeps it in CPU-addressable memory. This means that Unity can access the Mesh data at run time, and you can access it from your scripts. For example, you might want to do this if you’re generating a Mesh procedurally, or if you want to copy some data from a Mesh. <br><br>When this option is disabled, Unity uploads the Mesh data to GPU-addressable memory, and then removes it from CPU-addressable memory. <br><br>By default, this option is enabled. In most cases, to save runtime memory usage, disable this option. For information on when to enable Read/Write Enabled, see the <a href="../ScriptReference/Mesh-isReadable.html">Mesh.isReadable</a> API documentation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Optimize Mesh</strong></td>
+	<td style="text-align:left;">Determine the order in which triangles are listed in the <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> for better GPU performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Nothing</strong></td>
+	<td style="text-align:left;">No optimization.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Everything</strong></td>
+	<td style="text-align:left;">Let Unity reorder the vertices and indices for both polygons and vertices. This is the default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Polygon Order</strong></td>
+	<td style="text-align:left;">Reorder only the polygons.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Vertex Order</strong></td>
+	<td style="text-align:left;">Reorder only the vertices.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Generate Colliders</strong></td>
+	<td style="text-align:left;">Enable this option to import your Meshes with Mesh <span class="tooltip"><strong>Colliders</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> automatically attached. This is useful to quickly generate a <span class="tooltip"><strong>collision</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a href="CollidersOverview.html" href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> automatically attached. This is useful to quickly generate a <span class="tooltip"><strong>collision</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span> Mesh for environment geometry, but is not suitable for geometry you are moving.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="geoprops" aria-hidden="true"></a></p>
+
+<h2>Geometry properties section</h2>
+
+<figure>
+<img src="../uploads/Main/class-SketchUpImporter-geoprops.png" alt="The Geometry properties section">
+<figcaption>The Geometry properties section</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Index Format</strong></td>
+	<td style="text-align:left;">Define the size of the Mesh index buffer. <br><br><strong>Note:</strong> For bandwidth and memory storage size reasons, you generally want to keep <strong>16-bit</strong> indices as default, and only use <strong>32-bit</strong> when necessary, which is what the <strong>Auto</strong> option uses.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Auto</strong></td>
+	<td style="text-align:left;">Let Unity decide whether to use 16-bit or 32-bit indices, depending on the Mesh vertex count when it imports a Mesh. This is the default setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>16 bit</strong></td>
+	<td style="text-align:left;">Use 16-bit indices when importing a Mesh. If the Mesh is larger, then it is split into &lt;64k vertex chunks.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>32 bit</strong></td>
+	<td style="text-align:left;">Use 32-bit indices when importing a Mesh. If you are using GPU-based rendering pipelines (for example with compute shader triangle culling), using 32-bit indices ensures that all Meshes use the same index format. This reduces <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> complexity, because they only need to handle one format.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Swap UVs</strong></td>
+	<td style="text-align:left;">Swap UV channels in your Meshes. Use this option if your diffuse Texture uses UVs from the <span class="tooltip"><strong>lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span>. Unity supports up to eight UV channels but not all 3D modeling applications export more than two.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Generate Lightmap UVs</strong></td>
+	<td style="text-align:left;">Creates a second UV channel for Lightmapping. See documentation on <a href="GIIntro">Lightmapping</a> for more information.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="limitations" aria-hidden="true"></a></p>
+
+<h2>Limitations</h2>
+
+<ul>
+<li>SketchUp import is not supported on Linux.</li>
+<li>Unity does not support GIF Textures.</li>
+<li>Unity imports only limited data from SketchUp Scenes.</li>
+<li>Unity does not support or import the following SketchUp features:
+
+<ul>
+<li>2D Components (Text, dimensions)</li>
+<li>Animation settings</li>
+<li>Attributes</li>
+<li>Drawing Styles</li>
+<li>Dynamic components</li>
+<li>Layers</li>
+<li>Lines</li>
+<li>Section Planes</li>
+<li>Shadow settings</li>
+</ul>
+</li>
+</ul>
+
+<hr>
+
+<ul>
+<li><span class="page-history">Camera import fully supported starting in <a href="../Manual/30_search.html?q=newin20191">2019.1</a> <span class="search-words">NewIn20191</span></span></li>
+</ul>
+<!-- area:authoring -->
+
+<p><span class="search-words">SketchUpImporter</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="FBXImporter-Materials.html"></a></span><div class="tip">Materials tab</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-SpeedTreeImporter.html"></a></span><div class="tip">SpeedTree Import Settings window</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

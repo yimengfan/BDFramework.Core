@@ -1,0 +1,326 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Call JavaScript functions from Unity C# scripts</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/web-interacting-browser-js-to-unity.html">English</a></li>
+<li><a href="/cn/current/Manual/web-interacting-browser-js-to-unity.html">中文</a></li>
+<li><a href="/ja/current/Manual/web-interacting-browser-js-to-unity.html">日本語</a></li>
+<li><a href="/kr/current/Manual/web-interacting-browser-js-to-unity.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/web-interacting-browser-js-to-unity.html">English</a></li>
+<li><a href="/cn/current/Manual/web-interacting-browser-js-to-unity.html">中文</a></li>
+<li><a href="/ja/current/Manual/web-interacting-browser-js-to-unity.html">日本語</a></li>
+<li><a href="/kr/current/Manual/web-interacting-browser-js-to-unity.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="webgl.html">WebGL</a></li>
+<li><a href="webgl-develop.html">WebGL development</a></li>
+<li><a href="webgl-interactingwithbrowserscripting.html">Interaction with browser scripting</a></li>
+<li>Call JavaScript functions from Unity C# scripts</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="web-interacting-browser-js.html"></a></span><div class="tip">Set up your JavaScript plug-in</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="web-interacting-browser-unity-to-js.html"></a></span><div class="tip">Call Unity C# script functions from JavaScript</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Call JavaScript functions from Unity C# scripts</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can use functions from your JavaScript <span class="tooltip"><strong>plug-ins</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Plugins.html" href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> in your Unity C# code. It can be useful to use JavaScript code in Unity because you might need to communicate with other elements on your web page or Web APIs.</p>
+
+<p>To learn about the file types and how to set up a JavaScript plug-in for interaction with Unity <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>, refer to <a href="web-interacting-browser-js.html">Set up your JavaScript plug-in</a>. To learn how to interact with C/C++/C# plug-ins instead, refer to <a href="web-interacting-browsers-c-to-unity.html">Call C/C++/C# functions from Unity C# scripts</a>. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Topic</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="#pass-different-variables">Pass different variables from JavaScript to Unity</a></td>
+	<td style="text-align:left;">Tips on how to pass different variables between Unity and JavaScript.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#make-code-visible">Execute build code in its own scope</a></td>
+	<td style="text-align:left;">Tips on how to improve visibility of code between Unity and JavaScript.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#example-unity-code">Example Unity C# code that calls JavaScript functions</a></td>
+	<td style="text-align:left;">This example code shows how to call JavaScript functions in Unity.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#plugin-ref">Use Unity plug-ins as a reference </a></td>
+	<td style="text-align:left;">Shows a list of plug-ins included with Unity you can use as a reference.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="pass-different-variables" aria-hidden="true"></a></p>
+
+<h2>Pass different variables from JavaScript to Unity</h2>
+
+<p>To integrate JavaScript with Unity, you need efficient communication between the two. Use the following tips on how to pass various types of data from JavaScript to Unity.</p>
+
+<h3>Numeric types</h3>
+
+<p>You can pass simple numeric types to JavaScript in function parameters without converting them. </p>
+
+<p>For example, this function in JavaScript:
+<code>js
+AddNumbers: function (x, y) {
+    return x + y;
+  },
+</code>
+</p>
+
+<p>accepts the integer values from C# without conversions:</p>
+
+<pre><code class="cs">int result = AddNumbers(5, 7);
+</code></pre>
+
+<p>You can pass other data types as a pointer in the Emscripten heap. The Emscripten heap is just a large array in JavaScript memory.</p>
+
+<h3>Strings</h3>
+
+<p>To convert a string to a JavaScript string, use the <code>UTF8ToString</code> helper function.</p>
+
+<pre><code class="js">var stringMessage = UTF8ToString(&quot;Hello World&quot;);
+</code></pre>
+
+<p>To return a string value, call <code>_malloc</code> to allocate some memory and the <code>stringToUTF8</code> helper function to write a JavaScript string to the memory. If the string is a return value, then the <span class="tooltip"><strong>IL2CPP</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html" href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> runtime automatically frees up the memory for you.</p>
+
+<pre><code class="js"> var returnStr = &quot;Hello World&quot;;
+    var bufferSize = lengthBytesUTF8(returnStr) + 1;
+    var buffer = _malloc(bufferSize);
+    stringToUTF8(returnStr, buffer, bufferSize);
+</code></pre>
+
+<h3>Arrays</h3>
+
+<p>For arrays of primitive types, Emscripten provides different <code>ArrayBufferViews</code> into its heap for different sizes of integer, unsigned integer or floating point representations of memory: <code>HEAP8</code>, <code>HEAPU8</code>, <code>HEAP16</code>, <code>HEAPU16</code>, <code>HEAP32</code>, <code>HEAPU32</code>, <code>HEAPF32</code>, <code>HEAPF64</code>.</p>
+
+<p>The following function loops through the <code>HEAPF32</code> array and outputs the values at each index. </p>
+
+<pre><code class="js">PrintFloatArray: function (array, size) {
+    for(var i = 0; i &lt; size; i++)
+    console.log(HEAPF32[(array &gt;&gt; 2) + i]);
+  },
+</code></pre>
+
+<h3>Textures</h3>
+
+<p>To access a texture in <span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span>, Emscripten provides the <code>GL.textures</code> array which maps native texture IDs from Unity to WebGL texture objects. You can call WebGL functions on Emscripten’s WebGL context, <code>GLctx</code>.</p>
+
+<p>For example, the following function binds a WebGL texture from the GL texture array to a 2D texture. </p>
+
+<pre><code class="js"> BindWebGLTexture: function (texture) {
+    GLctx.bindTexture(GLctx.TEXTURE_2D, GL.textures[texture]);
+  },
+</code></pre>
+
+<p><a name="make-code-visible" aria-hidden="true"></a></p>
+
+<h2>Execute build code in its own scope</h2>
+
+<p>It is recommended that you execute all build code in its own scope. If you have your code in its own scope, you can embed your content on a page without causing conflicts with the embedding page code, and you can embed more than one build on the same page.</p>
+
+<h3>Code in .jslib plug-ins</h3>
+
+<p>If you have all your JavaScript code in the form of <code>.jslib</code> plug-ins inside your project, then this JavaScript code will run inside the same scope as the compiled build and your code should work the same way as in previous versions of Unity. Some of the objects and functions directly visible from the JavaScript plug-in code include:</p>
+
+<ul>
+<li><code>Module</code></li>
+<li><code>SendMessage</code></li>
+<li><code>HEAP8</code></li>
+<li><code>ccall</code></li>
+</ul>
+
+<p><a name="global-scope" aria-hidden="true"></a></p>
+
+<h3>Call JavaScript functions from global scope</h3>
+
+<p>If you want to call the internal JavaScript functions from the global scope of the embedded page, in your Web template <code>index.html</code>, you must use the <code>unityInstance</code> variable. </p>
+
+<p>Use <code>unityInstance</code> after the Unity engine instantiation succeeds, for example:</p>
+
+<pre><code class="js">  var MyGameInstance = null;
+  script.onload = () =&gt; {
+    createUnityInstance(canvas, config, (progress) =&gt; { /*...*/ }).then((unityInstance) =&gt; {
+      MyGameInstance = unityInstance;
+</code></pre>
+
+<p>Then, you can use <code>MyGameInstance.SendMessage()</code> to send a message to the build, or use <code>MyGameInstance.Module</code> to access the build module object.</p>
+
+<p><a name="example-unity-code" aria-hidden="true"></a></p>
+
+<h2>Example Unity C# code that calls JavaScript functions</h2>
+
+<p>The following JavaScript code creates a function named <code>Hello</code>. For this example, use this code in your JavaScript plug-in so you can call it in your Unity C# scripts. </p>
+
+<pre><code class="js">mergeInto(LibraryManager.library, {
+
+  Hello: function () {
+    window.alert(&quot;Hello, world!&quot;);
+  },
+});
+</code></pre>
+
+<p>Then, use this C# code in your Unity project to call the <code>Hello</code> function from your JavaScript code:</p>
+
+<pre><code class="cs">using UnityEngine;
+using System.Runtime.InteropServices;
+
+public class NewBehaviourScript : MonoBehaviour {
+
+    [DllImport(&quot;__Internal&quot;)]
+    private static extern void Hello();
+
+    void Start() {
+        Hello();
+    }
+}
+</code></pre>
+
+<p>For a larger code example with varied function types, refer to <a href="web-interacting-code-example.html">Code examples: Call JavaScript and C/C++/C# functions in Unity</a>. </p>
+
+<p><a name="plugin-ref" aria-hidden="true"></a></p>
+
+<h2>Use Unity plug-ins as a reference</h2>
+
+<p>There are several plug-ins in the Unity installation folder that you can use as reference: </p>
+
+<ul>
+<li><p><code>PlaybackEngines/WebGLSupport/BuildTools/lib</code></p></li>
+<li><p><code>PlaybackEngines/WebGLSupport/BuildTools/Emscripten/src/library*</code></p></li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><p><a href="webgl-interactingwithbrowserscripting.html">Interaction with browser scripting</a></p></li>
+<li><p>
+<a href="web-interacting-browser-js.html">Set up your JavaScript plug-in</a> </p></li>
+<li><p><a href="web-interacting-browser-unity-to-js.html">Call Unity C# script functions from JavaScript</a></p></li>
+<li><p><a href="web-interacting-browsers-c-to-unity.html">Call C/C++/C# functions from Unity C# scripts</a></p></li>
+<li><p><a href="web-interacting-browser-example.html">Create callbacks between Unity C#, JavaScript, and C/C++/C# code</a></p></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="web-interacting-browser-js.html"></a></span><div class="tip">Set up your JavaScript plug-in</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="web-interacting-browser-unity-to-js.html"></a></span><div class="tip">Call Unity C# script functions from JavaScript</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

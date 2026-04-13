@@ -1,0 +1,321 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Random</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Random.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Random.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Random.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Random.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Random.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Random.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Random.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Random.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="ScriptingImportantClasses.html">Important Classes </a></li>
+<li>Random</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-Mathf.html"></a></span><div class="tip">Mathf</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-Debug.html"></a></span><div class="tip">Debug</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Random</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/Random.html' title='Go to Random page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Random class provides you with easy ways of generating various commonly required types of random values.</p>
+
+<p>This page provides an overview of the Random class and its common uses when scripting with it. For an exhaustive reference of every member of the Random class and further technical details about it, see the <a href="../ScriptReference/Random.html">Random script reference</a>.</p>
+
+<p>Follow the links below for further details and examples of these useful methods.</p>
+
+<h2>Simple random numbers</h2>
+
+<p>
+<a href="../ScriptReference/Random-value.html"><code>Random.value</code></a> gives you a random <strong>floating point number</strong> between 0.0 and 1.0. A common usage is to convert it to a number between zero and a range of your choosing by multiplying the result.</p>
+
+<p>
+<a href="../ScriptReference/Random.Range.html"><code>Random.Range</code></a> gives you a random <strong>number between a minimum and maximum value</strong> that you provide. It returns either an integer or a float, depending on whether the min and max values provided are integers or floats.</p>
+
+<h2>Random points within Circles or Spheres</h2>
+
+<p>
+<a href="../ScriptReference/Random-insideUnitCircle.html"><code>Random.insideUnitCircle</code></a> returns a randomly selected <strong>point inside a circle</strong> with a radius of 1 (Again you can multiply the result to get a random point within a circle of any size).</p>
+
+<p>
+<a href="../ScriptReference/Random-insideUnitSphere.html"><code>Random.insideUnitSphere</code></a> returns a randomly selected <strong>point inside a sphere</strong> with a radius of 1.</p>
+
+<p>
+<a href="../ScriptReference/Random-onUnitSphere.html"><code>Random.onUnitSphere</code></a> returns a randomly selected <strong>point on the <em>surface</em> of a sphere</strong> with a radius of 1.</p>
+
+<h2>Other types of random values</h2>
+
+<p>Unity’s random class also offers a few other types of random value.</p>
+
+<p>To generate a random <strong>rotation</strong>, use <a href="../ScriptReference/Random-rotation.html"><code>Random.rotation</code></a>.</p>
+
+<p>To generate a random <strong>color</strong>, use <a href="../ScriptReference/Random.ColorHSV.html"><code>Random.ColorHSV</code></a>.</p>
+
+<h2>Choosing a Random Item from an Array</h2>
+
+<p>Picking an array element at random boils down to choosing a random integer between zero and the array’s maximum index value (which is equal to the length of the array minus one). This is easily done using the built-in <code>Random.Range</code> function:</p>
+
+<p><code>var element = myArray[Random.Range(0, myArray.Length)];</code></p>
+
+<p>Note that <code>Random.Range</code> returns a value from a range that includes the first parameter but excludes the second, so using <code>myArray.Length</code> here gives the correct result.</p>
+
+<h2>Choosing Items with Different Probabilities</h2>
+
+<p>Sometimes, you need to choose items at random but with some items more likely to be chosen than others. For example, an NPC may react in several different ways when it encounters a player:-</p>
+
+<ul>
+<li>50% chance of friendly greeting</li>
+<li>25% chance of running away</li>
+<li>20% chance of immediate attack</li>
+<li>5% chance of offering money as a gift</li>
+</ul>
+
+<p>You can visualize these different outcomes as a paper strip divided into sections each of which occupies a fraction of the strip’s total length. The fraction occupied is equal to the probability of that outcome being chosen. Making the choice is equivalent to picking a random point along the strip’s length (say by throwing a dart) and then seeing which section it is in.</p>
+
+<figure>
+<img src="../uploads/Main/ProbStrip.png" alt="">
+</figure>
+
+<p>In the script, the paper strip is actually an array of floats that contain the different probabilities for the items in order. The random point is obtained by multiplying <code>Random.value</code> by the total of all the floats in the array (they need not add up to 1; the significant thing is the relative size of the different values). To find which array element the point is “in”, firstly check to see if it is less than the value in the first element. If so, then the first element is the one selected. Otherwise, subtract the first element’s value from the point value and compare that to the second element and so on until the correct element is found. In code, this would look something like the following:-</p>
+
+<pre><code>float Choose (float[] probs) {
+
+    float total = 0;
+
+    foreach (float elem in probs) {
+        total += elem;
+    }
+
+    float randomPoint = Random.value * total;
+
+    for (int i= 0; i &lt; probs.Length; i++) {
+        if (randomPoint &lt; probs[i]) {
+            return i;
+        }
+        else {
+            randomPoint -= probs[i];
+        }
+    }
+    return probs.Length - 1;
+}
+</code></pre>
+
+<p>Note that the final return statement is necessary because <code>Random.value</code> can return a result of 1. In this case, the search will not find the random point anywhere. Changing the line:</p>
+
+<p><code>if (randomPoint &lt; probs[i])</code></p>
+
+<p>…to a less-than-or-equal test would avoid the extra return statement but would also allow an item to be chosen occasionally even when its probability is zero.</p>
+
+<h2>Weighting continuous random values</h2>
+
+<p>The array of floats method works well if you have discrete outcomes, but there are also situations where you want to produce a more continuous result - say, you want to randomize the number of gold pieces found in a treasure chest, and you want it to be possible to end up with any number between 1 and 100, but to make lower numbers more likely. Using the array-of-floats method to do this would require that you set up an array of 100 floats (i.e. sections on the paper strip) which is unwieldy; and if you aren’t limited to whole numbers but instead want any number in the range, it’s impossible to use that approach.</p>
+
+<p>A better approach for continuous results is to use an <code>AnimationCurve</code> to transform a ‘raw’ random value into a ‘weighted’ one; by drawing different curve shapes, you can produce different weightings. The code is also simpler to write:</p>
+
+<pre><code>float CurveWeightedRandom(AnimationCurve curve) {
+    return curve.Evaluate(Random.value);
+}
+</code></pre>
+
+<p>A ‘raw’ random value between 0 and 1 is chosen by reading from <code>Random.value</code>. It is then passed to <code>curve.Evaluate()</code>, which treats it as a horizontal coordinate, and returns the corresponding vertical coordinate of the curve at that horizontal position. Shallow parts of the curve have a greater chance of being picked, while steeper parts have a lower chance of being picked.</p>
+
+<figure>
+<img src="../uploads/Main/WeightedRandomCurve-linear.png" alt="A linear curve does not weight values at all; the horizontal coordinate is equal to the vertical coordinate for each point on the curve.">
+<figcaption>A linear curve does not weight values at all; the horizontal coordinate is equal to the vertical coordinate for each point on the curve.</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/WeightedRandomCurve-bias-low.png" alt="This curve is shallower at the beginning, and then steeper at the end, so it has a greater chance of low values and a reduced chance of high values. You can see that the height of the curve on the line where x=0.5 is at about 0.25, which means theres a 50% chance of getting a value between 0 and 0.25.">
+<figcaption>This curve is shallower at the beginning, and then steeper at the end, so it has a greater chance of low values and a reduced chance of high values. You can see that the height of the curve on the line where x=0.5 is at about 0.25, which means there’s a 50% chance of getting a value between 0 and 0.25.</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/WeightedRandomCurve-bias-lowhigh.png" alt="This curve is shallow at both the beginning and the end, making values close to the extremes more common, and steep in the middle which will make those values rare. Notice also that with this curve, the height values have been shifted up: the bottom of the curve is at 1, and the top of the curve is at 10, which means the values produced by the curve will be in the 1-10 range, instead of 0-1 like the previous curves. ">
+<figcaption>This curve is shallow at both the beginning and the end, making values close to the extremes more common, and steep in the middle which will make those values rare. Notice also that with this curve, the height values have been shifted up: the bottom of the curve is at 1, and the top of the curve is at 10, which means the values produced by the curve will be in the 1–10 range, instead of 0–1 like the previous curves. </figcaption>
+</figure>
+
+<p>Notice that these curves are not probability distribution curves like you might find in a guide to probability theory, but are more like inverse cumulative probability curves.</p>
+
+<p>By defining a public <code>AnimationCurve</code> variable on one of your <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>, you will be able to see and edit the curve through the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>, you will be able to see and edit the curve through the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window visually, instead of needing to calculate values.</p>
+
+<p>This technique produces floating-point numbers. If you want to calculate an integer result - for example, you want 82 gold pieces, rather than 82.1214 gold pieces - you can just pass the calculated value to a function like <code>Mathf.RoundToInt()</code>.</p>
+
+<h2>Shuffling a List</h2>
+
+<p>A common game mechanic is to choose from a known set of items but have them arrive in random order. For example, a deck of cards is typically shuffled so they are not drawn in a predictable sequence. You can shuffle the items in an array by visiting each element and swapping it with another element at a random index in the array:-</p>
+
+<pre><code>void Shuffle (int[] deck) {
+    for (int i = 0; i &lt; deck.Length; i++) {
+        int temp = deck[i];
+        int randomIndex = Random.Range(i, deck.Length);
+        deck[i] = deck[randomIndex];
+        deck[randomIndex] = temp;
+    }
+}
+</code></pre>
+
+<h2>Choosing from a Set of Items Without Repetition</h2>
+
+<p>A common task is to pick a number of items randomly from a set without picking the same one more than once. For example, you may want to generate a number of NPCs at random spawn points but be sure that only one NPC gets generated at each point. This can be done by iterating through the items in sequence, making a random decision for each as to whether or not it gets added to the chosen set. As each item is visited, the probability of its being chosen is equal to the number of items still needed divided by the number still left to choose from.</p>
+
+<p>As an example, suppose that ten spawn points are available but only five must be chosen. The probability of the first item being chosen will be 5 / 10 or 0.5. If it is chosen then the probability for the second item will be 4 / 9 or 0.44 (ie, four items still needed, nine left to choose from). However, if the first was not chosen then the probability for the second will be 5 / 9 or 0.56 (ie, five still needed, nine left to choose from). This continues until the set contains the five items required. You could accomplish this in code as follows:-</p>
+
+<pre><code>Transform[] spawnPoints;
+
+Transform[] ChooseSet (int numRequired) {
+    Transform[] result = new Transform[numRequired];
+
+    int numToChoose = numRequired;
+
+    for (int numLeft = spawnPoints.Length; numLeft &gt; 0; numLeft--) {
+
+        float prob = (float)numToChoose/(float)numLeft;
+
+        if (Random.value &lt;= prob) {
+            numToChoose--;
+            result[numToChoose] = spawnPoints[numLeft - 1];
+
+            if (numToChoose == 0) {
+                break;
+            }
+        }
+    }
+    return result;
+}
+</code></pre>
+
+<p>Note that although the selection is random, items in the chosen set will be in the same order they had in the original array. If the items are to be used one at a time in sequence then the ordering can make them partly predictable, so it may be necessary to shuffle the array before use.</p>
+
+<h2>Random Points in Space</h2>
+
+<p>A random point in a cubic volume can be chosen by setting each component of a Vector3 to a value returned by <code>Random.value</code>:</p>
+
+<p><code>var randVec = Vector3(Random.value, Random.value, Random.value);</code></p>
+
+<p>This gives a point inside a cube with sides one unit long. The cube can be scaled simply by multiplying the X, Y and Z components of the vector by the desired side lengths. If one of the axes is set to zero, the point will always lie within a single plane. For example, picking a random point on the “ground” is usually a matter of setting the X and Z components randomly and setting the Y component to zero.</p>
+
+<p>When the volume is a sphere (ie, when you want a random point within a given radius from a point of origin), you can use <code>Random.insideUnitSphere</code> multiplied by the desired radius:</p>
+
+<p><code>var randWithinRadius = Random.insideUnitSphere * radius;</code></p>
+
+<p>Note that if you set one of the resulting vector’s components to zero, you will <em>not</em> get a correct random point within a circle. Although the point is indeed random and lies within the right radius, the probability is heavily biased toward the center of the circle and so points will be spread very unevenly. You should use <code>Random.insideUnitCircle</code> for this task instead:-</p>
+
+<p><code>var randWithinCircle = Random.insideUnitCircle * radius;</code></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-Mathf.html"></a></span><div class="tip">Mathf</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-Debug.html"></a></span><div class="tip">Debug</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

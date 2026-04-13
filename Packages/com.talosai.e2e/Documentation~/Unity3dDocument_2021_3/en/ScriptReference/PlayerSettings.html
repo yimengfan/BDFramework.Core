@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: PlayerSettings</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">PlayerSettings</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEditor</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Inherits from:<a href="Object.html" class="cl">Object</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <a aria-label="go to usermanual page" href='../Manual/class-PlayerSettings.html' title='Go to PlayerSettings Component in the Manual' class='switch-link gray-btn sbtn left show'>Switch to Manual</a>
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Use Player settings to define how Unity builds and displays your final application.</p>
+              </div>
+              <div class="subsection">
+                <h3>Static Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="PlayerSettings-accelerometerFrequency.html">accelerometerFrequency</a></td><td class="desc">Accelerometer update frequency.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-actionOnDotNetUnhandledException.html">actionOnDotNetUnhandledException</a></td><td class="desc">Sets the crash behavior on .NET unhandled exception.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-advancedLicense.html">advancedLicense</a></td><td class="desc">Is the advanced version being used?</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-allowedAutorotateToLandscapeLeft.html">allowedAutorotateToLandscapeLeft</a></td><td class="desc">Is auto-rotation to landscape left supported?</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-allowedAutorotateToLandscapeRight.html">allowedAutorotateToLandscapeRight</a></td><td class="desc">Is auto-rotation to landscape right supported?</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-allowedAutorotateToPortrait.html">allowedAutorotateToPortrait</a></td><td class="desc">Is auto-rotation to portrait supported?</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-allowedAutorotateToPortraitUpsideDown.html">allowedAutorotateToPortraitUpsideDown</a></td><td class="desc">Is auto-rotation to portrait upside-down supported?</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-allowFullscreenSwitch.html">allowFullscreenSwitch</a></td><td class="desc">If enabled, allows the user to switch between full screen and windowed mode using OS specific keyboard short cuts.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-allowUnsafeCode.html">allowUnsafeCode</a></td><td class="desc">Allow unsafe C# code to be compiled for predefined assemblies.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-aotOptions.html">aotOptions</a></td><td class="desc">Additional AOT compilation options. Shared by AOT platforms.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-applicationIdentifier.html">applicationIdentifier</a></td><td class="desc">The application identifier for the currently selected build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-assemblyVersionValidation.html">assemblyVersionValidation</a></td><td class="desc">Set to true to exact version matching for strong named assemblies.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-bakeCollisionMeshes.html">bakeCollisionMeshes</a></td><td class="desc">Pre bake collision meshes on player build.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-bundleVersion.html">bundleVersion</a></td><td class="desc">Application bundle version shared between iOS &amp; Android platforms.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-captureSingleScreen.html">captureSingleScreen</a></td><td class="desc">Defines if fullscreen games should darken secondary displays.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-colorSpace.html">colorSpace</a></td><td class="desc">Set the rendering color space for the current project.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-companyName.html">companyName</a></td><td class="desc">The name of your company.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-cursorHotspot.html">cursorHotspot</a></td><td class="desc">Default cursor's click position in pixels from the top left corner of the cursor image.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.D3DHDRBitDepth.html">D3DHDRBitDepth</a></td><td class="desc">The number of bits in each color channel for swap chain buffers. (Direct3D 11 and Direct3D 12 mode).</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-defaultCursor.html">defaultCursor</a></td><td class="desc">The default cursor for your application.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-defaultInterfaceOrientation.html">defaultInterfaceOrientation</a></td><td class="desc">Default screen orientation for mobiles.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-defaultScreenHeight.html">defaultScreenHeight</a></td><td class="desc">Default vertical dimension of stand-alone player window.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-defaultScreenWidth.html">defaultScreenWidth</a></td><td class="desc">Default horizontal dimension of stand-alone player window.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-defaultWebScreenHeight.html">defaultWebScreenHeight</a></td><td class="desc">Default vertical dimension of web player window.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-defaultWebScreenWidth.html">defaultWebScreenWidth</a></td><td class="desc">Default horizontal dimension of web player window.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-enable360StereoCapture.html">enable360StereoCapture</a></td><td class="desc">Enable 360 Stereo Capture support on the current build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-enableCrashReportAPI.html">enableCrashReportAPI</a></td><td class="desc">Enables CrashReport API.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-enableFrameTimingStats.html">enableFrameTimingStats</a></td><td class="desc">Enable frame timing statistics.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-enableInternalProfiler.html">enableInternalProfiler</a></td><td class="desc">Enables internal profiler.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-enableMetalAPIValidation.html">enableMetalAPIValidation</a></td><td class="desc">Enables Metal API validation in the Editor.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-enableOpenGLProfilerGPURecorders.html">enableOpenGLProfilerGPURecorders</a></td><td class="desc">Enable ProfilerRecorder usage to record GPU timings when rendering with OpenGL.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-forceSingleInstance.html">forceSingleInstance</a></td><td class="desc">Restrict standalone players to a single concurrent running instance.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-fullScreenMode.html">fullScreenMode</a></td><td class="desc">Platform agnostic setting to define fullscreen behavior. Not all platforms support all modes.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-gcIncremental.html">gcIncremental</a></td><td class="desc">Allows you to enable or disable incremental mode for garbage collection.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-gpuSkinning.html">gpuSkinning</a></td><td class="desc">Enable GPU skinning on capable platforms.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-graphicsJobMode.html">graphicsJobMode</a></td><td class="desc">Selects the graphics job mode to use on platforms that support both Native and Legacy graphics jobs.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-graphicsJobs.html">graphicsJobs</a></td><td class="desc">Enable graphics jobs (multi threaded rendering).</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-keyaliasPass.html">keyaliasPass</a></td><td class="desc">The password to access the key alias used to sign an Android application.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-keystorePass.html">keystorePass</a></td><td class="desc">Password used for interacting with the Android Keystore.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-legacyClampBlendShapeWeights.html">legacyClampBlendShapeWeights</a></td><td class="desc">Defines whether the BlendShape weight range in SkinnedMeshRenderers is clamped.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-logObjCUncaughtExceptions.html">logObjCUncaughtExceptions</a></td><td class="desc">Are ObjC uncaught exceptions logged?</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-macRetinaSupport.html">macRetinaSupport</a></td><td class="desc">Enable Retina support for macOS.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-mipStripping.html">mipStripping</a></td><td class="desc">Enable mip stripping for all platforms.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.MTRendering.html">MTRendering</a></td><td class="desc">Is multi-threaded rendering enabled?</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-muteOtherAudioSources.html">muteOtherAudioSources</a></td><td class="desc">Stops or allows audio from other applications to play in the background while your Unity application is running.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-openGLRequireES31.html">openGLRequireES31</a></td><td class="desc">Specifies whether the application requires OpenGL ES 3.1 support.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-openGLRequireES31AEP.html">openGLRequireES31AEP</a></td><td class="desc">Specifies whether the application requires OpenGL ES 3.1 AEP support.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-openGLRequireES32.html">openGLRequireES32</a></td><td class="desc">Specifies whether the application requires OpenGL ES 3.2 support.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-preserveFramebufferAlpha.html">preserveFramebufferAlpha</a></td><td class="desc">When enabled, preserves the alpha value in the framebuffer to support rendering over native UI on Android.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-productName.html">productName</a></td><td class="desc">The name of your product.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-resetResolutionOnWindowResize.html">resetResolutionOnWindowResize</a></td><td class="desc">Indicates whether to reset the application's screen resolution when the native window size changes.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-resizableWindow.html">resizableWindow</a></td><td class="desc">Use resizable window in standalone player builds.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-runInBackground.html">runInBackground</a></td><td class="desc">If enabled, your game will continue to run after lost focus.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-statusBarHidden.html">statusBarHidden</a></td><td class="desc">Returns if status bar should be hidden. Supported on iOS only; on Android, the status bar is always hidden.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-stereoRenderingPath.html">stereoRenderingPath</a></td><td class="desc">Active stereo rendering path</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-stripEngineCode.html">stripEngineCode</a></td><td class="desc">Remove unused Engine code from your build (IL2CPP-only).</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-stripUnusedMeshComponents.html">stripUnusedMeshComponents</a></td><td class="desc">Should unused Mesh components be excluded from game build?</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-suppressCommonWarnings.html">suppressCommonWarnings</a></td><td class="desc">Suppresses common C# warnings.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-use32BitDisplayBuffer.html">use32BitDisplayBuffer</a></td><td class="desc">32-bit Display Buffer is used.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-useAnimatedAutorotation.html">useAnimatedAutorotation</a></td><td class="desc">Let the OS autorotate the screen as the device orientation changes.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-useFlipModelSwapchain.html">useFlipModelSwapchain</a></td><td class="desc">Use DXGI flip model swap chain for D3D11.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-useHDRDisplay.html">useHDRDisplay</a></td><td class="desc">Switch display to HDR mode (if available).</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-useMacAppStoreValidation.html">useMacAppStoreValidation</a></td><td class="desc">Enable receipt validation for the Mac App Store.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-usePlayerLog.html">usePlayerLog</a></td><td class="desc">Write a log file with debugging information.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-virtualRealitySplashScreen.html">virtualRealitySplashScreen</a></td><td class="desc">Virtual Reality specific splash screen.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-visibleInBackground.html">visibleInBackground</a></td><td class="desc">On Windows, shows the application in the background if the Fullscreen Windowed mode is used.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-vulkanEnableLateAcquireNextImage.html">vulkanEnableLateAcquireNextImage</a></td><td class="desc">Delays acquiring the swapchain image until after the frame is rendered.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-vulkanEnablePreTransform.html">vulkanEnablePreTransform</a></td><td class="desc">Applies the display rotation during rendering.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-vulkanEnableSetSRGBWrite.html">vulkanEnableSetSRGBWrite</a></td><td class="desc">Enables Graphics.SetSRGBWrite() on Vulkan renderer.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-vulkanNumSwapchainBuffers.html">vulkanNumSwapchainBuffers</a></td><td class="desc">Set number of swapchain buffers to be used with Vulkan renderer</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings-windowsGamepadBackendHint.html">windowsGamepadBackendHint</a></td><td class="desc">Specifies the desired Windows API to be used for input.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="PlayerSettings.GetAdditionalCompilerArguments.html">GetAdditionalCompilerArguments</a></td><td class="desc">Gets an array of additional compiler arguments set for a specific NamedBuildTarget.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetAdditionalCompilerArgumentsForGroup.html">GetAdditionalCompilerArgumentsForGroup</a></td><td class="desc">BuildTargetGroup is marked for deprecation in the future. Use PlayerSettings.GetAdditionalCompilerArguments instead.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetAdditionalIl2CppArgs.html">GetAdditionalIl2CppArgs</a></td><td class="desc">Obtain the additional arguments passed to the IL2CPP compiler during the player build process.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetApiCompatibilityLevel.html">GetApiCompatibilityLevel</a></td><td class="desc">Gets .NET API compatibility level for specified build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetApplicationIdentifier.html">GetApplicationIdentifier</a></td><td class="desc">Get the application identifier for the specified platform.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetArchitecture.html">GetArchitecture</a></td><td class="desc">Gets the architecture for the given build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetDefaultScriptingBackend.html">GetDefaultScriptingBackend</a></td><td class="desc">Returns the default ScriptingImplementation for the build target you select.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetDefaultShaderChunkCount.html">GetDefaultShaderChunkCount</a></td><td class="desc">Gets the default limit on the number of shader variant chunks Unity loads and keeps in memory.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetDefaultShaderChunkSizeInMB.html">GetDefaultShaderChunkSizeInMB</a></td><td class="desc">Gets the default size for compressed shader variant chunks.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetGraphicsAPIs.html">GetGraphicsAPIs</a></td><td class="desc">Get graphics APIs to be used on a build platform.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetIcons.html">GetIcons</a></td><td class="desc">Returns the list of assigned icons for the specified build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetIconsForTargetGroup.html">GetIconsForTargetGroup</a></td><td class="desc">BuildTargetGroup is marked for deprecation in the future. Use PlayerSettings.GetIcons instead.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetIconSizes.html">GetIconSizes</a></td><td class="desc">Returns a list of icon sizes for the specified platform.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetIconSizesForTargetGroup.html">GetIconSizesForTargetGroup</a></td><td class="desc">BuildTargetGroup is marked for deprecation in the future. Use PlayerSettings.GetIconSizes instead.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetIl2CppCompilerConfiguration.html">GetIl2CppCompilerConfiguration</a></td><td class="desc">Gets compiler configuration used when compiling generated C++ code for the build target you specify.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetIncrementalIl2CppBuild.html">GetIncrementalIl2CppBuild</a></td><td class="desc">Gets the value of incremental il2cpp build option.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetManagedStrippingLevel.html">GetManagedStrippingLevel</a></td><td class="desc">Gets the managed code stripping level set for the build target you select</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetMobileMTRendering.html">GetMobileMTRendering</a></td><td class="desc">Check if multithreaded rendering option for mobile platform is enabled.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetNormalMapEncoding.html">GetNormalMapEncoding</a></td><td class="desc">Gets the NormalMapEncoding for the build target you select.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetOverrideShaderChunkSettingsForPlatform.html">GetOverrideShaderChunkSettingsForPlatform</a></td><td class="desc">If the value is true, settings for the buildTarget override the default settings.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetPlatformIcons.html">GetPlatformIcons</a></td><td class="desc">Gets the list of available icon slots for the specified build target and  kind.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetPreloadedAssets.html">GetPreloadedAssets</a></td><td class="desc">Returns the assets that will be loaded at start up in the player and be kept alive until the player terminates.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetScriptingBackend.html">GetScriptingBackend</a></td><td class="desc">Gets the scripting framework for the build target you select.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetScriptingDefineSymbols.html">GetScriptingDefineSymbols</a></td><td class="desc">Gets the user-specified symbols for script compilation for the build target you select.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetScriptingDefineSymbolsForGroup.html">GetScriptingDefineSymbolsForGroup</a></td><td class="desc">BuildTargetGroup is marked for deprecation in the future. Use PlayerSettings.GetScriptingDefineSymbols instead.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetShaderChunkCountForPlatform.html">GetShaderChunkCountForPlatform</a></td><td class="desc">Gets the default limit on the number of shader variant chunks Unity loads and keeps in memory for the build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetShaderChunkSizeInMBForPlatform.html">GetShaderChunkSizeInMBForPlatform</a></td><td class="desc">Gets the default size for compressed shader variant chunks for the build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetShaderPrecisionModel.html">GetShaderPrecisionModel</a></td><td class="desc">Gets the active shader precision model.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetStackTraceLogType.html">GetStackTraceLogType</a></td><td class="desc">Gets stack trace logging options.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetSupportedIconKinds.html">GetSupportedIconKinds</a></td><td class="desc">Retrieves all icon kinds that the specified build target supports</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetSupportedIconKindsForPlatform.html">GetSupportedIconKindsForPlatform</a></td><td class="desc">BuildTargetGroup is marked for deprecation in the future. Use PlayerSettings.GetSupportedIconKinds instead.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetTemplateCustomValue.html">GetTemplateCustomValue</a></td><td class="desc">Returns a value of a custom template variable.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetUseDefaultGraphicsAPIs.html">GetUseDefaultGraphicsAPIs</a></td><td class="desc">Is a build platform using automatic graphics API choice?</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.GetVirtualTexturingSupportEnabled.html">GetVirtualTexturingSupportEnabled</a></td><td class="desc">Is virtual texturing enabled.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.HasAspectRatio.html">HasAspectRatio</a></td><td class="desc">Returns whether or not the specified aspect ratio is enabled.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetAdditionalCompilerArguments.html">SetAdditionalCompilerArguments</a></td><td class="desc">Sets additional compiler arguments for a build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetAdditionalCompilerArgumentsForGroup.html">SetAdditionalCompilerArgumentsForGroup</a></td><td class="desc">BuildTargetGroup is marked for deprecation in the future. Use PlayerSettings.SetAdditionalCompilerArguments instead.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetAdditionalIl2CppArgs.html">SetAdditionalIl2CppArgs</a></td><td class="desc">Set additional arguments passed to the IL2CPP compiler during the build process.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetApiCompatibilityLevel.html">SetApiCompatibilityLevel</a></td><td class="desc">Sets .NET API compatibility level for specified build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetApplicationIdentifier.html">SetApplicationIdentifier</a></td><td class="desc">Set the application identifier for the specified platform.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetArchitecture.html">SetArchitecture</a></td><td class="desc">Sets the architecture for the given build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetAspectRatio.html">SetAspectRatio</a></td><td class="desc">Enables the specified aspect ratio.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetDefaultShaderChunkCount.html">SetDefaultShaderChunkCount</a></td><td class="desc">Sets the default limit on the number of shader variant chunks Unity loads and keeps in memory.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetDefaultShaderChunkSizeInMB.html">SetDefaultShaderChunkSizeInMB</a></td><td class="desc">Sets the default size for compressed shader variant chunks.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetGraphicsAPIs.html">SetGraphicsAPIs</a></td><td class="desc">Sets the graphics APIs used on a build platform.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetIcons.html">SetIcons</a></td><td class="desc">Assigns a list of icons for the specified platform.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetIconsForTargetGroup.html">SetIconsForTargetGroup</a></td><td class="desc">BuildTargetGroup is marked for deprecation in the future. Use PlayerSettings.SetIcons instead.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetIl2CppCompilerConfiguration.html">SetIl2CppCompilerConfiguration</a></td><td class="desc">Sets compiler configuration used when compiling generated C++ code for a particular build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetIncrementalIl2CppBuild.html">SetIncrementalIl2CppBuild</a></td><td class="desc">Sets incremental build flag.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetManagedStrippingLevel.html">SetManagedStrippingLevel</a></td><td class="desc">Sets the managed code stripping level for specified build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetMobileMTRendering.html">SetMobileMTRendering</a></td><td class="desc">Enable or disable multithreaded rendering option for mobile platform.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetNormalMapEncoding.html">SetNormalMapEncoding</a></td><td class="desc">Sets the normal map encoding for the given build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetOverrideShaderChunkSettingsForPlatform.html">SetOverrideShaderChunkSettingsForPlatform</a></td><td class="desc">Enable this to override the default shader variant chunk settings.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetPlatformIcons.html">SetPlatformIcons</a></td><td class="desc">Assign a list of icons for the specified platform and icon kind.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetPreloadedAssets.html">SetPreloadedAssets</a></td><td class="desc">Assigns the assets that will be loaded at start up in the player and be kept alive until the player terminates.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetScriptingBackend.html">SetScriptingBackend</a></td><td class="desc">Sets the scripting framework for a given build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetScriptingDefineSymbols.html">SetScriptingDefineSymbols</a></td><td class="desc">Set user-specified symbols for script compilation for the given build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetScriptingDefineSymbolsForGroup.html">SetScriptingDefineSymbolsForGroup</a></td><td class="desc">BuildTargetGroup is marked for deprecation in the future. Use PlayerSettings.SetScriptingDefineSymbols instead.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetShaderChunkCountForPlatform.html">SetShaderChunkCountForPlatform</a></td><td class="desc">Sets the default limit on the number of shader variant chunks Unity loads and keeps in memory on the build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetShaderChunkSizeInMBForPlatform.html">SetShaderChunkSizeInMBForPlatform</a></td><td class="desc">Sets the default size for compressed shader variant chunks on the build target.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetShaderPrecisionModel.html">SetShaderPrecisionModel</a></td><td class="desc">Sets the shader precision model.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetStackTraceLogType.html">SetStackTraceLogType</a></td><td class="desc">Set stack trace logging options.
+Note: calling this function will implicitly call Application.SetStackTraceLogType.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetTemplateCustomValue.html">SetTemplateCustomValue</a></td><td class="desc">Sets a value of a custom template variable.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetUseDefaultGraphicsAPIs.html">SetUseDefaultGraphicsAPIs</a></td><td class="desc">Should a build platform use automatic graphics API choice.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.SetVirtualTexturingSupportEnabled.html">SetVirtualTexturingSupportEnabled</a></td><td class="desc">Enable virtual texturing.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Inherited Members</h3>
+      
+      <div class="subsection"><h3>Properties</h3><table class="list"><thead><tr><th>Property</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object-hideFlags.html">hideFlags</a></td><td class="desc">Should the object be hidden, saved with the Scene or modifiable by the user?</td></tr>
+        <tr><td class="lbl"><a href="Object-name.html">name</a></td><td class="desc">The name of the object.</td></tr>
+      </table></div>
+      
+      
+      
+      <div class="subsection"><h3>Public Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object.GetInstanceID.html">GetInstanceID</a></td><td class="desc">Gets  the instance ID of the object.</td></tr>
+        <tr><td class="lbl"><a href="Object.ToString.html">ToString</a></td><td class="desc">Returns the name of the object.</td></tr>
+      </table></div>
+      
+      <div class="subsection"><h3>Static Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object.Destroy.html">Destroy</a></td><td class="desc">Removes a GameObject, component or asset.</td></tr>
+        <tr><td class="lbl"><a href="Object.DestroyImmediate.html">DestroyImmediate</a></td><td class="desc">Destroys the object obj immediately. You are strongly recommended to use Destroy instead.</td></tr>
+        <tr><td class="lbl"><a href="Object.DontDestroyOnLoad.html">DontDestroyOnLoad</a></td><td class="desc">Do not destroy the target Object when loading a new Scene.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindAnyObjectByType.html">FindAnyObjectByType</a></td><td class="desc">Retrieves any active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindFirstObjectByType.html">FindFirstObjectByType</a></td><td class="desc">Retrieves the first active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectOfType.html">FindObjectOfType</a></td><td class="desc">Returns the first active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectsByType.html">FindObjectsByType</a></td><td class="desc">Retrieves a list of all loaded objects of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectsOfType.html">FindObjectsOfType</a></td><td class="desc">Gets a list of all loaded objects of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.Instantiate.html">Instantiate</a></td><td class="desc">Clones the object original and returns the clone.</td></tr>
+      </table></div>
+      <div class="subsection"><h3>Operators</h3><table class="list"><thead><tr><th>Operator</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object-operator_Object.html">bool</a></td><td class="desc">Does the object exist?</td></tr>
+        <tr><td class="lbl"><a href="Object-operator_ne.html">operator !=</a></td><td class="desc">Compares if two objects refer to a different object.</td></tr>
+        <tr><td class="lbl"><a href="Object-operator_eq.html">operator ==</a></td><td class="desc">Compares two object references to see if they refer to the same object.</td></tr>
+      </table></div>
+      
+      
+      
+    </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

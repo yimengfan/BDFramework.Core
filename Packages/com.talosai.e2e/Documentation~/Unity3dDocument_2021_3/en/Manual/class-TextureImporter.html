@@ -1,0 +1,916 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Texture Import Settings</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-TextureImporter.html">English</a></li>
+<li><a href="/cn/current/Manual/class-TextureImporter.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-TextureImporter.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-TextureImporter.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-TextureImporter.html">English</a></li>
+<li><a href="/cn/current/Manual/class-TextureImporter.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-TextureImporter.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-TextureImporter.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Textures.html">Textures</a></li>
+<li><a href="ImportingTextures.html">Importing Textures</a></li>
+<li>Texture Import Settings</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ImportingTextures.html"></a></span><div class="tip">Importing Textures</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="TextureTypes.html"></a></span><div class="tip">Texture types</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Texture Import Settings</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/TextureImporter.html' title='Go to TextureImporter page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <strong>Texture Import Settings</strong> window defines how Unity imports images from your project’s <code>Assets</code> folder into the Unity Editor.</p>
+
+<p>To access this window, select the image file in the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>. The <strong>Texture Import Settings</strong> window appears in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>. The <strong>Texture Import Settings</strong> window appears in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>.</p>
+
+<p>
+<strong>Note:</strong> Some of the less commonly used properties are hidden by default. Expand the <a href="#advanced">Advanced</a> section in the Inspector window to view these properties.</p>
+
+<figure>
+<img src="../uploads/Main/class-TextureImporter.png" alt="The Texture Import Settings window">
+<figcaption>The Texture Import Settings window</figcaption>
+</figure>
+
+<p>There are several sections on the Texture Import Settings window:</p>
+
+<ul>
+<li>
+<strong>(A)</strong> <a href="#texturetype">Texture Type</a>. Select the type of Texture you want to create.</li>
+<li>
+<strong>(B)</strong> <a href="#textureshape">Texture Shape</a>. Select the shape and set properties specific to that shape in this area.</li>
+<li>
+<strong>(C)</strong> <a href="#advanced">Type-specific and advanced properties</a>. Depending on what <strong>Texture Type</strong> value you select, extra properties might appear in this area.</li>
+<li>
+<strong>(D)</strong> <a href="#platform">Platform-specific overrides panel</a>. Use the <strong>Platform-specific overrides</strong> panel to set default options and their overrides for a specific platforms.</li>
+<li>
+<strong>(E)</strong> <strong>Texture preview</strong>. You can preview the Texture and adjust its values here.</li>
+</ul>
+
+<p><a name="texturetype" aria-hidden="true"></a></p>
+
+<h2>Texture Type</h2>
+
+<p>Use the <strong>Texture Type</strong> property to select the type of Texture you want to create from the source image file. The other properties in the Texture Import settings window change depending on the value you set.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Default</strong></td>
+	<td style="text-align:left;">This is the most common setting used for all Textures. It provides access to most of the properties for Texture importing. For more information, see the <a href="TextureTypes.html#Default">Default</a> Texture type.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Normal map</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normalmap" aria-label="Go to glossary anchor for Normalmap">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Select this to turn the color channels into a format suitable for real-time normal mapping. For more information, see the <a href="TextureTypes.html#NormalMap">Normal map</a> Texture type documentation. <br><br>For more information on normal mapping in general, see <a href="ImportingTextures.html#Normalmaps">Importing Textures</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Editor GUI and Legacy GUI</strong></td>
+	<td style="text-align:left;">Select this if you are using the Texture on any HUD or GUI controls. For more information, see the <a href="TextureTypes.html#Editor">Editor GUI and Legacy GUI</a> Texture type documentation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Sprite (2D and UI)</strong></td>
+	<td style="text-align:left;">Select this if you are using the Texture in a 2D game as a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html">Sprite</a><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html" href="Sprites.html">Sprite</a><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span>. For more information, see the <a href="TextureTypes.html#Sprite">Sprite (2D and UI)</a> Texture type documentation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Cursor</strong></td>
+	<td style="text-align:left;">Select this if you are using the Texture as a custom cursor. For more information, see the <a href="TextureTypes.html#Cursor">Cursor</a> Texture type documentation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Cookie</strong></td>
+	<td style="text-align:left;">Select this to set your Texture up with the basic parameters used for the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Cookies.html">Cookies</a> of your <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Cookies.html">Cookies</a> of your <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>’s <a href="class-Light.html">Lights</a>. For more information, see the <a href="TextureTypes.html#Cookie">Cookie</a> Texture type documentation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Select this if you are using the Texture as a <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LightmapParameters.html">Lightmap</a>. This option enables encoding into a specific format (RGBM or dLDR, depending on the platform) and a <span class="tooltip"><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a href="PostProcessingOverview.html" href="class-LightmapParameters.html">Lightmap</a>. This option enables encoding into a specific format (RGBM or dLDR, depending on the platform) and a <span class="tooltip"><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a href="PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span> step on Texture data (a push-pull dilation pass). For more information, see the <a href="TextureTypes.html#Lightmap">Lightmap</a> Texture type documentation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Single Channel</strong></td>
+	<td style="text-align:left;">Select this if you only need one channel in the Texture. For information on the properties available only for the this type, see the <a href="TextureTypes.html#SingleChannel">Single Channel</a> Texture type documentation.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="textureshape" aria-hidden="true"></a></p>
+
+<h2>Texture Shape</h2>
+
+<p>Use the <strong>Texture Shape</strong> property to select and define the shape and structure of the Texture. There are four shape types:</p>
+
+<ul>
+<li>
+<strong>2D</strong> is the most common setting for all Textures; it defines the image file as a 2D Texture. These are used to map Textures to 3D Meshes and GUI elements, among other Project elements.</li>
+<li>
+<strong>Cube</strong> defines the Texture as a <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Cubemap.html">cubemap</a>. You could use this for Skyboxes or <span class="tooltip"><strong>Reflection Probes</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html" href="class-Cubemap.html">cubemap</a>. You could use this for Skyboxes or <span class="tooltip"><strong>Reflection Probes</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span>, for example. This type is only available with the <a href="TextureTypes.html#Default">Default</a>, <a href="TextureTypes.html#NormalMap">Normal Map</a>, and <a href="TextureTypes.html#SingleChannel">Single Channel</a> Texture types.</li>
+<li>
+<strong>2D Array</strong> defines the Texture as a <a href="class-Texture2DArray.html">2D array texture</a>. This is commonly used as an optimization for some rendering techniques, where many textures of the same size &amp; format are used.</li>
+<li>
+<strong>3D</strong> defines the Texture as a <a href="class-Texture3D.html">3D texture</a>. 3D textures are used by some rendering techniques to represent volumetric data.</li>
+</ul>
+
+<h3>Cubemap mapping</h3>
+
+<p>You can further refine <span class="tooltip"><strong>Cubemap</strong><span class="tooltiptext">A collection of six square textures that can represent the reflections in an environment or the skybox drawn behind your geometry. The six squares form the faces of an imaginary cube that surrounds an object; each face represents the view along the directions of the world axes (up, down, left, right, forward and back). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Cubemap.html" href="class-Cubemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Cubemap" aria-label="Go to glossary anchor for Cubemap">Glossary</a></span></span></span> shape textures with the following properties:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Mapping</strong></td>
+	<td style="text-align:left;">Use <strong>Mapping</strong> to specify how the Texture is projected onto your <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. This is set to <strong>Auto</strong> by default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Auto</strong></td>
+	<td style="text-align:left;">Unity tries to create the layout from the Texture information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>6 Frames Layout (Cubic Environment)</strong></td>
+	<td style="text-align:left;">The Texture contains six images arranged in one of the standard cubemap layouts: cross, or sequence (+x -x +y -y +z -z). The images can be orientated either horizontally or vertically.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Latitude Longitude (Cylindrical)</strong></td>
+	<td style="text-align:left;">Maps the Texture to a 2D Latitude-Longitude representation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Mirrored Ball (Sphere Mapped)</strong></td>
+	<td style="text-align:left;">Maps the Texture to a sphere-like cubemap.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Convolution Type</strong></td>
+	<td style="text-align:left;">Choose the type of pre-convolution (filtering) that you want to use for this Texture. The result of pre-convolution is stored in mipmaps. <br>This property is only available for the <a href="TextureTypes.html#Default">Default</a> Texture type.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">The Texture has no pre-convolution (no filtering). This is the default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Specular (Glossy Reflection)</strong></td>
+	<td style="text-align:left;">Select this to use cubemaps as Reflection Probes. The Texture mipmaps are pre-convoluted (filtered) with the engine BRDF. For more information, see Wikipedia’s page on <a href="https://en.wikipedia.org/wiki/Bidirectional_reflectance_distribution_function">Bidirectional reflectance distribution function</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Diffuse (Irradiance)</strong></td>
+	<td style="text-align:left;">The Texture is convoluted (filtered) to represent irradiance. This is useful if you use the cubemap as a <span class="tooltip"><strong>Light Probe</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html" href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Fixup Edge Seams</strong></td>
+	<td style="text-align:left;">This option is only available with the <strong>None</strong> or <strong>Diffuse</strong> convolution (filter). Use this on low-end platforms as a work-around for filtering limitations, such as cubemaps incorrectly filtered between faces.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>2D Array and 3D columns and rows</h3>
+
+<p>The source texture files for <strong>2D Array</strong> and <strong>3D</strong> Textures are divided into cells; these textures are called flipbook textures. When Unity imports flipbook textures, it places the contents of each cell into its own 2D array layer or 3D texture slice.</p>
+
+<p>When you set the <strong>Texture Shape</strong> property to <strong>2D Array</strong> or <strong>3D</strong>, Unity displays the <strong>Columns</strong> and <strong>Rows</strong> properties. Use these to tell Unity how to divide the flipbook texture into cells.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Columns</strong></td>
+	<td style="text-align:left;">The number of columns that the source flipbook texture is divided into.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rows</strong></td>
+	<td style="text-align:left;">The number of rows that the source flipbook texture is divided into.</td>
+</tr>
+</tbody>
+</table>
+
+<p>For example, an image with 8x8 cells of smoke effect frames looks like this as a default 2D texture:</p>
+
+<figure>
+<img src="../uploads/Main/TextureImporter-Flipbook-2D.jpg" alt="Flipbook image as a 2D shape">
+<figcaption>Flipbook image as a 2D shape</figcaption>
+</figure>
+
+<p>But when you correctly import is as a 3D texture with 8 Columns and 8 Rows, it looks like this:</p>
+
+<figure>
+<img src="../uploads/Main/TextureImporter-Flipbook-3D.jpg" alt="Flipbook image as a 3D shape">
+<figcaption>Flipbook image as a 3D shape</figcaption>
+</figure>
+
+<p><a name="advanced" aria-hidden="true"></a></p>
+
+<h2>Type-specific and advanced settings</h2>
+
+<p>Depending on which Texture Type you select, different options might appear on the Texture Import Settings window. Some of these options are specific to the Texture Type itself, such as the Sprite Mode settings available with the <a href="TextureTypes.html#Sprite">Sprite (2D and UI)</a> type.</p>
+
+<p>The <strong>Advanced</strong> settings allow you to make finer adjustments to the way Unity handles your Texture. The order and availability of these settings might vary slightly depending on the <strong>Texture Type</strong> you choose.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Description:</strong></th>
+	<th style="text-align:left;"><strong>Supported by:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="sRGB" aria-hidden="true"></a><strong>sRGB (Color Texture)</strong>
+</td>
+	<td style="text-align:left;">Specifies that the texture stores data in sRGB (also called gamma) color space. This setting is only relevant when your project uses linear <a href="LinearLighting.html">color space</a>. If enabled, it instructs the GPU to convert data from sRGB color space to linear color space when it samples the texture in a shader.<br><br>Enable this for non-HDR textures that store regular color data. Disable this for textures that contain non-color data (such as smoothness or the metalness).<br><br>For HDR textures, Unity disables this value and hides the checkbox by default. For non-HDR textures, Unity enables this by default.</td>
+	<td style="text-align:left;">
+<a href="TextureTypes.html#Default">Default</a>,<br><a href="TextureTypes.html#Sprite">Sprite (2D and UI)</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="AlphaSrc" aria-hidden="true"></a><strong>Alpha Source</strong>
+</td>
+	<td style="text-align:left;">Specify how the alpha channel of the Texture is generated. This is set to <strong>None</strong> by default.</td>
+	<td style="text-align:left;">
+<a href="TextureTypes.html#Default">Default</a>,<br><a href="TextureTypes.html#Editor">Editor GUI and Legacy GUI</a>,<br><a href="TextureTypes.html#Sprite">Sprite (2D and UI)</a><br><a href="TextureTypes.html#Cursor">Cursor</a><br><a href="TextureTypes.html#Cookie">Cookie</a><br><a href="TextureTypes.html#SingleChannel">Single Channel</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">The imported Texture does not have an alpha channel, whether or not the input Texture has one.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Input Texture Alpha</strong></td>
+	<td style="text-align:left;">This uses the alpha from the input Texture if a Texture is provided.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>From Gray Scale</strong></td>
+	<td style="text-align:left;">This generates the alpha from the mean (average) of the input Texture RGB values.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="AlphaTrans" aria-hidden="true"></a><strong>Alpha is Transparency</strong>
+</td>
+	<td style="text-align:left;">Enable this property to dilate the color and avoid filtering artifacts on the edges if the alpha channel you specify is Transparency.</td>
+	<td style="text-align:left;">
+<a href="TextureTypes.html#Default">Default</a>,<br><a href="TextureTypes.html#Editor">Editor GUI and Legacy GUI</a>,<br><a href="TextureTypes.html#Sprite">Sprite (2D and UI)</a><br><a href="TextureTypes.html#Cursor">Cursor</a><br><a href="TextureTypes.html#Cookie">Cookie</a><br><a href="TextureTypes.html#SingleChannel">Single Channel</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="PSD" aria-hidden="true"></a><strong>Remove Matte (PSD)</strong>
+</td>
+	<td style="text-align:left;">Enable special processing for Photoshop files that use transparency (blending color pixels with white).<br><br><strong>Note:</strong> This is only available for PSD files.</td>
+	<td style="text-align:left;">
+<a href="TextureTypes.html#Default">Default</a>,<br><a href="TextureTypes.html#Editor">Editor GUI and Legacy GUI</a>,<br><a href="TextureTypes.html#Sprite">Sprite (2D and UI)</a><br><a href="TextureTypes.html#Cursor">Cursor</a><br><a href="TextureTypes.html#Cookie">Cookie</a><br><a href="TextureTypes.html#SingleChannel">Single Channel</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="PNG" aria-hidden="true"></a><strong>Ignore PNG file gamma</strong>
+</td>
+	<td style="text-align:left;">Enable this property to ignore the Gamma attribute in PNG files. This property does not effect other file formats.</td>
+	<td style="text-align:left;"><a href="TextureTypes.html">All Texture Types</a></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="NPOT" aria-hidden="true"></a><strong>Non Power of 2</strong>
+</td>
+	<td style="text-align:left;">If the Texture has a non-power of two (NPOT) dimension size, this defines a scaling behavior at import time. See documentation on <a href="ImportingTextures.html">Importing Textures</a> for more information on non-power of two sizes. This is set to <strong>None</strong> by default.</td>
+	<td style="text-align:left;">
+<a href="TextureTypes.html#Default">Default</a>,<br><a href="TextureTypes.html#NormalMap">Normal map</a><br><a href="TextureTypes.html#Editor">Editor GUI and Legacy GUI</a>,<br><a href="TextureTypes.html#Cursor">Cursor</a><br><a href="TextureTypes.html#Cookie">Cookie</a><br><a href="TextureTypes.html#Lightmap">Lightmap</a><br><a href="TextureTypes.html#SingleChannel">Single Channel</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">Texture dimension size stays the same.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>To nearest</strong></td>
+	<td style="text-align:left;">Scale the Texture to the nearest power-of-two dimension size at import time. For example, a 257x511 px Texture is scaled to 256x512 px. Note that PVRTC formats require Textures to be square (that is width equal to height), so the final dimension size is upscaled to 512x512 px.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>To larger</strong></td>
+	<td style="text-align:left;">Scale the Texture to the power-of-two dimension size of the largest dimension size value at import time. For example, a 257x511 px Texture is scaled to 512x512 px.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>To smaller</strong></td>
+	<td style="text-align:left;">Scale the Texture to the power-of-two dimension size of the smallest dimension size value at import time. For example, a 257x511 px Texture is scaled to 256x256 px.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="ReadWrite" aria-hidden="true"></a><strong>Read/Write Enabled</strong>
+</td>
+	<td style="text-align:left;">Enable this property to access the Texture data from scripts using <a href="../ScriptReference/Texture2D.SetPixels.html">Texture2D.SetPixels</a>, <a href="../ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a> and other <a href="../ScriptReference/Texture2D.html">Texture2D</a> and <a href="../ScriptReference/Cubemap.html">Cubemap</a> methods. Internally, Unity uses a copy of the Texture data for script access, which doubles the amount of memory required for the Texture. This property is therefore disabled by default, and you should enable it only if you require script access. For more information, see <a href="../ScriptReference/Texture-isReadable.html">Texture.isReadable</a>.<br><br>This property only appears if you set <strong>Texture Shape</strong> to <strong>2D</strong> or <strong>Cube</strong>. Other texture shapes are always imported with this property enabled.</td>
+	<td style="text-align:left;"><a href="TextureTypes.html">All Texture Types</a></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="VTO" aria-hidden="true"></a><strong>Virtual Texture Only</strong>
+</td>
+	<td style="text-align:left;">Enable this property to use the Texture solely in combination with a Texture Stack for Virtual Texturing. When enabled, the texture is not guaranteed to be available as a Texture2D in the Player (that is, not accessible from a script). When disabled, the Player includes the texture both as a Texture2D (accessible from script) and as a streamable texture in a Texture Stack.</td>
+	<td style="text-align:left;">
+<a href="TextureTypes.html#Default">Default</a>,<br><a href="TextureTypes.html#NormalMap">Normal map</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="Streaming" aria-hidden="true"></a><strong>Streaming Mip Maps</strong>
+</td>
+	<td style="text-align:left;">Enable this property to use <a href="TextureStreaming.html">Mip Map Streaming</a> on this Texture. This setting is valid for any Texture in the 3D environment that Unity displays with a Mesh Renderer. Diffuse Textures, normal maps and light maps are all valid for Mip Map Streaming.</td>
+	<td style="text-align:left;">
+<a href="TextureTypes.html#Default">Default</a>,<br><a href="TextureTypes.html#NormalMap">Normal map</a><br><a href="TextureTypes.html#Lightmap">Lightmap</a><br><a href="TextureTypes.html#SingleChannel">Single Channel</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Mip Map Priority</strong></td>
+	<td style="text-align:left;">Use this to set the priority of the mipmap. Unity uses this to determine which mipmaps to prioritize when assigning resources. Higher values represent a higher priority (for example, <strong>3</strong> is a higher priority than <strong>1</strong>). This setting is only available when <strong>Streaming Mip Maps</strong> is enabled.<br><br>The <strong>Mip Map Priority</strong> number is also a mipmap offset for the <strong>Memory Budget </strong>(set in the <a href="class-QualitySettings.html">Quality Settings</a> when <strong>Texture Streaming</strong> is enabled). For example, with a priority of 2, the Mip Map Streaming system tries to use a mipmap two mip levels higher than Textures with a priority of 0. One mip level higher is 2x in each axis and two levels higher is 4x in each axis, so two mip levels higher results in a texture 16x larger. If it can’t do this, it uses a lower mip level to fit the <strong>Memory Budget</strong>. Negative values are also valid. See <a href="TextureStreaming-API.html">Mip Map Streaming API</a> for more details.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="GenerateMipMaps" aria-hidden="true"></a><strong>Generate Mip Maps</strong>
+</td>
+	<td style="text-align:left;">Enable this property to enable mip map generation. Mip maps are smaller versions of the Texture that get used when the Texture is very small on screen. See documentation on <a href="ImportingTextures.html">Importing Textures</a> for more information on mip maps.<br><br><strong>Warning</strong>: Every time you select a new Texture Type, this property reverts to the default for the new Texture Type, if defined. See <a href="TextureTypes.html">Texture types</a> to find this property’s default value for each type.</td>
+	<td style="text-align:left;"><a href="TextureTypes.html">All Texture Types</a></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Border Mip Maps</strong></td>
+	<td style="text-align:left;">Enable this property to avoid colors bleeding out to the edge of the lower MIP levels. Used for light cookies (see below). This property is disabled by default.<br><br>Only available when <strong>Generate Mip Maps</strong> is enabled.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Mip Map Filtering</strong></td>
+	<td style="text-align:left;">There are two ways of mipmap filtering available for optimizing image quality. The default option is <strong>Box</strong>.<br><br>Only available when <strong>Generate Mip Maps</strong> is enabled.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Box</strong></td>
+	<td style="text-align:left;">This is the simplest way to fade out mipmaps. The MIP levels become smoother as they go down in dimension size.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Kaiser</strong></td>
+	<td style="text-align:left;">A sharpening algorithm runs on the mipmaps as they go down in dimension size. Try this option if your Textures are too blurry in the distance. (The algorithm is of the Kaiser Window type; see <a href="https://en.wikipedia.org/wiki/Kaiser_window">Wikipedia</a> for further information.)</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Mip Maps Preserve Coverage</strong></td>
+	<td style="text-align:left;">Enable this property if you want the alpha channel of generated mipmaps to preserve coverage during the alpha test. See <a href="../ScriptReference/TextureImporterSettings-mipMapsPreserveCoverage.html">TextureImporterSettings.mipMapsPreserveCoverage</a> for more information.<br><br>Only available when <strong>Generate Mip Maps</strong> is enabled.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Alpha Cutoff Value</strong></td>
+	<td style="text-align:left;">Set the reference value for controlling the Mip Map coverage during the alpha test.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Fadeout Mip Maps</strong></td>
+	<td style="text-align:left;">Enable this property to make the mipmaps fade to gray as the MIP levels progress. This is used for detail maps. The left-most scroll is the first MIP level to begin fading out. The right-most scroll defines the MIP level where the Texture is completely grayed out.<br><br>Only available when <strong>Generate Mip Maps</strong> is enabled.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="WrapMode" aria-hidden="true"></a><strong>Wrap Mode</strong>
+</td>
+	<td style="text-align:left;">Select how the Texture behaves when tiled. The default option is <strong>Repeat</strong>.</td>
+	<td style="text-align:left;"><a href="TextureTypes.html">All Texture Types</a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Repeat</strong></td>
+	<td style="text-align:left;">Repeats the Texture in tiles.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Clamp</strong></td>
+	<td style="text-align:left;">Stretches the Texture’s edges.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Mirror</strong></td>
+	<td style="text-align:left;">Mirrors the Texture at every integer boundary to create a repeating pattern.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Mirror Once</strong></td>
+	<td style="text-align:left;">Mirrors the Texture once, then clamps it to edge pixels.<br><br><strong>Note</strong>: Some mobile devices do not support Mirror Once mode. In this case, Unity uses the <strong>Mirror</strong> mode instead.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Per-axis</strong></td>
+	<td style="text-align:left;">Choose this to individually control how Unity wraps Textures at the U axis and V axis.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="FilterMode" aria-hidden="true"></a><strong>Filter Mode</strong>
+</td>
+	<td style="text-align:left;">Select how the Texture is filtered when it gets stretched by 3D transformations. The default option is <strong>Bilinear</strong>.</td>
+	<td style="text-align:left;"><a href="TextureTypes.html">All Texture Types</a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Point (no filter)</strong></td>
+	<td style="text-align:left;">The Texture appears blocky up close.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Bilinear</strong></td>
+	<td style="text-align:left;">The Texture appears blurry up close.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Trilinear</strong></td>
+	<td style="text-align:left;">Like Bilinear, but the Texture also blurs between the different MIP levels.</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="AnisoLevel" aria-hidden="true"></a><span class="tooltip"><strong>Aniso Level</strong><span class="tooltiptext">The anisotropic filtering (AF) level of a texture. Allows you to increase texture quality when viewing a texture at a steep angle. Good for floor and ground textures. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about TextureTypes.html" href="TextureTypes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnisoLevel" aria-label="Go to glossary anchor for AnisoLevel">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Increases Texture quality when viewing the Texture at a steep angle. Anisotropic filtering is good for floor and ground Textures but comes at a high performance cost. See documentation on <a href="ImportingTextures.html">Importing Textures</a> for more information on Anisotropic filtering.</td>
+	<td style="text-align:left;"><a href="TextureTypes.html">All Texture Types</a></td>
+</tr>
+</tbody>
+</table>
+
+<p>For information on the properties for each texture type, refer to the documentation for that texture type.</p>
+
+<p><a name="platform" aria-hidden="true"></a></p>
+
+<h2>Platform-specific overrides panel</h2>
+
+<p>To set the size and format of the imported texture, use the platform-specific overrides panel.</p>
+
+<h3>Default tab</h3>
+
+<p>The <strong>Default</strong> tab lets you set the final size and format of the imported texture on all platforms.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Max Size</strong></td>
+	<td style="text-align:left;">Sets the maximum dimensions of the imported texture in <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Resize Algorithm</strong></td>
+	<td style="text-align:left;">Sets the algorithm Unity uses to downscale the texture, if the texture file has larger dimensions than <strong>Max Size</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Mitchell</strong></td>
+	<td style="text-align:left;">Resizes the texture using the Mitchell algorithm. This is the default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Bilinear</strong></td>
+	<td style="text-align:left;">Resizes the texture using bilinear interpolation. This setting might preserve more small, sharp details than <strong>Mitchell</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Format</strong></td>
+	<td style="text-align:left;">Sets the number of channels and the data type of the final texture, except for platforms you override in the platform-specific override tabs. The default is <strong>Automatic</strong>, where Unity selects a value based on the number of channels in the texture, and the <strong>Compression</strong> setting. For more information, refer to the <a href="#default-formats">Default formats</a> section.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><span class="tooltip"><strong>Compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Sets the compression of the final texture. Unity uses this setting to select an appropriate <span class="tooltip"><strong>texture format</strong><span class="tooltiptext">A file format for handling textures during real-time rendering by 3D graphics hardware, such as a graphics card or mobile device. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporterOverride.html" href="class-TextureImporterOverride.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TextureFormat" aria-label="Go to glossary anchor for TextureFormat">Glossary</a></span></span></span>. This setting is only available if you set <strong>Format</strong> to <strong>Automatic</strong>. For more information, refer to the <a href="#default-formats">Default formats</a> section.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">Don’t compress the texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Low Quality</strong></td>
+	<td style="text-align:left;">Compresses the texture using a low-quality texture format. The compressed texture might use less memory than <strong>Normal Quality</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Normal Quality</strong></td>
+	<td style="text-align:left;">Compresses the texture using a standard texture format.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>High Quality</strong></td>
+	<td style="text-align:left;">Compresses the texture using a high-quality texture format. The compressed texture might use more memory than <strong>Normal Quality</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Use Crunch Compression</strong></td>
+	<td style="text-align:left;">Compresses the texture using the Crunch compression library, which helps Unity use the lowest possible amount of space. This setting is only available if you set <strong>Format</strong> to <strong>Automatic</strong>. Unity decompresses the texture to DXT or ETC format on the CPU, then uploads them to the GPU at runtime. If you enable this setting, textures might take a long time to compress, but decompression at runtime is fast.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Compressor Quality</strong></td>
+	<td style="text-align:left;">Sets the image quality of the compressed texture, if you enable <strong>Use Crunch Compression</strong>. A higher value might use more memory and increase compression time.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Platform-specific overrides tabs</h3>
+
+<p>The platform-specific override tabs let you override the settings in the <strong>Default</strong> tab for specific platforms. For more information about build platforms, refer to <a href="BuildSettings.html">Build Settings</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Max Size</strong></td>
+	<td style="text-align:left;">Sets the maximum dimensions of the imported texture in pixels.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Resize Algorithm</strong></td>
+	<td style="text-align:left;">Sets the algorithm Unity uses to downscale the texture, if the texture file has larger dimensions than <strong>Max Size</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Mitchell</strong></td>
+	<td style="text-align:left;">Resizes the texture using the Mitchell algorithm. This is the default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Bilinear</strong></td>
+	<td style="text-align:left;">Resizes the texture using bilinear interpolation. This setting might preserve more small, sharp details than <strong>Mitchell</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Format</strong></td>
+	<td style="text-align:left;">Sets the final texture format. The available texture formats depend on the platform, and the file type of the texture. The default is selected by Unity based on the platform and the settings in the <strong>Default</strong> tab. For more information, refer to the <a href="#default-formats">Default formats</a> section.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Compressor quality</strong></td>
+	<td style="text-align:left;">Sets the quality of the final texture that compression produces. This setting isn’t available for all texture formats.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Fast</strong></td>
+	<td style="text-align:left;">Compresses the texture to create a low-quality image that might use less memory than <span class="tooltip"><strong>Normal</strong><span class="tooltiptext">The direction perpendicular to the surface of a mesh, represented by a Vector. Unity uses normals to determine object orientation and apply shading. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VectorCookbook.html" href="VectorCookbook.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normal" aria-label="Go to glossary anchor for Normal">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Normal</strong></td>
+	<td style="text-align:left;">Compresses the texture using the standard compression.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Best</strong></td>
+	<td style="text-align:left;">Compresses the texture and retains a high-quality image that might use more memory than <strong>Normal</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Slider</td>
+	<td style="text-align:left;">Sets the quality of the compressed texture. This slider is only available if you select a texture that uses Crunch compression. A higher value might use more memory and increase compression time.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="splitalpha" aria-hidden="true"></a><strong>Split Alpha Channel</strong>
+</td>
+	<td style="text-align:left;">Allows alpha splitting for this Texture on these platforms: <strong>tvOS</strong>, <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span>, and <strong>Android</strong>. For more information, refer to <a href="class-TextureImporterOverride.html#android">Notes on Android for Texture compression formats</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="fallback" aria-hidden="true"></a><strong>Override ETC2 fallback</strong>
+</td>
+	<td style="text-align:left;">ETC2 texture decompression fallback override on Android devices that don’t support ETC2.<br><br>Allows to choose which texture format to decompress the texture to on Android devices that have no ETC2 texture format support. For more information, refer to <a href="class-TextureImporterOverride.html#android">Notes on Android for Texture compression formats</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="default-formats" aria-hidden="true"></a></p>
+
+<h2>Default formats</h2>
+
+<p>The following table lists the default <strong>Format</strong> Unity selects in the platform-specific override tab, based on the <strong>Format</strong> and <strong>Compression</strong> settings in the <strong>Default</strong> tab.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Platform</strong></th>
+	<th style="text-align:left;"><strong>Texture channels</strong></th>
+	<th style="text-align:left;"><strong>Format for no compression</strong></th>
+	<th style="text-align:left;"><strong>Format for Normal Quality compression</strong></th>
+	<th style="text-align:left;"><strong>Format for High Quality compression</strong></th>
+	<th style="text-align:left;"><strong>Format for Low Quality compression</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Windows, Linux, macOS</strong></td>
+	<td style="text-align:left;">RGB</td>
+	<td style="text-align:left;">RGB 24 bit</td>
+	<td style="text-align:left;">RGB Compressed DXT1</td>
+	<td style="text-align:left;">RGB(A) Compressed BC7</td>
+	<td style="text-align:left;">RGB Compressed DXT1</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">RGBA</td>
+	<td style="text-align:left;">RGBA 32 bit</td>
+	<td style="text-align:left;">RGBA Compressed DXT5</td>
+	<td style="text-align:left;">RGB(A) Compressed BC7</td>
+	<td style="text-align:left;">RGBA Compressed DXT5</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>HDR</strong><span class="tooltiptext">high dynamic range<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#HDR" aria-label="Go to glossary anchor for HDR">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">RGBA Half</td>
+	<td style="text-align:left;">RGB Compressed BC6H</td>
+	<td style="text-align:left;">RGB Compressed BC6H</td>
+	<td style="text-align:left;">RGB Compressed BC6H</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">RGB</td>
+	<td style="text-align:left;">RGB 24 bit</td>
+	<td style="text-align:left;">RGB Compressed DXT1</td>
+	<td style="text-align:left;">RGB Compressed DXT1</td>
+	<td style="text-align:left;">RGB Compressed DXT1</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">RGBA</td>
+	<td style="text-align:left;">RGBA 32 bit</td>
+	<td style="text-align:left;">RGBA Compressed DXT5</td>
+	<td style="text-align:left;">RGBA Compressed DXT5</td>
+	<td style="text-align:left;">RGBA Compressed DXT5</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Android</strong> (<a href="class-TextureImporterOverride.html#android">configurable</a>)</td>
+	<td style="text-align:left;">RGB</td>
+	<td style="text-align:left;">RGB 24 bit</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 6x6 block<br>RGB Compressed ETC2<br>RGB Compressed ETC</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 4x4 block<br>RGB Compressed ETC2<br>RGB Compressed ETC</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 8x8 block<br>RGB Compressed ETC2<br>RGB Compressed ETC</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">RGBA</td>
+	<td style="text-align:left;">RGBA 32 bit</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 6x6 block<br>RGBA Compressed ETC2</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 4x4 block<br>RGBA Compressed ETC2</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 8x8 block<br>RGBA Compressed ETC2</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>iOS</strong> (<a href="PlayerSettingsIOS-Other#Rendering">configurable</a>)</td>
+	<td style="text-align:left;">RGB</td>
+	<td style="text-align:left;">RGB 24 bit</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 6x6 block<br>RGB Compressed PVRTC 4 bits</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 4x4 block<br>RGB Compressed PVRTC 4 bits</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 8x8 block<br>RGB Compressed PVRTC 2 bits</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">RGBA</td>
+	<td style="text-align:left;">RGBA 32 bit</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 6x6 block<br>RGBA Compressed PVRTC 4 bits</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 4x4 block<br>RGBA Compressed PVRTC 4 bits</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 8x8 block<br>RGBA Compressed PVRTC 2 bits</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>tvOS</strong></td>
+	<td style="text-align:left;">RGB</td>
+	<td style="text-align:left;">RGB 24 bit</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 6x6 block</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 4x4 block</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 8x8 block</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">RGBA</td>
+	<td style="text-align:left;">RGBA 32 bit</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 6x6 block</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 4x4 block</td>
+	<td style="text-align:left;">RGBA Compressed ASTC 8x8 block</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Default</strong></td>
+	<td style="text-align:left;">RGBA</td>
+	<td style="text-align:left;">RGBA 32 bit</td>
+	<td style="text-align:left;">RGBA 16 bit</td>
+	<td style="text-align:left;">RGBA 16 bit</td>
+	<td style="text-align:left;">RGBA 16 bit</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="class-TextureImporterOverride.html">Recommended and supported texture formats, by platform</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ImportingTextures.html"></a></span><div class="tip">Importing Textures</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="TextureTypes.html"></a></span><div class="tip">Texture types</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

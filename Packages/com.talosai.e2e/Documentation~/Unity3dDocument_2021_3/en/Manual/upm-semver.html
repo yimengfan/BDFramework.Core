@@ -1,0 +1,531 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Versioning</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-semver.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-semver.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-semver.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-semver.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-semver.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-semver.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-semver.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-semver.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li><a href="CustomPackages.html">Creating custom packages</a></li>
+<li><a href="upm-manifestPkg.html">Package manifest</a></li>
+<li>Versioning</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-manifestPkg.html"></a></span><div class="tip">Package manifest</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="cus-asmdef.html"></a></span><div class="tip">Assembly definition and packages</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Versioning</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Packages must follow <strong>Semantic Versioning</strong> (SemVer). Semantic Versioning is a strategy that allows package authors to provide information on the type of changes included in a given version, compared to the previous version, in a format that automated tools can use.</p>
+
+<p>Semantic Versioning expresses versions as <strong>MAJOR.MINOR.PATCH</strong>, where MAJOR introduces one or more breaking changes, MINOR introduces one or more backward-compatible API changes, and PATCH only introduces bug fixes with no API changes at all.</p>
+
+<p>When you begin to develop a package, start the version number at <code>0.1.0</code>. The MAJOR version number <code>0</code> is reserved for packages in their initial development phase. During initial development, package APIs change often, frequently in a breaking manner, so keep the MAJOR version number at <code>0</code> until you consider your package stable enough and ready for use in production.</p>
+
+<p>After a package is officially ready for use in production, increment the MAJOR version to <code>1</code> and adhere to the following guidelines for subsequent changes:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Increment this value:</strong></th>
+	<th style="text-align:left;"><strong>Under these conditions:</strong></th>
+	<th style="text-align:left;"><strong>Example:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>MAJOR</strong></td>
+	<td style="text-align:left;">There is at least one breaking change and neither version of the package can be substituted for the other. A breaking change includes:<br><br>• Changing the API surface (the exposed part of the API) or features in a way that risks compilation or runtime errors.<br>• Removing non-API features, including removing Assets or changing an Asset’s GUID. <br>• Removing or renaming assemblies and Assets (because) the compiler might fail to locate them).<br><br><strong>Note</strong>: When incrementing the major version, always reset the <strong>PATCH</strong> and <strong>MINOR</strong> values to <code>0</code>.</td>
+	<td style="text-align:left;">Versions 1.2.3 and 2.0.0 are not compatible and cannot be used interchangeably without risk.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>MINOR</strong> <br>(same <strong>MAJOR</strong> value)</td>
+	<td style="text-align:left;">The highest <strong>MINOR</strong> introduces functionality in a backward-compatible way. A backward-compatible (or non-breaking) API change includes: <br><br>• Changing the API surface or features without risking compilation or runtime errors. <br>• Adding non-API features. <br>• Adding assemblies and Assets (because new items don’t have pre-existing references).<br><br><strong>Note</strong>: When incrementing the minor version, always reset the <strong>PATCH</strong> version to <code>0</code>.</td>
+	<td style="text-align:left;">You can use Version 1.3.0 to fulfill a dependency on 1.2.0, because 1.3.0 is backward-compatible. <br><br> You can’t use 1.2.0 to fulfill a dependency on 1.3.0.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>PATCH</strong> <br>(same <strong>MAJOR.MINOR</strong> values)</td>
+	<td style="text-align:left;">The highest <strong>PATCH</strong> introduces bug fixes without changing the API at all, in a backward-compatible way. The API doesn’t change if: <br><br>• The API surface is identical and the features remain unchanged. <br>• The changes don’t alter the public API.</td>
+	<td style="text-align:left;">Versions 1.3.0 and 1.3.1 should be interchangeable because they have the same API, even though 1.3.1 contains a bug fix not present in 1.3.0.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Following these versioning practices allows the Package Manager to automatically solve conflicts (when possible), or upgrade packages to newer, backward-compatible versions.</p>
+
+<p>The following sections describe scenarios to help you determine how these rules affect various package elements:</p>
+
+<ul>
+<li>
+<a href="#general">General assets</a> (such as Audio, Textures, and Models).</li>
+<li><a href="#asmdefs">Assembly definitions (<em>.asmdef</em> files) and precompiled assemblies (managed <em>.dll</em> files)</a></li>
+<li>
+<a href="#manifests">Package manifest files</a> (<em>package.json</em>)</li>
+<li><a href="#obsolete">Obsolete APIs</a></li>
+</ul>
+
+<p>In addition to these scenarios, there is another factor that can affect some changes that would normally require only a MINOR or PATCH version increase: whether the <a href="#autoref">Auto Referenced</a> property is enabled or disabled.</p>
+
+<p><a name="autoref" aria-hidden="true"></a></p>
+
+<h2>Automatic referencing</h2>
+
+<p>One of the properties you can set for your <a href="ScriptCompilationAssemblyDefinitionFiles.html">assembly definitions</a> is the <strong>Auto Referenced</strong> property, which controls whether Unity automatically references the file during compilation. When this property is enabled, some changes that would normally require only a MINOR or PATCH version increase now become breaking changes.</p>
+
+<p>When you <strong>disable</strong> auto-referencing, if you make any change that results in a new assembly being available, you are introducing a backward-compatible change to the API. Backward-compatible API changes, such as <a href="#asm-addPlatform">adding platforms</a>, <a href="#asm-testRefs">disabling Unity Test References</a>, <a href="#asm-newAsmdefs">adding a new <em>.asmdef</em></a>, or <a href="#asm-defCns">removing Define Constraints</a>, only require a <strong>MINOR</strong> increase.</p>
+
+<p>However, when you <strong>enable</strong> auto-referencing, that newly-added assembly is implicitly added to the references of various other assemblies. Since those cases can lead to compilation errors in those other assemblies, so it requires a <strong>MAJOR</strong> increase.</p>
+
+<p>Another common case occurs when you add or change versions for a package dependency. Most of the time, <a href="#mani-dep">changing the package dependency</a> only requires a <strong>PATCH</strong> increase. However, the new package version might contain an assembly with the <strong>Auto Referenced</strong> property <strong>enabled</strong>, which becomes a breaking change, and therefore requires a <strong>MAJOR</strong> increase.</p>
+
+<p>To avoid problems like these, always try to avoid putting a third-party DLL file into an unrelated package (such as including <em>Newtonsoft.Json.dll</em> in a SaveGameManager package).</p>
+
+<p><a name="general" aria-hidden="true"></a></p>
+
+<h2>Assets</h2>
+
+<p>A project can reference any asset that is visible to the Asset Database. The Asset Database tracks these assets uniquely using the GUIDs defined in their <em>.meta</em> files.</p>
+
+<p>When you introduce one of these changes to the public API, this requires a new <strong>MAJOR</strong> release, because they are <strong>breaking changes</strong>:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Scenario:</strong></th>
+	<th style="text-align:left;"><strong>Why these are breaking changes:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Removing an Asset that is visible to the Asset Database</td>
+	<td style="text-align:left;">If you remove an Asset, this might break references in user Projects or other packages.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Changing the GUID of an Asset</td>
+	<td style="text-align:left;">If you change an Asset GUID, the Asset Database understands this as removing the original Asset and then adding a new (identical) Asset. This results in a broken reference, because the original GUID no longer points to the Asset, so the Asset Database cannot resolve the reference.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="asmdefs" aria-hidden="true"></a></p>
+
+<h2>Assemblies</h2>
+
+<p>
+<a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ScriptCompilationAssemblyDefinitionFiles.html">Assembly definitions</a> (<em>.asmdef</em>) define a group of <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html" href="ScriptCompilationAssemblyDefinitionFiles.html">Assembly definitions</a> (<em>.asmdef</em>) define a group of <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> which the Unity Editor’s compilation pipeline turns into separate managed assemblies (<em>.dll</em>). These <em>.asmdef</em> assets include properties that drive the resulting assembly’s properties. This includes:</p>
+
+<ul>
+<li>Importer settings, such as included and excluded platforms</li>
+<li>Compilation-related properties, such as output assembly names and references fed to the compiler to build the assembly.</li>
+</ul>
+
+<p>Most properties have an impact on the consumers of the assembly, so changing any of these properties constitutes a change to the package’s public API. Other properties have no impact on the consumers of the assembly, so changing any of these is not considered changing the package API.</p>
+
+<p>
+<strong>Warning</strong>: The <strong>Auto Referenced</strong> property is a special case, because many of the changes that would normally <a href="#asm-none">not change the API at all</a> or would <a href="#asm-bcomp">change the API in a backward-compatible way</a> could cause compilation errors, depending on whether or not it is enabled. For more information, see <a href="#autoref">Automatic referencing</a>.</p>
+
+<p>Unity can either pre-compile assemblies, or compile them from scripts and an assembly definition. Therefore, anything that applies to assembly definitions generally also applies to precompiled assemblies.</p>
+
+<p>This section details changes in assembly definitions and precompiled assemblies, and the impact on the package version:</p>
+
+<ul>
+<li>
+<a href="#asm-break">Breaking changes</a> (allowed in new MAJOR releases only)</li>
+<li>
+<a href="#asm-bcomp">Backwards-compatible API changes</a> (allowed in new MAJOR or MINOR releases)</li>
+<li>
+<a href="#asm-none">Backwards-compatible changes</a> that do not alter the API (allowed in new MAJOR, MINOR or PATCH releases)</li>
+</ul>
+
+<p><a name="asm-break" aria-hidden="true"></a></p>
+
+<h3>MAJOR only: breaking changes</h3>
+
+<p>When you introduce a <strong>breaking change</strong> to the public API, this requires a new <strong>MAJOR</strong> release, because it might cause compilation and runtime errors. These scenarios all remove or hide an assembly from any other assemblies that reference it. When an assembly using a type defined in a referenced assembly is compiled, if the compiler cannot find that other assembly, that results in compilation errors. For more information about working with assemblies and assembly definitions, see <a href="ScriptCompilationAssemblyDefinitionFiles.html">Assembly Definitions</a>.</p>
+
+<p>Note that the following applies to both run-time and Editor assemblies that packages consume and use. It doesn’t apply to test assemblies, because packages do not normally consume them, so they are not part of a package’s API.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Scenario:</strong></th>
+	<th style="text-align:left;"><strong>Why the compiler can’t find the referenced assembly:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Removing an assembly definition or a precompiled assembly</td>
+	<td style="text-align:left;">Removing an assembly definition file prevents the compilation pipeline from generating the corresponding assembly. <br><br><strong>Note</strong>: As of 2019.1, missing references are allowed to support the “optional reference” use case, but renaming an assembly that Unity needs to compile an assembly definition causes compilation errors. Likewise, if compiled code needs a type from an assembly, renaming that assembly can result in run-time errors such as <code>TypeLoadException</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Changing an assembly name (either in the <em>.asmdef</em> file or renaming the <em>.dll</em> file)</td>
+	<td style="text-align:left;">Changing the assembly name is equivalent to removing the assembly and then adding a new one with a different name. This means Unity considers the original assembly to be missing, even though the API still contains the same assembly code under another name.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Adding a <a href="../ScriptReference/PluginImporter.DefineConstraints.html">define constraint</a> to an <em>.asmdef</em>
+</td>
+	<td style="text-align:left;">If you add a define constraint, Unity skips compiling the assembly whenever the define constraint is not met. This creates cases where the assembly is missing, even though it was previously available.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="ScriptCompilationAssemblyDefinitionFiles.html#create-platform-specific">Removing platforms</a></td>
+	<td style="text-align:left;">If you remove support for a specific platform, Unity no longer imports the assembly on that platform, which is equivalent to removing the assembly. <br><br>You can remove a platform by enabling one of these properties:<br>• <strong>includePlatforms</strong>, which breaks compatibility with all unlisted platforms<br>• <strong>excludePlatforms</strong>, which adds entries to it</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Moving public APIs from one assembly to another</td>
+	<td style="text-align:left;">When you move publicly accessible code from Assembly A to Assembly B, any assembly that references A but not B fails to compile.<br><br>For assembly definitions, if you move scripts around, you might be moving public APIs to a different assembly.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Changing the <strong>Auto Referenced</strong> property</td>
+	<td style="text-align:left;">When you <em>disable</em> the <strong>Auto Referenced</strong> property, you can no longer use the public API of this assembly without an explicit reference:<br><br>• For precompiled assemblies, disabling this property prevents Unity from implicitly adding the precompiled assembly as a reference to assembly definitions and project-compiled assemblies.<br>• For assembly definitions, disabling this property prevents Unity from implicitly adding the resulting assembly as a reference to project-compiled assemblies.<br><br>When you <em>enable</em> the <strong>Auto Referenced</strong> property, it potentially introduces conflicts with other changes to the API, properties, or dependencies. For more information, see the <a href="#autoref">Automatic referencing</a> section.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Enabling the <strong>Unity References → Test Assemblies</strong> property in assembly definitions</td>
+	<td style="text-align:left;">Enabling the <strong>Unity References → Test Assemblies</strong> property marks this assembly as a test assembly, and Unity doesn’t normally include it in builds (or compile it in some cases). When this happens, any assembly referencing the missing assembly fails to locate it, unless it is also a test assembly.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="asm-bcomp" aria-hidden="true"></a></p>
+
+<h3>MAJOR, MINOR: non-breaking API changes</h3>
+
+<p>The following changes are <strong>backward-compatible</strong>, or non-breaking, API changes. These scenarios all add an assembly, unlike breaking changes which remove an assembly. Since adding an assembly increases the API surface (the exposed part of the API), it is considered an API change. However, there are no existing references, so adding a new assembly won’t affect other assemblies created with an earlier API.</p>
+
+<p>Backward-compatible changes require at least a new <strong>MINOR</strong> release. If you are including other updates that are breaking changes, then these can also be part of the new <strong>MAJOR</strong> release.</p>
+
+<p>
+<strong>Warning</strong>: These changes are only backward-compatible if the <strong>Auto Referenced</strong> property is disabled. When the <strong>Auto Referenced</strong> property is enabled, the changes listed in this table might result in breaking changes. For more information, see the <a href="#autoref">Automatic referencing</a> section.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Scenario</strong></th>
+	<th style="text-align:left;"><strong>Why these changes don’t break compilation</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<a name="asm-defCns" aria-hidden="true"></a>Removing a <a href="../ScriptReference/PluginImporter.DefineConstraints.html">define constraint</a> to an .asmdef</td>
+	<td style="text-align:left;">Removing a define constraint means that the compilation and scripting pipelines no longer skip this assembly. Because Unity always builds that assembly, the compiler can always resolve references to it, regardless of whether or not that define constraint is met.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="asm-addPlatform" aria-hidden="true"></a>Adding platforms</td>
+	<td style="text-align:left;">Adding platforms has no effect on existing platform support, so it is backwards-compatible. This is an API change because it increases the API surface.<br><br>You can add platforms by modifying these properties:<br>• Add entries to the <strong>includePlatforms</strong> property.<br>• Remove the <strong>includePlatforms</strong> property completely. This is equivalent to adding all platforms that were not already in the <strong>includePlatforms</strong> property.<br>• Remove entries from the <strong>excludePlatforms</strong> property.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="asm-newAsmdefs" aria-hidden="true"></a>Creating an assembly definition with new scripts (not previously under a different <em>.asmdef</em> file)</td>
+	<td style="text-align:left;">Adding a new assembly increases the API surface (the exposed part of the API) without altering any existing implementations.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="asm-testRefs" aria-hidden="true"></a>Disabling the <strong>Unity References → Test Assemblies</strong> property in assembly definition files</td>
+	<td style="text-align:left;">Disabling the <strong>Unity References → Test Assemblies</strong> property marks this assembly as a regular assembly, so Unity no longer treats it differently from any assembly definition. This is an API change because it increases the API surface.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="asm-none" aria-hidden="true"></a></p>
+
+<h3>MAJOR, MINOR, PATCH: no API changes</h3>
+
+<p>The following changes do not affect the public API and are allowed in <strong>PATCH</strong> releases. The changes in these scenarios don’t alter the public API because they don’t affect the API surface (the exposed part of the API) and don’t change anything for other consumers.</p>
+
+<p>Changes that don’t alter the public API require at least a new <strong>PATCH</strong> release. If you are including other updates that introduce either breaking or non-breaking changes, then you can also include them in <strong>MAJOR</strong> or <strong>MINOR</strong> releases.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Scenario</strong></th>
+	<th style="text-align:left;"><strong>Why these changes don’t impact other consumers</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Changing the list of referenced assemblies and assembly definitions in <em>.asmdef</em> files</td>
+	<td style="text-align:left;">An assembly that references another assembly does not automatically reference that other assembly’s own references, but has to explicitly list them. Therefore, changing references in an assembly definition or assembly does not impact other consumers.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Changing the <strong>Allow unsafe code</strong> property in assembly definitions</td>
+	<td style="text-align:left;">This property controls whether the compiler is allowed to compile code that has the <strong>unsafe</strong> modifier. Changing that flag on its own does not alter the public API.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Changing the <strong>Override References</strong> property in assembly definitions</td>
+	<td style="text-align:left;">This property controls how Unity invokes the compiler for this assembly, and has no effect on consumers of the resulting assembly. Changing that flag on its own does not alter the public API.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="manifests" aria-hidden="true"></a></p>
+
+<h2>Package manifest files</h2>
+
+<p>The <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-manifestPkg.html">package manifest</a><span class="tooltiptext">Each package has a <em>manifest</em>, which provides information about the package to the Package Manager. The manifest contains information such as the name of the package, its version, a description for users, dependencies on other packages (if any), and other details. <a href="upm-manifestPkg.html" href="upm-manifestPkg.html">package manifest</a><span class="tooltiptext">Each package has a <em>manifest</em>, which provides information about the package to the Package Manager. The manifest contains information such as the name of the package, its version, a description for users, dependencies on other packages (if any), and other details. <a href="upm-manifestPkg.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Packagemanifest" aria-label="Go to glossary anchor for Packagemanifest">Glossary</a></span></span></span> file (<code>package.json</code>) specifies the name, version, package dependencies, and other metadata about the package itself.</p>
+
+<p>This section details changes in package manifest files, and the impact on the package version:</p>
+
+<ul>
+<li>
+<a href="#mani-name">Name changes</a> (not allowed)</li>
+<li>
+<a href="#mani-dep">Changes in dependencies</a> (the context determines the minimum version change)</li>
+<li>
+<a href="#mani-other">Other changes</a> (allowed in new MAJOR, MINOR or PATCH releases)</li>
+</ul>
+
+<p><a name="mani-name" aria-hidden="true"></a></p>
+
+<h3>Name changes (not allowed)</h3>
+
+<p>Changing the <strong>name</strong> property is the equivalent of removing one package and adding a new package with a different name, and it is not supported. You cannot rename a package by trying to release an update: you have to release it as an entirely new package. Name changes aren’t allowed because existing projects and packages cannot interpret the names as synonyms.</p>
+
+<p><a name="mani-dep" aria-hidden="true"></a></p>
+
+<h3>Dependency changes</h3>
+
+<p>Changing a dependency in a project does not in itself require a different MAJOR or MINOR version, unless it is part of an API change or if the <a href="#autoref">Auto Referenced</a> property is enabled.</p>
+
+<p>This section provides examples of dependency changes and the contexts in which they apply (assuming that the <a href="#autoref">Auto Referenced</a> property is disabled and there is no API change other than what each case describes):</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Dependency change</strong></th>
+	<th style="text-align:left;"><strong>Context</strong></th>
+	<th style="text-align:left;"><strong>Minimum version change</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Adding a new dependency</td>
+	<td style="text-align:left;">• Uses the new package without changing functional behavior, and doesn’t change the API surface.</td>
+	<td style="text-align:left;">PATCH</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">• Uses the new package to introduce new behavior, without modifying the API surface.<br>• Creates new APIs that expose types defined in the new package.</td>
+	<td style="text-align:left;">MINOR</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">• Uses the new package to change existing behavior in a way that is not backwards-compatible, without modifying the API surface.<br>• Modifies existing APIs in a way that is not backwards-compatible to expose types defined in the new package.</td>
+	<td style="text-align:left;">MAJOR</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Removing a dependency</td>
+	<td style="text-align:left;">• Removes the package without changing functional behavior, and doesn’t change the API surface.</td>
+	<td style="text-align:left;">PATCH</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">• Removing the package results in a change in existing behavior in a way that is not backwards-compatible, without changing the API surface.<br>• Removes APIs that expose types defined in that dependency.</td>
+	<td style="text-align:left;">MAJOR</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Changing a dependency</td>
+	<td style="text-align:left;">• Uses the modified package without changing functional behavior, and doesn’t change the API surface.</td>
+	<td style="text-align:left;">PATCH</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">• Uses the modified package to introduce new behavior, without modifying the API surface.<br>• Creates new APIs that expose types defined in the modified package.</td>
+	<td style="text-align:left;">MINOR</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">• Uses the modified package to change existing behavior in a way that is not backwards-compatible, without modifying the API surface.<br>• Changes existing APIs in a way that is not backwards-compatible to expose types defined in the modified package.<br>• Exposes some types in APIs that are changed in a non-backward-compatible way in the modified package.<br>• Exposes some types in APIs that are no longer defined in the modified package.</td>
+	<td style="text-align:left;">MAJOR</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="mani-other" aria-hidden="true"></a></p>
+
+<h3>MAJOR, MINOR or PATCH: other changes</h3>
+
+<p>You can change package manifest attributes that have no special effect on the Package Manager, the build pipeline, the scripting pipeline or the Asset Database in any release version. This includes changing the <strong>description</strong>, the <strong>category</strong>, the <strong>keywords</strong>, or the <strong>displayName</strong>.</p>
+
+<p>If you change these fields, that might indicate that your changes involve more than just bug fixes. Always consider whether other changes in the new version actually mandate a new MINOR or MAJOR release rather than a PATCH release.</p>
+
+<p>
+<strong>Note</strong>: Changes to the <strong>unity</strong> or <strong>unityRelease</strong> properties in a package’s manifest always require either a MINOR or MAJOR release. Even though the properties do not affect the package API itself, increasing the Unity version definitely excludes a package version from working on previous Unity editors and might break a dependent project or package, while decreasing the Unity version makes the package available to older Unity editors.</p>
+
+<p><a name="obsolete" aria-hidden="true"></a></p>
+
+<h2>Deprecated and obsolete APIs</h2>
+
+<p>When you want to remove some functionality from your API, first release at least one MINOR version containing the deprecation. This warns users about the impending removal, so they can transition to the new API smoothly. Then you can remove the functionality in a new MAJOR release.</p>
+
+<p>If another developer marks a package obsolete with a warning and you enabled <strong>Warnings as Errors</strong> in your project, the obsolete package might technically break your project, even though it is not a true break because the code still works as it did previously.</p>
+
+<p>In this case, you can choose how you want to fix the warning-as-error (in descending order of typical desirability):</p>
+
+<ul>
+<li>Change your code so you no longer use the API.</li>
+<li>Wrap your code that uses the API in <code>#pragma warning</code> directives to silence the warning.</li>
+<li>Disable warnings <strong>CS0612 (Obsolete)</strong> and <strong>CS0618 (Obsolete with a message)</strong>.</li>
+<li>Disable <strong>Warnings as Errors</strong> in your project.</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-manifestPkg.html"></a></span><div class="tip">Package manifest</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="cus-asmdef.html"></a></span><div class="tip">Assembly definition and packages</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

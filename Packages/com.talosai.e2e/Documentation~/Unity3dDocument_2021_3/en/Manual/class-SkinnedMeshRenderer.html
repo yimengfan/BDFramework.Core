@@ -1,0 +1,450 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Skinned Mesh Renderer component</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-SkinnedMeshRenderer.html">English</a></li>
+<li><a href="/cn/current/Manual/class-SkinnedMeshRenderer.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-SkinnedMeshRenderer.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-SkinnedMeshRenderer.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-SkinnedMeshRenderer.html">English</a></li>
+<li><a href="/cn/current/Manual/class-SkinnedMeshRenderer.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-SkinnedMeshRenderer.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-SkinnedMeshRenderer.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="mesh.html">Meshes</a></li>
+<li><a href="comp-MeshGroup.html">Mesh components</a></li>
+<li>Skinned Mesh Renderer component</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-MeshRenderer.html"></a></span><div class="tip">Mesh Renderer component</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-MeshFilter.html"></a></span><div class="tip">Mesh Filter component</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Skinned Mesh Renderer component</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/SkinnedMeshRenderer.html' title='Go to SkinnedMeshRenderer page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Skinned <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> Renderer component renders a deformable mesh. Deformable meshes include skinned meshes (meshes that have bones and bind poses), meshes that have blend shapes, and meshes that run cloth simulation.</p>
+
+<p>To render a regular mesh, use a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshRenderer.html">Mesh Renderer</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html" href="class-MeshRenderer.html">Mesh Renderer</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span> and a <span class="tooltip"><a href="class-MeshFilter.html">Mesh Filter</a><span class="tooltiptext">A mesh component that takes a mesh from your assets and passes it to the Mesh Renderer for rendering on the screen. <a href="class-MeshFilter.html" href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span> and a <span class="tooltip"><a href="class-MeshFilter.html">Mesh Filter</a><span class="tooltiptext">A mesh component that takes a mesh from your assets and passes it to the Mesh Renderer for rendering on the screen. <a href="class-MeshFilter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshFilter" aria-label="Go to glossary anchor for MeshFilter">Glossary</a></span></span></span> instead.</p>
+
+<p>When you add a deformable mesh or a model with a deformable mesh to a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, Unity adds a Skinned Mesh Renderer component to the resulting <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, Unity adds a Skinned Mesh Renderer component to the resulting <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>.</p>
+
+<p>In C# code, the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/SkinnedMeshRenderer.html">SkinnedMeshRenderer</a> class represents a Skinned Mesh Renderer component. The <code>SkinnedMeshRenderer</code> class inherits much of its functionality from the <a href="../ScriptReference/Renderer.html">Renderer</a> class. As such, this component has a lot in common with other components that inherit from <code>Renderer</code>, such as <span class="tooltip"><a href="class-LineRenderer.html">Line Renderer</a><span class="tooltiptext">A component that takes an array of two or more points in 3D space and draws a straight line between each one. You can use a single Line Renderer component to draw anything from a simple straight line to a complex spiral. <a href="class-LineRenderer.html" href="../ScriptReference/SkinnedMeshRenderer.html">SkinnedMeshRenderer</a> class represents a Skinned Mesh Renderer component. The <code>SkinnedMeshRenderer</code> class inherits much of its functionality from the <a href="../ScriptReference/Renderer.html">Renderer</a> class. As such, this component has a lot in common with other components that inherit from <code>Renderer</code>, such as <span class="tooltip"><a href="class-LineRenderer.html">Line Renderer</a><span class="tooltiptext">A component that takes an array of two or more points in 3D space and draws a straight line between each one. You can use a single Line Renderer component to draw anything from a simple straight line to a complex spiral. <a href="class-LineRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#LineRenderer" aria-label="Go to glossary anchor for LineRenderer">Glossary</a></span></span></span>, and <span class="tooltip"><a href="class-TrailRenderer.html">Trail Renderer</a><span class="tooltiptext">A visual effect that lets you to make trails behind GameObjects in the Scene as they move. <a href="class-TrailRenderer.html" href="Glossary.html#LineRenderer" aria-label="Go to glossary anchor for LineRenderer">Glossary</a></span></span></span>, and <span class="tooltip"><a href="class-TrailRenderer.html">Trail Renderer</a><span class="tooltiptext">A visual effect that lets you to make trails behind GameObjects in the Scene as they move. <a href="class-TrailRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TrailRenderer" aria-label="Go to glossary anchor for TrailRenderer">Glossary</a></span></span></span>.</p>
+
+<h2>Troubleshooting Skinned Mesh Renderer visibility</h2>
+
+<p>Unity uses the mesh’s bounds to determine whether to render it. If the entire <span class="tooltip"><strong>bounding volume</strong><span class="tooltiptext">A closed shape representing the edges and faces of a collider or trigger. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SpatialMappingComponentsGeneralSettings" href="SpatialMappingComponentsGeneralSettings">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Boundingvolume" aria-label="Go to glossary anchor for Boundingvolume">Glossary</a></span></span></span> is outside the view of any active <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="Glossary.html#Boundingvolume" aria-label="Go to glossary anchor for Boundingvolume">Glossary</a></span></span></span> is outside the view of any active <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>, Unity does not render the mesh.</p>
+
+<p>In the case of a Skinned Mesh Renderer, its mesh bounds change as it deforms. Unity accounts for all animations present at import time when it calculates the maximum bounding volume, and uses this value to determine visibility; however, the following situations that occur after import might push vertices or bones outside of the maximum known bounds:</p>
+
+<ul>
+<li>Additive animations</li>
+<li>Changing the positions of bones from a script at runtime</li>
+<li>Using vertex <span class="tooltip"><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> that change vertex positions</li>
+<li>Using ragdolls</li>
+</ul>
+
+<p>If this happens, Unity might not correctly determine the visibility of the mesh, and might fail to show it when expected.</p>
+
+<p>In these cases, you can try either of the following solutions to fix the problem:</p>
+
+<ul>
+<li>Modify the bounds to match the maximum potential bounding volume of your mesh. Use this option if possible, because it is better for performance.</li>
+<li>Enable <strong>Update When Offscreen</strong>, so that Unity continues to calculate the mesh bounds at all times, even when the mesh is not visible. Use this option if performance is not a major concern, or if you can’t predict the size of your bounding volume (for example, if you use ragdolls).</li>
+</ul>
+
+<h2>Skinned Mesh Renderer Inspector reference</h2>
+
+<figure>
+<img src="../uploads/Main/skinned-mesh-renderer-inspector.png" alt="The Skinned Mesh Renderer component as it appears in the Inspector window.">
+<figcaption>The Skinned Mesh Renderer component as it appears in the Inspector window.</figcaption>
+</figure>
+
+<ul>
+<li>
+<a href="#properties">Properties</a><br>
+</li>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #materials">Materials</a><span class="tooltiptext">An asset that defines how a surface should be rendered. <a href="class-Material.html" href="#materials">Materials</a><span class="tooltiptext">An asset that defines how a surface should be rendered. <a href="class-Material.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span><br>
+</li>
+<li>
+<a href="#Lighting">Lighting</a><br>
+</li>
+<li>
+<a href="#Probes">Probes</a><br>
+</li>
+<li><a href="#AdditionalSettings">Additional Settings</a></li>
+</ul>
+
+<p><a name="properties" aria-hidden="true"></a></p>
+
+<h3>Properties</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Bounds</strong></td>
+	<td style="text-align:left;">Sets the bounding volume that Unity uses to determine when the mesh is offscreen. Unity pre-calculates the bounds when importing the mesh and animations in the Model file, and displays the bounds as a wireframe around the Model in the Scene view.<br><br>If you set Update When Offscreen to True, Unity recalculates these bounds every frame and uses those calculated values to overwrite this property.<br><br>This property corresponds to the <a href="../ScriptReference/Mesh-bounds.html">Mesh.Bounds</a> API.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>BlendShapes</strong></td>
+	<td style="text-align:left;">Stores the weight values that Unity uses with the <a href="BlendShapes.html">blend shapes</a> defined in the mesh.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Quality</strong></td>
+	<td style="text-align:left;">Sets a runtime cap for the maximum number of bones that can affect a vertex. <br><br>When Unity imports a mesh, Unity can skin every vertex with a number of bones from one to 32. A higher number of influential bones improves results during movement. However, this also increases the computational resources required, and therefore might affect performance.<br><br>For performance reasons, it’s better to set the number of bones that affect a vertex on import, rather than using a runtime cap. To do this, use the Rig tab of the <a href="class-FBXImporter.html">Model Import Settings window</a> and adjust the Skin Weights setting.<br><br>In addition to using this setting to set a runtime cap per-component, you can also set a global limit for your project under Edit &gt; Project Settings &gt; Quality &gt; Other &gt; Skin Weights.<br><br>This property corresponds to the <a href="../ScriptReference/SkinnedMeshRenderer-quality.html">SkinnedMeshRenderer.quality</a> API.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Auto</strong></td>
+	<td style="text-align:left;">Use the global limit set in <strong>Quality Settings</strong> &gt; <strong>Skin Weights</strong>.<br><br><strong>Note:</strong> If you import a custom number of skin weights and you want to allow more than four bones of influence, you must choose this option and make sure you set <strong>Skin Weights</strong> to <strong>Unlimited</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>1 Bone</strong></td>
+	<td style="text-align:left;">Use only one bone per vertex.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>2 Bones</strong></td>
+	<td style="text-align:left;">Use up to two bones per vertex.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>4 Bones</strong></td>
+	<td style="text-align:left;">Use up to four bones per vertex. To allow more than four bones to influence a single vertex, use the <strong>Auto</strong> setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Update When Offscreen</strong></td>
+	<td style="text-align:left;">Enable this option to calculate the bounding volume at every frame, even when the mesh is not visible by any Camera. Disable this option to stop skinning when the GameObject is off-screen and resume it when the GameObject is visible again.<br><br>This is disabled by default, for performance reasons.<br><br>This property corresponds to the <a href="../ScriptReference/SkinnedMeshRenderer-updateWhenOffscreen.html">SkinnedMeshRenderer.updateWhenOffscreen</a> API.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Mesh</strong></td>
+	<td style="text-align:left;">Set the mesh that this Renderer uses. The mesh should either contain a valid bind pose and skin weights, use blend shapes, or run cloth simulation. If the mesh does not use any of these techniques, consider using a Mesh Renderer and a Mesh Filter.<br><br>Corresponds to the <a href="../ScriptReference/SkinnedMeshRenderer-sharedMesh.html">SkinnedMeshRenderer.sharedMesh</a> property.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Root bone</strong></td>
+	<td style="text-align:left;">Set the transform that is the “root” of the skeleton. The bounds move along with this transform.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Rendering Layer Mask</strong></td>
+	<td style="text-align:left;">This property determines which rendering layer Unity assigns this renderer to. You can use this property to specify an additional rendering-specific layer mask. This filters the renderers based on the mask the renderer has.<br><br>This property corresponds to the <a href="../ScriptReference/Renderer-renderingLayerMask.html">Renderer.renderingLayerMask</a> API.<br><br>Unity only displays this property when you use a <a href="https://docs.unity3d.com/Manual/ScriptableRenderPipeline.html">Scriptable Render Pipeline</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Renderer Priority</strong></td>
+	<td style="text-align:left;">Sort renderers by priority. Lower values are rendered first and higher values are rendered last.<br><br>This property corresponds to the <a href="../ScriptReference/Renderer-rendererPriority.html">Renderer.rendererPriority</a> API.<br><br>Unity only displays this property when you use the High Definition Render Pipeline.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="materials" aria-hidden="true"></a></p>
+
+<h3>Materials</h3>
+
+<figure>
+<img src="../uploads/Main/mesh-renderer-inspector-materials.png" alt="Wireframe view of the meshes in Unity’s 2020.1 HDRP template example project">
+<figcaption>Wireframe view of the meshes in Unity’s 2020.1 HDRP template example project</figcaption>
+</figure>
+
+<p>The <strong>Materials</strong> section lists all the <a href="class-Material.html">materials</a> that this component uses.</p>
+<table>
+ <thead>
+ <tr>
+ <th><strong>Property</strong></th>
+ <th><strong>Description</strong></th>
+ </tr>
+ </thead>
+ <tbody> <tr>
+<td><strong>Size</strong></td>
+<td>The number of elements in the material list.<br><br>If you decrease the number of elements, Unity deletes the elements at the end of the list. If you increase the number of elements, Unity adds new elements to the end of the list. Unity populates new elements with the same material that the element at the end of the list uses.</td>
+</tr>
+<tr>
+<td><strong>Element</strong></td>
+<td>The materials in the list. You can assign a material asset to each element.<br><br>By default, Unity orders the list alphabetically based on the name of the materials. This list is reorderable, and Unity updates the number of the elements automatically as you change their order.</td>
+</tr> </tbody>
+</table>
+
+<p>
+<strong>Note:</strong> If there are more materials than there are sub-meshes, Unity renders the last sub-mesh with each of the remaining materials, one on top of the next. If the materials are not fully opaque, you can layer different materials and create interesting visual effects. However, fully opaque materials overwrite previous layers, so any additional opaque materials that Unity applies to the last sub-mesh negatively affect performance and produce no benefit.</p>
+
+<p><a name="Lighting" aria-hidden="true"></a></p>
+
+<h2>Lighting</h2>
+
+<p>The <strong>Lighting</strong> section contains properties that relate to lighting.</p>
+<table>
+ <thead>
+ <tr>
+ <th colspan="2"><strong>Property</strong></th>
+ <th><strong>Description</strong></th>
+ </tr>
+ </thead>
+ <tbody> <tr>
+<td colspan="2"><strong>Cast Shadows</strong></td>
+<td>Specify if and how this Renderer casts shadows when a suitable <a href="class-Light.html">Light</a> shines on it.<br><br>This property corresponds to the <a href="../ScriptReference/Renderer-shadowCastingMode.html">Renderer.shadowCastingMode</a> API.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>On</strong></td>
+<td>This Renderer casts a shadow when a shadow-casting Light shines on it.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Off</strong></td>
+<td>This Renderer does not cast shadows.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Two-sided</strong></td>
+<td>This Renderer casts two-sided shadows. This means that single-sided objects like a plane or a quad can cast shadows, even if the light source is behind the mesh.<br><br>For <a href="class-LightingSettings.html#MixedLighting">Baked Global Illumination</a> or Enlighten <a href="class-LightingSettings.html#RealtimeLighting">Realtime Global Illumination</a> to support two-sided shadows, the material must support <a href="https://docs.unity3d.com/Manual/class-Material.html">Double Sided Global Illumination</a>.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Shadows Only</strong></td>
+<td>This Renderer casts shadows, but the Renderer itself isn’t visible.</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Receive Shadows</strong></td>
+<td>Specify if Unity displays shadows cast onto this Renderer.<br><br>This property only has an effect if you enable <a href="class-LightingSettings.html#MixedLighting">Baked Global Illumination</a> or Enlighten <a href="class-LightingSettings.html#RealtimeLighting">Realtime Global Illumination</a> for this scene.<br><br>This property corresponds to the <a href="../ScriptReference/Renderer-receiveShadows.html">Renderer.receiveShadows</a> API.</td>
+</tr> <tr>
+<td colspan="2"><strong>Contribute Global Illumination</strong></td>
+<td>Include this Renderer in global illumination calculations, which take place at bake time.<br><br>This property only has an effect if you enable <a href="class-LightingSettings.html#MixedLighting">Baked Global Illumination</a> or Enlighten <a href="class-LightingSettings.html#RealtimeLighting">Realtime Global Illumination</a> for this scene.<br><br>Enabling this property enables the Contribute GI flag in the GameObject’s <a href="StaticObjects.html">Static Editor Flags</a>. It corresponds to the <a href="../ScriptReference/StaticEditorFlags.ContributeGI.html">StaticEditorFlags.ContributeGI</a> API.</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Receive Global Illumination</strong></td>
+<td>Whether Unity provides global illumination data to this Renderer from baked lightmaps, or from runtime Light Probes.<br><br>This property is only editable if you enable <strong>Contribute Global Illumination</strong>. It only has an effect if you enable <a href="class-LightingSettings.html#MixedLighting">Baked Global Illumination</a> or Enlighten <a href="class-LightingSettings.html#RealtimeLighting">Realtime Global Illumination</a> for this scene.<br><br>This property corresponds to the <a href="../ScriptReference/MeshRenderer-receiveGI.html">MeshRenderer.receiveGI</a> API.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Lightmaps</strong></td>
+<td>Unity provides global illumination data to this Renderer from lightmaps.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Light Probes</strong></td>
+<td>Unity provides global illumination data to this Renderer from <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html">Light Probes</a><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html" href="LightProbes.html">Light Probes</a><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span> in the scene.</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Prioritize Illumination</strong></td>
+<td>Enable this property to always include this Renderer in Enlighten Realtime Global Illumination calculations. This ensures that the Renderer is affected by distant emissives, even those which are normally excluded from Global Illumination calculations for performance reasons.<br><br>This property is visible only if <strong>Contribute GI</strong> is enabled in the GameObject’s <a href="StaticObjects.html">Static Editor Flags</a>, your project uses the Built-in Render Pipeline, and Enlighten <a href="class-LightingSettings.html#RealtimeLighting">Realtime Global Illumination</a> is enabled in your scene.</td>
+</tr> </tbody>
+</table>
+
+<p><a name="Probes" aria-hidden="true"></a></p>
+
+<h3>Probes</h3>
+
+<p>The <strong>Probes</strong> section contains properties relating to <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html">Light Probe</a> and <span class="tooltip"><a href="class-ReflectionProbe.html">Reflection Probes</a><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html" href="LightProbes.html">Light Probe</a> and <span class="tooltip"><a href="class-ReflectionProbe.html">Reflection Probes</a><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span>.</p>
+<table>
+ <thead>
+ <tr>
+ <th colspan="2"><strong>Property</strong></th>
+ <th><strong>Description</strong></th>
+ </tr>
+ </thead>
+ <tbody> <tr>
+<td colspan="2"><strong>Light Probes</strong></td>
+<td>Set how this Renderer receives light from the <a href="LightProbes.html">Light Probes</a> system.<br><br>This property corresponds to the <a href="../ScriptReference/Renderer-lightProbeUsage.html">Renderer.lightProbeUsage</a> API.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Off</strong></td>
+<td>The Renderer doesn’t use any interpolated Light Probes.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Blend Probes</strong></td>
+<td>The Renderer uses one interpolated Light Probe. This is the default value.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Use Proxy Volume</strong></td>
+<td>The Renderer uses a 3D grid of interpolated Light Probes.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Custom Provided</strong></td>
+<td>The Renderer extracts Light Probe shader uniform values from the <a href="../ScriptReference/MaterialPropertyBlock.html">MaterialPropertyBlock</a>.</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Proxy Volume Override</strong></td>
+<td>Set a reference to another GameObject that has a Light Probe Proxy Volume component.<br><br>This property is only visible when <strong>Light Probes</strong> is set to <strong>Use Proxy Volume</strong>.</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Reflection Probes</strong></td>
+<td>Set how the Renderer receives reflections from the <a href="class-ReflectionProbe.html">Reflection Probe</a> system.<br><br>This property corresponds to the <a href="../ScriptReference/Renderer-probeAnchor.html">Renderer.probeAnchor</a> API.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Off</strong></td>
+<td>Disables Reflection Probes. Unity uses a skybox for reflection.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Blend Probes</strong></td>
+<td>Enables Reflection Probes. Blending occurs only between Reflection Probes. This is useful in indoor environments where the character may transition between areas with different lighting settings.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Blend Probes and Skybox</strong></td>
+<td>Enables Reflection Probes. Blending occurs between Reflection Probes, or between Reflection Probes and the default reflection. This is useful for outdoor environments.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Simple</strong></td>
+<td>Enables Reflection Probes, but no blending occurs between Reflection Probes when there are two overlapping volumes.</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Anchor Override</strong></td>
+<td>Set the Transform that Unity uses to determine the interpolation position when using the <a href="LightProbes.html">Light Probe</a> or <a href="class-ReflectionProbe.html">Reflection Probe</a> systems. By default, this is the centre of the bounding box of the Renderer’s geometry.<br><br>This property corresponds to the <a href="../ScriptReference/Renderer-probeAnchor.html">Renderer.probeAnchor</a> API.</td>
+</tr> </tbody>
+</table>
+
+<p><a name="AdditionalSettings" aria-hidden="true"></a></p>
+
+<h3>Additional Settings</h3>
+
+<p>The <strong>Additional Settings</strong> section contains additional properties.</p>
+<table>
+ <thead>
+ <tr>
+ <th colspan="2"><strong>Property</strong></th>
+ <th><strong>Description</strong></th>
+ </tr>
+ </thead>
+ <tbody> <tr>
+<td colspan="2"><strong>Skinned Motion Vectors</strong></td>
+<td>Enable this option to double-buffer the Mesh skinning data, so Unity can interpolate the skinned motion and place it into the motion vector Texture. This uses more GPU memory, but leads to more correct motion vectors.</td>
+</tr> <tr>
+<td colspan="2"><strong>Dynamic Occlusion</strong></td>
+<td>When <strong>Dynamic Occlusion</strong> is enabled, Unity’s <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about OcclusionCulling.html">occlusion culling</a><span class="tooltiptext">A process that disables rendering GameObjects that are hidden (occluded) from the view of the camera. <a href="OcclusionCulling.html" href="OcclusionCulling.html">occlusion culling</a><span class="tooltiptext">A process that disables rendering GameObjects that are hidden (occluded) from the view of the camera. <a href="OcclusionCulling.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Occlusionculling" aria-label="Go to glossary anchor for Occlusionculling">Glossary</a></span></span></span> system culls this Renderer when it is blocked from a Camera’s view by a Static Occluder. Otherwise, the system does not cull this Renderer when it is blocked from a Camera’s view by a Static Occluder.<br><br>Dynamic Occlusion is enabled by default. Disable it for effects such as drawing the outline of a character behind a wall.</td>
+</tr> </tbody>
+</table>
+
+<p><span class="search-words">SkinnedMeshRenderer</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-MeshRenderer.html"></a></span><div class="tip">Mesh Renderer component</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-MeshFilter.html"></a></span><div class="tip">Mesh Filter component</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

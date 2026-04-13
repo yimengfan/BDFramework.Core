@@ -1,0 +1,222 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: AssetBundle Dependencies</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="cloud" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetBundles-Dependencies.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetBundles-Dependencies.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetBundles-Dependencies.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetBundles-Dependencies.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetBundles-Dependencies.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetBundles-Dependencies.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetBundles-Dependencies.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetBundles-Dependencies.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AssetWorkflow.html">Asset Workflow</a></li>
+<li><a href="AssetBundlesIntro.html">AssetBundles</a></li>
+<li>AssetBundle Dependencies</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetBundles-Building.html"></a></span><div class="tip">Building AssetBundles</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetBundles-Native.html"></a></span><div class="tip">Using AssetBundles Natively</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>AssetBundle Dependencies</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>AssetBundles can become dependent on other AssetBundles if one or more of the <code>UnityEngine.Objects</code> contains a reference to a <code>UnityEngine.Object</code> located in another bundle. A dependency does not occur if the <code>UnityEngine.Object</code> contains a reference to a <code>UnityEngine.Object</code> that is not contained in any AssetBundle. In this case, a copy of the object that the bundle would be dependent on is copied into the bundle when you build the AssetBundles. If multiple objects in multiple bundles contain a reference to the same object that isn’t assigned to a bundle, every bundle that would have a dependency on that object will make its own copy of the object and package it into the built AssetBundle.</p>
+
+<p>Should an AssetBundle contain a dependency, it is important that the bundles that contain those dependencies are loaded before the object you’re attempting to instantiate is loaded. Unity will not attempt to automatically load dependencies.</p>
+
+<p>Consider the following example, a Material in <strong>Bundle 1</strong> references a Texture in <strong>Bundle 2</strong>:</p>
+
+<p>In this example, before loading the Material from <strong>Bundle 1</strong>, you would need to load <strong>Bundle 2</strong> into memory. It does not matter which order you load <strong>Bundle 1</strong> and <strong>Bundle 2</strong>, the important takeaway is that <strong>Bundle 2</strong> is loaded before loading the Material from <strong>Bundle 1</strong>. In the next section, we’ll discuss how you can use the <code>AssetBundleManifest</code> objects we touched on in the previous section to determine, and load, dependencies at runtime.</p>
+
+<h2>Duplicated information across AssetBundles</h2>
+
+<p>By default, Unity doesn’t optimize duplicated information across AssetBundles. This means multiple AssetBundles in your Project might contain the same information, such as a Material which is used by multiple <span class="tooltip"><strong>Prefabs</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span>. Assets which are used in multiple AssetBundles are known as common Assets. These can affect memory resources and loading times. </p>
+
+<p>This page describes how Unity manages duplicated information across AssetBundles, and how you can apply optimization. </p>
+
+<p><a name="EditorSetup" aria-hidden="true"></a></p>
+
+<h3>Editor setup</h3>
+
+<p>By default, Unity doesn’t perform any optimization to reduce or minimize the memory required to store duplicate information. During build creation, Unity builds duplicates of any implicitly referenced Assets inside the AssetBundles.
+To prevent this duplication, assign common Assets (such as Materials) to their own AssetBundle.</p>
+
+<p>For example: you could have an application with two Prefabs, both of which are assigned to their own AssetBundle. Both Prefabs share the same Material, which is not assigned to an AssetBundle. This Material references a Texture, which is not assigned to an AssetBundle.</p>
+
+<p>If you follow the <a href="AssetBundles-Workflow.html">AssetBundle Workflow</a> and use the example class <code>CreateAssetBundles</code> to build AssetBundles, each generated AssetBundle contains the Material (including its Shader and referenced Textures). In the example image below, the Prefab files have a size of 383 KB and 377 KB respectively.</p>
+
+<figure>
+<img src="../uploads/Main/AssetBundleDuplicate.png" alt="">
+</figure>
+
+<p>If the project contains a larger number of Prefabs, this behaviour impacts the final installer size, and the runtime memory footprint when both AssetBundles are loaded. Data duplication across AssetBundles also impacts batching, because Unity considers each copy of the same Material as a unique Material.</p>
+
+<p>To avoid data duplication, assign the Material and its referenced Assets to its own <code>modulesmaterials</code> AssetBundle. You can also tag the Material only, because the Texture dependency is also included in the AssetBundle automatically during the build process.</p>
+
+<p>Now if you rebuild the AssetBundles, the generated output includes a separate <code>modulesmaterials</code> AssetBundle (359 KB), which contains the Material and its associated Texture. This significantly reduces the size of the other AssetBundles for the Prefabs (from roughly 380 KB in the previous iteration down to roughly 20 KB).</p>
+
+<p>The image below illustrates this.</p>
+
+<figure>
+<img src="../uploads/Main/AssetBundleSeparate.png" alt="">
+</figure>
+
+<p><a name="RuntimeLoading" aria-hidden="true"></a></p>
+
+<h3>Runtime loading</h3>
+
+<p>When you extract common Assets to a single AssetBundle, be careful about dependencies. In particular, if you only use a Prefab to instantiate a module, the Materials do not load.</p>
+
+<figure>
+<img src="../uploads/Main/MaterialNotLoaded.png" alt="A Prefab without a loaded Material">
+<figcaption>A Prefab without a loaded Material</figcaption>
+</figure>
+
+<p>To solve this problem, load the Materials AssetBundle in memory before you load the AssetBundle that belongs to the module. In the following example, this happens in the variable <code>materialsAB</code>.</p>
+
+<pre><code>using System.IO;
+using UnityEngine;
+
+public class InstantiateAssetBundles : MonoBehaviour
+{
+    void Start()
+    {
+        var materialsAB = AssetBundle.LoadFromFile(Path.Combine(Application.dataPath, Path.Combine(&quot;AssetBundles&quot;, &quot;modulesmaterials&quot;)));
+        var moduleAB = AssetBundle.LoadFromFile(Path.Combine(Application.dataPath, Path.Combine(&quot;AssetBundles&quot;, &quot;example-prefab&quot;)));
+
+        if (moduleAB == null)
+        {
+            Debug.Log(&quot;Failed to load AssetBundle!&quot;);
+            return;
+        }
+        var prefab = moduleAB.LoadAsset&lt;GameObject&gt;(&quot;example-prefab&quot;);
+        Instantiate(prefab);
+    }
+}
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/MaterialLoaded.png" alt="A Prefab with a correctly loaded Material">
+<figcaption>A Prefab with a correctly loaded Material</figcaption>
+</figure>
+
+<p>
+<strong>Note:</strong> When you use LZ4 compressed and uncompressed AssetBundles, <a href="../ScriptReference/AssetBundle.LoadFromFile.html">AssetBundle.LoadFromFile</a> only loads the catalog of its content in memory, but not the content itself. To check if this is happening, use the <a href="https://docs.unity3d.com/Packages/com.unity.memoryprofiler@0.2/manual/index.html">Memory Profiler</a> package to <a href="https://docs.unity3d.com/Packages/com.unity.memoryprofiler@0.2/manual/workflow-memory-usage.html">inspect memory usage</a>.</p>
+<!-- area:cloud -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetBundles-Building.html"></a></span><div class="tip">Building AssetBundles</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetBundles-Native.html"></a></span><div class="tip">Using AssetBundles Natively</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

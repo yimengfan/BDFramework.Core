@@ -1,0 +1,353 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Log files</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/LogFiles.html">English</a></li>
+<li><a href="/cn/current/Manual/LogFiles.html">中文</a></li>
+<li><a href="/ja/current/Manual/LogFiles.html">日本語</a></li>
+<li><a href="/kr/current/Manual/LogFiles.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/LogFiles.html">English</a></li>
+<li><a href="/cn/current/Manual/LogFiles.html">中文</a></li>
+<li><a href="/ja/current/Manual/LogFiles.html">日本語</a></li>
+<li><a href="/kr/current/Manual/LogFiles.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li>Log files</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-profiler-traces.html"></a></span><div class="tip">Analyzing profiler traces</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="BestPracticeUnderstandingPerformanceInUnity.html"></a></span><div class="tip">Understanding optimization in Unity</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Log files</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity produces log files for the Editor, package manager, licensing, development players, and Hub. You can use these log files to understand where any problems happened in your application.</p>
+
+<p>Unity adds all messages, warnings, and errors from the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Console.html">Console window</a><span class="tooltiptext">A Unity Editor window that shows errors, warnings and other messages generated by Unity, or your own scripts. <a href="Console.html" href="Console.html">Console window</a><span class="tooltiptext">A Unity Editor window that shows errors, warnings and other messages generated by Unity, or your own scripts. <a href="Console.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Consolewindow" aria-label="Go to glossary anchor for Consolewindow">Glossary</a></span></span></span> to the log files. To add your own messages to the Console window, and the logs, use the <a href="class-Debug.html">Debug class</a>.</p>
+
+<p>Each operating system stores the log files in different locations. The default locations are outlined on this page, but you can also use certain command line arguments to control when and where Unity generates log files. For more information, see the <a href="EditorCommandLineArguments.html">Command line arguments</a> documentation.</p>
+
+<p>
+<strong>Note:</strong> Not all platforms support this feature. See <a href="PlatformSpecific.html">platform specific</a> documentation for further information.</p>
+
+<h2>Editor-related log locations</h2>
+
+<p>You can access the Editor logs from the console window. To do this, open a Console Window (<strong>menu: Window &gt; General &gt; Console</strong>) and select <strong>Open Editor Log</strong> from the Console window menu. </p>
+
+<p>You can access the other logs by using your operating system’s file manager application.</p>
+
+<h3>Linux</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Log type</strong></th>
+	<th style="text-align:left;"><strong>Log location</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Editor</strong></td>
+	<td style="text-align:left;"><code>~/.config/unity3d/Editor.log</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Package manager</strong></td>
+	<td style="text-align:left;"><code>~/.config/unity3d/upm.log</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Licensing client</strong></td>
+	<td style="text-align:left;"><code>~/.config/unity3d/Unity/Unity.Licensing.Client.log</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Licensing audits</strong></td>
+	<td style="text-align:left;"><code>~/.config/unity3d/Unity/Unity.Entitlements.Audit.log</code></td>
+</tr>
+</tbody>
+</table>
+
+<h3>macOS</h3>
+
+<p>On macOS, you can also access Unity’s logs via the Console.app utility</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Log type</strong></th>
+	<th style="text-align:left;"><strong>Log location</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Editor</strong></td>
+	<td style="text-align:left;"><code>~/Library/Logs/Unity/Editor.log</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Package manager</strong></td>
+	<td style="text-align:left;"><code>~/Library/Logs/Unity/upm.log</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Licensing client</strong></td>
+	<td style="text-align:left;"><code>~/Library/Logs/Unity/Unity.Licensing.Client.log</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Licensing audits</strong></td>
+	<td style="text-align:left;"><code>~/Library/Logs/Unity/Unity.Entitlements.Audit.log</code></td>
+</tr>
+</tbody>
+</table>
+
+<h3>Windows</h3>
+
+<p>On Windows, the Package Manager and Editor logs are placed in folders which aren’t shown in the Windows Explorer by default. To view the AppData folder, you must enable the Hidden Items setting on Windows. For more information on how to do this, see Microsoft’s documentation on <a href="https://support.microsoft.com/en-us/windows/view-hidden-files-and-folders-in-windows-97fbc472-c603-9d90-91d0-1166d1d9f4b5">View hidden files and folders in Windows</a>.</p>
+
+<p>On Windows, a standard out stream doesn’t exist by default, so you must launch the Editor with a valid configured <code>stdout</code> stream, as a child process from a CI system. If you specify <code>-</code> to send output` <code>to</code>stdout`, then you won’t see the output in the console window.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Log type</strong></th>
+	<th style="text-align:left;"><strong>Log location</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Editor</strong></td>
+	<td style="text-align:left;"><code>%LOCALAPPDATA%\Unity\Editor\Editor.log</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Package manager</strong></td>
+	<td style="text-align:left;">User account: <code>%LOCALAPPDATA%\Unity\Editor\upm.log</code> <br>SYSTEM account: <code>%ALLUSERSPROFILE%\Unity\Editor\upm.log</code>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Licensing client</strong></td>
+	<td style="text-align:left;"><code>%LOCALAPPDATA%\Unity\Unity.Licensing.Client.log</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Licensing audits</strong></td>
+	<td style="text-align:left;"><code>%LOCALAPPDATA%\Unity\Unity.Entitlements.Audit.log</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Crash files</strong></td>
+	<td style="text-align:left;">
+<code>%TMP%\CompanyName\ProductName\Crashes</code> <br><br> <strong>Note:</strong> You can overwrite the location of the folder location with the <code>-crash-report-folder</code> command line argument.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Player-related log locations</h2>
+
+<p>To view the Player log, open a Console Window (<strong>menu: Window &gt; General &gt; Console</strong>) and select <strong>Open Player Log</strong> from the Console window menu. You can also navigate to the following folder:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Operating system</strong></th>
+	<th style="text-align:left;"><strong><span class="tooltip"><strong>Player log</strong><span class="tooltiptext">The .log file created by a Standalone Player that contains a record of events, such as script execution times, the compiler version, and AssetImport time. Log files can help diagnose problems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LogFiles.html#Player" href="LogFiles.html#Player">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerLog" aria-label="Go to glossary anchor for PlayerLog">Glossary</a></span></span></span> location</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Android</strong></td>
+	<td style="text-align:left;">To access the Player log for an Android application, use <a href="https://developer.android.com/studio/command-line/logcat">Android logcat</a>. For more information, see <a href="android-debugging-on-an-android-device.html#view-android-logs">View Android logs</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Use the GDB console, or the Organizer Console through XCode to access iOS device logs. For more information on device logs, see <a href="https://developer.apple.com/documentation/xcode/acquiring-crash-reports-and-diagnostic-logs">Apple’s documentation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Linux</strong></td>
+	<td style="text-align:left;"><code>~/.config/unity3d/CompanyName/ProductName/Player.log</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>macOS</strong></td>
+	<td style="text-align:left;">
+<code>~/Library/Logs/Company Name/Product Name/Player.log</code><br><br><strong>Note:</strong> You can also use the Console.app utility to find the log file.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Universal Windows Platform</strong></td>
+	<td style="text-align:left;"><code>%USERPROFILE%\AppData\Local\Packages\&lt;productname&gt;\TempState\UnityPlayer.log</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Unity writes the log output to your <a href="webgl-debugging.html">browser’s JavaScript console</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Windows</strong></td>
+	<td style="text-align:left;"><code>%USERPROFILE%\AppData\LocalLow\CompanyName\ProductName\Player.log</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2>Unity Hub log locations</h2>
+
+<p>You can access the Hub logs by using your operating system’s file manager application. You can also access these logs from within the Hub. For more information, see <a href="https://docs.unity3d.com/hub/manual/Help.html">Hub documentation</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Operating system</strong></th>
+	<th style="text-align:left;"><strong>Player log location</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Linux</strong></td>
+	<td style="text-align:left;"><code>~/.config/UnityHub/logs/info-log.json</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>macOS</strong></td>
+	<td style="text-align:left;"><code>~/Library/Application\ Support/UnityHub/logs/info-log.json</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Windows</strong></td>
+	<td style="text-align:left;"><code>%UserProfile%\AppData\Roaming\UnityHub\logs\info-log.json</code></td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-profiler-traces.html"></a></span><div class="tip">Analyzing profiler traces</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="BestPracticeUnderstandingPerformanceInUnity.html"></a></span><div class="tip">Understanding optimization in Unity</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Managed code stripping</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ManagedCodeStripping.html">English</a></li>
+<li><a href="/cn/current/Manual/ManagedCodeStripping.html">中文</a></li>
+<li><a href="/ja/current/Manual/ManagedCodeStripping.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ManagedCodeStripping.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ManagedCodeStripping.html">English</a></li>
+<li><a href="/cn/current/Manual/ManagedCodeStripping.html">中文</a></li>
+<li><a href="/ja/current/Manual/ManagedCodeStripping.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ManagedCodeStripping.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="unity-architecture.html">Unity architecture</a></li>
+<li><a href="scripting-backends.html">Scripting backends</a></li>
+<li>Managed code stripping</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ScriptingRestrictions.html"></a></span><div class="tip">Scripting restrictions</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="unity-linker.html"></a></span><div class="tip">The Unity linker</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Managed code stripping</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>During the build process, Unity removes unused or unreachable code through a process called managed code stripping, which can significantly decrease your application’s final size. Managed code stripping removes code from managed assemblies, including assemblies built from the C# <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> in your project, assemblies that are part of packages and plugins, and assemblies in .NET Framework.</p>
+
+<p>Unity uses a tool called the Unity linker to perform a static analysis of the code in your project’s assemblies. The static analysis identifies any classes, portions of classes, functions, or portions of functions that can’t be reached during execution. This analysis only includes code that exists at build time because runtime generated code doesn’t exist when Unity performs the static analysis.</p>
+
+<p>You can configure the level of code stripping Unity performs for your project using the <strong>Managed Stripping Level</strong> setting. To prevent Unity removing specific parts of your code, use annotations to indicate which parts of your code base the Unity linker should preserve. For more information, see <a href="unity-linker.html">Unity linker</a>.</p>
+
+<h2>Configure managed code stripping</h2>
+
+<figure>
+<img src="../uploads/Main/managed-code-stripping-level.png" alt="The Managed Stripping Level property">
+<figcaption>The Managed Stripping Level property</figcaption>
+</figure>
+
+<p>The <strong>Managed Stripping Level</strong> property determines the set of rules that the Unity linker follows when it analyzes and strips your application’s code. As you increase the setting from <strong>Minimal</strong> to <strong>High</strong>, the rules enable the linker to search through more assemblies for unreachable code. The Unity linker removes more code at the higher settings which reduces the final size of your build, though the expanded search means that each build takes longer to produce.</p>
+
+<p>To change the <strong>Managed Stripping Level</strong> property:</p>
+
+<ol>
+<li>Go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong>.</li>
+<li>In Other Settings, navigate to the Optimization heading.</li>
+<li>Set the <strong>Managed Stripping Level</strong> property to the desired value.</li>
+</ol>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Disabled</strong></td>
+	<td style="text-align:left;">Unity doesn’t remove any code.<br><br>This setting is visible only and is the default setting if you use the Mono scripting backend.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Minimal</strong></td>
+	<td style="text-align:left;">Unity searches only the UnityEngine and the .NET class libraries for unused code. Unity doesn’t remove any user-written code. This setting is the least likely to cause any unexpected runtime behavior.<br><br>This setting is useful for projects where usability is of higher priority than build size.This is the default setting if you use the IL2CPP scripting backend.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Low</strong></td>
+	<td style="text-align:left;">Unity searches some user-written assemblies and all UnityEngine and .NET class libraries for unused code. This setting applies a set of rules that removes some unused code but minimizes the likelihood of unintended consequences, such as changes in behavior of runtime code that uses reflection.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Medium</strong></td>
+	<td style="text-align:left;">Unity partially searches all assemblies to find unreachable code. This setting applies a set of rules that strips more types of code patterns to reduce the build size. Although Unity doesn’t strip all possible unreachable code, this setting does increase the risk of undesirable or unexpected behavior changes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>High</strong></td>
+	<td style="text-align:left;">Unity performs an extensive search of all assemblies to find unreachable code. At this setting, Unity prioritizes size reduction more than code stability and removes as much code as possible.<br><br>This search can take much longer than for lower stripping levels. Use this setting only for projects where a compact build size is extremely important. Test your application thoroughly and make careful use of <code>[Preserve]</code> attributes and link.xml files to ensure that the Unity linker doesn’t strip vital code.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="PreserveCodeWithAnnotations" aria-hidden="true"></a></p>
+
+<h2>Preserve code using annotations</h2>
+
+<p>You can use annotations to prevent the Unity linker from stripping specific sections of your code. This is helpful if your application produces runtime code which doesn’t exist when Unity performs the static analysis; for example, through <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/reflection">reflection</a>. Annotations either provide general guidance to the Unity linker about which code patterns it shouldn’t strip, or instructions not to strip a specific, defined section of code.</p>
+
+<p>There are two broad approaches you can use to annotate your code to preserve it from the managed code stripping process:</p>
+
+<ul>
+<li>Root annotations identify parts of your code as roots. The Unity linker doesn’t strip any code that is marked as a root. Root annotations are less complicated to use but can also lead to the Unity linker preserving some code that it should strip.</li>
+<li>Dependency annotations define the connections between code elements. Dependency annotations can reduce the amount of over preservation of code compared to root annotations.</li>
+</ul>
+
+<p>Each of these techniques provides more control over the amount of code that the Unity linker strips at higher stripping levels and reduces the chance of vital code being stripped. Annotations are especially useful when your code references other code through reflection, because the Unity linker can’t always detect uses of reflection.</p>
+
+<p>Preserve code that uses reflection or generates other code at runtime to significantly reduce the likelihood of unexpected behavior when your application is executed. For examples of reflection patterns that the Unity linker can recognize, see the <a href="https://github.com/Unity-Technologies/linker/tree/unity-master/test/Mono.Linker.Tests.Cases/Reflection">Unity Intermediate Language Linker reflection test suite</a>.</p>
+
+<p><a name="RootAnnotations" aria-hidden="true"></a></p>
+
+<h2>Root annotations</h2>
+
+<p>Root annotations force the Unity linker to treat code elements as roots, which aren’t stripped in the code stripping process. There are two types of root annotations you can use, depending on whether you need to preserve individual types with their constructors or assemblies:</p>
+
+<ul>
+<li>
+<a href="#PreserveAttribute">Preserve Attribute</a>: Annotates individual types as roots to preserve them.</li>
+<li>
+<a href="#LinkXMLAnnotation">Link.xml</a>: Annotates assemblies and any types or other code entities within those assemblies as roots to preserve them.</li>
+</ul>
+
+<p><a name="PreserveAttribute" aria-hidden="true"></a></p>
+
+<h3>Annotate roots using the Preserve attribute</h3>
+
+<p>Use the <a href="../ScriptReference/Scripting.PreserveAttribute.html">Preserve</a> attribute to individually exclude specific sections of your code from the Unity linker’s static analysis. To annotate a piece of code with this attribute, add <code>[Preserve]</code> immediately before the first part of the code you want to preserve. The following list describes what entities the Unity linker preserves when you annotate different code elements with the <code>[Preserve]</code> attribute:</p>
+
+<ul>
+<li>
+<strong>Assembly</strong>: Preserves all types that are used and defined in the assembly. To assign the <code>[Preserve]</code> attribute to an assembly, place the attribute declaration in any C# file included in the assembly, before any namespace declarations.</li>
+<li>
+<strong>Type</strong>: Preserves a class or type and its default constructor.</li>
+<li>
+<strong>Method</strong>: Preserves the method, the type that declares the method, the type the method returns, and the types of all of its arguments.</li>
+<li>
+<strong>Property</strong>: Preserves the property, the type that declares the property, the value type of the property, and methods that get and set the property value.</li>
+<li>
+<strong>Field</strong>: Preserves the field, the field type, and the type that declares the field.</li>
+<li>
+<strong>Event</strong>: Preserves the event, the type that declares the event, type, the type the event returns, the <code>[add]</code> accessor, and the <code>[remove]</code> accessor.</li>
+<li>
+<strong>Delegate</strong>: Preserves the delegate type and all methods that the delegate invokes.</li>
+</ul>
+
+<p>Use the <code>[Preserve]</code> attribute when you want to preserve both a type and its default constructor. If you want to keep one or the other but not both, use a link.xml file.</p>
+
+<p>You can define the <code>[Preserve]</code> attribute in any assembly and in any namespace. You can use the UnityEngine.Scripting.PreserveAttribute class, create a subclass of UnityEngine.Scripting.PreserveAttribute, or create your own <a href="https://docs.unity3d.com/ScriptReference/PreserveAttribute.html">PreserveAttribute</a> class. For example:</p>
+
+<pre><code class="csharp">class Foo
+{
+    [Preserve]
+    public void PreservedMethod(){}
+}
+</code></pre>
+
+<p><a name="LinkXMLAnnotation" aria-hidden="true"></a></p>
+
+<h3>Annotate roots using a Link XML file</h3>
+
+<p>You can include a .xml file entitled link.xml in your project to preserve a list of specific assemblies or parts of assemblies. The link.xml file must be present in the <code>Assets</code> folder or a subdirectory of the <code>Assets</code> folder in your project and must include the <code>&lt;linker&gt;</code> tag in the file. The Unity linker treats any assembly, type, or member preserved in a link.xml file as a root type.</p>
+
+<p>You can use any number of link.xml files in your project. As a result, you can provide separate preservation declarations for each <span class="tooltip"><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Plugins.html" href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span>. You can’t include a link.xml file in a package, but you can reference package assemblies from non-package link.xml files.</p>
+
+<p>The following examples illustrate the different ways that you can declare the root types of a project’s assemblies using a link.xml file:</p>
+
+<pre><code class="xml-doc">&lt;linker&gt;
+  &lt;!--Preserve types and members in an assembly--&gt;
+  &lt;assembly fullname=&quot;AssemblyName&quot;&gt;
+    &lt;!--Preserve an entire type--&gt;
+    &lt;type fullname=&quot;AssemblyName.MethodName&quot; preserve=&quot;all&quot;/&gt;
+
+    &lt;!--No &quot;preserve&quot; attribute and no members specified means preserve all members--&gt;
+    &lt;type fullname=&quot;AssemblyName.MethodName&quot;/&gt;
+
+    &lt;!--Preserve all fields on a type--&gt;
+    &lt;type fullname=&quot;AssemblyName.MethodName&quot; preserve=&quot;fields&quot;/&gt;
+
+    &lt;!--Preserve all fields on a type--&gt;
+    &lt;type fullname=&quot;AssemblyName.MethodName&quot; preserve=&quot;methods&quot;/&gt;
+
+    &lt;!--Preserve the type only--&gt;
+    &lt;type fullname=&quot;AssemblyName.MethodName&quot; preserve=&quot;nothing&quot;/&gt;
+
+    &lt;!--Preserving only specific members of a type--&gt;
+    &lt;type fullname=&quot;AssemblyName.MethodName&quot;&gt;
+        
+      &lt;!--Fields--&gt;
+      &lt;field signature=&quot;System.Int32 FieldName&quot; /&gt;
+
+      &lt;!--Preserve a field by name rather than signature--&gt;
+      &lt;field name=&quot;FieldName&quot; /&gt;
+      
+      &lt;!--Methods--&gt;
+      &lt;method signature=&quot;System.Void MethodName()&quot; /&gt;
+
+      &lt;!--Preserve a method with parameters--&gt;
+      &lt;method signature=&quot;System.Void MethodName(System.Int32,System.String)&quot; /&gt;
+
+      &lt;!--Preserve a method by name rather than signature--&gt;
+      &lt;method name=&quot;MethodName&quot; /&gt;
+
+      &lt;!--Properties--&gt;
+
+      &lt;!--Preserve a property, its backing field (if present), 
+          getter, and setter methods--&gt;
+      &lt;property signature=&quot;System.Int32 PropertyName&quot; /&gt;
+
+      &lt;property signature=&quot;System.Int32 PropertyName&quot; accessors=&quot;all&quot; /&gt;
+
+      &lt;!--Preserve a property, its backing field (if present), and getter method--&gt;
+      &lt;property signature=&quot;System.Int32 PropertyName&quot; accessors=&quot;get&quot; /&gt;
+
+      &lt;!--Preserve a property, its backing field (if present), and setter method--&gt;
+      &lt;property signature=&quot;System.Int32 PropertyName&quot; accessors=&quot;set&quot; /&gt;
+
+      &lt;!--Preserve a property by name rather than signature--&gt;
+      &lt;property name=&quot;PropertyName&quot; /&gt;
+
+      &lt;!--Events--&gt;
+
+      &lt;!--Preserve an event, its backing field (if present), add, and remove methods--&gt;
+      &lt;event signature=&quot;System.EventHandler EventName&quot; /&gt;
+
+      &lt;!--Preserve an event by name rather than signature--&gt;
+      &lt;event name=&quot;EventName&quot; /&gt;
+
+    &lt;/type&gt;
+  &lt;/assembly&gt;
+&lt;/linker&gt;
+</code></pre>
+
+<p>The next example shows how you can declare entire assemblies:</p>
+
+<pre><code class="xml-doc">&lt;!--Preserve an entire assembly--&gt;
+  &lt;assembly fullname=&quot;AssemblyName&quot; preserve=&quot;all&quot;/&gt;
+
+  &lt;!--No &quot;preserve&quot; attribute and no types specified means preserve all--&gt;
+  &lt;assembly fullname=&quot;AssemblyName&quot;/&gt;
+
+  &lt;!--Fully qualified assembly name--&gt;
+  &lt;assembly fullname=&quot;AssemblyName, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null&quot;&gt;
+    &lt;type fullname=&quot;AssemblyName.Foo&quot; preserve=&quot;all&quot;/&gt;
+  &lt;/assembly&gt;
+
+  &lt;!--Force an assembly to be processed for roots but don’t explicitly preserve anything in particular. Useful when the assembly isn't referenced.--&gt;
+  &lt;assembly fullname=&quot;AssemblyName&quot; preserve=&quot;nothing&quot;/&gt;
+</code></pre>
+
+<p>This example shows how to preserve either nested or generic types:</p>
+
+<pre><code class="xml-doc">&lt;!--Examples with generics--&gt;
+    &lt;type fullname=&quot;AssemblyName.G`1&quot;&gt;
+
+      &lt;!--Preserve a field with generics in the signature--&gt;
+      &lt;field signature=&quot;System.Collections.Generic.List`1&amp;lt;System.Int32&amp;gt; FieldName&quot; /&gt;
+
+      &lt;field signature=&quot;System.Collections.Generic.List`1&amp;lt;T&amp;gt; FieldName&quot; /&gt;
+
+      &lt;!--Preserve a method with generics in the signature--&gt;
+      &lt;method signature=&quot;System.Void MethodName(System.Collections.Generic.List`1&amp;lt;System.Int32&amp;gt;)&quot; /&gt;
+
+      &lt;!--Preserve an event with generics in the signature--&gt;
+      &lt;event signature=&quot;System.EventHandler`1&amp;lt;System.EventArgs&amp;gt; EventName&quot; /&gt;
+
+    &lt;/type&gt;
+
+    &lt;!--Preserve a nested type--&gt;
+    &lt;type fullname=&quot;AssemblyName.H/Nested&quot; preserve=&quot;all&quot;/&gt;
+
+    &lt;!--Preserve all fields of a type if the type is used.  If the type isn't used, it will be removed--&gt;
+    &lt;type fullname=&quot;AssemblyName.I&quot; preserve=&quot;fields&quot; required=&quot;0&quot;/&gt;
+
+    &lt;!--Preserve all methods of a type if the type is used. If the type isn't used, it will be removed--&gt;
+    &lt;type fullname=&quot;AssemblyName.J&quot; preserve=&quot;methods&quot; required=&quot;0&quot;/&gt;
+
+    &lt;!--Preserve all types in a namespace--&gt;
+    &lt;type fullname=&quot;AssemblyName.SomeNamespace*&quot; /&gt;
+
+    &lt;!--Preserve all types with a common prefix in their name--&gt;
+    &lt;type fullname=&quot;Prefix*&quot; /&gt;
+</code></pre>
+
+<p><a name="AdditionalAssemblyXMLAttributes" aria-hidden="true"></a></p>
+
+<h3>Additional Assembly XML attributes</h3>
+
+<p>The <code>&lt;assembly&gt;</code> element of the link.xml file has three special-purpose attributes that you can enable for more control over the annotations.</p>
+
+<ul>
+<li>
+<code>ignoreIfMissing</code>: Use this attribute if you need to declare preservations for an assembly that doesn’t exist during all Player builds.</li>
+</ul>
+
+<pre><code class="xml-doc">&lt;linker&gt;
+  &lt;assembly fullname=&quot;Foo&quot; ignoreIfMissing=&quot;1&quot;&gt;
+    &lt;type name=&quot;TypeName&quot;/&gt;
+  &lt;/assembly&gt;
+&lt;/linker&gt;
+</code></pre>
+
+<ul>
+<li>
+<code>ignoreIfUnreferenced:</code> In some cases, you might want to preserve entities in an assembly only when that assembly is referenced by another assembly. Use this attribute to preserve the entities in an assembly only when at least one type is referenced in an assembly.</li>
+</ul>
+
+<pre><code class="xml-doc">&lt;linker&gt;
+  &lt;assembly fullname=&quot;Bar&quot; ignoreIfUnreferenced=&quot;1&quot;&gt;
+    &lt;type name=&quot;TypeName&quot;/&gt;
+  &lt;/assembly&gt;
+&lt;/linker&gt;
+</code></pre>
+
+<ul>
+<li>
+<code>windowsruntime:</code> When you define preservations for a Windows Runtime Metadata (.winmd) assembly, you must add the <code>windowsruntime</code> attribute to the <code>&lt;assembly&gt;</code> element in the link.xml file:</li>
+</ul>
+
+<pre><code class="xml-doc">&lt;linker&gt;
+  &lt;assembly fullname=&quot;Windows&quot; windowsruntime=&quot;true&quot;&gt;
+    &lt;type name=&quot;TypeName&quot;/&gt;
+ &lt;/assembly&gt;
+&lt;/linker&gt;
+</code></pre>
+
+<p><a name="DependencyAnnotations" aria-hidden="true"></a></p>
+
+<h2>Dependency annotations</h2>
+
+<p>Dependency annotations define dependencies between various code elements. These annotations are useful for preserving code patterns that the Unity linker can’t statically analyze, such as reflection. These annotations also ensure that these code elements aren’t erroneously preserved when no root element uses them. There are two methods you can use to change how the Unity linker processes code elements:</p>
+
+<ul>
+<li>
+<a href="#AnnotationAttributes">Annotation attributes</a>: these attributes indicate that the Unity linker should preserve a particular code pattern, such as any type that derives from the annotated type.</li>
+<li>
+<a href="#AlwaysLinkAssemblyAttribute">AlwaysLinkAssemblyAttribute</a>: use this attribute to indicate that the Unity linker should process an assembly even if it’s not referenced by any other assemblies in your Project.</li>
+</ul>
+
+<p><a name="AnnotationAttributes" aria-hidden="true"></a></p>
+
+<h3>Annotation attributes</h3>
+
+<p>The <code>[Preserve]</code> attribute is useful for situations when an API is always needed. Other attributes can be useful for more general preservations. For example, you can preserve all types that implement a particular interface by annotating the interface with the <a href="../ScriptReference/Scripting.RequireImplementorsAttribute.html">RequireImplementorsAttribute</a>.</p>
+
+<p>To annotate specific coding patterns, use one or more of the following attributes:</p>
+
+<ul>
+<li>
+<a href="../ScriptReference/Scripting.RequireImplementorsAttribute.html">RequireImplementorsAttribute</a>: marks all types that implement this interface as dependencies.</li>
+<li>
+<a href="../ScriptReference/Scripting.RequireDerivedAttribute.html">RequireDerivedAttribute</a>: marks all types that derive from this type as dependencies.</li>
+<li>
+<a href="../ScriptReference/Scripting.RequiredInterfaceAttribute.html">RequiredInterfaceAttribute</a>: marks interface implementations on types as dependencies.</li>
+<li>
+<a href="../ScriptReference/Scripting.RequiredMemberAttribute.html">RequiredMemberAttribute</a>: marks all members of a type as dependencies.</li>
+<li>
+<a href="../ScriptReference/Scripting.RequireAttributeUsagesAttribute.html">RequireAttributeUsagesAttribute</a>: marks custom attributes as dependencies.</li>
+</ul>
+
+<p>You can combine these attributes in various ways to more precisely control how the Unity linker preserves your code.</p>
+
+<p><a name="AlwaysLinkAssemblyAttribute" aria-hidden="true"></a></p>
+
+<h3>AlwaysLinkAssembly attribute</h3>
+
+<p>The <code>[assembly: UnityEngine.Scripting.AlwaysLinkAssembly]</code> attribute forces the Unity linker to search an assembly regardless of whether or not the assembly is referenced by another assembly that is included in the build. You can apply the <a href="../ScriptReference/Scripting.AlwaysLinkAssemblyAttribute.html">AlwaysLinkAssembly</a> attribute only to an assembly.</p>
+
+<p>The attribute doesn’t directly preserve code within the assembly. Instead, this attribute instructs the Unity linker to apply the root marking rules to the assembly. If no code elements match the root marking rules for the assembly, the Unity linker still removes the assembly from the build.</p>
+
+<p>Use this attribute on precompiled or package assemblies that contain one or more methods with the <code>[RuntimeInitializeOnLoadMethod]</code> attribute, but which might not contain types used directly or indirectly in any <span class="tooltip"><strong>Scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> in a project.</p>
+
+<p>If an assembly defines <code>[assembly: AlwaysLinkAssembly]</code> and is also referenced by another assembly included in the build, the attribute has no effect on the output.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ScriptingRestrictions.html"></a></span><div class="tip">Scripting restrictions</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="unity-linker.html"></a></span><div class="tip">The Unity linker</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Special optimizations</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="core" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/BestPracticeUnderstandingPerformanceInUnity8.html">English</a></li>
+<li><a href="/cn/current/Manual/BestPracticeUnderstandingPerformanceInUnity8.html">中文</a></li>
+<li><a href="/ja/current/Manual/BestPracticeUnderstandingPerformanceInUnity8.html">日本語</a></li>
+<li><a href="/kr/current/Manual/BestPracticeUnderstandingPerformanceInUnity8.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/BestPracticeUnderstandingPerformanceInUnity8.html">English</a></li>
+<li><a href="/cn/current/Manual/BestPracticeUnderstandingPerformanceInUnity8.html">中文</a></li>
+<li><a href="/ja/current/Manual/BestPracticeUnderstandingPerformanceInUnity8.html">日本語</a></li>
+<li><a href="/kr/current/Manual/BestPracticeUnderstandingPerformanceInUnity8.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="BestPracticeUnderstandingPerformanceInUnity.html">Understanding optimization in Unity</a></li>
+<li>Special optimizations</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="BestPracticeUnderstandingPerformanceInUnity7.html"></a></span><div class="tip">General Optimizations</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AsyncReadManagerMetrics.html"></a></span><div class="tip">Asset loading metrics</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Special optimizations</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>While the previous section described optimizations applicable to all projects, this section details optimizations that should <em>not</em> be applied prior to gathering profiling data. This may be because the optimizations are labor-intensive to implement, may compromise code cleanliness or maintainability in favor of performance, or may resolve problems that only appear at certain magnitudes of scale.</p>
+
+<h2>Multidimensional vs. jagged arrays</h2>
+
+<p>As described in this <a href="http://stackoverflow.com/questions/597720/what-are-the-differences-between-a-multidimensional-array-and-an-array-of-arrays">StackOverflow article</a>, it is generally more efficient to iterate over jagged arrays than over multidimensional arrays, as multidimensional arrays require a function call. </p>
+
+<p>NOTES: </p>
+
+<ul>
+<li><p>These are arrays of arrays, and are declared as <code>type[x][y]</code> instead of <code>type[x,y</code>].)</p></li>
+<li><p>This can be discovered by inspecting the IL generated by accessing a multidimensional array, using ILSpy or similar tools.)</p></li>
+</ul>
+
+<p>When profiled in Unity 5.3, 100 fully sequential iterations over a three-dimensional 100x100x100 array yielded the following timings, which were averaged over 10 runs of the test:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Array type</th>
+	<th style="text-align:left;">Total time (100 iterations)</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">One-Dimensional Array</td>
+	<td style="text-align:left;">660 ms</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Jagged Arrays</td>
+	<td style="text-align:left;">730 ms</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Multidimensional Array</td>
+	<td style="text-align:left;">3470 ms</td>
+</tr>
+</tbody>
+</table>
+
+<p>The cost of the additional function call can be seen in the disparity between the cost of accessing multidimensional arrays vs. one-dimensional arrays, and the cost of iterating over a non-compact memory structure can be seen in the difference between accessing jagged arrays vs. one-dimensional arrays.</p>
+
+<p>As demonstrated above, the cost of the additional function call heavily outweighs the cost imposed by using a non-compact memory structure.</p>
+
+<p>For highly performance-sensitive operations, it is recommended to use a one-dimensional array. For all other cases where an array with multiple dimensions is required, use a jagged array. Multidimensional arrays should not be used.</p>
+
+<h2>Particle System pooling</h2>
+
+<p>When pooling Particle Systems, be aware that they consume at least 3500 bytes of memory. Memory consumption increases based on the number of modules activated on the <span class="tooltip"><strong>Particle System</strong><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ParticleSystem.html" href="class-ParticleSystem.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#particlesystem" aria-label="Go to glossary anchor for particlesystem">Glossary</a></span></span></span>. This memory is <em>not</em> released when Particle Systems are deactivated; It is only released when they are destroyed.</p>
+
+<p>As of Unity 5.3, most Particle System settings can now be manipulated at runtime. For projects that must pool a large number of different particle effects, it may be more efficient to extract the configuration parameters of the Particle Systems out onto a data-carrier class or structure.</p>
+
+<p>When a particle effect is needed, a pool of “generic” particle effects can then supply the requisite particle effect object. The configuration data can then be applied to the object to achieve the desired graphical effect.</p>
+
+<p>This is substantially more memory-efficient than attempting to pool all possible variants &amp; configurations of Particle Systems used in a given <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, but requires substantial engineering effort to achieve.</p>
+
+<h2>Update managers</h2>
+
+<p>Internally, Unity tracks lists of objects interested in its callbacks, such as <code>Update</code>, <code>FixedUpdate</code> and <code>LateUpdate</code>. These are maintained as intrusively-linked lists to ensure that list updates occur in constant time. MonoBehaviours are added to/removed from these lists when they are Enabled or Disabled, respectively.</p>
+
+<p>While it is convenient to simply add the appropriate callbacks to the MonoBehaviours that require them, this becomes increasingly inefficient as the number of callbacks grows. There is a small but significant overhead to invoking managed-code callbacks from native code. This results both in degraded frame times when invoking large numbers of per-frame methods, and in degraded instantiation times when instantiating <span class="tooltip"><strong>Prefabs</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> that contain large numbers of MonoBehaviours (NOTE:
+ The instantiation cost is due to the performance overhead of invoking Awake and OnEnable callbacks on each Component in a prefab.).</p>
+
+<p>When the number of MonoBehaviours with per-frame callbacks grows into the hundreds or thousands, it is advantageous to remove these callbacks and instead have MonoBehaviours (or even standard C# objects) attach to a global manager singleton. The global manager singleton can then distribute <code>Update</code>, <code>LateUpdate</code> and other callbacks to interested objects. This has the additional benefit of allowing code to smartly unsubscribe from callbacks when they would otherwise no-op, thereby shrinking the sheer number of functions that must be called each frame.</p>
+
+<p>The greatest saving is usually realized by eliminating callbacks which rarely execute. Consider the following pseudo-code:</p>
+
+<pre><code>void Update() {
+    if(!someVeryRareCondition) { return; }
+// … some operation …
+}
+</code></pre>
+
+<p>If there are large numbers of MonoBehaviours with Update callbacks similar to the above, then a significant amount of the time consumed running Update callbacks are spent switching between native and managed code domains for MonoBehaviour execution that then exit immediately. If these classes instead subscribed to a global Update Manager only while <code>someVeryRareCondition</code> were true, and unsubscribed thereafter, time would be saved both code domain switching and on the evaluation of the rare condition.</p>
+
+<h3>Using C# delegates in an update manager</h3>
+
+<p>It is tempting to use plain C# delegates to implement these callbacks. However, C#’s delegate implementation is optimized for a low rate of subscription and unsubscription, and for a low number of callbacks. A C# delegate performs a full deep-copy of the callback list each time a callback is added or removed. Large lists of callbacks, or large numbers of callbacks subscribing/unsubscribing during a single frame results in a performance spike in the internal <code>Delegate.Combine</code> method.</p>
+
+<p>For cases where adds/removes occur at high frequencies, consider using a data structure designed for fast inserts/removes instead of delegates.</p>
+
+<h2>Loading thread control</h2>
+
+<p>Unity permits developers to control the priority of background threads that are being used to load data. This is particularly important when trying to stream AssetBundles onto disk in the background. </p>
+
+<p>The priority for the main thread and graphics thread are both <code>ThreadPriority.Normal</code> – any threads with higher priority preempt the main/graphics threads and cause framerate hiccups, whereas threads with lower priority do not. If threads have an equivalent priority to the main thread, the CPU attempts to give equal time to the threads, which generally results in framerate stuttering if multiple background threads are performing heavy operations, such as AssetBundle decompression.</p>
+
+<p>Currently, this priority can be controlled in three places.</p>
+
+<p>First, the default priority for Asset loading calls, such as <code>Resources.LoadAsync</code> and <code>AssetBundle.LoadAssetAsync</code>, is taken from the <a href="../ScriptReference/Application-backgroundLoadingPriority.html">Application.backgroundLoadingPriority</a> setting. As documented, this call also limits the amount of time that the main thread spends integrating Assets (NOTE:
+ Most types of Unity Assets must be “integrated” onto the Main thread. During integration, the Asset initialization is finalized and certain thread-safe operations are performed. This includes scripting callback invocations, such as Awake callbacks. See the “Resource Management” guide for further details.), in order to limit the impact of Asset loading on frame time.</p>
+
+<p>Second, each asynchronous Asset loading operation, as well as each UnityWebRequest request, returns an <code>AsyncOperation</code> object to monitor and manage the operation. This <code>AsyncOperation</code> object exposes a <a href="../ScriptReference/AsyncOperation-priority.html">priority</a> property that can be used to tweak an individual operation’s priority.</p>
+
+<p>Finally, WWW objects, such as those returned from a call to <code>WWW.LoadFromCacheOrDownload</code>, expose a <a href="../ScriptReference/WWW-threadPriority.html">threadPriority</a> property. It is important to note that WWW objects do not automatically use the <code>Application.backgroundLoadingPriority</code> setting as their default value – WWW objects always default to <code>ThreadPriority.Normal</code>.</p>
+
+<p>It’s important to note that the under-the-hood systems used to decompress and load data differ between these APIs. <code>Resources.LoadAsync</code> and <code>AssetBundle.LoadAssetAsync</code> are operated by Unity’s internal PreloadManager system, which governs its own loading thread(s) and performs its own rate-limiting. <code>UnityWebRequest</code> uses its own dedicated thread pool. <code>WWW</code> spawns an entirely new thread each time a request is created.</p>
+
+<p>While all other loading mechanisms have a built-in queuing system, WWW does not. Calling <code>WWW.LoadFromCacheOrDownload</code> on a very large number of compressed AssetBundles spawns an equivalent number of threads, which then compete with the main thread for CPU time. This can easily result in frame-rate stuttering.</p>
+
+<p>Therefore, when using WWW to load and decompress AssetBundles, it is considered best practice to set an appropriate value for the <code>threadPriority</code> of each WWW object that is created.</p>
+
+<h2>Mass object movement &amp; CullingGroups</h2>
+
+<p>As mentioned in the section on Transform Manipulation, moving large Transform hierarchies has a relatively high CPU cost due to the propagation of change messages. However, in real development environments, it is often impossible to collapse a hierarchy to a modest number of <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>.</p>
+
+<p>At the same time, it is good development practice to only run enough behavior to maintain the believability of the game world while eliminating behavior the user will not notice – for example, in a Scene with a large number of characters, it is always more optimal to only run Mesh-skinning and animation-driven Transform movement for characters that are on-screen. There is no reason to waste CPU time calculating purely <span class="tooltip"><strong>visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span> of the simulation for characters that are off-screen.</p>
+
+<p>Both of these problems can be neatly addressed with an API first introduced in Unity 5.1: <a href="CullingGroupAPI.html">CullingGroups</a>.</p>
+
+<p>Instead of directly manipulating a large group of GameObjects in the scene, change the system to manipulate the Vector3 parameters of a group of BoundingSpheres within a CullingGroup. Each BoundingSphere serves as the authoritative repository for a single game-logical entity’s world-space position, and receives callbacks when the entity moves near/within the frustum of the CullingGroup’s main <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>. These callbacks can then be used to activate/deactivate code or components (such as Animators) governing behavior that should only run while the entity is visible.</p>
+
+<h2>Reducing method call overhead</h2>
+
+<p>C#’s string library provides an excellent case study in the cost of adding additional method calls to simple library code. In the section on the built-in string APIs <code>String.StartsWith</code> and <code>String.EndsWith</code>, it was mentioned that hand-coded replacements are 10–100 times faster than the built-in methods, even when unwanted locale coercion was suppressed.</p>
+
+<p>The key reason for this performance difference is simply the cost of adding additional method calls to tight inner loops. Each method that is invoked must locate the address of the method in memory and push another frame onto the stack. Neither of these operations are free, but in most code they are sufficiently small to ignore.</p>
+
+<p>However, when running small methods in tight loops, the overhead added by introducing additional method calls can become significant – and even dominant.</p>
+
+<p>Consider the following two simple methods.</p>
+
+<p><strong>Example 1:</strong></p>
+
+<pre><code>int Accum { get; set; }
+Accum = 0;
+
+for(int i = 0; i &lt; myList.Count; i++) {
+    Accum += myList[i];
+}
+
+</code></pre>
+
+<p><strong>Example 2:</strong></p>
+
+<pre><code>int accum = 0;
+int len = myList.Count;
+
+for(int i = 0; i &lt; len; i++) {
+    accum += myList[i];
+}
+</code></pre>
+
+<p>Both methods calculate the sum of all integers in a C# generic <code>List&lt;int&gt;</code>. The first example is a bit more “modern C#” in that it uses an automatically generated property to hold its data values.</p>
+
+<p>While on the surface these two pieces of code appear equivalent, the difference is notable when the code is analyzed for method calls.</p>
+
+<p><strong>Example 1:</strong></p>
+
+<pre><code>int Accum { get; set; }
+Accum = 0;
+
+for(int i = 0;
+       i &lt; myList.Count;    // call to List::getCount
+       i++) {
+    Accum       // call to set_Accum
++=      // call to get_Accum
+myList[i];  // call to List::get_Value
+}
+</code></pre>
+
+<p>So there are four method calls each time the loop executes:</p>
+
+<ul>
+<li>
+<code>myList.Count</code> invokes the <code>get</code> method on the <code>Count</code> property</li>
+<li>The <code>get</code> and <code>set</code> methods on the <code>Accum</code> property must be called</li>
+<li>
+<code>get</code> to retrieve the current value of <code>Accum</code> so that it can be passed to the addition operation</li>
+<li>
+<code>set</code> to assign the result of the addition operation to <code>Accum</code>
+</li>
+<li>The <em>[]</em> operator invokes the list’s <em>get_Value</em> method to retrieve the value of the item at a specific index at the list.</li>
+</ul>
+
+<p><strong>Example 2:</strong></p>
+
+<pre><code>int accum = 0;
+int len = myList.Count;
+
+for(int i = 0;
+    i &lt; len; 
+    i++) {
+    accum += myList[i]; // call to List::get_Value
+}
+</code></pre>
+
+<p>In this second example, the call to <code>get_Value</code> remains, but all other methods have either been eliminated or no longer execute once per loop iteration.</p>
+
+<ul>
+<li><p>As <code>accum</code> is now a primitive value instead of a property, method calls do not need to be made to set or retrieve its value.</p></li>
+<li><p>As <code>myList.Count</code> is assumed to not vary while the loop is running, its access has been moved outside of the loop’s conditional statement, so it is no longer executed at the beginning of each loop iteration.</p></li>
+</ul>
+
+<p>The timings for the two versions reveal the true benefit of removing 75% of the method call overhead from this specific snippet of code. When run 100,000 times on a modern desktop machine:</p>
+
+<ul>
+<li>Example 1 requires 324 milliseconds to execute</li>
+<li>Example 2 requires 128 milliseconds to execute</li>
+</ul>
+
+<p>The primary issue here is that Unity performs very little method inlining, if any. Even under <span class="tooltip"><strong>IL2CPP</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html" href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span>, many methods do not currently inline properly. This is especially true of properties. Further, <em>virtual</em> and interface methods cannot be inlined at all.</p>
+
+<p>Therefore, a method call declared in the source C# is very likely to end up producing a method call in the final binary application.</p>
+
+<h3>Trivial properties</h3>
+
+<p>Unity provides many “simple” constants on its data types for the convenience of developers. However, in light of the above, it is important to note that these constants are generally implemented as properties that return constant values.</p>
+
+<p>Vector3.zero’s property body is as follows:</p>
+
+<pre><code>get { return new Vector3(0,0,0); }
+</code></pre>
+
+<p>Quaternion.identity is very similar:</p>
+
+<pre><code>get { return new Quaternion(0,0,0,1); }
+
+</code></pre>
+
+<p>While the cost of accessing these properties is usually tiny compared to the actual code surrounding them, they can make a small difference when they are executed thousands of times per frame (or more).</p>
+
+<p>For simple primitive types, use a <code>const</code> value instead. <code>Const</code> values are inlined at compile time – the reference to the <code>const</code> variable is replaced with its value.</p>
+
+<p>
+<strong>Note:</strong> Because every reference to a <code>const</code> variable is replaced with its value, it is inadvisable to declare long strings or other large data types <code>const</code>. This unnecessarily bloats the size of the final binary due to all the duplicated data in the final instruction code.</p>
+
+<p>Wherever <code>const</code> isn’t appropriate, make a <code>static readonly</code> variable instead. In some projects, even Unity’s built-in trivial properties have been replaced with <code>static readonly</code> variables, resulting in small improvements in performance.</p>
+
+<h3>Trivial methods</h3>
+
+<p>Trivial methods are trickier. It is extremely useful to be able to declare functionality once and reuse it elsewhere. However, in tight inner loops, it may be necessary to depart from good coding practices and instead “manually inline” certain code.</p>
+
+<p>Some methods can be eliminated outright. Consider <code>Quaternion.Set</code>, <code>Transform.Translate</code> or <code>Vector3.Scale</code>. These perform very trivial operations and can be replaced with simple assignment statements.</p>
+
+<p>For more complex methods, weigh the profiling evidence for manual inlining against the long-term cost of maintaining the more-performant code.</p>
+<!-- area:core -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="BestPracticeUnderstandingPerformanceInUnity7.html"></a></span><div class="tip">General Optimizations</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AsyncReadManagerMetrics.html"></a></span><div class="tip">Asset loading metrics</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

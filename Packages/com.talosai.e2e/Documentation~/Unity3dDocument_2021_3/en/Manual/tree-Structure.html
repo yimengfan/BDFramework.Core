@@ -1,0 +1,205 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Tree  Basics</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/tree-Structure.html">English</a></li>
+<li><a href="/cn/current/Manual/tree-Structure.html">中文</a></li>
+<li><a href="/ja/current/Manual/tree-Structure.html">日本語</a></li>
+<li><a href="/kr/current/Manual/tree-Structure.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/tree-Structure.html">English</a></li>
+<li><a href="/cn/current/Manual/tree-Structure.html">中文</a></li>
+<li><a href="/ja/current/Manual/tree-Structure.html">日本語</a></li>
+<li><a href="/kr/current/Manual/tree-Structure.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="CreatingEnvironments.html">World building</a></li>
+<li><a href="class-Tree.html">Tree Editor</a></li>
+<li>Tree  Basics</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="tree-FirstTree.html"></a></span><div class="tip">Building Your First Tree</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="tree-Branches.html"></a></span><div class="tip">Branch Group Properties</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Tree Basics</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>With the Tree Creator package imported, you can select <strong>GameObject &gt; 3D Object &gt; Tree</strong> to add a new tree to the scene (this will also create a new Tree asset in the Project view). The tree this produces is initially little more than a single stalk with no leaves or branches. However, you will notice in the inspector that the object has a Tree component attached, and this will allow you to design the tree to your liking.</p>
+
+<p>At the top of the Tree component <span class="tooltip"><strong>inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> is the <em>tree structure editor</em> where the basic arrangement of branches and leaves is specified.</p>
+
+<figure>
+<img src="../uploads/Main/TreeStructure.png" alt="Tree Structure editor">
+<figcaption>Tree Structure editor</figcaption>
+</figure>
+
+<p>It is important to understand the concept of <em>tree levels</em> when working with the editor. The trunk has branches which, in turn, have sub-branches; this branching process continues until the terminal twig are produced. The trunk is regarded as the first level of the tree, and then any branches growing directly from the trunk comprise the second level. Any branches that grow from second level branches together form the third level, and so on.</p>
+
+<figure>
+<img src="../uploads/Main/TreeStructureDiagram.png" alt="">
+</figure>
+
+<p>This notion of levels is reflected in the tree editor. Consider the following tree structure, for example:-</p>
+
+<figure>
+<img src="../uploads/Main/TreeExample01.png" alt="">
+</figure>
+
+<p>The icons are connected by lines to show the branching levels of the tree. The icon right at the bottom (with the tree picture) denotes the “root” of the tree. When this icon is selected, the properties in the inspector panel below are the ones that apply to the tree as a whole. From this root extend the first and second levels of branching. The icons show several pieces of information:-</p>
+
+<figure>
+<img src="../uploads/Main/TreeIconDetails.png" alt="">
+</figure>
+
+<p>The main picture shows which kind of element it is. The number in the top-right corner is the number of branches that exist at that level of the tree, as set by the <em>Frequency</em> property in the inspector. With a given icon selected, changing the <em>Frequency</em> value will change the number of branches at that level. The eye image just below the number denotes the visibility of the branches in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view; you click the eye to toggle visibility on or off.</p>
+
+<p>The arrangement of branch groups can be edited using the controls at the bottom-right of the tree editor:-</p>
+
+<figure>
+<img src="../uploads/Main/TreeGroupTools.png" alt="">
+</figure>
+
+<p>Going from left to right, the first tool adds <em>leaf</em> groups to the tree. Leaves are arranged in levels as are branches but unlike branches, leaves cannot further subdivide into more levels. The second tool adds a new branch group at the current level (ie, it creates a new “child” for the selected branch icon). The third tool duplicates whichever group is selected while the fourth deletes a group from the tree. It is possible to have several groups at each level of a tree as in the following example:-</p>
+
+<figure>
+<img src="../uploads/Main/TreeExample02.png" alt="">
+</figure>
+
+<p>This tree has a main trunk from which two different branch groups grow. The first has its own sub-groups of branches and leaves, while the second just has bare branches. The separate groups at a given level can each have their properties set differently in the inspector so you could, say, have a large number of short twigs sprouting from the trunk along with a smaller number of main branches.</p>
+
+<h2>Hand Editing Branches and Leaves</h2>
+
+<p>When a branch is selected in the tree structure view, it will also be highlighted in the <span class="tooltip"><strong>scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>, as with this “tree” (which is just a bare trunk for now).</p>
+
+<figure>
+<img src="../uploads/Main/TreeWithControlPoints01.png" alt="">
+</figure>
+
+<p>The tree’s single branch is shown with a number of boxes overlaid on the view. The boxes represent <em>control points</em> along the length of the branch (ie, the center line of the branch passes through all the points but is also smoothly curved between them). You can click and drag any of the boxes to move the control points and thus change the shape of the branch.</p>
+
+<figure>
+<img src="../uploads/Main/TreeWithControlPoints02.png" alt="">
+</figure>
+
+<p>Moving control points is actually just the first of three options available on the hand editing <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/TreeHandEditTools.png" alt="">
+</figure>
+
+<p>The second tool allows you to bend the branch by rotating it at a given control point. The third tool allows you to start with the mouse at a given control point and from there on draw the branch freehand. The branching is still controlled from the structure view - only the shapes of branches can be redrawn. If a leaf group is selected in the structure view then a corresponding toolbar gives you options to move or rotate leaves around their parent branch.</p>
+
+<p>Note that some properties in the tree creator’s inspector are related to <em>procedural</em> generation of trees (ie, the computer generates the shape itself randomly) and these will be disabled after you have hand edited the tree. There is a button which will restore a tree to procedural status but this will undo any edits you have made by hand.</p>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="tree-FirstTree.html"></a></span><div class="tip">Building Your First Tree</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="tree-Branches.html"></a></span><div class="tip">Branch Group Properties</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

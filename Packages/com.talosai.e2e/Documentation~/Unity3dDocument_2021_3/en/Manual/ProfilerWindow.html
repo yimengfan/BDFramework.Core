@@ -1,0 +1,526 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: The Profiler window</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ProfilerWindow.html">English</a></li>
+<li><a href="/cn/current/Manual/ProfilerWindow.html">中文</a></li>
+<li><a href="/ja/current/Manual/ProfilerWindow.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ProfilerWindow.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ProfilerWindow.html">English</a></li>
+<li><a href="/cn/current/Manual/ProfilerWindow.html">中文</a></li>
+<li><a href="/ja/current/Manual/ProfilerWindow.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ProfilerWindow.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="Profiler.html">Profiler overview</a></li>
+<li>The Profiler window</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="profiler-markers.html"></a></span><div class="tip">Common Profiler markers</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="profiler-asset-loading-module.html"></a></span><div class="tip">Asset Loading Profiler module</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>The Profiler window</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To access the Unity Profiler, go to <strong>Window &gt; Analysis &gt; Profiler</strong> or use the keyboard shortcut <strong>Ctrl+7</strong> (<strong>Command+7</strong> on macOS).</p>
+
+<p>The <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> records multiple areas of your application’s performance, and displays that information to you. You can use this information to make informed decisions about what you might need to optimize in your application, and to confirm that your optimizations produce the results you expect.</p>
+
+<p>By default, the Profiler records and keeps the last 300 frames of your game, and shows you detailed information about every frame. You can increase the number of frames it records in the Preferences window (menu: <strong>Edit &gt; Preferences</strong>), up to 2,000 frames. <strong>Note:</strong> If you increase this setting to a large number of frames, the Profiler’s overhead and memory usage might become more performance intensive.</p>
+
+<p>You can inspect script code, and how your application uses certain Assets and resources that might be slowing it down. You can also compare how your application performs on different devices. The Profiler has several different <a href="#modules">Profiler modules</a> that you can add to your profiling session to get more information on areas such as rendering, memory, and audio. </p>
+
+<p>This page covers the following topics:</p>
+
+<ul>
+<li><a href="#layout">Profiler window layout</a></li>
+<li><a href="#preferences">Profiler Preferences</a></li>
+<li>
+<a href="#controls">Profiler controls</a>
+
+<ul>
+<li><a href="#deep-profiling">Deep Profiling</a></li>
+</ul>
+</li>
+<li>
+<a href="#modules">Profiler modules</a>
+
+<ul>
+<li><a href="#module-overhead">Profiler module overhead</a></li>
+<li><a href="#frame-charts">Profiler frame charts</a></li>
+</ul>
+</li>
+<li><a href="#standalone">Standalone Profiler</a></li>
+<li><a href="#command-line">Command line arguments</a></li>
+</ul>
+
+<p><a name="layout" aria-hidden="true"></a></p>
+
+<h2>Profiler window layout</h2>
+
+<p>The Profiler window is laid out as follows:</p>
+
+<figure>
+<img src="../uploads/Main/profiler-window-layout.png" alt="The Profiler window, with the CPU Usage Profiler module selected">
+<figcaption>The Profiler window, with the CPU Usage Profiler module selected</figcaption>
+</figure>
+
+<ul>
+<li>
+<strong>A:</strong> <a href="#module">Profiler modules</a>. This is a list of all the modules you can profile in your application. Use the drop-down menu at the top of this area to add and remove modules from the window.</li>
+<li>
+<strong>B:</strong> <a href="#controls">Profiler controls</a>. Use these controls to set which device to profile from and what kind of profiling Unity should perform, navigate between frames, and start recording data.</li>
+<li>
+<strong>C:</strong> <strong>Frame charts</strong>. This area contains charts of each module the Profiler profiles. This area is blank when you open the Profiler for the first time, and fills with information when you start profiling your application.</li>
+<li>
+<strong>D:</strong> <strong>Module details panel</strong>. The information in this area of the window changes based on the module you have selected. For instance, when you select the CPU Usage Profiler module, it contains a detailed timeline and the option to switch to a Hierarchy view. When you select the Rendering Profiler module, this area displays a list of debugging information. This area is blank when you open the Profiler for the first time, and fills with information when you start profiling your application.</li>
+</ul>
+
+<p><a name="preferences" aria-hidden="true"></a></p>
+
+<h2>Profiler Preferences</h2>
+
+<p>The Preferences window contains additional Profiler window settings as follows:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Preference</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Frame count</strong></td>
+	<td style="text-align:left;">Set the maximum number of frames for the Profiler to capture. You can set this number between 300 and 2,000.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Show stats for ‘current frame’</strong></td>
+	<td style="text-align:left;">By default, when you select the <strong>Current Frame</strong> button and enter Current Frame mode, the frame indicator line does not have annotations with the stats for the current frame. This is because the stats annotations might make it difficult to view data in real-time. To display the annotations, enable this setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Default recording state</strong></td>
+	<td style="text-align:left;">Select which recording state the Profiler should open in. Choose from <strong>Enabled</strong>, <strong>Disabled</strong>, or <strong>Remember</strong>. Enabled keeps the <strong>Record</strong> button enabled between sessions, while <strong>Disbled</strong> disables it, regardless of whether you turn it on or off during your profiling session. The <strong>Remember</strong> state remembers whether you have enabled or disabled the <strong>Record</strong> button during your session and keeps it at its last state next time you open the Profiler window.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Default editor target mode</strong></td>
+	<td style="text-align:left;">Select what mode the <strong>Attach to Player</strong> dropdown should target by default. Choose from either <strong>Playmode</strong> or <strong>Editor</strong>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="controls" aria-hidden="true"></a></p>
+
+<h2>Profiler controls</h2>
+
+<figure>
+<img src="../uploads/Main/ProfilerControls.png" alt="">
+</figure>
+
+<p>The Profiler controls are in the <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> at the top of the Profiler window. Use these to start or stop recording profiler data, and to navigate through profiled frames.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Control</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Attach to Player</strong></td>
+	<td style="text-align:left;">Select which target to profile your application on. By default, this is set to <strong>Playmode</strong>. You can also select <strong>Editor</strong> to profile the Unity Editor and display the resources that the Editor is currently using.<br> <br> Unity also automatically detects any devices that are running on your network or connected via USB, and displays them in the drop-down. Click <strong>Enter IP</strong> in the drop-down to manually enter the IP address of the device you want to profile your application on. For more information, see <a href="profiler-profiling-applications.html">Profiling your application</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Record</strong></td>
+	<td style="text-align:left;">Enable this setting to record profiling information for the active modules when you run your application. If you don’t have this button enabled, the Profiler doesn’t collect any data when you run your application.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Back arrow</strong></td>
+	<td style="text-align:left;">Navigate one frame back.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Forward arrow</strong></td>
+	<td style="text-align:left;">Navigate one frame forward.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Current Frame</strong></td>
+	<td style="text-align:left;">When you click the <strong>Current Frame</strong> button, the frame indicator line jumps to the last recorded frame, and the Profiler enters Current Frame mode. While the Profiler collects data in this mode, it stays on the current frame and displays the data it collects in real-time. Click the button again to exit Current Frame mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Frame number</strong></td>
+	<td style="text-align:left;">Indicates the frame number you are currently looking at in the Profiler. The number on the left is the current frame selected, and the number on the right is the total number of frames combined that the Profiler collected during your entire Profiling session.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Clear</strong></td>
+	<td style="text-align:left;">Erase all data from the Profiler window.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Clear on Play</strong></td>
+	<td style="text-align:left;">Enable this setting to erase all data from the Profiler window next time you click Play in the Player window, or when you connect to a new target device.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Deep Profile</strong></td>
+	<td style="text-align:left;">Enable this setting to profile all C# methods. When you enable this setting, Unity adds instrumentation to all mono calls, which then allows for a more detailed investigation of your <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>. See <a href="#deep-profiling">Deep Profiling</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><span class="tooltip"><strong>Call Stacks</strong><span class="tooltiptext">A list of methods that were called at run time, organized as a last-in-first-out stack. <br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#callstack" aria-label="Go to glossary anchor for callstack">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">To record call stacks for scripting memory allocations, click this toggle. Frames that the Profiler records when you enable this option have information about the selected samples on the full call stack that lead to a managed scripting allocation, even when <strong>Deep Profile</strong> is not active. By default, the Profiler records the full call stack information for GC.Alloc samples when you enable this setting, but you can change this to a different sample from the dropdown menu (<strong>UnsafeUtility.Malloc</strong>, <strong>JobHandle.Complete</strong>, or <strong>Native Allocations</strong>). For more information, see the <a href="ProfilerCPU.html#allocation-callstacks">Allocation call stacks</a> section of the CPU Usage Profiler module page.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Load</strong></td>
+	<td style="text-align:left;">Load saved Profiler data into the Profiler window. You can also load binary profile data that the Player has written out to file via the <a href="../ScriptReference/Profiling.Profiler-logFile.html">Profiler.logFile</a> API.<br> <br> Hold down the Shift button and click the <strong>Load</strong> button to append the file contents to the current profile frames.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Save</strong></td>
+	<td style="text-align:left;">Save the Profiler data into a .data file in your Project folder.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="3"><strong>Context menu</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Color Blind Mode</td>
+	<td style="text-align:left;">Enable this setting to make the Profiler use higher contrast colors in its graphs. This enhances visibility for users with red-green color blindness (such as deuteranopia, protanopia, or tritanopia).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Show stats for “current” frame</td>
+	<td style="text-align:left;">By default, when you select the <strong>Current Frame</strong> button and enter Current Frame mode, the frame indicator line does not have annotations with the stats for the current frame. This is because the stats annotations might make it difficult to view data in real-time. To display the annotations, enable this setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Preferences</td>
+	<td style="text-align:left;">Open the <strong>Preferences</strong> menu to adjust Profiler-specific properties.</td>
+</tr>
+</tbody>
+</table>
+
+<p>To maintain a low overhead, Unity only redraws every fifth frame of the Editor UI. This results in a slightly stuttered update.</p>
+
+<p><a name="deep-profiling" aria-hidden="true"></a></p>
+
+<h3>Deep Profiling</h3>
+
+<p>Usually the Profiler only profiles code timings that are explicitly wrapped in <a href="../ScriptReference/Unity.Profiling.ProfilerMarker.html">ProfilerMarkers</a>. This includes the first call stack depth of invocations from the engine’s native code into your scripting code, such as a <code>MonoBehaviour</code>’s <code>Start</code>, <code>Update</code>, or similar methods. </p>
+
+<p>Without adding more explicit <code>ProfilerMarker</code> instrumentation to your own code, the only other samples you can see as child samples of your scripting code are those that call back into Unity’s API, if that API has been instrumented. Most API calls that carry a performance overhead are instrumented. For example, accessing the main <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> through the <code>Camera.main</code> API is registered as a “<code>FindMainCamera</code>” sample.</p>
+
+<p>When you enable the <strong>Deep Profile</strong> setting, the Profiler profiles every part of your script code and records all function calls, including at least the first call stack depth into any Unity API. This is useful information to help you work out where your code impacts on your application’s performance, but it comes with a large overhead.</p>
+
+<p>When you deep profile your application, Unity injects profiler instrumentation into all of your script methods to record all function calls. This is useful to understand where your application code spends the most time. </p>
+
+<p>Deep Profiling is resource-intensive and uses a lot of memory. As a result, your application runs significantly slower while it is profiling. Deep Profiling is better suited for small games with simple scripting. If you are using complex script code, your application might not be able to use Deep Profiling at all, and for many larger applications, Deep Profiling might make Unity run out of memory. </p>
+
+<p>If you run into issues where there are too many samples for the Profiler to store in the ring buffer it uses to stream them to the Profiler, then Unity displays an error message. To increase the size of the ring buffer, you can adjust the <a href="../ScriptReference/Profiling.Profiler-maxUsedMemory.html">Profiler.maxUsedMemory</a> property for the Player you’re profiling.</p>
+
+<p>If Deep Profiling causes the frame rate of your application to drop so much that it is impossible to run, you can manually profile blocks of your script code, which has a smaller overhead than Deep Profiling. Use <a href="../ScriptReference/Unity.Profiling.ProfilerMarker.html">ProfilerMarkers</a> to manually add the instrumentation you need to mark up script blocks. These appear in the <a href="ProfilerCPU.html">CPU Usage Profiler module</a>.</p>
+
+<p>If you want to find out which call stacks lead to a GC.Alloc sample without Deep Profiling, you can turn on the collection of <strong>Allocation call stacks</strong>. Enable the <strong>Call Stacks</strong> setting in the Profiler controls, and then you can select the GC.Alloc samples in the Timeline view, or use the Show <strong>Related Objects panel</strong> in the Hierarchy view to find the call stacks for these samples. For more information, see the documentation on Allocation call stacks in the <a href="ProfilerCPU.html#allocation-callstacks">CPU Profiler Module</a> page.</p>
+
+<p><a name="modules" aria-hidden="true"></a></p>
+
+<h2>Profiler modules</h2>
+
+<p>The top part of the Profiler window is divided into Profiler modules that profile specific areas of your game. When you profile your application, Unity displays the data related to each module in corresponding charts.</p>
+
+<p>The <strong>CPU Usage</strong> module provides the best overview of how much time your application spends on each frame. The other modules collect more specific data and can help you inspect more specific areas or to monitor the vitals of your application, such as memory consumption, rendering, or audio statistics.</p>
+
+<p>Each module has its own chart. When you select a module, a Module Details panel appears in the bottom section of the window, which you can use to inspect the detailed data the module collects.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Profiler module</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>CPU Usage</strong></td>
+	<td style="text-align:left;">Displays an overview of where your application spends the most time, in areas such as physics, scripts, animation, and garbage collection. This module contains broad profiling information about your application, and you can use it to decide which further modules to use to investigate more specific issues in your application. This module is always active, even if you close it. See <a href="ProfilerCPU.html">CPU Usage Profiler module</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GPU Usage</strong></td>
+	<td style="text-align:left;">Displays information related to graphics processing. By default this module is not active, because it has a high overhead. See <a href="ProfilerGPU.html">GPU Usage Profiler module</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rendering</strong></td>
+	<td style="text-align:left;">Displays information on how Unity renders graphics in your application, including information on static and <span class="tooltip"><strong>dynamic batching</strong><span class="tooltiptext">An automatic Unity process which attempts to render multiple meshes as if they were a single mesh for optimized graphics performance. The technique transforms all of the GameObject vertices on the CPU and groups many similar vertices together. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DrawCallBatching.html" href="DrawCallBatching.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DynamicBatching" aria-label="Go to glossary anchor for DynamicBatching">Glossary</a></span></span></span>, SetPass and Draw calls, triangles, and vertices. See <a href="ProfilerRendering.html">Rendering Profiler module</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Memory</strong></td>
+	<td style="text-align:left;">Displays information on how Unity allocates memory in your application. This is particularly useful for seeing how scripting allocations (GC.Alloc) lead up to garbage collection, or how your application’s Asset memory usage trends over time. See <a href="ProfilerMemory.html">Memory Profiler module</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Audio</strong></td>
+	<td style="text-align:left;">Displays information related to the audio in your application, such as when and how many <span class="tooltip"><strong>audio sources</strong><span class="tooltiptext">A component which plays back an Audio Clip in the scene to an audio listener or through an audio mixer. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioSource.html" href="class-AudioSource.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioSource" aria-label="Go to glossary anchor for AudioSource">Glossary</a></span></span></span> play, how much CPU usage the Audio system requires, and how much memory Unity allocates to it. See <a href="ProfilerAudio.html">Audio Profiler module</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Video</strong></td>
+	<td style="text-align:left;">Displays information related to <a href="VideoPlayer.html">video</a> in your application. See <a href="profiler-video-profiler-module.html">Video Profiler module</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Physics</strong></td>
+	<td style="text-align:left;">Displays information about the physics in your application that the <span class="tooltip"><strong>physics engine</strong><span class="tooltiptext">A system that simulates aspects of physical systems so that objects can accelerate correctly and be affected by collisions, gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PhysicsSection.html" href="PhysicsSection.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PhysicsEngine" aria-label="Go to glossary anchor for PhysicsEngine">Glossary</a></span></span></span> has processed. See <a href="ProfilerPhysics.html">Physics Profiler module</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Physics (2D)</strong></td>
+	<td style="text-align:left;">Similar to the Physics Profiler module, this module displays information about where the physics engine has processed 2D physics in your application. See <a href="profiler-2d-physics-profiler-module.html">2D Physics Profiler module</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Displays information about how Unity handles UI batching for your application, including why and how Unity batches items. See <a href="ProfilerUI.html">UI and UI Details Profiler module</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UI Details</strong></td>
+	<td style="text-align:left;">Similar to the UI Module, this module’s chart adds data about batch and vertices count, as well as markers which include information about user input events that trigger UI changes. See <a href="ProfilerUI.html">UI and UI Details Profiler module</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Global Illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Displays information on how much CPU resource Unity spends on the Global Illumination lighting subsystem in your application. See <a href="ProfilerGI.html">Global Illumination Profiler window</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Virtual Texturing</strong></td>
+	<td style="text-align:left;">Displays statistics about <a href="svt-streaming-virtual-texturing.html">Streaming Virtual Texturing</a> in your application. See the <a href="profiler-virtual-texturing-module.html">Virtual Texturing Profiler module</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Asset Loading</strong></td>
+	<td style="text-align:left;">Displays information about how your application loads assets. See the <a href="profiler-asset-loading-module.html">Asset Loading Profiler module</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>File Access</strong></td>
+	<td style="text-align:left;">Displays information about file accesses in your application. See the <a href="profiler-file-access-module.html">File Access Profiler module</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="module-overhead" aria-hidden="true"></a></p>
+
+<h3>Profiler module overhead</h3>
+
+<p>Some Profiler modules have a large data collection overhead, such as the GPU, UI, and Audio Profiler module. To prevent these modules from affecting your application’s performance, you can deactivate them by unselecting them in the <strong>Profiler Module</strong> dropdown. This removes the module from the window, stops the Profiler from collecting that module’s data, and lowers the Profiler’s overhead. </p>
+
+<p>This does not apply to the CPU Usage module, which always collects data even when it’s not active, because other modules rely on it.</p>
+
+<p>To add a module, select the <strong>Profiler Module</strong> dropdown and choose the Profiler you want to activate. When you choose a Profiler module from the drop-down, it starts collecting data, but shows no data for the period in which it was not active. </p>
+
+<p>To avoid the overhead of the GPU Profiler module, it is not active by default. The GPU Profiler module must be active at the start of your application to hook into the graphics driver. If you add it later, it has no effect on most platforms, and the Profiler displays the message “GPU profiling is not supported by the graphics card driver (or it was disabled because of driver bugs)”.</p>
+
+<p>If you instruct the Profiler to collect and send data to disk through the <a href="../ScriptReference/Profiling.Profiler-logFile.html">Profiler.logFile</a> API instead of through the Profiler window, you can turn off Profiler modules through <a href="../ScriptReference/Profiling.Profiler.SetAreaEnabled.html">Profiler.SetAreaEnabled()</a>.</p>
+
+<p>Some settings that debug your scripts through an external IDE might also create overhead. To avoid this overhead and get more accurate measurements, disable the <strong>Editor Attaching</strong> setting (menu: <strong>Preferences &gt; External Tools</strong>). Similarly, when you profile build Players, open <strong>Build Settings</strong> and disable <strong>Script Debugging</strong> to avoid that overhead.</p>
+
+<p><a name="frame-charts" aria-hidden="true"></a></p>
+
+<h3>Profiler frame charts</h3>
+
+<p>The upper part of the Profiler window displays performance data over time on a frame-by-frame basis. When you run your application, the Profiler records data for each frame. By default, the Profiler window displays the history of the last 300 frames it profiles. You can increase the number of frames the Profiler profiles in the <strong>Preferences</strong> window, up to a maximum of 2,000.</p>
+
+<p>When you click in the Profiler frame chart area of the Profiler window, a white line appears, which highlights one frame of your application. To navigate between frames, use the <a href="#controls">transport controls</a> in the toolbar of the Profiler window.</p>
+
+<p>Unity manages the vertical scale of the charts automatically, and the charts attempt to fill the vertical space of the window. To see more detail in a chart, you can remove other Profiler modules, or you can drag the splitter between the charts and the detailed statistics area to increase the screen area of the charts.</p>
+
+<p>To toggle hiding and displaying a metric in a chart, click the colored square next to its label in its module. This can be useful to identify the causes of spikes. In stacked charts such as the CPU Usage Profiler’s chart, you can reorder the metric labels to affect the stacking order, which helps make more prominent metrics more visible.</p>
+
+<p>Each Profiler module collects different performance data metrics and displays them in separate charts. When you click on a frame, Unity displays more details about the frame in the Module Details pane in the bottom half of the Profiler window. The type of detail in this window changes depending on which Profile module you select. For more information about the specific details that each module displays in this area, see the individual documentation for the <a href="#modules">Profiler modules</a>.</p>
+
+<p><a name="standalone" aria-hidden="true"></a></p>
+
+<h2>Standalone Profiler</h2>
+
+<p>To use the Standalone Profiler, go to <strong>Window &gt; Analysis &gt; Profiler (Standalone process)</strong>. When you select the Standalone Profiler, Unity launches the Profiler outside of the Unity Editor’s process, and instead launches the Profiler in a new, separate process.</p>
+
+<p>Launching the Profiler in its own dedicated process ensures cleaner Profiler data when you target the Editor or Play mode. It also reduces overhead, because the Profiler isn’t profiling itself or sharing a process with your application or the Editor. The functionality and controls of the Profiler remain the same as when you run the Profiler in the same process as the Editor.</p>
+
+<figure>
+<img src="../uploads/Main/profiler-standalone-menut.png" alt="Menu selection for the Standalone Profiler">
+<figcaption>Menu selection for the Standalone Profiler</figcaption>
+</figure>
+
+<p>When you start a separate process for the Profiler window, it takes longer to start up than opening it in the same process as the Editor. You cannot dock any Editor windows that are connected to the separate process to the main process’s windows. Additionally, when you restart the Editor, Unity does not re-open the windows in the out-of-process Profiler.</p>
+
+<p><a name="command-line" aria-hidden="true"></a></p>
+
+<h2>Command line arguments</h2>
+
+<p>If you start your built Player or the Unity Editor from the command line (such as the Command Prompt on Windows, Terminal on macOS, Linux shell, or adb for Android), you can pass command line arguments to configure some Profiler settings.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Command line argument</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>-deepprofiling</code></td>
+	<td style="text-align:left;">Enable Deep Profiling in a built Player.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-profiler-enable</code></td>
+	<td style="text-align:left;">Profile the start-up of a Player or the Editor. When you use this argument with a Player, it has the same effect as building the Player with the <strong>Autoconnect Profiler</strong> option enabled in Build Settings. <br> <br> When you use this argument with the Editor, it starts collecting and displaying Profiler information in the Profiler window on start-up of the Editor.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-profiler-log-file &lt;Path/To/Log/File.raw&gt;</code></td>
+	<td style="text-align:left;">This argument sets the Profiler up to stream the profile data to a .raw file on startup. It works for both Players and the Editor.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-profiler-capture-frame-count &lt;NumberOfFrames&gt;</code></td>
+	<td style="text-align:left;">This argument sets how many frames to capture in a profile when streaming to a .raw file on start-up. It only works on Players.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>-profiler-maxusedmemory</code></td>
+	<td style="text-align:left;">By default, <code>maxUsedMemory</code> is 16MB for Players and 256MB for the Editor. You can use this argument to set the <code>maxUsedMemory</code> parameter to a custom size at start-up (for example, <code>-profiler-maxusedmemory 16777216</code>). The size is set in bytes.</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<ul>
+<li><span class="page-history">Added Out-of-process Profiler in <a href="https://docs.unity3d.com/2020.1/Documentation/Manual/30_search.html?q=newin20201">2020.1</a> <span class="search-words">NewIn20201</span></span></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="profiler-markers.html"></a></span><div class="tip">Common Profiler markers</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="profiler-asset-loading-module.html"></a></span><div class="tip">Asset Loading Profiler module</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

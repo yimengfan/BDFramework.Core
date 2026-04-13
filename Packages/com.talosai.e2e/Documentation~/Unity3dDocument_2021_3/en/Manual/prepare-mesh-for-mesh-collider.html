@@ -1,0 +1,205 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Prepare a Mesh for Mesh colliders</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/prepare-mesh-for-mesh-collider.html">English</a></li>
+<li><a href="/cn/current/Manual/prepare-mesh-for-mesh-collider.html">中文</a></li>
+<li><a href="/ja/current/Manual/prepare-mesh-for-mesh-collider.html">日本語</a></li>
+<li><a href="/kr/current/Manual/prepare-mesh-for-mesh-collider.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/prepare-mesh-for-mesh-collider.html">English</a></li>
+<li><a href="/cn/current/Manual/prepare-mesh-for-mesh-collider.html">中文</a></li>
+<li><a href="/ja/current/Manual/prepare-mesh-for-mesh-collider.html">日本語</a></li>
+<li><a href="/kr/current/Manual/prepare-mesh-for-mesh-collider.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PhysicsSection.html">Physics</a></li>
+<li><a href="PhysicsOverview.html">Built-in 3D Physics</a></li>
+<li><a href="collision-section.html">Collision</a></li>
+<li><a href="collider-shapes.html">Collider shapes</a></li>
+<li><a href="mesh-colliders.html">Mesh colliders</a></li>
+<li>Prepare a Mesh for Mesh colliders</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="mesh-colliders-introduction.html"></a></span><div class="tip">Mesh colliders</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-MeshCollider.html"></a></span><div class="tip">Mesh collider component reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Prepare a Mesh for Mesh colliders</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Mesh <span class="tooltip"><strong>colliders</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> require a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> require a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>’s <span class="tooltip"><a href="mesh.html">Mesh</a><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>’s <span class="tooltip"><a href="mesh.html">Mesh</a><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> to be properly configured so that <span class="tooltip"><strong>collisions</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a href="CollidersOverview.html" href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> to be properly configured so that <span class="tooltip"><strong>collisions</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span> are accurate.</p>
+
+<p><a name="allow-read-write-access" aria-hidden="true"></a></p>
+
+<h2>Allow read and write access to a Mesh</h2>
+
+<p>There are particular configurations and optimizations that require a Mesh to be read/write enabled. For details on what “read/write” means in this context, refer to documentation on the Mesh API property <a href="../ScriptReference/Mesh-isReadable.html"><code>Mesh.isReadable</code></a>. </p>
+
+<p>A Mesh must be read/write enabled if any of the following circumstances are true:</p>
+
+<ul>
+<li>The attached <span class="tooltip"><strong>Mesh collider</strong><span class="tooltiptext">A free-form collider component which accepts a mesh reference to define its collision surface shape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshCollider.html" href="class-MeshCollider.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshCollider" aria-label="Go to glossary anchor for MeshCollider">Glossary</a></span></span></span>’s Transform has negative scaling (for example, (–1, 1, 1)) and the Mesh is convex.</li>
+<li>The attached Mesh collider’s Transform is skewed or sheared (for example, when a rotated Transform has a scaled parent Transform).</li>
+<li>The Mesh collider’s <strong>Cooking Options</strong> (see <a href="#configure-mesh-cooking">Configure Mesh cooking</a>) are set to any value other than the default (that is, everything enabled except <strong>None</strong>).</li>
+</ul>
+
+<h3>Make a Mesh read/write enabled</h3>
+
+<p>To make a Mesh read/write enabled, the Mesh must have a <code>Mesh.isReadable</code> value of <code>true</code>. To apply this via the Editor:</p>
+
+<ol>
+<li>In the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, select the <span class="tooltip"><strong>model file</strong><span class="tooltiptext">A file containing a 3D data, which may include definitions for meshes, bones, animation, materials and textures. <a href="3D-formats.html" href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, select the <span class="tooltip"><strong>model file</strong><span class="tooltiptext">A file containing a 3D data, which may include definitions for meshes, bones, animation, materials and textures. <a href="3D-formats.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Modelfile" aria-label="Go to glossary anchor for Modelfile">Glossary</a></span></span></span> (for example, the FBX file) that contains the Mesh.</li>
+<li>In the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, select <strong>Model</strong>.</li>
+<li>In the <strong>Meshes</strong> section, enable <strong>Read/Write</strong>.</li>
+</ol>
+
+<p><a name="configure-mesh-cooking" aria-hidden="true"></a></p>
+
+<h2>Configure Mesh cooking</h2>
+
+<p>To calculate collisions with a Mesh collider, the physics system needs to be able to access the Mesh’s geometry. “Mesh cooking” refers to the process of converting a 3D mesh from its original format (for example, FBX or OBJ) into a format that the physics system can read. The cooking process takes the raw Mesh data and builds spatial search structures so that Unity can respond to physics queries more quickly.</p>
+
+<p>You can trigger Mesh cooking in the Import Settings (<strong>Import Settings</strong> &gt; <strong>Model</strong> &gt; <strong>Generate Colliders</strong>) or at run time.</p>
+
+<h3>Optimize Mesh cooking at run time</h3>
+
+<p>During the Mesh cooking process, Unity can apply various optimizations to reduce the size and complexity of the Mesh (for example: removing redundant vertices, merging overlapping triangles, or simplifying the geometry to reduce the number of triangles). Unity can then load the optimized mesh more quickly and efficiently, which reduces memory use and improves overall performance.</p>
+
+<p>To control which optimizations run, use the Mesh collider’s <strong>Cooking Options</strong> property (which corresponds to the C# enum <a href="../ScriptReference/MeshColliderCookingOptions.html"><code>MeshColliderCookingOptions</code></a>). For an overview of the different cooking options available, see the <a href="class-MeshCollider.html">Mesh collider component reference</a>.</p>
+
+<p>The default <strong>Cooking Options</strong> are suitable for any Mesh collider that you cook in the Editor and never re-cook at run time. They are also suitable for most Mesh colliders that you need at run time (particularly large or complicated Meshes that only need to cook once). However, you might need to alter the <strong>Cooking Options</strong> to make collider generation faster if you need to rapidly generate collision geometry at run time (for example, procedural surfaces, or Mesh colliders that deform in response to player behaviour). </p>
+
+<p>To optimize Mesh cooking for Meshes that Unity generates at run time, you can disable the data cleaning steps (<strong>Enable Mesh Cleaning</strong>, and <strong>Weld Co-Located Vertices</strong>). However, if you disable the data cleaning steps, you must have another way to validate your Mesh data, to ensure you aren’t using data that those algorithms would otherwise clean.</p>
+
+<ul>
+<li>If <strong>Enable Mesh Cleaning</strong> is disabled, you must ensure that the Mesh has no degenerate triangles (for example, thin triangles where the points are collinear, or triangles with an area close to zero or infinity).</li>
+<li>If <strong>Weld Colocated Vertices</strong> is disabled, you must ensure that the Mesh has no co-located vertices (that is, multiple vertices existing in the same location).</li>
+</ul>
+
+<p>You can also disable <strong>Cook For Faster Simulation</strong> to save memory usage.</p>
+
+<p>When you change the <strong>Cooking Options</strong>, you need to apply read/write permission to the Mesh. For guidance on how to do this, see <a href="#allow-read-write-access">Allow read and write access to a Mesh</a>.</p>
+
+<h2>Optimize non-rendered Meshes</h2>
+
+<p>If a Mesh only needs to provide data for physics calculations and not for rendering (for example, for invisible colliders), you don’t need to import the Mesh’s normals. Meshes without normals require less memory and use less disk space. </p>
+
+<p>To disable normals:</p>
+
+<ol>
+<li>In the Project window, select the Mesh.</li>
+<li>In the Inspector’s <a href="">Import settings</a>, select <strong>Model</strong>.</li>
+<li>Navigate to the Geometry section and set <strong>Normals</strong> to <strong>None</strong>.</li>
+</ol>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="mesh-colliders-introduction.html"></a></span><div class="tip">Mesh colliders</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-MeshCollider.html"></a></span><div class="tip">Mesh collider component reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

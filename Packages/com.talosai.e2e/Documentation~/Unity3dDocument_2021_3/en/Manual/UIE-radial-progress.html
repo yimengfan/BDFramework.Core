@@ -1,0 +1,573 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Use Mesh API to create a radial progress indicator</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-radial-progress.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-radial-progress.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-radial-progress.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-radial-progress.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-radial-progress.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-radial-progress.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-radial-progress.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-radial-progress.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-structure-ui.html">Structure UI</a></li>
+<li><a href="UIE-uxml-examples.html">Structure UI examples</a></li>
+<li>Use Mesh API to create a radial progress indicator</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-slide-toggle.html"></a></span><div class="tip">Create a slide toggle custom control</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-create-bindable-custom-control.html"></a></span><div class="tip">Create a bindable custom control</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Use Mesh API to create a radial progress indicator</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Version</strong>: 2021.3+</p>
+
+<p>This example demonstrates how to use the <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> API to draw visual content onto a <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> API to draw visual content onto a <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span>. </p>
+
+<p>
+<strong>Note</strong>: The Mesh API is a tool for advanced users. In version 2022.1 and later, if you only want to generate simple geometry, use the Vector API instead. For more information, see <a href="https://docs.unity3d.com/2022.2/Documentation/Manual/UIE-radial-progress-use-vector-api.html">Use Vector API to create a radial progress indicator</a>.</p>
+
+<h2>Example overview</h2>
+
+<p>This example creates a custom control that displays progress, as an alternative to a loading bar. The progress indicator displays a progress value in a partially filled ring around a label that displays the percentage. It supports a value between 0 and 100, which determines how much of the ring is filled.</p>
+
+<figure>
+<img src="../uploads/Main/radial-progress-finished.png" alt="">
+</figure>
+
+<p>You can find the completed files that this example creates in this <a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/master/radial-progress">GitHub repository</a>.</p>
+
+<h2>Prerequisites</h2>
+
+<p>This guide is for developers familiar with the Unity Editor, <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit, and C# scripting. Before you start, get familiar with the following:</p>
+
+<ul>
+<li><a href="UIBuilder.html">UI Builder</a></li>
+<li><a href="UIE-USS.html">USS</a></li>
+<li><a href="UIE-Events-Handling.html">Handling events</a></li>
+<li><a href="../ScriptReference/UIElements.MeshGenerationContext.html"><code>MeshGenerationContext</code></a></li>
+</ul>
+
+<h2>Create the radial progress indicator and its custom mesh</h2>
+
+<p>Create two C# files with one defining the <code>RadialProgress</code> class and another defining the custom mesh. In the C# file that defines the <code>RadialProgress</code> class, create a Factory class to expose the control to UXML and UI Builder.</p>
+
+<ol>
+<li><p>Create a Unity project with any template.</p></li>
+<li><p>Create a folder named <code>radial-progress</code> to store your files.</p></li>
+<li>
+<p>In the <code>radial-progress</code> folder, create a C# scrip named <code>RadialProgress.cs</code> with the following content:</p>
+
+<pre><code class="lang-cs">using Unity.Collections;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+namespace MyUILibrary
+{
+
+    // An element that displays progress inside a partially filled circle
+    public class RadialProgress : VisualElement
+    {
+        public new class UxmlTraits : VisualElement.UxmlTraits
+        {
+            // The progress property is exposed to UXML.
+            UxmlFloatAttributeDescription m_ProgressAttribute = new UxmlFloatAttributeDescription()
+            {
+                name = &quot;progress&quot;
+            };
+
+            // Use the Init method to assign the value of the progress UXML attribute to the C# progress property.
+            public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
+            {
+                base.Init(ve, bag, cc);
+
+                (ve as RadialProgress).progress = m_ProgressAttribute.GetValueFromBag(bag, cc);
+            }
+        }
+
+        // Define a factory class to expose this control to UXML.
+        public new class UxmlFactory : UxmlFactory&lt;RadialProgress, UxmlTraits&gt; { }
+
+        // These are USS class names for the control overall and the label.
+        public static readonly string ussClassName = &quot;radial-progress&quot;;
+        public static readonly string ussLabelClassName = &quot;radial-progress__label&quot;;
+
+        // These objects allow C# code to access custom USS properties.
+        static CustomStyleProperty&lt;Color&gt; s_TrackColor = new CustomStyleProperty&lt;Color&gt;(&quot;--track-color&quot;);
+        static CustomStyleProperty&lt;Color&gt; s_ProgressColor = new CustomStyleProperty&lt;Color&gt;(&quot;--progress-color&quot;);
+
+        // These are the meshes this control uses.
+        EllipseMesh m_TrackMesh;
+        EllipseMesh m_ProgressMesh;
+
+        // This is the label that displays the percentage.
+        Label m_Label;
+
+        // This is the number of outer vertices to generate the circle.
+        const int k_NumSteps = 200;
+
+        // This is the number that the Label displays as a percentage.
+        float m_Progress;
+
+        // A value between 0 and 100
+
+        public float progress
+        {
+            // The progress property is exposed in C#.
+            get =&gt; m_Progress;
+            set
+            {
+                // Whenever the progress property changes, MarkDirtyRepaint() is named. This causes a call to the
+                // generateVisualContents callback.
+                m_Progress = value;
+                m_Label.text = Mathf.Clamp(Mathf.Round(value), 0, 100) + &quot;%&quot;;
+                MarkDirtyRepaint();
+            }
+        }
+
+        // This default constructor is RadialProgress's only constructor.
+        public RadialProgress()
+        {
+            // Create a Label, add a USS class name, and add it to this visual tree.
+            m_Label = new Label();
+            m_Label.AddToClassList(ussLabelClassName);
+            Add(m_Label);
+
+            // Create meshes for the track and the progress.
+            m_ProgressMesh = new EllipseMesh(k_NumSteps);
+            m_TrackMesh = new EllipseMesh(k_NumSteps);
+
+            // Add the USS class name for the overall control.
+            AddToClassList(ussClassName);
+
+            // Register a callback after custom style resolution.
+            RegisterCallback&lt;CustomStyleResolvedEvent&gt;(evt =&gt; CustomStylesResolved(evt));
+
+            // Register a callback to generate the visual content of the control.
+            generateVisualContent += context =&gt; GenerateVisualContent(context);
+
+            progress = 0.0f;
+        }
+
+        static void CustomStylesResolved(CustomStyleResolvedEvent evt)
+        {
+            RadialProgress element = (RadialProgress)evt.currentTarget;
+            element.UpdateCustomStyles();
+        }
+
+        // After the custom colors are resolved, this method uses them to color the meshes and (if necessary) repaint
+        // the control.
+        void UpdateCustomStyles()
+        {
+            if (customStyle.TryGetValue(s_ProgressColor, out var progressColor))
+            {
+                m_ProgressMesh.color = progressColor;
+            }
+
+            if (customStyle.TryGetValue(s_TrackColor, out var trackColor))
+            {
+                m_TrackMesh.color = trackColor;
+            }
+
+            if (m_ProgressMesh.isDirty || m_TrackMesh.isDirty)
+                MarkDirtyRepaint();
+        }
+
+        // The GenerateVisualContent() callback method calls DrawMeshes().
+        static void GenerateVisualContent(MeshGenerationContext context)
+        {
+            RadialProgress element = (RadialProgress)context.visualElement;
+            element.DrawMeshes(context);
+        }
+
+        // DrawMeshes() uses the EllipseMesh utility class to generate an array of vertices and indices, for both the
+        // &quot;track&quot; ring (in grey) and the progress ring (in green). It then passes the geometry to the MeshWriteData
+        // object, as returned by the MeshGenerationContext.Allocate() method. For the &quot;progress&quot; mesh, only a slice of
+        // the index arrays is used to progressively reveal parts of the mesh.
+        void DrawMeshes(MeshGenerationContext context)
+        {
+            float halfWidth = contentRect.width * 0.5f;
+            float halfHeight = contentRect.height * 0.5f;
+
+            if (halfWidth &lt; 2.0f || halfHeight &lt; 2.0f)
+                return;
+
+            m_ProgressMesh.width = halfWidth;
+            m_ProgressMesh.height = halfHeight;
+            m_ProgressMesh.borderSize = 10;
+            m_ProgressMesh.UpdateMesh();
+
+            m_TrackMesh.width = halfWidth;
+            m_TrackMesh.height = halfHeight;
+            m_TrackMesh.borderSize = 10;
+            m_TrackMesh.UpdateMesh();
+
+            // Draw track mesh first
+            var trackMeshWriteData = context.Allocate(m_TrackMesh.vertices.Length, m_TrackMesh.indices.Length);
+            trackMeshWriteData.SetAllVertices(m_TrackMesh.vertices);
+            trackMeshWriteData.SetAllIndices(m_TrackMesh.indices);
+
+            // Keep progress between 0 and 100
+            float clampedProgress = Mathf.Clamp(m_Progress, 0.0f, 100.0f);
+
+            // Determine how many triangles are used to depending on progress, to achieve a partially filled circle
+            int sliceSize = Mathf.FloorToInt((k_NumSteps * clampedProgress) / 100.0f);
+
+            if (sliceSize == 0)
+                return;
+
+            // Every step is 6 indices in the corresponding array
+            sliceSize *= 6;
+
+            var progressMeshWriteData = context.Allocate(m_ProgressMesh.vertices.Length, sliceSize);
+            progressMeshWriteData.SetAllVertices(m_ProgressMesh.vertices);
+
+            var tempIndicesArray = new NativeArray&lt;ushort&gt;(m_ProgressMesh.indices, Allocator.Temp);
+            progressMeshWriteData.SetAllIndices(tempIndicesArray.Slice(0, sliceSize));
+            tempIndicesArray.Dispose();
+        }
+
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>Create a C# script named <code>EllipseMesh.cs</code> with the following content:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.UIElements;
+
+namespace MyUILibrary
+{
+    public class EllipseMesh
+    {
+        int m_NumSteps;
+        float m_Width;
+        float m_Height;
+        Color m_Color;
+        float m_BorderSize;
+        bool m_IsDirty;
+        public Vertex[] vertices { get; private set; }
+        public ushort[] indices { get; private set; }
+
+        public EllipseMesh(int numSteps)
+        {
+            m_NumSteps = numSteps;
+            m_IsDirty = true;
+        }
+
+        public void UpdateMesh()
+        {
+            if (!m_IsDirty)
+                return;
+
+            int numVertices = numSteps * 2;
+            int numIndices = numVertices * 6;
+
+            if (vertices == null || vertices.Length != numVertices)
+                vertices = new Vertex[numVertices];
+
+            if (indices == null || indices.Length != numIndices)
+                indices = new ushort[numIndices];
+
+            float stepSize = 360.0f / (float)numSteps;
+            float angle = -180.0f;
+
+            for (int i = 0; i &lt; numSteps; ++i)
+            {
+                angle -= stepSize;
+                float radians = Mathf.Deg2Rad * angle;
+
+                float outerX = Mathf.Sin(radians) * width;
+                float outerY = Mathf.Cos(radians) * height;
+                Vertex outerVertex = new Vertex();
+                outerVertex.position = new Vector3(width + outerX, height + outerY, Vertex.nearZ);
+                outerVertex.tint = color;
+                vertices[i * 2] = outerVertex;
+
+                float innerX = Mathf.Sin(radians) * (width - borderSize);
+                float innerY = Mathf.Cos(radians) * (height - borderSize);
+                Vertex innerVertex = new Vertex();
+                innerVertex.position = new Vector3(width + innerX, height + innerY, Vertex.nearZ);
+                innerVertex.tint = color;
+                vertices[i * 2 + 1] = innerVertex;
+
+                indices[i * 6] = (ushort)((i == 0) ? vertices.Length - 2 : (i - 1) * 2); // previous outer vertex
+                indices[i * 6 + 1] = (ushort)(i * 2); // current outer vertex
+                indices[i * 6 + 2] = (ushort)(i * 2 + 1); // current inner vertex
+
+                indices[i * 6 + 3] = (ushort)((i == 0) ? vertices.Length - 2 : (i - 1) * 2); // previous outer vertex
+                indices[i * 6 + 4] = (ushort)(i * 2 + 1); // current inner vertex
+                indices[i * 6 + 5] = (ushort)((i == 0) ? vertices.Length - 1 : (i - 1) * 2 + 1); // previous inner vertex
+            }
+
+            m_IsDirty = false;
+        }
+
+        public bool isDirty =&gt; m_IsDirty;
+
+        void CompareAndWrite(ref float field, float newValue)
+        {
+            if (Mathf.Abs(field - newValue) &gt; float.Epsilon)
+            {
+                m_IsDirty = true;
+                field = newValue;
+            }
+        }
+
+        public int numSteps
+        {
+            get =&gt; m_NumSteps;
+            set
+            {
+                m_IsDirty = value != m_NumSteps;
+                m_NumSteps = value;
+            }
+        }
+
+        public float width
+        {
+            get =&gt; m_Width;
+            set =&gt; CompareAndWrite(ref m_Width, value);
+        }
+
+        public float height
+        {
+            get =&gt; m_Height;
+            set =&gt; CompareAndWrite(ref m_Height, value);
+        }
+
+        public Color color
+        {
+            get =&gt; m_Color;
+            set
+            {
+                m_IsDirty = value != m_Color;
+                m_Color = value;
+            }
+        }
+
+        public float borderSize
+        {
+            get =&gt; m_BorderSize;
+            set =&gt; CompareAndWrite(ref m_BorderSize, value);
+        }
+
+    }
+}
+</code></pre>
+</li>
+</ol>
+
+<h2>Use the custom control in a UI Document and test</h2>
+
+<p>Create a USS file to style the radial progress indicator custom control. Use UI Builder to add the control and apply the USS stylesheet. Test the control with different <code>Progress</code> values.</p>
+
+<ol>
+<li>
+<p>Create a USS file named <code>RadialProgress.uss</code> with the following content:</p>
+
+<pre><code class="lang-css">.radial-progress {
+    min-width: 26px;
+    min-height: 20px;
+    --track-color: rgb(130, 130, 130);
+    --progress-color: rgb(46, 132, 24);
+    --percentage-color: white;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    flex-direction: row;
+    justify-content: center;
+    width: 100px; 
+    height: 100px;
+}
+
+.radial-progress__label {
+    -unity-text-align: middle-left;
+    color: var(--percentage-color);
+}
+</code></pre>
+</li>
+<li><p>Create a UI Document named <code>RadialProgressExample.uxml</code>.</p></li>
+<li><p>Double-click <code>RadialProgressExample.uxml</code> to open it in the UI Builder.</p></li>
+<li><p>In the Library window, select <strong>Project</strong> &gt; <strong>Custom Controls</strong> &gt; <strong>MyUILibrary</strong>.</p></li>
+<li><p>Drag <strong>RadialProgress</strong> to the Hierarchy window.</p></li>
+<li><p>In the <strong>StyleSheets</strong> section of the UI Builder, add <code>RadialProgress.uss</code> as existing USS.</p></li>
+<li><p>In the Hierarchy window, select <strong>RadialProgress</strong>. </p></li>
+<li><p>In the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window, enter <code>radial-progress</code> in the <strong>Name</strong> box.</p></li>
+<li><p>In the Inspector window, enter different values in the <strong>Progress</strong> box. The percentage in the <span class="tooltip"><strong>Viewport</strong><span class="tooltiptext">The user’s visible area of an app on their screen.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Viewport" aria-label="Go to glossary anchor for Viewport">Glossary</a></span></span></span> changes, and the green progress ring resizes.</p></li>
+</ol>
+
+<h2>Use the progress indicator in runtime</h2>
+
+<p>Use the UI Document in a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, and create a C# MonoBehaviour script to update the <code>Progress</code> property of the control with dynamic values for demo purposes. </p>
+
+<ol>
+<li>
+<p>In the <code>radial-progress</code> folder, create a C# script named <code>RadialProgressComponent.cs</code> with the following content:</p>
+
+<pre><code class="lang-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
+using MyUILibrary;
+
+[RequireComponent(typeof(UIDocument))]
+public class RadialProgressComponent : MonoBehaviour
+{
+
+    RadialProgress m_RadialProgress;
+
+    void Start()
+    {
+        var root = GetComponent&lt;UIDocument&gt;().rootVisualElement;
+
+        m_RadialProgress = new RadialProgress() {
+            style = {
+                position = Position.Absolute,
+                left = 20, top = 20, width = 200, height = 200
+            }
+        };
+
+        root.Add(m_RadialProgress);
+    }
+
+    void Update()
+    {
+        // For demo purpose, give the progress property dynamic values.
+        m_RadialProgress.progress = ((Mathf.Sin(Time.time) + 1.0f) / 2.0f) * 60.0f + 10.0f;
+    }
+}
+</code></pre>
+</li>
+<li><p>In Unity, select <strong>GameObject</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>UI Document</strong>.</p></li>
+<li><p>Select the <strong>UIDocument</strong> in the Hierarchy window.</p></li>
+<li><p>Add <strong>RadialProgressComponent.cs</strong> as a component of the UIDocument <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. </p></li>
+<li><p>Enter play mode. The progress indicator appears in the scene, and the progress ring and value change dynamically.</p></li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-create-custom-controls.html">Create custom controls</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-slide-toggle.html"></a></span><div class="tip">Create a slide toggle custom control</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-create-bindable-custom-control.html"></a></span><div class="tip">Create a bindable custom control</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

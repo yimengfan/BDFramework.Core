@@ -1,0 +1,775 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Linux Player settings </title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="platforms" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PlayerSettings-linux.html">English</a></li>
+<li><a href="/cn/current/Manual/PlayerSettings-linux.html">中文</a></li>
+<li><a href="/ja/current/Manual/PlayerSettings-linux.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PlayerSettings-linux.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PlayerSettings-linux.html">English</a></li>
+<li><a href="/cn/current/Manual/PlayerSettings-linux.html">中文</a></li>
+<li><a href="/ja/current/Manual/PlayerSettings-linux.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PlayerSettings-linux.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="linux.html">Linux</a></li>
+<li>Linux Player settings </li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="linux.html"></a></span><div class="tip">Linux</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Buildsettings-linux.html"></a></span><div class="tip">Linux Build settings</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Linux Player settings</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use the Linux Unity Player settings (menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong>) to determine how Unity builds and displays your Linux application. For a description of the general Player settings, refer to <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html#general">Player Settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html" href="class-PlayerSettings.html#general">Player Settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/class-PlayerSettingsStandalone.png" alt="Linux Player settings">
+<figcaption>Linux Player settings</figcaption>
+</figure>
+
+<p>You can find documentation for the properties in the following sections:</p>
+
+<ul>
+<li><a href="#Icon">Icon</a></li>
+<li><a href="#Resolution">Resolution and Presentation</a></li>
+<li><a href="#Splash">Splash Image</a></li>
+<li><a href="#Other">Other Settings</a></li>
+</ul>
+
+<p><a name="Icon" aria-hidden="true"></a></p>
+
+<h2>Icon</h2>
+
+<p>Enable the <strong>Override for Windows, Mac, Linux</strong> setting to assign a custom icon for your desktop game. You can upload different sizes of the icon to fit each of the squares provided.</p>
+
+<p><a name="Resolution" aria-hidden="true"></a></p>
+
+<h2>Resolution and Presentation</h2>
+
+<p>Use the <strong>Resolution and Presentation</strong> section to customize aspects of the screen’s appearance in the <a href="#Resolution1">Resolution</a> and <a href="#Resolution2">Standalone Player Options</a> sections.</p>
+
+<p><a name="Resolution1" aria-hidden="true"></a></p>
+
+<h3>Resolution section</h3>
+
+<p>This section allows you to customize the screen mode and default size.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetPCRes.png" alt="Resolution section">
+<figcaption>Resolution section</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;" colspan="2"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<a name="fullscreen" aria-hidden="true"></a><strong>Fullscreen Mode</strong>
+</td>
+	<td style="text-align:left;" colspan="2">Choose the full-screen mode. This defines the default window mode at startup.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Fullscreen Window</strong></td>
+	<td style="text-align:left;">Set your app window to the full-screen native display resolution, covering the whole screen. This mode is also known as borderless full-screen. Unity renders the app content at the resolution set by a script, or the native display resolution if none is set and scales it to fill the window. When scaling, Unity adds black bars to the rendered output to match the display <span class="tooltip"><strong>aspect ratio</strong><span class="tooltiptext">The relationship of an image’s proportional dimensions, such as its width and height.<br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AspectRatio" aria-label="Go to glossary anchor for AspectRatio">Glossary</a></span></span></span> to prevent content stretching. This process is called <a href="https://en.wikipedia.org/wiki/Letterboxing_(filming)">letterboxing</a>. The OS overlay <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html" href="Glossary.html#AspectRatio" aria-label="Go to glossary anchor for AspectRatio">Glossary</a></span></span></span> to prevent content stretching. This process is called <a href="https://en.wikipedia.org/wiki/Letterboxing_(filming)">letterboxing</a>. The OS overlay <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> displays on top of the full-screen window (such as IME input windows). All platforms support this mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Exclusive Fullscreen (Windows only)</strong></td>
+	<td style="text-align:left;">Set your app to maintain sole full-screen use of a display. Unlike <em>Fullscreen Window</em>, this mode changes the OS resolution of the display to match the app’s chosen resolution. This option is only supported on Windows.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Maximized Window (Mac only)</strong></td>
+	<td style="text-align:left;">Set the app window to the operating system’s definition of <strong>maximized</strong>, which is typically a full-screen window with a hidden menu bar and dock on macOS. This option is only supported on macOS. <strong>Fullscreen Window</strong> is the default setting for other platforms.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Windowed</strong></td>
+	<td style="text-align:left;">Set your app to a standard, non-full-screen movable window, the size of which is dependent on the app resolution. In this mode, the window is resizable by default. Use the <a href="#resizable">Resizable Window</a> setting to disable this. All desktop platforms support this full-screen mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Default Is Native Resolution</strong></td>
+	<td style="text-align:left;" colspan="2">Enable this option to make the game use the default resolution used on the target machine. This option isn’t available if the <strong>Fullscreen Mode</strong> is set to <em>Windowed</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Default Screen Width</strong></td>
+	<td style="text-align:left;" colspan="2">Set the default width of the game screen in <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span>. This option is only available if the <strong>Fullscreen Mode</strong> is set to <em>Windowed</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Default Screen Height</strong></td>
+	<td style="text-align:left;" colspan="2">Set the default height of the game screen in pixels. This option is only available if the <strong>Fullscreen Mode</strong> is set to <em>Windowed</em>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Mac Retina Support</strong></td>
+	<td style="text-align:left;" colspan="2">Enable this option to enable support for high DPI (Retina) screens on a Mac. Unity enables this by default. This enhances Projects on a Retina display, but it’s somewhat resource-intensive when active.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Run In background</strong></td>
+	<td style="text-align:left;" colspan="2">Enable this option to have the game running in the background instead of pausing if the app loses focus.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Resolution2" aria-hidden="true"></a></p>
+
+<h3>Standalone Player Options</h3>
+
+<p>Use this section to specify the settings to customize the screen. For example, you can set options for users to resize the screen and specify how many instances can run concurrently.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetPCStand.png" alt="Standalone Player Options">
+<figcaption>Standalone Player Options</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Capture Single Screen</strong></td>
+	<td style="text-align:left;">Enable this option to ensure desktop games in <a href="#fullscreen">Fullscreen Mode</a> do not darken the secondary monitor in multi-monitor setups. This is not supported on Mac OS X.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="UsePlayerLog" aria-hidden="true"></a><strong>Use Player Log</strong>
+</td>
+	<td style="text-align:left;">Enable this option to write a log file with debugging information. Defaults to enabled.<br><strong>Warning:</strong> If you plan to submit your application to the Mac App Store, leave this option disabled. For more information, refer to <a href="#AppStore">Publishing to the Mac App Store</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="resizable" aria-hidden="true"></a><strong>Resizable Window</strong>
+</td>
+	<td style="text-align:left;">Enable this option to allow resizing of the player window.<br><strong>Note:</strong> If you disable this option, your application can’t use the <strong>Windowed</strong> <a href="#fullscreen">Fullscreen Mode</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Visible in Background</strong></td>
+	<td style="text-align:left;">Enable this option to show the application in the background if <strong>Windowed</strong> <a href="#fullscreen">Fullscreen Mode</a> is used (in Windows).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Allow Fullscreen Switch</strong></td>
+	<td style="text-align:left;">Enable this option to allow default OS full-screen key presses to toggle between full-screen and windowed modes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Force Single Instance</strong></td>
+	<td style="text-align:left;">Enable this option to restrict desktop players to a single concurrent running instance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Use DXGI flip model swap chain for D3D11</strong></td>
+	<td style="text-align:left;">Use the flip model to ensure best performance for presenting your application. Every time a frame needs to be displayed, Unity makes a copy of the swap chain surface and <span class="tooltip"><strong>blits</strong><span class="tooltiptext">A shorthand term for “bit block transfer”. A blit operation is the process of transferring blocks of data from one place in memory to another.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#blit" aria-label="Go to glossary anchor for blit">Glossary</a></span></span></span> it to the screen buffer. This setting affects the D3D11 graphics API. Disable this option to fall back to the Windows 7-style BitBlt model. When run in Windowed (borderless) full-screen mode, Unity displays the application swap chain directly on the screen, which reduces input latency by one frame and eliminates desktop composition done by the Desktop Window Manager in the same way that exclusive full-screen does. This optimization is known as “Independent Flip.” For more information, refer to <a href="../ScriptReference/PlayerSettings-useFlipModelSwapchain.html">PlayerSettings.useFlipModelSwapchain</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Supported Aspect Ratios</strong></td>
+	<td style="text-align:left;">Enable each aspect ratio that you want to appear in the Resolution Dialog at startup (as long as they’re supported by the user’s monitor).</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Splash" aria-hidden="true"></a></p>
+
+<h2>Splash Image</h2>
+
+<p>Use the <strong>Virtual Reality Splash Image</strong> setting to select a custom splash image for <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html">Virtual Reality</a><span class="tooltiptext">Virtual Reality (VR) immerses users in an artificial 3D world of realistic images and sounds, using a headset and motion tracking. <a href="VROverview.html" href="XR.html">Virtual Reality</a><span class="tooltiptext">Virtual Reality (VR) immerses users in an artificial 3D world of realistic images and sounds, using a headset and motion tracking. <a href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VirtualReality" aria-label="Go to glossary anchor for VirtualReality">Glossary</a></span></span></span> displays. For information on common Splash Screen settings, see <a href="class-PlayerSettingsSplashScreen.html">Splash Screen</a>.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetPCSplash.png" alt="Splash Image settings">
+<figcaption>Splash Image settings</figcaption>
+</figure>
+
+<p><a name="Other" aria-hidden="true"></a></p>
+
+<h2>Other Settings</h2>
+
+<p>This section allows you to customize a range of options organized into the following groups:</p>
+
+<ul>
+<li><a href="#Rendering">Rendering</a></li>
+<li><a href="#Vulkan">Vulkan Settings</a></li>
+<li><a href="#AppStore">Mac App Store Options</a></li>
+<li><a href="#Configuration">Configuration</a></li>
+<li><a href="#ShaderVariantLoading">Shader Variant Loading</a></li>
+<li><a href="#Optimization">Optimization</a></li>
+<li><a href="#Logging">Logging</a></li>
+<li><a href="#Legacy">Legacy</a></li>
+</ul>
+
+<p><a name="Rendering" aria-hidden="true"></a></p>
+
+<h3>Rendering</h3>
+
+<p>Use these settings to customize how Unity renders your game for desktop (Windows, Mac, Linux) platforms.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetPCOther-Rendering.png" alt="Rendering settings">
+<figcaption>Rendering settings</figcaption>
+</figure>
+<table>
+<thead><tr>
+<th><strong>Property</strong></th>
+<th colspan="2"><strong>Description</strong></th>
+</tr></thead>
+<tbody> <tr>
+<td rowspan="3"><strong>Color Space</strong></td>
+<td colspan="2">Choose which color space Unity uses for rendering: <strong>Gamma</strong> or <strong>Linear</strong>. For more information, see <a href="LinearLighting.html">Linear rendering overview</a>.</td>
+</tr>
+<tr>
+ <td><strong>Gamma</strong></td>
+ <td>Gamma color space is typically used for calculating lighting on older hardware restricted to 8 bits per channel for the frame buffer format. Even though monitors today are digital, they might still take a gamma-encoded signal as input.</td>
+</tr>
+<tr>
+ <td><strong>Linear</strong></td>
+ <td>Linear color space rendering gives more precise results. When you select to work in linear color space, the Editor defaults to using <a href="https://en.wikipedia.org/wiki/SRGB">sRGB</a> sampling. If your <a href="Textures.html">Textures</a> are in linear color space, you need to work in linear color space and disable sRGB sampling for each Texture.</td>
+</tr>
+ <tr>
+<td><strong>Auto Graphics API for Windows</strong></td>
+<td colspan="2">Enable this option to use the best Graphics API on the Windows machine the game is running on. Disable it to add and remove supported Graphics APIs. </td>
+</tr> <tr>
+<td><strong>Auto Graphics API for Mac</strong></td>
+<td colspan="2">Enable this option to use the best Graphics API on the Mac the game is running on. Disable it to add and remove supported Graphics APIs. </td>
+</tr> <tr>
+<td><strong>Auto Graphics API for Linux</strong></td>
+<td colspan="2">Enable this option to use the best Graphics API on the Linux machine it runs on. Disable it to add and remove supported Graphics APIs. </td>
+</tr> <tr>
+<td><strong>Color Gamut for Mac</strong></td>
+<td colspan="2">You can add or remove <a href="https://www.viewsonic.com/colorpro/articles/detail/color-gamut_113">color gamuts</a> for the Mac platform to use for rendering. Click the plus (+) icon to display a list of available gamuts. A color gamut defines a possible range of colors available for a given device (such as a monitor or screen). The sRGB gamut is the default (and required) gamut. </td>
+</tr> <tr>
+<td><strong>Metal API Validation</strong></td>
+<td colspan="2">Enable this option when you need to debug Shader issues.<br><strong>Note:</strong> Validation increases CPU usage, so use it only for debugging.</td>
+</tr> <tr>
+<td>
+<strong>Metal Write-Only Backbuffer</strong> </td>
+<td colspan="2"> Allow improved performance in non-default device orientation. This sets the <code>frameBufferOnly</code> flag on the back buffer, which prevents readback from the back buffer but enables some driver optimization. </td>
+</tr> <tr>
+<td>
+<strong>Memoryless Depth</strong> </td>
+<td colspan="2"> Choose when to use <a href="../ScriptReference/RenderTextureMemoryless.Depth.html">memoryless render textures</a>. Memoryless render textures are temporarily stored in the on-tile memory when rendered, not in CPU or GPU memory. This reduces memory usage of your app but you cannot read or write to these render textures.<br><strong>Note:</strong> Memoryless render textures are only supported on iOS, tvOS 10.0+ Metal and Vulkan. Render textures are read/write protected and stored in CPU or GPU memory on other platforms. </td>
+</tr> <tr>
+<td></td>
+<td>
+<strong>Unused</strong> </td>
+<td>Never use memoryless framebuffer depth.</td>
+</tr> <tr>
+<td></td>
+<td>
+<strong>Forced</strong> </td>
+<td>Always use memoryless framebuffer depth.</td>
+</tr> <tr>
+<td></td>
+<td>
+<strong>Automatic</strong> </td>
+<td>Let Unity decide when to use memoryless framebuffer depth.</td>
+</tr> <tr>
+<td>
+<strong>Static Batching</strong> </td>
+<td colspan="2">Use Static batching. For more information, refer to <a href="DrawCallBatching.html">Draw call batching</a>.</td>
+</tr> <tr>
+<td>
+<strong>Dynamic Batching</strong> </td>
+<td colspan="2">Use dynamic batching (enabled by default). For more information, refer to <a href="DrawCallBatching.html">Draw call batching</a>.<br><br><strong>Note:</strong> Dynamic batching has no effect when a <a href="ScriptableRenderPipeline.html">Scriptable Render Pipeline</a> is active, so this setting is only visible if the <strong>Scriptable Render Pipeline Asset</strong> <a href="class-GraphicsSettings.html#SRLoop">Graphics</a> setting is blank. </td>
+</tr> <tr>
+<td>
+<strong>Compute Skinning</strong> </td>
+<td colspan="2">Enable this option to enable DX11/ES3 GPU compute skinning, freeing up CPU resources.</td>
+</tr> <tr>
+<td>
+<strong>Graphics Jobs</strong> </td>
+<td colspan="2">Offloads graphics tasks (render loops) to worker threads running on other CPU cores. This option reduces the time spent in <code>Camera.Render</code> on the main thread, which can be a bottleneck.</td>
+</tr> <tr>
+<td>
+<strong>Lightmap Encoding</strong> </td>
+<td colspan="2">Defines the encoding scheme and compression format of the lightmaps. <br>You can choose from <strong>Low Quality</strong>, <strong>Normal Quality</strong>, or <strong>High Quality</strong> . For more information, refer to <a href="Lightmaps-TechnicalInformation.html">Lightmaps: Technical information</a>.</td>
+</tr> <tr>
+<td>
+<strong>Lightmap Streaming</strong> </td>
+<td colspan="2">Uses <a href="TextureStreaming.html">Mipmap Streaming</a> for lightmaps. Unity applies this setting to all lightmaps when it generates them.<br><br><strong>Note:</strong> To use this setting, you must enable the <a href="class-QualitySettings.html#texStream">Texture Streaming Quality</a> setting.</td>
+</tr> <tr>
+<td>
+<strong>Streaming Priority</strong> </td>
+<td colspan="2">Sets the priority for all lightmaps in the <a href="TextureStreaming.html">Mipmap Streaming system</a>. Unity applies this setting to all lightmaps when it generates them.<br>Positive numbers give higher priority. Valid values range from –128 to 127.</td>
+</tr> <tr>
+<td><strong>Frame Timing Stats</strong></td>
+<td colspan="2">Allows Unity to gather CPU/GPU frame timing statistics. Use this option with the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DynamicResolution.html">Dynamic Resolution</a><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets, to reduce workload on the GPU. <a href="DynamicResolution.html" href="DynamicResolution.html">Dynamic Resolution</a><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets, to reduce workload on the GPU. <a href="DynamicResolution.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#dynamicresolution" aria-label="Go to glossary anchor for dynamicresolution">Glossary</a></span></span></span> camera setting to determine if your application is CPU or GPU bound.</td>
+</tr>
+ <tr>
+<td><strong>Use Display In HDR Mode (Windows Only)</strong></td>
+<td colspan="2">Allows the game to automatically switch to HDR mode output when it runs. If the display doesn’t support HDR mode, the game runs in standard mode. </td>
+</tr> <tr>
+<td><strong>Swap Chain Bit Depth</strong></td>
+<td colspan="2">Selects the number of bits in each color channel for swap chain buffers. You can select <strong>Bit Depth 10</strong> or <strong>Bit Depth 16</strong>. The option to choose bit depth only becomes available when you enable HDR Mode. <br><br>For more information on bit depth, refer to the Scripting API page for <a href="../ScriptReference/D3DHDRDisplayBitDepth.html">D3DHDRDisplayBitDepth</a>.</td>
+</tr> <tr>
+<td></td>
+<td><strong>Bit Depth 10</strong></td>
+<td>Unity will use the R10G10B10A2 buffer format and Rec2020 primaries with ST2084 PQ encoding.</td>
+</tr> <tr>
+<td></td>
+<td><strong>Bit Depth 16</strong></td>
+<td>Unity will use the R16G16B16A16 buffer format and Rec709 primaries with linear color (no encoding).</td>
+</tr> <tr>
+<td> <strong>Virtual Texturing (Experimental)</strong> </td>
+<td colspan="2">Enable this option to reduce GPU memory usage and texture loading times if your Scene has many high resolution textures. For more information, refer to <a href="svt-streaming-virtual-texturing.html">Virtual Texturing</a>. <br><br><strong>Note</strong>: The Unity Editor requires a restart for this setting to take effect. </td>
+</tr> <tr>
+<td rowspan="3"><b>Shader Precision Model</b></td>
+<td colspan="2">Select the default precision shaders use. For more information, refer to <a href="SL-Use16BitPrecisionInShaders.html">Use 16-bit precision in shaders</a>.</td>
+</tr>
+<tr>
+<td><b>Platform default</b></td>
+<td>Use lower precision on mobile platforms, and full precision on other platforms.</td>
+</tr>
+<tr>
+<td><b>Unified</b></td>
+<td>Use lower precision if the platform supports it.</td>
+</tr>
+ <tr>
+<td> <strong>360 Stereo Capture</strong> </td>
+<td colspan="2"> Allows Unity to capture stereoscopic 360 images and videos. When enabled, Unity compiles additional shader variants to support 360 capture (only on Windows). When enabled, the <code>enable_360_capture</code> keyword is added during the <a href="../ScriptReference/Camera.RenderToCubemap.html">Stereo RenderCubemap call</a>. This keyword isn’t triggered outside the <code>Stereo RenderCubemap</code> function.</td>
+</tr>
+ </tbody>
+</table>
+
+<p><a name="Vulkan" aria-hidden="true"></a></p>
+
+<h3>Vulkan Settings</h3>
+
+<figure>
+<img src="../uploads/Main/PlayerSetPCOther-Vulkan.png" alt="Vulkan settings">
+<figcaption>Vulkan settings</figcaption>
+</figure>
+<table>
+<thead><tr>
+<th colspan="1"><strong>Property</strong></th>
+<th><strong>Description</strong></th>
+</tr></thead>
+<tbody> <tr>
+<td colspan="1"><strong>SRGB Write Mode</strong></td>
+<td> Enable this option to allow <code>Graphics.SetSRGBWrite()</code> renderer to toggle the sRGB write mode during runtime. That is, if you want to temporarily turn off Linear-to-sRGB write color conversion, you can use this property to achieve that. Enabling this has a negative impact on performance on mobile tile-based GPUs; therefore, do NOT enable this for mobile.</td>
+</tr> <tr>
+<td colspan="1"><strong>Number of swapchain buffers</strong></td>
+<td> Set this option to 2 for double-buffering, or 3 for triple-buffering to use with Vulkan renderer. This setting may help with latency on some platforms, but in most cases you should not change this from the default value of 3. Double-buffering might have a negative impact on performance. Do not use this setting on Android.</td>
+</tr> <tr>
+<td colspan="1">
+<strong>Acquire swapchain image late as possible</strong> </td>
+<td> If enabled, Vulkan delays acquiring the backbuffer until after it renders the frame to an offscreen image. Vulkan uses a staging image to achieve this. Enabling this setting causes an extra blit when presenting the backbuffer. This setting, in combination with double-buffering, can improve performance. However, it also can cause performance issues because the additional blit takes up bandwidth.</td>
+</tr> <tr>
+<td colspan="1"><strong>Recycle command buffers</strong></td>
+<td>Indicates whether to recycle or free <a href="../ScriptReference/Rendering.CommandBuffer.html">CommandBuffers</a> after Unity executes them.</td>
+</tr> </tbody>
+</table>
+
+<p><a name="AppStore" aria-hidden="true"></a></p>
+
+<h3>Mac App Store Options</h3>
+
+<figure>
+<img src="../uploads/Main/DeliverAppMacStore1.png" alt="Mac App Store Options">
+<figcaption>Mac App Store Options</figcaption>
+</figure>
+
+<p>The properties in this section are only relevant to macOS. For more information, refer to <a href="PlayerSettings-macOS.html">macOS Player Settings</a>.</p>
+
+<p><a name="Configuration" aria-hidden="true"></a></p>
+
+<h3>Configuration</h3>
+<table>
+ <thead>
+ <tr>
+ <th><strong>Property</strong></th>
+ <th colspan="2"><strong>Description</strong></th>
+ </tr>
+ </thead>
+<tbody>
+<tr>
+ <td rowspan="3"><strong>Scripting Backend</strong></td>
+ <td colspan="2">
+<a name="backend" aria-hidden="true"></a>Choose the scripting backend you want to use. The scripting backend determines how Unity compiles and executes C# code in your Project.</td>
+</tr>
+<tr>
+ <td><strong>Mono</strong></td>
+ <td>Compiles C# code into .NET Common Intermediate Language (CIL) and executes that CIL using a Common Language Runtime. For more information, refer to <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Mono.html">Mono</a><span class="tooltiptext">A scripting backend used in Unity. <a href="IL2CPP.html" href="Mono.html">Mono</a><span class="tooltiptext">A scripting backend used in Unity. <a href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mono" aria-label="Go to glossary anchor for Mono">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+ <td><strong>IL2CPP</strong></td>
+ <td>Compiles C# code into CIL, converts the CIL to C++ and then compiles that C++ into native machine code, which executes directly at runtime. For more information, refer to <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html" href="IL2CPP.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+ <td rowspan="3"><strong>API Compatibility Level</strong></td>
+ <td colspan="2">Choose which .NET APIs you can use in your project. This setting can affect compatibility with third-party libraries. However, it has no effect on Editor-specific code (code in an Editor directory, or within an Editor-specific Assembly Definition).<br><br><strong>Tip:</strong> If you are having problems with a third-party assembly, you can try the suggestion in the <a href="#apiComp">API Compatibility Level</a> section below.</td>
+</tr>
+<tr>
+ <td><strong>.Net Framework</strong></td>
+ <td>Compatible with the .NET Framework 4 (which includes everything in the .NET Standard 2.0 profile plus additional APIs). Choose this option when using libraries that access APIs not included in .NET Standard 2.0. Produces larger builds and any additional APIs available aren’t necessarily supported on all platforms. Refer to <a href="dotnetProfileAssemblies.html">Referencing additional class library assemblies</a> for more information.</td>
+</tr>
+<tr>
+ <td><strong>.Net Standard 2.1</strong></td>
+ <td>Produces smaller builds and has full cross-platform support.</td>
+</tr>
+<tr>
+<td>
+<strong>IL2CPP Code Generation</strong> </td>
+<td colspan="2">This setting doesn’t apply for Linux.</td>
+</tr>
+<tr>
+<td>
+<strong>C++ Compiler Configuration</strong> </td>
+<td colspan="2">This setting doesn’t apply for Linux.</td>
+</tr>
+<tr>
+ <td><strong>Use incremental GC</strong></td>
+ <td colspan="2">Uses the incremental garbage collector, which spreads garbage collection over several frames to reduce garbage collection-related spikes in frame duration. For more information, refer to <a href="performance-managed-memory.html">Automatic Memory Management</a>.</td>
+</tr>
+<tr>
+ <td rowspan="4"><strong>Allow downloads over HTTP</strong></td>
+ <td colspan="2">Indicates whether to allow downloading content over HTTP. The default option is <strong>Not allowed</strong> due to the recommended protocol being HTTPS, which is more secure.</td>
+</tr>
+<tr>
+ <td><strong>Not Allowed</strong></td>
+ <td>Never allow downloads over HTTP.</td>
+</tr>
+<tr>
+ <td><strong>Allowed in Development Builds</strong></td>
+ <td>Only allow downloads over HTTP in development builds.</td>
+</tr>
+<tr>
+ <td><strong>Always Allowed</strong></td>
+ <td>Allow downloads over HTTP in development and release builds.</td>
+</tr>
+<tr>
+ <td rowspan="4"><strong>Active Input Handling</strong></td>
+ <td colspan="2">Choose how to handle input from users.</td>
+</tr>
+<tr>
+ <td><strong>Input Manager (Old)</strong></td>
+ <td>Uses the traditional <a href="class-InputManager.html">Input</a> settings.</td>
+</tr>
+<tr>
+ <td><strong>Input System Package (New)</strong></td>
+ <td>Uses the <a href="../ScriptReference/Input.html">Input</a> system. This option requires you to install the <a href="https://github.com/Unity-Technologies/InputSystem">InputSystem package</a>.</td>
+</tr>
+<tr>
+ <td><strong>Both</strong></td>
+ <td>Use both systems.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="apiComp" aria-hidden="true"></a></p>
+
+<h4>API Compatibility Level</h4>
+
+<p>You can choose your mono API compatibility level for all targets. Sometimes a 3rd-party .NET library uses functionality that is outside of your .NET compatibility level. To understand what’s going on in such cases, and how to best fix it, try following these suggestions: </p>
+
+<ol>
+<li>Install <a href="https://www.microsoft.com/en-us/p/ilspy/9mxfbkfvsq13?cid=msft_web_chart&amp;activetab=pivot:overviewtab">ILSpy</a> for Windows.</li>
+<li>Drag the .NET assemblies for the API compatilibity level you are having issues with into ILSpy. You can find these under <code>Frameworks/Mono/lib/mono/YOURSUBSET/</code>.</li>
+<li>Drag in your 3rd-party assembly.</li>
+<li>Right-click your 3rd-party assembly and select <strong>Analyze</strong>.</li>
+<li>In the analysis report, inspect the <strong>Depends on</strong> section. The report highlights anything that the 3rd-party assembly depends on, but that is not available in the .NET compatibility level of your choice in red.</li>
+</ol>
+
+<p><a name="ScriptCompilation" aria-hidden="true"></a></p>
+
+<h3>Script Compilation</h3>
+
+<figure>
+<img src="../uploads/Main/ProjectSettingsScriptCompilation.png" alt="Script compilation settings">
+<figcaption>Script compilation settings</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Scripting Define Symbols</strong></td>
+	<td style="text-align:left;">Set custom compilation flags. For more details, see the documentation on <a href="PlatformDependentCompilation.html">Platform dependent compilation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Additional Compiler Arguments</strong></td>
+	<td style="text-align:left;">Add entries to this list to pass additional arguments to the Roslyn compiler. Use one new entry for each additional argument.<br>To create a new entry, press the ‘+’ button. To remove an entry, press the ‘-’ button.<br>When you have added all desired arguments, click the <strong>Apply</strong> button to include your additional arguments in future compilations.The <strong>Revert</strong> button resets this list to the most recent applied state.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Suppress Common Warnings</strong></td>
+	<td style="text-align:left;">Disable this setting to display the C# warnings <a href="https://docs.microsoft.com/en-us/dotnet/csharp/misc/cs0169">CS0169</a> and <a href="https://docs.microsoft.com/en-us/dotnet/csharp/misc/CS0649">CS0649</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Allow ‘unsafe’ Code</strong></td>
+	<td style="text-align:left;">Enable support for compiling <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/unsafe">‘unsafe’ C# code</a> in a pre-defined assembly (for example, <code>Assembly-CSharp.dll</code>). <br>For Assembly Definition Files (<code>.asmdef</code>), click on one of your <code>.asmdef</code> files and enable the option in the Inspector window that appears.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Use Deterministic Compilation</strong></td>
+	<td style="text-align:left;">Disable this setting to prevent compilation with the -deterministic C# flag. With this setting enabled, compiled assemblies are byte-for-byte identical each time they are compiled.<br>For more information, see Microsoft’s <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/deterministic-compiler-option">deterministic compiler option documentation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Enable Roslyn Analyzers</strong></td>
+	<td style="text-align:left;">Disable this setting to compile user-written <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> without Roslyn analyzer DLLs that might be present in your project.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Optimization" aria-hidden="true"></a></p>
+
+<h3>Optimization</h3>
+
+<figure>
+<img src="../uploads/Main/PlayerSetPCOther-Optimize.png" alt="Optimization settings">
+<figcaption>Optimization settings</figcaption>
+</figure>
+<table>
+<thead><tr>
+<th colspan="2"><strong>Property</strong></th>
+<th><strong>Description</strong></th>
+</tr></thead>
+<tbody> <tr>
+<td colspan="2"><strong>Prebake Collision Meshes</strong></td>
+<td>Adds collision data to <a href="class-Mesh.html">Meshes</a> at build time. </td>
+</tr> <tr>
+<td colspan="2"><strong>Keep Loaded Shaders Alive</strong></td>
+<td>Indicates whether to prevent shaders from being unloaded. <br><br>For more information, see <a href="shader-loading.html">Shader Loading</a>. </td>
+</tr> <tr>
+<td colspan="2"><strong>Preloaded Assets</strong></td>
+<td>Sets an array of Assets for the player to load on startup. <br>To add new Assets, increase the value of the <strong>Size</strong> property and then set a reference to the Asset to load in the new <strong>Element</strong> box that appears.</td>
+</tr> <tr>
+<td colspan="2">
+<strong>AOT compilation options</strong> </td>
+<td>Additional options for Ahead of Time (AOT) compilation. This helps <a href="iphone-playerSizeOptimization.html">optimize the size of the built iOS player</a>.</td>
+</tr> <tr>
+<td colspan="2">
+<strong>Strip Engine Code</strong> </td>
+<td>Enable this option if you want the Unity Linker tool to remove code for Unity Engine features that your Project doesn’t use. This setting is only available with the <a href="IL2CPP.html">IL2CPP scripting backend</a>.<br><br>Most apps don’t use every available DLL. This option strips out DLLs that your app doesn’t use to reduce the size of the built Player. If your app is using one or more classes that would normally be stripped out under your current settings, Unity displays a debug message when you try to build the app.</td>
+</tr> <tr>
+<td colspan="2"><strong>Managed Stripping Level</strong></td>
+<td>Chooses how aggressively Unity strips unused managed (C#) code. The options are <strong>Minimal</strong>, <strong>Low</strong>, <strong>Medium</strong>, and <strong>High</strong>. <br>When Unity builds your app, the Unity Linker process can strip unused code from the managed DLLs your Project uses. Stripping code can make the resulting executable significantly smaller, but can sometimes accidentally remove code that’s in use. <br><br>For more information about these options and bytecode stripping with IL2CPP, refer to <a href="../ScriptReference/ManagedStrippingLevel.html">ManagedStrippingLevel</a>.</td>
+</tr>
+ <tr>
+<td colspan="2"><strong>Vertex Compression</strong></td>
+<td>Sets vertex compression per channel. This affects all the meshes in your project. <br>Typically, Vertex Compression is used to reduce the size of mesh data in memory, reduce file size, and improve GPU performance. <br><br>For more information on how to configure vertex compression and limitations of this setting, refe to <a href="mesh-compression.html">Compressing mesh data</a>. </td>
+</tr> <tr>
+<td colspan="2"><strong>Optimize Mesh Data</strong></td>
+<td>Enable this option to strip unused vertex attributes from the mesh used in a build. This option reduces the amount of data in the mesh, which can help reduce build size, loading times, and runtime memory usage. <br><br> <strong>Warning:</strong> If you have this setting enabled, you should remember to not change material or shader settings at runtime. <br><br> For more information, refer to <a href="../ScriptReference/PlayerSettings-stripUnusedMeshComponents.html">PlayerSettings.stripUnusedMeshComponents</a>.</td>
+</tr>
+ <tr>
+<td colspan="2"><strong>Texture MipMap Stripping</strong></td>
+<td>Enables mipmap stripping for all platforms. This strips unused mipmaps from Textures at build time. Unity determines unused mipmaps by comparing the value of the mipmap against the <strong>Quality Settings</strong> for the current platform. If a mipmap value is excluded from every <strong>Quality Setting</strong> for the current platform, then Unity strips those mipmaps from the build at build time. If <a href="../ScriptReference/QualitySettings-masterTextureLimit.html">QualitySettings.masterTextureLimit</a> is set to a mipmap value that has been stripped, Unity will set the value to the closest mipmap value that has not been stripped.</td>
+</tr> </tbody>
+</table>
+
+<p><a name="Logging" aria-hidden="true"></a></p>
+
+<h3>Stack Trace</h3>
+
+<p>Select what type of logging to allow in specific contexts.</p>
+
+<figure>
+<img src="../uploads/Main/PlayerSetPCOther-Logging.png" alt="Stack Trace settings">
+<figcaption>Stack Trace settings</figcaption>
+</figure>
+
+<p>Select your preferred stack trace method by enabling the option that corresponds to each Log Type (<strong>Error</strong>, <strong>Assert</strong>, <strong>Warning</strong>, <strong>Log</strong>, and <strong>Exception</strong>) based on the type of logging you require. For more information, refer to <a href="StackTrace.html">stack trace logging</a>. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">No logs are ever recorded.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ScriptOnly</strong></td>
+	<td style="text-align:left;">Logs only when running scripts.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Full</strong></td>
+	<td style="text-align:left;">Logs all the time.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Legacy" aria-hidden="true"></a></p>
+
+<h3>Legacy</h3>
+
+<figure>
+<img src="../uploads/Main/PlayerSetPCOther-Legacy.png" alt="Legacy settings for Desktop platforms">
+<figcaption>Legacy settings for Desktop platforms</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Clamp BlendShapes (Deprecated)</strong></td>
+	<td style="text-align:left;">Enable the option to clamp the range of blend shape weights in <a href="class-SkinnedMeshRenderer.html">SkinnedMeshRenderers</a>.</td>
+</tr>
+</tbody>
+</table>
+<!-- area:platforms -->
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="linux.html"></a></span><div class="tip">Linux</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Buildsettings-linux.html"></a></span><div class="tip">Linux Build settings</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

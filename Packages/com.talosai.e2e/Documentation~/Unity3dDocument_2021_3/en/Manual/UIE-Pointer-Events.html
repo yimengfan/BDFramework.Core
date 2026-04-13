@@ -1,0 +1,491 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Pointer events</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Pointer-Events.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Pointer-Events.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Pointer-Events.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Pointer-Events.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Pointer-Events.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Pointer-Events.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Pointer-Events.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Pointer-Events.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-Events.html">Control behavior with events</a></li>
+<li><a href="UIE-Events-Reference.html">Event reference</a></li>
+<li>Pointer events</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Panel-Events.html"></a></span><div class="tip">Panel events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Tooltip-Events.html"></a></span><div class="tip">Tooltip event</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Pointer events</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Pointer events fire for <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> interactions with a pointing device. Similar to mouse events, pointer events provide additional information about the used input device, such as pen pressure or tilt angle.</p>
+
+<p>Pointer events always precede mouse events in UI Toolkit.</p>
+
+<p>Pointer events don’t have a persistent position. They also don’t have a set position when they’re released from the touch device.</p>
+
+<p>Some pointer events, such as <code>PointerStationaryEvent</code> and <code>PointerCancelEvent</code> events, have conditions triggered by the operating system (OS) of the input device.</p>
+
+<p>The base class for all pointer events is <a href="../ScriptReference/UIElements.PointerEventBase_1.html">PointerEventBase</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Event</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Trickles down</strong></th>
+	<th style="text-align:left;"><strong>Bubbles up</strong></th>
+	<th style="text-align:left;"><strong>Cancellable</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.PointerDownEvent.html">PointerDownEvent</a></td>
+	<td style="text-align:left;">Sent when you press a pointer.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.PointerUpEvent.html">PointerUpEvent</a></td>
+	<td style="text-align:left;">Sent when you release a pointer.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.PointerMoveEvent.html">PointerMoveEvent</a></td>
+	<td style="text-align:left;">Sent when the pointer changes state.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.PointerEnterEvent.html">PointerEnterEvent</a></td>
+	<td style="text-align:left;">Sent when the pointer enters a <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span>, or one of its descendants.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.PointerLeaveEvent.html">PointerLeaveEvent</a></td>
+	<td style="text-align:left;">Sent when the pointer leaves a visual element and all of its descendants.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.PointerOverEvent.html">PointerOverEvent</a></td>
+	<td style="text-align:left;">Sent when the pointer enters a visual element.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.PointerOutEvent.html">PointerOutEvent</a></td>
+	<td style="text-align:left;">Sent when the pointer leaves a visual element.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.PointerStationaryEvent.html">PointerStationaryEvent</a></td>
+	<td style="text-align:left;">Sent when a pointer type (like a stylus or finger) doesn’t change for a set amount of time determined by the operating system.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.PointerCancelEvent.html">PointerCancelEvent</a></td>
+	<td style="text-align:left;">Sent when a pointer action is cancelled by the operating system.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Unique properties</h2>
+
+<p>
+<strong><code>altitudeAngle</code></strong>: The altitudeAngle contains the angle of the stylus relative to the surface, in radians. A value of 0 indicates that the stylus is parallel to the surface. A value of pi/2 indicates that it’s perpendicular to the surface.</p>
+
+<p>
+<strong><code>azimuthAngle</code></strong>: The azimuthAngle contains the angle of the stylus relative x-axis, in radians. A value of 0 indicates that the stylus points along the x-axis of the device.</p>
+
+<p>
+<strong><code>button</code></strong>: The button property returns an integer that identifies the mouse button pressed to trigger the event. The following table lists the integer and associated mouse button:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Integer</strong></th>
+	<th style="text-align:left;"><strong>Button</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">0</td>
+	<td style="text-align:left;">Left button</td>
+</tr>
+<tr>
+	<td style="text-align:left;">1</td>
+	<td style="text-align:left;">Right button</td>
+</tr>
+<tr>
+	<td style="text-align:left;">2</td>
+	<td style="text-align:left;">Middle button</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong><code>clickCount</code></strong>: The clickCount property contains the number of times the button is pressed.</p>
+
+<p>
+<strong><code>deltaPosition</code></strong>: The <code>deltaPosition</code> property contains the difference between the pointer’s position during the previous mouse event and its position during the current mouse event.</p>
+
+<p>
+<strong><code>deltaTime</code></strong>: The <code>deltaTime</code> property contains the amount of time that has passed since the last recorded change in pointer values, in seconds.</p>
+
+<p>
+<strong><code>localPosition</code></strong>: The <code>localPosition</code> property returns the pointer position relative to the target visual element.</p>
+
+<p>
+<strong><code>modifiers</code></strong>: The modifiers property returns the modifier key currently held down. Some examples of modifiers are the <code>Shift</code>, <code>Ctrl</code>, or <code>Alt</code> keys. For more information, see the <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values#modifier_keys">Modifier keys section</a> of the MDN documentation.</p>
+
+<p>
+<strong><code>pointerId</code></strong>: The pointerId property returns an integer that identifies the pointer that sends the event.</p>
+
+<p>
+<strong><code>pointerType</code></strong>: The pointerType property returns a string that defines the type of pointer that creates the event.</p>
+
+<p>
+<strong><code>position</code></strong>: The position property returns the pointer position in the screen or world coordinate system.</p>
+
+<p>
+<strong><code>pressedButtons</code></strong>: The pressedButton property returns an integer that identifies which combination of mouse buttons are currently pressed.</p>
+
+<p>The number is the sum of the individual buttons’ integer value (see table below). For example, holding the right mouse button and the middle mouse button pressed at the same time will result in pressedButton having a value of 6.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Integer</strong></th>
+	<th style="text-align:left;"><strong>Button</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">1</td>
+	<td style="text-align:left;">Left button</td>
+</tr>
+<tr>
+	<td style="text-align:left;">2</td>
+	<td style="text-align:left;">Right button</td>
+</tr>
+<tr>
+	<td style="text-align:left;">4</td>
+	<td style="text-align:left;">Middle button</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong><code>pressure</code></strong>: The pressure property returns the amount of pressure currently applied by a touch. If the device doesn’t report pressure, the value of this property is 1.0f.</p>
+
+<p>
+<strong><code>radius</code></strong>: The radius property returns an estimate of the radius of a touch. Add radiusVariance to get the maximum touch radius, subtract it to get the minimum touch radius.</p>
+
+<p>
+<strong><code>radiusVariance</code></strong>: The radiusVariance property value determines the accuracy of the touch radius. Add this value to the radius to get the maximum touch radius, subtract it to get the minimum touch radius.</p>
+
+<p>
+<strong><code>tangentialPressure</code></strong>: The tangentialPressure property returns a float value representing the pressure applied to an additional pressure-sensitive control on the stylus.</p>
+
+<p>
+<strong><code>twist</code></strong>: The twist property returns the rotation of the stylus around its axis, in radians.</p>
+
+<h2>Event list</h2>
+
+<p>The following list provides the name, description, and target of each event in the event family. For more information on the event, see the <a href="../ScriptReference/UIElements.MouseEventBase_1.html">UI Toolkit API</a>.</p>
+
+<h3>PointerDownEvent</h3>
+
+<p>The <a href="../ScriptReference/UIElements.PointerDownEvent.html">PointerDownEvent</a> is sent when you press a pointer inside a visual element.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element that receives the pointer capture. Otherwise, it’s the topmost selectable element under the cursor.</p>
+
+<h3>PointerUpEvent</h3>
+
+<p>A <a href="../ScriptReference/UIElements.PointerUpEvent.html">PointerUpEvent</a> triggers when you release a pointer within a visual element.</p>
+
+<p>When the <code>PointerUpEvent</code> event triggers, it also removes the pointer coordinates. It also clears the cache of the pointer, so there’s no record of the pointer location.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element that receives the pointer capture. Otherwise, it’s the topmost selectable element under the cursor.</p>
+
+<h3>PointerMoveEvent</h3>
+
+<p>The <a href="../ScriptReference/UIElements.PointerMoveEvent.html">PointerMoveEvent</a> occurs when the pointer changes state.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element that receives the pointer capture. Otherwise, it’s the topmost selectable element under the cursor.</p>
+
+<h3>PointerEnterEvent</h3>
+
+<p>The <a href="../ScriptReference/UIElements.PointerEnterEvent.html">PointerEnterEvent</a> is sent when the pointer enters a visual element, or one of its descendants.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element (or one of its descendants) that the pointer exits.</p>
+
+<h3>PointerLeaveEvent</h3>
+
+<p>A <a href="../ScriptReference/UIElements.PointerLeaveEvent.html">PointerLeaveEvent</a> is sent when the pointer leaves a visual element and all its descendants. For example if a visual element contains a child, then the parent element will receive this event when the pointer is no longer over either the parent or the child. The parent element won’t receive the <a href="../ScriptReference/UIElements.PointerLeaveEvent.html">PointerLeaveEvent</a> while the pointer is still over one of its child elements, even if it’s no longer the topmost element underneath the pointer. It will receive the <a href="../ScriptReference/UIElements.PointerOverEvent.html">PointerOverEvent</a> instead.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element (or one of its descendants) that the pointer exits.</p>
+
+<h3>PointerOverEvent</h3>
+
+<p>The <a href="../ScriptReference/UIElements.PointerOverEvent.html">PointerOverEvent</a> is sent when the pointer enters a visual element.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element under the pointer.</p>
+
+<h3>PointerOutEvent</h3>
+
+<p>The <a href="../ScriptReference/UIElements.PointerOutEvent.html">PointerOutEvent</a> is sent when the pointer leaves a visual element.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element that the pointer exits.</p>
+
+<h3>PointerStationaryEvent</h3>
+
+<p>The <a href="../ScriptReference/UIElements.PointerStationaryEvent.html">PointerStationaryEvent</a> is sent when a pointer type (like a stylus or finger) doesn’t change for a set amount of time determined by the operating system.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element that captures the pointer, or the topmost selectable element under the pointer.</p>
+
+<h3>PointerCancelEvent</h3>
+
+<p>The <a href="../ScriptReference/UIElements.PointerCancelEvent.html">PointerCancelEvent</a> is sent when a pointer action is cancelled by the operating system.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element that captures the pointer, or the topmost selectable element under the pointer.</p>
+
+<h2>Examples</h2>
+
+<p>The following code sample creates an Editor window with a red box containing a yellow box. It prints messages to the console when the pointer leaves a visual element or its child. It demonstrates the behavior of the <a href="../ScriptReference/UIElements.PointerOutEvent.html">PointerOutEvent</a> and the <a href="../ScriptReference/UIElements.PointerLeaveEvent.html">PointerLeaveEvent</a>.</p>
+
+<p>To see the example in action, do the following:</p>
+
+<ol>
+<li>Under <strong>Assets &gt; Scripts &gt; Editor</strong>, create a new UXML file called PointerEventsTestWindow.uxml</li>
+<li>Copy the UXML code from below into it</li>
+<li>Under <strong>Assets &gt; Scripts &gt; Editor</strong>, create a new C# file called PointerEventsTestWindow.cs</li>
+<li>Copy a code sample into the C# script.</li>
+<li>From the Editor Toolbar, select <strong>Window &gt; UI Toolkit &gt; Pointer Events Test Window</strong>.</li>
+</ol>
+
+<h3>UXML code</h3>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot; xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; engine=&quot;UnityEngine.UIElements&quot; editor=&quot;UnityEditor.UIElements&quot; noNamespaceSchemaLocation=&quot;../../UIElementsSchema/UIElements.xsd&quot; editor-extension-mode=&quot;False&quot;&gt;
+    &lt;ui:VisualElement style=&quot;flex-grow: 1; justify-content: center; align-items: center;&quot;&gt;
+        &lt;ui:VisualElement name=&quot;Red_Box&quot; style=&quot;background-color: rgb(183, 34, 46); width: 50%; height: 50%; align-items: center; justify-content: center;&quot;&gt;
+            &lt;ui:VisualElement name=&quot;Yellow_Box&quot; style=&quot;width: 175%; height: 50%; background-color: rgb(197, 163, 0);&quot; /&gt;
+        &lt;/ui:VisualElement&gt;
+    &lt;/ui:VisualElement&gt;
+&lt;/ui:UXML&gt;
+
+</code></pre>
+
+<h3>C# code</h3>
+
+<pre><code class="lang-csharp">
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
+using UnityEditor.UIElements;
+
+public class PointerEventsTestWindow : EditorWindow
+{
+    [MenuItem(&quot;Window/UI Toolkit/Pointer Events Test Window&quot;)]
+    public static void ShowExample()
+    {
+        PointerEventsTestWindow wnd = GetWindow&lt;PointerEventsTestWindow&gt;();
+        wnd.titleContent = new GUIContent(&quot;Pointer Events Test Window&quot;);
+    }
+
+    public void CreateGUI()
+    {
+        // Import UXML
+        VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath&lt;VisualTreeAsset&gt;(&quot;Assets/Scripts/Editor/PointerEventsTestWindow.uxml&quot;);
+        visualTree.CloneTree(rootVisualElement);
+
+        // Get the red box and register pointer event callbacks
+        VisualElement redBox = rootVisualElement.Q(&quot;Red_Box&quot;);
+        redBox.RegisterCallback&lt;PointerOutEvent&gt;(OnPointerOutEvent, TrickleDown.TrickleDown);
+        redBox.RegisterCallback&lt;PointerLeaveEvent&gt;(OnPointerLeaveEvent, TrickleDown.TrickleDown);
+    }
+
+    private void OnPointerLeaveEvent(PointerLeaveEvent evt)
+    {
+        Debug.Log($&quot;Pointer LEAVE Event. Target: {(evt.target as VisualElement).name}&quot;);
+    }
+
+    private void OnPointerOutEvent(PointerOutEvent evt)
+    {
+        Debug.Log($&quot;Pointer OUT Event. Target: {(evt.target as VisualElement).name}&quot;);
+    }
+}
+
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-create-drag-and-drop-ui.html">Create a drag-and-drop UI</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Panel-Events.html"></a></span><div class="tip">Panel events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Tooltip-Events.html"></a></span><div class="tip">Tooltip event</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

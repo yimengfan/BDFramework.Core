@@ -1,0 +1,470 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Audio in WebGL</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="platforms" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/webgl-audio.html">English</a></li>
+<li><a href="/cn/current/Manual/webgl-audio.html">中文</a></li>
+<li><a href="/ja/current/Manual/webgl-audio.html">日本語</a></li>
+<li><a href="/kr/current/Manual/webgl-audio.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/webgl-audio.html">English</a></li>
+<li><a href="/cn/current/Manual/webgl-audio.html">中文</a></li>
+<li><a href="/ja/current/Manual/webgl-audio.html">日本語</a></li>
+<li><a href="/kr/current/Manual/webgl-audio.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="webgl.html">WebGL</a></li>
+<li><a href="webgl-develop.html">WebGL development</a></li>
+<li>Audio in WebGL</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="webgl-graphics.html"></a></span><div class="tip">WebGL graphics</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="webgl-texture-compression.html"></a></span><div class="tip">Texture compression in WebGL</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Audio in WebGL</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page only provides information about audio capabilities in <span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span>. To learn how to use audio in your Unity project, refer to <a href="AudioOverview.html">Audio Overview</a>.</p>
+
+<p>Because Unity uses <a href="https://www.fmod.com">FMOD</a> to manage audio for platforms, Unity WebGL supports limited audio functionality, which only includes the basic features. FMOD relies on threads, which WebGL doesn’t support. For this reason, Unity uses an implementation based on the internal Web Audio API, which enables the browser to handle audio playback and mixing.</p>
+
+<p>
+<strong>Note:</strong> Google Chrome’s new Autoplay policy prevents autoplay of audio and video under certain conditions. For example, while your game might be set to autoplay some background music soon after the game loads, it won’t play automatically unless you click or tap on the website. For more information on how to enable or disable this policy, refer to Google Chrome’s documentation on <a href="https://developer.chrome.com/blog/autoplay/">Autoplay policy in Chrome</a>.</p>
+
+<h2>Supported classes</h2>
+
+<p>Unity WebGL supports the following API classes:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Class</strong></th>
+	<th style="text-align:left;"><strong>WebGL Support status</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource.html">AudioSource</a></strong></td>
+	<td style="text-align:left;">WebGL supports some APIs. Refer to <a href="../ScriptReference/AudioSource.html">AudioSource</a> for specific support details.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioListener.html">AudioListener</a></strong></td>
+	<td style="text-align:left;">All APIs supported.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioClip.html">AudioClip</a></strong></td>
+	<td style="text-align:left;">WebGL supports some APIs. Refer to <a href="#audioclip">AudioClip</a> for specific support details.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/Audio.AudioMixer.html">AudioMixer</a></strong></td>
+	<td style="text-align:left;">WebGL supports some APIs. Refer to <a href="#audio-mixer">Audio Mixer</a> for specific support details.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/SystemInfo-supportsAudio.html">SystemInfo.supportsAudio</a></strong></td>
+	<td style="text-align:left;">The browser provides audio support for WebGL. For this reason, <code>SystemInfo.supportsAudio</code> is always true.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/Microphone.html">Microphone</a></strong></td>
+	<td style="text-align:left;">Not supported.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>AudioSource</h2>
+
+<p>The <a href="../ScriptReference/AudioSource.html">AudioSource</a> API supports basic positional audio playback, including:</p>
+
+<ul>
+<li>Pausing and resuming</li>
+<li>Rolloff</li>
+<li>Pitch setting</li>
+<li>Doppler effect support</li>
+</ul>
+
+<p>Unity WebGL supports the following AudioSource APIs: </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Settings</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource-clip.html">Clip</a></strong></td>
+	<td style="text-align:left;">Determines the <span class="tooltip"><strong>audio clip</strong><span class="tooltiptext">A container for audio data in Unity. Unity supports mono, stereo and multichannel audio assets (up to eight channels). Unity can import .aif, .wav, .mp3, and .ogg audio file format, and .xm, .mod, .it, and .s3m tracker module formats. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioClip.html" href="class-AudioClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioClip" aria-label="Go to glossary anchor for AudioClip">Glossary</a></span></span></span> that plays next.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource-dopplerLevel.html">dopplerLevel</a></strong></td>
+	<td style="text-align:left;">Sets the Doppler scale for the AudioSource.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource-ignoreListenerPause.html">ignoreListenerPause</a></strong></td>
+	<td style="text-align:left;">Allows AudioSource to ignore <code>AudioListener.pause</code> and continue to play audio.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource-ignoreListenerVolume.html">ignoreListenerVolume</a></strong></td>
+	<td style="text-align:left;">Ignores the end-user’s AudioSource volume.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource-isPlaying.html">isPlaying</a></strong></td>
+	<td style="text-align:left;">Returns true if the <code>AudioSource.clip</code> is playing.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource-loop.html">loop</a></strong></td>
+	<td style="text-align:left;">Allows the application to loop the <code>AudioSource.clip</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource-maxDistance.html">maxDistance</a></strong></td>
+	<td style="text-align:left;">Sets the maximum distance at which the <code>AudioSource.clip</code> stops attenuating or becomes inaudible.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource-minDistance.html">minDistance</a></strong></td>
+	<td style="text-align:left;">Sets the minimum distance at which the AudioSource.clip no longer rises in volumes. The sound starts to attenuate beyond the minimum distance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource-mute.html">mute</a></strong></td>
+	<td style="text-align:left;">Mutes the AudioSource.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource-pitch.html">pitch</a></strong></td>
+	<td style="text-align:left;">Sets the pitch of the <code>AudioSource.clip</code>. WebGL only supports positive pitch values.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource-playOnAwake.html">playOnAwake</a></strong></td>
+	<td style="text-align:left;">Plays the AudioSource on Awake.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource-rolloffMode.html">rolloffMode</a></strong></td>
+	<td style="text-align:left;">Sets the AudioSource attenuation over distance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource-time.html">time</a></strong></td>
+	<td style="text-align:left;">Sets the playback position in seconds.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource-timeSamples.html">timeSamples</a></strong></td>
+	<td style="text-align:left;">Sets the playback position in Pulse-code modulation (PCM) samples.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource-velocityUpdateMode.html">velocityUpdateMode</a></strong></td>
+	<td style="text-align:left;">Sets whether the AudioSource updates in the fixed or dynamic update loop.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource-volume.html">volume</a></strong></td>
+	<td style="text-align:left;">Sets the volume of the AudioSource (0.0 to 1.0).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource.Pause.html">Pause</a></strong></td>
+	<td style="text-align:left;">Pauses the <code>AudioSource.clip</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource.Play.html">Play</a></strong></td>
+	<td style="text-align:left;">Plays the <code>AudioSource.clip</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource.PlayDelayed.html">PlayDelayed</a></strong></td>
+	<td style="text-align:left;">Plays the <code>AudioSource.clip</code> with a delay you specify in seconds.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource.PlayOneShot.html">PlayOneShot</a></strong></td>
+	<td style="text-align:left;">Plays an <a href="../ScriptReference/AudioSource-clip.html">AudioClip</a> and scales the AudioSource volume by volumeScale.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource.PlayScheduled.html">PlayScheduled</a></strong></td>
+	<td style="text-align:left;">Plays the AudioSource at a time you specify.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource.SetScheduledEndTime.html">SetScheduledEndTime</a></strong></td>
+	<td style="text-align:left;">Sets a time that a scheduled <code>AudioSource.clip</code> ends.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource.SetScheduledStartTime.html">SetScheduledStartTime</a></strong></td>
+	<td style="text-align:left;">Sets the time that a scheduled <code>AudioSource.clip</code> starts.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource.Stop.html">Stop</a></strong></td>
+	<td style="text-align:left;">Stops playing the <code>AudioSource.clip</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource.UnPause.html">UnPause</a></strong></td>
+	<td style="text-align:left;">Unpauses a paused <code>AudioSource.clip</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioSource.PlayClipAtPoint.html">PlayClipAtPoint</a></strong></td>
+	<td style="text-align:left;">Plays an <code>AudioSource.clip</code> at a given position in the worldspace.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>AudioClip <a name="audioclip" aria-hidden="true"></a>
+</h2>
+
+<p>Unity WebGL imports <a href="../ScriptReference/AudioClip.html">AudioClip</a> files in the AAC Format, which is supported by most browsers. Unity WebGL supports the following AudioClip APIs: </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Properties</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioClip-length.html">length</a></strong></td>
+	<td style="text-align:left;">The length of the AudioClip in seconds.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioClip-loadState.html">loadState</a></strong></td>
+	<td style="text-align:left;">Returns the current load state of the audio data associated with an AudioClip.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioClip-samples.html">samples</a></strong></td>
+	<td style="text-align:left;">The length of the AudioClip in samples.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioClip-loadType.html">loadType</a></strong></td>
+	<td style="text-align:left;">The load type of the clip. You can set the AudioClip load type in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>.</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Method</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Additional information</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioClip.Create.html">AudioClip.Create</a></strong></td>
+	<td style="text-align:left;">Creates an AudioClip with a name and length you specify.</td>
+	<td style="text-align:left;">Unity WebGL partially supports <code>AudioClip.Create</code>. Browsers don’t support dynamic streaming, so to use <code>AudioClip.Create</code>, set the Stream to false.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioClip.SetData.html">AudioClip.SetData</a></strong></td>
+	<td style="text-align:left;">Sets sample data in an AudioSource.clip.</td>
+	<td style="text-align:left;">Unity WebGL partially supports <code>AudioClip.SetData</code>. You can use this method only on compressed audio files with <strong>Load Type</strong> set to <strong>Decompress on Load</strong>. Refer to <a href="#compressed-audio">Compressed audio</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/AudioClip.GetData.html">AudioClip.GetData</a></strong></td>
+	<td style="text-align:left;">Retrieves an array with sample data from an AudioSource.clip.</td>
+	<td style="text-align:left;">Unity WebGL partially supports <code>AudioClip.GetData</code>. You can use this method only on compressed audio files with <strong>Load Type</strong> set to <strong>Decompress on Load</strong>. Refer to <a href="#compressed-audio">Compressed audio</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note:</strong> For audio clip support on Centos 7, make sure you’ve installed the <a href="https://ffmpeg.org/">ffmpeg</a> package.</p>
+
+<h2>Audio Mixer <a name="audio-mixer" aria-hidden="true"></a>
+</h2>
+
+<p>Unity WebGL supports some functionality of <a href="AudioMixer.html">Audio Mixer</a> assets. </p>
+
+<p>You can do the following with Audio Mixers on Unity WebGL:</p>
+
+<ul>
+<li>Create an Audio Mixer asset.</li>
+<li>Add AudioMixerGroups to the hierarchy.</li>
+<li>Adjust the volume of each group. To expose or change the volume with scripting, use <a href="../ScriptReference/Audio.AudioMixer.SetFloat.html">AudioMixer.SetFloat</a>.</li>
+</ul>
+
+<p>
+<strong>Note</strong>: Volume is the only property you can change on Unity WebGL. Other properties and sound effects aren’t supported.</p>
+
+<h2>Compressed audio <a name="compressed-audio" aria-hidden="true"></a>
+</h2>
+
+<p>To use compressed audio with WebGL in Unity, set the AudioClip <a href="../ScriptReference/AudioClip-loadType.html">loadType</a> to one of the following options: </p>
+
+<ul>
+<li><a href="../ScriptReference/AudioClipLoadType.CompressedInMemory.html">CompressedInMemory</a></li>
+<li><a href="../ScriptReference/AudioClipLoadType.DecompressOnLoad.html">DecompressOnLoad</a></li>
+</ul>
+
+<p>You can also change these settings in the Unity Editor. To change the setting, select your Audio Clip, then set <strong>Load Type</strong> in the Inspector window to your preferred option (<strong>Decompress On Load</strong> or <strong>Compressed In Memory</strong>).</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><span class="tooltip"><strong>Compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> method</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Considerations</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>CompressedInMemory</strong></td>
+	<td style="text-align:left;">Use this to compress the audio on disk and have it remain compressed after it loads into your application memory.</td>
+	<td style="text-align:left;">Compressed audio can cause latency and is less precise when it comes to audio playback. However, compressed audio uses less memory in your application than decompressed audio. It’s best practice to use <code>CompressedInMemory</code> for audio that’s unaffected by precision for example, background music.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>DecompressOnLoad</strong></td>
+	<td style="text-align:left;">Use this to compress the audio on disk, similar to CompressedInMemory, and decompress when it loads into your application memory.</td>
+	<td style="text-align:left;">Decompressed audio uses a significant amount of memory compared to compressed audio but has lower latency and more audio flexibility. Use <code>DecompressedOnLoad</code> for audio that’s affected by precision (for example, character dialog or sound effects).</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Issues with DecompressOnLoad on iOS devices<a name="decompress-audio-issues" aria-hidden="true"></a>
+</h3>
+
+<p>If you set your audio clip’s <code>loadType</code> to <code>DecompressOnLoad</code>, the clip might not be audible on <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> devices that are in Silent Mode. This issue occurs only in Web builds. </p>
+
+<p>The Web audio system uses the browser’s <code>AudioBufferSourceNode</code> node to load audio clips that have the <code>DecompressOnLoad</code> load type. The sounds aren’t audible on iOS devices in Silent Mode because WebKit categorizes this node type differently than <code>MediaElementSourceNode</code>, which is used for <code>CompressedInMemory</code> sounds.</p>
+
+<p>To ensure audio plays regardless of Silent Mode, set your audio clip <code>loadType</code> to <code>CompressedInMemory</code>. If you need to load in a sound when a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> starts, it’s recommended to load the sound completely in a temporary scene and <a href="../ScriptReference/SceneManagement.LoadSceneMode.Additive.html">load the target scene additively</a>. </p>
+
+<h2>Audio playback and browser security</h2>
+
+<p>For security reasons, browsers don’t allow audio playback until an end user interacts with your application webpage via a mouse click, touch event, or key press. Use a loading screen to allow the end user to interact with your application and start audio playback before your main content begins.</p>
+<!-- area:platforms -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="webgl-graphics.html"></a></span><div class="tip">WebGL graphics</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="webgl-texture-compression.html"></a></span><div class="tip">Texture compression in WebGL</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

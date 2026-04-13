@@ -1,0 +1,540 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Creating a 2D game</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Quickstart2DCreate.html">English</a></li>
+<li><a href="/cn/current/Manual/Quickstart2DCreate.html">中文</a></li>
+<li><a href="/ja/current/Manual/Quickstart2DCreate.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Quickstart2DCreate.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Quickstart2DCreate.html">English</a></li>
+<li><a href="/cn/current/Manual/Quickstart2DCreate.html">中文</a></li>
+<li><a href="/ja/current/Manual/Quickstart2DCreate.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Quickstart2DCreate.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Unity2D.html">2D game development</a></li>
+<li><a href="Quickstart2D.html">2D game development quickstart guide</a></li>
+<li>Creating a 2D game</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Quickstart2DSetup.html"></a></span><div class="tip">Initial setup for 2D games</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="2DSorting.html"></a></span><div class="tip">2D Sorting</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Creating a 2D game</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Before you create a 2D game, you need to decide on a <a href="Quickstart2DPerspective.html">game perspective</a> and an <a href="Quickstart2DArt.html">art style</a>. </p>
+
+<p>To create a 2D game, <a href="Quickstart2DSetup.html">set up your Unity project</a> and then familiarize yourself with the relevant concepts in the following order:</p>
+
+<ol>
+<li><p><a href="#Fundamentals">Fundamentals</a></p></li>
+<li><p><a href="#Scripting">Scripting</a></p></li>
+<li><p><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #Sprites">Sprites</a><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html" href="#Sprites">Sprites</a><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span></p></li>
+<li><p><a href="#Environment">Building in-game environments</a></p></li>
+<li><p><a href="#Animation">Character animation</a></p></li>
+<li><p>
+<a href="#Graphics">Graphics</a> </p></li>
+<li><p><a href="#Physics">Physics 2D</a></p></li>
+<li><p><a href="#Audio">Audio</a></p></li>
+<li><p><a href="#UI">User interface</a></p></li>
+<li><p><a href="#Profiling">Profiling, optimizing and testing</a></p></li>
+<li><p><a href="#Publishing">Publishing</a></p></li>
+</ol>
+
+<p><a name="Fundamentals" aria-hidden="true"></a></p>
+
+<h2>Fundamentals</h2>
+
+<p><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GameObjects.html">GameObjects</a><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="GameObjects.html">GameObjects</a><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> are fundamental objects in Unity that represent characters, props, scenery, and more. Every object in your game is a GameObject.</p>
+
+<p>GameObjects represent the items in your game; the space in which you place them to build your level is called a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html">scene</a><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="CreatingScenes.html">scene</a><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. Scenes in Unity are always 3D; when you make a 2D game in Unity, you typically choose to ignore the third dimension (the z-axis) but you can also use it in special cases, for example when making 2.5D games.</p>
+
+<p>The behavior of GameObjects is defined by blocks of functionality called components. The following components are fundamental for 2D games: </p>
+
+<ul>
+<li><p>
+<a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Transform.html">Transform</a>: the <span class="tooltip"><strong>Transform component</strong><span class="tooltiptext">A Transform component determines the Position, Rotation, and Scale of each object in the scene. Every GameObject has a Transform. <a href="class-Transform.html" href="class-Transform.html">Transform</a>: the <span class="tooltip"><strong>Transform component</strong><span class="tooltiptext">A Transform component determines the Position, Rotation, and Scale of each object in the scene. Every GameObject has a Transform. <a href="class-Transform.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TransformComponent" aria-label="Go to glossary anchor for TransformComponent">Glossary</a></span></span></span> determines the Position, Rotation, and Scale of each GameObject in the scene. Every GameObject has a Transform component.</p></li>
+<li><p><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-SpriteRenderer.html">Sprite Renderer</a><span class="tooltiptext">A component that lets you display images as Sprites for use in both 2D and 3D scenes. <a href="class-SpriteRenderer.html" href="class-SpriteRenderer.html">Sprite Renderer</a><span class="tooltiptext">A component that lets you display images as Sprites for use in both 2D and 3D scenes. <a href="class-SpriteRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SpriteRenderer" aria-label="Go to glossary anchor for SpriteRenderer">Glossary</a></span></span></span>: the Sprite Renderer component renders the Sprite and controls how it looks in a scene.</p></li>
+<li><p><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Camera.html">Cameras</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html" href="class-Camera.html">Cameras</a><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>: devices that capture and display the world to the player. Marking a Camera as <strong>Orthographic</strong> removes all perspective from the Camera’s view. This is mostly useful for making isometric or 2D games.</p></li>
+<li><p>
+<a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Collider2D.html">Collider 2D</a>: this component defines the shape of a 2D GameObject for the purposes of physical <span class="tooltip"><strong>collisions</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a href="CollidersOverview.html" href="Collider2D.html">Collider 2D</a>: this component defines the shape of a 2D GameObject for the purposes of physical <span class="tooltip"><strong>collisions</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span>. See <a href="class-Physics2DManager.html">2D Physics</a>. </p></li>
+</ul>
+
+<p>Components are <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> representations of C# classes; you can use scripts to change and interact with components, or create new ones. See the <a href="#Scripting">Scripting</a> section for more details.</p>
+
+<p><a name="Scripting" aria-hidden="true"></a></p>
+
+<h2>Scripting</h2>
+
+<p>All 2D games need <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ScriptingSection.html">scripts</a><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html" href="ScriptingSection.html">scripts</a><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>. Scripts respond to input from the player and arrange for events in the gameplay to happen when they should.</p>
+
+<p>For details on how to use scripts in Unity see <a href="ScriptingConcepts.html">Scripting Overview</a>. Also see the Unity Learn <a href="https://learn.unity.com/course/beginner-scripting">Beginner Scripting</a> course. </p>
+
+<p>Scripts are attached to GameObjects, and any script you create inherits from the <a href="../ScriptReference/MonoBehaviour.html">MonoBehaviour</a> class.</p>
+
+<p><a name="Sprites" aria-hidden="true"></a></p>
+
+<h2>Sprites</h2>
+
+<p>
+<a href="Sprites.html">Sprites</a> are 2D graphic objects. You use Sprites for all types of 2D games. For example, you can import an image of your main character as a Sprite. </p>
+
+<figure>
+<img src="../uploads/Main/quickstart-sprite-2d.png" alt="A character Sprite">
+<figcaption>A character Sprite</figcaption>
+</figure>
+
+<p>You can also use a collection of Sprites to build a character. This allows you greater control over the movement and animation of your characters. </p>
+
+<figure>
+<img src="../uploads/Main/quickstart-sprite-editor-2d.png" alt="Multiple Sprites that make up the parts of a character, displayed in the Sprite Editor">
+<figcaption>Multiple Sprites that make up the parts of a character, displayed in the Sprite Editor</figcaption>
+</figure>
+
+<h3>Importing and setting up Sprites</h3>
+
+<p>Import your Sprites with Unity’s recommended settings; see <a href="Sprites.html">Importing and Setting Up Sprites</a>. </p>
+
+<h3>Rendering Sprites</h3>
+
+<p>Use the <a href="class-SpriteRenderer.html">Sprite Renderer</a> component to render your Sprites. For example, you can use the Sprite Renderer to change the color and opacity of a Sprite. </p>
+
+<figure>
+<img src="../uploads/Main/quickstart-sprite-renderer-2d.png" alt="Adjusting the color of a Sprite with the Sprite Renderer">
+<figcaption>Adjusting the color of a Sprite with the Sprite Renderer</figcaption>
+</figure>
+
+<p>See the <a href="https://learn.unity.com/tutorial/introduction-to-the-sprite-renderer#">Introduction to the Sprite Renderer Learn tutorial</a>. Sorting SpritesBy organizing Sprites in layers, you can create an illusion of depth. You can sort Sprites according to many strategies. See <a href="Sprites.html">Sorting Sprites</a> for full details. For example, you might sort Sprites along the y-axis, so that Sprites that are higher up are sorted behind Sprites that are lower, to make the Sprites that are higher appear further away than the Sprites that are lower. </p>
+
+<figure>
+<img src="../uploads/Main/quickstart-sort-sprites-2d.png" alt="Sprites sorted along the y-axis">
+<figcaption>Sprites sorted along the y-axis</figcaption>
+</figure>
+
+<p>To set the overlay order of Sprites, use <a href="class-TagManager.html">Sorting Layers</a>. </p>
+
+<p>To group GameObjects with <a href="class-SpriteRenderer.html">Sprite Renderers</a>, and control the order in which they render their Sprites, use <a href="class-SortingGroup.html">Sorting Groups</a>.</p>
+
+<h3>Sprite Atlas</h3>
+
+<p>You can use a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-SpriteAtlas.html">Sprite Atlas</a><span class="tooltiptext">A texture that is composed of several smaller textures. Also referred to as a texture atlas, image sprite, sprite sheet or packed texture. <a href="class-SpriteAtlas.html" href="class-SpriteAtlas.html">Sprite Atlas</a><span class="tooltiptext">A texture that is composed of several smaller textures. Also referred to as a texture atlas, image sprite, sprite sheet or packed texture. <a href="class-SpriteAtlas.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#spriteatlas" aria-label="Go to glossary anchor for spriteatlas">Glossary</a></span></span></span> to consolidate several Textures into a single combined Texture. This optimizes your game and saves memory. For example, you can add all your Sprites associated with a particular character or purpose to a Sprite Atlas. </p>
+
+<figure>
+<img src="../uploads/Main/quickstart-sprite-atlas-2d.png" alt="A Sprite Atlas">
+<figcaption>A Sprite Atlas</figcaption>
+</figure>
+
+<p>See the <a href="https://learn.unity.com/tutorial/introduction-to-the-sprite-atlas">Introduction to the Sprite Atlas Learn tutorial</a>. </p>
+
+<p><a name="Environment" aria-hidden="true"></a></p>
+
+<h2>Building in-game environments</h2>
+
+<p>Environment design refers to the process of building your game’s levels and environments. You can combine the environment design tools in this section in whichever way makes the most sense for your game; for example, you can make a top-down game using only 9-slice, or you can make a side on platformer with Tilemap and SpriteShape.</p>
+
+<p><a name="Slicing" aria-hidden="true"></a></p>
+
+<h3>9-slicing</h3>
+
+<p>9-slicing is a 2D technique that allows you to reuse an image at various sizes without needing to prepare multiple assets. Unity can dynamically stretch and tile designated parts of a Sprite to allow one Sprite to serve as the border or background for UI elements of many sizes. See <a href="9SliceSprites.html">9-slicing sprites</a>.</p>
+
+<p>For example, you could use 9-slicing to stretch a Sprite to shape when you build a 2D level.</p>
+
+<figure>
+<img src="../uploads/Main/quickstart-9-slice-2d.png" alt="A 9-sliced Sprite, split into nine sections">
+<figcaption>A 9-sliced Sprite, split into nine sections</figcaption>
+</figure>
+
+<p>See the <a href="https://learn.unity.com/tutorial/using-9-slicing-for-scalable-sprites-2019-3">Using 9-Slicing for Scalable Sprites Learn tutorial</a>. </p>
+
+<p><a name="Tilemap" aria-hidden="true"></a></p>
+
+<h3>Tilemap</h3>
+
+<p>The <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Tilemap.html">Tilemap</a><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a href="class-Tilemap.html" href="class-Tilemap.html">Tilemap</a><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a href="class-Tilemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Tilemap" aria-label="Go to glossary anchor for Tilemap">Glossary</a></span></span></span> component is a system that stores and handles Tile assets for creating 2D levels. Use the <a href="class-Tilemap.html">2D Tilemap Editor</a> package (installed by default) to use Tilemaps. </p>
+
+<p>For example, you can use Tilemaps to paint levels using Tiles and brush tools and define rules for how Tiles behave. </p>
+
+<figure>
+<img src="../uploads/Main/quickstart-tilemap-2d.png" alt="The Tile Palette window, used to edit Tilemaps">
+<figcaption>The Tile Palette window, used to edit Tilemaps</figcaption>
+</figure>
+
+<p>See the <a href="https://learn.unity.com/tutorial/introduction-to-tilemaps">Introduction to Tilemaps Learn tutorial</a>. </p>
+
+<h4>2D Tilemap Extras</h4>
+
+<p>To add some extra Tilemap assets to your Project, install the <a href="https://docs.unity3d.com/Packages/com.unity.2d.tilemap.extras@1.6/manual/index.html">2D Tilemap Extras</a> package. This package contains reusable 2D and Tilemap Editor scripts that you can use for your own Projects. You can customize the behavior of the scripts to create new Brushes that suit different scenarios.</p>
+
+<p><a name="Isometric" aria-hidden="true"></a></p>
+
+<h4>Isometric Tilemaps</h4>
+
+<p>For games with isometric perspective, you can create <a href="Tilemap-Isometric.html">Isometric Tilemaps</a>.</p>
+
+<h3>SpriteShape</h3>
+
+<p>In a similar way to a vector drawing tool, SpriteShape provides a more flexible way to create larger Sprites, such as organic-looking landscapes and paths. See the <a href="https://docs.unity3d.com/Packages/com.unity.2d.spriteshape@3.0/manual/SSProfile.html">Sprite Shape Profile</a>. </p>
+
+<figure>
+<img src="../uploads/Main/quickstart-spriteshape-path-2d.png" alt="A path created in SpriteShape">
+<figcaption>A path created in SpriteShape</figcaption>
+</figure>
+
+<p>See the <a href="https://learn.unity.com/tutorial/working-with-spriteshape">Working with SpriteShape tutorial</a>. </p>
+
+<p><a name="Animation" aria-hidden="true"></a></p>
+
+<h2>Character animation</h2>
+
+<p>There are three different ways you can animate 2D characters: </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">2D animation type</th>
+	<th style="text-align:left;">Used for</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Frame-by-frame</td>
+	<td style="text-align:left;">Artistic reasons, if you want your game to have a classic animation art style. Frame-by-frame animation is relatively resource-intensive, both to make and to run.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Cutout</td>
+	<td style="text-align:left;">Smooth skeletal animation, when the characters don’t require realistic articulation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Skeletal</td>
+	<td style="text-align:left;">Smooth skeletal animation where Sprites bend according to the bone structure. Use this when the characters need a more organic feel.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Frame-by-frame</h3>
+
+<p>Frame-by-frame animation is based on the traditional cel animation technique of drawing each moment of an animation as individual images, which are played in fast sequence, like flipping pages on a flipbook.</p>
+
+<p>For more information, refer to <a href="https://docs.unity3d.com/Packages/com.unity.2d.animation@9.1/manual/SpriteSwapLanding.html">Sprite Swap</a> in the 2D Animation package manual.</p>
+
+<figure>
+<img src="../uploads/Main/quickstart-frame-by-frame-2d.png" alt="Frame-by-frame animation in the Sprite Editor">
+<figcaption>Frame-by-frame animation in the Sprite Editor</figcaption>
+</figure>
+
+<p>See the <a href="https://learn.unity.com/tutorial/introduction-to-sprite-animations">Introduction to Sprite Animations Learn tutorial</a>. </p>
+
+<h3>Cutout</h3>
+
+<p>In cutout animation, multiple Sprites make up the body of a character, and each piece moves to give the visual effect of the whole character moving. This animation style is similar to skeletal animation (see below), except that the Sprites don’t bend.</p>
+
+<figure>
+<img src="../uploads/Main/quickstart-cutout-2d.png" alt="Cutout animation in the Sprite Editor">
+<figcaption>Cutout animation in the Sprite Editor</figcaption>
+</figure>
+
+<h3>Skeletal</h3>
+
+<p>With skeletal animation, you map a Sprite or a group of Sprites onto an animation skeleton. You can create and define animation bones for characters and objects, that define how they should bend and move. This approach allows the bones to bend and deform the Sprites, for a more natural movement style. To use skeletal animation, you need to use the <a href="com.unity.2d.animation.html">2D Animation</a> package (installed by default). </p>
+
+<p>For a 2D Animation workflow, including a guide to working with the Bone Editor, see the <a href="https://docs.unity3d.com/Packages/com.unity.2d.animation@1.0/manual/index.html">2D Animation documentation</a>. </p>
+
+<figure>
+<img src="../uploads/Main/quickstart-skeletal-2d.png" alt="A character with bones in the Bone Editor">
+<figcaption>A character with bones in the Bone Editor</figcaption>
+</figure>
+
+<p><a name="Graphics" aria-hidden="true"></a></p>
+
+<h2>Graphics</h2>
+
+<p>This section describes your graphics options when using Universal <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> (URP). </p>
+
+<h3>Lighting</h3>
+
+<p>Because you’re using URP with the 2D Renderer, you can use the Light 2D component to apply optimized 2D lighting to Sprites. For details, see <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@10.0/manual/Lights-2D-intro.html">Introduction to Lights 2D</a>. </p>
+
+<figure>
+<img src="../uploads/Main/quickstart-lighting-2d.png" alt="These two images show the same scene; in the image on the left, 2D Lights are disabled, and in the image on the right, 2D lights are enabled. With 2D Lights, you can use the same Sprites to create different weather conditions or moods.">
+<figcaption>These two images show the same scene; in the image on the left, 2D Lights are disabled, and in the image on the right, 2D lights are enabled. With 2D Lights, you can use the same Sprites to create different weather conditions or moods.</figcaption>
+</figure>
+
+<p>To set up lighting: </p>
+
+<ol>
+<li><p>Prepare your Sprites for lighting. For details, see <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@10.0/manual/PrepShader.html">Preparing Sprites for Lighting</a>. </p></li>
+<li><p>Set up <span class="tooltip"><strong>normal map</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normalmap" aria-label="Go to glossary anchor for Normalmap">Glossary</a></span></span></span> and mask Textures. 2D Lights can interact with normal map and mask Textures linked to Sprites to create advanced lighting effects, such as <a href="https://en.wikipedia.org/wiki/Normal_mapping">normal mapping</a>. See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@10.0/manual/SecondaryTextures.html">Setting up normal map and mask Textures</a>. </p></li>
+<li><p>Create a 2D Light GameObject; see <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@10.0/manual/2DLightProperties.html">2D Lights Properties</a>. </p></li>
+<li><p>Configure the 2D Renderer Data asset; see <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@10.0/manual/2DRendererData_overview.html">Configuring the 2D Renderer Asset</a>. </p></li>
+<li><p>(Optional) if you want to apply 2D Light effects to a <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> art game, see <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@10.0/manual/2d-pixelperfect.html">2D Pixel Perfect</a>. </p></li>
+</ol>
+
+<p>See the <a href="https://learn.unity.com/tutorial/editing-lighting-in-the-lightweight-render-pipeline#">Lighting in URP Learn tutorial</a>. </p>
+
+<h3>Shadows</h3>
+
+<p>To define the shape and properties that a Light uses to determine the shadows it casts, use the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@7.1/manual/2DShadows.html">Shadow Caster 2D component</a>. Increase the Light’s <strong>Shadow Intensity</strong> above zero. </p>
+
+<figure>
+<img src="../uploads/Main/quickstart-shadows-2d.png" alt="A shadow intensity of 0.5 in the Shadow Caster 2D component">
+<figcaption>A shadow intensity of 0.5 in the Shadow Caster 2D component</figcaption>
+</figure>
+
+<h3>Enhanced look and feel</h3>
+
+<p>Particle systems and <span class="tooltip"><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span> are optional tools that you can use to add polish to your game. </p>
+
+<h4>Particle systems</h4>
+
+<p>You can use particle systems to create dynamic objects like fire, smoke or liquids, as an alternative to using a Sprite. Sprites are more suited to physical objects. See <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ParticleSystems.html">Particle systems</a><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a href="class-ParticleSystem.html" href="ParticleSystems.html">Particle systems</a><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a href="class-ParticleSystem.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#particlesystem" aria-label="Go to glossary anchor for particlesystem">Glossary</a></span></span></span>. </p>
+
+<figure>
+<img src="../uploads/Main/quickstart-particle-system-2d.png" alt="A fire effect, created with the Particle System and Shader Graph for 2D">
+<figcaption>A fire effect, created with the Particle System and Shader Graph for 2D</figcaption>
+</figure>
+
+<h4>Post-processing</h4>
+
+<p>You can use post-processing effects and full-screen effects to significantly improve the appearance of your game. For example, you can use these effects to simulate physical camera or film properties, or to create stylized visuals. </p>
+
+<p>URP has its own post-processing implementation. See <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@8.2/manual/integration-with-post-processing.html">Post-processing in the Universal Render Pipeline</a>. </p>
+
+<figure>
+<img src="../uploads/Main/quickstart-post-processing-2d.png" alt="The Lost Crypt demo uses the bloom and vignette post-processing effects">
+<figcaption>The Lost Crypt demo uses the bloom and vignette post-processing effects</figcaption>
+</figure>
+
+<p><a name="Physics" aria-hidden="true"></a></p>
+
+<h2>Physics 2D</h2>
+
+<p>The Physics 2D settings define limits on the accuracy of the physical simulation in your 2D game. See <a href="class-Physics2DManager.html">2D Physics</a>. </p>
+
+<p>This <a href="https://www.youtube.com/watch?v=Xxbs9x2qB7Y&amp;feature=youtu.be">video</a> provides an overview of 2D physics features in Unity 2020.1.</p>
+
+<p>To learn how to use Unity’s 2D <span class="tooltip"><strong>physics engine</strong><span class="tooltiptext">A system that simulates aspects of physical systems so that objects can accelerate correctly and be affected by collisions, gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PhysicsSection.html" href="PhysicsSection.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PhysicsEngine" aria-label="Go to glossary anchor for PhysicsEngine">Glossary</a></span></span></span>, see the <a href="https://learn.unity.com/tutorial/2d-physics">2D Physics Learn tutorial</a>.</p>
+
+<p>The following 2D physics tools are useful for 2D games.</p>
+
+<ul>
+<li><p><a href="#Rigidbody">Rigidbody 2D</a></p></li>
+<li><p><a href="#Collider">Collider 2D</a></p></li>
+<li><p><a href="#Triggers">Triggers</a></p></li>
+<li><p><a href="#Joints">2D Joints</a></p></li>
+<li><p><a href="#Effectors">2D Effectors</a></p></li>
+</ul>
+
+<h3>Rigidbody 2D<a name="Rigidbody" aria-hidden="true"></a>
+</h3>
+
+<p>A <span class="tooltip"><strong>Rigidbody</strong><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Rigidbody.html" href="class-Rigidbody.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span> 2D component places a GameObject under the control of the physics engine. See <a href="class-Rigidbody2D.html">Rigidbody 2D</a>. </p>
+
+<figure>
+<img src="../uploads/Main/quickstart-rigidbody-component-2d.png" alt="The Rigidbody 2D component">
+<figcaption>The Rigidbody 2D component</figcaption>
+</figure>
+
+<h3>Collider 2D<a name="Collider" aria-hidden="true"></a>
+</h3>
+
+<p>Collider 2D components define the shape of a 2D GameObject for the purposes of physical collisions. You can also use <span class="tooltip"><strong>Collider</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> 2D components for input detection. For example, in mobile games you can use them to make Sprites selectable.</p>
+
+<p>The Collider 2D types that you can use with Rigidbody 2D are: </p>
+
+<ul>
+<li><p><a href="class-CircleCollider2D.html">Circle Collider 2D</a></p></li>
+<li><p><a href="class-BoxCollider2D.html">Box Collider 2D</a></p></li>
+<li><p><a href="class-PolygonCollider2D.html">Polygon Collider 2D</a></p></li>
+<li><p><a href="class-EdgeCollider2D.html">Edge Collider 2D</a></p></li>
+<li><p><a href="class-CapsuleCollider2D.html">Capsule Collider 2D</a></p></li>
+<li><p><a href="class-CompositeCollider2D.html">Composite Collider 2D</a></p></li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/quickstart-circle-collider-component.png" alt="The Circle Collider 2D component">
+<figcaption>The Circle Collider 2D component</figcaption>
+</figure>
+
+<h3>Triggers<a name="Triggers" aria-hidden="true"></a>
+</h3>
+
+<p>When you set a Collider 2D as a Trigger (by enabling its <strong>Is Trigger</strong> property), it no longer behaves as a physical object, and it can intersect with other Colliders without causing a collision. Instead, when a Collider enters its space, Unity calls the <code>OnTriggerEnter</code> function on the Trigger GameObject’s scripts. </p>
+
+<figure>
+<img src="../uploads/Main/quickstart-is-trigger-2d.png" alt="The Circle Collider 2D component with Is Trigger selected">
+<figcaption>The Circle Collider 2D component with <strong>Is Trigger</strong> selected</figcaption>
+</figure>
+
+<h3>2D Joints<a name="Joints" aria-hidden="true"></a>
+</h3>
+
+<p>Joints attach GameObjects together. You can only attach 2D <span class="tooltip"><strong>joints</strong><span class="tooltiptext">A physics component allowing a dynamic connection between Rigidbody components, usually allowing some degree of movement such as a hinge. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Joints.html" href="Joints.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#joint" aria-label="Go to glossary anchor for joint">Glossary</a></span></span></span> to GameObjects that have a Rigidbody 2D component attached, or to a fixed position in world space. See <a href="Joints2D.html">2D Joints</a>. </p>
+
+<h3>2D Effectors<a name="Effectors" aria-hidden="true"></a>
+</h3>
+
+<p>Use Effector 2D <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingComponents.html">components</a><span class="tooltiptext">A functional part of a GameObject. A GameObject can contain any number of components. Unity has many built-in components, and you can create your own by writing scripts that inherit from MonoBehaviour. <a href="UsingComponents.html" href="UsingComponents.html">components</a><span class="tooltiptext">A functional part of a GameObject. A GameObject can contain any number of components. Unity has many built-in components, and you can create your own by writing scripts that inherit from MonoBehaviour. <a href="UsingComponents.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#component" aria-label="Go to glossary anchor for component">Glossary</a></span></span></span> with <a href="Collider2D.html">Collider 2D</a> components to direct the forces of <a href="PhysicsSection.html">physics</a> in your scene when <a href="GameObjects.html">GameObject</a> Colliders come into contact with each other. See <a href="Effectors2D.html">2D Effectors</a>.</p>
+
+<p><a name="Audio" aria-hidden="true"></a></p>
+
+<h2>Audio</h2>
+
+<p>You can add background music and sound effects to your game in Unity; see <a href="AudioOverview.html">Audio Overview</a>. Use third-party software to create your audio and import it into Unity with the recommended settings. </p>
+
+<p><a name="UI" aria-hidden="true"></a></p>
+
+<h2>User interface</h2>
+
+<p>If you want to add a menu or help to your game, you need to set up a <a href="UIToolkits.html">user interface</a>. To set up a user interface, use <a href="https://docs.unity3d.com/Manual/UIToolkits.html">Unity UI</a>. </p>
+
+<p><a name="Profiling" aria-hidden="true"></a></p>
+
+<h2>Profiling, optimizing and testing a build</h2>
+
+<h3>Profiling</h3>
+
+<p>Profiling allows you to see how resource-intensive the different parts of your game are. You should always profile your game on its target release platform; see <a href="profiler-profiling-applications.html">Profiling your application</a>. </p>
+
+<h3>Optimizing</h3>
+
+<p>After profiling, you can use the results to make performance improvements and optimizations. See <a href="BestPracticeUnderstandingPerformanceInUnity.html">Understanding optimization in Unity</a>.</p>
+
+<h3>Testing</h3>
+
+<p>Test your game and your code with the Unity Test Framework; see <a href="https://docs.unity3d.com/Packages/com.unity.test-framework@1.1/manual/index.html">Unity Test Framework</a>.</p>
+
+<figure>
+<img src="../uploads/Main/quickstart-testing-2d.png" alt="The Test Runner window">
+<figcaption>The Test Runner window</figcaption>
+</figure>
+
+<h2>Publishing<a name="Publishing" aria-hidden="true"></a>
+</h2>
+
+<p>When you’ve finished your game, you’re ready to publish it. See <a href="PublishingBuilds.html">Publishing Builds</a>. </p>
+
+<figure>
+<img src="../uploads/Main/quickstart-build-settings.png" alt="The Build Settings window">
+<figcaption>The Build Settings window</figcaption>
+</figure>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Quickstart2DSetup.html"></a></span><div class="tip">Initial setup for 2D games</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="2DSorting.html"></a></span><div class="tip">2D Sorting</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

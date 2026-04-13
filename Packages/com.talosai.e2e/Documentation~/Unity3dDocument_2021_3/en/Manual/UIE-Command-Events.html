@@ -1,0 +1,307 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Command events</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Command-Events.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Command-Events.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Command-Events.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Command-Events.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Command-Events.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Command-Events.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Command-Events.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Command-Events.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-Events.html">Control behavior with events</a></li>
+<li><a href="UIE-Events-Reference.html">Event reference</a></li>
+<li>Command events</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Click-Events.html"></a></span><div class="tip">Click events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Drag-Events.html"></a></span><div class="tip">Drag-and-drop events</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Command events</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Command events are sent to allow the Unity Editor to forward top-level menu actions to the Editor <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>, as well as their equivalent keyboard shortcuts.</p>
+
+<p>The following are the available commands:</p>
+
+<ul>
+<li><code>Copy</code></li>
+<li><code>Cut</code></li>
+<li><code>Paste</code></li>
+<li><code>Delete</code></li>
+<li><code>DeselectAll</code></li>
+<li><code>SoftDelete</code></li>
+<li><code>Duplicate</code></li>
+<li><code>FrameSelected</code></li>
+<li><code>FrameSelectedWithLock</code></li>
+<li><code>SelectAll</code></li>
+<li><code>Find</code></li>
+<li><code>FocusProjectWindow</code></li>
+</ul>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Event</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Trickles down</strong></th>
+	<th style="text-align:left;"><strong>Bubbles up</strong></th>
+	<th style="text-align:left;"><strong>Cancellable</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ValidateCommandEvent.html">ValidateCommandEvent</a></td>
+	<td style="text-align:left;">The Editor sends this event when determining whether an element in the panel handles the command.</td>
+	<td style="text-align:left;">✔</td>
+	<td style="text-align:left;">✔</td>
+	<td style="text-align:left;">✔</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ExecuteCommandEvent.html">ExecuteCommandEvent</a></td>
+	<td style="text-align:left;">The Editor sends this event when an element in the panel executes a command.</td>
+	<td style="text-align:left;">✔</td>
+	<td style="text-align:left;">✔</td>
+	<td style="text-align:left;">✔</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Unique properties</h2>
+
+<p>
+<strong><code>target</code></strong>: The element with keyboard focus. This value is <code>null</code> if no element has focus.</p>
+
+<p>
+<strong><code>commandName</code></strong>: The command to validate or execute.</p>
+
+<h2>Event List</h2>
+
+<h3>ValidateCommandEvent</h3>
+
+<p>The <code>ValidateCommandEvent</code> event asks an EditorWindow if it can execute a command. For example, the Editor can enable or disable a menu item based on the results from the validation command event. </p>
+
+<p>To verify if the Editor can execute a command:</p>
+
+<ol>
+<li>Register a callback for <code>ValidateCommandEvent</code>.</li>
+<li>Test the <code>commandName</code> property of the event.</li>
+<li>Call the <code>Event.StopPropogation()</code> method on the event if the command can be executed.</li>
+</ol>
+
+<h3>ExecuteCommandEvent</h3>
+
+<p>The <code>ExecuteCommandEvent</code> event asks an Editor Window to execute a command. </p>
+
+<p>Even if this event follows a validation event, it’s best practice to ensure the action is possible first, independently of any previous validation.</p>
+
+<p>To respond to the command:</p>
+
+<ol>
+<li>Register a callback for <code>ExecuteCommandEvent</code>.</li>
+<li>Test the <code>commandName</code> property of the event.</li>
+<li>Call the <code>Event.StopPropogation()</code> method on the event before executing the actual logic of the command, so the Editor knows that the comment has been executed.</li>
+</ol>
+
+<h2>Example</h2>
+
+<p>The following example uses command events to support copy and paste in a custom Editor Window. The example displays a list of fruits in a custom Editor window. Users can use keyboard shortcuts to copy and paste any fruits.</p>
+
+<pre><code class="lang-csharp">using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class CopyPasteExample : EditorWindow
+{
+    [MenuItem(&quot;Window/UI Toolkit Examples/CopyPasteExample&quot;)]
+    public static void Show()
+    {
+        GetWindow&lt;CopyPasteExample&gt;();
+    }
+
+    readonly List&lt;string&gt; fruits = new ()
+    {
+        &quot;Banana&quot;,
+        &quot;Apple&quot;,
+        &quot;Lime&quot;,
+        &quot;Orange&quot;
+    };
+    
+    ListView m_ListView;
+
+    public void CreateGUI()
+    {
+        Func&lt;VisualElement&gt; makeItem = () =&gt; new Label();
+
+        Action&lt;VisualElement, int&gt; bindItem = (e, i) =&gt; (e as Label).text = fruits[i];
+
+        m_ListView = new ListView();
+        m_ListView.makeItem = makeItem;
+        m_ListView.bindItem = bindItem;
+        m_ListView.itemsSource = fruits;
+        m_ListView.selectionType = SelectionType.Single;
+        
+        m_ListView.RegisterCallback&lt;ValidateCommandEvent&gt;(OnValidateCommand);
+        m_ListView.RegisterCallback&lt;ExecuteCommandEvent&gt;(OnExecuteCommand);
+        
+        rootVisualElement.Add(m_ListView);
+    }
+
+    void OnExecuteCommand(ExecuteCommandEvent evt)
+    {
+        if (evt.commandName == &quot;Copy&quot; &amp;&amp; m_ListView.selectedIndices.Count() &gt; 0)
+        {
+            EditorGUIUtility.systemCopyBuffer = fruits[m_ListView.selectedIndex];
+            evt.StopPropagation();
+        }
+        else if (evt.commandName == &quot;Paste&quot; &amp;&amp; !string.IsNullOrEmpty(EditorGUIUtility.systemCopyBuffer))
+        {
+            fruits.Add(EditorGUIUtility.systemCopyBuffer);
+            m_ListView.RefreshItems();
+            evt.StopPropagation();
+        }
+    }
+
+    void OnValidateCommand(ValidateCommandEvent evt)
+    {
+        if (evt.commandName == &quot;Copy&quot; &amp;&amp; m_ListView.selectedIndices.Count() &gt; 0)
+        {
+            evt.StopPropagation();
+        }
+        else if (evt.commandName == &quot;Paste&quot; &amp;&amp; !string.IsNullOrEmpty(EditorGUIUtility.systemCopyBuffer))
+        {
+            evt.StopPropagation();
+        }
+    }
+}
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Click-Events.html"></a></span><div class="tip">Click events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Drag-Events.html"></a></span><div class="tip">Drag-and-drop events</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

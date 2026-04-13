@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Coroutines</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Coroutines.html">English</a></li>
+<li><a href="/cn/current/Manual/Coroutines.html">中文</a></li>
+<li><a href="/ja/current/Manual/Coroutines.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Coroutines.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Coroutines.html">English</a></li>
+<li><a href="/cn/current/Manual/Coroutines.html">中文</a></li>
+<li><a href="/ja/current/Manual/Coroutines.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Coroutines.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="ScriptingConcepts.html">Scripting concepts</a></li>
+<li>Coroutines</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="EventFunctions.html"></a></span><div class="tip">Event Functions</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Namespaces.html"></a></span><div class="tip">Namespaces</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Coroutines</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A coroutine allows you to spread tasks across several frames. In Unity, a coroutine is a method that can pause execution and return control to Unity but then continue where it left off on the following frame. </p>
+
+<p>In most situations, when you call a method, it runs to completion and then returns control to the calling method, plus any optional return values. This means that any action that takes place within a method must happen within a single frame update. </p>
+
+<p>In situations where you would like to use a method call to contain a procedural animation or a sequence of events over time, you can use a coroutine. </p>
+
+<p>However, it’s important to remember that coroutines aren’t threads. Synchronous operations that run within a coroutine still execute on the main thread. If you want to reduce the amount of CPU time spent on the main thread, it’s just as important to avoid blocking operations in coroutines as in any other script code. If you want to use multi-threaded code within Unity, consider the <a href="JobSystem.html">C# Job System</a>.</p>
+
+<p>It’s best to use coroutines if you need to deal with long asynchronous operations, such as waiting for HTTP transfers, asset loads, or file I/O to complete.</p>
+
+<h2>Coroutine example</h2>
+
+<p>As an example, consider the task of gradually reducing an object’s alpha (opacity) value until it becomes invisible:</p>
+
+<pre><code class="lang-csharp">void Fade()
+{
+    Color c = renderer.material.color;
+    for (float alpha = 1f; alpha &gt;= 0; alpha -= 0.1f)
+    {
+        c.a = alpha;
+        renderer.material.color = c;
+    }
+}
+</code></pre>
+
+<p>In this example, the Fade method doesn’t have the effect you might expect. To make the fading visible, you must reduce the alpha of the fade over a sequence of frames to display the intermediate values that Unity renders. However, this example method executes in its entirety within a single frame update. The intermediate values are never displayed, and the object disappears instantly.</p>
+
+<p>To work around this situation, you could add code to the <code>Update</code> function that executes the fade on a frame-by-frame basis. However, it can be more convenient to use a coroutine for this kind of task.</p>
+
+<p>In C#, you declare a coroutine like this:</p>
+
+<pre><code class="lang-csharp">IEnumerator Fade()
+{
+    Color c = renderer.material.color;
+    for (float alpha = 1f; alpha &gt;= 0; alpha -= 0.1f)
+    {
+        c.a = alpha;
+        renderer.material.color = c;
+        yield return null;
+    }
+}
+</code></pre>
+
+<p>A coroutine is a method that you declare with an <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.ienumerator">IEnumerator</a> return type and with a <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/yield">yield</a> return statement included somewhere in the body. The <code>yield return null</code>line is the point where execution pauses and resumes in the following frame. To set a coroutine running, you need to use the <a href="../ScriptReference/MonoBehaviour.StartCoroutine.html">StartCoroutine</a> function:</p>
+
+<pre><code class="lang-csharp">void Update()
+{
+    if (Input.GetKeyDown(&quot;f&quot;))
+    {
+        StartCoroutine(Fade());
+    }
+}
+</code></pre>
+
+<p>The loop counter in the Fade function maintains its correct value over the lifetime of the coroutine, and any variable or parameter is preserved between <code>yield</code> statements.</p>
+
+<h2>Coroutine time delay</h2>
+
+<p>By default, Unity resumes a coroutine on the frame after a <code>yield</code> statement. If you want to introduce a time delay, use <a href="../ScriptReference/WaitForSeconds.html">WaitForSeconds</a>:</p>
+
+<pre><code class="lang-csharp">IEnumerator Fade()
+{
+    Color c = renderer.material.color;
+    for (float alpha = 1f; alpha &gt;= 0; alpha -= 0.1f)
+    {
+        c.a = alpha;
+        renderer.material.color = c;
+        yield return new WaitForSeconds(.1f);
+    }
+}
+</code></pre>
+
+<p>You can use <code>WaitForSeconds</code> to spread an effect over a period of time, and you can use it as an alternative to including the tasks in the <code>Update</code> method. Unity calls the <code>Update</code> method several times per second, so if you don’t need a task to be repeated quite so often, you can put it in a coroutine to get a regular update but not every single frame. </p>
+
+<p>For example, you might have an alarm in your application that warns the player if an enemy is nearby with the following code:</p>
+
+<pre><code class="lang-csharp">bool ProximityCheck()
+{
+    for (int i = 0; i &lt; enemies.Length; i++)
+    {
+        if (Vector3.Distance(transform.position, enemies[i].transform.position) &lt; dangerDistance) {
+                return true;
+        }
+    }
+
+    return false;
+}
+</code></pre>
+
+<p>If there are a lot of enemies then calling this function every frame might introduce a significant overhead. However, you could use a coroutine to call it every tenth of a second:</p>
+
+<pre><code class="lang-csharp">IEnumerator DoCheck()
+{
+    for(;;)
+    {
+        if (ProximityCheck())
+        {
+            // Perform some action here
+        }
+        yield return new WaitForSeconds(.1f);
+    }
+}
+</code></pre>
+
+<p>This reduces the number of checks that Unity carries out without any noticeable effect on gameplay.</p>
+
+<h2>Stopping coroutines</h2>
+
+<p>To stop a coroutine, use <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/MonoBehaviour.StopCoroutine.html">StopCoroutine</a> and <a href="../ScriptReference/MonoBehaviour.StopAllCoroutines.html">StopAllCoroutines</a>. A coroutine also stops if you’ve set <a href="../ScriptReference/GameObject.SetActive.html">SetActive</a> to <code>false</code> to disable the <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="../ScriptReference/MonoBehaviour.StopCoroutine.html">StopCoroutine</a> and <a href="../ScriptReference/MonoBehaviour.StopAllCoroutines.html">StopAllCoroutines</a>. A coroutine also stops if you’ve set <a href="../ScriptReference/GameObject.SetActive.html">SetActive</a> to <code>false</code> to disable the <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> the coroutine is attached to. Calling <code>Destroy(example)</code> (where <code>example</code> is a <code>MonoBehaviour</code> instance) immediately triggers <a href="../ScriptReference/MonoBehaviour.OnDisable.html">OnDisable</a> and Unity processes the coroutine, effectively stopping it. Finally, <code>OnDestroy</code> is invoked at the end of the frame.</p>
+
+<p>
+<strong>Note:</strong> If you’ve disabled a <code>MonoBehaviour</code> by setting <a href="ScriptReference:Behaviour-enabled">enabled</a> to <code>false</code>, Unity doesn’t stop coroutines.</p>
+
+<h2>Analyzing coroutines</h2>
+
+<p>Coroutines execute differently from other script code. Most script code in Unity appears within a performance trace in a single location, beneath a specific callback invocation. However, the CPU code of coroutines always appears in two places in a trace.</p>
+
+<p>All the initial code in a coroutine, from the start of the coroutine method until the first <code>yield</code> statement, appears in the trace whenever Unity starts a coroutine. The initial code most often appears whenever the <a href="../ScriptReference/MonoBehaviour.StartCoroutine.html">StartCoroutine</a> method is called. Coroutines that Unity callbacks generate (such as <code>Start</code> callbacks that return an <code>IEnumerator</code>) first appear within their respective Unity callback.</p>
+
+<p>The rest of a coroutine’s code (from the first time it resumes until it finishes executing) appears within the <code>DelayedCallManager</code> line that’s inside Unity’s main loop.</p>
+
+<p>This happens because of the way that Unity executes coroutines. The <a href="overview-of-dot-net-in-unity.html">C# compiler</a> auto generates an instance of a class that backs coroutines. Unity then uses this object to track the state of the coroutine across multiple invocations of a single method. Because local-scope variables within the coroutine must persist across <code>yield</code> calls, Unity hoists the local-scope variables into the generated class, which remain allocated on the heap during the coroutine. This object also tracks the internal state of the coroutine: it remembers at which point in the code the coroutine must resume after yielding.</p>
+
+<p>Because of this, the memory pressure that happens when a coroutine starts is equal to a fixed overhead allocation plus the size of its local-scope variables.</p>
+
+<p>The code which starts a coroutine constructs and invokes an object, and then Unity’s <code>DelayedCallManager</code> invokes it again whenever the coroutine’s <code>yield</code> condition is satisfied. Because coroutines usually start outside of other coroutines, this splits their execution overhead between the <code>yield</code> call and <code>DelayedCallManager</code>.</p>
+
+<p>You can use the Unity <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> to inspect and understand where Unity executes coroutines in your application. To do this, profile your application with <a href="ProfilerWindow.html#deep-profiling">Deep Profiling</a> enabled, which profiles every part of your script code and records all function calls. You can then use the <a href="ProfilerCPU.html">CPU Usage Profiler module</a> to investigate the coroutines in your application. </p>
+
+<figure>
+<img src="../uploads/Main/coroutines-cpu-profiler.png" alt="Profiler session with a coroutine in a DelayedCall">
+<figcaption>Profiler session with a coroutine in a DelayedCall</figcaption>
+</figure>
+
+<p>It’s best practice to condense a series of operations down to the fewest number of individual coroutines possible. Nested coroutines are useful for code clarity and maintenance, but they impose a higher memory overhead because the coroutine tracks objects.</p>
+
+<p>If a coroutine runs every frame and doesn’t <code>yield</code> on long-running operations, it’s more performant to replace it with an <code>Update</code> or <code>LateUpdate</code> callback. This is useful if you have long-running or infinitely looping coroutines.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="EventFunctions.html"></a></span><div class="tip">Event Functions</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Namespaces.html"></a></span><div class="tip">Namespaces</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

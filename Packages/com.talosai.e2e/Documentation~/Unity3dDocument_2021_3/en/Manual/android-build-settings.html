@@ -1,0 +1,242 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Android Build Settings</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/android-build-settings.html">English</a></li>
+<li><a href="/cn/current/Manual/android-build-settings.html">中文</a></li>
+<li><a href="/ja/current/Manual/android-build-settings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/android-build-settings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/android-build-settings.html">English</a></li>
+<li><a href="/cn/current/Manual/android-build-settings.html">中文</a></li>
+<li><a href="/ja/current/Manual/android-build-settings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/android-build-settings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="android.html">Android</a></li>
+<li><a href="android-building-and-delivering.html">Building and delivering for Android</a></li>
+<li>Android Build Settings</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="overriding-android-manifest.html"></a></span><div class="tip">Override the Android App Manifest</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="android-BuildProcess.html"></a></span><div class="tip">Build your application for Android</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Android Build Settings</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use the Android Build Settings to configure and build your application for Android devices. The Android Build Settings are part of the <a href="BuildSettings.html">Build Settings window</a>. To view the Android Build Settings:</p>
+
+<ol>
+<li>Select <strong>File</strong> &gt; <strong>Build Settings</strong>.</li>
+<li>From the list of platforms in the <strong>Platform</strong> pane, select <strong>Android</strong>.
+ <br><strong>Note</strong>: If Android is greyed out, follow the steps on <a href="android-sdksetup.html">Android environment setup</a>.</li>
+<li>If the <strong>Build</strong> button isn’t visible and <strong>Build And Run</strong> is greyed out, select <strong>Switch Platform</strong>. The Android Build Settings now have an effect on the build.</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/android-build-settings.png" alt="">
+</figure>
+
+<h2>Build settings</h2>
+
+<p>This section explains each Android Build Setting. For information on the rest of the Build Settings window, refer to <a href="BuildSettings.html">Build Settings window</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Texture Compression</strong></td>
+	<td style="text-align:left;">The texture compression format to use for the build. The options are:<br>• <strong>Use Player Settings</strong>: Uses the texture compression format you set in <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettingsAndroid.html">Player Settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html" href="class-PlayerSettingsAndroid.html">Player Settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span>.<br>• <strong>ETC (GLES 2.0)</strong>: Uses ETC format.<br>• <strong>ETC2 (GLES 3.0)</strong>: Uses ETC2 format.<br>• <strong>ASTC</strong>: Uses ASTC format.<br>• <strong>DXT (Tegra)</strong>: Uses DXT format.<br>• <strong>PVRTC (PowerVR)</strong>: Uses PVRTC format. <br><br>You can also change this setting from a script or using the <code>-setDefaultPlatformTextureFormat</code> <a href="CommandLineArguments.html">command-line switch</a>. <br><br>For more information, see <a href="class-TextureImporterOverride.html#android">Recommended, default, and supported texture compression formats, by platform</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ETC2 fallback</strong></td>
+	<td style="text-align:left;">Specifies the uncompressed RGBA texture format that Unity uses for Android devices that don’t support ETC2. This affects the amount of memory uncompressed textures use and their image quality. The options are:<br>• <strong>32-bit</strong>: Stores RGBA textures in full resolution using 32 bits to store each pixel (8 bits per color channel). This is the highest quality uncompressed texture format and uses the most memory.<br>• <strong>16-bit</strong>: Stores RGBA textures in full resolution using 16 bits to store each pixel (4 bits per color channel). This uses half of the memory that <strong>32-bit</strong> uses, but textures can lose valuable color information because of the lower precision.<br>• <strong>32-bit, half resolution</strong>: Stores RGBA textures in half resolution using 32 bits to store each pixel (8 bits per color channel). This uses a quarter of the memory that <strong>32-bit</strong> uses, but the texture can become blurry. <br><br><strong>Note</strong>: If a texture doesn’t use ETC2 compression format:<br>• Most compression formats use the <strong>32-bit</strong> fallback.<br>• Single-channel and two-channel texture compression formats fall back to a different format depending on what the GPU supports. For example, it could be <a href="../ScriptReference/Experimental.Rendering.GraphicsFormat.R8_UNorm.html">R8_UNorm</a> or <a href="../ScriptReference/Experimental.Rendering.GraphicsFormat.R8G8B8A8_SRGB.html">R8G8B8A8_SRGB</a>.<br>• ASTC HDR formats fall back to a floating-point format if the GPU supports it. Otherwise, they fall back to <strong>32-bit</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Export Project</strong></td>
+	<td style="text-align:left;">Indicates whether to export the Unity project as a <span class="tooltip"><strong>Gradle</strong><span class="tooltiptext">An Android build system that automates several build processes. This automation means that many common build errors are less likely to occur. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about android-gradle-overview.html" href="android-gradle-overview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Gradle" aria-label="Go to glossary anchor for Gradle">Glossary</a></span></span></span> project that you can import into Android Studio. For more information, refer to <a href="android-export-process.html">Exporting an Android project</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Symlink Sources</strong></td>
+	<td style="text-align:left;">Indicates whether to share Java and Kotlin source files between the Unity and exported Gradle project. <br><br>Enable this setting to create <a href="https://en.wikipedia.org/wiki/Symbolic_link">symbolic links</a> so the Gradle project references Java and Kotlin source files in the Unity project. This is useful to test and iterate Java and Kotlin code because it means any changes you make to Java and Kotlin source files in the exported Gradle project persist if you re-export the Unity project. <br><br>Disable this setting to make Unity copy Java and Kotlin source files from the Unity project into the exported Gradle project. <br><br>You can only interact with this setting if you enable <strong>Export Project</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Build App Bundle (Google Play)</strong></td>
+	<td style="text-align:left;">Indicates whether to build the application as an<a href="https://developer.android.com/platform/technology/app-bundle/"> Android App Bundle</a> (AAB) to distribute on Google Play. If you enable this setting, Unity builds the application as an AAB. If you disable this setting, Unity builds the application as an APK. <br><br>The setting only appears if you disable <strong>Export Project</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Export for App Bundle</strong></td>
+	<td style="text-align:left;">Indicates whether to configure the exported Gradle project to build as an Android App Bundle. <br><br>The setting only appears if you enable <strong>Export Project</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="debug-symbols" aria-hidden="true"></a> <strong>Create symbols.zip</strong>
+</td>
+	<td style="text-align:left;">Specifies how Unity generates a <a href="android-symbols.html">symbols package</a> when it builds your application. The options are:<br>• <strong>Disabled</strong>: Unity doesn’t generate a symbols package.<br>• <strong>Public</strong>: Unity generates a <a href="android-symbols.html#public-symbols">public symbols</a> package for your application.<br>• <strong>Debugging</strong>: Unity generates a <a href="android-symbols.html#debugging-symbols">debugging symbols</a> package for your application.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Run Device</strong></td>
+	<td style="text-align:left;">Specifies which attached device to test the build on. Devices connected via USB should appear in the list automatically. If you connect a new device or don’t find an attached device in the list, click <strong>Refresh</strong>. To connect a new device wirelessly over Android Debug Bridge, select the <strong>&lt;Enter IP&gt;</strong> option. For more information, refer to <a href="android-debugging-on-an-android-device.html">Debug on Android devices</a> or <a href="android-ChromeOS-debugging.html">Debugging on a ChromeOS device</a>, depending on the platform you want to build for.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Build to Device</strong></td>
+	<td style="text-align:left;">A build pipeline that doesn’t create a full build and instead deploys single files that changed since the last patch directly to the device. <strong>Patch</strong> deploys changed files to the devices and <strong>Patch And Run</strong> deploys changed files and then runs the application on the device. For more information, refer to <a href="android-AppPatching.html">Application patching</a>. <br><br>You can only interact with this setting if you enable <strong>Development Build</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Development Build</strong></td>
+	<td style="text-align:left;">Indicates whether to include scripting debug symbols and the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html">Profiler</a><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a href="Profiler.html" href="Profiler.html">Profiler</a><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> in your build. Use this setting when you want to test your application.<br>When you select this option, Unity sets the DEVELOPMENT_BUILD scripting define. Your build then includes preprocessor directives that set DEVELOPMENT_BUILD as a condition. For more information, refer to <a href="PlatformDependentCompilation.html">Platform-dependent compilations</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Autoconnect Profiler</strong></td>
+	<td style="text-align:left;">Indicates whether to automatically connect the Profiler to the built application when it runs. <br><br>You can only interact with this setting if you enable <strong>Development Build</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Deep Profiling Support</strong></td>
+	<td style="text-align:left;">Indicates whether to enable <a href="ProfilerWindow.html#deep-profiling">Deep Profiling</a> in the Profiler. This makes the Profiler instrument every function call in your application so it returns more detailed profiling data. This option might slow down script execution. <br><br>You can only interact with this setting if you enable <strong>Development Build</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Script Debugging</strong></td>
+	<td style="text-align:left;">Indicates whether to allow debugging for the application’s script code. <br><br>You can only interact with this setting if you enable <strong>Development Build</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Wait For Managed Debugger</strong></td>
+	<td style="text-align:left;">Indicates whether the application waits for a debugger to attach before it runs any script code. <br><br>This setting only appears if you enable <strong>Script Debugging</strong>. Also, you can only interact with this setting if you enable <strong>Development Build</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="compression-method" aria-hidden="true"></a><strong>Compression Method</strong>
+</td>
+	<td style="text-align:left;">Specifies the method Unity uses to compress the data in your Project when it builds the Player. This includes <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetTypes.html">Assets</a><span class="tooltiptext">Any media or data that can be used in your game or project. An asset may come from a file created outside of Unity, such as a 3D Model, an audio file or an image. You can also create some asset types in Unity, such as an Animator Controller, an Audio Mixer or a Render Texture. <a href="AssetWorkflow.html" href="AssetTypes.html">Assets</a><span class="tooltiptext">Any media or data that can be used in your game or project. An asset may come from a file created outside of Unity, such as a 3D Model, an audio file or an image. You can also create some asset types in Unity, such as an Animator Controller, an Audio Mixer or a Render Texture. <a href="AssetWorkflow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Asset" aria-label="Go to glossary anchor for Asset">Glossary</a></span></span></span>, <span class="tooltip"><a href="CreatingScenes.html">Scenes</a><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Asset" aria-label="Go to glossary anchor for Asset">Glossary</a></span></span></span>, <span class="tooltip"><a href="CreatingScenes.html">Scenes</a><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, <a href="class-PlayerSettings.html">Player settings</a>, and <a href="GICache.html">GI data</a>. The options are:<br>• <strong>Default</strong>: Uses ZIP which gives slightly better compressions results than LZ4 and LZ4HC but data is slower to decompress. <br>• <strong>LZ4</strong>: Uses LZ4, a fast compression format that’s useful for development builds. Using LZ4 compression instead of ZIP can significantly improve loading time for Unity applications. For more information, refer to <a href="../ScriptReference/BuildOptions.CompressWithLz4.html">BuildOptions.CompressWithLz4</a>. <br>• <strong>LZ4HC</strong>: A high compression variant of LZ4 that’s slower to build but produces better results for release builds. Using LZ4HC compression instead of ZIP can significantly improve loading time for Unity applications. For more information, refer to <a href="../ScriptReference/BuildOptions.CompressWithLz4HC.html">BuildOptions.CompressWithLz4</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="../ScriptReference/BuildOptions.html">BuildOptions API reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="overriding-android-manifest.html"></a></span><div class="tip">Override the Android App Manifest</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="android-BuildProcess.html"></a></span><div class="tip">Build your application for Android</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Animating a GameObject</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/animeditor-AnimatingAGameObject.html">English</a></li>
+<li><a href="/cn/current/Manual/animeditor-AnimatingAGameObject.html">中文</a></li>
+<li><a href="/ja/current/Manual/animeditor-AnimatingAGameObject.html">日本語</a></li>
+<li><a href="/kr/current/Manual/animeditor-AnimatingAGameObject.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/animeditor-AnimatingAGameObject.html">English</a></li>
+<li><a href="/cn/current/Manual/animeditor-AnimatingAGameObject.html">中文</a></li>
+<li><a href="/ja/current/Manual/animeditor-AnimatingAGameObject.html">日本語</a></li>
+<li><a href="/kr/current/Manual/animeditor-AnimatingAGameObject.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AnimationSection.html">Animation</a></li>
+<li><a href="AnimationClips.html">Animation Clips</a></li>
+<li><a href="AnimationEditorGuide.html">Animation Window Guide</a></li>
+<li>Animating a GameObject</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="animeditor-CreatingANewAnimationClip.html"></a></span><div class="tip">Creating a new Animation Clip</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="animeditor-AnimationCurves.html"></a></span><div class="tip">Using Animation Curves</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Animating a GameObject</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Once you have saved the new Animation clip Asset, you are ready to begin adding <span class="tooltip"><strong>keyframes</strong><span class="tooltiptext">A frame that marks the start or end point of a transition in an animation. Frames in between the keyframes are called inbetweens.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#keyframe" aria-label="Go to glossary anchor for keyframe">Glossary</a></span></span></span> to the clip.</p>
+
+<p>There are two distinct methods you can use to animate <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the Animation window: <strong>Record Mode</strong> and <strong>Preview Mode</strong>.</p>
+
+<p>
+<strong>Record Mode.</strong> (Also referred to as auto-key mode)</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorControlsRecordMode.png" alt="The Animation Window in Record mode">
+<figcaption>The Animation Window in Record mode</figcaption>
+</figure>
+
+<p>In record mode, Unity automatically creates keyframes at the playback head when you move, rotate, or otherwise modify any animatable property on your animated GameObject. Press the button with the red circle to enable record mode. The Animation window time line is <strong>tinted red</strong> when in record mode.</p>
+
+<p><strong>Preview Mode:</strong></p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorControlsPreviewMode.png" alt="The Animation Window in Preview mode">
+<figcaption>The Animation Window in Preview mode</figcaption>
+</figure>
+
+<p>In preview mode, modifying your animated GameObject <em>does not</em> automatically create keyframes. You must manually create keyframes (see below) each time you modify your GameObject to a desired new state (for example, moving or rotating it). Press the <strong>Preview</strong> button to enable preview mode. The Animation window time line is <strong>tinted blue</strong> when in preview mode.</p>
+
+<p><em>Note: In record mode, the <strong>Preview</strong> button is also active, because you are previewing the existing animation and recording new keyframes at the same time.</em></p>
+
+<h2>Recording keyframes</h2>
+
+<p>To begin recording keyframes for the selected GameObject, click on the <strong>Animation Record button</strong>. This enters <strong>Animation Record Mode</strong>, where changes to the GameObject are recorded into the <span class="tooltip"><strong>Animation Clip</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html" href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorAnimationModeButton.png" alt="Record button">
+<figcaption>Record button</figcaption>
+</figure>
+
+<p>Once in <strong>Record mode</strong> you can create keyframes by setting the white Playback head to the desired time in the Animation time line, and then modify your GameObject to the state you want it to be at that point in time.</p>
+
+<p>The changes you make to the GameObject are recorded as keyframes at the current time shown by the white line (the playback head) in the Animation Window.</p>
+
+<p>Any change to an animatable property (such as its position or rotation) will cause a keyframe for that property to appear in the Animation window.</p>
+
+<p>Clicking or dragging in the time line bar moves the playback head and shows the state of the animation at the playback head’s current time.</p>
+
+<p>In the screenshot below you can see the Animation window in record mode. The time line bar is tinted red, indicating record mode, and the animated properties show up with a red background in the inspector.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorPreviewFrame.jpg" alt="Current frame">
+<figcaption>Current frame</figcaption>
+</figure>
+
+<p>You can stop the <strong>Record Mode</strong> at any time by clicking the <strong>Record button</strong> again. When you stop Record mode, the Animation window switches to <strong>Preview mode</strong>, so that you can still see the GameObject in its current position according to the animation time line.</p>
+
+<p>You can animate any property of the GameObject by manipulating it while in Animation Record Mode. Moving, Rotating or Scaling the GameObject adds corresponding keyframes for those properties in the animation clip. Adjusting values directly in the GameObject’s inspector also adds keyframes while in Record mode. This applies to any animatable property in the inspector, including numeric values, checkboxes, colors, and most other values.</p>
+
+<p>Any properties of the GameObject that are currently animated are shown listed in the left-hand side of the Animation Window. Properties which are not animated are not shown in this window. Any new properties that you animate, including properties on child objects, are added to the property list area as soon as you start animating them.</p>
+
+<p>
+<strong>Transform</strong> properties are special in that the <strong>.x</strong>, <strong>.y</strong>, and <strong>.z</strong> properties are linked, so curves for all three are added at the same time.</p>
+
+<p>You can also add animatable properties to the current GameObject (and its children) by clicking the <strong>Add Property</strong> button. Clicking this button shows a pop up list of the GameObject’s animatable properties. These correspond with the properties you can see listed in the inspector.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorMatchesInspector.png" alt="The animatable properties of a GameObject are revealed when you click the Add Property button">
+<figcaption>The animatable properties of a GameObject are revealed when you click the <strong>Add Property</strong> button</figcaption>
+</figure>
+
+<p>When in <strong>Preview mode</strong> or <strong>Record mode</strong>, the white vertical line shows which frame of the <strong>Animation Clip</strong> is currently previewed. The <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> and <span class="tooltip"><strong>Scene View</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html" href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> and <span class="tooltip"><strong>Scene View</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> shows the GameObject at that frame of the Animation Clip. The values of the animated properties at that frame are also shown in a column to the right of the property names.</p>
+
+<p>In Animation Mode a white vertical line shows the currently previewed frame.</p>
+
+<h3>Time line</h3>
+
+<p>You can click anywhere on the <strong>Animation window time line</strong> to move the playback head to that frame, and preview or modify that frame in the Animation Clip. The numbers in the <strong>time line</strong> are shown as seconds and frames, so 1:30 means 1 second and 30 frames.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorTimeLine.png" alt="Time Line">
+<figcaption>Time Line</figcaption>
+</figure>
+
+<p>Note: The time line appears <strong>tinted blue</strong> when in <em>Preview</em> mode, or <strong>tinted red</strong> when in <em>Record</em> mode.</p>
+
+<h3>Creating keyframes in preview mode</h3>
+
+<p>As well as using <strong>Record mode</strong> to automatically create keyframes when you modify a GameObject, you can create keyframes in <strong>Preview mode</strong> by modifying a property on the GameObject, then explicitly choosing to create a keyframe for that property.</p>
+
+<p>In preview mode, animated properties are tinted blue in the Inspector window. When you see this blue tint, it means these values are being driven by the keyframes of the animation clip currently being previewed in the animation window.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorPreviewModifiedInspectorFields.png" alt="In preview mode, animated fields are tinted blue in the inspector">
+<figcaption>In preview mode, animated fields are tinted blue in the inspector</figcaption>
+</figure>
+
+<p>If you modify any of these blue-tinted properties while previewing (such as rotating a GameObject that has its rotation property animated, as in the above screenshot) the GameObject is now in a <strong>modified</strong> animation state. This is indicated by a change of color in the tint of the inspector field to a pink color. Because you are not in record mode, your modification is not yet saved as a keyframe.</p>
+
+<p>For example, in the screenshot below, the rotation property has been modified to have a Y value of –90. This modification has not yet been saved as a keyframe in the animation clip.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorPreviewModifiedValue.png" alt="A modified animated property in preview mode. This change has not yet been saved as a keyframe">
+<figcaption>A modified animated property in preview mode. This change has not yet been saved as a keyframe</figcaption>
+</figure>
+
+<p>In this modified state, you must manually create a keyframe to “save” this modification. If you move the playback head, or switch your selection away from the animated GameObject, you will lose the modification.</p>
+
+<h3>Manually creating keyframes</h3>
+
+<p>There are three different ways to manually create a keyframe when you have modified a GameObject in preview mode.</p>
+
+<p>You can add a keyframe by right-clicking the <strong>property label</strong> of the property you have modified, which allows you to either add a keyframe for just that property, or for all animated properties:</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorPropertyContextMenuAddKey.png" alt="The property label context menu">
+<figcaption>The property label context menu</figcaption>
+</figure>
+
+<p>When you have added a keyframe, the new keyframe will be visible in the <span class="tooltip"><strong>animator window</strong><span class="tooltiptext">The window where the Animator Controller is visualized and edited. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimatorWindow.html" href="AnimatorWindow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorWindow" aria-label="Go to glossary anchor for AnimatorWindow">Glossary</a></span></span></span> as a diamond symbol (called out in red in the screenshot below), and the property field will return to a blue tint, indicating that your modification is saved as a keyframe, and that you are now previewing a value that is driven by the animation keyframes.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorPreviewKeyAdded.png" alt="With the new keyframe added (marked in red), the values in the inspector return to a blue tint.">
+<figcaption>With the new keyframe added (marked in red), the values in the inspector return to a blue tint.</figcaption>
+</figure>
+
+<p>You can also add a keyframe by clicking the <strong>Add Keyframe</strong> button in the Animation window:
+<img src="../uploads/Main/AnimationEditorAddKeyframeButton.png" alt="The Add Keyframe Button">
+</p>
+
+<p>Or, you can add a keyframe (or keyframes) by using the hotkeys K or Shift-K as described below:</p>
+
+<h4>Hotkeys</h4>
+
+<ul>
+<li>
+<strong>K</strong> - <em>Key all animated.</em> Adds an keyframe for all animated properties at the current position of the playback head in the animation window.</li>
+<li>
+<strong>Shift-K</strong> - <em>Key all modified.</em> Adds an keyframe for only those animated properties which have been modified at the current position of the playback head in the animation window.</li>
+</ul>
+
+<hr>
+
+<ul>
+<li><p><span class="page-edit">2017–09–05 Page amended
+</span></p></li>
+<li><p><span class="page-history">Preview mode added in Unity <a href="https://docs.unity3d.com/2017.1/Documentation/Manual/30_search.html?q=newin20171">2017.1</a> <span class="search-words">NewIn20171</span></span></p></li>
+</ul>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="animeditor-CreatingANewAnimationClip.html"></a></span><div class="tip">Creating a new Animation Clip</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="animeditor-AnimationCurves.html"></a></span><div class="tip">Using Animation Curves</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

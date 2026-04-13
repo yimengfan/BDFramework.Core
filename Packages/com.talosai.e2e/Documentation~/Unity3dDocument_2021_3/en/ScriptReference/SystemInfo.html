@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: SystemInfo</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">SystemInfo</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEngine</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Implemented in:<a href="UnityEngine.CoreModule.html" class="cl">UnityEngine.CoreModule</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Access system and hardware information.</p>
+              </div>
+              <div class="subsection">
+        <p>Use this class to figure out capabilities of the underlying platform and hardware. For example, you can check which <a href="RenderTexture.html">RenderTexture</a> formats are supported (<a href="SystemInfo.SupportsRenderTextureFormat.html">SupportsRenderTextureFormat</a>), how many CPU threads are available (<a href="SystemInfo-processorCount.html">processorCount</a>), and so on.</p>
+      </div>
+              <div class="subsection">
+                <h3>Static Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="SystemInfo-batteryLevel.html">batteryLevel</a></td><td class="desc">The current battery level (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-batteryStatus.html">batteryStatus</a></td><td class="desc">Returns the current status of the device's battery (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-computeSubGroupSize.html">computeSubGroupSize</a></td><td class="desc">Size of the compute thread group that supports efficient memory sharing on the GPU (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-constantBufferOffsetAlignment.html">constantBufferOffsetAlignment</a></td><td class="desc">Minimum buffer offset (in bytes) when binding a constant buffer using Shader.SetConstantBuffer or Material.SetConstantBuffer.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-copyTextureSupport.html">copyTextureSupport</a></td><td class="desc">Support for various Graphics.CopyTexture cases (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-deviceModel.html">deviceModel</a></td><td class="desc">The model of the device (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-deviceName.html">deviceName</a></td><td class="desc">The user defined name of the device (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-deviceType.html">deviceType</a></td><td class="desc">Returns the kind of device the application is running on (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-deviceUniqueIdentifier.html">deviceUniqueIdentifier</a></td><td class="desc">A unique device identifier. It's guaranteed to be unique for every device (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-graphicsDeviceID.html">graphicsDeviceID</a></td><td class="desc">The identifier code of the graphics device (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-graphicsDeviceName.html">graphicsDeviceName</a></td><td class="desc">The name of the graphics device (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-graphicsDeviceType.html">graphicsDeviceType</a></td><td class="desc">The graphics API type used by the graphics device (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-graphicsDeviceVendor.html">graphicsDeviceVendor</a></td><td class="desc">The vendor of the graphics device (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-graphicsDeviceVendorID.html">graphicsDeviceVendorID</a></td><td class="desc">The identifier code of the graphics device vendor (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-graphicsDeviceVersion.html">graphicsDeviceVersion</a></td><td class="desc">The graphics API type and driver version used by the graphics device (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-graphicsMemorySize.html">graphicsMemorySize</a></td><td class="desc">Amount of video memory present (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-graphicsMultiThreaded.html">graphicsMultiThreaded</a></td><td class="desc">Is graphics device using multi-threaded rendering (Read Only)?</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-graphicsShaderLevel.html">graphicsShaderLevel</a></td><td class="desc">Graphics device shader capability level (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-graphicsUVStartsAtTop.html">graphicsUVStartsAtTop</a></td><td class="desc">Returns true if the texture UV coordinate convention for this platform has Y starting at the top of the image.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-hasDynamicUniformArrayIndexingInFragmentShaders.html">hasDynamicUniformArrayIndexingInFragmentShaders</a></td><td class="desc">Returns true when the GPU has native support for indexing uniform arrays in fragment shaders without restrictions.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-hasHiddenSurfaceRemovalOnGPU.html">hasHiddenSurfaceRemovalOnGPU</a></td><td class="desc">True if the GPU supports hidden surface removal.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-hasMipMaxLevel.html">hasMipMaxLevel</a></td><td class="desc">Returns true if the GPU supports partial mipmap chains (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-hdrDisplaySupportFlags.html">hdrDisplaySupportFlags</a></td><td class="desc">Returns a bitwise combination of HDRDisplaySupportFlags describing the support for HDR displays on the system.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-maxAnisotropyLevel.html">maxAnisotropyLevel</a></td><td class="desc">Returns the maximum anisotropic level for anisotropic filtering that is supported on the device. </td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-maxComputeBufferInputsCompute.html">maxComputeBufferInputsCompute</a></td><td class="desc">Determines how many compute buffers Unity supports simultaneously in a compute shader for reading. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-maxComputeBufferInputsDomain.html">maxComputeBufferInputsDomain</a></td><td class="desc">Determines how many compute buffers Unity supports simultaneously in a domain shader for reading. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-maxComputeBufferInputsFragment.html">maxComputeBufferInputsFragment</a></td><td class="desc">Determines how many compute buffers Unity supports simultaneously in a fragment shader for reading. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-maxComputeBufferInputsGeometry.html">maxComputeBufferInputsGeometry</a></td><td class="desc">Determines how many compute buffers Unity supports simultaneously in a geometry shader for reading. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-maxComputeBufferInputsHull.html">maxComputeBufferInputsHull</a></td><td class="desc">Determines how many compute buffers Unity supports simultaneously in a hull shader for reading. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-maxComputeBufferInputsVertex.html">maxComputeBufferInputsVertex</a></td><td class="desc">Determines how many compute buffers Unity supports simultaneously in a vertex shader for reading. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-maxComputeWorkGroupSize.html">maxComputeWorkGroupSize</a></td><td class="desc">The largest total number of invocations in a single local work group that can be dispatched to a compute shader (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-maxComputeWorkGroupSizeX.html">maxComputeWorkGroupSizeX</a></td><td class="desc">The maximum number of work groups that a compute shader can use in X dimension (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-maxComputeWorkGroupSizeY.html">maxComputeWorkGroupSizeY</a></td><td class="desc">The maximum number of work groups that a compute shader can use in Y dimension (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-maxComputeWorkGroupSizeZ.html">maxComputeWorkGroupSizeZ</a></td><td class="desc">The maximum number of work groups that a compute shader can use in Z dimension (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-maxCubemapSize.html">maxCubemapSize</a></td><td class="desc">Maximum cubemap texture size in pixels (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-maxGraphicsBufferSize.html">maxGraphicsBufferSize</a></td><td class="desc">The maximum size of a graphics buffer (GraphicsBuffer, ComputeBuffer, vertex/index buffer, etc.) in bytes (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-maxTexture3DSize.html">maxTexture3DSize</a></td><td class="desc">Maximum 3D texture size in pixels (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-maxTextureArraySlices.html">maxTextureArraySlices</a></td><td class="desc">Maximum number of slices in a Texture array (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-maxTextureSize.html">maxTextureSize</a></td><td class="desc">Maximum texture size in pixels (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-npotSupport.html">npotSupport</a></td><td class="desc">What NPOT (non-power of two size) texture support does the GPU provide? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-operatingSystem.html">operatingSystem</a></td><td class="desc">Operating system name with version (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-operatingSystemFamily.html">operatingSystemFamily</a></td><td class="desc">Returns the operating system family the game is running on (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-processorCount.html">processorCount</a></td><td class="desc">Number of processors present (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-processorFrequency.html">processorFrequency</a></td><td class="desc">The processor frequency of the device in MHz (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-processorType.html">processorType</a></td><td class="desc">Processor name (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-renderingThreadingMode.html">renderingThreadingMode</a></td><td class="desc">Application's actual rendering threading mode (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportedRandomWriteTargetCount.html">supportedRandomWriteTargetCount</a></td><td class="desc">The maximum number of random write targets (UAV) that Unity supports simultaneously. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportedRenderTargetCount.html">supportedRenderTargetCount</a></td><td class="desc">How many simultaneous render targets (MRTs) are supported? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supports2DArrayTextures.html">supports2DArrayTextures</a></td><td class="desc">Are 2D Array textures supported? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supports32bitsIndexBuffer.html">supports32bitsIndexBuffer</a></td><td class="desc">Are 32-bit index buffers supported? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supports3DRenderTextures.html">supports3DRenderTextures</a></td><td class="desc">Are 3D (volume) RenderTextures supported? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supports3DTextures.html">supports3DTextures</a></td><td class="desc">Are 3D (volume) textures supported? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsAccelerometer.html">supportsAccelerometer</a></td><td class="desc">Is an accelerometer available on the device?</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsAnisotropicFilter.html">supportsAnisotropicFilter</a></td><td class="desc">Returns true when anisotropic filtering is supported on the device.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsAsyncCompute.html">supportsAsyncCompute</a></td><td class="desc">Returns true when the platform supports asynchronous compute queues and false if otherwise.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsAsyncGPUReadback.html">supportsAsyncGPUReadback</a></td><td class="desc">Returns true if asynchronous readback of GPU data is available for this device and false otherwise.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsAudio.html">supportsAudio</a></td><td class="desc">Is there an Audio device available for playback? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsCompressed3DTextures.html">supportsCompressed3DTextures</a></td><td class="desc">Are compressed formats for 3D (volume) textures supported? (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsComputeShaders.html">supportsComputeShaders</a></td><td class="desc">Are compute shaders supported? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsConservativeRaster.html">supportsConservativeRaster</a></td><td class="desc">Is conservative rasterization supported? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsCubemapArrayTextures.html">supportsCubemapArrayTextures</a></td><td class="desc">Are Cubemap Array textures supported? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsGeometryShaders.html">supportsGeometryShaders</a></td><td class="desc">Are geometry shaders supported? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsGpuRecorder.html">supportsGpuRecorder</a></td><td class="desc">Specifies whether the current platform supports the GPU Recorder or not. (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsGraphicsFence.html">supportsGraphicsFence</a></td><td class="desc">
+          true if the platform supports GraphicsFences, otherwise false.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsGyroscope.html">supportsGyroscope</a></td><td class="desc">Is a gyroscope available on the device?</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsHardwareQuadTopology.html">supportsHardwareQuadTopology</a></td><td class="desc">Does the hardware support quad topology? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsInstancing.html">supportsInstancing</a></td><td class="desc">Is GPU draw call instancing supported? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsLocationService.html">supportsLocationService</a></td><td class="desc">Is the device capable of reporting its location?</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsMipStreaming.html">supportsMipStreaming</a></td><td class="desc">Is streaming of texture mip maps supported? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsMotionVectors.html">supportsMotionVectors</a></td><td class="desc">Whether motion vectors are supported on this platform.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsMultisampleAutoResolve.html">supportsMultisampleAutoResolve</a></td><td class="desc">Returns true if multisampled textures are resolved automatically</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsMultisampled2DArrayTextures.html">supportsMultisampled2DArrayTextures</a></td><td class="desc">Boolean that indicates whether multisampled texture arrays are supported (true if supported, false if not supported).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsMultisampledTextures.html">supportsMultisampledTextures</a></td><td class="desc">Are multisampled textures supported? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsMultisampleResolveDepth.html">supportsMultisampleResolveDepth</a></td><td class="desc">Returns true if the platform supports multisample resolve of depth textures.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsMultiview.html">supportsMultiview</a></td><td class="desc">Boolean that indicates whether Multiview is supported (true if supported, false if not supported). (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsRawShadowDepthSampling.html">supportsRawShadowDepthSampling</a></td><td class="desc">Is sampling raw depth from shadowmaps supported? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsRayTracing.html">supportsRayTracing</a></td><td class="desc">Checks if ray tracing is supported by the current configuration.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsRenderTargetArrayIndexFromVertexShader.html">supportsRenderTargetArrayIndexFromVertexShader</a></td><td class="desc">Boolean that indicates if SV_RenderTargetArrayIndex can be used in a vertex shader (true if it can be used, false if not).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsSeparatedRenderTargetsBlend.html">supportsSeparatedRenderTargetsBlend</a></td><td class="desc">Returns true when the platform supports different blend modes when rendering to multiple render targets, or false otherwise.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsSetConstantBuffer.html">supportsSetConstantBuffer</a></td><td class="desc">Does the current renderer support binding constant buffers directly? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsShadows.html">supportsShadows</a></td><td class="desc">Are built-in shadows supported? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsSparseTextures.html">supportsSparseTextures</a></td><td class="desc">Are sparse textures supported? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsStoreAndResolveAction.html">supportsStoreAndResolveAction</a></td><td class="desc">This property is true if the graphics API of the target build platform takes RenderBufferStoreAction.StoreAndResolve into account, false if otherwise.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsTessellationShaders.html">supportsTessellationShaders</a></td><td class="desc">Are tessellation shaders supported? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsTextureWrapMirrorOnce.html">supportsTextureWrapMirrorOnce</a></td><td class="desc">Returns true if the 'Mirror Once' texture wrap mode is supported. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-supportsVibration.html">supportsVibration</a></td><td class="desc">Is the device capable of providing the user haptic feedback by vibration?</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-systemMemorySize.html">systemMemorySize</a></td><td class="desc">Amount of system memory present (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-unsupportedIdentifier.html">unsupportedIdentifier</a></td><td class="desc">Value returned by SystemInfo string properties which are not supported on the current platform.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-usesLoadStoreActions.html">usesLoadStoreActions</a></td><td class="desc">True if the Graphics API takes RenderBufferLoadAction and RenderBufferStoreAction into account, false if otherwise.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo-usesReversedZBuffer.html">usesReversedZBuffer</a></td><td class="desc">This property is true if the current platform uses a reversed depth buffer (where values range from 1 at the near plane and 0 at far plane), and false if the depth buffer is normal (0 is near, 1 is far). (Read Only)</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="SystemInfo.GetCompatibleFormat.html">GetCompatibleFormat</a></td><td class="desc">Returns a format supported by the platform for the specified usage.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo.GetGraphicsFormat.html">GetGraphicsFormat</a></td><td class="desc">Returns the platform-specific GraphicsFormat that is associated with the DefaultFormat.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo.GetRenderTextureSupportedMSAASampleCount.html">GetRenderTextureSupportedMSAASampleCount</a></td><td class="desc">Checks if the target platform supports the MSAA samples count in the RenderTextureDescriptor argument.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo.IsFormatSupported.html">IsFormatSupported</a></td><td class="desc">Verifies that the specified graphics format is supported for the specified usage.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo.SupportsBlendingOnRenderTextureFormat.html">SupportsBlendingOnRenderTextureFormat</a></td><td class="desc">Is blending supported on render texture format?</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo.SupportsRandomWriteOnRenderTextureFormat.html">SupportsRandomWriteOnRenderTextureFormat</a></td><td class="desc">Tests if a RenderTextureFormat can be used with RenderTexture.enableRandomWrite.</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo.SupportsRenderTextureFormat.html">SupportsRenderTextureFormat</a></td><td class="desc">Is render texture format supported?</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo.SupportsTextureFormat.html">SupportsTextureFormat</a></td><td class="desc">Is texture format supported on this device?</td></tr>
+      <tr><td class="lbl"><a href="SystemInfo.SupportsVertexAttributeFormat.html">SupportsVertexAttributeFormat</a></td><td class="desc">Indicates whether the given combination of a vertex attribute format and dimension is supported on this device.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

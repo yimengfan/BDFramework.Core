@@ -1,0 +1,306 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Scene view View Options toolbar</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ViewModes.html">English</a></li>
+<li><a href="/cn/current/Manual/ViewModes.html">中文</a></li>
+<li><a href="/ja/current/Manual/ViewModes.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ViewModes.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ViewModes.html">English</a></li>
+<li><a href="/cn/current/Manual/ViewModes.html">中文</a></li>
+<li><a href="/ja/current/Manual/ViewModes.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ViewModes.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="UsingTheEditor.html">Unity's interface</a></li>
+<li><a href="UsingTheSceneView.html">The Scene view</a></li>
+<li>Scene view View Options toolbar</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SceneVisibility.html"></a></span><div class="tip">Scene visibility</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="GizmosMenu.html"></a></span><div class="tip">Gizmos menu</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Scene view View Options toolbar</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can use the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view View Options <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view View Options <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> Overlay to choose various options for viewing the Scene and to enable/disable lighting and audio. These controls only affect the <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html" href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> Overlay to choose various options for viewing the Scene and to enable/disable lighting and audio. These controls only affect the <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> during development and have no effect on the built game.</p>
+
+<figure>
+<img src="../uploads/Main/SceneViewControlBar.png" alt="">
+</figure>
+
+<h2>Draw mode menu</h2>
+
+<p>The first dropdown menu selects which <strong>Draw Mode</strong> will be used to depict the Scene. The available options are:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Draw Mode</strong></th>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Shading Mode</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Shaded</td>
+	<td style="text-align:left;">Show surfaces with their textures visible.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Wireframe</td>
+	<td style="text-align:left;">Draw meshes with a wireframe representation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Shaded Wireframe</td>
+	<td style="text-align:left;">Show meshes textured and with wireframes overlaid.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Miscellaneous</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Shadow Cascades</td>
+	<td style="text-align:left;">Show directional light <a href="shadow-cascades.html">shadow cascades</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Render Paths</td>
+	<td style="text-align:left;">Show the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingPaths.html">rendering path</a><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a href="RenderingPaths.html" href="RenderingPaths.html">rendering path</a><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a href="RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#RenderingPath" aria-label="Go to glossary anchor for RenderingPath">Glossary</a></span></span></span> for each GameObject using a color code: <br><br>Blue indicates <span class="tooltip"><a href="RenderTech-DeferredShading.html">deferred shading</a><span class="tooltiptext">A rendering path in the Built-in Render Pipeline that places no limit on the number of Lights that can affect a GameObject. All Lights are evaluated per-pixel, which means that they all interact correctly with normal maps and so on. Additionally, all Lights can have cookies and shadows. <a href="RenderTech-DeferredShading.html" href="Glossary.html#RenderingPath" aria-label="Go to glossary anchor for RenderingPath">Glossary</a></span></span></span> for each GameObject using a color code: <br><br>Blue indicates <span class="tooltip"><a href="RenderTech-DeferredShading.html">deferred shading</a><span class="tooltiptext">A rendering path in the Built-in Render Pipeline that places no limit on the number of Lights that can affect a GameObject. All Lights are evaluated per-pixel, which means that they all interact correctly with normal maps and so on. Additionally, all Lights can have cookies and shadows. <a href="RenderTech-DeferredShading.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Deferredshading" aria-label="Go to glossary anchor for Deferredshading">Glossary</a></span></span></span><br> Green indicates <a href="RenderTech-DeferredLighting.html">deferred lighting</a><br> Yellow indicates <span class="tooltip"><a href="RenderTech-ForwardRendering.html">forward rendering</a><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a href="RenderTech-ForwardRendering.html" href="Glossary.html#Deferredshading" aria-label="Go to glossary anchor for Deferredshading">Glossary</a></span></span></span><br> Green indicates <a href="RenderTech-DeferredLighting.html">deferred lighting</a><br> Yellow indicates <span class="tooltip"><a href="RenderTech-ForwardRendering.html">forward rendering</a><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a href="RenderTech-ForwardRendering.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ForwardRendering" aria-label="Go to glossary anchor for ForwardRendering">Glossary</a></span></span></span><br>Red indicates <a href="RenderTech-VertexLit.html">vertex lit</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Alpha Channel</td>
+	<td style="text-align:left;">Render colors with alpha.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Overdraw</td>
+	<td style="text-align:left;">Render <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> as transparent “silhouettes”. The transparent colors accumulate, making it easy to spot places where one object is drawn over another.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Mipmaps</td>
+	<td style="text-align:left;">Show ideal texture sizes using a color code: <br><br>Red indicates that the texture is larger than necessary (at the current distance and resolution)<br>Blue indicates that the texture might be larger. The ideal texture sizes depend on the resolution at which your application will run and how close the Camera can get to particular surfaces.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Texture Streaming</td>
+	<td style="text-align:left;">Tint GameObjects green, red, or blue, depending on their status in the <a href="TextureStreaming.html">Texture Streaming</a> system. For more information, see documentation on <a href="TextureStreaming-API.html#DebuggingAPI">Texture Streaming debugging</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> Mask</td>
+	<td style="text-align:left;">Sprite Masks are used to either hide or reveal parts of a Sprite or group of Sprites. See <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-SpriteMask.html">Sprite Masks</a><span class="tooltiptext">A texture which defines which areas of an underlying image to reveal or hide. <a href="class-SpriteMask.html" href="class-SpriteMask.html">Sprite Masks</a><span class="tooltiptext">A texture which defines which areas of an underlying image to reveal or hide. <a href="class-SpriteMask.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SpriteMask" aria-label="Go to glossary anchor for SpriteMask">Glossary</a></span></span></span> for more information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Deferred</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">These modes let you view each of the elements of the G-buffer (<strong>Albedo</strong>, <strong>Specular</strong>, <strong>Smoothness</strong> and <strong>Normal</strong>) in isolation. See documentation on <a href="RenderTech-DeferredShading.html">Deferred Shading</a> for more information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Global Illumination</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">The following modes are available to help visualize aspects of the <span class="tooltip"><a href="lighting-window.html">Global Illumination</a><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span> system: <strong>Systems</strong>, <strong>Clustering</strong>, <strong>Lit Clustering</strong>, <strong>UV Charts</strong>, and <strong>Contributors/Receivers</strong>. See documentation on <a href="GIVis.html">GI Visualisations</a> for information about each of these modes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Realtime Global Illumination</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">The following modes are available to help visualize aspects of the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about realtime-gi-using-enlighten.html">Enlighten Realtime Global Illumination</a><span class="tooltiptext">A lighting system by Geomerics used in Unity for lightmapping and for Enlighten Realtime Global Illumination. <a href="https://www.siliconstudio.co.jp/en/products-service/enlighten/" href="realtime-gi-using-enlighten.html">Enlighten Realtime Global Illumination</a><span class="tooltiptext">A lighting system by Geomerics used in Unity for lightmapping and for Enlighten Realtime Global Illumination. <a href="https://www.siliconstudio.co.jp/en/products-service/enlighten/">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#EnlightenRealtimeGlobalIllumination" aria-label="Go to glossary anchor for EnlightenRealtimeGlobalIllumination">Glossary</a></span></span></span> system: <strong>Albedo</strong>, <strong>Emissive</strong>, <strong>Indirect</strong>, and <strong>Directionality</strong>. See documentation on <a href="GIVis.html">GI Visualisations</a> for information about each of these modes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Baked Global Illumination</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">The following modes are available to help visualize aspects of the Baked Global Illumination system: <strong>Baked Light Map</strong>, <strong>Directionality</strong>, <strong><span class="tooltip"><strong>Shadowmask</strong><span class="tooltiptext">A Texture that shares the same UV layout and resolution with its corresponding lightmap. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightMode-Mixed-Shadowmask.html" href="LightMode-Mixed-Shadowmask.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shadowmask" aria-label="Go to glossary anchor for Shadowmask">Glossary</a></span></span></span></strong>, <strong>Albedo</strong>, <strong>Emissive</strong>, <strong>UV Charts</strong>, <strong>Texel Validity</strong>, <strong>UV Overlap</strong>, <strong>Baked <span class="tooltip"><strong>Lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a href="Lightmapping.html" href="Glossary.html#Shadowmask" aria-label="Go to glossary anchor for Shadowmask">Glossary</a></span></span></span></strong>, <strong>Albedo</strong>, <strong>Emissive</strong>, <strong>UV Charts</strong>, <strong>Texel Validity</strong>, <strong>UV Overlap</strong>, <strong>Baked <span class="tooltip"><strong>Lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> Culling</strong>, <strong>Lightmap Indices</strong>, and <strong>Light Overlap</strong>. See documentation on <a href="GIVis.html">GI Visualisations</a> for information about each of these modes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Material Validator</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">There are two <strong>Material Validator</strong> modes: <strong>Albedo</strong> and <strong>Metal Specular</strong>. These allow you to check whether your physically-based materials use values within the recommended ranges. See <a href="MaterialValidator.html">Physically Based Material Validator</a> for more information.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>2D, lighting and Audio switches</h2>
+
+<p>To the right of the <strong>Render Mode</strong> menu are three buttons that switch certain Scene view options on or off:</p>
+
+<ul>
+<li>
+<strong>2D</strong>: switches between 2D and 3D view for the Scene. In 2D mode the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> is oriented looking towards positive z, with the x-axis pointing right and the y-axis pointing up.</li>
+<li>
+<strong>Lighting</strong>: turns Scene view lighting (lights, object shading, etc) on or off.</li>
+<li>
+<strong>Audio</strong>: turns Scene view <span class="tooltip"><strong>audio effects</strong><span class="tooltiptext">Any effect that can modify the output of Audio Mixer components, such as filtering frequency ranges of a sound or applying reverb. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioEffectMixer.html" href="class-AudioEffectMixer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioEffect" aria-label="Go to glossary anchor for AudioEffect">Glossary</a></span></span></span> on or off.</li>
+</ul>
+
+<h2>Effects button and menu</h2>
+
+<p>The menu (activated by the icon to the right of the <strong>Audio</strong> button) has options to enable or disable rendering effects in the Scene view.</p>
+
+<ul>
+<li><span class="tooltip"><strong>Skybox</strong><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Skybox.html" href="class-Skybox.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skybox" aria-label="Go to glossary anchor for Skybox">Glossary</a></span></span></span>: a skybox texture rendered in the Scene’s background</li>
+<li><span class="tooltip"><strong>Fog</strong><span class="tooltiptext">A post-processing effect that overlays a color onto objects depending on the distance from the camera. Use this to simulate fog or mist in outdoor environments, or to hide clipping of objects near the camera’s far clip plane. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="PostProcessingOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Fog" aria-label="Go to glossary anchor for Fog">Glossary</a></span></span></span>: gradual fading of the view to a flat color with distance from the camera.</li>
+<li>
+<strong>Flares</strong>: <span class="tooltip"><strong>lens flares</strong><span class="tooltiptext">A component that simulates the effect of lights refracting inside a camera lens. Use a Lens Flare to represent very bright lights or add atmosphere to your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LensFlare.html" href="class-LensFlare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LensFlare" aria-label="Go to glossary anchor for LensFlare">Glossary</a></span></span></span> on lights.</li>
+<li>
+<strong>Always Refresh</strong>: Defines whether animated materials display the animation. When selected, any time-based effects (for example, Shaders) will animate. For example, Scene effects (like grass waving on a Terrain).</li>
+<li>
+<strong>Post Processing</strong>: Shows <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html">Post-processing</a><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a href="PostProcessingOverview.html" href="PostProcessingOverview.html">Post-processing</a><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a href="PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span> effects.</li>
+<li><span class="tooltip"><strong>Particle Systems</strong><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ParticleSystem.html" href="class-ParticleSystem.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#particlesystem" aria-label="Go to glossary anchor for particlesystem">Glossary</a></span></span></span>: Shows <a href="ParticleSystems.html">Particle System</a> effects.</li>
+</ul>
+
+<p>The <strong>Effects</strong> button itself acts as a switch that enables or disables all the selected effects at once.</p>
+
+<h2>Scene visibility switch</h2>
+
+<p>The Scene visibility switch toggles Scene visibility for GameObjects on and off. When it’s on, Unity applies the Scene visibility settings. When it’s off, Unity ignores them.</p>
+
+<p>For more information, see the documentation on <a href="SceneVisibility.html">Scene Visibility</a>.</p>
+
+<h2>Camera settings menu</h2>
+
+<p>The Camera settings menu contains options for configuring the Scene view camera. For more information, see the documentation on <a href="SceneViewCamera.html">Camera settings</a>.</p>
+
+<h2>Gizmos menu</h2>
+
+<p>The <span class="tooltip"><strong>Gizmos</strong><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GizmosMenu.html#GizmosIcons" href="GizmosMenu.html#GizmosIcons">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Gizmo" aria-label="Go to glossary anchor for Gizmo">Glossary</a></span></span></span> menu contains options for how objects, icons, and gizmos are displayed. This menu is available in both the Scene view and the <a href="GameView.html">Game view</a>. See documentation on the <a href="GizmosMenu.html">Gizmos Menu</a> manual page for more information.</p>
+
+<ul>
+<li><span class="page-history">Scene Visibility Switch added in <a href="https://docs.unity3d.com/2019.1/Documentation/Manual/30_search.html?q=newin20191">2019.1</a> <span class="search-words">NewIn20191</span></span></li>
+<li><span class="page-history">Scene view Camera settings added in 2019.1</span></li>
+<li><span class="page-history">Component Editor Tools panel switch added in 2019.1</span></li>
+<li><span class="page-history">Toolbar moved to Overlays in 2021.2</span></li>
+</ul>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SceneVisibility.html"></a></span><div class="tip">Scene visibility</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="GizmosMenu.html"></a></span><div class="tip">Gizmos menu</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Refreshing the Asset Database</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetDatabaseRefreshing.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetDatabaseRefreshing.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetDatabaseRefreshing.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetDatabaseRefreshing.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetDatabaseRefreshing.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetDatabaseRefreshing.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetDatabaseRefreshing.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetDatabaseRefreshing.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AssetWorkflow.html">Asset Workflow</a></li>
+<li><a href="AssetDatabase.html">The Asset Database</a></li>
+<li>Refreshing the Asset Database</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetDatabase.html"></a></span><div class="tip">The Asset Database</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetDatabaseCustomizingWorkflow.html"></a></span><div class="tip">Customizing the Asset Database workflow</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Refreshing the Asset Database</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity refreshes the Asset Database in the following situations:</p>
+
+<ul>
+<li>When the Unity Editor regains focus (if you have enabled <a href="Preferences.html">Auto-Refresh</a> in the Preferences window)</li>
+<li>When you select <strong>Assets &gt; Refresh</strong> from the menu</li>
+<li>When you call <a href="../ScriptReference/AssetDatabase.Refresh.html">AssetDatabase.Refresh</a> from C#</li>
+</ul>
+
+<p>Some other AssetDatabase APIs trigger a Refresh() but only for the Assets you specify. For example <a href="../ScriptReference/AssetDatabase.CreateAsset.html">CreateAsset()</a> and <a href="../ScriptReference/AssetDatabase.ImportAsset.html">ImportAsset()</a>.</p>
+
+<p>Unity performs the following steps during an Asset Database refresh:</p>
+
+<ol>
+<li>It looks for changes to the Asset files, and then updates the source Asset Database</li>
+<li>It imports and compiles code-related files such as .dll, .asmdef, .asmref, .rsp, and .cs files.</li>
+<li>It then reloads the domain, if <a href="../ScriptReference/AssetDatabase.Refresh.html">Refresh</a> was not invoked from a script.</li>
+<li>It post-processes all of the Assets for the imported code-related files</li>
+<li>It then imports non-code-related Assets and post-processes all the remaining imported Assets</li>
+<li>It then <a href="#hotreloading">hot reloads</a> the Assets</li>
+</ol>
+
+<h2>The Asset Database detailed refresh process</h2>
+
+<p>Unity performs the steps described in the previous section during the Asset Database refresh. This section describes this process in more detail. These steps happen inside a loop, and some steps might cause the refresh process to restart (for example, if importing an Asset creates other Assets which Unity also needs to import). </p>
+
+<p>Unity restarts the Asset Database refresh loop under the following conditions:</p>
+
+<ul>
+<li>If, after the import, a file that the importer used has changed on disk.</li>
+<li>If, in OnPostProcessAllAssets, you call any of the following:
+
+<ul>
+<li><a href="https://docs.unity3d.com/ScriptReference/AssetDatabase.ForceReserializeAssets.html">ForceReserializeAssets</a></li>
+<li><a href="https://docs.unity3d.com/ScriptReference/AssetImporter.SaveAndReimport.html">AssetImporter.SaveAndImport</a></li>
+<li>Any AssetDatabase API that queues an additional Refresh, such as MoveAsset, CreateAsset and ImportAsset</li>
+</ul>
+</li>
+<li>If the timestamp of the file being imported changes while it is being imported, the file is queued for re-import</li>
+<li>When an importer creates a file in the middle of an import (for example, FBX models can restart a Refresh by extracting their Textures from the model).</li>
+</ul>
+
+<h3>Look for changes on disk</h3>
+
+<p>When Unity looks for changes on disk, it scans the <code>Assets</code> and <code>Packages</code> folders in your Project to check if any files have been added, modified, or deleted since the last scan. It gathers any changes into a list to process in the next step.</p>
+
+<h3>Update source Asset Database</h3>
+
+<p>Once Unity gathers the file list, it then gets the file hashes for the files which have either been added or modified. It then updates the Asset Database with the GUIDs for those files, and removes the entries for the files that it detected as deleted.</p>
+
+<h3>Dependency tracking</h3>
+
+<p>The Asset Database keeps track of two types of Asset dependencies: <strong>static dependencies</strong> and <strong>dynamic dependencies</strong>. If any dependency of an Asset changes, Unity triggers a reimport of that Asset.</p>
+
+<h5>Static dependencies</h5>
+
+<p>A static dependency is a value, setting or property that an importer depends on. Static dependencies are known before the Asset is imported, and are not affected by the behavior of the importer during the import process. If a static dependency of an Asset changes, Unity re-imports that Asset.</p>
+
+<p>Some common static dependencies are:</p>
+
+<ul>
+<li>The name of the Asset</li>
+<li>ID of the importer associated with the Asset</li>
+<li>The version of the importer</li>
+<li>The currently selected build target platform</li>
+</ul>
+
+<h5>Dynamic dependencies</h5>
+
+<p>Unity typically discovers the dynamic dependencies of an asset during the import process. This is because these dependencies are defined by the content of the source asset. For example, a <span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> might reference another Shader, and a <span class="tooltip"><strong>Prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> might reference another Shader, and a <span class="tooltip"><strong>Prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> might depend on other Prefabs. </p>
+
+<p>The importer might also use a global state conditionally based on the content of the source asset, in which case it also becomes a dynamic dependency. Examples of this are the target platform, the Project’s color space, the graphics API, the scripting runtime version, or the Texture <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> state.</p>
+
+<p>Unity stores these dynamic dependencies of an asset in an <a href="../ScriptReference/AssetImporters.AssetImportContext.html">Asset Import Context</a>. </p>
+
+<h3>Import and compile code-related files</h3>
+
+<p>In the list of changed or added files, Unity gathers the ones that relate to code, and sends them to the script compilation pipeline. The compiler generates assemblies from the script files and assembly definition files in your Project. For more information on this step, see documentation on <a href="https://docs.unity3d.com/Manual/ScriptCompilationAssemblyDefinitionFiles.html">script compilation assembly definition files</a>.</p>
+
+<h3>Reload the domain</h3>
+
+<p>If Unity detects any script changes, it reloads the C# domain. It does this because new Scripted Importers could have been created, and their logic could potentially impact the import result of Assets in the Refresh queue. This step restarts the Refresh() to ensure any new Scripted Importers take effect.</p>
+
+<h3>Import non-code-related Assets</h3>
+
+<p>Once Unity imports all code-related assets and it reloads the domain, it then moves on to the remaining Assets. Each Asset’s importer processes that type of Asset, and identifies the file types that it should import based on the filename extensions. For example, the TextureImporter is responsible for importing .jpg, .png and .psd files, among others.</p>
+
+<p>There are two types of importers: </p>
+
+<ul>
+<li>Native importers: Unity’s <a href="BuiltInImporters.html">built-in importers</a>.</li>
+<li>
+<a href="ScriptedImporters.html">Scripted importers</a>: Custom importers that extend Unity’s import capabilities. These are written in C#.</li>
+</ul>
+
+<p>Unity processes all native importers first, and then all scripted importers in a separate phase.</p>
+
+<p>When an importer imports an asset file, Unity generates an <strong>AssetImportContext</strong>. The AssetImportContext reports the Static Dependencies of an asset.</p>
+
+<p>Also, during the import step, there are a number of callbacks which occur.</p>
+
+<p>Preprocess Asset Importer Calls:</p>
+
+<ul>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPreprocessAsset.html"><code>OnPreprocessAsset</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPreprocessAnimation.html"><code>OnPreprocessAnimation</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPreprocessAudio.html"><code>OnPreprocessAudio</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPreprocessModel.html"><code>OnPreprocessModel</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPreprocessSpeedTree.html"><code>OnPreprocessSpeedTree</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPreprocessTexture.html"><code>OnPreprocessTexture</code></a></li>
+</ul>
+
+<p>Postprocess Asset Importer Calls:</p>
+
+<ul>
+<li><a href="../ScriptReference/AssetPostprocessor.OnAssignMaterialModel.html"><code>OnAssignMaterialModel</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPostprocessAnimation.html"><code>OnPostprocessAnimation</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPostprocessAssetbundleNameChanged.html"><code>OnPostprocessAssetbundleNameChanged</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPostprocessAudio.html"><code>OnPostprocessAudio</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPostprocessCubemap.html"><code>OnPostprocessCubemap</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPostprocessGameObjectWithAnimatedUserProperties.html"><code>OnPostprocessGameObjectWithAnimatedUserProperties</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPostprocessGameObjectWithUserProperties.html"><code>OnPostprocessGameObjectWithUserProperties</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPostprocessMaterial.html"><code>OnPostprocessMaterial</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPostprocessMeshHierarchy.html"><code>OnPostprocessMeshHierarchy</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPostprocessModel.html"><code>OnPostprocessModel</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPostprocessSpeedTree.html"><code>OnPostprocessSpeedTree</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPostprocessSprites.html"><code>OnPostprocessSprites</code></a></li>
+<li><a href="../ScriptReference/AssetPostprocessor.OnPostprocessTexture.html"><code>OnPostprocessTexture</code></a></li>
+</ul>
+
+<p>One final post processing callback which is triggered once all importing has completed is <a href="https://docs.unity3d.com/ScriptReference/AssetPostprocessor.OnPostprocessAllAssets.html"><code>OnPostprocessAllAssets</code></a>.</p>
+
+<p>There are a number of things that can happen which will restart the refresh process on the Asset folder, some of them being:</p>
+
+<ul>
+<li><p>If the import of an asset failed</p></li>
+<li><p>If the asset was modified during the import phase of the Refresh. For example, if a file in the list gets modified so its modification date is not what it was in the previous refresh. This can happen if you start pulling files from a <span class="tooltip"><strong>Version Control</strong><span class="tooltiptext">A system for managing file changes. You can use Unity in conjunction with most common version control tools, including Perforce, Git, Mercurial and PlasticSCM. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VersionControl.html" href="VersionControl.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VersionControl" aria-label="Go to glossary anchor for VersionControl">Glossary</a></span></span></span> system while the Editor has focus.</p></li>
+<li><p>If an Asset created other assets during import. For example: When importing an FBX, textures can get extracted from the FBX and placed into the project, and this means that Unity has to import the textures (and any artifacts they generate).</p></li>
+<li><p>If you force the re-import of a file during one of the pre/post process callbacks or inside OnPostProcessAllAssets, for example, using <code>AssetDatabase.ForceReserializeAssets</code> or <code>AssetImport.SaveAndReimport</code>. Note, you must be careful not to cause infinite reimport loops if you do this.</p></li>
+<li><p>If an Assembly Reload happens after compiling <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>. If you generate a C# file during the refresh process, that new file must then be compiled, so Unity restarts the refresh.</p></li>
+<li><p>If you save an asset as “Text only” but the Asset must be serialized as binary, a restart will happen. (For example, Scenes with Terrains in them must be serialized as Binary, since the terrain data would be unwieldy if viewed as an array of characters in a text file.)</p></li>
+</ul>
+
+<p><a name="hotreloading" aria-hidden="true"></a></p>
+
+<h4>Hot reloading</h4>
+
+<p>Hot reloading refers to the process where Unity imports and applies any changes to scripts and assets while the Editor is open. This might happen while the Editor is in Play Mode or outside of Play Mode. You do not have to restart your application or the Editor for changes to take effect.</p>
+
+<p>When you change and save a script, Unity hot-reloads all of the project’s script data. It first stores all serializable variable values in all loaded scripts, reloads the scripts, then restores the values. All of the data stored in non-serializable variables is lost during a hot reload.</p>
+
+<p>
+<strong>Note:</strong> Unity imports assets imported by the (built-in DefaultImporter)[BuiltInImporters] first, and then script assets, so it does not call any script-defined PostProcessAllAssets for default assets.</p>
+
+<h4>End of Refresh</h4>
+
+<p>Once all these steps have completed, the <code>Refresh()</code> is complete. The <strong>Artifact Database</strong> is updated with the relevant information, and the necessary import result files are generated on disk.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetDatabase.html"></a></span><div class="tip">The Asset Database</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetDatabaseCustomizingWorkflow.html"></a></span><div class="tip">Customizing the Asset Database workflow</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Inverse Kinematics</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/InverseKinematics.html">English</a></li>
+<li><a href="/cn/current/Manual/InverseKinematics.html">中文</a></li>
+<li><a href="/ja/current/Manual/InverseKinematics.html">日本語</a></li>
+<li><a href="/kr/current/Manual/InverseKinematics.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/InverseKinematics.html">English</a></li>
+<li><a href="/cn/current/Manual/InverseKinematics.html">中文</a></li>
+<li><a href="/ja/current/Manual/InverseKinematics.html">日本語</a></li>
+<li><a href="/kr/current/Manual/InverseKinematics.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AnimationSection.html">Animation</a></li>
+<li><a href="AnimatorControllers.html">Animator Controllers</a></li>
+<li><a href="AnimationStateMachines.html">Animation State Machines</a></li>
+<li>Inverse Kinematics</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="TargetMatching.html"></a></span><div class="tip">Target Matching</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="RootMotion.html"></a></span><div class="tip">Root Motion - how it works</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Inverse Kinematics</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Most character animation is created by rotating the angles of joints in a skeleton to predetermined values. The position of a child <span class="tooltip"><strong>joint</strong><span class="tooltiptext">A physics component allowing a dynamic connection between Rigidbody components, usually allowing some degree of movement such as a hinge. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Joints.html" href="Joints.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#joint" aria-label="Go to glossary anchor for joint">Glossary</a></span></span></span> changes according to the rotation of its parent. The end point of a chain of joints is determined by the angles and relative positions of the individual joints along the chain. This method of posing a skeleton is known as <strong>forward <span class="tooltip"><strong>kinematics</strong><span class="tooltiptext">The geometry that describes the position and orientation of a character’s joints and bodies. Used by inverse kinematics to control character movement.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#kinematics" aria-label="Go to glossary anchor for kinematics">Glossary</a></span></span></span></strong>.</p>
+
+<p>However, it is often useful to pose joints from the opposite point of view. Start from a chosen position in space, or a goal, and work backwards to find a way to orient the joints so that the end point reaches the goal. This can be useful if you want a character to grab an object or stand on an uneven surface. This approach is known as <strong>inverse kinematics</strong> (IK). It is supported in Mecanim for a humanoid character with a correctly configured <span class="tooltip"><strong>Avatar</strong><span class="tooltiptext">An interface for retargeting animation from one rig to another. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ConfiguringtheAvatar.html" href="ConfiguringtheAvatar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Avatar" aria-label="Go to glossary anchor for Avatar">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/MecanimIKGrabbing.jpg" alt="">
+</figure>
+
+<p>To set up IK for a character, you typically have objects around the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> that a character interacts with. You can use these objects and your character to set up IK within a script. You can use the following Animator functions:
+* <a href="../ScriptReference/Animator.SetIKPositionWeight.html">SetIKPositionWeight</a>
+* <a href="../ScriptReference/Animator.SetIKRotationWeight.html">SetIKRotationWeight</a>
+* <a href="../ScriptReference/Animator.SetIKPosition.html">SetIKPosition</a>
+* <a href="../ScriptReference/Animator.SetIKRotation.html">SetIKRotation</a>
+* <a href="../ScriptReference/Animator.SetLookAtPosition.html">SetLookAtPosition</a>
+* <a href="../ScriptReference/Animator-bodyPosition.html">bodyPosition</a>
+* <a href="../ScriptReference/Animator-bodyRotation.html">bodyRotation</a>
+</p>
+
+<p>For example, the image above shows a character touching a cylindrical object. To do this with IK and through scripting, follow these steps:</p>
+
+<ol>
+<li>Create a valid Avatar for your character.</li>
+<li>Create an <span class="tooltip"><strong>Animator Controller</strong><span class="tooltiptext">Controls animation through Animation Layers with Animation State Machines and Animation Blend Trees, controlled by Animation Parameters. The same Animator Controller can be referenced by multiple models with Animator components. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimatorController.html" href="class-AnimatorController.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorController" aria-label="Go to glossary anchor for AnimatorController">Glossary</a></span></span></span> with at least one animation for this character.</li>
+<li>In the Layers pane of the <span class="tooltip"><strong>Animator window</strong><span class="tooltiptext">The window where the Animator Controller is visualized and edited. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimatorWindow.html" href="AnimatorWindow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorWindow" aria-label="Go to glossary anchor for AnimatorWindow">Glossary</a></span></span></span>, click the Cog icon in the Base Layer and enable <strong>IK Pass</strong> from the context menu. When enabled, IK Pass sends an <code>OnAnimatorIK</code> callback. In a later step, you will use this callback to implement inverse kinematics in a script.</li>
+</ol>
+
+<p><img src="../uploads/Main/AnimatorControllerToolSettingsIKPass.png" alt="Enable the IK Pass checkbox for the Default Layer"></p>
+
+<ol>
+<li>Make sure the Animator Controller is assigned to the character’s <span class="tooltip"><strong>Animator Component</strong><span class="tooltiptext">A component on a model that animates that model using the Animation system. The component has a reference to an Animator Controller asset that controls the animation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimatorController.html" href="class-AnimatorController.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorComponent" aria-label="Go to glossary anchor for AnimatorComponent">Glossary</a></span></span></span>.</li>
+</ol>
+
+<p><img src="../uploads/Main/AnimatorInspectorForIK.png" alt=""></p>
+
+<ol>
+<li>Next, add a script to your character. In this example, the script is named <code>IKControl</code>. This script sets the IK target for the right hand of the character. This script also changes the look at position so that the character looks towards the cylinder object when grabbed. The full script is listed below:</li>
+</ol>
+
+<pre><code>using UnityEngine;
+using System;
+using System.Collections;
+
+[RequireComponent(typeof(Animator))]
+public class IKControl : MonoBehaviour {
+
+    protected Animator animator;
+
+    public bool ikActive = false;
+    public Transform rightHandObj = null;
+    public Transform lookObj = null;
+
+    void Start ()
+    {
+        animator = GetComponent&lt;Animator&gt;();
+    }
+
+    //a callback for calculating IK
+    void OnAnimatorIK()
+    {
+        if(animator) {
+
+            //if the IK is active, set the position and rotation directly to the goal.
+            if(ikActive) {
+
+                // Set the look target position, if one has been assigned
+                if(lookObj != null) {
+                    animator.SetLookAtWeight(1);
+                    animator.SetLookAtPosition(lookObj.position);
+                }
+
+                // Set the right hand target position and rotation, if one has been assigned
+                if(rightHandObj != null) {
+                    animator.SetIKPositionWeight(AvatarIKGoal.RightHand,1);
+                    animator.SetIKRotationWeight(AvatarIKGoal.RightHand,1);  
+                    animator.SetIKPosition(AvatarIKGoal.RightHand,rightHandObj.position);
+                    animator.SetIKRotation(AvatarIKGoal.RightHand,rightHandObj.rotation);
+                }
+
+            }
+
+            //if the IK is not active, set the position and rotation of the hand and head back to the original position
+            else {          
+                animator.SetIKPositionWeight(AvatarIKGoal.RightHand,0);
+                animator.SetIKRotationWeight(AvatarIKGoal.RightHand,0);
+                animator.SetLookAtWeight(0);
+            }
+        }
+    }
+}
+
+</code></pre>
+
+<ol>
+<li><p>To avoid the right hand passing through the Cylinder <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, add an empty child GameObject to the <code>Cylinder</code> GameObject. To do this, right-click the Cylinder GameObject in the Hierarchy window and select <strong>Create Empty</strong>. Name this empty child GameObject <code>Cylinder Grab Handle</code>.</p></li>
+<li><p>Position and rotate the <code>Cylinder Grab Handle</code> GameObject so that the right hand touches but does not pass through the cylinder.</p></li>
+</ol>
+
+<p><img src="../uploads/Main/MecanimIKGrabHandle.jpg" alt="An empty GameObject acts as the IK target. Add this empty GameObject so that the right hand interacts properly with the Cylinder object."></p>
+
+<ol>
+<li>Assign the <code>Cylinder Grab Handle</code> GameObject as the <strong>Right Hand Obj</strong> property of the <code>IKControl</code> script.</li>
+<li>Assign the <code>Cylinder</code> GameObject as the <strong>Look Obj</strong> so that the character looks towards the centre of the Cylinder when <strong>IK Active</strong> is enabled.</li>
+</ol>
+
+<p><img src="../uploads/Main/MecanimIKSetupInspector.png" alt=""></p>
+
+<ol>
+<li>Enter play mode.</li>
+</ol>
+
+<p>Your character should touch and release the Cylinder GameObject as you enabled and disable the <strong>IK Active</strong> checkbox. While in Play Mode, change the position and rotation of the <code>Cylinder</code> GameObject to see how the right hand and character look at reacts.</p>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="TargetMatching.html"></a></span><div class="tip">Target Matching</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="RootMotion.html"></a></span><div class="tip">Root Motion - how it works</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

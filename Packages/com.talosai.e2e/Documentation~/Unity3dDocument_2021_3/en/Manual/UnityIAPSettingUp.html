@@ -1,0 +1,282 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Setting up Unity IAP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UnityIAPSettingUp.html">English</a></li>
+<li><a href="/cn/current/Manual/UnityIAPSettingUp.html">中文</a></li>
+<li><a href="/ja/current/Manual/UnityIAPSettingUp.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UnityIAPSettingUp.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UnityIAPSettingUp.html">English</a></li>
+<li><a href="/cn/current/Manual/UnityIAPSettingUp.html">中文</a></li>
+<li><a href="/ja/current/Manual/UnityIAPSettingUp.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UnityIAPSettingUp.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityServices.html">Unity Services</a></li>
+<li><a href="UnityIAP.html">﻿Unity IAP</a></li>
+<li>Setting up Unity IAP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UnityIAP.html"></a></span><div class="tip">﻿Unity IAP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnityIAPAppleConfiguration.html"></a></span><div class="tip">Configuring for Apple App Store and Mac App Store</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Setting up Unity IAP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Note</strong>: Screenshots and menu choices might differ between release versions.</p>
+
+<h2>Overview</h2>
+
+<p>This document explains how to activate <strong>In-App Purchasing</strong> (IAP). </p>
+
+<p>The <span class="tooltip"><strong>Unity IAP</strong><span class="tooltiptext">Abbreviation of Unity <strong>In App Purchase</strong><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UnityIAP" aria-label="Go to glossary anchor for UnityIAP">Glossary</a></span></span></span> package provides coded and codeless approaches that you set up to:
+- Allow users to buy items in your games.
+- Connect to stores so that you can obtain revenue from these purchases.</p>
+
+<p>Here is an overview of the steps:</p>
+
+<ul>
+<li><p>Define your In-app purchase strategy for this game.</p></li>
+<li><p>Setup your project as a Unity service.</p></li>
+<li><p>Activate IAP to automatically install the package.</p></li>
+<li><p>Configure settings.</p></li>
+<li><p>Create and catalog your the in-game items that you want to sell.</p></li>
+<li>
+<p>Use the Codeless IAP button to give users a way to buy items. Then, once you have the logic working, consider customizing the button look and feel. Or use the scripted IAP for a rich API to enhance this process. </p>
+
+<figure>
+<img src="../uploads/Main/IAP-DemoButtons.png" alt="">
+</figure>
+</li>
+<li><p>Connect your app to the relevant app-stores, such as Google, Apple, or Android. </p></li>
+<li><p>Add items to the stores.</p></li>
+</ul>
+
+<p>Put it all together:</p>
+
+<ul>
+<li>Configure your IAP using guidance from this doc, support, and the IAP forum.</li>
+<li>Test everything.</li>
+<li>Make it live.</li>
+</ul>
+
+<p>You can also do many of these steps, or fine-tune what you create, with the In-App Purchasing API.</p>
+
+<p>
+<strong>Note</strong>: Versions of Unity IAP between 4.2.0 and 4.6.0 automatically install Unity <span class="tooltip"><strong>Analytics</strong><span class="tooltiptext">Abbreviation of <strong>Unity Analytics</strong><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Analytics" aria-label="Go to glossary anchor for Analytics">Glossary</a></span></span></span>. <span class="tooltip"><strong>Unity Analytics</strong><span class="tooltiptext">A data platform that provides analytics for your Unity game. <a href="UnityAnalytics.html" href="Glossary.html#Analytics" aria-label="Go to glossary anchor for Analytics">Glossary</a></span></span></span>. <span class="tooltip"><strong>Unity Analytics</strong><span class="tooltiptext">A data platform that provides analytics for your Unity game. <a href="UnityAnalytics.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UnityAnalytics" aria-label="Go to glossary anchor for UnityAnalytics">Glossary</a></span></span></span> is a paid service, and if your usage exceeds the free tier limits, you will be responsible for paying for your usage. To avoid using Unity Analytics, install Unity IAP 4.7.0 or later, and/or remove Unity Analytics from your project (which you can learn more about <a href="https://forum.unity.com/threads/important-iap-sdk-usage-of-analytics-changed-as-of-version-4-7-0.1301283/">here</a>).</p>
+
+<h2>Getting Started</h2>
+
+<p>
+<strong>Note</strong>: The Samsung Galaxy store is now obsolete and is no longer supported in the Unity In-App Purchasing package 4.0.0 and later. This guide to configure the Samsung Galaxy store only applies to the IAP package version 3.1.0 and earlier. If you are using the Unity IAP package 4.0.0 and later and you want to implement a Samsung Galaxy store, use the <a href="https://docs.unity3d.com/Manual/udp.html">Unity Distribution Platform</a> instead.</p>
+
+<ol>
+<li><p>Open your Unity project in the Unity Editor.</p></li>
+<li><p>Choose <strong>Window\General\Services</strong>. The services window will appear.</p></li>
+<li><p>Create a Project ID, then connect the project to an organization.</p></li>
+<li><p>Answer the <span class="tooltip"><strong>COPPA</strong><span class="tooltiptext">(Children’s Online Privacy Protection Act) COPPA is a US law that applies to apps that collect personal information and are targeted to children under the age of 14. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UnityAnalyticsCOPPA" href="UnityAnalyticsCOPPA">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#COPPA" aria-label="Go to glossary anchor for COPPA">Glossary</a></span></span></span> compliance questions.</p></li>
+<li>
+<p>The services window will display a list of services. Click <strong>In-App Purchasing</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/IAP-ServicesList.png" alt="">
+</figure>
+</li>
+<li>
+<p>The <span class="tooltip"><strong>Project Settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html" href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span> window appears.</p>
+
+<figure>
+<img src="../uploads/Main/IAP-ProjectSettings.png" alt="">
+</figure>
+</li>
+<li><p>Activate the toggle next to <strong>In-App Purchasing Settings</strong> to <strong>ON</strong>.</p></li>
+</ol>
+
+<p>This automatically installs the IAP package from the package manager, providing you with new features and menu items to help you manage IAP. </p>
+
+<h2>Next Steps</h2>
+
+<h3>Define your In-App Purchase strategy</h3>
+
+<p>Your task will be to create items for players to buy and obtain their identifiers.</p>
+
+<p>You must tie product identifiers (strings) to each item you are selling by using a specified format. Some stores require that you customize the <strong>Product ID</strong> for their stores.</p>
+
+<h4>Planning:</h4>
+
+<ul>
+<li>Define your strategy to determine when/how users can buy things</li>
+<li>Define your pricing strategy</li>
+<li>Define the types of products (subscriber, consumable, non consumable)</li>
+</ul>
+
+<h2>Where to learn more</h2>
+
+<h4>IAP Samples</h4>
+
+<ol>
+<li>From the <strong>IAP Project Settings Page</strong>, select <strong>Open Package Manager</strong> from <strong>Options</strong>.</li>
+<li>Navigate to <strong>In App Purchasing</strong>. On the right information panel, find <strong>Samples</strong>.</li>
+<li>Expand <strong>Samples</strong>, then select <strong>Import</strong>.</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/IAP-Samples.png" alt="">
+</figure>
+
+<h4>Forum tutorials</h4>
+
+<p>
+<a href="https://forum.unity.com/threads/sample-iap-project.529555/">Visit the Unity forum</a>. </p>
+
+<h4>Unity Learn IAP classes</h4>
+
+<p>
+<a href="https://learn.unity.com/tutorial/unity-iap">Refer to the Unity Learn IAP classes</a>. </p>
+
+<h2>Troubleshooting</h2>
+
+<h4>How to resolve compilation errors during upgrades</h4>
+
+<p><strong>Important notes if you are upgrading from Unity IAP version 2.x to future versions.</strong></p>
+
+<p>If you are updating from Unity IAP (com.unity.purchasing + the Asset Store plugin) versions 2.x to future versions, to resolve compilation errors, complete the following actions:</p>
+
+<ul>
+<li>Move <code>IAPProductCatalog.json</code> and <code>BillingMode.json</code>from <code>Assets/Plugins/UnityPurchasing/Resources/</code> to <code>Assets/Resources/</code>
+</li>
+<li>Move <code>AppleTangle.cs</code> and <code>GooglePlayTangle.cs</code> FROM: ‘Assets/Plugins/UnityPurchasing/generated’ TO: <code>Assets/Scripts/UnityPurchasing/generated</code>.</li>
+<li>Remove all remaining <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span> plugin folders and files in <code>Assets/Plugins/UnityPurchasing</code> from your
+project.</li>
+</ul>
+
+<h4>Common Unity IAP integration compiler errors</h4>
+
+<p>The following error messages might indicate that Unity IAP is deactivated in the Unity Cloud Services window, or that Unity is disconnected from the Internet:
+* <code>CS0246</code>
+* <code>System.Reflection.ReflectionTypeLoadException</code>
+* <code>UnityPurchasing/Bin/Stores.dll</code>
+* <code>UnityEngine.Purchasing</code>
+</p>
+
+<p>To resolve these errors:</p>
+
+<p>Reload the Services window by closing, then reopening it. After reloading, ensure that the Unity IAP service is active.
+If this doesn’t work, try to disconnect and reconnect to the Internet, then sign back into Unity Services and re-activate Unity IAP.</p>
+
+<p>
+<strong>Note</strong>: You must have an <strong>Owner</strong> or <strong>Manager</strong> role for the project.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UnityIAP.html"></a></span><div class="tip">﻿Unity IAP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnityIAPAppleConfiguration.html"></a></span><div class="tip">Configuring for Apple App Store and Mac App Store</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Keyboard events</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Keyboard-Events.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Keyboard-Events.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Keyboard-Events.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Keyboard-Events.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Keyboard-Events.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Keyboard-Events.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Keyboard-Events.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Keyboard-Events.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-Events.html">Control behavior with events</a></li>
+<li><a href="UIE-Events-Reference.html">Event reference</a></li>
+<li>Keyboard events</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Input-Events.html"></a></span><div class="tip">Input events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Mouse-Events.html"></a></span><div class="tip">Mouse events</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Keyboard events</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Keyboard events occur when you press or release keys on the keyboard. Each event includes information about the <a href="../ScriptReference/UIElements.KeyboardEventBase_1-modifiers.html">modifier</a>, <a href="../ScriptReference/UIElements.KeyboardEventBase_1-character.html">text character</a>, and related <a href="../ScriptReference/UIElements.KeyboardEventBase_1-keyCode.html">key code</a> for the event.</p>
+
+<p>Many standard controls use the <code>KeyDownEvent</code> to encode shortcuts or accessibility behaviors. The following examples all use keyboard events:</p>
+
+<ul>
+<li>The <code>Toggle</code> and <code>Button</code> classes listen for <code>Enter</code> and <code>Spacebar</code> key presses as replacement actions for mouse clicks.</li>
+<li>The <span class="tooltip"><strong>ScrollView</strong><span class="tooltiptext">A UI Control which displays a large set of Controls in a viewable area that you can see by using a scrollbar. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-uxml-element-ScrollView.html" href="UIE-uxml-element-ScrollView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScrollView" aria-label="Go to glossary anchor for ScrollView">Glossary</a></span></span></span> and Slider controls use directional arrow key presses to modulate their values.</li>
+<li>The <span class="tooltip"><strong>TextField control</strong><span class="tooltiptext">A TextField control displays a non-interactive piece of text to the user, such as a caption, label for other GUI controls, or instruction. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about gui-Controls.html" href="gui-Controls.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TextFieldcontrol" aria-label="Go to glossary anchor for TextFieldcontrol">Glossary</a></span></span></span> looks at both the <code>keyCode</code> property and the character property to execute special actions or to accept text.</li>
+</ul>
+
+<p>The base class for all keyboard events is <a href="../ScriptReference/UIElements.KeyboardEventBase_1.html">KeyboardEventBase</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Event</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Trickles down</strong></th>
+	<th style="text-align:left;"><strong>Bubbles up</strong></th>
+	<th style="text-align:left;"><strong>Cancellable</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.KeyDownEvent.html">KeyDownEvent</a></td>
+	<td style="text-align:left;">Sent when the user presses a key on the keyboard.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.KeyUpEvent.html">KeyUpEvent</a></td>
+	<td style="text-align:left;">Sent when the user releases a key on the keyboard.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Unique properties</h2>
+
+<p>
+<strong><code>keyCode</code></strong>: The <code>keyCode</code> property returns a character key that corresponds directly to a physical key on an input device, such as a keyboard or joystick. The difference between the <code>character</code> property and the <code>keyCode</code> property is that <code>keyCode</code> represents a physical key, while <code>character</code> represents the entry of a specific character. For example, both <code>a</code> and <code>A</code> return <code>keyCode=KeyCode.A</code> during a <code>keyDownEvent</code>.</p>
+
+<p>
+<strong><code>character</code></strong>: The <code>character</code> property returns a character code during a <code>keyDownEvent</code>.</p>
+
+<p>
+<strong><code>modifiers</code></strong>: The <code>modifiers</code> property returns which modifier key is held down. Some examples of modifier keys are the <code>Shift</code>, <code>Ctrl</code>, or <code>Alt</code> keys.</p>
+
+<p>For more information, see the <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values#modifier_keys">Modifier keys section</a> of the MDN documentation.</p>
+
+<h2>Event List</h2>
+
+<p>The following list provides the name, description, and target of each event in the event family.</p>
+
+<p>By default, a <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span> doesn’t receive keyboard events. Only elements that are focusable and currently in focus are targeted for keyboard events. This is because keyboard events trickle down and bubble up, allowing parent elements to receive them as well.</p>
+
+<p>In summary, to begin receiving keyboard events, you must mark the element as <code>focusable=true</code> and explicitly give it focus using <code>element.Focus()</code>. This ensures that the element is eligible to receive keyboard events.</p>
+
+<h3>KeyDownEvent</h3>
+
+<p>A <a href="../ScriptReference/UIElements.KeyDownEvent.html">KeyDownEvent</a> is sent each time you press a key on the keyboard. The key pressed contains the <code>keyCode</code> property for that event. If that key press has text input associated with it, additional events are sent for each character of text input. The <code>character</code> property contains the character for those events.</p>
+
+<p>When you press and release <code>a</code>, <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit sends the following events:</p>
+
+<pre><code class="lang-csharp">
+KeyDownEvent { keyCode=KeyCode.A }
+KeyDownEvent { character=’a’ }
+KeyUpEvent { keyCode=KeyCode.A }
+
+</code></pre>
+
+<p>When you press and release <code>Ctrl+a</code>, UI Toolkit sends the following events:</p>
+
+<pre><code class="lang-csharp">
+KeyDownEvent { keyCode=KeyCode.LeftControl, modifiers=EventModifiers.Control }
+KeyDownEvent { keyCode=KeyCode.A, modifiers=EventModifiers.Control }
+KeyUpEvent { keyCode=KeyCode.A, modifiers=EventModifiers.Control }
+KeyUpEvent { keyCode=KeyCode.LeftControl }
+
+</code></pre>
+
+<p>
+<strong><code>target</code></strong>: The visual element that has focus. If no element has focus, the root visual element of the panel.</p>
+
+<h3>KeyUpEvent</h3>
+
+<p>A <a href="../ScriptReference/UIElements.KeyUpEvent.html">KeyUpEvent</a> is sent when you release a key on the keyboard. The keyCode property for that event contains the key being released. <code>KeyDownEvent</code> has additional events sent when a keystroke has an associated text input.</p>
+
+<p>When you press and release <code>a</code>, UI Toolkit sends the following events:</p>
+
+<pre><code class="lang-csharp">KeyDownEvent { keyCode=KeyCode.A }
+KeyDownEvent { character=’a’ }
+KeyUpEvent { keyCode=KeyCode.A }
+</code></pre>
+
+<p>When you press and release <code>Ctrl+a</code>, UI Toolkit sends the following events:</p>
+
+<pre><code class="lang-csharp">
+KeyDownEvent { keyCode=KeyCode.LeftControl, modifiers=EventModifiers.Control }
+KeyDownEvent { keyCode=KeyCode.A, modifiers=EventModifiers.Control }
+KeyUpEvent { keyCode=KeyCode.A, modifiers=EventModifiers.Control }
+KeyUpEvent { keyCode=KeyCode.LeftControl }
+
+</code></pre>
+
+<p>
+<strong><code>target</code></strong>: The visual element that has focus. If no element has focus, the root visual element of the panel.</p>
+
+<h2>Examples</h2>
+
+<p>The following code example prints a message to the console when you press a key in a TextField. This code sample highlights the event firing of both <code>KeyUpEvent</code> and <code>KeyDownEvent</code>.</p>
+
+<ol>
+<li><p>Create a Unity project with any template.</p></li>
+<li><p>In the SampleScene, select <strong>GameObject</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>UI Document</strong>.</p></li>
+<li>
+<p>Create a C# script named <code>KeyboardEventTest.cs</code> with the following contents:</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+using UnityEngine.UIElements;
+
+// Add KeyboardEventTest to a GameObject with a valid UIDocument.
+// When the user presses a key, it will print the keyboard event properties to the console.
+[RequireComponent(typeof(UIDocument))]
+public class KeyboardEventTest : MonoBehaviour
+{
+    void OnEnable()
+    {
+        var root = GetComponent&lt;UIDocument&gt;().rootVisualElement;
+        root.Add(new Label(&quot;Press any key to see the keyDown properties&quot;));
+        root.Add(new TextField());
+        root.Q&lt;TextField&gt;().Focus();
+        root.RegisterCallback&lt;KeyDownEvent&gt;(OnKeyDown, TrickleDown.TrickleDown);
+        root.RegisterCallback&lt;KeyUpEvent&gt;(OnKeyUp, TrickleDown.TrickleDown);
+    }
+    void OnKeyDown(KeyDownEvent ev)
+    {
+        Debug.Log(&quot;KeyDown:&quot; + ev.keyCode);
+        Debug.Log(&quot;KeyDown:&quot; + ev.character);
+        Debug.Log(&quot;KeyDown:&quot; + ev.modifiers);
+    }
+
+    void OnKeyUp(KeyUpEvent ev)
+    {
+        Debug.Log(&quot;KeyUp:&quot; + ev.keyCode);
+        Debug.Log(&quot;KeyUp:&quot; + ev.character);
+        Debug.Log(&quot;KeyUp:&quot; + ev.modifiers);
+    }
+}
+</code></pre>
+</li>
+<li><p>Select the UIDocument <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the Hierarchy window. </p></li>
+<li><p>Drag <code>KeyboardEventTest.cs</code> to <strong>Add Component</strong> in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window. </p></li>
+<li><p>Enter Play mode and type in the TextField.</p></li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-Events.html">UI Toolkit events</a></li>
+<li><a href="UIE-ElementRef.html#built-in-controls">UI Toolkit built-in controls reference</a></li>
+<li><a href="UIE-Controls.html">UI Toolkit controls</a></li>
+<li><a href="UIE-Controls-Examples">UI Toolkit controls examples</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Input-Events.html"></a></span><div class="tip">Input events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Mouse-Events.html"></a></span><div class="tip">Mouse events</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

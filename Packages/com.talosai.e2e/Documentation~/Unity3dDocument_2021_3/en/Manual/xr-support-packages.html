@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: XR packages</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xr-support-packages.html">English</a></li>
+<li><a href="/cn/current/Manual/xr-support-packages.html">中文</a></li>
+<li><a href="/ja/current/Manual/xr-support-packages.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xr-support-packages.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xr-support-packages.html">English</a></li>
+<li><a href="/cn/current/Manual/xr-support-packages.html">中文</a></li>
+<li><a href="/ja/current/Manual/xr-support-packages.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xr-support-packages.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="XR.html">XR</a></li>
+<li><a href="xr-support-landing.html">Overview</a></li>
+<li>XR packages</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="xr-support-landing.html"></a></span><div class="tip">Overview</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AROverview.html"></a></span><div class="tip">AR development in Unity</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>XR packages</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Unity packages that support <span class="tooltip"><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html" href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> development fall into two broad categories:</p>
+
+<ul>
+<li>
+<a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #plug-ins">XR provider plug-ins</a>: provider plug-ins enable support for XR devices and platforms. For example, the Apple ARKit <span class="tooltip"><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a href="Plugins.html" href="#plug-ins">XR provider plug-ins</a>: provider plug-ins enable support for XR devices and platforms. For example, the Apple ARKit <span class="tooltip"><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> allows <span class="tooltip"><strong>AR</strong><span class="tooltiptext">Augmented Reality <a href="AROverview.html" href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> allows <span class="tooltip"><strong>AR</strong><span class="tooltiptext">Augmented Reality <a href="AROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AR" aria-label="Go to glossary anchor for AR">Glossary</a></span></span></span> applications to run on the <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a href="iphone.html" href="Glossary.html#AR" aria-label="Go to glossary anchor for AR">Glossary</a></span></span></span> applications to run on the <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> platform and the OpenXR plug-in allows applications to run on several <span class="tooltip"><strong>VR</strong><span class="tooltiptext">Virtual Reality <a href="VROverview.html" href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> platform and the OpenXR plug-in allows applications to run on several <span class="tooltip"><strong>VR</strong><span class="tooltiptext">Virtual Reality <a href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VR" aria-label="Go to glossary anchor for VR">Glossary</a></span></span></span> and <span class="tooltip"><strong>MR</strong><span class="tooltiptext">Mixed Reality<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MR" aria-label="Go to glossary anchor for MR">Glossary</a></span></span></span> systems.</li>
+<li>
+<a href="#support-packages">Feature and tool support packages</a>: these packages provide features and tools for developing XR applications.</li>
+</ul>
+
+<p><a id="plug-ins" aria-hidden="true"></a></p>
+
+<h2>XR provider plug-ins</h2>
+
+<p>The Unity XR plug-in framework provides the basis for XR development in Unity. You can add support for an XR device to a project by installing and enabling the relevant XR plug-in. You can add or remove plug-ins to the project at any time. </p>
+
+<p>See <a href="configuring-project-for-xr.html">XR Project set up</a> for instructions on how to add XR plug-ins to your project using the <strong>XR Plug-in Management</strong> system.</p>
+
+<p>Unity supports the following XR plug-ins:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Plug-in</th>
+	<th style="text-align:left;">Supported devices</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/Packages/com.unity.xr.arkit@4.2/manual/index.html">Apple ARKit</a></td>
+	<td style="text-align:left;"><a href="https://developer.apple.com/documentation/arkit/verifying_device_support_and_user_permission">iOS devices</a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/Packages/com.unity.xr.arcore@4.2/manual/index.html">Google ARCore</a></td>
+	<td style="text-align:left;">Handheld <a href="https://developers.google.com/ar/devices">Android devices</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.microsoft.com/en-us/windows/mixed-reality/develop/unity/unity-development-overview">Microsoft HoloLens</a></td>
+	<td style="text-align:left;">HoloLens, HoloLens 2</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://learn.microsoft.com/en-us/windows/mixed-reality/develop/unity/mixed-reality-openxr-plugin">Microsoft Windows Mixed Reality</a></td>
+	<td style="text-align:left;">Microsoft supported package for HoloLens and Windows Mixed Reality headsets (various manufacturers). <br><br><strong>Note:</strong> In Unity 2021+. use the OpenXR provider plug-in for MR. The previous WMR provider package is not supported beyond Unity 2020.3. Refer to <a href="#wmr-support">Windows Mixed Reality support</a> for more information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/Packages/com.unity.xr.oculus@3.2/manual/index.html">Oculus</a></td>
+	<td style="text-align:left;">Oculus Rift, Meta Quest 2, Quest Pro</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.7/manual/index.html">OpenXR</a></td>
+	<td style="text-align:left;">Any device with an OpenXR runtime, including Meta headsets, Vive headsets, Valve SteamVR, HoloLens, Windows <span class="tooltip"><strong>Mixed Reality</strong><span class="tooltiptext">Mixed Reality (MR) combines its own virtual environment with the user’s real-world environment and allows them to interact with each other.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MixedReality" aria-label="Go to glossary anchor for MixedReality">Glossary</a></span></span></span>, and others.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">PlayStation VR (available to registered PlayStation developers)</td>
+	<td style="text-align:left;">Sony PS VR and PS VR2 devices. See <a href="https://partners.playstation.net/">PlayStation Partners</a> for more information.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Refer to <a href="system-requirements.html#xr">XR Platform System Requirements</a> for system requirements for developing XR projects in Unity.</p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li>One plug-in can support more than one type of XR device and more than one operating system.</li>
+<li>Plug-ins for additional XR devices might be available from their platform creators or other third parties.</li>
+<li>Unity does not directly support XR on <span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span>. Projects that add support for WebXR, such as <a href="https://github.com/needle-tools/needle-engine-support/blob/main/documentation/xr.md">Needle Engine</a>, <a href="https://github.com/Rufus31415/Simple-WebXR-Unity">SimpleWebXR</a>, and <a href="https://github.com/De-Panther/unity-webxr-export">WebXR Export</a>, are available.</li>
+<li>Magic Leap support is not available in Unity 2021.3. Refer to <a href="#magic-leap-support">Magic Leap support</a> for more information.</li>
+</ul>
+
+<p><a id="support-packages" aria-hidden="true"></a></p>
+
+<h2>XR support packages</h2>
+
+<p>Unity’s XR packages build on the XR plug-in framework to add additional application-level features and developer tools. </p>
+
+<p>The XR packages include:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Package</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="configuring-project-for-xr.html">XR Plug-in Management</a></td>
+	<td style="text-align:left;">Adds <span class="tooltip"><strong>Project Settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html" href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span> for managing the platforms and plug-ins used by a Unity XR project. See <a href="configuring-project-for-xr.html">Project setup</a> for information about managing XR plug-ins.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.2/index.html">AR Foundation</a></td>
+	<td style="text-align:left;">Provides cross-platform AR features, such as plane detection, meshing, and object tracking. Required for developing AR applications with the Unity XR packages.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@latest">XR Interaction Toolkit</a></td>
+	<td style="text-align:left;">Provides interaction components for adding controller-based interaction and manipulation, <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> interaction, and movement. Supports VR, MR, and AR.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/Packages/com.unity.mars@latest">Unity Mars</a></td>
+	<td style="text-align:left;">Provides components and tools for adapting AR content to the user’s surroundings. For example, it supplies a standard way of querying the environment to find suitable locations for adding your digital content to the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. Requires a license that includes Unity Mars. See <a href="https://unity.com/products/unity-mars">Unity Mars</a> for information about license requirements.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/Packages/com.unity.xr.core-utils@2.1/manual/index.html">XR Core Utilities</a></td>
+	<td style="text-align:left;">Contains software utilities used by other XR plug-ins and packages. Typically installed in your project as a dependency of other XR packages.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.legacyinputhelpers@2.1/manual/index.html">XR Legacy Input Helpers</a>.</td>
+	<td style="text-align:left;">Contains software utilities related to XR input. This package is being phased out, but is still installed as a dependency by some XR packages.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note:</strong> If you use the AR Foundation package in a project, the version numbers of AR Foundation, ARCore, and ARKit must all match. In other words, if you are using version 4.2 of the AR Foundation package, you must also use version 4.2 of the ARCore and ARKit packages.</p>
+
+<p><a id="xr-package-changes" aria-hidden="true"></a></p>
+
+<h2>XR package changes in Unity 2021.3</h2>
+
+<p>The following information describes the changes to XR packages in Unity 2021.3:</p>
+
+<p><a id="magic-leap-support" aria-hidden="true"></a></p>
+
+<h3>Magic Leap support</h3>
+
+<p>Developing for the Magic Leap is not supported in Unity 2021.3. However, you can develop for the Magic Leap 1 using Unity 2020.3 and for the Magic Leap 2 using Unity 2022.2+.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Unity version</th>
+	<th style="text-align:left;">Package version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Unity 2019.4–2020.3</td>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/Packages/com.unity.xr.magicleap@6.4">com.unity.xr.magicleap@6.4</a></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Unity 2021.1–2022.1</td>
+	<td style="text-align:left;">No version supported.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Unity 2022.2+</td>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/Packages/com.unity.xr.magicleap@7.0">com.unity.xr.magicleap@7.0</a></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note:</strong> While Unity allows you to install the Magic Leap provider plug-in on Unity 2021.3, you cannot build or run your project on a Magic Leap device.</p>
+
+<p><a id="wmr-support" aria-hidden="true"></a></p>
+
+<h3>Windows Mixed Reality support</h3>
+
+<p>The Windows Mixed Reality package cannot be installed in Unity 2021.3. Use the OpenXR provider plug-in to develop for Windows Mixed Reality devices.</p>
+
+<p>To configure the OpenXR provider plug-in for Windows MR:</p>
+
+<ol>
+<li><p>In the Unity Editor, open <strong>Edit &gt; Project Settings</strong>
+</p></li>
+<li><p>Select the <strong>XR Plug-in Management</strong> category.</p></li>
+<li><p>Choose the <strong>Windows, Mac, Linux</strong> tab.</p></li>
+<li>
+<p>In the <strong>Plug-in Providers</strong> list, enable <strong>OpenXR</strong>.</p>
+
+<p>The OpenXR package installs, if necessary.</p>
+</li>
+<li>
+<p>Click the Help icon next to the <strong>Windows Mixed Reality feature group</strong> option to open the <a href="https://learn.microsoft.com/en-us/windows/mixed-reality/develop/unity/mixed-reality-openxr-plugin">Microsoft Mixed Reality OpenXR Plugin setup instructions</a>.</p>
+
+<p><img src="../uploads/Main/xr-wmr-install.png" alt=""></p>
+</li>
+<li><p>Follow the the instructions to install the Microsoft Mixed Reality OpenXR plug-in. (The <strong>Microsoft Mixed Reality Feature Tool</strong> program lists the plug-in under its <strong>Platform Support</strong> category.)</p></li>
+<li><p>Enable the <strong>Windows Mixed Reality feature group</strong>.</p></li>
+</ol>
+
+<p>After you have installed the plug-in, review the <strong>OpenXR</strong> settings under <strong>XR Plug-in Management</strong>.</p>
+
+<p><a id="xr-quest-support" aria-hidden="true"></a></p>
+
+<h3>Oculus Quest support</h3>
+
+<p>The Vulkan graphics API is no longer considered experimental on Quest family devices.</p>
+
+<p>Meta has dropped support for the Quest 1 device as of version 51.0 of their Platform SDK. The Platform SDK is included in version 51.0 of the Oculus Integration package on the Unity <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span>. To continue developing for the Quest 1, you must use version 50 or earlier of the Oculus Integration package. If needed, you can download this version from the Meta Quest downloads page: <a href="https://developer.oculus.com/downloads/package/unity-integration/50.0">https://developer.oculus.com/downloads/package/unity-integration/50.0</a>.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="xr-support-landing.html"></a></span><div class="tip">Overview</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AROverview.html"></a></span><div class="tip">AR development in Unity</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

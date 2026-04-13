@@ -1,0 +1,463 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Shader semantics</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-ShaderSemantics.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-ShaderSemantics.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-ShaderSemantics.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-ShaderSemantics.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-ShaderSemantics.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-ShaderSemantics.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-ShaderSemantics.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-ShaderSemantics.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-writing.html">Writing shaders</a></li>
+<li><a href="SL-ShaderPrograms.html">HLSL in Unity</a></li>
+<li>Shader semantics</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-MultipleProgramVariants-shortcuts.html"></a></span><div class="tip">Use shortcuts to create keyword sets</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-PropertiesInPrograms.html"></a></span><div class="tip">Accessing shader properties in Cg/HLSL</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Shader semantics</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>When writing HLSL <a href="SL-ShaderPrograms.html">shader programs</a>,
+input and output variables need to have their “intent” indicated
+via <strong>semantics</strong>. This is a standard concept in HLSL
+shader language; see the <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb509647.aspx">Semantics documentation on MSDN</a> for more details.</p>
+
+<h2>Vertex shader input semantics</h2>
+
+<p>The main vertex <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> function (indicated by the <code>#pragma vertex</code>
+directive) needs to have semantics on all of the input parameters.
+These correspond to individual <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Mesh.html">Mesh</a><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html" href="class-Mesh.html">Mesh</a><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> data elements, like vertex position, normal mesh, and texture coordinates.
+See <a href="SL-VertexProgramInputs.html">vertex program inputs</a> for more details.</p>
+
+<p>Here’s an example of a simple <span class="tooltip"><strong>vertex shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-ShaderPrograms.html" href="SL-ShaderPrograms.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span> that takes vertex position
+and a texture coordinate as an input. The <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> shader
+visualizes the texture coordinate as a color.</p>
+
+<pre><code>Shader &quot;Unlit/Show UVs&quot;
+{
+    SubShader
+    {
+        Pass
+        {
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+
+            struct v2f {
+                float2 uv : TEXCOORD0;
+                float4 pos : SV_POSITION;
+            };
+
+            v2f vert (
+                float4 vertex : POSITION, // vertex position input
+                float2 uv : TEXCOORD0 // first texture coordinate input
+                )
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(vertex);
+                o.uv = uv;
+                return o;
+            }
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+                return fixed4(i.uv, 0, 0);
+            }
+            ENDCG
+        }
+    }
+}
+</code></pre>
+
+<figure>
+<img src="../uploads/SL/SemanticsShowUVs.png" alt="">
+</figure>
+
+<p>Instead of spelling out all individual inputs one by one,
+it is also possible to declare a structure of them, and indicate
+semantics on each individual member variable of the struct.</p>
+
+<h2>Fragment shader output semantics</h2>
+
+<p>Most often a fragment (pixel) shader outputs a color, and has an
+<code>SV_Target</code> semantic. The fragment shader in the example above does
+exactly that:</p>
+
+<pre><code>fixed4 frag (v2f i) : SV_Target
+</code></pre>
+
+<p>The function <code>frag</code> has a return type of <code>fixed4</code> (low precision
+RGBA color). As it only returns a single value, the semantic
+is indicated on the function itself, <code>: SV_Target</code>.</p>
+
+<p>It is also possible to return a structure with the outputs.
+The fragment shader above could be rewritten this way too, and it would
+do exactly the same:</p>
+
+<pre><code>struct fragOutput {
+    fixed4 color : SV_Target;
+};
+fragOutput frag (v2f i)
+{
+    fragOutput o;
+    o.color = fixed4(i.uv, 0, 0);
+    return o;
+}
+</code></pre>
+
+<p>Returning structures from the fragment shader is mostly useful
+for shaders that don’t just return a single color. Additional
+semantics supported by the fragment shader outputs are as follows.</p>
+
+<h4>SV_TargetN: Multiple render targets</h4>
+
+<p>
+<code>SV_Target1</code>, <code>SV_Target2</code>, etc.: These are additional colors written by the shader. This is used when rendering into more than one render target at once (known as the Multiple Render Targets rendering technique, or MRT). <code>SV_Target0</code> is the same as <code>SV_Target</code>.</p>
+
+<h4>SV_Depth: Pixel shader depth output</h4>
+
+<p>Usually the fragment
+shader does not override the Z buffer value, and a default value
+is used from the regular triangle <span class="tooltip"><strong>rasterization</strong><span class="tooltiptext">The process of generating an image by calculating pixels for each polygon or triangle in the geometry. This is an alternative to ray tracing.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rasterization" aria-label="Go to glossary anchor for Rasterization">Glossary</a></span></span></span>. However, for some
+effects it is useful to output custom Z buffer depth values per pixel.</p>
+
+<p>Note that on many GPUs this turns off some <span class="tooltip"><strong>depth buffer</strong><span class="tooltiptext">A memory store that holds the z-value depth of each pixel in an image, where the z-value is the depth for each rendered pixel from the projection plane. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#depthbuffer" aria-label="Go to glossary anchor for depthbuffer">Glossary</a></span></span></span> optimizations, so don’t override Z buffer value without a good reason. The cost incurred by <code>SV_Depth</code> varies depending on the GPU architecture, but overall it’s fairly similar to the cost of alpha testing (using the built-in <code>clip()</code> function in HLSL). Render shaders that modify depth after all regular opaque shaders. For example, by using the <code>AlphaTest</code> <a href="SL-SubShaderTags.html">rendering queue</a>.</p>
+
+<p>The depth output value needs to be a single <code>float</code>.</p>
+
+<h2>Vertex shader outputs and fragment shader inputs</h2>
+
+<p>A vertex shader needs to output the final clip space position of a vertex, so that the GPU knows where on the screen to rasterize it, and at what depth. This output needs to have the <code>SV_POSITION</code> semantic, and be of a <code>float4</code> type.</p>
+
+<p>Any other outputs (“interpolators” or “varyings”) produced by the vertex shader are whatever your particular shader needs. The values output from the vertex shader will be interpolated across the face of the rendered triangles, and the values at each pixel will be passed as inputs to the fragment shader.</p>
+
+<p>Many modern GPUs don’t really care what semantics these variables have; however some old systems (most notably, shader model 2 GPUs on Direct3D 9) did have special rules about the semantics:</p>
+
+<ul>
+<li>
+<code>TEXCOORD0</code>, <code>TEXCOORD1</code> etc are used to indicate arbitrary high precision data such as texture coordinates and positions.</li>
+<li>
+<code>COLOR0</code> and <code>COLOR1</code> semantics on vertex outputs and fragment inputs are for low-precision, 0–1 range data (like simple color values).</li>
+</ul>
+
+<p>For best cross platform support, label vertex outputs and
+fragment inputs as <code>TEXCOORDn</code> semantics.</p>
+
+<h4>Interpolator count limits</h4>
+
+<p>There are limits to how many interpolator variables can be used in total
+to pass the information from the vertex into the fragment shader. The limit
+depends on the platform and GPU, and the general guidelines are:</p>
+
+<ul>
+<li>
+<strong>Up to 8 interpolators</strong>: OpenGL ES 2.0 (Android), Direct3D 11 9.x level
+ (Windows Phone) and Direct3D 9 shader model 2.0 (old PCs). Since the interpolator
+ count is limited, but each interpolator can be a 4-component vector,
+ some shaders pack things together to stay within limits. For example, two texture
+ coordinates can be passed in one <code>float4</code> variable (.xy for one coordinate, .zw
+ for the second coordinate).</li>
+<li>
+<strong>Up to 10 interpolators</strong>: Direct3D 9 shader model 3.0 (<code>#pragma target 3.0</code>).</li>
+<li>
+<strong>Up to 16 interpolators</strong>: OpenGL ES 3.0 (Android), Metal (iOS).</li>
+<li>
+<strong>Up to 32 interpolators</strong>: Direct3D 10 shader model 4.0 (<code>#pragma target 4.0</code>).</li>
+</ul>
+
+<p>Regardless of your particular target hardware, it is generally a good idea to use as few interpolators as possible for performance reasons.</p>
+
+<h2>Other special semantics</h2>
+
+<h4>Screen space pixel position: VPOS</h4>
+
+<p>A fragment shader can receive position of the pixel being rendered as a special <code>VPOS</code> semantic.
+This feature only exists starting with shader model 3.0, so the shader needs to have the <code>#pragma target 3.0</code> compilation directive.</p>
+
+<p>On different platforms the underlying type of the screen space position input varies, so for maximum portability use the <code>UNITY_VPOS_TYPE</code> type for it (it will be <code>float4</code> on most platforms, and float2 on Direct3D 9).</p>
+
+<p>Additionally, using the pixel position semantic makes it hard to have both the clip space position (SV_POSITION) and VPOS in the same vertex-to-fragment structure. So the vertex shader should output the clip space position as a separate “out” variable. See the example shader below:</p>
+
+<pre><code>Shader &quot;Unlit/Screen Position&quot;
+{
+    Properties
+    {
+        _MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+    }
+    SubShader
+    {
+        Pass
+        {
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma target 3.0
+
+            // note: no SV_POSITION in this struct
+            struct v2f {
+                float2 uv : TEXCOORD0;
+            };
+
+            v2f vert (
+                float4 vertex : POSITION, // vertex position input
+                float2 uv : TEXCOORD0, // texture coordinate input
+                out float4 outpos : SV_POSITION // clip space position output
+                )
+            {
+                v2f o;
+                o.uv = uv;
+                outpos = UnityObjectToClipPos(vertex);
+                return o;
+            }
+
+            sampler2D _MainTex;
+
+            fixed4 frag (v2f i, UNITY_VPOS_TYPE screenPos : VPOS) : SV_Target
+            {
+                // screenPos.xy will contain pixel integer coordinates.
+                // use them to implement a checkerboard pattern that skips rendering
+                // 4x4 blocks of pixels
+
+                // checker value will be negative for 4x4 blocks of pixels
+                // in a checkerboard pattern
+                screenPos.xy = floor(screenPos.xy * 0.25) * 0.5;
+                float checker = -frac(screenPos.r + screenPos.g);
+
+                // clip HLSL instruction stops rendering a pixel if value is negative
+                clip(checker);
+
+                // for pixels that were kept, read the texture and output it
+                fixed4 c = tex2D (_MainTex, i.uv);
+                return c;
+            }
+            ENDCG
+        }
+    }
+}
+</code></pre>
+
+<figure>
+<img src="../uploads/SL/SemanticsScreenPosition.png" alt="">
+</figure>
+
+<h4>Face orientation: VFACE</h4>
+
+<p>A fragment shader can receive a variable that indicates whether the rendered surface is facing the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>, or facing away from the camera. This is useful when rendering geometry that should be visible from both sides – often used on leaves and similar thin objects. The <code>VFACE</code> semantic input variable will contain a positive value for front-facing triangles, and a negative value for back-facing ones.</p>
+
+<p>This feature only exists from shader model 3.0 onwards, so the shader needs to have the <code>#pragma target 3.0</code> compilation directive.</p>
+
+<pre><code>Shader &quot;Unlit/Face Orientation&quot;
+{
+    Properties
+    {
+        _ColorFront (&quot;Front Color&quot;, Color) = (1,0.7,0.7,1)
+        _ColorBack (&quot;Back Color&quot;, Color) = (0.7,1,0.7,1)
+    }
+    SubShader
+    {
+        Pass
+        {
+            Cull Off // turn off backface culling
+
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma target 3.0
+
+            float4 vert (float4 vertex : POSITION) : SV_POSITION
+            {
+                return UnityObjectToClipPos(vertex);
+            }
+
+            fixed4 _ColorFront;
+            fixed4 _ColorBack;
+
+            fixed4 frag (fixed facing : VFACE) : SV_Target
+            {
+                // VFACE input positive for frontbaces,
+                // negative for backfaces. Output one
+                // of the two colors depending on that.
+                return facing &gt; 0 ? _ColorFront : _ColorBack;
+            }
+            ENDCG
+        }
+    }
+}
+</code></pre>
+
+<p>The shader above uses the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-Cull.html">Cull</a> state to turn off backface culling (by default back-facing triangles are not rendered at all). Here is the shader applied to a bunch of <span class="tooltip"><strong>Quad</strong><span class="tooltiptext">A primitive object that resembles a plane but its edges are only one unit long, it uses only 4 vertices, and the surface is oriented in the XY plane of the local coordinate space. <a href="PrimitiveObjects.html" href="SL-Cull.html">Cull</a> state to turn off backface culling (by default back-facing triangles are not rendered at all). Here is the shader applied to a bunch of <span class="tooltip"><strong>Quad</strong><span class="tooltiptext">A primitive object that resembles a plane but its edges are only one unit long, it uses only 4 vertices, and the surface is oriented in the XY plane of the local coordinate space. <a href="PrimitiveObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Quad" aria-label="Go to glossary anchor for Quad">Glossary</a></span></span></span> meshes, rotated at different orientations:</p>
+
+<figure>
+<img src="../uploads/SL/SemanticsFaceOrientation.png" alt="">
+</figure>
+
+<h4>Vertex ID: SV_VertexID</h4>
+
+<p>A vertex shader can receive a variable that has the “vertex number” as an unsigned integer. This is mostly useful when you want to
+fetch additional per-vertex data from textures or <a href="class-ComputeShader.html">ComputeBuffers</a>.</p>
+
+<p>This feature only exists from DX10 (shader model 4.0) and GLCore / OpenGL ES 3, so the shader needs to have the <code>#pragma target 3.5</code> compilation directive.</p>
+
+<pre><code>Shader &quot;Unlit/VertexID&quot;
+{
+    SubShader
+    {
+        Pass
+        {
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma target 3.5
+
+            struct v2f {
+                fixed4 color : TEXCOORD0;
+                float4 pos : SV_POSITION;
+            };
+
+            v2f vert (
+                float4 vertex : POSITION, // vertex position input
+                uint vid : SV_VertexID // vertex ID, needs to be uint
+                )
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(vertex);
+                // output funky colors based on vertex ID
+                float f = (float)vid;
+                o.color = half4(sin(f/10),sin(f/100),sin(f/1000),0) * 0.5 + 0.5;
+                return o;
+            }
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+                return i.color;
+            }
+            ENDCG
+        }
+    }
+}
+</code></pre>
+
+<figure>
+<img src="../uploads/SL/SemanticsVertexID.png" alt="">
+</figure>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-MultipleProgramVariants-shortcuts.html"></a></span><div class="tip">Use shortcuts to create keyword sets</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-PropertiesInPrograms.html"></a></span><div class="tip">Accessing shader properties in Cg/HLSL</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

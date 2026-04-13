@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: SerializeReference</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">SerializeReference</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEngine</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Implemented in:<a href="UnityEngine.CoreModule.html" class="cl">UnityEngine.CoreModule</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>A <a href="../Manual/Attributes.html">scripting attribute</a> that instructs Unity to serialize a field as a reference instead of as a value.</p>
+              </div>
+              <div class="subsection">
+        <p>See the <a href="../Manual/script-Serialization.html">serialization manual page</a> for information about serialization and the complete serialization rules.<br /><br />Without the use of the <code class="mono">[SerializeReference]</code> attribute, Unity serializes each of the fields of an object  by value or by reference, depending on the field's type, and according to these serialization rules:
+</p>
+        <ul>
+          <li>
+            <strong>UnityEngine.Object fields, by reference:</strong>
+            <br />If the field type is derived from UnityEngine.Object, Unity serializes it as a reference to that object. For example, a <a href="MonoBehaviour.html">MonoBehaviour</a> that defines a <a href="Transform.html">Transform</a> field. Fields that reference a UnityEngine.Object like this do not require the SerializeReference attribute, because the serialization for the field always records the reference to an independently-serialized object.<br /><br /></li>
+          <li>
+            <strong>Other field types, by value:</strong>
+            <br />If the field type is one that Unity can automatically serialize by value (simple field types, such as int, string, <a href="Vector3.html">Vector3</a>, etc), or if it is a custom serializable class or structure marked with the <code class="mono">[Serializable]</code> attribute, it is serialized as a value.</li>
+        </ul>
+        <p>In the case of a custom serializable class, this means it serializes only the <em>data belonging to the object</em> assigned to the field, rather than a reference to the object itself. To force Unity to serialize these field types as a reference, use the <code class="mono">[SerializeReference]</code> attribute.<br />
+<br />
+You might want to serialize as a reference rather than a value when:<br />
+</p>
+        <ul>
+          <li>
+            <strong>You want multiple references to the same instance of a custom serializable class.</strong>
+            <br />For example, reference serialization is necessary for reference-based topologies based on custom serializable classes (such as linked lists, tree structures, or cyclical graphs). This is because the default value-based serialization stores each reference as a separate copy of the object, when fields originally shared a single reference to the same object. In particular, if you serialize a cyclical graph data structure, you must use SerializeReference to preserve the graph properly and to avoid potential freezes or crashes that can arise from the default serialization approach.<br /><br /></li>
+          <li>
+            <strong>You want to use polymorphism on fields whose type is a custom serializable class.</strong>
+            <br />If you try to use <a href="https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/polymorphism">polymorphism</a> on custom serializable classes without the <code class="mono">[SerializeReference]</code> attribute, your derived classes' additional fields won't be preserved, and your object will instead be serialized as if it was the field's declared type. You can see polymorphism in the <code class="mono">SerializeReferencePolymorphismExample</code> class below.<br /><br /></li>
+          <li>
+            <strong>You want to serialize null values.</strong>
+            <br />Value-based serialization can't represent null. Without the use of SerializeReference, null values are replaced with an inline object that has unassigned fields in the serialized data. Using SerializeReference allows you to store null references.</li>
+        </ul>
+        <p>
+          <strong>Optimization</strong>
+          <br />
+          <br />By-value serialization is more efficient than using SerializeReference in terms of storage, memory, and loading and saving time, so you should only use SerializeReference in situations which require it.<br /><br /><strong>The host object and managed references</strong><br /><br />In the context of SerializeReference, your object which specializes <a href="MonoBehaviour.html">MonoBehaviour</a>, <a href="ScriptableObject.html">ScriptableObject</a>, <a href="AssetImporters.ScriptedImporter.html">ScriptedImporter</a> or other UnityEngine class is called the <strong>host object</strong>.  You can use SerializeReference directly on fields of the host object, or indirectly on fields of custom structures or classes that are serialized within the host object.<br /><br />The objects assigned to fields with the <code class="mono">[SerializeReference]</code> attribute in the host object are <strong>managed references</strong>. Each managed reference  has a unique ID, which the MonoBehaviour, ScriptableObject or other host object that contains the <code class="mono">[SerializeReference]</code> fields associated with it. By default, Unity generates this ID automatically; to specify an ID, use <a href="SerializationUtility.SetManagedReferenceIdForObject.html">SerializationUtility.SetManagedReferenceIdForObject</a>.<br /><br />When you use SerializeReference, the managed reference objects are only available as shared references within the host object in which they are defined. When a host object is serialized, any managed reference objects are serialized in the "references" section of the serialized data, which is a list located after the serialization of the regular fields. Each managed reference object has an entry in the list, recording its ID, its fully qualified class name, and the value of its fields.<br /><br />You can see this serialized data for yourself if you're using the default "force text" <a href="../Manual/class-EditorManager.html">asset serialization mode</a>. To do this, assign one of the sample scripts below to a GameObject, save the scene, then open the <code class="mono">.unity</code> scene file in a text editor. Each managed reference's data is stored in the <code class="mono">.unity</code> file, under the "references:" section of the serialized MonoBehaviour data.<br /><br />The managed references are not shared between other UnityEngine.Object instances. If you assign the same custom serializable class object to fields on two different host objects, the serialized references will become separate instances. In addition, if you clone a host object with managed references, this also creates separate copies of all the managed reference objects.<br /><br />To share referenced values between multiple host objects, use <a href="ScriptableObject.html">ScriptableObject</a> instead of SerializeReference. ScriptableObject allows you to group a related set of data together as an asset. Because ScriptableObject is derived from UnityEngine.Object, you can share references to them outside of an individual host object. The serialization rules still apply to the fields on the ScriptableObject however, so you may need to use the <code class="mono">[SerializeReference]</code> attribute on fields within your ScriptableObject-derived class.<br /><br /><strong>The SerializeReference attribute is supported on fields whose type is any of the following:</strong>
+</p>
+        <ul>
+          <li>A regular class</li>
+          <li>An abstract class</li>
+          <li>An interface</li>
+          <li>System.Object</li>
+          <li>A class derived from a generic type, but not a specific specialization of a generic type (inflated type). For example, you can't use the [SerializeReference] attribute with the type <code class="mono">MyData&lt;int&gt;</code>, instead you must create a non-generic subclass of your generic instance type and use that as the field type instead, like this:<br /><br /><code class="mono">public class MyIntData : MyData&lt;int&gt; {}</code><br /><br />The only exception to this limitation is when using <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1">List&lt;T&gt;</a>, which is a special case described below.</li>
+        </ul>
+        <p>
+          <strong>The value assigned to a field with the SerializeReference attribute must, unless it is null, follow these rules:</strong>
+</p>
+        <ul>
+          <li>Must be an instance of a custom class, with the [Serializable] attribute.</li>
+          <li>Must be an instance of the field's type, or a type that derives from that type.</li>
+          <li>Must not derive from UnityEngine.Object.  For example it cannot be a GameObject, MonoBehaviour, ScriptableObject or Transform.</li>
+          <li>Must not be a C# <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-types">Value type</a>. Therefore simple types like integers, as well as structures are not supported, and should be serialized without the <code class="mono">[SerializeReference]</code> attribute instead.</li>
+          <li>Must not be a C# Dictionary, or other type that is not supported by Unity serialization</li>
+        </ul>
+        <p>
+          <strong>Notes on the use of SerializeReference with arrays and lists:</strong>
+</p>
+        <ul>
+          <li>Unity supports serializing arrays and lists of objects by reference.</li>
+          <li>For array and <code class="mono">List&lt;T&gt;</code> fields, the SerializeReference attribute applies to the elements of the array or list and not to the array or list object itself.</li>
+          <li>You cannot assign an array or list to a field of type System.Object.  Instead the field type needs to be explicitly declared as an array or list.<br />This is demonstrated in this example:<br /><br /><code class="mono">[SerializeReference] public System.Object a = new List&lt;MyCustomClass&gt;(); // UNSUPPORTED</code><br /><code class="mono">[SerializeReference] public List&lt;MyCustomClass&gt; a = new List&lt;MyCustomClass&gt;(); // VALID</code></li>
+        </ul>
+        <p>
+          <strong>Other Notes:</strong>
+</p>
+        <ul>
+          <li>Animation is not supported on fields of referenced objects when the host object derives from ScriptableObject or ScriptedImporter.</li>
+          <li>When types referred to by SerializeReference are no longer available when deserializing, Unity replaces the instance with null, but the serialized information is preserved. for more information see <a href="SerializationUtility.HasManagedReferencesWithMissingTypes.html">SerializationUtility.HasManagedReferencesWithMissingTypes</a></li>
+        </ul>
+        <p>See Also: <a href="SerializedProperty-managedReferenceValue.html">SerializedProperty.managedReferenceValue</a>, <a href="MonoBehaviour.html">MonoBehaviour</a>, <a href="SerializationUtility.html">SerializationUtility</a>.<br /><br /></p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using <a href="Rendering.VirtualTexturing.System.html">System</a>;
+using UnityEngine;<br /><br />public class SerializeReferencePolymorphismExample : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    [<a href="Serializable.html">Serializable</a>]
+    public class Base
+    {
+        public int m_Data = 1;
+    }<br /><br />    [<a href="Serializable.html">Serializable</a>]
+    public class Apple : Base
+    {
+        public string m_Description = "Ripe";
+    }<br /><br />    [<a href="Serializable.html">Serializable</a>]
+    public class Orange : Base
+    {
+        public bool m_IsRound = true;
+    }<br /><br />    // Use <a href="SerializeReference.html">SerializeReference</a> if this field needs to hold both
+    // Apples and Oranges.  Otherwise only m_Data from Base object would be serialized
+    [<a href="SerializeReference.html">SerializeReference</a>]
+    public Base m_Item = new Apple();<br /><br />    [<a href="SerializeReference.html">SerializeReference</a>]
+    public Base m_Item2 = new Orange();<br /><br />    // Use by-value instead of <a href="SerializeReference.html">SerializeReference</a>, because
+    // no polymorphism and no other field needs to share this object
+    public Apple m_MyApple = new Apple();
+}
+</pre>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using <a href="Rendering.VirtualTexturing.System.html">System</a>;
+using System.Text;
+using UnityEngine;<br /><br />public class SerializeReferenceLinkedListExample : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    // This example shows a linked list structure with a single int per <a href="Experimental.GraphView.Node.html">Node</a>.
+    // This would be much more efficiently represented using a List&lt;int&gt;, without any <a href="SerializeReference.html">SerializeReference</a> needed.
+    // But it demonstrates an approach that can be extended for trees and other more advanced graphs<br /><br />    [<a href="Serializable.html">Serializable</a>]
+    public class <a href="Experimental.GraphView.Node.html">Node</a>
+    {
+        // This field must use serialize reference so that serialization can store
+        // a reference to another <a href="Experimental.GraphView.Node.html">Node</a> object, or null.  By-value
+        // can never properly represent this sort of self-referencing structure.
+        [<a href="SerializeReference.html">SerializeReference</a>]
+        public <a href="Experimental.GraphView.Node.html">Node</a> m_Next = null;<br /><br />        public int m_Data = 1;
+    }<br /><br />    [<a href="SerializeReference.html">SerializeReference</a>]
+    public <a href="Experimental.GraphView.Node.html">Node</a> m_Front = null;<br /><br />    // Points to the last node in the list.  This is an
+    // example of a having more than one field pointing to a single <a href="Experimental.GraphView.Node.html">Node</a>
+    // object, which cannot be done with "by-value" serialization
+    [<a href="SerializeReference.html">SerializeReference</a>]
+    public <a href="Experimental.GraphView.Node.html">Node</a> m_End = null;<br /><br />    SerializeReferenceLinkedListExample()
+    {
+        AddEntry(1);
+        AddEntry(3);
+        AddEntry(9);
+        AddEntry(81);
+        PrintList();
+    }<br /><br />    private void AddEntry(int data)
+    {
+        if (m_Front == null)
+        {
+            m_Front = new <a href="Experimental.GraphView.Node.html">Node</a>() {m_Data = data};
+            m_End = m_Front;
+        }
+        else
+        {
+            m_End.m_Next = new <a href="Experimental.GraphView.Node.html">Node</a>() {m_Data = data};
+            m_End = m_End.m_Next;
+        }
+    }<br /><br />    private void PrintList()
+    {
+        var sb = new StringBuilder();
+        sb.Append("Link list contents: ");
+        var position = m_Front;
+        while (position != null)
+        {
+            sb.Append("  <a href="Experimental.GraphView.Node.html">Node</a> data " + position.m_Data).AppendLine();
+            position = position.m_Next;
+        }
+        <a href="Debug.Log.html">Debug.Log</a>(sb.ToString());
+    }
+}
+</pre>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using <a href="Rendering.VirtualTexturing.System.html">System</a>;
+using System.Collections.Generic;
+using UnityEngine;<br /><br />public interface IShape {}<br /><br />[<a href="Serializable.html">Serializable</a>]
+public class Cube : IShape
+{
+    public <a href="Vector3.html">Vector3</a> size;
+}<br /><br />[<a href="Serializable.html">Serializable</a>]
+public class Thing
+{
+    public int weight;
+}<br /><br />[<a href="ExecuteInEditMode.html">ExecuteInEditMode</a>]
+public class BuildingBlocks : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    [<a href="SerializeReference.html">SerializeReference</a>]
+    public List&lt;IShape&gt; inventory;<br /><br />    [<a href="SerializeReference.html">SerializeReference</a>]
+    public System.Object bin;<br /><br />    [<a href="SerializeReference.html">SerializeReference</a>]
+    public List&lt;System.Object&gt; bins;<br /><br />    void OnEnable()
+    {
+        if (inventory == null)
+        {
+            inventory = new List&lt;IShape&gt;()
+            {
+                new Cube() {size = new <a href="Vector3.html">Vector3</a>(1.0f, 1.0f, 1.0f)}
+            };
+            <a href="Debug.Log.html">Debug.Log</a>("Created list");
+        }
+        else
+            <a href="Debug.Log.html">Debug.Log</a>("Read list");<br /><br />        if (bins == null)
+        {
+            // This is supported, the 'bins' serialized field is declared as a collection, with each entry as a reference.
+            bins = new List&lt;System.Object&gt;() { new Cube(), new Thing() };
+        }<br /><br />        if (bin == null)
+        {
+            // !! DO NOT USE !!
+            // Although this is syntactically correct, it is not supported as a valid serialization construct because the 'bin' serialized field is declared as holding a single reference type.
+            bin = new List&lt;System.Object&gt;() { new Cube() };
+        }
+    }
+}
+</pre>
+      </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

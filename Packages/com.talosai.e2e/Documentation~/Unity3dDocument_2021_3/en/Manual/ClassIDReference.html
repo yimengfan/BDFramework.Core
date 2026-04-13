@@ -1,0 +1,2679 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Classes ordered by ID number</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ClassIDReference.html">English</a></li>
+<li><a href="/cn/current/Manual/ClassIDReference.html">中文</a></li>
+<li><a href="/ja/current/Manual/ClassIDReference.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ClassIDReference.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ClassIDReference.html">English</a></li>
+<li><a href="/cn/current/Manual/ClassIDReference.html">中文</a></li>
+<li><a href="/ja/current/Manual/ClassIDReference.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ClassIDReference.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="EditorFeatures.html">Editor Features</a></li>
+<li><a href="TextSceneFormat.html">Text-Based Scene Files</a></li>
+<li>Classes ordered by ID number</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="YAMLSceneExample.html"></a></span><div class="tip">An Example of a YAML Scene File</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="TroubleShootingEditor.html"></a></span><div class="tip">Troubleshoot the Editor</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h2>Classes ordered by ID number</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">ID</th>
+	<th style="text-align:left;">Class</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>0</strong></td>
+	<td style="text-align:left;">Object</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>2</strong></td>
+	<td style="text-align:left;">Component</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>3</strong></td>
+	<td style="text-align:left;">LevelGameManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>4</strong></td>
+	<td style="text-align:left;">Transform</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>5</strong></td>
+	<td style="text-align:left;">TimeManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>6</strong></td>
+	<td style="text-align:left;">GlobalGameManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>8</strong></td>
+	<td style="text-align:left;">Behaviour</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>9</strong></td>
+	<td style="text-align:left;">GameManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>11</strong></td>
+	<td style="text-align:left;">AudioManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>13</strong></td>
+	<td style="text-align:left;">InputManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>18</strong></td>
+	<td style="text-align:left;">EditorExtension</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>19</strong></td>
+	<td style="text-align:left;">Physics2DSettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>20</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>21</strong></td>
+	<td style="text-align:left;">Material</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>23</strong></td>
+	<td style="text-align:left;">MeshRenderer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>25</strong></td>
+	<td style="text-align:left;">Renderer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>27</strong></td>
+	<td style="text-align:left;">Texture</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>28</strong></td>
+	<td style="text-align:left;">Texture2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>29</strong></td>
+	<td style="text-align:left;">OcclusionCullingSettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>30</strong></td>
+	<td style="text-align:left;">GraphicsSettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>33</strong></td>
+	<td style="text-align:left;">MeshFilter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>41</strong></td>
+	<td style="text-align:left;">OcclusionPortal</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>43</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>45</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Skybox</strong><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Skybox.html" href="class-Skybox.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skybox" aria-label="Go to glossary anchor for Skybox">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>47</strong></td>
+	<td style="text-align:left;">QualitySettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>48</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>49</strong></td>
+	<td style="text-align:left;">TextAsset</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>50</strong></td>
+	<td style="text-align:left;">Rigidbody2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>53</strong></td>
+	<td style="text-align:left;">Collider2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>54</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Rigidbody</strong><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Rigidbody.html" href="class-Rigidbody.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>55</strong></td>
+	<td style="text-align:left;">PhysicsManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>56</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Collider</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>57</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Joint</strong><span class="tooltiptext">A physics component allowing a dynamic connection between Rigidbody components, usually allowing some degree of movement such as a hinge. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Joints.html" href="Joints.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#joint" aria-label="Go to glossary anchor for joint">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>58</strong></td>
+	<td style="text-align:left;">CircleCollider2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>59</strong></td>
+	<td style="text-align:left;">HingeJoint</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>60</strong></td>
+	<td style="text-align:left;">PolygonCollider2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>61</strong></td>
+	<td style="text-align:left;">BoxCollider2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>62</strong></td>
+	<td style="text-align:left;">PhysicsMaterial2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>64</strong></td>
+	<td style="text-align:left;">MeshCollider</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>65</strong></td>
+	<td style="text-align:left;">BoxCollider</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>66</strong></td>
+	<td style="text-align:left;">CompositeCollider2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>68</strong></td>
+	<td style="text-align:left;">EdgeCollider2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>70</strong></td>
+	<td style="text-align:left;">CapsuleCollider2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>72</strong></td>
+	<td style="text-align:left;">ComputeShader</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>74</strong></td>
+	<td style="text-align:left;">AnimationClip</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>75</strong></td>
+	<td style="text-align:left;">ConstantForce</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>78</strong></td>
+	<td style="text-align:left;">TagManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>81</strong></td>
+	<td style="text-align:left;">AudioListener</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>82</strong></td>
+	<td style="text-align:left;">AudioSource</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>83</strong></td>
+	<td style="text-align:left;">AudioClip</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>84</strong></td>
+	<td style="text-align:left;">RenderTexture</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>86</strong></td>
+	<td style="text-align:left;">CustomRenderTexture</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>89</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Cubemap</strong><span class="tooltiptext">A collection of six square textures that can represent the reflections in an environment or the skybox drawn behind your geometry. The six squares form the faces of an imaginary cube that surrounds an object; each face represents the view along the directions of the world axes (up, down, left, right, forward and back). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Cubemap.html" href="class-Cubemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Cubemap" aria-label="Go to glossary anchor for Cubemap">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>90</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Avatar</strong><span class="tooltiptext">An interface for retargeting animation from one rig to another. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ConfiguringtheAvatar.html" href="ConfiguringtheAvatar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Avatar" aria-label="Go to glossary anchor for Avatar">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>91</strong></td>
+	<td style="text-align:left;">AnimatorController</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>93</strong></td>
+	<td style="text-align:left;">RuntimeAnimatorController</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>94</strong></td>
+	<td style="text-align:left;">ShaderNameRegistry</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>95</strong></td>
+	<td style="text-align:left;">Animator</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>96</strong></td>
+	<td style="text-align:left;">TrailRenderer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>98</strong></td>
+	<td style="text-align:left;">DelayedCallManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>102</strong></td>
+	<td style="text-align:left;">TextMesh</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>104</strong></td>
+	<td style="text-align:left;">RenderSettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>108</strong></td>
+	<td style="text-align:left;">Light</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>109</strong></td>
+	<td style="text-align:left;">ShaderInclude</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>110</strong></td>
+	<td style="text-align:left;">BaseAnimationTrack</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>111</strong></td>
+	<td style="text-align:left;">Animation</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>114</strong></td>
+	<td style="text-align:left;">MonoBehaviour</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>115</strong></td>
+	<td style="text-align:left;">MonoScript</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>116</strong></td>
+	<td style="text-align:left;">MonoManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>117</strong></td>
+	<td style="text-align:left;">Texture3D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>118</strong></td>
+	<td style="text-align:left;">NewAnimationTrack</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>119</strong></td>
+	<td style="text-align:left;">Projector</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>120</strong></td>
+	<td style="text-align:left;">LineRenderer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>121</strong></td>
+	<td style="text-align:left;">Flare</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>122</strong></td>
+	<td style="text-align:left;">Halo</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>123</strong></td>
+	<td style="text-align:left;">LensFlare</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>124</strong></td>
+	<td style="text-align:left;">FlareLayer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>126</strong></td>
+	<td style="text-align:left;">NavMeshProjectSettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>128</strong></td>
+	<td style="text-align:left;">Font</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>129</strong></td>
+	<td style="text-align:left;">PlayerSettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>130</strong></td>
+	<td style="text-align:left;">NamedObject</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>134</strong></td>
+	<td style="text-align:left;">PhysicMaterial</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>135</strong></td>
+	<td style="text-align:left;">SphereCollider</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>136</strong></td>
+	<td style="text-align:left;">CapsuleCollider</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>137</strong></td>
+	<td style="text-align:left;">SkinnedMeshRenderer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>138</strong></td>
+	<td style="text-align:left;">FixedJoint</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>141</strong></td>
+	<td style="text-align:left;">BuildSettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>142</strong></td>
+	<td style="text-align:left;">AssetBundle</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>143</strong></td>
+	<td style="text-align:left;">CharacterController</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>144</strong></td>
+	<td style="text-align:left;">CharacterJoint</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>145</strong></td>
+	<td style="text-align:left;">SpringJoint</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>146</strong></td>
+	<td style="text-align:left;">WheelCollider</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>147</strong></td>
+	<td style="text-align:left;">ResourceManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>150</strong></td>
+	<td style="text-align:left;">PreloadData</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>152</strong></td>
+	<td style="text-align:left;">MovieTexture</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>153</strong></td>
+	<td style="text-align:left;">ConfigurableJoint</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>154</strong></td>
+	<td style="text-align:left;">TerrainCollider</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>156</strong></td>
+	<td style="text-align:left;">TerrainData</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>157</strong></td>
+	<td style="text-align:left;">LightmapSettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>158</strong></td>
+	<td style="text-align:left;">WebCamTexture</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>159</strong></td>
+	<td style="text-align:left;">EditorSettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>162</strong></td>
+	<td style="text-align:left;">EditorUserSettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>164</strong></td>
+	<td style="text-align:left;">AudioReverbFilter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>165</strong></td>
+	<td style="text-align:left;">AudioHighPassFilter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>166</strong></td>
+	<td style="text-align:left;">AudioChorusFilter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>167</strong></td>
+	<td style="text-align:left;">AudioReverbZone</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>168</strong></td>
+	<td style="text-align:left;">AudioEchoFilter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>169</strong></td>
+	<td style="text-align:left;">AudioLowPassFilter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>170</strong></td>
+	<td style="text-align:left;">AudioDistortionFilter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>171</strong></td>
+	<td style="text-align:left;">SparseTexture</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>180</strong></td>
+	<td style="text-align:left;">AudioBehaviour</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>181</strong></td>
+	<td style="text-align:left;">AudioFilter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>182</strong></td>
+	<td style="text-align:left;">WindZone</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>183</strong></td>
+	<td style="text-align:left;">Cloth</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>184</strong></td>
+	<td style="text-align:left;">SubstanceArchive</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>185</strong></td>
+	<td style="text-align:left;">ProceduralMaterial</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>186</strong></td>
+	<td style="text-align:left;">ProceduralTexture</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>187</strong></td>
+	<td style="text-align:left;">Texture2DArray</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>188</strong></td>
+	<td style="text-align:left;">CubemapArray</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>191</strong></td>
+	<td style="text-align:left;">OffMeshLink</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>192</strong></td>
+	<td style="text-align:left;">OcclusionArea</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>193</strong></td>
+	<td style="text-align:left;">Tree</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>195</strong></td>
+	<td style="text-align:left;">NavMeshAgent</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>196</strong></td>
+	<td style="text-align:left;">NavMeshSettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>198</strong></td>
+	<td style="text-align:left;">ParticleSystem</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>199</strong></td>
+	<td style="text-align:left;">ParticleSystemRenderer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>200</strong></td>
+	<td style="text-align:left;">ShaderVariantCollection</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>205</strong></td>
+	<td style="text-align:left;">LODGroup</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>206</strong></td>
+	<td style="text-align:left;">BlendTree</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>207</strong></td>
+	<td style="text-align:left;">Motion</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>208</strong></td>
+	<td style="text-align:left;">NavMeshObstacle</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>210</strong></td>
+	<td style="text-align:left;">SortingGroup</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>212</strong></td>
+	<td style="text-align:left;">SpriteRenderer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>213</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>214</strong></td>
+	<td style="text-align:left;">CachedSpriteAtlas</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>215</strong></td>
+	<td style="text-align:left;">ReflectionProbe</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>218</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>220</strong></td>
+	<td style="text-align:left;">LightProbeGroup</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>221</strong></td>
+	<td style="text-align:left;">AnimatorOverrideController</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>222</strong></td>
+	<td style="text-align:left;">CanvasRenderer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>223</strong></td>
+	<td style="text-align:left;">Canvas</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>224</strong></td>
+	<td style="text-align:left;">RectTransform</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>225</strong></td>
+	<td style="text-align:left;">CanvasGroup</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>226</strong></td>
+	<td style="text-align:left;">BillboardAsset</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>227</strong></td>
+	<td style="text-align:left;">BillboardRenderer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>228</strong></td>
+	<td style="text-align:left;">SpeedTreeWindAsset</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>229</strong></td>
+	<td style="text-align:left;">AnchoredJoint2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>230</strong></td>
+	<td style="text-align:left;">Joint2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>231</strong></td>
+	<td style="text-align:left;">SpringJoint2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>232</strong></td>
+	<td style="text-align:left;">DistanceJoint2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>233</strong></td>
+	<td style="text-align:left;">HingeJoint2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>234</strong></td>
+	<td style="text-align:left;">SliderJoint2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>235</strong></td>
+	<td style="text-align:left;">WheelJoint2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>236</strong></td>
+	<td style="text-align:left;">ClusterInputManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>237</strong></td>
+	<td style="text-align:left;">BaseVideoTexture</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>238</strong></td>
+	<td style="text-align:left;">NavMeshData</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>240</strong></td>
+	<td style="text-align:left;">AudioMixer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>241</strong></td>
+	<td style="text-align:left;">AudioMixerController</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>243</strong></td>
+	<td style="text-align:left;">AudioMixerGroupController</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>244</strong></td>
+	<td style="text-align:left;">AudioMixerEffectController</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>245</strong></td>
+	<td style="text-align:left;">AudioMixerSnapshotController</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>246</strong></td>
+	<td style="text-align:left;">PhysicsUpdateBehaviour2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>247</strong></td>
+	<td style="text-align:left;">ConstantForce2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>248</strong></td>
+	<td style="text-align:left;">Effector2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>249</strong></td>
+	<td style="text-align:left;">AreaEffector2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>250</strong></td>
+	<td style="text-align:left;">PointEffector2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>251</strong></td>
+	<td style="text-align:left;">PlatformEffector2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>252</strong></td>
+	<td style="text-align:left;">SurfaceEffector2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>253</strong></td>
+	<td style="text-align:left;">BuoyancyEffector2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>254</strong></td>
+	<td style="text-align:left;">RelativeJoint2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>255</strong></td>
+	<td style="text-align:left;">FixedJoint2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>256</strong></td>
+	<td style="text-align:left;">FrictionJoint2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>257</strong></td>
+	<td style="text-align:left;">TargetJoint2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>258</strong></td>
+	<td style="text-align:left;">LightProbes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>259</strong></td>
+	<td style="text-align:left;">LightProbeProxyVolume</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>271</strong></td>
+	<td style="text-align:left;">SampleClip</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>272</strong></td>
+	<td style="text-align:left;">AudioMixerSnapshot</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>273</strong></td>
+	<td style="text-align:left;">AudioMixerGroup</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>290</strong></td>
+	<td style="text-align:left;">AssetBundleManifest</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>300</strong></td>
+	<td style="text-align:left;">RuntimeInitializeOnLoadManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>310</strong></td>
+	<td style="text-align:left;">UnityConnectSettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>319</strong></td>
+	<td style="text-align:left;">AvatarMask</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>320</strong></td>
+	<td style="text-align:left;">PlayableDirector</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>328</strong></td>
+	<td style="text-align:left;">VideoPlayer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>329</strong></td>
+	<td style="text-align:left;">VideoClip</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>330</strong></td>
+	<td style="text-align:left;">ParticleSystemForceField</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>331</strong></td>
+	<td style="text-align:left;">SpriteMask</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>363</strong></td>
+	<td style="text-align:left;">OcclusionCullingData</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1001</strong></td>
+	<td style="text-align:left;">PrefabInstance</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1002</strong></td>
+	<td style="text-align:left;">EditorExtensionImpl</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1003</strong></td>
+	<td style="text-align:left;">AssetImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1005</strong></td>
+	<td style="text-align:left;">Mesh3DSImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1006</strong></td>
+	<td style="text-align:left;">TextureImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1007</strong></td>
+	<td style="text-align:left;">ShaderImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1008</strong></td>
+	<td style="text-align:left;">ComputeShaderImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1020</strong></td>
+	<td style="text-align:left;">AudioImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1026</strong></td>
+	<td style="text-align:left;">HierarchyState</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1028</strong></td>
+	<td style="text-align:left;">AssetMetaData</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1029</strong></td>
+	<td style="text-align:left;">DefaultAsset</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1030</strong></td>
+	<td style="text-align:left;">DefaultImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1031</strong></td>
+	<td style="text-align:left;">TextScriptImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1032</strong></td>
+	<td style="text-align:left;">SceneAsset</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1034</strong></td>
+	<td style="text-align:left;">NativeFormatImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1035</strong></td>
+	<td style="text-align:left;">MonoImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1038</strong></td>
+	<td style="text-align:left;">LibraryAssetImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1040</strong></td>
+	<td style="text-align:left;">ModelImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1041</strong></td>
+	<td style="text-align:left;">FBXImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1042</strong></td>
+	<td style="text-align:left;">TrueTypeFontImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1045</strong></td>
+	<td style="text-align:left;">EditorBuildSettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1048</strong></td>
+	<td style="text-align:left;">InspectorExpandedState</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1049</strong></td>
+	<td style="text-align:left;">AnnotationManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1050</strong></td>
+	<td style="text-align:left;">PluginImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1051</strong></td>
+	<td style="text-align:left;">EditorUserBuildSettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1055</strong></td>
+	<td style="text-align:left;">IHVImageFormatImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1101</strong></td>
+	<td style="text-align:left;">AnimatorStateTransition</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1102</strong></td>
+	<td style="text-align:left;">AnimatorState</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1105</strong></td>
+	<td style="text-align:left;">HumanTemplate</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1107</strong></td>
+	<td style="text-align:left;">AnimatorStateMachine</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1108</strong></td>
+	<td style="text-align:left;">PreviewAnimationClip</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1109</strong></td>
+	<td style="text-align:left;">AnimatorTransition</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1110</strong></td>
+	<td style="text-align:left;">SpeedTreeImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1111</strong></td>
+	<td style="text-align:left;">AnimatorTransitionBase</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1112</strong></td>
+	<td style="text-align:left;">SubstanceImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1113</strong></td>
+	<td style="text-align:left;">LightmapParameters</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1120</strong></td>
+	<td style="text-align:left;">LightingDataAsset</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1124</strong></td>
+	<td style="text-align:left;">SketchUpImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1125</strong></td>
+	<td style="text-align:left;">BuildReport</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1126</strong></td>
+	<td style="text-align:left;">PackedAssets</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1127</strong></td>
+	<td style="text-align:left;">VideoClipImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>100000</strong></td>
+	<td style="text-align:left;">int</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>100001</strong></td>
+	<td style="text-align:left;">bool</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>100002</strong></td>
+	<td style="text-align:left;">float</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>100003</strong></td>
+	<td style="text-align:left;">MonoObject</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>100004</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Collision</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>100005</strong></td>
+	<td style="text-align:left;">Vector3f</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>100006</strong></td>
+	<td style="text-align:left;">RootMotionData</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>100007</strong></td>
+	<td style="text-align:left;">Collision2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>100008</strong></td>
+	<td style="text-align:left;">AudioMixerLiveUpdateFloat</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>100009</strong></td>
+	<td style="text-align:left;">AudioMixerLiveUpdateBool</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>100010</strong></td>
+	<td style="text-align:left;">Polygon2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>100011</strong></td>
+	<td style="text-align:left;">void</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>19719996</strong></td>
+	<td style="text-align:left;">TilemapCollider2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>41386430</strong></td>
+	<td style="text-align:left;">AssetImporterLog</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>73398921</strong></td>
+	<td style="text-align:left;">VFXRenderer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>156049354</strong></td>
+	<td style="text-align:left;">Grid</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>156483287</strong></td>
+	<td style="text-align:left;">ScenesUsingAssets</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>171741748</strong></td>
+	<td style="text-align:left;">ArticulationBody</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>181963792</strong></td>
+	<td style="text-align:left;">Preset</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>285090594</strong></td>
+	<td style="text-align:left;">IConstraint</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>294290339</strong></td>
+	<td style="text-align:left;">AssemblyDefinitionReferenceImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>369655926</strong></td>
+	<td style="text-align:left;">AssetImportInProgressProxy</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>382020655</strong></td>
+	<td style="text-align:left;">PluginBuildInfo</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>387306366</strong></td>
+	<td style="text-align:left;">MemorySettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>426301858</strong></td>
+	<td style="text-align:left;">EditorProjectAccess</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>468431735</strong></td>
+	<td style="text-align:left;">PrefabImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>483693784</strong></td>
+	<td style="text-align:left;">TilemapRenderer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>612988286</strong></td>
+	<td style="text-align:left;">SpriteAtlasAsset</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>638013454</strong></td>
+	<td style="text-align:left;">SpriteAtlasDatabase</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>641289076</strong></td>
+	<td style="text-align:left;">AudioBuildInfo</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>644342135</strong></td>
+	<td style="text-align:left;">CachedSpriteAtlasRuntimeData</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>662584278</strong></td>
+	<td style="text-align:left;">AssemblyDefinitionReferenceAsset</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>668709126</strong></td>
+	<td style="text-align:left;">BuiltAssetBundleInfoSet</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>687078895</strong></td>
+	<td style="text-align:left;">SpriteAtlas</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>747330370</strong></td>
+	<td style="text-align:left;">RayTracingShaderImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>815301076</strong></td>
+	<td style="text-align:left;">PreviewImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>825902497</strong></td>
+	<td style="text-align:left;">RayTracingShader</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>850595691</strong></td>
+	<td style="text-align:left;">LightingSettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>877146078</strong></td>
+	<td style="text-align:left;">PlatformModuleSetup</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>890905787</strong></td>
+	<td style="text-align:left;">VersionControlSettings</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>893571522</strong></td>
+	<td style="text-align:left;">CustomCollider2D</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>895512359</strong></td>
+	<td style="text-align:left;">AimConstraint</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>937362698</strong></td>
+	<td style="text-align:left;">VFXManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>954905827</strong></td>
+	<td style="text-align:left;">RuleSetFileAsset</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>994735392</strong></td>
+	<td style="text-align:left;">VisualEffectSubgraph</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>994735403</strong></td>
+	<td style="text-align:left;">VisualEffectSubgraphOperator</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>994735404</strong></td>
+	<td style="text-align:left;">VisualEffectSubgraphBlock</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1001480554</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1027052791</strong></td>
+	<td style="text-align:left;">LocalizationImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1114811875</strong></td>
+	<td style="text-align:left;">ReferencesArtifactGenerator</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1152215463</strong></td>
+	<td style="text-align:left;">AssemblyDefinitionAsset</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1154873562</strong></td>
+	<td style="text-align:left;">SceneVisibilityState</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1183024399</strong></td>
+	<td style="text-align:left;">LookAtConstraint</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1210832254</strong></td>
+	<td style="text-align:left;">SpriteAtlasImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1223240404</strong></td>
+	<td style="text-align:left;">MultiArtifactTestImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1268269756</strong></td>
+	<td style="text-align:left;">GameObjectRecorder</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1325145578</strong></td>
+	<td style="text-align:left;">LightingDataAssetParent</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1386491679</strong></td>
+	<td style="text-align:left;">PresetManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1403656975</strong></td>
+	<td style="text-align:left;">StreamingManager</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1480428607</strong></td>
+	<td style="text-align:left;">LowerResBlitTexture</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1521398425</strong></td>
+	<td style="text-align:left;">VideoBuildInfo</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1542919678</strong></td>
+	<td style="text-align:left;">StreamingController</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1736697216</strong></td>
+	<td style="text-align:left;">AndroidAssetPackImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1742807556</strong></td>
+	<td style="text-align:left;">GridLayout</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1766753193</strong></td>
+	<td style="text-align:left;">AssemblyDefinitionImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1773428102</strong></td>
+	<td style="text-align:left;">ParentConstraint</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1777034230</strong></td>
+	<td style="text-align:left;">RuleSetFileImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1818360608</strong></td>
+	<td style="text-align:left;">PositionConstraint</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1818360609</strong></td>
+	<td style="text-align:left;">RotationConstraint</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1818360610</strong></td>
+	<td style="text-align:left;">ScaleConstraint</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1839735485</strong></td>
+	<td style="text-align:left;"><span class="tooltip"><strong>Tilemap</strong><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Tilemap.html" href="class-Tilemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Tilemap" aria-label="Go to glossary anchor for Tilemap">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1896753125</strong></td>
+	<td style="text-align:left;">PackageManifest</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1896753126</strong></td>
+	<td style="text-align:left;">PackageManifestImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1953259897</strong></td>
+	<td style="text-align:left;">TerrainLayer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>1971053207</strong></td>
+	<td style="text-align:left;">SpriteShapeRenderer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>2058629509</strong></td>
+	<td style="text-align:left;">VisualEffectAsset</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>2058629510</strong></td>
+	<td style="text-align:left;">VisualEffectImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>2058629511</strong></td>
+	<td style="text-align:left;">VisualEffectResource</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>2059678085</strong></td>
+	<td style="text-align:left;">VisualEffectObject</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>2083052967</strong></td>
+	<td style="text-align:left;">VisualEffect</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>2083778819</strong></td>
+	<td style="text-align:left;">LocalizationAsset</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>2089858483</strong></td>
+	<td style="text-align:left;">ScriptedImporter</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>2103361453</strong></td>
+	<td style="text-align:left;">ShaderIncludeImporter</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Classes ordered alphabetically</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">ID</th>
+	<th style="text-align:left;">Class</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>AimConstraint</strong></td>
+	<td style="text-align:left;">895512359</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AnchoredJoint2D</strong></td>
+	<td style="text-align:left;">229</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AndroidAssetPackImporter</strong></td>
+	<td style="text-align:left;">1736697216</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Animation</strong></td>
+	<td style="text-align:left;">111</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AnimationClip</strong></td>
+	<td style="text-align:left;">74</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Animator</strong></td>
+	<td style="text-align:left;">95</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AnimatorController</strong></td>
+	<td style="text-align:left;">91</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AnimatorOverrideController</strong></td>
+	<td style="text-align:left;">221</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AnimatorState</strong></td>
+	<td style="text-align:left;">1102</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AnimatorStateMachine</strong></td>
+	<td style="text-align:left;">1107</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AnimatorStateTransition</strong></td>
+	<td style="text-align:left;">1101</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AnimatorTransition</strong></td>
+	<td style="text-align:left;">1109</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AnimatorTransitionBase</strong></td>
+	<td style="text-align:left;">1111</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AnnotationManager</strong></td>
+	<td style="text-align:left;">1049</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AreaEffector2D</strong></td>
+	<td style="text-align:left;">249</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ArticulationBody</strong></td>
+	<td style="text-align:left;">171741748</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AssemblyDefinitionAsset</strong></td>
+	<td style="text-align:left;">1152215463</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AssemblyDefinitionImporter</strong></td>
+	<td style="text-align:left;">1766753193</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AssemblyDefinitionReferenceAsset</strong></td>
+	<td style="text-align:left;">662584278</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AssemblyDefinitionReferenceImporter</strong></td>
+	<td style="text-align:left;">294290339</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AssetBundle</strong></td>
+	<td style="text-align:left;">142</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AssetBundleManifest</strong></td>
+	<td style="text-align:left;">290</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AssetImporter</strong></td>
+	<td style="text-align:left;">1003</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AssetImporterLog</strong></td>
+	<td style="text-align:left;">41386430</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AssetImportInProgressProxy</strong></td>
+	<td style="text-align:left;">369655926</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AssetMetaData</strong></td>
+	<td style="text-align:left;">1028</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioBehaviour</strong></td>
+	<td style="text-align:left;">180</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioBuildInfo</strong></td>
+	<td style="text-align:left;">641289076</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioChorusFilter</strong></td>
+	<td style="text-align:left;">166</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioClip</strong></td>
+	<td style="text-align:left;">83</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioDistortionFilter</strong></td>
+	<td style="text-align:left;">170</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioEchoFilter</strong></td>
+	<td style="text-align:left;">168</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioFilter</strong></td>
+	<td style="text-align:left;">181</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioHighPassFilter</strong></td>
+	<td style="text-align:left;">165</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioImporter</strong></td>
+	<td style="text-align:left;">1020</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioListener</strong></td>
+	<td style="text-align:left;">81</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioLowPassFilter</strong></td>
+	<td style="text-align:left;">169</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioManager</strong></td>
+	<td style="text-align:left;">11</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioMixer</strong></td>
+	<td style="text-align:left;">240</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioMixerController</strong></td>
+	<td style="text-align:left;">241</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioMixerEffectController</strong></td>
+	<td style="text-align:left;">244</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioMixerGroup</strong></td>
+	<td style="text-align:left;">273</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioMixerGroupController</strong></td>
+	<td style="text-align:left;">243</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioMixerLiveUpdateBool</strong></td>
+	<td style="text-align:left;">100009</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioMixerLiveUpdateFloat</strong></td>
+	<td style="text-align:left;">100008</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioMixerSnapshot</strong></td>
+	<td style="text-align:left;">272</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioMixerSnapshotController</strong></td>
+	<td style="text-align:left;">245</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioReverbFilter</strong></td>
+	<td style="text-align:left;">164</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioReverbZone</strong></td>
+	<td style="text-align:left;">167</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AudioSource</strong></td>
+	<td style="text-align:left;">82</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Avatar</strong></td>
+	<td style="text-align:left;">90</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AvatarMask</strong></td>
+	<td style="text-align:left;">319</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BaseAnimationTrack</strong></td>
+	<td style="text-align:left;">110</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BaseVideoTexture</strong></td>
+	<td style="text-align:left;">237</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Behaviour</strong></td>
+	<td style="text-align:left;">8</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BillboardAsset</strong></td>
+	<td style="text-align:left;">226</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BillboardRenderer</strong></td>
+	<td style="text-align:left;">227</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BlendTree</strong></td>
+	<td style="text-align:left;">206</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>bool</strong></td>
+	<td style="text-align:left;">100001</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BoxCollider</strong></td>
+	<td style="text-align:left;">65</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BoxCollider2D</strong></td>
+	<td style="text-align:left;">61</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BuildReport</strong></td>
+	<td style="text-align:left;">1125</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BuildSettings</strong></td>
+	<td style="text-align:left;">141</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BuiltAssetBundleInfoSet</strong></td>
+	<td style="text-align:left;">668709126</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BuoyancyEffector2D</strong></td>
+	<td style="text-align:left;">253</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CachedSpriteAtlas</strong></td>
+	<td style="text-align:left;">214</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CachedSpriteAtlasRuntimeData</strong></td>
+	<td style="text-align:left;">644342135</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Camera</strong></td>
+	<td style="text-align:left;">20</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Canvas</strong></td>
+	<td style="text-align:left;">223</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CanvasGroup</strong></td>
+	<td style="text-align:left;">225</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CanvasRenderer</strong></td>
+	<td style="text-align:left;">222</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CapsuleCollider</strong></td>
+	<td style="text-align:left;">136</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CapsuleCollider2D</strong></td>
+	<td style="text-align:left;">70</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CharacterController</strong></td>
+	<td style="text-align:left;">143</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CharacterJoint</strong></td>
+	<td style="text-align:left;">144</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CircleCollider2D</strong></td>
+	<td style="text-align:left;">58</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Cloth</strong></td>
+	<td style="text-align:left;">183</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ClusterInputManager</strong></td>
+	<td style="text-align:left;">236</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Collider</strong></td>
+	<td style="text-align:left;">56</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Collider2D</strong></td>
+	<td style="text-align:left;">53</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Collision</strong></td>
+	<td style="text-align:left;">100004</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Collision2D</strong></td>
+	<td style="text-align:left;">100007</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Component</strong></td>
+	<td style="text-align:left;">2</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CompositeCollider2D</strong></td>
+	<td style="text-align:left;">66</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ComputeShader</strong></td>
+	<td style="text-align:left;">72</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ComputeShaderImporter</strong></td>
+	<td style="text-align:left;">1008</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ConfigurableJoint</strong></td>
+	<td style="text-align:left;">153</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ConstantForce</strong></td>
+	<td style="text-align:left;">75</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ConstantForce2D</strong></td>
+	<td style="text-align:left;">247</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Cubemap</strong></td>
+	<td style="text-align:left;">89</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CubemapArray</strong></td>
+	<td style="text-align:left;">188</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CustomCollider2D</strong></td>
+	<td style="text-align:left;">893571522</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CustomRenderTexture</strong></td>
+	<td style="text-align:left;">86</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>DefaultAsset</strong></td>
+	<td style="text-align:left;">1029</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>DefaultImporter</strong></td>
+	<td style="text-align:left;">1030</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>DelayedCallManager</strong></td>
+	<td style="text-align:left;">98</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>DistanceJoint2D</strong></td>
+	<td style="text-align:left;">232</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>EdgeCollider2D</strong></td>
+	<td style="text-align:left;">68</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>EditorBuildSettings</strong></td>
+	<td style="text-align:left;">1045</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>EditorExtension</strong></td>
+	<td style="text-align:left;">18</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>EditorExtensionImpl</strong></td>
+	<td style="text-align:left;">1002</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>EditorProjectAccess</strong></td>
+	<td style="text-align:left;">426301858</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>EditorSettings</strong></td>
+	<td style="text-align:left;">159</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>EditorUserBuildSettings</strong></td>
+	<td style="text-align:left;">1051</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>EditorUserSettings</strong></td>
+	<td style="text-align:left;">162</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Effector2D</strong></td>
+	<td style="text-align:left;">248</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>FBXImporter</strong></td>
+	<td style="text-align:left;">1041</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>FixedJoint</strong></td>
+	<td style="text-align:left;">138</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>FixedJoint2D</strong></td>
+	<td style="text-align:left;">255</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Flare</strong></td>
+	<td style="text-align:left;">121</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>FlareLayer</strong></td>
+	<td style="text-align:left;">124</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>float</strong></td>
+	<td style="text-align:left;">100002</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Font</strong></td>
+	<td style="text-align:left;">128</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>FrictionJoint2D</strong></td>
+	<td style="text-align:left;">256</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GameManager</strong></td>
+	<td style="text-align:left;">9</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GameObject</strong></td>
+	<td style="text-align:left;">1</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GameObjectRecorder</strong></td>
+	<td style="text-align:left;">1268269756</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GlobalGameManager</strong></td>
+	<td style="text-align:left;">6</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GraphicsSettings</strong></td>
+	<td style="text-align:left;">30</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Grid</strong></td>
+	<td style="text-align:left;">156049354</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GridLayout</strong></td>
+	<td style="text-align:left;">1742807556</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Halo</strong></td>
+	<td style="text-align:left;">122</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>HierarchyState</strong></td>
+	<td style="text-align:left;">1026</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>HingeJoint</strong></td>
+	<td style="text-align:left;">59</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>HingeJoint2D</strong></td>
+	<td style="text-align:left;">233</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>HumanTemplate</strong></td>
+	<td style="text-align:left;">1105</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>IConstraint</strong></td>
+	<td style="text-align:left;">285090594</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>IHVImageFormatImporter</strong></td>
+	<td style="text-align:left;">1055</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>InputManager</strong></td>
+	<td style="text-align:left;">13</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>InspectorExpandedState</strong></td>
+	<td style="text-align:left;">1048</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>int</strong></td>
+	<td style="text-align:left;">100000</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Joint</strong></td>
+	<td style="text-align:left;">57</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Joint2D</strong></td>
+	<td style="text-align:left;">230</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LensFlare</strong></td>
+	<td style="text-align:left;">123</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LevelGameManager</strong></td>
+	<td style="text-align:left;">3</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LibraryAssetImporter</strong></td>
+	<td style="text-align:left;">1038</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Light</strong></td>
+	<td style="text-align:left;">108</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LightingDataAsset</strong></td>
+	<td style="text-align:left;">1120</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LightingDataAssetParent</strong></td>
+	<td style="text-align:left;">1325145578</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LightingSettings</strong></td>
+	<td style="text-align:left;">850595691</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LightmapParameters</strong></td>
+	<td style="text-align:left;">1113</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LightmapSettings</strong></td>
+	<td style="text-align:left;">157</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LightProbeGroup</strong></td>
+	<td style="text-align:left;">220</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LightProbeProxyVolume</strong></td>
+	<td style="text-align:left;">259</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LightProbes</strong></td>
+	<td style="text-align:left;">258</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LineRenderer</strong></td>
+	<td style="text-align:left;">120</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LocalizationAsset</strong></td>
+	<td style="text-align:left;">2083778819</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LocalizationImporter</strong></td>
+	<td style="text-align:left;">1027052791</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LODGroup</strong></td>
+	<td style="text-align:left;">205</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LookAtConstraint</strong></td>
+	<td style="text-align:left;">1183024399</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>LowerResBlitTexture</strong></td>
+	<td style="text-align:left;">1480428607</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Material</strong></td>
+	<td style="text-align:left;">21</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MemorySettings</strong></td>
+	<td style="text-align:left;">387306366</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Mesh</strong></td>
+	<td style="text-align:left;">43</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Mesh3DSImporter</strong></td>
+	<td style="text-align:left;">1005</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MeshCollider</strong></td>
+	<td style="text-align:left;">64</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MeshFilter</strong></td>
+	<td style="text-align:left;">33</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MeshRenderer</strong></td>
+	<td style="text-align:left;">23</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ModelImporter</strong></td>
+	<td style="text-align:left;">1040</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MonoBehaviour</strong></td>
+	<td style="text-align:left;">114</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MonoImporter</strong></td>
+	<td style="text-align:left;">1035</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MonoManager</strong></td>
+	<td style="text-align:left;">116</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MonoObject</strong></td>
+	<td style="text-align:left;">100003</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MonoScript</strong></td>
+	<td style="text-align:left;">115</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Motion</strong></td>
+	<td style="text-align:left;">207</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MovieTexture</strong></td>
+	<td style="text-align:left;">152</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MultiArtifactTestImporter</strong></td>
+	<td style="text-align:left;">1223240404</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NamedObject</strong></td>
+	<td style="text-align:left;">130</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NativeFormatImporter</strong></td>
+	<td style="text-align:left;">1034</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NavMeshAgent</strong></td>
+	<td style="text-align:left;">195</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NavMeshData</strong></td>
+	<td style="text-align:left;">238</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NavMeshObstacle</strong></td>
+	<td style="text-align:left;">208</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NavMeshProjectSettings</strong></td>
+	<td style="text-align:left;">126</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NavMeshSettings</strong></td>
+	<td style="text-align:left;">196</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>NewAnimationTrack</strong></td>
+	<td style="text-align:left;">118</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Object</strong></td>
+	<td style="text-align:left;">0</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>OcclusionArea</strong></td>
+	<td style="text-align:left;">192</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>OcclusionCullingData</strong></td>
+	<td style="text-align:left;">363</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>OcclusionCullingSettings</strong></td>
+	<td style="text-align:left;">29</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>OcclusionPortal</strong></td>
+	<td style="text-align:left;">41</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>OffMeshLink</strong></td>
+	<td style="text-align:left;">191</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PackageManifest</strong></td>
+	<td style="text-align:left;">1896753125</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PackageManifestImporter</strong></td>
+	<td style="text-align:left;">1896753126</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PackedAssets</strong></td>
+	<td style="text-align:left;">1126</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ParentConstraint</strong></td>
+	<td style="text-align:left;">1773428102</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ParticleSystem</strong></td>
+	<td style="text-align:left;">198</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ParticleSystemForceField</strong></td>
+	<td style="text-align:left;">330</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ParticleSystemRenderer</strong></td>
+	<td style="text-align:left;">199</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PhysicMaterial</strong></td>
+	<td style="text-align:left;">134</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Physics2DSettings</strong></td>
+	<td style="text-align:left;">19</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PhysicsManager</strong></td>
+	<td style="text-align:left;">55</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PhysicsMaterial2D</strong></td>
+	<td style="text-align:left;">62</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PhysicsUpdateBehaviour2D</strong></td>
+	<td style="text-align:left;">246</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PlatformEffector2D</strong></td>
+	<td style="text-align:left;">251</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PlatformModuleSetup</strong></td>
+	<td style="text-align:left;">877146078</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PlayableDirector</strong></td>
+	<td style="text-align:left;">320</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PlayerSettings</strong></td>
+	<td style="text-align:left;">129</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PluginBuildInfo</strong></td>
+	<td style="text-align:left;">382020655</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PluginImporter</strong></td>
+	<td style="text-align:left;">1050</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PointEffector2D</strong></td>
+	<td style="text-align:left;">250</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Polygon2D</strong></td>
+	<td style="text-align:left;">100010</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PolygonCollider2D</strong></td>
+	<td style="text-align:left;">60</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PositionConstraint</strong></td>
+	<td style="text-align:left;">1818360608</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Prefab</strong></td>
+	<td style="text-align:left;">1001480554</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PrefabImporter</strong></td>
+	<td style="text-align:left;">468431735</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PrefabInstance</strong></td>
+	<td style="text-align:left;">1001</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PreloadData</strong></td>
+	<td style="text-align:left;">150</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Preset</strong></td>
+	<td style="text-align:left;">181963792</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PresetManager</strong></td>
+	<td style="text-align:left;">1386491679</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PreviewAnimationClip</strong></td>
+	<td style="text-align:left;">1108</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PreviewImporter</strong></td>
+	<td style="text-align:left;">815301076</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ProceduralMaterial</strong></td>
+	<td style="text-align:left;">185</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ProceduralTexture</strong></td>
+	<td style="text-align:left;">186</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Projector</strong></td>
+	<td style="text-align:left;">119</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>QualitySettings</strong></td>
+	<td style="text-align:left;">47</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RayTracingShader</strong></td>
+	<td style="text-align:left;">825902497</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RayTracingShaderImporter</strong></td>
+	<td style="text-align:left;">747330370</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RectTransform</strong></td>
+	<td style="text-align:left;">224</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ReferencesArtifactGenerator</strong></td>
+	<td style="text-align:left;">1114811875</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ReflectionProbe</strong></td>
+	<td style="text-align:left;">215</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RelativeJoint2D</strong></td>
+	<td style="text-align:left;">254</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Renderer</strong></td>
+	<td style="text-align:left;">25</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RenderSettings</strong></td>
+	<td style="text-align:left;">104</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RenderTexture</strong></td>
+	<td style="text-align:left;">84</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ResourceManager</strong></td>
+	<td style="text-align:left;">147</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rigidbody</strong></td>
+	<td style="text-align:left;">54</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rigidbody2D</strong></td>
+	<td style="text-align:left;">50</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RootMotionData</strong></td>
+	<td style="text-align:left;">100006</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RotationConstraint</strong></td>
+	<td style="text-align:left;">1818360609</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RuleSetFileAsset</strong></td>
+	<td style="text-align:left;">954905827</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RuleSetFileImporter</strong></td>
+	<td style="text-align:left;">1777034230</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RuntimeAnimatorController</strong></td>
+	<td style="text-align:left;">93</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RuntimeInitializeOnLoadManager</strong></td>
+	<td style="text-align:left;">300</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SampleClip</strong></td>
+	<td style="text-align:left;">271</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ScaleConstraint</strong></td>
+	<td style="text-align:left;">1818360610</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SceneAsset</strong></td>
+	<td style="text-align:left;">1032</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ScenesUsingAssets</strong></td>
+	<td style="text-align:left;">156483287</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SceneVisibilityState</strong></td>
+	<td style="text-align:left;">1154873562</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ScriptedImporter</strong></td>
+	<td style="text-align:left;">2089858483</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Shader</strong></td>
+	<td style="text-align:left;">48</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ShaderImporter</strong></td>
+	<td style="text-align:left;">1007</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ShaderInclude</strong></td>
+	<td style="text-align:left;">109</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ShaderIncludeImporter</strong></td>
+	<td style="text-align:left;">2103361453</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ShaderNameRegistry</strong></td>
+	<td style="text-align:left;">94</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ShaderVariantCollection</strong></td>
+	<td style="text-align:left;">200</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SketchUpImporter</strong></td>
+	<td style="text-align:left;">1124</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SkinnedMeshRenderer</strong></td>
+	<td style="text-align:left;">137</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Skybox</strong></td>
+	<td style="text-align:left;">45</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SliderJoint2D</strong></td>
+	<td style="text-align:left;">234</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SortingGroup</strong></td>
+	<td style="text-align:left;">210</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SparseTexture</strong></td>
+	<td style="text-align:left;">171</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SpeedTreeImporter</strong></td>
+	<td style="text-align:left;">1110</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SpeedTreeWindAsset</strong></td>
+	<td style="text-align:left;">228</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SphereCollider</strong></td>
+	<td style="text-align:left;">135</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SpringJoint</strong></td>
+	<td style="text-align:left;">145</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SpringJoint2D</strong></td>
+	<td style="text-align:left;">231</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Sprite</strong></td>
+	<td style="text-align:left;">213</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SpriteAtlas</strong></td>
+	<td style="text-align:left;">687078895</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SpriteAtlasAsset</strong></td>
+	<td style="text-align:left;">612988286</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SpriteAtlasDatabase</strong></td>
+	<td style="text-align:left;">638013454</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SpriteAtlasImporter</strong></td>
+	<td style="text-align:left;">1210832254</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SpriteMask</strong></td>
+	<td style="text-align:left;">331</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SpriteRenderer</strong></td>
+	<td style="text-align:left;">212</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SpriteShapeRenderer</strong></td>
+	<td style="text-align:left;">1971053207</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>StreamingController</strong></td>
+	<td style="text-align:left;">1542919678</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>StreamingManager</strong></td>
+	<td style="text-align:left;">1403656975</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SubstanceArchive</strong></td>
+	<td style="text-align:left;">184</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SubstanceImporter</strong></td>
+	<td style="text-align:left;">1112</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SurfaceEffector2D</strong></td>
+	<td style="text-align:left;">252</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TagManager</strong></td>
+	<td style="text-align:left;">78</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TargetJoint2D</strong></td>
+	<td style="text-align:left;">257</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Terrain</strong></td>
+	<td style="text-align:left;">218</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TerrainCollider</strong></td>
+	<td style="text-align:left;">154</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TerrainData</strong></td>
+	<td style="text-align:left;">156</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TerrainLayer</strong></td>
+	<td style="text-align:left;">1953259897</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TextAsset</strong></td>
+	<td style="text-align:left;">49</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TextMesh</strong></td>
+	<td style="text-align:left;">102</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TextScriptImporter</strong></td>
+	<td style="text-align:left;">1031</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Texture</strong></td>
+	<td style="text-align:left;">27</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Texture2D</strong></td>
+	<td style="text-align:left;">28</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Texture2DArray</strong></td>
+	<td style="text-align:left;">187</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Texture3D</strong></td>
+	<td style="text-align:left;">117</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TextureImporter</strong></td>
+	<td style="text-align:left;">1006</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Tilemap</strong></td>
+	<td style="text-align:left;">1839735485</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TilemapCollider2D</strong></td>
+	<td style="text-align:left;">19719996</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TilemapRenderer</strong></td>
+	<td style="text-align:left;">483693784</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TimeManager</strong></td>
+	<td style="text-align:left;">5</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TrailRenderer</strong></td>
+	<td style="text-align:left;">96</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Transform</strong></td>
+	<td style="text-align:left;">4</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Tree</strong></td>
+	<td style="text-align:left;">193</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TrueTypeFontImporter</strong></td>
+	<td style="text-align:left;">1042</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UnityConnectSettings</strong></td>
+	<td style="text-align:left;">310</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Vector3f</strong></td>
+	<td style="text-align:left;">100005</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VersionControlSettings</strong></td>
+	<td style="text-align:left;">890905787</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VFXManager</strong></td>
+	<td style="text-align:left;">937362698</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VFXRenderer</strong></td>
+	<td style="text-align:left;">73398921</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VideoBuildInfo</strong></td>
+	<td style="text-align:left;">1521398425</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VideoClip</strong></td>
+	<td style="text-align:left;">329</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VideoClipImporter</strong></td>
+	<td style="text-align:left;">1127</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VideoPlayer</strong></td>
+	<td style="text-align:left;">328</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VisualEffect</strong></td>
+	<td style="text-align:left;">2083052967</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VisualEffectAsset</strong></td>
+	<td style="text-align:left;">2058629509</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VisualEffectImporter</strong></td>
+	<td style="text-align:left;">2058629510</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VisualEffectObject</strong></td>
+	<td style="text-align:left;">2059678085</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VisualEffectResource</strong></td>
+	<td style="text-align:left;">2058629511</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VisualEffectSubgraph</strong></td>
+	<td style="text-align:left;">994735392</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VisualEffectSubgraphBlock</strong></td>
+	<td style="text-align:left;">994735404</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VisualEffectSubgraphOperator</strong></td>
+	<td style="text-align:left;">994735403</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>void</strong></td>
+	<td style="text-align:left;">100011</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>WebCamTexture</strong></td>
+	<td style="text-align:left;">158</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>WheelCollider</strong></td>
+	<td style="text-align:left;">146</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>WheelJoint2D</strong></td>
+	<td style="text-align:left;">235</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>WindZone</strong></td>
+	<td style="text-align:left;">182</td>
+</tr>
+</tbody>
+</table>
+
+<p>Unused IDs: 7, 10, 12, 14 - 17, 22, 24, 26, 31 - 32, 34 - 40, 42, 44, 46, 51 - 52, 63, 67, 69, 71, 73, 76 - 77, 79 - 80, 85, 87 - 88, 92, 97, 99 - 101, 103, 105 - 107, 112 - 113, 125, 127, 131 - 133, 139 - 140, 148 - 149, 151, 155, 160 - 161, 163, 172 - 179, 189 - 190, 194, 197, 201 - 204, 209, 211, 216 - 217, 219, 239, 242, 260 - 270, 274 - 289, 291 - 299, 301 - 309, 311 - 318, 321 - 327, 332 - 362, 364 - 1000, 1004, 1009 - 1019, 1021 - 1025, 1027, 1033, 1036 - 1037, 1039, 1043 - 1044, 1046 - 1047, 1052 - 1054, 1056 - 1100, 1103 - 1104, 1106, 1114 - 1119, 1121 - 1123, 1128 - 99999, 100012 - 19719995, 19719997 - 41386429, 41386431 - 73398920, 73398922 - 156049353, 156049355 - 156483286, 156483288 - 171741747, 171741749 - 181963791, 181963793 - 285090593, 285090595 - 294290338, 294290340 - 369655925, 369655927 - 382020654, 382020656 - 387306365, 387306367 - 426301857, 426301859 - 468431734, 468431736 - 483693783, 483693785 - 612988285, 612988287 - 638013453, 638013455 - 641289075, 641289077 - 644342134, 644342136 - 662584277, 662584279 - 668709125, 668709127 - 687078894, 687078896 - 747330369, 747330371 - 815301075, 815301077 - 825902496, 825902498 - 850595690, 850595692 - 877146077, 877146079 - 890905786, 890905788 - 893571521, 893571523 - 895512358, 895512360 - 937362697, 937362699 - 954905826, 954905828 - 994735391, 994735393 - 994735402, 994735405 - 1001480553, 1001480555 - 1027052790, 1027052792 - 1114811874, 1114811876 - 1152215462, 1152215464 - 1154873561, 1154873563 - 1183024398, 1183024400 - 1210832253, 1210832255 - 1223240403, 1223240405 - 1268269755, 1268269757 - 1325145577, 1325145579 - 1386491678, 1386491680 - 1403656974, 1403656976 - 1480428606, 1480428608 - 1521398424, 1521398426 - 1542919677, 1542919679 - 1736697215, 1736697217 - 1742807555, 1742807557 - 1766753192, 1766753194 - 1773428101, 1773428103 - 1777034229, 1777034231 - 1818360607, 1818360611 - 1839735484, 1839735486 - 1896753124, 1896753127 - 1953259896, 1953259898 - 1971053206, 1971053208 - 2058629508, 2058629512 - 2059678084, 2059678086 - 2083052966, 2083052968 - 2083778818, 2083778820 - 2089858482, 2089858484 - 2103361452, 2103361454 - 2147483647</p>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="YAMLSceneExample.html"></a></span><div class="tip">An Example of a YAML Scene File</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="TroubleShootingEditor.html"></a></span><div class="tip">Troubleshoot the Editor</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

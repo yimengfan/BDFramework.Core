@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Sprite Atlas workflow</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SpriteAtlasWorkflow.html">English</a></li>
+<li><a href="/cn/current/Manual/SpriteAtlasWorkflow.html">中文</a></li>
+<li><a href="/ja/current/Manual/SpriteAtlasWorkflow.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SpriteAtlasWorkflow.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SpriteAtlasWorkflow.html">English</a></li>
+<li><a href="/cn/current/Manual/SpriteAtlasWorkflow.html">中文</a></li>
+<li><a href="/ja/current/Manual/SpriteAtlasWorkflow.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SpriteAtlasWorkflow.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Unity2D.html">2D game development</a></li>
+<li><a href="Sprites.html">Work with sprites</a></li>
+<li><a href="sprite-atlas.html">Sprite Atlas</a></li>
+<li>Sprite Atlas workflow</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="VariantSpriteAtlas.html"></a></span><div class="tip">Variant Sprite Atlas</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SpriteAtlasDistribution.html"></a></span><div class="tip">Preparing Sprite Atlases for distribution</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Sprite Atlas workflow</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Follow the steps below to create a <span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> Atlas asset and how to select different options and features when you include a sprite atlas in your projects.</p>
+
+<ol>
+<li>Create a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #createAtlas">Sprite Atlas</a><span class="tooltiptext">A texture that is composed of several smaller textures. Also referred to as a texture atlas, image sprite, sprite sheet or packed texture. <a href="class-SpriteAtlas.html" href="#createAtlas">Sprite Atlas</a><span class="tooltiptext">A texture that is composed of several smaller textures. Also referred to as a texture atlas, image sprite, sprite sheet or packed texture. <a href="class-SpriteAtlas.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#spriteatlas" aria-label="Go to glossary anchor for spriteatlas">Glossary</a></span></span></span> Asset.</li>
+<li>Select a list of <a href="#objectlist">Objects for Packing</a> into the Sprite Atlas.</li>
+<li>Enable <a href="#inclbuild">Include in build</a> on Sprite Atlases to include them with the project.</li>
+<li>(Optional) Create a <a href="VariantSpriteAtlas.html">Variant Sprite Atlas</a>.</li>
+<li>(Optional) Prepare Sprite Atlases for <a href="SpriteAtlasDistribution.html">distribution</a>.
+
+<ul>
+<li>Sprites prepared for distribution need to be loaded via <a href="LateBinding.html">Late Binding</a> with a script.</li>
+</ul>
+</li>
+<li>(Optional) <a href="#Optimized">Optimize</a> Sprite Atlas usage and size in your Project for improved performance.</li>
+</ol>
+
+<h2>Prerequisites</h2>
+
+<p>You must have the <a href="com.unity.2d.sprite.html">2D Sprite</a> package installed to have the option to create a Sprite Atlas asset. This package is part of the <a href="2DFeature.html">2D feature set</a> and is automatically installed if you select the <a href="https://docs.unity3d.com/hub/manual/Templates.html">2D template</a> when creating a new project. You can also manually install this package via <a href="Packages.html">Unity’s Package Manager</a>. </p>
+
+<h2>Create a Sprite Atlas Asset<a name="createAtlas" aria-hidden="true"></a>
+</h2>
+
+<p>To create the <strong>Sprite Atlas</strong> Asset, go to <strong>Assets &gt; Create &gt; 2D &gt; Sprite Atlas</strong>. Unity creates the Sprite Atlas in the Asset folder, with the file extension * .spriteatlas.</p>
+
+<h2>Selecting items for the Objects for Packing list<a name="objectlist" aria-hidden="true"></a>
+</h2>
+
+<p>The <strong>Objects for Packing</strong> list displays the currently selected items that are in the Sprite Atlas. You can place Texture2D and Sprite Assets in this list. Drag and drop a folder directly onto the list to automatically add all valid content within the folder to the list (only the folder appears on the list).</p>
+
+<p>To select specific items for the list:</p>
+
+<ol>
+<li>
+<p>Select the Sprite Atlas Asset and find the Objects For Packing list in its <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window. It displays the list of items for Unity to pack when it builds the Sprite Atlas.</p>
+
+<figure>
+<img src="../uploads/Main/ObjectsList.png" alt="">
+</figure>
+</li>
+<li>
+<p>To add items, select the plus (<strong>+</strong>) icon at the lower right of the list to create a new row. Drag a valid Asset onto an empty row to add it to the list, or select the circle icon to the right of the row to open the <strong>Select Object</strong> window. Select an Asset from the Object Picker window to add it to the list:</p>
+
+<figure>
+<img src="../uploads/Main/TexturePicker.png" alt="">
+</figure>
+
+<p>To remove an item from the list, click the minus (<strong>-</strong>) icon at the lower right of the <strong>Objects For Packing</strong> list. To replace an item, drag another item to the row it occupies to replace it on the list.</p>
+</li>
+<li>
+<p>Select <strong>Pack Preview</strong> to preview the combined Atlas Texture in the <strong>Asset Preview</strong> window.</p>
+
+<figure>
+<img src="../uploads/Main/PackPreview.png" alt="">
+</figure>
+</li>
+</ol>
+
+<h2>Include in Build<a name="inclbuild" aria-hidden="true"></a>
+</h2>
+
+<p>All Sprite Atlases have <strong>Include in Build</strong> enabled by default when created. This means that Unity includes the Sprite Atlases with the Project’s <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PublishingBuilds.html">build</a><span class="tooltiptext">The process of compiling your project into a format that is ready to run on a specific platform or platforms. <a href="BuildSettings.html" href="PublishingBuilds.html">build</a><span class="tooltiptext">The process of compiling your project into a format that is ready to run on a specific platform or platforms. <a href="BuildSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#build" aria-label="Go to glossary anchor for build">Glossary</a></span></span></span> and automatically loads them at the build’s run time. Enable or disable the ‘Include in Build’ property to control which Sprite Atlases are included in the Project build. </p>
+
+<figure>
+<img src="../uploads/Main/IncludeInBuild.png" alt="">
+</figure>
+
+<p>Clearing ‘Include in Build’ <a href="SpriteAtlasDistribution.html#Dontinclbuild">disables</a> this behavior, and is done when preparing a Sprite Atlas for <a href="SpriteAtlasDistribution.html">distribution</a>.</p>
+
+<h2>How to optimize Sprite Atlas usage and size for improved performance<a name="Optimized" aria-hidden="true"></a>
+</h2>
+
+<p>When a Sprite is active in a <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, Unity loads the Sprite Atlas it belongs to and all the Textures it contains. This can cause excessive performance overhead if Unity loads a Sprite Atlas with very large Textures when nothing in the Scene is using most of those Textures.</p>
+
+<p>To optimize Sprite Atlas usage, ideally all or most Sprites that are active in the Scene should belong to the same Atlas. It is good practice to split Sprite Textures into multiple smaller Atlases according to their common usage.</p>
+
+<p>Another way to reduce performance overhead is to reduce the empty space between packed Textures in the Sprite Atlas. This reduces the size of the Sprite Atlas. To do this, select the Sprite Atlas and inspect the packed Atlas Texture in the Pack Preview window at the bottom of its Inspector settings. If there is no Preview available, select the <strong>Pack Preview</strong> button under the <strong>Objects for Packing</strong> list to generate the packed Texture. </p>
+
+<figure>
+<img src="../uploads/Main/2D_ExcessSpace.png" alt="Sprite Atlas with excess empty space.">
+<figcaption>Sprite Atlas with excess empty space.</figcaption>
+</figure>
+
+<p>If there is excess empty space visible, you can manually reduce the size of the packed Texture to reduce the amount of empty space and optimize the Atlas’s size. To do so, go to the <strong>Platform-specific overrides</strong> panel at the bottom of the Inspector window. Select a lower value from the drop-down menu of the <strong>Max Texture Size</strong> setting, then select <strong>Pack Preview</strong> to regenerate the packed Texture.</p>
+
+<figure>
+<img src="../uploads/Main/2DSpriteAtlas_MaxTexSize.png" alt="Set the Max Texture Size.">
+<figcaption>Set the Max Texture Size.</figcaption>
+</figure>
+
+<p>When the <strong>Max Texture Size</strong> value is lower than the current dimensions of the Sprite Atlas Texture, Unity reduces the packed Texture dimensions to match the set <strong>Max Texture Size</strong> as closely as possible, and automatically trims away any extra empty space. If there are selected Sprite Textures that exceed the <strong>Max Texture Size</strong> setting of the Sprite Atlas, then the Sprite Atlas ignores the <strong>Max Texture Size</strong> setting and remains at the minimum size required to contain the Sprite Textures at their original dimensions.</p>
+
+<figure>
+<img src="../uploads/Main/2DSpriteAtlas_MinTexSize.png" alt="Textures in a Sprite Atlas remain in their original dimensions.">
+<figcaption>Textures in a Sprite Atlas remain in their original dimensions.</figcaption>
+</figure>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="VariantSpriteAtlas.html"></a></span><div class="tip">Variant Sprite Atlas</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SpriteAtlasDistribution.html"></a></span><div class="tip">Preparing Sprite Atlases for distribution</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

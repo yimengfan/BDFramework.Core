@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Package Manager</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-PackageManager.html">English</a></li>
+<li><a href="/cn/current/Manual/class-PackageManager.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-PackageManager.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-PackageManager.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-PackageManager.html">English</a></li>
+<li><a href="/cn/current/Manual/class-PackageManager.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-PackageManager.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-PackageManager.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="EditorFeatures.html">Editor Features</a></li>
+<li><a href="comp-ManagerGroup.html">Project Settings</a></li>
+<li>Package Manager</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-GraphicsSettings.html"></a></span><div class="tip">Graphics</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-PhysicsManager.html"></a></span><div class="tip">Physics</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Package Manager</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <strong>Package Manager</strong> settings (menu: <strong>Edit &gt; Project Settings</strong>, then the <strong>Package Manager</strong> category) let you manage your scoped registries and modify the advanced settings for your current project.</p>
+
+<figure>
+<img src="../uploads/Main/class-PackageManager.png" alt="The Package Manager settings window. The top of the window displays pre-release package settings (A). The main area of the window (B) displays scoped registries (1) and details for the selected scoped registry (2).">
+<figcaption>The Package Manager settings window. The top of the window displays pre-release package settings (A). The main area of the window (B) displays scoped registries (1) and details for the selected scoped registry (2).</figcaption>
+</figure>
+
+<p>
+<strong>(A)</strong> Under the <strong>Advanced Settings</strong> section, toggle whether or not <a href="#advanced_preview">pre-release packages</a> and <a href="#advanced_dependencies">package dependencies</a> are visible in the Package Manager window.</p>
+
+<p>
+<strong>(B)</strong> <a href="#scoped_add">Add</a>, <a href="#scoped_modify">modify</a>, and <a href="#scoped_remove">remove</a> scoped registries for your project under the <strong>Scoped Registries</strong> group, which contains the following areas:</p>
+
+<p>    <strong>(1)</strong> The list of scoped registries currently defined for this project</p>
+
+<p>    <strong>(2)</strong> The details for the selected scoped registry</p>
+
+<p><br></p>
+
+<p><a name="advanced" aria-hidden="true"></a></p>
+
+<h2>Advanced Settings</h2>
+
+<p>Use the Advanced Settings group to toggle the <a href="#advanced_preview">Enable Pre-release Packages</a> and <a href="#advanced_dependencies">Show Dependencies</a> settings for your current project.</p>
+
+<p><a name="advanced_preview" aria-hidden="true"></a></p>
+
+<h3>Enable Pre-release Packages</h3>
+
+<p>Enable the <strong>Enable Pre-release Packages</strong> setting to display <a href="pack-preview.html">pre-release packages</a> in the Package Manager window. Pre-release packages appear with the <img src="../uploads/Main/iconPre.png" alt="Pre-"> tag in the list view and the <img src="../uploads/Main/iconPrerelease.png" alt="Pre-Release"> tag in the details view, as a reminder of which packages will release with the next long-term support (LTS) version of the Unity Editor.</p>
+
+<p><br></p>
+
+<p>
+<strong>Warning</strong>: </p>
+
+<p>By default this setting is disabled because pre-release packages are still being verified as stable enough for production, but are not fully released yet. For more information about the lifecycle of packages, see <a href="upm-lifecycle.html">Package states and lifecycle</a>.</p>
+
+<p><br></p>
+
+<p><a name="advanced_dependencies" aria-hidden="true"></a></p>
+
+<h3>Show Dependencies</h3>
+
+<p>Enable the <strong>Show Dependencies</strong> setting to: </p>
+
+<ul>
+<li>Show any packages that are installed as <span class="tooltip"><strong>indirect dependencies</strong><span class="tooltiptext">An <strong>indirect</strong>, or transitive dependency occurs when your project requests a package which itself “depends on” another package. For example, if your project depends on the <code>alembic@1.0.7</code> package which in turn depends on the <code>timeline@1.0.0</code> package, then your project has an direct dependency on Alembic and an indirect dependency on Timeline. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-dependencies.html" href="upm-dependencies.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Indirectdependency" aria-label="Go to glossary anchor for Indirectdependency">Glossary</a></span></span></span> in the Package Manager window’s <a href="upm-ui-list.html">list of packages</a>.</li>
+<li>Display a package’s dependency information in the <a href="upm-ui-details.html">package’s details</a> on the Package Manager window. This includes the following:
+
+<ul>
+<li>
+<strong>Is using</strong> lists any packages that this package requires, including the specific version.</li>
+<li>
+<strong>Used by</strong> lists the names and versions of any other packages that depend on this one.</li>
+</ul>
+</li>
+</ul>
+
+<p>
+<strong>Note</strong>: By default, this setting is disabled. For more information about how dependencies work with packages, see <a href="upm-dependencies.html">Dependency and resolution</a>.</p>
+
+<figure>
+<img src="../uploads/Main/upm-show-depend.png" alt="The same project with Show Dependencies disabled (left) and Show Dependencies enabled (right)">
+<figcaption>The same project with <strong>Show Dependencies</strong> disabled (left) and <strong>Show Dependencies</strong> enabled (right)</figcaption>
+</figure>
+
+<p><br></p>
+
+<p><a name="scoped" aria-hidden="true"></a></p>
+
+<h2>Scoped Registries</h2>
+
+<p>The <strong>Scoped Registries</strong> group displays a list of <a href="upm-scoped.html">scoped registries</a> already added to the current project on the left, and the details of the selected registry on the right.</p>
+
+<p>For detailed information about scoped registries, including how to use and configure them with the Unity Package Manager, see the documentation on <a href="upm-scoped.html">Scoped Registries</a>.</p>
+
+<p>
+<strong>Note</strong>: If you added a scoped registry but you don’t see it in the <strong>My Registries</strong> context or the <strong>My Registries</strong> context isn’t available at all, it might be because the package registry server you added does not implement the <code>/-/v1/search</code> or <code>/-/all</code> endpoints, which means that it is not compatible with Unity’s Package Manager.</p>
+
+<p><a name="scoped_add" aria-hidden="true"></a></p>
+
+<h3>Adding a new registry</h3>
+
+<p>To add a new scoped registry to your project:</p>
+
+<ol>
+<li>Select the <strong>+</strong> button at the bottom of the list. A new entry appears as <strong>New Scoped Registry</strong> in the list and blank values for the details on the right and the <strong>Revert</strong> and <strong>Apply</strong> buttons change to <strong>Cancel</strong> and <strong>Save</strong> buttons.</li>
+<li>Enter values for the <a href="upm-scoped.html#name">Name</a>, <a href="upm-scoped.html#url">URL</a>, and <a href="upm-scoped.html#scopes">Scope(s)</a> properties.</li>
+<li>If you need to specify more than one scope, select the <strong>+</strong> button underneath the last <strong>Scope(s)</strong> value. Another text box appears.</li>
+<li>When you are finished entering the information for the selected scoped registry, click <strong>Save</strong>. To cancel adding the new scoped registry entirely, click <strong>Cancel</strong>.</li>
+</ol>
+
+<p><a name="scoped_modify" aria-hidden="true"></a></p>
+
+<h3>Modifying an existing registry</h3>
+
+<p>To modify an existing scoped registry:</p>
+
+<ol>
+<li>Select the registry you want to modify from the list on the left. The existing information appears on the right.</li>
+<li>Modify any of the <a href="upm-scoped.html#name">Name</a>, <a href="upm-scoped.html#url">URL</a>, and <a href="upm-scoped.html#scopes">Scope(s)</a> properties.</li>
+<li>When you are finished updating the information for the selected scoped registry, click <strong>Apply</strong>. To cancel adding the new scoped registry entirely, click <strong>Revert</strong>.</li>
+</ol>
+
+<p><a name="scoped_remove" aria-hidden="true"></a></p>
+
+<h3>Removing a registry</h3>
+
+<p>To delete an existing scoped registry:</p>
+
+<ol>
+<li>Select the registry you want to delete from the list</li>
+<li>Click the <strong>-</strong> button underneath the list. A dialog box prompts you to confirm the removal.</li>
+<li>Click <strong>Ok</strong> to proceed or <strong>Cancel</strong> to leave it intact.</li>
+</ol>
+
+<p><br></p>
+
+<hr>
+
+<p><br></p>
+
+<ul>
+<li><span class="page-history"><strong>Scoped Registries</strong>, __Enable Preview Packages__ and __Show Dependencies__ project settings added in <a href="https://docs.unity3d.com/2020.1/Documentation/Manual/30_search.html?q=newin20201">2020.1</a> <span class="search-words">NewIn20201</span></span></li>
+<li><span class="page-history"><strong>Enable Preview Packages</strong> project setting changed to __Enable Pre-release Packages__ in <a href="https://docs.unity3d.com/2021.1/Documentation/Manual/30_search.html?q=newin20211">2021.1</a> <span class="search-words">NewIn20211</span></span></li>
+</ul>
+
+<p><span class="search-words">PackageManager</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-GraphicsSettings.html"></a></span><div class="tip">Graphics</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-PhysicsManager.html"></a></span><div class="tip">Physics</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Using the Animation view</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/animeditor-UsingAnimationEditor.html">English</a></li>
+<li><a href="/cn/current/Manual/animeditor-UsingAnimationEditor.html">中文</a></li>
+<li><a href="/ja/current/Manual/animeditor-UsingAnimationEditor.html">日本語</a></li>
+<li><a href="/kr/current/Manual/animeditor-UsingAnimationEditor.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/animeditor-UsingAnimationEditor.html">English</a></li>
+<li><a href="/cn/current/Manual/animeditor-UsingAnimationEditor.html">中文</a></li>
+<li><a href="/ja/current/Manual/animeditor-UsingAnimationEditor.html">日本語</a></li>
+<li><a href="/kr/current/Manual/animeditor-UsingAnimationEditor.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AnimationSection.html">Animation</a></li>
+<li><a href="AnimationClips.html">Animation Clips</a></li>
+<li><a href="AnimationEditorGuide.html">Animation Window Guide</a></li>
+<li>Using the Animation view</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AnimationEditorGuide.html"></a></span><div class="tip">Animation Window Guide</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="animeditor-CreatingANewAnimationClip.html"></a></span><div class="tip">Creating a new Animation Clip</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Using the Animation view</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use the <strong>Animation view</strong> to preview and edit <strong>Animation Clips</strong> for animated <strong>GameObjects</strong> in Unity. To open the Animation view in Unity, go to <strong>Window</strong> &gt; <strong>Animation</strong>.</p>
+
+<h2>Viewing Animations on a GameObject</h2>
+
+<p>The <strong>Animation window</strong> is linked to the Hierarchy window, the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view, and the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view, and the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window. Like the Inspector, the Animation window shows the timeline and <span class="tooltip"><strong>keyframes</strong><span class="tooltiptext">A frame that marks the start or end point of a transition in an animation. Frames in between the keyframes are called inbetweens.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#keyframe" aria-label="Go to glossary anchor for keyframe">Glossary</a></span></span></span> of the Animation for the currently selected <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window. Like the Inspector, the Animation window shows the timeline and <span class="tooltip"><strong>keyframes</strong><span class="tooltiptext">A frame that marks the start or end point of a transition in an animation. Frames in between the keyframes are called inbetweens.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#keyframe" aria-label="Go to glossary anchor for keyframe">Glossary</a></span></span></span> of the Animation for the currently selected <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> or <span class="tooltip"><strong>Animation Clip</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a href="class-AnimationClip.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> or <span class="tooltip"><strong>Animation Clip</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> Asset. You can select a GameObject using the Hierarchy window or the <span class="tooltip"><strong>Scene View</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html" href="Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> Asset. You can select a GameObject using the Hierarchy window or the <span class="tooltip"><strong>Scene View</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>, or select an Animation Clip Asset using the Project Window.</p>
+
+<h2>The Animated Properties list</h2>
+
+<p>In the image below, the Animation view (left) shows the Animation used by the currently selected GameObject, and its child GameObjects if they are also controlled by this Animation. The Scene view and Hierarchy view are on the right, demonstrating that the Animation view shows the Animations attached to the currently selected GameObject.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorShowsSelected.jpg" alt="">
+</figure>
+
+<p>In the left side of the Animation view is a list of the animated properties. In a newly created clip where no animation has yet been recorded, this list is empty.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationWindowEmptyClip.png" alt="The Animation view displaying an empty clip. No properties are shown on the left yet.">
+<figcaption>The Animation view displaying an empty clip. No properties are shown on the left yet.</figcaption>
+</figure>
+
+<p>When you begin to animate various properties within this clip, the animated properties will appear here. If the animation controls multiple child objects, the list will also include hierarchical sub-lists of each child object’s animated properties. In the example above, various parts of the Robot Arm’s GameObject hierarchy are all animated within the same animation clip.</p>
+
+<p>When animating a hierarchy of GameObjects within a single clip like this, make sure you create the Animation on the root GameObject in the hierarchy.</p>
+
+<p>Each property can be folded and unfolded to reveal the exact values recorded at each keyframe. The value fields show the interpolated value if the playback head (the white line) is between keyframes. You can edit these fields directly. If changes are made when the playback head is over a keyframe, the keyframe’s values are modified. If changes are made when the playback head is between keyframes (and therefore the value shown is an interpolated value), a new keyframe is created at that point with the new value that you entered.</p>
+
+<h2>The Animation Timeline</h2>
+
+<p>On the right side of the Animation View is the timeline for the current clip. The keyframes for each animated property appear in this timeline. The timeline view has two modes, <strong>Dopesheet</strong> and <strong>Curves</strong>. To toggle between these modes, click <strong>Dopesheet</strong> or <strong>Curves</strong> at the bottom of the animated property list area:</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorDopeSheetCurvesButtons.png" alt="">
+</figure>
+
+<p>These offer two alternate views of the Animation timeline and keyframe data.</p>
+
+<h3>Dopesheet mode</h3>
+
+<p>
+<strong>Dopesheet</strong> mode offers a more compact view, allowing you to view each property’s keyframe sequence in an individual horizontal track. This allows you to view a simple overview of the keyframe timing for multiple properties or GameObjects.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorDopeSheetView.png" alt="Here the Animation Window is in Dope Sheet mode, showing the keyframe positions of all animated properties within the Animation clip">
+<figcaption>Here the Animation Window is in Dope Sheet mode, showing the keyframe positions of all animated properties within the Animation clip</figcaption>
+</figure>
+
+<p>See documentation on <a href="animeditor-AdvancedKeySelectionAndManipulation.html">Key manipulation in Dopesheet mode</a> for more information.</p>
+
+<h3>Curves mode</h3>
+
+<p>
+<strong>Curves</strong> mode displays a resizable graph containing a view of how the values for each animated property changes over time. All selected properties appear overlaid within the same graph view. This mode allows you to have great control over viewing and editing the values, and how they are interpolated between.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorCurvesViewMultipleSelected.png" alt="Here, the Animation Window shows the curves for the rotation data of four selected GameObjects within this Animation clip">
+<figcaption>Here, the Animation Window shows the curves for the rotation data of four selected GameObjects within this Animation clip</figcaption>
+</figure>
+
+<h3>Fitting your selection to the window</h3>
+
+<p>When using <strong>Curves</strong> mode to view your Animation, it’s important to understand that sometimes the various ranges for each property can differ greatly. For example, consider a simple Animation clip for a spinning bouncing cube. The bouncing Y position value may vary between the range 0 to 2 (meaning the cube bounces 2 units high during the animation); however, the rotation value goes from 0 to 360 (representing its degrees of rotation). When viewing these two curves at the same time, the <span class="tooltip"><strong>animation curves</strong><span class="tooltiptext">Allows you to add data to an imported clip so you can animate the timings of other items based on the state of an animator. For example, for a game set in icy conditions, you could use an extra animation curve to control the emission rate of a particle system to show the player’s condensing breath in the cold air. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationCurvesOnImportedClips.html" href="AnimationCurvesOnImportedClips.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationCurves" aria-label="Go to glossary anchor for AnimationCurves">Glossary</a></span></span></span> for the position values will be very difficult to make out because the view will be zoomed out to fit the 0–360 range of the rotation values within the window:</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorTwoCurvesBigRangeDifference.png" alt="The position and rotation curves of a bouncing spinning cube are both selected, but because the view is zoomed out to fit the 0-360 range of the rotation curve, the bouncing Y position curve is not easily discernible">
+<figcaption>The position and rotation curves of a bouncing spinning cube are both selected, but because the view is zoomed out to fit the 0–360 range of the rotation curve, the bouncing Y position curve is not easily discernible</figcaption>
+</figure>
+
+<p>Press <strong>F</strong> on the keyboard to zoom the view to the currently selected keyframes. This is useful as a quick way to focus and re-scale the window on a portion of your Animation timeline for easier editing.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorSelectedKeyframesFitView.png" alt="">
+</figure>
+
+<p>Click on individual properties in the list and press <strong>F</strong> on the keyboard to automatically re-scale the view to fit the range for that value. You can also manually adjust the zoom of the <strong>Curves</strong> window by using the drag handles at each end of the view’s scrollbar sliders. In the image below, the Animation Window is zoomed in to view the bouncing Y position Animation. The start of the yellow rotation curve is still visible, but now extends way off the top of the view:</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorTwoCurvesZoomedIn.png" alt="">
+</figure>
+
+<p>Press <strong>A</strong> on the keyboard to fit and re-scale the window to show all the keyframes in the clip, regardless of which ones are selected. This is useful if you want to view the whole timeline while preserving your current selection:</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorSelectedKeyframesAllView.png" alt="">
+</figure>
+
+<h3>Playback and frame navigation controls</h3>
+
+<p>To control playback of the <strong>Animation Clip</strong>, use the <strong>Playback Controls</strong> at the top left of Animation view.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorFrameNavigation.png" alt="Frame navigation">
+<figcaption>Frame navigation</figcaption>
+</figure>
+
+<p>From left-to-right, these controls are:</p>
+
+<ul>
+<li>Preview mode (toggle on/off).</li>
+<li>Record mode (toggle on/off). Note: Preview mode is on when record mode is on.</li>
+<li>Move the playback head to the beginning of the clip.</li>
+<li>Move the playback head to the previous keyframe.</li>
+<li>Play the Animation Clip starting from the location of the playback head.</li>
+<li>Move the playback head to the next keyframe.</li>
+<li>Move the playback head to the end of the clip.</li>
+<li>The location of the playback head in frames or seconds. Edit this field to move the playhead to a specific location.</li>
+</ul>
+
+<p>You can also control the playback head with the following keyboard shortcuts:</p>
+
+<ul>
+<li>Press Comma (,) to go to the previous frame or second.</li>
+<li>Press Period (.) to go to the next frame or second.</li>
+<li>Hold Alt (macOS: Option) and press Comma (,) to go to the previous keyframe.</li>
+<li>Hold Alt (macOS: Option) and press Period (.) to go to the next keyframe.</li>
+</ul>
+
+<h3>Locking the window</h3>
+
+<p>You can lock the Animation editor window so that it does not automatically switch to reflect the currently selected GameObject in the Hierarchy or Scene. Locking the window is useful if you want to focus on the Animation for one particular GameObject, and still be able to select and manipulate other GameObjects in the Scene.</p>
+
+<figure>
+<img src="../uploads/Main/AnimationEditorWindowLockIcon.png" alt="The Lock button">
+<figcaption>The Lock button</figcaption>
+</figure>
+
+<p>To learn more about navigating the Curve view, see documentation on <a href="animeditor-AnimationCurves.html">Using Animation Curves</a>.</p>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AnimationEditorGuide.html"></a></span><div class="tip">Animation Window Guide</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="animeditor-CreatingANewAnimationClip.html"></a></span><div class="tip">Creating a new Animation Clip</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

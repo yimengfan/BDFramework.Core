@@ -1,0 +1,302 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Solving network issues</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-config-network.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-config-network.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-config-network.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-config-network.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-config-network.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-config-network.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-config-network.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-config-network.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li><a href="Packages.html">Unity's Package Manager</a></li>
+<li><a href="upm-config.html">Configuration</a></li>
+<li>Solving network issues</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-config.html"></a></span><div class="tip">Configuration</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-config-scoped.html"></a></span><div class="tip">Scoped registry authentication</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Solving network issues</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use these procedures to:</p>
+
+<ul>
+<li>
+<a href="#Firewall">Configure your firewall settings</a> so that Unity has access to the Package Manager registry server.</li>
+<li>
+<a href="#Proxy">Configure your proxy server</a>, either by <a href="#Hub">setting environment variables for the Hub</a> or <a href="#SSL">custom certificate authority (CA) certificates</a>.</li>
+</ul>
+
+<p><a name="Firewall" aria-hidden="true"></a></p>
+
+<h2>Configuring your firewall</h2>
+
+<p>To ensure that the Unity Package Manager can access the domains it uses, you must add the domains to your firewall’s safe list.</p>
+
+<p>For a complete list of these domains, and all domains that the Unity Editor requires, refer to <a href="https://docs.unity3d.com/2023.3/Documentation/Manual/ent-proxy-exception-list.html#endpoints-unity">Endpoints that Unity applications access</a>. You can either use the list to add entire domains, or use the table to selectively add subdomains.</p>
+
+<p>Refer to your operating system’s help to learn how to add a domain name to the firewall’s safe list.</p>
+
+<p><a name="Proxy" aria-hidden="true"></a></p>
+
+<h2>Configuring your proxy server</h2>
+
+<p>When using a proxy server, configure the <code>HTTP_PROXY</code> and <code>HTTPS_PROXY</code> environment variables for the Unity Package Manager to use when performing requests against the Unity package registry.</p>
+
+<p>You can set these variables globally (either system or user variables) according to your operating system. Alternatively, you can <a href="#Hub">set them only for the Unity Hub</a> when it launches.</p>
+
+<p>For environments where you are behind a proxy server using a certificate that Package Manager does not recognize, you can configure <a href="#SSL">a custom certificate authority</a>.</p>
+
+<p><a name="SSL" aria-hidden="true"></a></p>
+
+<h3>Custom certificate authority</h3>
+
+<p>In some corporations and institutions, users can only access the internet through a proxy server. Some proxies unpack the HTTPS content and repack it with their own SSL certificate. In some cases, Unity Package Manager’s underlying HTTPS layer rejects these certificates because it does not recognize the certificate authority that emitted them, and treats the connection as a possible <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle attack</a>. This means that you can’t use many features in Unity, including the Package Manager, unless you configure additional SSL certificate authorities to allow these certificates.</p>
+
+<p>To configure additional SSL certificate authorities:</p>
+
+<ol>
+<li><p>Locate the <a href="upm-config.html#upmconfig"><code>upmconfig.toml</code> global configuration file</a>. If the file does not already exist, create an empty text file.</p></li>
+<li>
+<p>Create a text file with one or more certificates for custom certificate authorities. The file should consist of one or more trusted certificates in the <a href="https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail">Privacy-Enhanced Mail</a> (PEM) format. For example:</p>
+
+<pre><code class="lang-pem">-----BEGIN CERTIFICATE-----
+MIIC+zCCAeOgAwIBAgIJAO0U6hVJnbvjMA0GCSqGSIb3DQEBBQUAMBQxEjAQBgNV
+BAMMCWxvY2FsaG9zdDAeFw0xOTAzMTIwMTIxMzRaFw0yOTAzMDkwMTIxMzRaMBQx
+EjAQBgNVBAMMCWxvY2FsaG9zdDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+ggEBAKNh0EM7j57pXorGs5OHzlk9TYeUqITtXXdWfY1fbqRdj+a8qLNs4m/nDsDW
+KgibHYG3FUqIidjPL61DLQuWUPY9Zo+uQaccIe0E5wb+To9mwMlLuhMD6iCPFRpe
+jcDhNj4vG1RVARMO1jupeZqdb+xHBZqtmMJmtiDOBxt662Z4hvoH8mdqNEuSkozz
+HqXmcdigrTO37DspGRBx08GJlHFHUs7C+hYOsOdNjME3dH/8uihjKYiqQb1E12dN
+PNL7jYm3AZv+qUmDFM3BJE0hSmAP00GuTJxbe31Kh4e7N5/XSiLsnqwircOj/Hfi
+eWjtsoXbCNDIiWUQtXBeLD/BdvkCAwEAAaNQME4wHQYDVR0OBBYEFDFw8VDkgMne
+mDjgo+b1iaPfUkdVMB8GA1UdIwQYMBaAFDFw8VDkgMnemDjgo+b1iaPfUkdVMAwG
+A1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEFBQADggEBAFEjUWGz1r3xSsbwUJsRhbMc
+M7Jjf9/r833H7eq31mbl/JbXPnpo8IctMuWyw42ccMtgq7i+coQeKwvWnHtI5rhe
+vshEkIqNPAoCnpW5NLprYDDTG1PDEhv6FYpW8Alq65i03tptzaoHlH3sH+97E/h0
+qSYI7yNHWMC5u0r1DB0BR+lZsj6RnwWPySMSuXx5sSiKIS/HkkMVwwmxKa4ZwuwS
+LFwHSUdqk0lJK4b0mCwyTHNvYO1IDziE5EKwfuaKVgOa62iCHVahgIVa+een4EfS
+hCCr3M3cq11Mi+mnRi1scxxrOno4OEEChWg2szZLlxBrkVJllrrq620XJ6RLB/8=
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+MIIDtzCCAp+gAwIBAgIQDOfg5RfYRv6P5WD8G/AwOTANBgkqhkiG9w0BAQUFADBl
+MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3
+d3cuZGlnaWNlcnQuY29tMSQwIgYDVQQDExtEaWdpQ2VydCBBc3N1cmVkIElEIFJv
+b3QgQ0EwHhcNMDYxMTEwMDAwMDAwWhcNMzExMTEwMDAwMDAwWjBlMQswCQYDVQQG
+EwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3d3cuZGlnaWNl
+cnQuY29tMSQwIgYDVQQDExtEaWdpQ2VydCBBc3N1cmVkIElEIFJvb3QgQ0EwggEi
+MA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCtDhXO5EOAXLGH87dg+XESpa7c
+JpSIqvTO9SA5KFhgDPiA2qkVlTJhPLWxKISKityfCgyDF3qPkKyK53lTXDGEKvYP
+mDI2dsze3Tyoou9q+yHyUmHfnyDXH+Kx2f4YZNISW1/5WBg1vEfNoTb5a3/UsDg+
+wRvDjDPZ2C8Y/igPs6eD1sNuRMBhNZYW/lmci3Zt1/GiSw0r/wty2p5g0I6QNcZ4
+VYcgoc/lbQrISXwxmDNsIumH0DJaoroTghHtORedmTpyoeb6pNnVFzF1roV9Iq4/
+AUaG9ih5yLHa5FcXxH4cDrC0kqZWs72yl+2qp/C3xag/lRbQ/6GW6whfGHdPAgMB
+AAGjYzBhMA4GA1UdDwEB/wQEAwIBhjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQW
+BBRF66Kv9JLLgjEtUYunpyGd823IDzAfBgNVHSMEGDAWgBRF66Kv9JLLgjEtUYun
+pyGd823IDzANBgkqhkiG9w0BAQUFAAOCAQEAog683+Lt8ONyc3pklL/3cmbYMuRC
+dWKuh+vy1dneVrOfzM4UKLkNl2BcEkxY5NM9g0lFWJc1aRqoR+pWxnmrEthngYTf
+fwk8lOa4JiwgvT2zKIn3X/8i4peEH+ll74fg38FnSbNd67IJKusm7Xi+fT8r87cm
+NW1fiQG2SVufAQWbqz0lwcy2f8Lxb4bG+mRo64EtlOtCt/qMHt1i8b5QZ7dsvfPx
+H2sMNgcWfzd8qVttevESRmCD1ycEvkvOl77DZypoEd+A5wwzZr8TDRRu838fYxAe
++o0bJW1sj6W3YQGx0qMmoRBxna3iw/nDmVG3KwcIzi7mULKn+gpFL6Lw8g==
+-----END CERTIFICATE-----
+</code></pre>
+</li>
+<li><p>Save this file to the same folder as the global configuration file if possible, although Unity supports any location on the file system.</p></li>
+<li>
+<p>In the global configuration file, add the <strong>caFile</strong> key and set its value as an absolute file path to your PEM file. <strong>Important</strong>: When setting Windows paths in TOML files, use forward slashes (<code>/</code>) or double backslashes (<code>\\</code>). Don’t use single backslashes (<code>\</code>) because they’re special characters which mark escape sequences and can cause TOML parsing errors.</p>
+
+<p><strong>Windows example</strong></p>
+
+<pre><code class="lang-toml">caFile = &quot;C:\\ProgramData\\Unity\\config\\cert.pem&quot;
+</code></pre>
+
+<p><strong>macOS and Linux example</strong></p>
+
+<pre><code class="lang-toml">caFile = &quot;/etc/cert.pem&quot;
+</code></pre>
+</li>
+</ol>
+
+<p><a name="Hub" aria-hidden="true"></a></p>
+
+<h3>Setting environment variables for the Unity Hub</h3>
+
+<p>This section provides instructions for creating a command file you can run from a <a href="#Windows">Windows command prompt</a> or a <a href="#MacOS">macOS or Linux terminal</a>. Alternatively, you can copy and paste the commands directly into the prompt or terminal window.</p>
+
+<p>
+<strong>Note:</strong> Before you run the command file, shut down the Hub completely. If the Hub is already running, the script switches focus to the Hub without relaunching, so it does not apply the changed proxy settings.</p>
+
+<p><a name="Windows" aria-hidden="true"></a></p>
+
+<h4>Windows</h4>
+
+<p>These instructions create a command file on Windows.</p>
+
+<p>The file launches the Hub with the environment variables set. You can either double-click the file, or invoke it from the command prompt. Unity passes these environment variables on to any Unity Editor process launched from the Hub.</p>
+
+<ol>
+<li><p>Open a text editor such as Notepad.</p></li>
+<li>
+<p>Enter the following text, replacing <strong>proxy-url</strong> with the correct proxy server URL and adjusting the Hub install path if needed:</p>
+
+<pre><code class="lang-powershell">@echo off
+set HTTP_PROXY=proxy-url
+set HTTPS_PROXY=proxy-url
+start &quot;&quot; &quot;C:\Program Files\Unity Hub\Unity Hub.exe&quot;
+
+</code></pre>
+
+<p>
+<strong>Note:</strong> If there are spaces in the path, you must use double quotes around the path to the program.</p>
+</li>
+<li><p>Save the file to a location where you can easily find it (such as the <code>Desktop</code>), and make sure the file has the <code>.cmd</code> (for example, <code>launchUnityHub.cmd</code>).</p></li>
+</ol>
+
+<p><a name="MacOS" aria-hidden="true"></a></p>
+
+<h4>macOS</h4>
+
+<p>These instructions create the <code>launchUnityHub.command</code> file on macOS.</p>
+
+<p>The file launches the Hub with the environment variables set. You can either double-click the file, or invoke it from a Bash terminal. Unity passes these environment variables on to any Unity Editor process launched from the Hub.</p>
+
+<p>
+<strong>Note:</strong> Double-clicking the command file opens a Terminal window or tab and leaves it open, even after the script finishes. You can change this behavior in the preferences for the <strong>Terminal.app</strong>.</p>
+
+<ol>
+<li><p>Open a Terminal window.</p></li>
+<li>
+<p>Enter the following script, replacing <strong>proxy-url</strong> with the correct proxy server URL and adjusting the Hub install path if needed:</p>
+
+<pre><code class="lang-bash">echo '#!/bin/bash
+export HTTP_PROXY=proxy-url
+export HTTPS_PROXY=proxy-url
+nohup &quot;/Applications/Unity Hub.app/Contents/MacOS/Unity Hub&quot; &amp;&gt;/dev/null &amp;' &gt; launchUnityHub.command
+chmod +x launchUnityHub.command
+</code></pre>
+
+<p>
+<strong>Note:</strong> If there are spaces in the path, you must use double quotes around the path to the program.</p>
+</li>
+<li><p>Move the <code>launchUnityHub.command</code> file to a convenient location (for example, the <code>Desktop</code>), if you prefer.</p></li>
+</ol>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-config.html"></a></span><div class="tip">Configuration</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-config-scoped.html"></a></span><div class="tip">Scoped registry authentication</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

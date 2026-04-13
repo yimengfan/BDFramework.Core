@@ -1,0 +1,293 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Hinge Joint component reference</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-HingeJoint.html">English</a></li>
+<li><a href="/cn/current/Manual/class-HingeJoint.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-HingeJoint.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-HingeJoint.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-HingeJoint.html">English</a></li>
+<li><a href="/cn/current/Manual/class-HingeJoint.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-HingeJoint.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-HingeJoint.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PhysicsSection.html">Physics</a></li>
+<li><a href="PhysicsOverview.html">Built-in 3D Physics</a></li>
+<li><a href="joints-section.html">Joints</a></li>
+<li>Hinge Joint component reference</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-FixedJoint.html"></a></span><div class="tip">Fixed Joint component reference</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-SpringJoint.html"></a></span><div class="tip">Spring Joint component reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Hinge Joint component reference</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/HingeJoint.html' title='Go to HingeJoint page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <strong>Hinge <span class="tooltip"><strong>Joint</strong><span class="tooltiptext">A physics component allowing a dynamic connection between Rigidbody components, usually allowing some degree of movement such as a hinge. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Joints.html" href="Joints.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#joint" aria-label="Go to glossary anchor for joint">Glossary</a></span></span></span></strong> groups together two <span class="tooltip"><a href="class-Rigidbody.html">Rigidbodies</a><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a href="class-Rigidbody.html" href="Glossary.html#joint" aria-label="Go to glossary anchor for joint">Glossary</a></span></span></span></strong> groups together two <span class="tooltip"><a href="class-Rigidbody.html">Rigidbodies</a><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a href="class-Rigidbody.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span>, constraining them to move like they are connected by a hinge. It is perfect for doors, but can also be used to model chains, pendulums, and other objects that have a similar hinge-like motion.</p>
+
+<p>A single <strong>Hinge Joint</strong> should be applied to a <strong><span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span></strong>. The hinge rotates at the point specified by the <strong>Anchor</strong> property, moving around the specified <strong>Axis</strong> property. </p>
+
+<p>The Hinge Joint has <strong>Spring</strong>, <strong>Motor</strong>, and <strong>Limits</strong> properties, which allow you to fine-tune the joint’s behaviors.</p>
+
+<h2>Properties</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Edit Angular Limits</strong></td>
+	<td style="text-align:left;">Adds a visual <span class="tooltip"><strong>gizmo</strong><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GizmosMenu.html#GizmosIcons" href="GizmosMenu.html#GizmosIcons">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Gizmo" aria-label="Go to glossary anchor for Gizmo">Glossary</a></span></span></span> to the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Gizmo" aria-label="Go to glossary anchor for Gizmo">Glossary</a></span></span></span> to the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view that helps you edit joint angular limits. To use this gizmo, set the <strong>Angular X, Y, Z Motion</strong> to <strong>Limited</strong> and then handles appear for you to drag and adjust the joint’s rotational space.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Connected Body</strong></td>
+	<td style="text-align:left;">Optional reference to the Rigidbody that the joint is dependent upon. If you do not assign a <strong>Connected Body</strong> or <strong>Connected Articulation Body</strong>, the joint connects to the world. <br><br> You can use connected bodies to string multiple Hinge Joints together to create a chain. Add a joint to each link in the chain, and attach the next link as the <strong>Connected Body</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Connected Articulation Body</strong></td>
+	<td style="text-align:left;">Optional reference to the ArticulationBody that the joint is dependent upon. If not set, the joint connects to the world.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Anchor</strong></td>
+	<td style="text-align:left;">The position of the axis around which the body swings. The position is defined in local space. For example, for a normal door hinge, the <strong>Anchor</strong> is at the intersection between the door and the wall. For a door that is connected to the normal door, like a cat flap or a pet door, the normal door should be assigned as the pet door’s <strong>Connected Body</strong>, so that the pet door’s hinge is connected to the main door’s Rigidbody, rather than to a fixed point in world space.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Axis</strong></td>
+	<td style="text-align:left;">The direction of the axis around which the body swings. The direction is defined in local space. For example, for a door that opens at the side, like a normal door hinge, the <strong>Axis</strong> is up, positive along the Y axis. For a door that opens from the bottom or top, like a cat flap or a pet door, the <strong>Axis</strong> is sideways, positive along the relative X axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Auto Configure Connected Anchor</strong></td>
+	<td style="text-align:left;">If this is enabled, Unity calculates the Connected Anchor position automatically to match the global position of the anchor property. This is the default behavior. If this is disabled, you can configure the position of the connected anchor manually.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Connected Anchor</strong></td>
+	<td style="text-align:left;">Manual configuration of the connected anchor position.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Use Spring</strong></td>
+	<td style="text-align:left;">Spring makes the Rigidbody reach for a specific angle compared to its connected body. <br><br><strong>Spring</strong> and <strong>Motor</strong> are intended to be mutually exclusive. Using both at the same time leads to unpredictable results.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Spring</strong></td>
+	<td style="text-align:left;">Properties of the Spring that are used if <strong>Use Spring</strong> is enabled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Spring</strong></td>
+	<td style="text-align:left;">The force the object asserts to move into the position.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Damper</strong></td>
+	<td style="text-align:left;">The higher this value, the more the object slows down.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Target Position</strong><span class="tooltiptext">A joint property to set the target position that the joint’s drive force should move it to. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ConfigurableJoint.html" href="class-ConfigurableJoint.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TargetPosition" aria-label="Go to glossary anchor for TargetPosition">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Target angle of the spring. The spring pulls towards this angle measured in degrees.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Use Motor</strong></td>
+	<td style="text-align:left;">The motor makes the object spin around. <br><br><strong>Spring</strong> and <strong>Motor</strong> are intended to be mutually exclusive. Using both at the same time leads to unpredictable results.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Motor</strong></td>
+	<td style="text-align:left;">Properties of the Motor that are used if <strong>Use Motor</strong> is enabled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Target Velocity</strong><span class="tooltiptext">A joint property to set the desired velocity with which the joint should move to the Target Position under the drive force. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ConfigurableJoint.html" href="class-ConfigurableJoint.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TargetVelocity" aria-label="Go to glossary anchor for TargetVelocity">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">The speed the object tries to attain.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Force</strong></td>
+	<td style="text-align:left;">The force applied in order to attain the speed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Free Spin</strong></td>
+	<td style="text-align:left;">If enabled, the motor never decreases the rate of acceleration.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Use Limits</strong></td>
+	<td style="text-align:left;">If enabled, the angle of the hinge is restricted within the <strong>Min</strong> &amp; <strong>Max</strong> values.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Limits</strong></td>
+	<td style="text-align:left;">Properties of the Limits that are used if <strong>Use Limits</strong> is enabled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Min</strong></td>
+	<td style="text-align:left;">The lowest angle the rotation can go.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Max</strong></td>
+	<td style="text-align:left;">The highest angle the rotation can go.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Bounciness</strong></td>
+	<td style="text-align:left;">How much the object bounces when it hits the minimum or maximum stop limit.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Contact Distance</strong><span class="tooltiptext">A joint limit property that sets the minimum distance tolerance between the joint position and the limit at which the limit will be enforced. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-CharacterJoint.html" href="class-CharacterJoint.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ContactDistance" aria-label="Go to glossary anchor for ContactDistance">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Within the contact distance from the limit contacts persist in order to avoid jitter.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Break Force</strong></td>
+	<td style="text-align:left;">The force that needs to be applied for this joint to break.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Break Torque</strong></td>
+	<td style="text-align:left;">The torque that needs to be applied for this joint to break.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Enable <span class="tooltip"><strong>Collision</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">When checked, this enables collisions between bodies connected with a joint.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Enable Preprocessing</strong></td>
+	<td style="text-align:left;">Disabling preprocessing helps to stabilize impossible-to-fulfil configurations.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Mass Scale</strong></td>
+	<td style="text-align:left;">The scale to apply to the inverted mass and inertia tensor of the Rigidbody, ranging from 0.00001 to infinity. This is useful when the joint connects two Rigidbodies of largely varying mass. The physics solver produces better results when the connected Rigidbodies have a similar mass. When your connected Rigidbodies vary in mass, use this property with the <strong>Connect Mass Scale</strong> property to apply fake masses to make them roughly equal to each other. This produces a high-quality and stable simulation, but reduces the physical behaviour of the Rigidbodies.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Connected Mass Scale</strong></td>
+	<td style="text-align:left;">The scale to apply to the inverted mass and inertia tensor of the connected Rigidbody, ranging from 0.00001 to infinity.</td>
+</tr>
+</tbody>
+</table>
+<!-- area:authoring -->
+
+<p><span class="search-words">HingeJoint</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-FixedJoint.html"></a></span><div class="tip">Fixed Joint component reference</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-SpringJoint.html"></a></span><div class="tip">Spring Joint component reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

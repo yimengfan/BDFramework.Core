@@ -1,0 +1,908 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: USS color keywords</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-uss-color-keywords.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-uss-color-keywords.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-uss-color-keywords.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-uss-color-keywords.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-uss-color-keywords.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-uss-color-keywords.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-uss-color-keywords.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-uss-color-keywords.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-USS.html">Style UI</a></li>
+<li><a href="UIE-uss-properties.html">USS properties</a></li>
+<li>USS color keywords</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-USS-Properties-Reference.html"></a></span><div class="tip">USS properties reference</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-USS-variables.html"></a></span><div class="tip">USS custom properties (variables)</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>USS color keywords</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The following table lists all the supported color keywords, their RGB hex values, and the sample colors.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Keyword</strong></th>
+	<th style="text-align:left;"><strong>RGB hex value</strong></th>
+	<th style="text-align:left;"><strong>Sample</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>aliceblue</code></td>
+	<td style="text-align:left;"><code>#f0f8ff</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: aliceblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>antiquewhite</code></td>
+	<td style="text-align:left;"><code>#faebd7</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: antiquewhite;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>aqua</code></td>
+	<td style="text-align:left;"><code>#00ffff</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: aqua;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>aquamarine</code></td>
+	<td style="text-align:left;"><code>#7fffd4</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: aquamarine;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>azure</code></td>
+	<td style="text-align:left;"><code>#f0ffff</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: azure;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>beige</code></td>
+	<td style="text-align:left;"><code>#f5f5dc</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: beige;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>bisque</code></td>
+	<td style="text-align:left;"><code>#ffe4c4</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: bisque;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>black</code></td>
+	<td style="text-align:left;"><code>#000000</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: black;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>blanchedalmond</code></td>
+	<td style="text-align:left;"><code>#ffebcd</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: blanchedalmond;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>blue</code></td>
+	<td style="text-align:left;"><code>#0000ff</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: blue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>blueviolet</code></td>
+	<td style="text-align:left;"><code>#8a2be2</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: blueviolet;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>brown</code></td>
+	<td style="text-align:left;"><code>#a52a2a</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: brown;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>burlywood</code></td>
+	<td style="text-align:left;"><code>#deb887</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: burlywood;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>cadetblue</code></td>
+	<td style="text-align:left;"><code>#5f9ea0</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: cadetblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>chartreuse</code></td>
+	<td style="text-align:left;"><code>#7fff00</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: chartreuse;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>chocolate</code></td>
+	<td style="text-align:left;"><code>#d2691e</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: chocolate;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>coral</code></td>
+	<td style="text-align:left;"><code>#ff7f50</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: coral;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>cornflowerblue</code></td>
+	<td style="text-align:left;"><code>#6495ed</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: cornflowerblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>cornsilk</code></td>
+	<td style="text-align:left;"><code>#fff8dc</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: cornsilk;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>crimson</code></td>
+	<td style="text-align:left;"><code>#dc143c</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: crimson;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>cyan</code></td>
+	<td style="text-align:left;"><code>#00ffff</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: cyan;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkblue</code></td>
+	<td style="text-align:left;"><code>#00008b</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkcyan</code></td>
+	<td style="text-align:left;"><code>#008b8b</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkcyan;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkgoldenrod</code></td>
+	<td style="text-align:left;"><code>#b8860b</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkgoldenrod;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkgray</code></td>
+	<td style="text-align:left;"><code>#a9a9a9</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkgray;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkgreen</code></td>
+	<td style="text-align:left;"><code>#006400</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkgreen;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkgrey</code></td>
+	<td style="text-align:left;"><code>#a9a9a9</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkgrey;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkkhaki</code></td>
+	<td style="text-align:left;"><code>#bdb76b</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkkhaki;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkmagenta</code></td>
+	<td style="text-align:left;"><code>#8b008b</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkmagenta;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkolivegreen</code></td>
+	<td style="text-align:left;"><code>#556b2f</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkolivegreen;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkorange</code></td>
+	<td style="text-align:left;"><code>#ff8c00</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkorange;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkorchid</code></td>
+	<td style="text-align:left;"><code>#9932cc</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkorchid;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkred</code></td>
+	<td style="text-align:left;"><code>#8b0000</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkred;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darksalmon</code></td>
+	<td style="text-align:left;"><code>#e9967a</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darksalmon;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkseagreen</code></td>
+	<td style="text-align:left;"><code>#8fbc8f</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkseagreen;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkslateblue</code></td>
+	<td style="text-align:left;"><code>#483d8b</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkslateblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkslategray</code></td>
+	<td style="text-align:left;"><code>#2f4f4f</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkslategray;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkslategrey</code></td>
+	<td style="text-align:left;"><code>#2f4f4f</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkslategrey;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkturquoise</code></td>
+	<td style="text-align:left;"><code>#00ced1</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkturquoise;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>darkviolet</code></td>
+	<td style="text-align:left;"><code>#9400d3</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: darkviolet;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>deeppink</code></td>
+	<td style="text-align:left;"><code>#ff1493</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: deeppink;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>deepskyblue</code></td>
+	<td style="text-align:left;"><code>#00bfff</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: deepskyblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>dimgray</code></td>
+	<td style="text-align:left;"><code>#696969</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: dimgray;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>dimgrey</code></td>
+	<td style="text-align:left;"><code>#696969</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: dimgrey;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>dodgerblue</code></td>
+	<td style="text-align:left;"><code>#1e90ff</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: dodgerblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>firebrick</code></td>
+	<td style="text-align:left;"><code>#b22222</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: firebrick;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>floralwhite</code></td>
+	<td style="text-align:left;"><code>#fffaf0</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: floralwhite;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>forestgreen</code></td>
+	<td style="text-align:left;"><code>#228b22</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: forestgreen;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>gainsboro</code></td>
+	<td style="text-align:left;"><code>#dcdcdc</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: gainsboro;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>ghostwhite</code></td>
+	<td style="text-align:left;"><code>#f8f8ff</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: ghostwhite;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>gold</code></td>
+	<td style="text-align:left;"><code>#ffd700</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: gold;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>gray</code></td>
+	<td style="text-align:left;"><code>#808080</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: gray;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>green</code></td>
+	<td style="text-align:left;"><code>#008000</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: green;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>goldenrod</code></td>
+	<td style="text-align:left;"><code>#daa520</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: goldenrod;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>greenyellow</code></td>
+	<td style="text-align:left;"><code>#adff2f</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: greenyellow;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>grey</code></td>
+	<td style="text-align:left;"><code>#808080</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: grey;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>honeydew</code></td>
+	<td style="text-align:left;"><code>#f0fff0</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: honeydew;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>hotpink</code></td>
+	<td style="text-align:left;"><code>#ff69b4</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: hotpink;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>indianred</code></td>
+	<td style="text-align:left;"><code>#cd5c5c</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: indianred;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>indigo</code></td>
+	<td style="text-align:left;"><code>#4b0082</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: indigo;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>ivory</code></td>
+	<td style="text-align:left;"><code>#fffff0</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: ivory;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>khaki</code></td>
+	<td style="text-align:left;"><code>#f0e68c</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: khaki;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lavender</code></td>
+	<td style="text-align:left;"><code>#e6e6fa</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lavender;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lavenderblush</code></td>
+	<td style="text-align:left;"><code>#fff0f5</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lavenderblush;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lawngreen</code></td>
+	<td style="text-align:left;"><code>#7cfc00</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lawngreen;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lemonchiffon</code></td>
+	<td style="text-align:left;"><code>#fffacd</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lemonchiffon;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lightblue</code></td>
+	<td style="text-align:left;"><code>#add8e6</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lightblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lightcoral</code></td>
+	<td style="text-align:left;"><code>#f08080</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lightcoral;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lightcyan</code></td>
+	<td style="text-align:left;"><code>#e0ffff</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lightcyan;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lightgoldenrodyellow</code></td>
+	<td style="text-align:left;"><code>#fafad2</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lightgoldenrodyellow;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lightgray</code></td>
+	<td style="text-align:left;"><code>#d3d3d3</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lightgray;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lightgreen</code></td>
+	<td style="text-align:left;"><code>#90ee90</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lightgreen;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lightgrey</code></td>
+	<td style="text-align:left;"><code>#d3d3d3</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lightgrey;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lightpink</code></td>
+	<td style="text-align:left;"><code>#ffb6c1</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lightpink;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lightsalmon</code></td>
+	<td style="text-align:left;"><code>#ffa07a</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lightsalmon;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lightseagreen</code></td>
+	<td style="text-align:left;"><code>#20b2aa</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lightseagreen;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lightskyblue</code></td>
+	<td style="text-align:left;"><code>#87cefa</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lightskyblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lightslategray</code></td>
+	<td style="text-align:left;"><code>#778899</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lightslategray;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lightslategrey</code></td>
+	<td style="text-align:left;"><code>#778899</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lightslategrey;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lightsteelblue</code></td>
+	<td style="text-align:left;"><code>#b0c4de</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lightsteelblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lightyellow</code></td>
+	<td style="text-align:left;"><code>#ffffe0</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lightyellow;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>lime</code></td>
+	<td style="text-align:left;"><code>#00ff00</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: lime;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>limegreen</code></td>
+	<td style="text-align:left;"><code>#32cd32</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: limegreen;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>linen</code></td>
+	<td style="text-align:left;"><code>#faf0e6</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: linen;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>magenta</code></td>
+	<td style="text-align:left;"><code>#ff00ff</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: magenta;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>maroon</code></td>
+	<td style="text-align:left;"><code>#800000</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: maroon;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>mediumaquamarine</code></td>
+	<td style="text-align:left;"><code>#66cdaa</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: mediumaquamarine;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>mediumblue</code></td>
+	<td style="text-align:left;"><code>#0000cd</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: mediumblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>mediumorchid</code></td>
+	<td style="text-align:left;"><code>#ba55d3</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: mediumorchid;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>mediumpurple</code></td>
+	<td style="text-align:left;"><code>#9370db</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: mediumpurple;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>mediumseagreen</code></td>
+	<td style="text-align:left;"><code>#3cb371</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: mediumseagreen;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>mediumslateblue</code></td>
+	<td style="text-align:left;"><code>#7b68ee</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: mediumslateblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>mediumspringgreen</code></td>
+	<td style="text-align:left;"><code>#00fa9a</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: mediumspringgreen;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>mediumturquoise</code></td>
+	<td style="text-align:left;"><code>#48d1cc</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: mediumturquoise;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>mediumvioletred</code></td>
+	<td style="text-align:left;"><code>#c71585</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: mediumvioletred;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>midnightblue</code></td>
+	<td style="text-align:left;"><code>#191970</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: midnightblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>mintcream</code></td>
+	<td style="text-align:left;"><code>#f5fffa</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: mintcream;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>mistyrose</code></td>
+	<td style="text-align:left;"><code>#ffe4e1</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: mistyrose;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>moccasin</code></td>
+	<td style="text-align:left;"><code>#ffe4b5</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: moccasin;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>navajowhite</code></td>
+	<td style="text-align:left;"><code>#ffdead</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: navajowhite;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>navy</code></td>
+	<td style="text-align:left;"><code>#000080</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: navy;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>oldlace</code></td>
+	<td style="text-align:left;"><code>#fdf5e6</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: oldlace;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>olive</code></td>
+	<td style="text-align:left;"><code>#808000</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: olive;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>olivedrab</code></td>
+	<td style="text-align:left;"><code>#6b8e23</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: olivedrab;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>orange</code></td>
+	<td style="text-align:left;"><code>#ffa500</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: orange;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>orangered</code></td>
+	<td style="text-align:left;"><code>#ff4500</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: orangered;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>orchid</code></td>
+	<td style="text-align:left;"><code>#da70d6</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: orchid;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>palegoldenrod</code></td>
+	<td style="text-align:left;"><code>#eee8aa</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: palegoldenrod;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>palegreen</code></td>
+	<td style="text-align:left;"><code>#98fb98</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: palegreen;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>paleturquoise</code></td>
+	<td style="text-align:left;"><code>#afeeee</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: paleturquoise;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>palevioletred</code></td>
+	<td style="text-align:left;"><code>#db7093</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: palevioletred;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>papayawhip</code></td>
+	<td style="text-align:left;"><code>#ffefd5</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: papayawhip;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>peachpuff</code></td>
+	<td style="text-align:left;"><code>#ffdab9</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: peachpuff;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>peru</code></td>
+	<td style="text-align:left;"><code>#cd853f</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: peru;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>pink</code></td>
+	<td style="text-align:left;"><code>#ffc0cb</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: pink;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>plum</code></td>
+	<td style="text-align:left;"><code>#dda0dd</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: plum;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>powderblue</code></td>
+	<td style="text-align:left;"><code>#b0e0e6</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: powderblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>purple</code></td>
+	<td style="text-align:left;"><code>#800080</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: purple;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>rebeccapurple</code></td>
+	<td style="text-align:left;"><code>#663399</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: rebeccapurple;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>red</code></td>
+	<td style="text-align:left;"><code>#ff0000</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: red;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>rosybrown</code></td>
+	<td style="text-align:left;"><code>#bc8f8f</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: rosybrown;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>royalblue</code></td>
+	<td style="text-align:left;"><code>#4169e1</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: royalblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>saddlebrown</code></td>
+	<td style="text-align:left;"><code>#8b4513</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: saddlebrown;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>salmon</code></td>
+	<td style="text-align:left;"><code>#fa8072</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: salmon;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>sandybrown</code></td>
+	<td style="text-align:left;"><code>#f4a460</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: sandybrown;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>seagreen</code></td>
+	<td style="text-align:left;"><code>#2e8b57</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: seagreen;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>seashell</code></td>
+	<td style="text-align:left;"><code>#fff5ee</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: seashell;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>sienna</code></td>
+	<td style="text-align:left;"><code>#a0522d</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: sienna;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>silver</code></td>
+	<td style="text-align:left;"><code>#c0c0c0</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: silver;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>skyblue</code></td>
+	<td style="text-align:left;"><code>#87ceeb</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: skyblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>slateblue</code></td>
+	<td style="text-align:left;"><code>#6a5acd</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: slateblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>slategray</code></td>
+	<td style="text-align:left;"><code>#708090</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: slategray;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>slategrey</code></td>
+	<td style="text-align:left;"><code>#708090</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: slategrey;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>snow</code></td>
+	<td style="text-align:left;"><code>#fffafa</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: snow;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>springgreen</code></td>
+	<td style="text-align:left;"><code>#00ff7f</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: springgreen;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>steelblue</code></td>
+	<td style="text-align:left;"><code>#4682b4</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: steelblue;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>tan</code></td>
+	<td style="text-align:left;"><code>#d2b48c</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: tan;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>teal</code></td>
+	<td style="text-align:left;"><code>#008080</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: teal;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>thistle</code></td>
+	<td style="text-align:left;"><code>#d8bfd8</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: thistle;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>tomato</code></td>
+	<td style="text-align:left;"><code>#ff6347</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: tomato;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>transparent</code></td>
+	<td style="text-align:left;"><code>rgba(0,0,0,0)</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: transparent;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>turquoise</code></td>
+	<td style="text-align:left;"><code>#40e0d0</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: turquoise;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>violet</code></td>
+	<td style="text-align:left;"><code>#ee82ee</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: violet;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>wheat</code></td>
+	<td style="text-align:left;"><code>#f5deb3</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: wheat;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>white</code></td>
+	<td style="text-align:left;"><code>#ffffff</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: white;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>whitesmoke</code></td>
+	<td style="text-align:left;"><code>#f5f5f5</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: whitesmoke;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>yellow</code></td>
+	<td style="text-align:left;"><code>#ffff00</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: yellow;"></div></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>yellowgreen</code></td>
+	<td style="text-align:left;"><code>#9acd32</code></td>
+	<td style="text-align:left;"><div style="height: 20px;background: yellowgreen;"></div></td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-USS-PropertyTypes.html">USS data types</a></li>
+<li><a href="UIE-USS-SupportedProperties.html">USS common properties</a></li>
+<li><a href="UIE-USS-Properties-Reference.html">USS properties reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-USS-Properties-Reference.html"></a></span><div class="tip">USS properties reference</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-USS-variables.html"></a></span><div class="tip">USS custom properties (variables)</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

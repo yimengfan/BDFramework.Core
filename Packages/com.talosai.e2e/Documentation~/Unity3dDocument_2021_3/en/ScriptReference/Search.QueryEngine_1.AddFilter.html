@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Search.QueryEngine_1.AddFilter</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">
+                  <a href="Search.QueryEngine_1.html">QueryEngine&lt;T0&gt;</a>.AddFilter</h1>
+                <div class="clear">
+                </div>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public void <span class="sig-kw">AddFilter</span>(string <span class="sig-kw">token</span>,
+Func&lt;TData,TFilter&gt; <span class="sig-kw">getDataFunc</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public void <span class="sig-kw">AddFilter</span>(string <span class="sig-kw">token</span>,
+Func&lt;TData,TFilter&gt; <span class="sig-kw">getDataFunc</span>,
+stringComparison <span class="sig-kw">stringComparison</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">token</td>
+                    <td class="desc">The identifier of the filter. Typically what precedes the operator in a filter (for example, "id" in "id&gt;=2").</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">getDataFunc</td>
+                    <td class="desc">Callback used to get the object that is used in the filter. Takes an object of type TData and returns an object of type TFilter.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">stringComparison</td>
+                    <td class="desc">String comparison option.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">supportedOperatorType</td>
+                    <td class="desc">List of supported operator tokens. This list contains the supported operator tokens. Use null or an empty list to indicate that all operators are supported.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Adds a new custom filter.</p>
+              </div>
+              <div class="subsection">
+        <p>&lt;TData&gt;: The type of the data that is filtered by the <a href="Search.QueryEngine_1.html">QueryEngine</a>.<br /><br />&lt;TFilter&gt;: The type of the data that is compared by the filter.<br /><br />Use this overload to register basic filters if you don't need to handle the operators yourself.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">// Add a filter for MyObjectType.id that supports all operators
+queryEngine.AddFilter("id", myObj =&gt; myObj.id);
+// Add a filter for MyObjectType.name that supports only contains (:), equal (=) and not equal (!=)
+queryEngine.AddFilter("n", myObj =&gt; myObj.name, new[] { ":", "=", "!=" });
+// Add a filter for MyObjectType.active that supports only equal and not equal
+queryEngine.AddFilter("a", myObj =&gt; myObj.active, new[] { "=", "!=" });
+// Add a filter for the computed property magnitude that supports equal, not equal, lesser, greater, lesser or equal and greater or equal.
+queryEngine.AddFilter("m", myObj =&gt; myObj.position.magnitude, new[] { "=", "!=", "&lt;", "&gt;", "&lt;=", "&gt;=" });
+
+</pre>
+      </div>
+              <div class="subsection">
+        <p>For a complete example see <a href="Search.QueryEngine_1.html">QueryEngine</a>.</p>
+      </div>
+              <hr class="section" />
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public void <span class="sig-kw">AddFilter</span>(string <span class="sig-kw">token</span>,
+Func&lt;TData,TParam,TFilter&gt; <span class="sig-kw">getDataFunc</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public void <span class="sig-kw">AddFilter</span>(string <span class="sig-kw">token</span>,
+Func&lt;TData,TParam,TFilter&gt; <span class="sig-kw">getDataFunc</span>,
+stringComparison <span class="sig-kw">stringComparison</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public void <span class="sig-kw">AddFilter</span>(string <span class="sig-kw">token</span>,
+Func&lt;TData,TParam,TFilter&gt; <span class="sig-kw">getDataFunc</span>,
+Func&lt;string,TParam&gt; <span class="sig-kw">parameterTransformer</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public void <span class="sig-kw">AddFilter</span>(string <span class="sig-kw">token</span>,
+Func&lt;TData,TParam,TFilter&gt; <span class="sig-kw">getDataFunc</span>,
+Func&lt;string,TParam&gt; <span class="sig-kw">parameterTransformer</span>,
+stringComparison <span class="sig-kw">stringComparison</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">token</td>
+                    <td class="desc">The identifier of the filter. Typically what precedes the operator in a filter (for example, "id" in "id&gt;=2").</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">getDataFunc</td>
+                    <td class="desc">Callback used to get the object that is used in the filter. Takes an object of type TData and TParam, and returns an object of type TFilter.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">parameterTransformer</td>
+                    <td class="desc">Callback used to convert a string to type TParam. Used when parsing the query to convert what is passed to the function into the correct format.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">stringComparison</td>
+                    <td class="desc">String comparison option.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">supportedOperatorType</td>
+                    <td class="desc">List of supported operator tokens. This list contains the supported operator tokens. Use null or an empty list to indicate that all operators are supported.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Adds a new custom filter with parameters.</p>
+              </div>
+              <div class="subsection">
+        <p>&lt;TData&gt;: The type of the data that is filtered by the <a href="Search.QueryEngine_1.html">QueryEngine</a>.<br /><br />&lt;TFilter&gt;: The type of the data that is compared by the filter.<br /><br />&lt;TParam&gt;: The type of the data that is passed to the filter.<br /><br />Use this overload to register filters that accept parameters if you don't need to handle the operators yourself.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using <a href="UnityEditor.html">UnityEditor</a>;
+using UnityEditor.Search;
+using UnityEngine;
+
+static class Example_QueryEngine_AddFilter_Param
+{
+    static List&lt;MyObjectType&gt; s_Data;
+
+    [<a href="MenuItem.html">MenuItem</a>("Examples/<a href="Search.QueryEngine.html">QueryEngine</a>/AddFilter_Param")]
+    public static void RunExample()
+    {
+        // Set up the query engine
+        var queryEngine = new <a href="Search.QueryEngine.html">QueryEngine</a>&lt;MyObjectType&gt;();
+        queryEngine.SetSearchDataCallback(myObj =&gt; new[] { myObj.id.ToString(), myObj.name });
+
+        // Add a "dist" filter to filter items based on a specified distance from a position or from another item
+        queryEngine.AddFilter("dist", (myObj, paramPosition) =&gt;
+        {
+            // Compute the distance from the position that was retrieved in the parameter transformer
+            var vec = myObj.position - paramPosition;
+            return vec.magnitude;
+        }, paramStringValue =&gt;
+            {
+                // <a href="Transform.html">Transform</a> the parameter from a string to a usable <a href="Vector2.html">Vector2</a>
+
+                // If the user specified a vector
+                if (paramStringValue.StartsWith("[") &amp;&amp; paramStringValue.EndsWith("]"))
+                {
+                    paramStringValue = paramStringValue.Trim('[', ']');
+                    var vectorTokens = paramStringValue.Split(',');
+                    var vectorValues = vectorTokens.Select(token =&gt; float.Parse(token, CultureInfo.InvariantCulture.NumberFormat)).ToList();
+                    return new <a href="Vector2.html">Vector2</a>(vectorValues[0], vectorValues[1]);
+                }
+
+                // Treat the value as the name of an object
+                var myObj = s_Data.Find(obj =&gt; obj.name == paramStringValue);
+                return myObj.position;
+            }, new[] { "=", "!=", "&lt;", "&gt;", "&lt;=", "&gt;=" });
+
+        s_Data = new List&lt;MyObjectType&gt;()
+        {
+            new MyObjectType { id = 0, name = "Test 1", position = new <a href="Vector2.html">Vector2</a>(0, 0), active = false },
+            new MyObjectType { id = 1, name = "Test 2", position = new <a href="Vector2.html">Vector2</a>(0, 1), active = true },
+            new MyObjectType { id = 2, name = "Test 3", position = new <a href="Vector2.html">Vector2</a>(1, 0), active = false },
+            new MyObjectType { id = 3, name = "Test 4", position = new <a href="Vector2.html">Vector2</a>(1.2f, 0), active = false },
+        };
+
+        // Find all items that are at a distance of 1 or greater to [0, 0]
+        var query = queryEngine.Parse("dist([0, 0])&gt;=1");
+        var filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 3, $"There should be 3 items in the filtered list but found {filteredData.Count} items.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(!filteredData.Contains(s_Data[0]), "Test 1 should not be in the list as its distance to [0, 0] is &lt; 1.");
+
+        // Find all items that are at a distance smaller than 1 to "Test 3", but not "Test 3" itself
+        query = queryEngine.Parse("dist(Test 3)&lt;1 -\"Test 3\"");
+        filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 1, $"There should be 1 item in the filtered list but found {filteredData.Count} items.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Contains(s_Data[3]), "Test 4 should be in the list as its distance to Test 3 is &lt; 1.");
+    }
+
+    class MyObjectType
+    {
+        public int id { get; set; }
+        public string name { get; set; } = string.Empty;
+        public <a href="Vector2.html">Vector2</a> position { get; set; } = <a href="Vector2-zero.html">Vector2.zero</a>;
+        public bool active { get; set; }
+
+        public override string ToString()
+        {
+            return $"({id}, {name}, ({position.x}, {position.y}), {active})";
+        }
+    }
+}
+
+
+</pre>
+      </div>
+              <hr class="section" />
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public void <span class="sig-kw">AddFilter</span>(string <span class="sig-kw">token</span>,
+Func&lt;TData,string,TFilter,bool&gt; <span class="sig-kw">filterResolver</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">token</td>
+                    <td class="desc">The identifier of the filter. Typically what precedes the operator in a filter (for example, "id" in "id&gt;=2").</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">filterResolver</td>
+                    <td class="desc">Callback used to handle any operators for this filter. Takes an object of type TData, the operator token and the filter value, and returns a boolean indicating if the filter passed or not.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">supportedOperatorType</td>
+                    <td class="desc">List of supported operator tokens. This list contains the supported operator tokens. Use null or an empty list to indicate that all operators are supported.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Adds a new custom filter with a complete resolver.</p>
+              </div>
+              <div class="subsection">
+        <p>&lt;TData&gt;: The type of the data that is filtered by the <a href="Search.QueryEngine_1.html">QueryEngine</a>.<br /><br />&lt;TFilter&gt;: The type of the data that is compared by the filter.<br /><br />Use this overload to register basic filters if you need to handle the operators yourself.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using System.Collections.Generic;
+using System.Linq;
+using <a href="UnityEditor.html">UnityEditor</a>;
+using UnityEditor.Search;
+using UnityEngine;
+
+static class Example_QueryEngine_AddFilter_Resolver
+{
+    static List&lt;MyObjectType&gt; s_Data;
+
+    [<a href="MenuItem.html">MenuItem</a>("Examples/<a href="Search.QueryEngine.html">QueryEngine</a>/AddFilter_Resolver")]
+    public static void RunExample()
+    {
+        // Set up the query engine
+        var queryEngine = new <a href="Search.QueryEngine.html">QueryEngine</a>&lt;MyObjectType&gt;();
+        queryEngine.SetSearchDataCallback(myObj =&gt; new[] { myObj.id.ToString(), myObj.name });
+
+        // Add a custom filter "is", with a resolver that will handle all operators
+        queryEngine.AddFilter&lt;string&gt;("is", (myObj, operatorToken, filterValue) =&gt;
+        {
+            if (operatorToken != ":")
+                return false;
+
+            switch (filterValue)
+            {
+                case "active":
+                    return myObj.active;
+                case "root":
+                    return myObj.id == 0;
+                case "center":
+                    return myObj.position == <a href="Vector2-zero.html">Vector2.zero</a>;
+                default: return false;
+            }
+        }, new[] {":"});
+
+        s_Data = new List&lt;MyObjectType&gt;()
+        {
+            new MyObjectType { id = 0, name = "Test 1", position = new <a href="Vector2.html">Vector2</a>(0, 0), active = false },
+            new MyObjectType { id = 1, name = "Test 2", position = new <a href="Vector2.html">Vector2</a>(0, 1), active = true },
+            new MyObjectType { id = 2, name = "Test 3", position = new <a href="Vector2.html">Vector2</a>(1, 0), active = false },
+            new MyObjectType { id = 3, name = "Test 4", position = new <a href="Vector2.html">Vector2</a>(1.2f, 0), active = false },
+        };
+
+        // Find all items that are of type "active"
+        var query = queryEngine.Parse("is:active");
+        var filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 1, $"There should be 1 item in the filtered list but found {filteredData.Count} items.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Contains(s_Data[1]), "Test 2 should be in the list as it is active.");
+
+        // Find all items that are root
+        query = queryEngine.Parse("is:root");
+        filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 1, $"There should be 1 item in the filtered list but found {filteredData.Count} items.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Contains(s_Data[0]), "Test 1 should be in the list as it is a root.");
+    }
+
+    class MyObjectType
+    {
+        public int id { get; set; }
+        public string name { get; set; } = string.Empty;
+        public <a href="Vector2.html">Vector2</a> position { get; set; } = <a href="Vector2-zero.html">Vector2.zero</a>;
+        public bool active { get; set; }
+
+        public override string ToString()
+        {
+            return $"({id}, {name}, ({position.x}, {position.y}), {active})";
+        }
+    }
+}
+
+
+</pre>
+      </div>
+              <hr class="section" />
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public void <span class="sig-kw">AddFilter</span>(string <span class="sig-kw">token</span>,
+Func&lt;TData,TParam,string,TFilter,bool&gt; <span class="sig-kw">filterResolver</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public void <span class="sig-kw">AddFilter</span>(string <span class="sig-kw">token</span>,
+Func&lt;TData,TParam,string,TFilter,bool&gt; <span class="sig-kw">filterResolver</span>,
+Func&lt;string,TParam&gt; <span class="sig-kw">parameterTransformer</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">token</td>
+                    <td class="desc">The identifier of the filter. Typically what precedes the operator in a filter (for example, "id" in "id&gt;=2").</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">filterResolver</td>
+                    <td class="desc">Callback used to handle any operators for this filter. Takes an object of type TData, an object of type TParam, the operator token and the filter value, and returns a boolean indicating if the filter passed or not.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">parameterTransformer</td>
+                    <td class="desc">Callback used to convert a string to type TParam. Used when parsing the query to convert what is passed to the function into the correct format.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">supportedOperatorType</td>
+                    <td class="desc">List of supported operator tokens. This list contains the supported operator tokens. Use null or an empty list to indicate that all operators are supported.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Adds a new custom filter with parameters and a complete resolver.</p>
+              </div>
+              <div class="subsection">
+        <p>&lt;TData&gt;: The type of the data that is filtered by the <a href="Search.QueryEngine_1.html">QueryEngine</a>.<br /><br />&lt;TFilter&gt;: The type of the data that is compared by the filter.<br /><br />&lt;TParam&gt;: The type of the data that is passed to the filter.<br /><br />Use this overload to register filters that accept parameters if you need to handle the operators yourself.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using <a href="UnityEditor.html">UnityEditor</a>;
+using UnityEditor.Search;
+using UnityEngine;
+
+static class Example_QueryEngine_AddFilter_Param_Resolver
+{
+    static List&lt;MyObjectType&gt; s_Data;
+
+    [<a href="MenuItem.html">MenuItem</a>("Examples/<a href="Search.QueryEngine.html">QueryEngine</a>/AddFilter_Param_Resolver")]
+    public static void RunExample()
+    {
+        // Set up the query engine
+        var queryEngine = new <a href="Search.QueryEngine.html">QueryEngine</a>&lt;MyObjectType&gt;();
+        queryEngine.SetSearchDataCallback(myObj =&gt; new[] { myObj.id.ToString(), myObj.name });
+
+        // Add a "dist" filter to filter items based on a specified distance from a position or from another item, and handle all operators
+        queryEngine.AddFilter&lt;<a href="Vector2.html">Vector2</a>, string&gt;("dist", (myObj, paramPosition, operatorToken, filterValue) =&gt;
+        {
+            var distance = (myObj.position - paramPosition).magnitude;
+
+            if (operatorToken == ":")
+            {
+                switch (filterValue)
+                {
+                    case "near":
+                        return distance &lt;= 10.0f;
+                    case "far":
+                        return distance &gt; 10.0f;
+                }
+                return false;
+            }
+
+            var floatValue = float.Parse(filterValue, CultureInfo.InvariantCulture.NumberFormat);
+            switch (operatorToken)
+            {
+                case "=":
+                    return distance == floatValue;
+                case "!=":
+                    return distance != floatValue;
+                case "&lt;":
+                    return distance &lt; floatValue;
+                case "&lt;=":
+                    return distance &lt;= floatValue;
+                case "&gt;":
+                    return distance &gt; floatValue;
+                case "&gt;=":
+                    return distance &gt;= floatValue;
+            }
+            return false;
+        }, paramStringValue =&gt;
+            {
+                // <a href="Transform.html">Transform</a> the parameter from a string to a usable <a href="Vector2.html">Vector2</a>
+
+                // If the user specified a vector
+                if (paramStringValue.StartsWith("[") &amp;&amp; paramStringValue.EndsWith("]"))
+                {
+                    paramStringValue = paramStringValue.Trim('[', ']');
+                    var vectorTokens = paramStringValue.Split(',');
+                    var vectorValues = vectorTokens.Select(token =&gt; float.Parse(token, CultureInfo.InvariantCulture.NumberFormat)).ToList();
+                    return new <a href="Vector2.html">Vector2</a>(vectorValues[0], vectorValues[1]);
+                }
+
+                // Treat the value as the name of an object
+                var myObj = s_Data.Find(obj =&gt; obj.name == paramStringValue);
+                return myObj.position;
+            });
+
+        s_Data = new List&lt;MyObjectType&gt;()
+        {
+            new MyObjectType { id = 0, name = "Test 1", position = new <a href="Vector2.html">Vector2</a>(0, 0), active = false },
+            new MyObjectType { id = 1, name = "Test 2", position = new <a href="Vector2.html">Vector2</a>(0, 10), active = true },
+            new MyObjectType { id = 2, name = "Test 3", position = new <a href="Vector2.html">Vector2</a>(10, 0), active = false },
+            new MyObjectType { id = 3, name = "Test 4", position = new <a href="Vector2.html">Vector2</a>(12f, 0), active = false },
+        };
+
+        // Find all items that are "near" "Test 1", including "Test 1"
+        var query = queryEngine.Parse("dist(Test 1):near");
+        var filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 3, $"There should be 3 items in the filtered list but found {filteredData.Count} items.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(!filteredData.Contains(s_Data[3]), "Test 4 should not be in the list as it is far of Test 1.");
+
+        // Find all items that are far of [0, 0]
+        query = queryEngine.Parse("dist([0, 0]):far");
+        filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 1, $"There should be 1 item in the filtered list but found {filteredData.Count} items.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Contains(s_Data[3]), "Test 4 should be in the list as it is far of [0, 0].");
+    }
+
+    class MyObjectType
+    {
+        public int id { get; set; }
+        public string name { get; set; } = string.Empty;
+        public <a href="Vector2.html">Vector2</a> position { get; set; } = <a href="Vector2-zero.html">Vector2.zero</a>;
+        public bool active { get; set; }
+
+        public override string ToString()
+        {
+            return $"({id}, {name}, ({position.x}, {position.y}), {active})";
+        }
+    }
+}
+
+
+</pre>
+      </div>
+              <hr class="section" />
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public <a href="Search.IQueryEngineFilter.html">Search.IQueryEngineFilter</a> <span class="sig-kw">AddFilter</span>(Regex <span class="sig-kw">token</span>,
+Func&lt;TData,string,TFilter&gt; <span class="sig-kw">getDataFunc</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public <a href="Search.IQueryEngineFilter.html">Search.IQueryEngineFilter</a> <span class="sig-kw">AddFilter</span>(Regex <span class="sig-kw">token</span>,
+Func&lt;TData,string,TFilter&gt; <span class="sig-kw">getDataFunc</span>,
+stringComparison <span class="sig-kw">stringComparison</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">token</td>
+                    <td class="desc">The regular expression that matches the filter. Matches what precedes the operator in a filter (for example, "id" in "id&gt;=2").</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">getDataFunc</td>
+                    <td class="desc">Callback used to get the object that is used in the filter. Takes an object of type TData, a string representing the actual filter name that was matched and returns an object of type TFilter.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">supportedOperatorType</td>
+                    <td class="desc">List of supported operator tokens. This list contains the supported operator tokens. Use null or an empty list to indicate that all operators are supported.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">stringComparison</td>
+                    <td class="desc">String comparison option.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Returns</h3>
+                <p>
+                  <strong>IQueryEngineFilter</strong>
+        The new filter.
+      </p>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Adds a new custom filter with a regular expression.</p>
+              </div>
+              <div class="subsection">
+        <p>&lt;TData&gt;: The type of the data that is filtered by the <a href="Search.QueryEngine_1.html">QueryEngine</a>.<br /><br />&lt;TFilter&gt;: The type of the data that is compared by the filter.<br /><br />Use this overload to register basic filters that match a regular expression if you don't need to handle the operators yourself.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using <a href="Rendering.VirtualTexturing.System.html">System</a>;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using <a href="UnityEditor.html">UnityEditor</a>;
+using UnityEditor.Search;
+using UnityEngine;
+
+static class Example_QueryEngine_AddFilter_Regex
+{
+    static List&lt;MyObjectType&gt; s_Data;
+
+    [<a href="MenuItem.html">MenuItem</a>("Examples/<a href="Search.QueryEngine.html">QueryEngine</a>/AddFilter_Regex")]
+    public static void RunExample()
+    {
+        // Set up the query engine
+        var queryEngine = new <a href="Search.QueryEngine.html">QueryEngine</a>&lt;MyObjectType&gt;();
+        queryEngine.SetSearchDataCallback(myObj =&gt; new[] { myObj.id.ToString(), myObj.name });
+        SetupPropertyHandlers(queryEngine);
+
+        // Add a regular expression filter to filter generic properties
+        // When adding a new regular expression filter, there needs to be a single capturing group to retrieve the
+        // actual name of the filter that matched.
+        queryEngine.AddFilter(new Regex("#([\\w.]+)"), (myObj, filterNameMatch) =&gt;
+        {
+            if (myObj.property.name == filterNameMatch)
+                return myObj.property;
+            return Property.invalid;
+        });
+
+        s_Data = new List&lt;MyObjectType&gt;()
+        {
+            new MyObjectType { id = 0, property = new Property("size", PropertyType.Integer, 64) },
+            new MyObjectType { id = 1, property = new Property("size", PropertyType.Integer, 128) },
+            new MyObjectType { id = 2, property = new Property("tag", PropertyType.String, "item") },
+            new MyObjectType { id = 3, property = new Property("tag", PropertyType.String, "car item") }
+        };
+
+        // Find all objects that have a property "size" greater than 32
+        var query = queryEngine.Parse("#size&gt;32");
+        var filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 2, $"There should be 2 items in the filtered list but found {filteredData.Count} items.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Contains(s_Data[0]), "Object 0 should be in the list as its property \"size\" is &gt; 32.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Contains(s_Data[1]), "Object 1 should be in the list as its property \"size\" is &gt; 32.");
+
+        // Find all objects that have a property "size" equal to 128
+        query = queryEngine.Parse("#size=128");
+        filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 1, $"There should be 1 item in the filtered list but found {filteredData.Count} items.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Contains(s_Data[1]), "Object 1 should be in the list as its property \"size\" is = 128.");
+
+        // Find all objects that have a property "tag" that contains "item"
+        query = queryEngine.Parse("#tag:item");
+        filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 2, $"There should be 2 items in the filtered list but found {filteredData.Count} items.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Contains(s_Data[2]), "Object 2 should be in the list as its property \"tag\" contains \"item\".");
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Contains(s_Data[3]), "Object 3 should be in the list as its property \"tag\" contains \"item\".");
+    }
+
+    static void SetupPropertyHandlers(<a href="Search.QueryEngine.html">QueryEngine</a>&lt;MyObjectType&gt; qe)
+    {
+        qe.AddOperatorHandler(":", (Property v, int number, StringComparison sc) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f.ToString().IndexOf(r.ToString()) != -1));
+        qe.AddOperatorHandler("=", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f == r));
+        qe.AddOperatorHandler("!=", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f != r));
+        qe.AddOperatorHandler("&lt;=", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f &lt;= r));
+        qe.AddOperatorHandler("&lt;", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f &lt; r));
+        qe.AddOperatorHandler("&gt;", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f &gt; r));
+        qe.AddOperatorHandler("&gt;=", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f &gt;= r));
+        qe.AddOperatorHandler(":", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; f.IndexOf(r, sc) != -1));
+        qe.AddOperatorHandler("=", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Equals(f, r, sc)));
+        qe.AddOperatorHandler("!=", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; !string.Equals(f, r, sc)));
+        qe.AddOperatorHandler("&lt;=", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Compare(f, r, sc) &lt;= 0));
+        qe.AddOperatorHandler("&lt;", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Compare(f, r, sc) &lt; 0));
+        qe.AddOperatorHandler("&gt;", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Compare(f, r, sc) &gt; 0));
+        qe.AddOperatorHandler("&gt;=", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Compare(f, r, sc) &gt;= 0));
+    }
+
+    static bool PropertyStringCompare(Property p, string s, Func&lt;string, string, bool&gt; comparer)
+    {
+        if (p.type != PropertyType.String)
+            return false;
+        return comparer((string)p.value, s);
+    }
+
+    static bool PropertyIntCompare(Property p, int number, Func&lt;int, int, bool&gt; comparer)
+    {
+        if (p.type != PropertyType.Integer)
+            return false;
+        return comparer((int)p.value, number);
+    }
+
+    enum PropertyType
+    {
+        None,
+        Integer,
+        String,
+        Integer_Array
+    }
+
+    struct Property
+    {
+        public string name { get; }
+        public PropertyType type { get; }
+        public object value { get; set; }
+
+        public Property(string name, PropertyType type, object value)
+        {
+            this.name = name;
+            this.type = type;
+            this.value = value;
+        }
+
+        public static Property invalid = new Property(string.Empty, PropertyType.None, null);
+    }
+
+    class MyObjectType
+    {
+        public int id { get; set; }
+        public string name { get; set; } = string.Empty;
+        public <a href="Vector2.html">Vector2</a> position { get; set; } = <a href="Vector2-zero.html">Vector2.zero</a>;
+        public bool active { get; set; }
+        public Property property { get; set; } = Property.invalid;
+
+        public override string ToString()
+        {
+            return $"({id}, {name}, ({position.x}, {position.y}), {active})";
+        }
+    }
+}
+
+</pre>
+      </div>
+              <hr class="section" />
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public <a href="Search.IQueryEngineFilter.html">Search.IQueryEngineFilter</a> <span class="sig-kw">AddFilter</span>(Regex <span class="sig-kw">token</span>,
+Func&lt;TData,string,TParam,TFilter&gt; <span class="sig-kw">getDataFunc</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public <a href="Search.IQueryEngineFilter.html">Search.IQueryEngineFilter</a> <span class="sig-kw">AddFilter</span>(Regex <span class="sig-kw">token</span>,
+Func&lt;TData,string,TParam,TFilter&gt; <span class="sig-kw">getDataFunc</span>,
+stringComparison <span class="sig-kw">stringComparison</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public <a href="Search.IQueryEngineFilter.html">Search.IQueryEngineFilter</a> <span class="sig-kw">AddFilter</span>(Regex <span class="sig-kw">token</span>,
+Func&lt;TData,string,TParam,TFilter&gt; <span class="sig-kw">getDataFunc</span>,
+Func&lt;string,TParam&gt; <span class="sig-kw">parameterTransformer</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public <a href="Search.IQueryEngineFilter.html">Search.IQueryEngineFilter</a> <span class="sig-kw">AddFilter</span>(Regex <span class="sig-kw">token</span>,
+Func&lt;TData,string,TParam,TFilter&gt; <span class="sig-kw">getDataFunc</span>,
+Func&lt;string,TParam&gt; <span class="sig-kw">parameterTransformer</span>,
+stringComparison <span class="sig-kw">stringComparison</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">token</td>
+                    <td class="desc">The regular expression that matches the filter. Matches what precedes the operator in a filter (for example, "id" in "id&gt;=2").</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">getDataFunc</td>
+                    <td class="desc">Callback used to get the object that is used in the filter. Takes an object of type TData, a string representing the actual filter name that was matched, an object of type TParam, and returns an object of type TFilter.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">supportedOperatorType</td>
+                    <td class="desc">List of supported operator tokens. This list contains the supported operator tokens. Use null or an empty list to indicate that all operators are supported.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">stringComparison</td>
+                    <td class="desc">String comparison option.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">parameterTransformer</td>
+                    <td class="desc">Callback used to convert a string to type TParam. Used when parsing the query to convert what is passed to the function into the correct format.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Returns</h3>
+                <p>
+                  <strong>IQueryEngineFilter</strong>
+        The new filter.
+      </p>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Adds a new custom filter with a regular expression and parameters.</p>
+              </div>
+              <div class="subsection">
+        <p>&lt;TData&gt;: The type of the data that is filtered by the <a href="Search.QueryEngine_1.html">QueryEngine</a>.<br /><br />&lt;TFilter&gt;: The type of the data that is compared by the filter.<br /><br />&lt;TParam&gt;: The type of the data that is passed to the filter.<br /><br />Use this overload to register filters that match a regular expression and accept parameters if you don't need to handle the operators yourself.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using <a href="Rendering.VirtualTexturing.System.html">System</a>;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using <a href="UnityEditor.html">UnityEditor</a>;
+using UnityEditor.Search;
+using UnityEngine;
+
+static class Example_QueryEngine_AddFilter_Param_Regex
+{
+    static List&lt;MyObjectType&gt; s_Data;
+
+    [<a href="MenuItem.html">MenuItem</a>("Examples/<a href="Search.QueryEngine.html">QueryEngine</a>/AddFilter_Param_Regex")]
+    public static void RunExample()
+    {
+        // Set up the query engine
+        var queryEngine = new <a href="Search.QueryEngine.html">QueryEngine</a>&lt;MyObjectType&gt;();
+        queryEngine.SetSearchDataCallback(myObj =&gt; new[] { myObj.id.ToString(), myObj.name });
+        SetupPropertyHandlers(queryEngine);
+
+        // Add a regular expression filter function to filter generic properties with parameters
+        // When adding a new regular expression filter, there needs to be a single capturing group to retrieve the
+        // actual name of the filter that matched.
+        queryEngine.AddFilter&lt;int, Property&gt;(new Regex("\\$([\\w.]+)"), (myObj, filterNameMatch, param) =&gt;
+        {
+            if (myObj.property.name != filterNameMatch)
+                return Property.invalid;
+            if (myObj.property.type != PropertyType.Integer_Array)
+                return Property.invalid;
+            if (!(myObj.property.value is int[] array))
+                return Property.invalid;
+            if (param &lt; 0 || param &gt;= array.Length)
+                return Property.invalid;
+            return new Property(myObj.property.name, PropertyType.Integer, array[param]);
+        });
+
+        s_Data = new List&lt;MyObjectType&gt;()
+        {
+            new MyObjectType { id = 0, property = new Property("size", PropertyType.Integer, 64) },
+            new MyObjectType { id = 1, property = new Property("size", PropertyType.Integer, 128) },
+            new MyObjectType { id = 2, property = new Property("tag", PropertyType.String, "item") },
+            new MyObjectType { id = 3, property = new Property("tag", PropertyType.String, "car item") },
+            new MyObjectType { id = 4, property = new Property("values", PropertyType.Integer_Array, new int[] {0, 2, 42}) },
+            new MyObjectType { id = 5, property = new Property("values", PropertyType.Integer_Array, new int[] {8, 52, 210}) },
+            new MyObjectType { id = 6, property = new Property("weights", PropertyType.Integer_Array, new int[] {1000, 250, 400}) }
+        };
+
+        // Find all objects that have a property "values" with a sub value greater than 42 at index 1
+        var query = queryEngine.Parse("$values(1)&gt;42");
+        var filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 1, $"There should be 1 item in the filtered list but found {filteredData.Count} items.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Contains(s_Data[5]), "Object 5 should be in the list as its property \"values\" at index 1 is &gt; 42.");
+
+        // Find all objects that have a property "weights" with a sub value lower or equal to 1000 at index 0
+        query = queryEngine.Parse("$weights(0)&lt;=1000");
+        filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 1, $"There should be 1 item in the filtered list but found {filteredData.Count} items.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Contains(s_Data[6]), "Object 6 should be in the list as its property \"weights\" at index 0 is &lt;= 1000.");
+    }
+
+    static void SetupPropertyHandlers(<a href="Search.QueryEngine.html">QueryEngine</a>&lt;MyObjectType&gt; qe)
+    {
+        qe.AddOperatorHandler(":", (Property v, int number, StringComparison sc) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f.ToString().IndexOf(r.ToString()) != -1));
+        qe.AddOperatorHandler("=", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f == r));
+        qe.AddOperatorHandler("!=", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f != r));
+        qe.AddOperatorHandler("&lt;=", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f &lt;= r));
+        qe.AddOperatorHandler("&lt;", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f &lt; r));
+        qe.AddOperatorHandler("&gt;", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f &gt; r));
+        qe.AddOperatorHandler("&gt;=", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f &gt;= r));
+        qe.AddOperatorHandler(":", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; f.IndexOf(r, sc) != -1));
+        qe.AddOperatorHandler("=", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Equals(f, r, sc)));
+        qe.AddOperatorHandler("!=", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; !string.Equals(f, r, sc)));
+        qe.AddOperatorHandler("&lt;=", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Compare(f, r, sc) &lt;= 0));
+        qe.AddOperatorHandler("&lt;", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Compare(f, r, sc) &lt; 0));
+        qe.AddOperatorHandler("&gt;", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Compare(f, r, sc) &gt; 0));
+        qe.AddOperatorHandler("&gt;=", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Compare(f, r, sc) &gt;= 0));
+    }
+
+    static bool PropertyStringCompare(Property p, string s, Func&lt;string, string, bool&gt; comparer)
+    {
+        if (p.type != PropertyType.String)
+            return false;
+        return comparer((string)p.value, s);
+    }
+
+    static bool PropertyIntCompare(Property p, int number, Func&lt;int, int, bool&gt; comparer)
+    {
+        if (p.type != PropertyType.Integer)
+            return false;
+        return comparer((int)p.value, number);
+    }
+
+    enum PropertyType
+    {
+        None,
+        Integer,
+        String,
+        Integer_Array
+    }
+
+    struct Property
+    {
+        public string name { get; }
+        public PropertyType type { get; }
+        public object value { get; set; }
+
+        public Property(string name, PropertyType type, object value)
+        {
+            this.name = name;
+            this.type = type;
+            this.value = value;
+        }
+
+        public static Property invalid = new Property(string.Empty, PropertyType.None, null);
+    }
+
+    class MyObjectType
+    {
+        public int id { get; set; }
+        public string name { get; set; } = string.Empty;
+        public <a href="Vector2.html">Vector2</a> position { get; set; } = <a href="Vector2-zero.html">Vector2.zero</a>;
+        public bool active { get; set; }
+        public Property property { get; set; } = Property.invalid;
+
+        public override string ToString()
+        {
+            return $"({id}, {name}, ({position.x}, {position.y}), {active})";
+        }
+    }
+}
+
+</pre>
+      </div>
+              <hr class="section" />
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public <a href="Search.IQueryEngineFilter.html">Search.IQueryEngineFilter</a> <span class="sig-kw">AddFilter</span>(Regex <span class="sig-kw">token</span>,
+Func&lt;TData,string,string,TFilter,bool&gt; <span class="sig-kw">filterResolver</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">token</td>
+                    <td class="desc">The regular expression that matches the filter. Matches what precedes the operator in a filter (for example, "id" in "id&gt;=2").</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">filterResolver</td>
+                    <td class="desc">Callback used to handle any operators for this filter. Takes an object of type TData, a string representing the actual filter name that was matched, the operator token and the filter value, and returns a boolean indicating if the filter passed or not.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">supportedOperatorType</td>
+                    <td class="desc">List of supported operator tokens. This list contains the supported operator tokens. Use null or an empty list to indicate that all operators are supported.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Returns</h3>
+                <p>
+                  <strong>IQueryEngineFilter</strong>
+        The new filter.
+      </p>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Adds a new custom filter with a regular expression and a complete resolver.</p>
+              </div>
+              <div class="subsection">
+        <p>&lt;TData&gt;: The type of the data that is filtered by the <a href="Search.QueryEngine_1.html">QueryEngine</a>.<br /><br />&lt;TFilter&gt;: The type of the data that is compared by the filter.<br /><br />Use this overload to register basic filters that match a regular expression if you need to handle the operators yourself.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using <a href="Rendering.VirtualTexturing.System.html">System</a>;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using <a href="UnityEditor.html">UnityEditor</a>;
+using UnityEditor.Search;
+using UnityEngine;
+
+static class Example_QueryEngine_AddFilter_Resolver_Regex
+{
+    static List&lt;MyObjectType&gt; s_Data;
+
+    [<a href="MenuItem.html">MenuItem</a>("Examples/<a href="Search.QueryEngine.html">QueryEngine</a>/AddFilter_Resolver_Regex")]
+    public static void RunExample()
+    {
+        // Set up the query engine
+        var queryEngine = new <a href="Search.QueryEngine.html">QueryEngine</a>&lt;MyObjectType&gt;();
+        queryEngine.SetSearchDataCallback(myObj =&gt; new[] { myObj.id.ToString(), myObj.name });
+        SetupPropertyHandlers(queryEngine);
+
+        // Add a regular expression filter to filter generic properties, with a resolver to handle all operators yourself.
+        // When adding a new regular expression filter, there needs to be a single capturing group to retrieve the
+        // actual name of the filter that matched.
+        queryEngine.AddFilter&lt;string&gt;(new Regex("p_([\\w]+)"), (myObj, filterNameMatch, operatorToken, filterValue) =&gt;
+        {
+            if (operatorToken != ":")
+                return false;
+            if (myObj.property.name != filterNameMatch)
+                return false;
+
+            switch (filterValue)
+            {
+                case "enabled":
+                    return myObj.property.enabled;
+                case "empty":
+                    {
+                        if (myObj.property.type != PropertyType.Integer_Array)
+                            return false;
+                        if (!(myObj.property.value is int[] array))
+                            return false;
+                        return array.Length == 0;
+                    }
+                default: return false;
+            }
+        }, new[] {":"});
+
+        s_Data = new List&lt;MyObjectType&gt;()
+        {
+            new MyObjectType { id = 0, property = new Property("size", PropertyType.Integer, 64, true) },
+            new MyObjectType { id = 1, property = new Property("size", PropertyType.Integer, 128, false) },
+            new MyObjectType { id = 2, property = new Property("tag", PropertyType.String, "item", true) },
+            new MyObjectType { id = 3, property = new Property("tag", PropertyType.String, "car item", false) },
+            new MyObjectType { id = 4, property = new Property("values", PropertyType.Integer_Array, new int[] {0, 2, 42}, true) },
+            new MyObjectType { id = 5, property = new Property("values", PropertyType.Integer_Array, new int[] {8, 52, 210}, false) },
+            new MyObjectType { id = 6, property = new Property("weights", PropertyType.Integer_Array, new int[] {1000, 250, 400}, false) },
+            new MyObjectType { id = 7, property = new Property("weights", PropertyType.Integer_Array, new int[] {}, false) }
+        };
+
+        // Find all items that have a property "size" that is enabled.
+        var query = queryEngine.Parse("p_size:enabled");
+        var filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 1, $"There should be 1 item in the filtered list but found {filteredData.Count} items.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Contains(s_Data[0]), "Object 0 should be in the list as its property \"size\" is enabled.");
+
+        // Find all items that have a property "weights" that is empty.
+        query = queryEngine.Parse("p_weights:empty");
+        filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 1, $"There should be 1 item in the filtered list but found {filteredData.Count} items.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Contains(s_Data[7]), "Object 7 should be in the list as its property \"weights\" is empty.");
+    }
+
+    static void SetupPropertyHandlers(<a href="Search.QueryEngine.html">QueryEngine</a>&lt;MyObjectType&gt; qe)
+    {
+        qe.AddOperatorHandler(":", (Property v, int number, StringComparison sc) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f.ToString().IndexOf(r.ToString()) != -1));
+        qe.AddOperatorHandler("=", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f == r));
+        qe.AddOperatorHandler("!=", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f != r));
+        qe.AddOperatorHandler("&lt;=", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f &lt;= r));
+        qe.AddOperatorHandler("&lt;", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f &lt; r));
+        qe.AddOperatorHandler("&gt;", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f &gt; r));
+        qe.AddOperatorHandler("&gt;=", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f &gt;= r));
+        qe.AddOperatorHandler(":", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; f.IndexOf(r, sc) != -1));
+        qe.AddOperatorHandler("=", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Equals(f, r, sc)));
+        qe.AddOperatorHandler("!=", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; !string.Equals(f, r, sc)));
+        qe.AddOperatorHandler("&lt;=", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Compare(f, r, sc) &lt;= 0));
+        qe.AddOperatorHandler("&lt;", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Compare(f, r, sc) &lt; 0));
+        qe.AddOperatorHandler("&gt;", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Compare(f, r, sc) &gt; 0));
+        qe.AddOperatorHandler("&gt;=", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Compare(f, r, sc) &gt;= 0));
+    }
+
+    static bool PropertyStringCompare(Property p, string s, Func&lt;string, string, bool&gt; comparer)
+    {
+        if (p.type != PropertyType.String)
+            return false;
+        return comparer((string)p.value, s);
+    }
+
+    static bool PropertyIntCompare(Property p, int number, Func&lt;int, int, bool&gt; comparer)
+    {
+        if (p.type != PropertyType.Integer)
+            return false;
+        return comparer((int)p.value, number);
+    }
+
+    enum PropertyType
+    {
+        None,
+        Integer,
+        String,
+        Integer_Array
+    }
+
+    struct Property
+    {
+        public string name { get; }
+        public PropertyType type { get; }
+        public object value { get; set; }
+        public bool enabled { get; set; }
+
+        public Property(string name, PropertyType type, object value, bool enabled)
+        {
+            this.name = name;
+            this.type = type;
+            this.value = value;
+            this.enabled = enabled;
+        }
+
+        public static Property invalid = new Property(string.Empty, PropertyType.None, null, false);
+    }
+
+    class MyObjectType
+    {
+        public int id { get; set; }
+        public string name { get; set; } = string.Empty;
+        public <a href="Vector2.html">Vector2</a> position { get; set; } = <a href="Vector2-zero.html">Vector2.zero</a>;
+        public bool active { get; set; }
+        public Property property { get; set; } = Property.invalid;
+
+        public override string ToString()
+        {
+            return $"({id}, {name}, ({position.x}, {position.y}), {active})";
+        }
+    }
+}
+
+</pre>
+      </div>
+              <hr class="section" />
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public <a href="Search.IQueryEngineFilter.html">Search.IQueryEngineFilter</a> <span class="sig-kw">AddFilter</span>(Regex <span class="sig-kw">token</span>,
+Func&lt;TData,string,TParam,string,TFilter,bool&gt; <span class="sig-kw">filterResolver</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public <a href="Search.IQueryEngineFilter.html">Search.IQueryEngineFilter</a> <span class="sig-kw">AddFilter</span>(Regex <span class="sig-kw">token</span>,
+Func&lt;TData,string,TParam,string,TFilter,bool&gt; <span class="sig-kw">filterResolver</span>,
+Func&lt;string,TParam&gt; <span class="sig-kw">parameterTransformer</span>,
+string[] <span class="sig-kw">supportedOperatorType</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">token</td>
+                    <td class="desc">The regular expression that matches the filter. Matches what precedes the operator in a filter (for example, "id" in "id&gt;=2").</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">filterResolver</td>
+                    <td class="desc">Callback used to handle any operators for this filter. Takes an object of type TData, a string representing the actual filter name that was matched, an object of type TParam, the operator token and the filter value, and returns a boolean indicating if the filter passed or not.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">supportedOperatorType</td>
+                    <td class="desc">List of supported operator tokens. This list contains the supported operator tokens. Use null or an empty list to indicate that all operators are supported.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">parameterTransformer</td>
+                    <td class="desc">Callback used to convert a string to type TParam. Used when parsing the query to convert what is passed to the function into the correct format.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Returns</h3>
+                <p>
+                  <strong>IQueryEngineFilter</strong>
+        The new filter.
+      </p>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Adds a new custom filter with a regular expression, parameters and a complete resolver.</p>
+              </div>
+              <div class="subsection">
+        <p>&lt;TData&gt;: The type of the data that is filtered by the <a href="Search.QueryEngine_1.html">QueryEngine</a>.<br /><br />&lt;TFilter&gt;: The type of the data that is compared by the filter.<br /><br />&lt;TParam&gt;: The type of the data that is passed to the filter.<br /><br />Use this overload to register filters that match a regular expression and accept parameters if you need to handle the operators yourself.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using <a href="Rendering.VirtualTexturing.System.html">System</a>;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
+using <a href="UnityEditor.html">UnityEditor</a>;
+using UnityEditor.Search;
+using UnityEngine;
+
+static class Example_QueryEngine_AddFilter_Param_Resolver_Regex
+{
+    static List&lt;MyObjectType&gt; s_Data;
+
+    [<a href="MenuItem.html">MenuItem</a>("Examples/<a href="Search.QueryEngine.html">QueryEngine</a>/AddFilter_Param_Resolver_Regex")]
+    public static void RunExample()
+    {
+        // Set up the query engine
+        var queryEngine = new <a href="Search.QueryEngine.html">QueryEngine</a>&lt;MyObjectType&gt;();
+        queryEngine.SetSearchDataCallback(myObj =&gt; new[] { myObj.id.ToString(), myObj.name });
+
+        // Add a regular expression filter to filter generic properties, with a resolver to handle all operators yourself.
+        // When adding a new regular expression filter, there needs to be a single capturing group to retrieve the
+        // actual name of the filter that matched.
+        queryEngine.AddFilter&lt;int, string&gt;(new Regex("p_([\\w]+)"), (myObj, filterNameMatch, index, operatorToken, filterValue) =&gt;
+        {
+            if (myObj.property.name != filterNameMatch)
+                return false;
+            if (myObj.property.type != PropertyType.Integer_Array)
+                return false;
+            if (!(myObj.property.value is int[] array))
+                return false;
+
+            if (operatorToken == ":")
+            {
+                switch (filterValue)
+                {
+                    case "valid":
+                        return index &gt;= 0 &amp;&amp; index &lt; array.Length;
+                    default: return false;
+                }
+            }
+
+            if (index &lt; 0 || index &gt;= array.Length)
+                return false;
+
+            var value = array[index];
+            var integerValue = int.Parse(filterValue, CultureInfo.InvariantCulture.NumberFormat);
+            switch (operatorToken)
+            {
+                case "=":
+                    return value == integerValue;
+                case "!=":
+                    return value != integerValue;
+                case "&lt;":
+                    return value &lt; integerValue;
+                case "&lt;=":
+                    return value &lt;= integerValue;
+                case "&gt;":
+                    return value &gt; integerValue;
+                case "&gt;=":
+                    return value &gt;= integerValue;
+            }
+            return false;
+        });
+
+        s_Data = new List&lt;MyObjectType&gt;()
+        {
+            new MyObjectType { id = 0, property = new Property("size", PropertyType.Integer, 64, true) },
+            new MyObjectType { id = 1, property = new Property("size", PropertyType.Integer, 128, false) },
+            new MyObjectType { id = 2, property = new Property("tag", PropertyType.String, "item", true) },
+            new MyObjectType { id = 3, property = new Property("tag", PropertyType.String, "car item", false) },
+            new MyObjectType { id = 4, property = new Property("values", PropertyType.Integer_Array, new int[] {0, 2, 42}, true) },
+            new MyObjectType { id = 5, property = new Property("values", PropertyType.Integer_Array, new int[] {8, 52, 210}, false) },
+            new MyObjectType { id = 6, property = new Property("weights", PropertyType.Integer_Array, new int[] {1000, 250, 400}, false) },
+            new MyObjectType { id = 7, property = new Property("weights", PropertyType.Integer_Array, new int[] {}, false) }
+        };
+
+        // Find all items that have a property named "weights" with a valid value at index 2.
+        var query = queryEngine.Parse("p_weights(2):valid");
+        var filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 1, $"There should be 1 item in the filtered list but found {filteredData.Count} items.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Contains(s_Data[6]), "Object 6 should be in the list as its property \"weights\" has a valid value at index 2.");
+
+        // Find all items that have a property named "values" with a value greater than 50 at index 1.
+        query = queryEngine.Parse("p_values(1)&gt;50");
+        filteredData = query.Apply(s_Data).ToList();
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Count == 1, $"There should be 1 item in the filtered list but found {filteredData.Count} items.");
+        <a href="Debug.Assert.html">Debug.Assert</a>(filteredData.Contains(s_Data[5]), "Object 5 should be in the list as its property \"values\" has a value &gt; 50 at index 1.");
+    }
+
+    static void SetupPropertyHandlers(<a href="Search.QueryEngine.html">QueryEngine</a>&lt;MyObjectType&gt; qe)
+    {
+        qe.AddOperatorHandler(":", (Property v, int number, StringComparison sc) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f.ToString().IndexOf(r.ToString()) != -1));
+        qe.AddOperatorHandler("=", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f == r));
+        qe.AddOperatorHandler("!=", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f != r));
+        qe.AddOperatorHandler("&lt;=", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f &lt;= r));
+        qe.AddOperatorHandler("&lt;", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f &lt; r));
+        qe.AddOperatorHandler("&gt;", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f &gt; r));
+        qe.AddOperatorHandler("&gt;=", (Property v, int number) =&gt; PropertyIntCompare(v, number, (f, r) =&gt; f &gt;= r));
+        qe.AddOperatorHandler(":", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; f.IndexOf(r, sc) != -1));
+        qe.AddOperatorHandler("=", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Equals(f, r, sc)));
+        qe.AddOperatorHandler("!=", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; !string.Equals(f, r, sc)));
+        qe.AddOperatorHandler("&lt;=", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Compare(f, r, sc) &lt;= 0));
+        qe.AddOperatorHandler("&lt;", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Compare(f, r, sc) &lt; 0));
+        qe.AddOperatorHandler("&gt;", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Compare(f, r, sc) &gt; 0));
+        qe.AddOperatorHandler("&gt;=", (Property v, string s, StringComparison sc) =&gt; PropertyStringCompare(v, s, (f, r) =&gt; string.Compare(f, r, sc) &gt;= 0));
+    }
+
+    static bool PropertyStringCompare(Property p, string s, Func&lt;string, string, bool&gt; comparer)
+    {
+        if (p.type != PropertyType.String)
+            return false;
+        return comparer((string)p.value, s);
+    }
+
+    static bool PropertyIntCompare(Property p, int number, Func&lt;int, int, bool&gt; comparer)
+    {
+        if (p.type != PropertyType.Integer)
+            return false;
+        return comparer((int)p.value, number);
+    }
+
+    enum PropertyType
+    {
+        None,
+        Integer,
+        String,
+        Integer_Array
+    }
+
+    struct Property
+    {
+        public string name { get; }
+        public PropertyType type { get; }
+        public object value { get; set; }
+        public bool enabled { get; set; }
+
+        public Property(string name, PropertyType type, object value, bool enabled)
+        {
+            this.name = name;
+            this.type = type;
+            this.value = value;
+            this.enabled = enabled;
+        }
+
+        public static Property invalid = new Property(string.Empty, PropertyType.None, null, false);
+    }
+
+    class MyObjectType
+    {
+        public int id { get; set; }
+        public string name { get; set; } = string.Empty;
+        public <a href="Vector2.html">Vector2</a> position { get; set; } = <a href="Vector2-zero.html">Vector2.zero</a>;
+        public bool active { get; set; }
+        public Property property { get; set; } = Property.invalid;
+
+        public override string ToString()
+        {
+            return $"({id}, {name}, ({position.x}, {position.y}), {active})";
+        }
+    }
+}
+
+</pre>
+      </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

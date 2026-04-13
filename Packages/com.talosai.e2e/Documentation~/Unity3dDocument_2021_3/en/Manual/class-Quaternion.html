@@ -1,0 +1,227 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Quaternion</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Quaternion.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Quaternion.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Quaternion.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Quaternion.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Quaternion.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Quaternion.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Quaternion.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Quaternion.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="ScriptingImportantClasses.html">Important Classes </a></li>
+<li>Quaternion</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="VectorCookbook.html"></a></span><div class="tip">Vectors</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-ScriptableObject.html"></a></span><div class="tip">ScriptableObject</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Quaternion</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/Quaternion.html' title='Go to Quaternion page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity uses the <span class="tooltip"><strong>Quaternion</strong><span class="tooltiptext">Unity’s standard way of representing rotations as data. When writing code that deals with rotations, you should usually use the Quaternion class and its methods. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about QuaternionAndEulerRotationsInUnity.html" href="QuaternionAndEulerRotationsInUnity.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Quaternion" aria-label="Go to glossary anchor for Quaternion">Glossary</a></span></span></span> class to store the three dimensional orientation of <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Quaternion" aria-label="Go to glossary anchor for Quaternion">Glossary</a></span></span></span> class to store the three dimensional orientation of <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, as well as using them to describe a relative rotation from one orientation to another. </p>
+
+<p>This page provides an overview of the Quaternion class and its common uses when scripting with it. For an exhaustive reference of every member of the Quaternion class, see the <a href="../ScriptReference/Quaternion.html">Quaternion script reference</a>.</p>
+
+<p>It’s important to understand the difference between Euler angles (the X, Y, &amp; Z values that you see in the inspector for the rotation of a GameObject), and the underlying Quaternion value which Unity uses to store the actual rotation of GameObjects. For the basics of this topic, read <a href="QuaternionAndEulerRotationsInUnity.html">Rotation and Orientation in Unity</a>.</p>
+
+<p>When dealing with handling rotations in your <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>, you should use the Quaternion class and its functions to create and modify rotational values. There are some situations where it is valid to use Euler angles, but you should bear in mind:
+- You should use the Quaternion Class functions that deal with Euler angles
+- Retrieving, modifying, and re-applying Euler values from a rotation can cause unintentional side-effects (see below)</p>
+
+<h2>Creating and manipulating quaternions directly</h2>
+
+<p>Unity’s Quaternion class has a number of functions which allow you to create and manipulate rotations without needing to use Euler angles at all, and these are the ones you should use in most typical cases. Each of these links to the Script Reference with code samples:</p>
+
+<h3>Creating Rotations:</h3>
+
+<ul>
+<li><a href="../ScriptReference/Quaternion.LookRotation.html"><code>Quaternion.LookRotation</code></a></li>
+<li><a href="../ScriptReference/Quaternion.Angle.html"><code>Quaternion.Angle</code></a></li>
+<li><a href="../ScriptReference/Quaternion.AngleAxis.html"><code>Quaternion.AngleAxis</code></a></li>
+<li><a href="../ScriptReference/Quaternion.FromToRotation.html"><code>Quaternion.FromToRotation</code></a></li>
+</ul>
+
+<h3>Manipulating Rotations:</h3>
+
+<ul>
+<li><a href="../ScriptReference/Quaternion.Slerp.html"><code>Quaternion.Slerp</code></a></li>
+<li><a href="../ScriptReference/Quaternion.Inverse.html"><code>Quaternion.Inverse</code></a></li>
+<li><a href="../ScriptReference/Quaternion.RotateTowards.html"><code>Quaternion.RotateTowards</code></a></li>
+</ul>
+
+<p>The Transform class also provides methods which allow you to work with the Quaternion rotations:</p>
+
+<ul>
+<li>
+<a href="../ScriptReference/Transform.Rotate.html"><code>Transform.Rotate</code></a> &amp; <a href="../ScriptReference/Transform.RotateAround.html"><code>Transform.RotateAround</code></a>
+</li>
+</ul>
+
+<h2>Working with Euler angles</h2>
+
+<p>In some cases it’s more desirable to use Euler angles in your scripts. When doing so, it’s important to note that you must keep your angles in variables, and only use them to <em>apply</em> them as Euler angles to your rotation, which should still ultimately be stored as a Quaternion. While it’s possible to retrieve Euler angles <em>from</em> a quaternion, if you retrieve, modify and re-apply, problems are likely to arise.</p>
+
+<p>You can read more detail about exactly how these problems can arise in the <a href="../ScriptReference/Quaternion-eulerAngles.html">eulerAngles script reference page</a>.</p>
+
+<p>Here are some examples of <strong>mistakes</strong> commonly made using a hypothetical example of trying to rotate a GameObject around the X axis at 10 degrees per second. This is what you should <strong>avoid</strong>:</p>
+
+<pre><code>// rotation scripting mistake #1
+// the mistake here is that we are modifying the x value of a quaternion
+// this value does not represent an angle, and does not produce desired results
+    
+void Update () 
+{
+    var rot = transform.rotation;
+    rot.x += Time.deltaTime * 10;
+    transform.rotation = rot;
+}
+</code></pre>
+
+<pre><code>// rotation scripting mistake #2
+// Read, modify, then write the Euler values from a Quaternion.
+// Because these values are calculated from a Quaternion,
+// each new rotation might return very different Euler angles, which might suffer from gimbal lock.
+        
+void Update () 
+{
+    var angles = transform.rotation.eulerAngles;
+    angles.x += Time.deltaTime * 10;
+    transform.rotation = Quaternion.Euler(angles);
+}
+</code></pre>
+
+<p>And here is an example of using Euler angles in script <strong>correctly</strong>:</p>
+
+<pre><code>// Rotation scripting with Euler angles correctly.
+// Store the Euler angle in a class variable, and only use it to
+// apply it as an Euler angle, but never rely on reading the Euler back.
+        
+float x;
+void Update () 
+{
+    x += Time.deltaTime * 10;
+    transform.rotation = Quaternion.Euler(x,0,0);
+}
+</code></pre>
+
+<p>See the <a href="../ScriptReference/Quaternion.html">Quaternion script reference page</a> for more information.</p>
+
+<p><span class="search-words">Quaternion</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="VectorCookbook.html"></a></span><div class="tip">Vectors</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-ScriptableObject.html"></a></span><div class="tip">ScriptableObject</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

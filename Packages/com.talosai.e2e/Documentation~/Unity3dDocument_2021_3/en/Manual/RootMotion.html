@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Root Motion - how it works</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/RootMotion.html">English</a></li>
+<li><a href="/cn/current/Manual/RootMotion.html">中文</a></li>
+<li><a href="/ja/current/Manual/RootMotion.html">日本語</a></li>
+<li><a href="/kr/current/Manual/RootMotion.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/RootMotion.html">English</a></li>
+<li><a href="/cn/current/Manual/RootMotion.html">中文</a></li>
+<li><a href="/ja/current/Manual/RootMotion.html">日本語</a></li>
+<li><a href="/kr/current/Manual/RootMotion.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AnimationSection.html">Animation</a></li>
+<li><a href="AnimatorControllers.html">Animator Controllers</a></li>
+<li><a href="AnimationStateMachines.html">Animation State Machines</a></li>
+<li>Root Motion - how it works</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="InverseKinematics.html"></a></span><div class="tip">Inverse Kinematics</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ScriptingRootMotion.html"></a></span><div class="tip">Tutorial: Scripting Root Motion for &quot;in-place&quot; humanoid animations</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Root Motion - how it works</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>Body Transform</h2>
+
+<p>The Body Transform is the mass center of the character. It is used in Mecanim’s <span class="tooltip"><strong>retargeting</strong><span class="tooltiptext">Applying animations created for one model to another. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Retargeting.html" href="Retargeting.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Retargeting" aria-label="Go to glossary anchor for Retargeting">Glossary</a></span></span></span> engine and provides the most stable displacement model. The Body Orientation is an average of the lower and upper body orientation relative to the <span class="tooltip"><strong>Avatar</strong><span class="tooltiptext">An interface for retargeting animation from one rig to another. <a href="ConfiguringtheAvatar.html" href="Glossary.html#Retargeting" aria-label="Go to glossary anchor for Retargeting">Glossary</a></span></span></span> engine and provides the most stable displacement model. The Body Orientation is an average of the lower and upper body orientation relative to the <span class="tooltip"><strong>Avatar</strong><span class="tooltiptext">An interface for retargeting animation from one rig to another. <a href="ConfiguringtheAvatar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Avatar" aria-label="Go to glossary anchor for Avatar">Glossary</a></span></span></span> <span class="tooltip"><strong>T-Pose</strong><span class="tooltiptext">The pose in which the character has their arms straight out to the sides, forming a “T”. The required pose for the character to be in, in order to make an Avatar.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#T-pose" aria-label="Go to glossary anchor for T-pose">Glossary</a></span></span></span>.</p>
+
+<p>The Body Transform and Orientation are stored in the <span class="tooltip"><strong>Animation Clip</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html" href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> (using the <span class="tooltip"><a href="MuscleDefinitions.html">Muscle definitions</a><span class="tooltiptext">This allows you to have more intuitive control over the character’s skeleton. When an Avatar is in place, the Animation system works in muscle space, which is more intuitive than bone space. <a href="MuscleDefinitions.html" href="Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> (using the <span class="tooltip"><a href="MuscleDefinitions.html">Muscle definitions</a><span class="tooltiptext">This allows you to have more intuitive control over the character’s skeleton. When an Avatar is in place, the Animation system works in muscle space, which is more intuitive than bone space. <a href="MuscleDefinitions.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Muscledefinition" aria-label="Go to glossary anchor for Muscledefinition">Glossary</a></span></span></span> set up in the Avatar). They are the only world-space curves stored in the <strong>Animation Clip</strong>. Everything else: muscle curves and IK goals (Hands and Feet) are stored relative to the body transform. </p>
+
+<h2>Root Transform</h2>
+
+<p>The <strong>Root Transform</strong> is a projection on the Y plane of the Body Transform and is computed at runtime. At every frame, a change in the Root Transform is computed. This change in transform is then applied to the Game Object to make it move.</p>
+
+<figure>
+<img src="../uploads/Main/MecanimRootMotionPreview.jpg" alt="The circle below the character represents the root transform">
+<figcaption>The circle below the character represents the root transform</figcaption>
+</figure>
+
+<h2>Animation Clip Inspector</h2>
+
+<p>The Animation Clip Editor settings - <strong>Root Transform Rotation</strong>, <strong>Root Transform Position (Y)</strong> and <strong>Root Transform Position (XZ)</strong> - let you control the Root Transform projection from the Body Transform. Depending on these settings some parts of the Body Transform may be transferred to Root Transform. For example you can decide if you want the motion Y position to be part of the <strong>Root Motion</strong> (trajectory) or part of the pose (body transform), which is known as <strong>Baked into Pose</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/MecanimRootMotion.png" alt="">
+</figure>
+
+<h2>Root Transform Rotation</h2>
+
+<p>
+<strong>Bake into Pose:</strong> The orientation will stay on the body transform (or Pose). The Root Orientation will be constant and delta Orientation will be identity. This means that the Game Object will not be rotated at all by that <strong>AnimationClip</strong>.</p>
+
+<p>Only AnimationClips that have similar start and stop Root Orientation should use this option. You will have a Green Light in the <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> telling you that an <strong>AnimationClip</strong> is a good candidate. A suitable candidate would be a straight walk or a run.</p>
+
+<p>
+<strong>Based Upon</strong>: This lets you set the orientation of the clip. Using <strong>Body Orientation</strong>, the clip will be oriented to follow the forward vector of body. This default setting works well for most Motion Capture (Mocap) data like walks, runs, and jumps, but it will fail with motion like strafing where the motion is perpendicular to the body’s forward vector. In those cases you can manually adjust the orientation using the <strong>Offset</strong> setting. Finally you have <strong>Original</strong> that will automatically add the authored offset found in the imported clip. It is usually used with Keyframed data to respect orientation that was set by the artist.</p>
+
+<p>
+<strong>Offset</strong>: used to enter the offset when that option is chosen for <strong>Based Upon</strong>.</p>
+
+<h2>Root Transform Position (Y)</h2>
+
+<p>This uses the same concepts described in Root Transform Rotation.</p>
+
+<p>
+<strong>Bake Into Pose</strong>: The Y component of the motion will stay on the Body Transform (Pose). The Y component of the Root Transform will be constant and Delta Root Position Y will be 0. This means that this clip won’t change the Game Object Height. Again you have a Green Light telling you that a clip is a good candidate for baking Y motion into pose.</p>
+
+<p>Most of the <strong>AnimationClips</strong> will enable this setting. Only clips that will change the <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> height should have this turned off, like jump up or down.</p>
+
+<p>Note: the <code>Animator.gravityWeight</code> is driven by Bake Into Pose position Y. When enabled, <code>gravityWeight = 1</code>, when <code>disabled = 0</code>. <strong>gravityWeight</strong> is blended for clips when transitioning between states.</p>
+
+<p>
+<strong>Based Upon:</strong> In a similar way to <strong>Root Transform Rotation</strong> you can choose from <strong>Original</strong> or <strong>Mass Center (Body)</strong>. There is also a <strong>Feet</strong> option that is very convenient for <strong>AnimationClips</strong> that change height (<strong>Bake Into Pose</strong> disabled). When using <strong>Feet</strong> the Root Transform Position Y will match the lowest foot Y for all frames. Thus the blending point always remains around the feet which prevents floating problem when blending or transitioning.</p>
+
+<p>
+<strong>Offset:</strong> In a similar way to <strong>Root Transform Rotation</strong>, you can manually adjust the <strong>AnimationClip</strong> height using the <strong>Offset</strong> setting.</p>
+
+<h2>Root Transform Position (XZ)</h2>
+
+<p>Again, this uses same concepts described in <strong>Root Transform Rotation</strong> and <strong>Root Motion Position (Y).</strong>
+</p>
+
+<p>
+<strong>Bake Into Pose</strong> will usually be used for “Idles” where you want to force the delta Position (XZ) to be 0. It will stop the accumulation of small deltas drifting after many evaluations. It can also be used for a Keyframed clip with <strong>Based Upon</strong> <strong>Original</strong> to force an authored position that was set by the artist.</p>
+
+<h2>Loop Pose</h2>
+
+<p>Loop Pose (like Pose Blending in Blend Trees or Transitions) happens in the referential of Root Transform. Once the Root Transform is computed, the Pose becomes relative to it. The relative Pose difference between Start and Stop frame is computed and distributed over the range of the clip from 0–100%.</p>
+
+<h2>Generic Root Motion and Loop Pose</h2>
+
+<p>This works in essentially the same as Humanoid Root Motion, but instead of using the Body Transform to compute/project a Root Transform, the transform set in <span class="tooltip"><strong>Root Node</strong><span class="tooltiptext">A transform in an animation hierarchy that allows Unity to establish consistency between Animation clips for a generic model. It also enables Unity to properly blend between Animations that have not been authored “in place” (that is, where the whole Model moves its world position while animating). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationRootMotionNodeOnImportedClips.html" href="AnimationRootMotionNodeOnImportedClips.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rootnode" aria-label="Go to glossary anchor for Rootnode">Glossary</a></span></span></span> is used. The Pose (all the bones which transform below the Root Motion bone) is made relative to the Root Transform.</p>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="InverseKinematics.html"></a></span><div class="tip">Inverse Kinematics</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ScriptingRootMotion.html"></a></span><div class="tip">Tutorial: Scripting Root Motion for &quot;in-place&quot; humanoid animations</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

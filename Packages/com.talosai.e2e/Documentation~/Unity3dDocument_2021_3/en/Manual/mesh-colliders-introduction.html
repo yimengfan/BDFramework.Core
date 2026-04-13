@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Mesh colliders</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/mesh-colliders-introduction.html">English</a></li>
+<li><a href="/cn/current/Manual/mesh-colliders-introduction.html">中文</a></li>
+<li><a href="/ja/current/Manual/mesh-colliders-introduction.html">日本語</a></li>
+<li><a href="/kr/current/Manual/mesh-colliders-introduction.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/mesh-colliders-introduction.html">English</a></li>
+<li><a href="/cn/current/Manual/mesh-colliders-introduction.html">中文</a></li>
+<li><a href="/ja/current/Manual/mesh-colliders-introduction.html">日本語</a></li>
+<li><a href="/kr/current/Manual/mesh-colliders-introduction.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PhysicsSection.html">Physics</a></li>
+<li><a href="PhysicsOverview.html">Built-in 3D Physics</a></li>
+<li><a href="collision-section.html">Collision</a></li>
+<li><a href="collider-shapes.html">Collider shapes</a></li>
+<li><a href="mesh-colliders.html">Mesh colliders</a></li>
+<li>Mesh colliders</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="mesh-colliders.html"></a></span><div class="tip">Mesh colliders</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="prepare-mesh-for-mesh-collider.html"></a></span><div class="tip">Prepare a Mesh for Mesh colliders</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Mesh colliders</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshCollider.html">Mesh colliders</a><span class="tooltiptext">A free-form collider component which accepts a mesh reference to define its collision surface shape. <a href="class-MeshCollider.html" href="class-MeshCollider.html">Mesh colliders</a><span class="tooltiptext">A free-form collider component which accepts a mesh reference to define its collision surface shape. <a href="class-MeshCollider.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#MeshCollider" aria-label="Go to glossary anchor for MeshCollider">Glossary</a></span></span></span> match the shape of a <span class="tooltip"><a href="class-Mesh.html">Mesh</a><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html" href="Glossary.html#MeshCollider" aria-label="Go to glossary anchor for MeshCollider">Glossary</a></span></span></span> match the shape of a <span class="tooltip"><a href="class-Mesh.html">Mesh</a><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> exactly, for extremely accurate <span class="tooltip"><strong>collision</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a href="CollidersOverview.html" href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> exactly, for extremely accurate <span class="tooltip"><strong>collision</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span> simulation. </p>
+
+<p>The Mesh <span class="tooltip"><strong>collider</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> builds its collision geometry to match an assigned <a href="class-Mesh.html">Mesh</a>, including its shape, position and scale. The benefit of this is that you can make the shape of the collider exactly the same as the shape of the visible Mesh for the <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> builds its collision geometry to match an assigned <a href="class-Mesh.html">Mesh</a>, including its shape, position and scale. The benefit of this is that you can make the shape of the collider exactly the same as the shape of the visible Mesh for the <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, which creates more precise and realistic collisions. </p>
+
+<p>The precision of a Mesh collider comes with a higher processing overhead than <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about primitive-colliders.html">primitive colliders</a> (such as the <a href="class-SphereCollider.html">Sphere</a>, <a href="class-BoxCollider.html">Box</a>, and <a href="class-CapsuleCollider.html">Capsule</a> colliders). For this reason, it is best practice to only use Mesh colliders for colliders that do not otherwise require a high amount of processing power, or for collisions where primitive colliders or a <a href="compound-colliders.html">compound collider</a> would have a greater overhead. A good approach is to use Mesh colliders for static <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="primitive-colliders.html">primitive colliders</a> (such as the <a href="class-SphereCollider.html">Sphere</a>, <a href="class-BoxCollider.html">Box</a>, and <a href="class-CapsuleCollider.html">Capsule</a> colliders). For this reason, it is best practice to only use Mesh colliders for colliders that do not otherwise require a high amount of processing power, or for collisions where primitive colliders or a <a href="compound-colliders.html">compound collider</a> would have a greater overhead. A good approach is to use Mesh colliders for static <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> geometry, and compound colliders for moving GameObjects.</p>
+
+<h2>Benefits and limitations of Mesh colliders</h2>
+
+<p>In most cases, Mesh colliders offer a similar solution to <a href="compound-colliders.html">compound colliders</a>: their primary purpose is to provide accurate collisions for items with complex shapes. When considering the benefits and limitations of Mesh colliders, you are usually comparing them to compound colliders. </p>
+
+<p>The main benefits of Mesh colliders are:</p>
+
+<ul>
+<li>Mesh colliders are extremely accurate, because they perfectly match the shape of the item.</li>
+<li>Mesh colliders require less manual development time than compound colliders, because Unity handles their shape automatically based on the shape of the Mesh.</li>
+<li>In some cases, Mesh colliders can be less computationally demanding than compound colliders. This is often the case for very complex shapes which would require a high number of compound colliders to approximate. One Mesh collider might be more efficient than several primitive colliders.</li>
+</ul>
+
+<p>However, Mesh colliders also have some significant limitations:</p>
+
+<ul>
+<li>Mesh colliders cannot provide accurate collisions between concave shapes. For details, see <a href="#concave-convex-mesh-colliders">Concave and convex Mesh colliders</a>, below.</li>
+<li>In some cases, compound colliders can be less computationally demanding than Mesh colliders. This is often the case for simpler shapes which only require a few colliders to approximate, or for shapes that don’t need to be too accurate. For example, a Mesh collider might generate hundreds of polygons in order to precisely match a complex shape, but an approximation with primitive colliders might require far fewer.</li>
+<li>Mesh colliders are not a good option for Meshes that change shape at runtime. For details, see <a href="#meshes-that-change-shape-runtime">Meshes that change shape at runtime</a>, below.</li>
+</ul>
+
+<p>The decision is always unique to your project, so you should test each configuration and use the Physics <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> to understand the efficiency of your collider setup.</p>
+
+<p><a name="concave-convex-mesh-colliders" aria-hidden="true"></a></p>
+
+<h2>Concave and convex Mesh colliders</h2>
+
+<p>Mesh colliders behave differently based on whether they are marked as concave or convex. By default, PhysX considers Mesh colliders to be concave.</p>
+
+<p>In mathematics, “concave” and “convex” are terms used to describe shapes:</p>
+
+<p>A convex shape only has lines that curve outward (for example, a ball). Any line segment connecting two points on its boundary remains entirely within the shape.
+A concave shape has at least one “cave” or indentation where the boundary curves inward (for example, a banana). Line segments connecting two points on its boundary might sometimes cross space outside the shape.</p>
+
+<p>Concave colliders have some limitations:
+Concave Mesh colliders can only be static (that is, they have no physics body) or kinematic (they have a kinematic physics body). See <a href="collider-types.html">Collider types</a> for more details.
+Concave Mesh colliders can only collide with convex colliders. If two concave colliders make contact, no collision occurs. </p>
+
+<p>If you have two concave Mesh colliders that need to collide, you can do one of the following, depending on how accurate your collision needs to be:</p>
+
+<p>If you do not need accurate collisions to take place in the concave parts of the shape, mark one of the Mesh colliders as convex in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> (enable <strong>Is Convex</strong>). This generates a new convex collider shape called a “hull”, which is like the assigned concave Mesh but with any concave lines filled in, to make them convex. </p>
+
+<figure>
+<img src="../uploads/Main/food-pack-banana-concave-mesh.png" alt="A concave Mesh collider on a banana-shaped GameObject.">
+<figcaption>A concave Mesh collider on a banana-shaped GameObject.</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/food-pack-banana-convex-mesh.png" alt="A convex Mesh collider on the same banana-shaped GameObject.">
+<figcaption>A convex Mesh collider on the same banana-shaped GameObject.</figcaption>
+</figure>
+
+<p>If you need accurate collisions to take place in the concave parts of the shape, use a <a href="compound-colliders.html">compound collider</a> made of convex colliders.</p>
+
+<p><a name="meshes-that-change-shape-runtime" aria-hidden="true"></a></p>
+
+<h3>Meshes that change shape at runtime</h3>
+
+<p>The Mesh that you have assigned to the Mesh collider should ideally not change shape at runtime. </p>
+
+<p>Every time the Mesh changes shape, the <span class="tooltip"><strong>physics engine</strong><span class="tooltiptext">A system that simulates aspects of physical systems so that objects can accelerate correctly and be affected by collisions, gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PhysicsSection.html" href="PhysicsSection.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PhysicsEngine" aria-label="Go to glossary anchor for PhysicsEngine">Glossary</a></span></span></span> needs to recalculate the Mesh collider geometry, which causes a substantial performance overhead. For this reason, you should not modify the geometry of a Mesh that a Mesh collider is using. If a Mesh needs to both collide and change shape at runtime, it is usually better to approximate the Mesh shape with <a href="primitive-colliders.html">primitive colliders</a> or <a href="compound-colliders.html">compound colliders</a>.</p>
+
+<h3>Directional mesh facing</h3>
+
+<p>Faces in collision meshes are one-sided. This means GameObjects can pass through them from one direction, but collide with them from the other.</p>
+
+<p>For details about the underlying algorithms and data structures that Mesh colliders use, see the Nvidia PhysX documentation on <a href="https://docs.nvidia.com/gameworks/content/gameworkslibrary/physx/guide/Manual/Geometry.html">Geometry</a>.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="mesh-colliders.html"></a></span><div class="tip">Mesh colliders</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="prepare-mesh-for-mesh-collider.html"></a></span><div class="tip">Prepare a Mesh for Mesh colliders</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

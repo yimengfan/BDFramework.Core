@@ -1,0 +1,286 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: 9-slicing Sprites </title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/9SliceSprites.html">English</a></li>
+<li><a href="/cn/current/Manual/9SliceSprites.html">中文</a></li>
+<li><a href="/ja/current/Manual/9SliceSprites.html">日本語</a></li>
+<li><a href="/kr/current/Manual/9SliceSprites.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/9SliceSprites.html">English</a></li>
+<li><a href="/cn/current/Manual/9SliceSprites.html">中文</a></li>
+<li><a href="/ja/current/Manual/9SliceSprites.html">日本語</a></li>
+<li><a href="/kr/current/Manual/9SliceSprites.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Unity2D.html">2D game development</a></li>
+<li><a href="Sprites.html">Work with sprites</a></li>
+<li>9-slicing Sprites </li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-SortingGroup.html"></a></span><div class="tip">Sorting Groups</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-SpriteMask.html"></a></span><div class="tip">Sprite Masks</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>9-slicing Sprites</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>9-slicing is a 2D technique which allows you to reuse an image at various sizes without needing to prepare multiple <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetWorkflow.html">Assets</a><span class="tooltiptext">Any media or data that can be used in your game or project. An asset may come from a file created outside of Unity, such as a 3D Model, an audio file or an image. You can also create some asset types in Unity, such as an Animator Controller, an Audio Mixer or a Render Texture. <a href="AssetWorkflow.html" href="AssetWorkflow.html">Assets</a><span class="tooltiptext">Any media or data that can be used in your game or project. An asset may come from a file created outside of Unity, such as a 3D Model, an audio file or an image. You can also create some asset types in Unity, such as an Animator Controller, an Audio Mixer or a Render Texture. <a href="AssetWorkflow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Asset" aria-label="Go to glossary anchor for Asset">Glossary</a></span></span></span>. It involves splitting the image into nine portions, so that when you re-size the <span class="tooltip"><a href="Sprites.html">Sprite</a><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html" href="Glossary.html#Asset" aria-label="Go to glossary anchor for Asset">Glossary</a></span></span></span>. It involves splitting the image into nine portions, so that when you re-size the <span class="tooltip"><a href="Sprites.html">Sprite</a><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span>, the different portions scale or tile (that is, repeat in a grid formation) in different ways to keep the Sprite in proportion. This is useful when creating patterns or <span class="tooltip"><a href="class-TextureImporter.html">Textures</a><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a href="class-TextureImporter.html" href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span>, the different portions scale or tile (that is, repeat in a grid formation) in different ways to keep the Sprite in proportion. This is useful when creating patterns or <span class="tooltip"><a href="class-TextureImporter.html">Textures</a><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a href="class-TextureImporter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#texture" aria-label="Go to glossary anchor for texture">Glossary</a></span></span></span>, such as walls or floors in a 2D environment.</p>
+
+<p>This is an example of a 9-sliced Sprite, split into nine sections. Each section is labelled with a letter from A to I.</p>
+
+<figure>
+<img src="../uploads/Main/9SliceSprites-0.png" alt="">
+</figure>
+
+<p>The following points describe what happens when you change the dimensions of the image:</p>
+
+<ul>
+<li><p>The four corners (A, C, G and I) do not change in size.</p></li>
+<li><p>The B and H sections stretch or tile horizontally.</p></li>
+<li><p>The D and F sections stretch or tile vertically.</p></li>
+<li><p>The E section stretches or tiles both horizontally and vertically.</p></li>
+</ul>
+
+<p>This page describes how to set 9-slicing up, and which settings to apply depending on whether you want to stretch or tile the areas shown above.</p>
+
+<h2>Setting up your Sprite for 9-slicing</h2>
+
+<p>Before you 9-slice a Sprite, you need to ensure the Sprite is set up properly.</p>
+
+<p>First, you need to make sure the <strong>Mesh Type</strong> is set to <strong>Full Rect</strong>. To apply this, select the Sprite, then in the Inspector window click the <strong>Mesh Type</strong> drop-down and select <strong>Full Rect</strong>. If the <strong>Mesh Type</strong> is set to <strong>Tight</strong>, 9-slicing might not work correctly, because of how the Sprite Renderer generates and renders the Sprite when it is set up for 9-slicing. </p>
+
+<figure>
+<img src="../uploads/Main/9SliceSprites-1.png" alt="The Sprite’s Inspector window. Mesh Type is highlighted in the red box.">
+<figcaption>The Sprite’s Inspector window. <strong>Mesh Type</strong> is highlighted in the red box.</figcaption>
+</figure>
+
+<p>Next, you need to define the borders of the Sprite via the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SpriteEditor.html"><strong>Sprite Editor</strong></a> window. To do this, select the Sprite, then in the <span class="tooltip"><a href="UsingTheInspector.html">Inspector</a><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="SpriteEditor.html"><strong>Sprite Editor</strong></a> window. To do this, select the Sprite, then in the <span class="tooltip"><a href="UsingTheInspector.html">Inspector</a><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window click the <strong>Sprite Editor</strong> button.</p>
+
+<figure>
+<img src="../uploads/Main/9SliceSprites-2.png" alt="The Sprite’s Inspector window. The Sprite Editor button is highlighted in the red box. See documentation on Sprites for information on all of the properties in the Sprite Import Settings.">
+<figcaption>The Sprite’s Inspector window. The <strong>Sprite Editor</strong> button is highlighted in the red box. See documentation on <a href="Sprites.html">Sprites</a> for information on all of the properties in the Sprite Import Settings.</figcaption>
+</figure>
+
+<p>Use the Sprite Editor window to define the borders of the Sprite (that is, where you want to define the tiled areas, such as the walls of a floor tile). To do this, use the Sprite control panel’s <strong>L</strong>, <strong>R</strong>, <strong>T</strong>, and <strong>B</strong> fields (left, right, top, and bottom, respectively). Alternatively, click and drag the green dots at the top, bottom, and sides.</p>
+
+<figure>
+<img src="../uploads/Main/9SliceSprites-3.jpg" alt="Defining the borders of the Sprite in the Sprite Editor window">
+<figcaption>Defining the borders of the Sprite in the Sprite Editor window</figcaption>
+</figure>
+
+<p>Click <strong>Apply</strong> in the Sprite Editor window’s top bar. Close the Sprite Editor window, and drag the Sprite from the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html">Project window</a><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a href="ProjectView.html" href="ProjectView.html">Project window</a><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span> into the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span> into the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view to begin working on it.</p>
+
+<h2>9-slicing your Sprite</h2>
+
+<p>Select the Sprite in the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html">Scene view</a><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html" href="UsingTheSceneView.html">Scene view</a><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> or the <a href="Hierarchy.html">Hierarchy window</a>. In the Inspector window, navigate to the <span class="tooltip"><a href="class-SpriteRenderer.html">Sprite Renderer</a><span class="tooltiptext">A component that lets you display images as Sprites for use in both 2D and 3D scenes. <a href="class-SpriteRenderer.html" href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> or the <a href="Hierarchy.html">Hierarchy window</a>. In the Inspector window, navigate to the <span class="tooltip"><a href="class-SpriteRenderer.html">Sprite Renderer</a><span class="tooltiptext">A component that lets you display images as Sprites for use in both 2D and 3D scenes. <a href="class-SpriteRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SpriteRenderer" aria-label="Go to glossary anchor for SpriteRenderer">Glossary</a></span></span></span> component and change the <strong>Draw Mode</strong> property. </p>
+
+<figure>
+<img src="../uploads/Main/SpriteRenderer.png" alt="">
+</figure>
+
+<p>It is set to <strong>Simple</strong> by default; to apply 9-slicing, set it to either <strong>Sliced</strong> or <strong>Tiled</strong> depending on the behavior you want. The following sections explain how each one behaves, using this Sprite:</p>
+
+<figure>
+<img src="../uploads/Main/9SliceSprites-4.jpg" alt="The original Sprite used for the examples shown below">
+<figcaption>The original Sprite used for the examples shown below</figcaption>
+</figure>
+
+<h3>Simple</h3>
+
+<figure>
+<img src="../uploads/Main/9SliceSprites-5.png" alt="">
+</figure>
+
+<p>This is the default Sprite Renderer behaviour. The image scales in all directions when its dimensions change. <strong>Simple</strong> is not used for 9-slicing.</p>
+
+<h3>Sliced</h3>
+
+<figure>
+<img src="../uploads/Main/9SliceSprites-6.png" alt="">
+</figure>
+
+<p>In <strong>Sliced</strong> mode, the corners stay the same size, the top and bottom of the Sprite stretch horizontally, the sides of the Sprite stretch vertically, and the centre of the Sprite stretches horizontally and vertically to fit the Sprite’s size.</p>
+
+<p>When a Sprite’s <strong>Draw Mode</strong> is set to <strong>Sliced</strong>, you can choose to change the size using the <strong>Size</strong> property on the Sprite Renderer or the <a href="Toolbar.html">Rect Transform Tool</a>. You can still scale the Sprite using the Transform properties or the Transform Tool; however, the Transform scales the Sprite without applying the 9-slicing. </p>
+
+<h3>Tiled</h3>
+
+<figure>
+<img src="../uploads/Main/9SliceSprites-7.png" alt="">
+</figure>
+
+<p>In <strong>Tiled</strong> mode, the sprite stays the same size, and does not scale. Instead, the top and bottom of the Sprite repeat horizontally, the sides repeat vertically, and the centre of the Sprite repeats in a tile formation to fit the Sprite’s size.</p>
+
+<p>When you set the <strong>Draw Mode</strong> to <strong>Tiled</strong>, an additional property called <strong>Tile Mode</strong> appears. See the next section in this page for more information on how <strong>Tile Mode</strong> works. </p>
+
+<p>See documentation on the <a href="class-SpriteRenderer.html">Sprite Renderer</a> for full details on all of the component’s properties.</p>
+
+<h2>Tile Mode</h2>
+
+<p>When the <strong>Draw Mode</strong> is set to <strong>Tiled</strong>, use the <strong>Tile Mode</strong> property to control how the sections repeat when the dimensions of the Sprite change.</p>
+
+<h3><img src="../uploads/Main/9SliceSprites-8.png" alt="Set Draw Mode to Tiled to access Tile Mode in Sprite Renderer"></h3>
+
+<h3>Continuous</h3>
+
+<p>
+<strong>Tile Mode</strong> is set to <strong>Continuous</strong> by default. When the size of the Sprite changes, the repeating sections repeat evenly in the Sprite.</p>
+
+<figure>
+<img src="../uploads/Main/9SliceSprites-9.png" alt="">
+</figure>
+
+<h3>Adaptive</h3>
+
+<p>When <strong>Tile Mode</strong> is set to <strong>Adaptive</strong>, the repeating sections only repeat when the dimensions of the Sprite reach the <strong>Stretch Value</strong>. </p>
+
+<figure>
+<img src="../uploads/Main/9SliceSprites-10.png" alt="">
+</figure>
+
+<p>Use the <strong>Stretch Value</strong> slider to set the value between <strong>0</strong> and <strong>1</strong>. Note that <strong>1</strong> represents an image resized to twice its original dimensions, so if the <strong>Stretch Value</strong> is set at <strong>1</strong>, the section repeats when the image is stretched to twice its original size.</p>
+
+<p>To demonstrate this, the following images show the difference between an image with the same dimension but a different <strong>Stretch Value:</strong>
+</p>
+
+<p>
+<strong>Stretch Value 0.1</strong>:</p>
+
+<figure>
+<img src="../uploads/Main/9SliceSprites-11.png" alt="">
+</figure>
+
+<p>
+<strong>Stretch Value 0.5</strong>:</p>
+
+<figure>
+<img src="../uploads/Main/9SliceSprites-12.png" alt="">
+</figure>
+
+<h2>9-slicing and Colliders</h2>
+
+<p>If your <a href="Sprites.html">Sprite</a> has a <a href="Collider2D.html">Collider2D</a> attached, you need to ensure that when you change the Sprite’s dimensions, the Collider2D changes with it.</p>
+
+<p>
+<a href="class-BoxCollider2D.html">Box Collider 2D</a> and <a href="class-PolygonCollider2D.html">Polygon Collider 2D</a> are the only Collider2D components in Unity that support 9-slicing. These two Collider2Ds have an <strong>Auto Tiling</strong> checkbox. To make sure the Collider2D components are set up for 9-slicing, select the Sprite you are applying it to, navigate to the Collider2D in the Inspector window, and tick the <strong>Auto Tiling</strong> checkbox. This enables automatic updates to the shape of the Collider2D, meaning that the shape is automatically readjusted when the Sprite’s dimensions change. If you don’t enable <strong>Auto Tiling</strong>, the Collider2D stays the same shape and size, even when the Sprite’s dimensions change.</p>
+
+<h3>Limitations and known issues</h3>
+
+<ul>
+<li><p>The only two Collider2Ds that support 9-slicing are BoxCollider2D and PolygonCollider2D.</p></li>
+<li><p>You cannot edit BoxCollider2D or PolygonCollider2D when the Sprite Renderer’s <strong>Draw Mode</strong> is set to <strong>Sliced</strong> or <strong>Tiled</strong>. Editing in the Inspector window is disabled, and a warning appears to notify you that the Collider2D cannot be edited because it is driven by the Sprite Renderer component’s tiling properties.</p></li>
+<li><p>When the shape is regenerated in <strong>Auto Tiling</strong>, additional edges might appear within the Collider2D’s shape. This may have an effect on <span class="tooltip"><strong>collisions</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span>.</p></li>
+</ul>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-SortingGroup.html"></a></span><div class="tip">Sorting Groups</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-SpriteMask.html"></a></span><div class="tip">Sprite Masks</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

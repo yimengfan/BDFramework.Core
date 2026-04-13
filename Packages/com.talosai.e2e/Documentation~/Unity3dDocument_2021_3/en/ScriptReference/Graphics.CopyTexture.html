@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Graphics.CopyTexture</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">
+                  <a href="Graphics.html">Graphics</a>.CopyTexture</h1>
+                <div class="clear">
+                </div>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public static void <span class="sig-kw">CopyTexture</span>(<a href="Texture.html">Texture</a> <span class="sig-kw">src</span>,
+<a href="Texture.html">Texture</a> <span class="sig-kw">dst</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public static void <span class="sig-kw">CopyTexture</span>(<a href="Texture.html">Texture</a> <span class="sig-kw">src</span>,
+int <span class="sig-kw">srcElement</span>,
+<a href="Texture.html">Texture</a> <span class="sig-kw">dst</span>,
+int <span class="sig-kw">dstElement</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public static void <span class="sig-kw">CopyTexture</span>(<a href="Texture.html">Texture</a> <span class="sig-kw">src</span>,
+int <span class="sig-kw">srcElement</span>,
+int <span class="sig-kw">srcMip</span>,
+<a href="Texture.html">Texture</a> <span class="sig-kw">dst</span>,
+int <span class="sig-kw">dstElement</span>,
+int <span class="sig-kw">dstMip</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public static void <span class="sig-kw">CopyTexture</span>(<a href="Texture.html">Texture</a> <span class="sig-kw">src</span>,
+int <span class="sig-kw">srcElement</span>,
+int <span class="sig-kw">srcMip</span>,
+int <span class="sig-kw">srcX</span>,
+int <span class="sig-kw">srcY</span>,
+int <span class="sig-kw">srcWidth</span>,
+int <span class="sig-kw">srcHeight</span>,
+<a href="Texture.html">Texture</a> <span class="sig-kw">dst</span>,
+int <span class="sig-kw">dstElement</span>,
+int <span class="sig-kw">dstMip</span>,
+int <span class="sig-kw">dstX</span>,
+int <span class="sig-kw">dstY</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">src</td>
+                    <td class="desc">The source texture to copy from, specified as a <a href="Texture.html">Texture</a>.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">dst</td>
+                    <td class="desc">The destination texture to copy to, specified as a <a href="Texture.html">Texture</a>.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">srcElement</td>
+                    <td class="desc">The element in the source texture to copy from. For example, the <a href="CubemapFace.html">CubemapFace</a> in a Cubemap or the slice in a texture array. Set the value to <code class="mono">0</code> if <code class="mono">src</code> is a 2D texture.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">srcMip</td>
+                    <td class="desc">The mipmap level to copy from. The range is <code class="mono">0</code> through the texture's <a href="Texture-mipmapCount.html">Texture.mipmapCount</a>. The default value is <code class="mono">0</code>.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">dstElement</td>
+                    <td class="desc">The element in the destination texture to copy to. For example, the <a href="CubemapFace.html">CubemapFace</a> in a Cubemap or the slice in a texture array. Set the value to <code class="mono">0</code> if `dst` is a 2D texture.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">dstMip</td>
+                    <td class="desc">The mipmap level to write to. The range is <code class="mono">0</code> through the texture's <a href="Texture-mipmapCount.html">Texture.mipmapCount</a>. The default value is <code class="mono">0</code>.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">srcX</td>
+                    <td class="desc">The starting x coordinate of <code class="mono">src</code> to copy a region from. Accepted values range from <code class="mono">0</code> to the width of <code class="mono">src</code> at the specified <code class="mono">srcMip</code>. <code class="mono">0</code> is the left of the texture.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">srcY</td>
+                    <td class="desc">The starting y coordinate of <code class="mono">src</code> to copy a region from. Accepted values range from <code class="mono">0</code> to the height of <code class="mono">src</code> at the specified <code class="mono">srcMip</code>. <code class="mono">0</code> is the bottom of the texture.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">srcWidth</td>
+                    <td class="desc">The width of the region to copy. Accepted values are greater than or equal to <code class="mono">0</code> and ensure that the region fits within <code class="mono">src</code> at the specified <code class="mono">srcMip</code> considering offset <code class="mono">(srcX, srcY)</code>, and within <code class="mono">dst</code> at the specified <code class="mono">dstMip</code> considering offset <code class="mono">(dstX, dstY)</code>.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">srcHeight</td>
+                    <td class="desc">The height of the region to copy. Accepted values are greater than or equal to <code class="mono">0</code> and ensure that the region fits within <code class="mono">src</code> at the specified <code class="mono">srcMip</code> considering offset <code class="mono">(srcX, srcY)</code>, and within <code class="mono">dst</code> at the specified <code class="mono">dstMip</code> considering offset <code class="mono">(dstX, dstY)</code>.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">dstX</td>
+                    <td class="desc">The starting x coordinate of <code class="mono">dst</code> to copy a region to. Accepted values range from <code class="mono">0</code> to the width of <code class="mono">dst</code> at the specified <code class="mono">dstMip</code>. <code class="mono">0</code> is the left of the texture.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">dstY</td>
+                    <td class="desc">The starting y coordinate of <code class="mono">dst</code> to copy a region to. Accepted values range from <code class="mono">0</code> to the height of <code class="mono">dst</code> at the specified <code class="mono">dstMip</code>. <code class="mono">0</code> is the bottom of the texture.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Copies pixel data from one texture to another.</p>
+              </div>
+              <div class="subsection">
+        <p>This method copies pixel data from one texture to another on the GPU. If <a href="Texture-isReadable.html">Texture.isReadable</a> is <code class="mono">true</code> for both <code class="mono">src</code> and <code class="mono">dst</code>, the method also copies pixel data on the CPU. If <a href="Texture-isReadable.html">Texture.isReadable</a> is <code class="mono">false</code> for either <code class="mono">src</code> or <code class="mono">dst</code>, <code class="mono">CopyTexture</code> becomes one of the fastest ways to copy a texture. <strong>Warning</strong>: Be careful when using an <code class="mono">Apply</code> method such as <a href="Texture2D.Apply.html">Texture2D.Apply</a> after <code class="mono">CopyTexture</code>, because you might copy old or undefined CPU texture data to the GPU.<br /><br />To use <code class="mono">CopyTexture</code>, the following must be the same in both the source and destination texture areas:
+</p>
+        <ul>
+          <li>Format. You can also use two compatible formats - for example, <a href="TextureFormat.ARGB32.html">TextureFormat.ARGB32</a> and <a href="RenderTextureFormat.ARGB32.html">RenderTextureFormat.ARGB32</a>.</li>
+          <li>Size.</li>
+          <li>
+            <a href="RenderTexture-antiAliasing.html">RenderTexture.antiAliasing</a> values, if the textures are render textures.</li>
+        </ul>
+        <p>You might be able to copy between incompatible formats depending on your graphics API. For example, on some APIs you can copy between formats with the same bit width. <br /><br />Depending on your graphics API, you might not be able to copy between different types of textures. For more information on compatibility, see <a href="SystemInfo-copyTextureSupport.html">SystemInfo.copyTextureSupport</a> and <a href="Rendering.CopyTextureSupport.html">CopyTextureSupport</a>.<br /><br />If <code class="mono">src</code> is a depth-only render texture, you must copy the whole texture, not part of it. A depth-only render texture has its color buffer set to a <a href="RenderTexture-graphicsFormat.html">color format</a> of <code class="mono">None</code> and its depth buffer set to a valid <a href="RenderTexture-depthStencilFormat.html">RenderTexture.depthStencilFormat</a>.<br /><br />When you use <a href="Texture2D-ignoreMipmapLimit.html">Texture2D.ignoreMipmapLimit</a>, textures can have a variety of mipmap limit settings. This means you may not be able to copy from one mipmap level to another, because for example the source texture is limited to half resolution and the destination texture is limited to quarter resolution.<br /><br />You can load Textures at different resolutions by using <a href="QualitySettings-masterTextureLimit.html">QualitySettings.masterTextureLimit</a>. Note that this affects CopyTextures as you cannot copy a full mip between textures with different master
+texture limit values. If you need to copy between textures with a different master texture limit, use the region-based overload. The region-based overload adjusts the source rectangle based on the source
+texture's master texture limit. It also adjusts the destination offset based on the destination's master texture limit. For example, copying a 128x128 area from position 16,16 to position 32,32 results
+in the following behaviours in these example cases:
+</p>
+        <ul>
+          <li>When the master texture limit is set to 0: Unity performs all copies as expected.</li>
+          <li>When the master texture limit is set to 2 and both textures are subject to the master texture limit: Unity adjusts the source rectangle to 32x32 and adjusts the offset to 4,4. Unity changes the destination offset to 8x8. Unity performs all copies as expected without awareness of the master texture limit setting.</li>
+          <li>When the master texture limit is set to 2, the source is a regular texture, and the destination is an array texture (array textures are never subject to the master texture limit): Unity adjusts the source rectangle to 32x32 and adjusts the offset to 4,4. Unity doesn't change the destination offset, which remains at 32x32.</li>
+        </ul>
+        <p>The following sample shows how you can copy to or from a Texture2DArray, when Texture2Ds are subject to a master texture limit different from 0:</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using UnityEngine;<br /><br />public class CopyTextureSample : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    // <a href="PackageManager.UI.Sample.html">Sample</a> to copy all available mips: inTex -&gt; outArray (no master texture limits) -&gt; outTex
+    [<a href="SerializeField.html">SerializeField</a>] <a href="Texture2D.html">Texture2D</a> inTex;
+    [<a href="SerializeField.html">SerializeField</a>] <a href="Texture2DArray.html">Texture2DArray</a> outArray;
+    [<a href="SerializeField.html">SerializeField</a>] <a href="Texture2D.html">Texture2D</a> outTex;
+    [<a href="SerializeField.html">SerializeField</a>] bool considerMasterTextureLimits;<br /><br />    void Start()
+    {
+        int width = inTex.width;
+        int height = inTex.width;
+        
+        outArray = new <a href="Texture2DArray.html">Texture2DArray</a>(width, height, 1, inTex.format, true);
+        outTex = new <a href="Texture2D.html">Texture2D</a>(width, height, inTex.format, true);<br /><br />        if (!considerMasterTextureLimits)
+        {
+            // <a href="Texture2D.html">Texture2D</a> -&gt; <a href="Texture2DArray.html">Texture2DArray</a>
+            // Master <a href="Texture.html">Texture</a> Limit: "1: Half <a href="Resolution.html">Resolution</a>" =&gt; copies into mips that are now too large; will copy each mip of inTex into a quarter of outArray
+            for (int mip = 0; mip &lt; inTex.mipmapCount; ++mip)
+            {
+                int copyWidth = width &gt;&gt; mip;
+                int copyHeight = height &gt;&gt; mip;
+                <a href="Graphics.CopyTexture.html">Graphics.CopyTexture</a>(inTex, 0, mip, 0, 0, copyWidth, copyHeight, outArray, 0, mip, 0, 0);
+            }<br /><br />            // <a href="Texture2DArray.html">Texture2DArray</a> -&gt; <a href="Texture2D.html">Texture2D</a> 
+            // Master <a href="Texture.html">Texture</a> Limit: "1: Half <a href="Resolution.html">Resolution</a>" =&gt; errors, since we try to copy into mips that are now too small
+            for (int mip = 0; mip &lt; outArray.mipmapCount; ++mip)
+            {
+                int copyWidth = width &gt;&gt; mip;
+                int copyHeight = height &gt;&gt; mip;
+                <a href="Graphics.CopyTexture.html">Graphics.CopyTexture</a>(outArray, 0, mip, 0, 0, copyWidth, copyHeight, outTex, 0, mip, 0, 0);
+            }
+        }
+        else // considering master texture limits
+        {
+            int masterTextureLimit = <a href="QualitySettings-masterTextureLimit.html">QualitySettings.masterTextureLimit</a>;
+            
+            // <a href="Texture2D.html">Texture2D</a> -&gt; <a href="Texture2DArray.html">Texture2DArray</a>
+            // Master <a href="Texture.html">Texture</a> Limit: "1: Half <a href="Resolution.html">Resolution</a>" =&gt; mip0 of outArray is not written to, other mips copy as expected
+            //  (ALTERNATIVE: if outArray creation already considered masterTextureLimit for its dimensions,
+            //   the CopyTexture call can ignore masterTextureLimit since the mips will line up again) 
+            for (int mip = 0; mip &lt; inTex.mipmapCount - masterTextureLimit; ++mip)
+            {
+                int copyWidth = width &gt;&gt; mip;
+                int copyHeight = height &gt;&gt; mip;
+                int srcMip = mip;
+                int dstMip = mip + masterTextureLimit;
+                <a href="Graphics.CopyTexture.html">Graphics.CopyTexture</a>(inTex, 0, srcMip, 0, 0, copyWidth, copyHeight, outArray, 0, dstMip, 0, 0);
+            }<br /><br />            // <a href="Texture2DArray.html">Texture2DArray</a> -&gt; <a href="Texture2D.html">Texture2D</a> 
+            // Master <a href="Texture.html">Texture</a> Limit: "1: Half <a href="Resolution.html">Resolution</a>" =&gt; mip0 of outArray is not copied (but outTex does not upload it to GPU anyway)
+            for (int mip = masterTextureLimit; mip &lt; outArray.mipmapCount; ++mip)
+            {
+                int copyWidth = width &gt;&gt; mip;
+                int copyHeight = height &gt;&gt; mip;
+                int srcMip = mip;
+                int dstMip = mip - masterTextureLimit;
+                <a href="Graphics.CopyTexture.html">Graphics.CopyTexture</a>(outArray, 0, srcMip, 0, 0, copyWidth, copyHeight, outTex, 0, dstMip, 0, 0);
+            }
+        }
+    }
+}
+</pre>
+      </div>
+              <div class="subsection">
+        <p>
+          <br />
+          <br />Mipmap level arguments always apply to the texture as loaded under the current master texture limit. For example, a 256x256 texture with master texture limit set to 0 mip 1 refers to a 128x128 mip.
+However, if the mastertexture limit is set to 2 on that texture, mip 1 refers to a 32x32 mip. This means that in many cases when using <code class="mono">CopyTexture</code> you do not need to take the master texture limit into
+account in your calls. In less common calls (for example, copying from Texture2D to TextureArray) you do need to adjust for it. To copy textures in a cubemap array, calculate the destination element as
+6 * cubemapIndex + faceIndex. As a result, the six faces from the cubemap at index 0 are elements 0,1,2... 5. The six faces from the cubemap at array index 1 are 6,7 .... 11 and so on.<br /><br />Compressed texture formats add some restrictions to <code class="mono">CopyTexture</code> with a region variant. For example, PVRTC formats
+are not supported since they are not block-based (for these formats you can only copy whole texture or whole mip level).
+For block-based formats (e.g. DXT, BCn, ETC), the region size and coordinates must be a multiple of compression block size
+(4 pixels for DXT).<br /><br />Even if <a href="Texture-isReadable.html">Texture.isReadable</a> is <code class="mono">true</code>, <code class="mono">CopyTexture</code> doesn't copy pixel data on the CPU if you copy only a region of a compressed texture.<br /><br />Additional resources: <a href="Rendering.CopyTextureSupport.html">CopyTextureSupport</a>.</p>
+      </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

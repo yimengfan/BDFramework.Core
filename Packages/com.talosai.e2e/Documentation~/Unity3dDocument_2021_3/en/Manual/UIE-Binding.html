@@ -1,0 +1,344 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: SerializedObject data binding</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Binding.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Binding.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Binding.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Binding.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Binding.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Binding.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Binding.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Binding.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-support-for-editor-ui.html">Support for Editor UI</a></li>
+<li>SerializedObject data binding</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-HowTo-CreateCustomInspector.html"></a></span><div class="tip">Create a Custom Inspector</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-bindable-elements.html"></a></span><div class="tip">Bindable elements reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>SerializedObject data binding</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Data bindings synchronize properties of non-UI object, such as a <code>string</code> property on a <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/MonoBehaviour.html"><code>MonoBehaviour</code></a>, with properties of <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html" href="../ScriptReference/MonoBehaviour.html"><code>MonoBehaviour</code></a>, with properties of <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> objects, such as the <code>value</code> property of a TextField. A binding refers to the link between the property and the visual control that modifies it.</p>
+
+<p>Use data binding to synchronize values between a property and a specific <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span>, so you don’t need to write <a href="UIE-Events-Handling.html">event handlers</a> when the value changes in the UI.</p>
+
+<p>
+<strong>Note</strong>: SerializedObject data binding only works in the Editor, not at runtime.</p>
+
+<h2>Serialization requirements</h2>
+
+<p>You can only bind to <a href="../ScriptReference/SerializedProperty.html">serialized properties</a>. This means you can only bind visual elements to the following objects that are compatible with the <a href="script-Serialization.html">Serialization system</a>:</p>
+
+<ul>
+<li>User-defined <a href="../ScriptReference/ScriptableObject.html"><code>ScriptableObject</code></a> classes</li>
+<li>User-defined <a href="../ScriptReference/MonoBehaviour.html"><code>MonoBehaviour</code></a> classes</li>
+<li>Native Unity component types</li>
+<li>Native Unity asset types</li>
+<li>Primitive C# types such as <code>int</code>, <code>bool</code>, <code>float</code>, and so on.</li>
+<li>Native Unity types such as <code>Vector3</code>, <code>Color</code>, <code>Object</code>, and so on.</li>
+</ul>
+
+<p><a name="value-binding" aria-hidden="true"></a></p>
+
+<h2>Value binding</h2>
+
+<p>You can only bind the <code>value</code> property of visual elements that implement the <a href="../ScriptReference/UIElements.INotifyValueChanged_1.html"><code>INotifyValueChanged</code></a> interface. For example, you can bind <a href="../ScriptReference/UIElements.TextField-value.html"><code>TextField.value</code></a> to a <code>string</code>, but you can’t bind <a href="../ScriptReference/UIElements.VisualElement-name.html"><code>TextField.name</code></a> to a <code>string</code>. </p>
+
+<p>You can bind between an object and any visual element that either derives from <a href="../ScriptReference/UIElements.BindableElement.html"><code>BindableElement</code></a> or implements the <a href="../ScriptReference/UIElements.IBindable.html"><code>IBindable</code></a> interface.</p>
+
+<h2>Create a binding</h2>
+
+<p>To create a binding, either <a href="#call-bind">call <code>Bind()</code></a> or <a href="#call-bindproperty"><code>BindProperty()</code></a>.</p>
+
+<p><a name="call-bind" aria-hidden="true"></a></p>
+
+<h3>Call <code>Bind()</code>
+</h3>
+
+<p>You can call <a href="../ScriptReference/UIElements.BindingExtensions.Bind.html"><code>Bind()</code></a> to bind an element to a <a href="../ScriptReference/SerializedObject.html">SerializedObject</a>. Before you bind an element, you must <a href="#set-binding-path">set the binding path</a> and create a SerializedObject. </p>
+
+<p>Use this method if you don’t have easy access to the <code>SerializedProperty</code> for the binding. See <a href="UIE-create-a-binding-csharp.html">Create a binding with a C# script</a> for an example.</p>
+
+<p>The <a href="../ScriptReference/UIElements.BindingExtensions.Bind.html"><code>Bind()</code></a> extension method sets up an entire hierarchy of visual elements with specified <a href="../ScriptReference/UIElements.IBindable-bindingPath.html"><code>bindingPath</code></a> properties. You can call the <a href="../ScriptReference/UIElements.BindingExtensions.Bind.html"><code>Bind()</code></a> method on a single element or the parent of the hierarchy that you want to bind. For example, you can call <a href="../ScriptReference/UIElements.BindingExtensions.Bind.html"><code>Bind()</code></a> on the <code>rootVisualElement</code> of an Editor window. This binds all child elements with specified <a href="../ScriptReference/UIElements.IBindable-bindingPath.html"><code>bindingPath</code></a> properties.</p>
+
+<p>Don’t call <a href="../ScriptReference/UIElements.BindingExtensions.Bind.html"><code>Bind()</code></a> from the <code>Editor.CreateInspectorGUI()</code> or <code>PropertyDrawer.CreatePropertyGUI()</code> override. These overrides are called automatically on the visual elements that these methods return.</p>
+
+<h3>Call <code>Unbind()</code>
+</h3>
+
+<p>The <a href="../ScriptReference/UIElements.BindingExtensions.Unbind.html"><code>Unbind()</code></a> method stops the value tracking for the element and all its direct and indirect child elements. In general, you don’t need to call <a href="../ScriptReference/UIElements.BindingExtensions.Unbind.html"><code>Unbind()</code></a> because tracking stops when a user closes the Inspector or Editor window. Call <a href="../ScriptReference/UIElements.BindingExtensions.Unbind.html"><code>Unbind()</code></a> if you must bind elements to different targets in their lifetimes. </p>
+
+<p>If you construct an <a href="../ScriptReference/UIElements.InspectorElement.html"><code>InspectorElement</code></a> in C# by calling its constructor, binding occurs during the constructor call. If you want to rebind an <a href="../ScriptReference/UIElements.InspectorElement.html"><code>InspectorElement</code></a> after it has been constructed, you must call <a href="../ScriptReference/UIElements.BindingExtensions.Unbind.html"><code>Unbind()</code></a> and then either call <a href="../ScriptReference/UIElements.BindingExtensions.Bind.html"><code>Bind()</code></a> explicitly or let a bind operation from a parent create a binding.</p>
+
+<p><a name="set-binding-path" aria-hidden="true"></a></p>
+
+<h3>Set binding path</h3>
+
+<p>If you call <a href="../ScriptReference/UIElements.BindingExtensions.Bind.html"><code>Bind()</code></a> to create the binding, you must set the visual element’s binding path to the property name of the object that you want to bind to. </p>
+
+<p>For example:</p>
+
+<ul>
+<li>
+<p>If you have the following component script:</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+
+public class MyComp : MonoBehaviour
+{
+    [SerializeField]
+    int m_Count;
+}
+</code></pre>
+
+<p>To bind your visual element to <code>m_Count</code>, set the binding path to <code>m_Count</code>.</p>
+</li>
+<li><p>If you want to bind a visual element to a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>’s name property, which is <code>m_Name</code>, set the binding path to <code>m_Name</code>. </p></li>
+</ul>
+
+<p>You can set the binding path in UI Builder, UXML, or with a C# script:</p>
+
+<ul>
+<li>In UI Builder, enter the binding path in the <strong>Binding Path</strong> field for a visual element in the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIB-interface-overview.html#uibuilder-inspector">Inspector</a><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="UIB-interface-overview.html#uibuilder-inspector">Inspector</a><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>.</li>
+<li>In UXML, set the <code>binding-path</code> attribute for a visual element. See <a href="UIE-create-a-binding-uxml-bind.html#binding-path-uxml">Define the binding path in UXML</a> for an example.</li>
+<li>In C#, set <a href="../ScriptReference/UIElements.IBindable-bindingPath.html"><code>bindingPath</code></a> from the <a href="../ScriptReference/UIElements.IBindable.html"><code>IBindable</code></a> interface. See <a href="UIE-create-a-binding-csharp.html#binding-path-csharp">Bind with the binding path</a> for an example.</li>
+</ul>
+
+<p><a name="call-bindproperty" aria-hidden="true"></a></p>
+
+<h3>Call <code>BindProperty()</code>
+</h3>
+
+<p>You can call <a href="../ScriptReference/UIElements.BindingExtensions.BindProperty.html"><code>BindProperty()</code></a> to bind an element to a <a href="../ScriptReference/SerializedProperty.html"><code>SerializedProperty</code></a> directly. </p>
+
+<p>Use this method if you already have a <code>SerializedProperty</code> object, and especially if you traverse the properties of a <a href="../ScriptReference/SerializedObject.html"><code>SerializedObject</code></a> to build a UI dynamically. See <a href="UIE-bind-without-bindpath.html">Bind without the binding path</a> for an example.</p>
+
+<h3>Bind elements to nested properties</h3>
+
+<p>You can bind a visual element to nested properties in the source object. To do so, combine the binding path of an element with the binding path of the first ancestor. Use this method with the following elements:</p>
+
+<ul>
+<li><a href="../ScriptReference/UIElements.BindableElement.html"><code>BindableElement</code></a></li>
+<li>
+<a href="../ScriptReference/UIElements.TemplateContainer.html"><code>TemplateContainer</code></a> (corresponds to the <code>&lt;Instance&gt;</code> tag in UXML)</li>
+<li><a href="../ScriptReference/UIElements.GroupBox.html"><code>GroupBox</code></a></li>
+</ul>
+
+<p>See <a href="UIE-bind-to-nested-properties.html">Bind to nested properties</a> for an example.</p>
+
+<h3>Receive callbacks when values change</h3>
+
+<p>You can create a binding to receive a callback when a bound serialized property changes. To do so, leverage the <a href="../ScriptReference/UIElements.BindingExtensions.TrackPropertyValue.html"><code>TrackPropertyValue()</code></a> extension method, which is available to any <code>VisualElement</code>. This registers a callback that executes when the provided <code>SerializedProperty</code> changes. See <a href="UIE-create-a-binding-callback.html">Receive callbacks when a serialized property changes</a> for an example.</p>
+
+<p>You can also create a binding to receive a callback when any properties of the bound serialized object changes. To do so, leverage the <a href="../ScriptReference/UIElements.BindingExtensions.TrackSerializedObjectValue.html"><code>TrackSerializedObjectValue()</code></a> extension method, which is available to any <code>VisualElement</code>. This registers a callback that executes when the provided <code>SerializedProperty</code> changes. See <a href="UIE-create-a-binding-callback-any-properties.html">Receive callbacks when any properties change</a> for an example.</p>
+
+<h3>Bind custom elements</h3>
+
+<p>You can create custom elements and bind them to serialized properties through the <a href="UIE-binding.html#value-binding">value binding</a> system.</p>
+
+<p>To create bindable custom elements:</p>
+
+<ol>
+<li>
+<a href="UIE-create-custom-controls.html#create-a-custom-control-class">Declare a custom element</a>.</li>
+<li>Inherit the element from <code>BindableElement</code> or implement the <code>IBinding</code> interface.</li>
+<li>Implement the <code>INotifyValueChanged</code> interface.</li>
+<li>Implement the <code>SetValueWithoutNotify()</code> method to the <code>INotifyValueChanged</code> interface.</li>
+<li>Implement the <code>value</code> property accessors to the <code>INotifyValueChanged</code> interface.</li>
+</ol>
+
+<p>See <a href="UIE-bind-to-list-without-listview.html#custom-control">Create and style a custom control</a> for an example.</p>
+
+<p>When writing a custom inspectors you don’t have to explicitely bind a serialized object to the visual tree like in the editor windows examples above. This step is done implicitely after the <code>CreateInspectorGUI</code> method finishes. This automatic binding step is only performed at that time. If you add a field outside of a callback to the <code>CreateInspectorGUI</code> method, you will need to bind it manually. Otherwise it might fail to render or produce undefined visual results.</p>
+
+<h2>Best practices</h2>
+
+<p>Based on the type of UI you create, binding occurs at various times. This is called bind time.</p>
+
+<p>The following table describes the bind time of a control:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Condition</strong></th>
+	<th style="text-align:left;"><strong>Automatic bind time (assuming binding path was set)</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>An <code>InspectorElement</code> constructed in C#</strong></td>
+	<td style="text-align:left;">During the <a href="../ScriptReference/UIElements.InspectorElement-ctor.html">constructor</a> call</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>A child element that is under the return value of <a href="../ScriptReference/Editor.CreateInspectorGUI.html"><code>CreateInspectorGUI()</code></a> or <a href="../ScriptReference/PropertyDrawer.CreatePropertyGUI.html"><code>CreatePropertyGUI()</code></a> when those methods return</strong></td>
+	<td style="text-align:left;">After <a href="../ScriptReference/Editor.CreateInspectorGUI.html"><code>CreateInspectorGUI()</code></a> or <a href="../ScriptReference/PropertyDrawer.CreatePropertyGUI.html"><code>CreatePropertyGUI()</code></a> returns</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>A child element that is under an element when <a href="../ScriptReference/UIElements.BindingExtensions.Bind.html"><code>Bind()</code></a> or <a href="../ScriptReference/UIElements.BindingExtensions.BindProperty.html"><code>BindProperty()</code></a> is called on the parent element</strong></td>
+	<td style="text-align:left;">During the <a href="../ScriptReference/UIElements.BindingExtensions.Bind.html"><code>Bind()</code></a> or <a href="../ScriptReference/UIElements.BindingExtensions.BindProperty.html"><code>BindProperty()</code></a> call</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Other</strong></td>
+	<td style="text-align:left;">No automatic binding; you must bind the element or one of its parents manually</td>
+</tr>
+</tbody>
+</table>
+
+<p>The following are best practices when creating a binding regarding bind time:</p>
+
+<ul>
+<li>If you create a custom <a href="../ScriptReference/Editor.html"><code>Editor</code></a> or custom <a href="../ScriptReference/PropertyDrawer.html"><code>PropertyDrawer</code></a>, set the elements’ binding paths instead of calling <a href="../ScriptReference/UIElements.BindingExtensions.Bind.html"><code>Bind()</code></a> or <a href="../ScriptReference/UIElements.BindingExtensions.BindProperty.html"><code>BindProperty()</code></a> on any visual elements that are in the <span class="tooltip"><a href="UIE-VisualTree.html">visual tree</a><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualtree" aria-label="Go to glossary anchor for Visualtree">Glossary</a></span></span></span> by the end of the body of <a href="../ScriptReference/Editor.CreateInspectorGUI.html"><code>CreateInspectorGUI()</code></a> or <code>CreatePropertyGUI()</code>. These elements are bound automatically after <a href="../ScriptReference/Editor.CreateInspectorGUI.html"><code>CreateInspectorGUI()</code></a> or <a href="../ScriptReference/PropertyDrawer.CreatePropertyGUI.html"><code>CreatePropertyGUI()</code></a> returns. However, if you add any elements to the visual tree after that point, call <a href="../ScriptReference/UIElements.BindingExtensions.Bind.html"><code>Bind()</code></a> or <a href="../ScriptReference/UIElements.BindingExtensions.BindProperty.html"><code>BindProperty()</code></a> to bind them.</li>
+<li>If you create any other type of UI, call <a href="../ScriptReference/UIElements.BindingExtensions.Bind.html"><code>Bind()</code></a> or <a href="../ScriptReference/UIElements.BindingExtensions.BindProperty.html"><code>BindProperty()</code></a> regardless of the time at which the elements get added to the visual tree. If you call <a href="../ScriptReference/UIElements.BindingExtensions.Bind.html"><code>Bind()</code></a> or <a href="../ScriptReference/UIElements.BindingExtensions.BindProperty.html"><code>BindProperty()</code></a> and bind multiple controls at the same time, set the binding path of each control and then call <a href="../ScriptReference/UIElements.BindingExtensions.Bind.html"><code>Bind()</code></a> on the lowest-level parent element that encompasses all the controls. <a href="../ScriptReference/UIElements.BindingExtensions.Bind.html"><code>Bind()</code></a> binds the element on which it’s called if it has a binding path and recursively binds all its child elements if they have binding paths. To prevent a negative performance impact, don’t bind a visual element with the <a href="../ScriptReference/UIElements.BindingExtensions.Bind.html"><code>Bind()</code></a> method more than once.</li>
+</ul>
+
+<h2>Binding examples</h2>
+
+<p>Try the following examples to learn how to code with data binding:</p>
+
+<ul>
+<li><a href="UIE-create-a-binding-csharp.html">Bind with binding path in C# script</a></li>
+<li><a href="UIE-bind-without-bindpath.html">Bind without the binding path</a></li>
+<li><a href="UIE-create-a-binding-uxml-bind.html">Bind with UXML and C#</a></li>
+<li><a href="UIE-create-a-binding-uxml-inspector.html">Create a binding with the Inspector</a></li>
+<li><a href="UIE-bind-to-nested-properties.html">Bind to nested properties</a></li>
+<li><a href="UIE-bind-uxml-template.html">Bind to a UXML template</a></li>
+<li><a href="UIE-create-a-binding-callback.html">Receive callbacks when a bound property changes</a></li>
+<li><a href="UIE-create-a-binding-callback-any-properties.html">Receive callbacks when any bound properties change</a></li>
+<li><a href="UIE-bind-to-list.html">Bind to a list with ListView</a></li>
+<li><a href="UIE-bind-to-list-without-listview.html">Bind to a list without ListView</a></li>
+<li><a href="UIE-bind-custom-control.html">Bind a custom control</a></li>
+<li><a href="UIE-bind-to-custom-data-type.html">Bind a custom control to custom data type</a></li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-binding-data-type-conversion.html">Binding data type conversion</a></li>
+<li><a href="UIE-binding-implementation-details.html">Implementation details</a></li>
+<li><a href="UIE-binding-examples.html">Binding examples</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-HowTo-CreateCustomInspector.html"></a></span><div class="tip">Create a Custom Inspector</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-bindable-elements.html"></a></span><div class="tip">Bindable elements reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

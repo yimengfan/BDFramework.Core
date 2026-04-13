@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Search the current Scene</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/search-scene.html">English</a></li>
+<li><a href="/cn/current/Manual/search-scene.html">中文</a></li>
+<li><a href="/ja/current/Manual/search-scene.html">日本語</a></li>
+<li><a href="/kr/current/Manual/search-scene.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/search-scene.html">English</a></li>
+<li><a href="/cn/current/Manual/search-scene.html">中文</a></li>
+<li><a href="/ja/current/Manual/search-scene.html">日本語</a></li>
+<li><a href="/kr/current/Manual/search-scene.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="search-overview.html">Unity Search</a></li>
+<li><a href="search-providers.html">Search Providers</a></li>
+<li>Search the current Scene</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="search-assets.html"></a></span><div class="tip">Search Project Assets</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="search-menu.html"></a></span><div class="tip">Search the Unity main menu</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Search the current Scene</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use the Hierarchy Search Provider to find GameObjects in the current <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<p>Hierarchy queries run on <strong>all</strong> objects of the <strong>current scene</strong>. For this search, Unity uses progressive caching, not indexed data (as opposed to <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #asset-provider">Asset</a><span class="tooltiptext">Any media or data that can be used in your game or project. An asset may come from a file created outside of Unity, such as a 3D Model, an audio file or an image. You can also create some asset types in Unity, such as an Animator Controller, an Audio Mixer or a Render Texture. <a href="AssetWorkflow.html" href="#asset-provider">Asset</a><span class="tooltiptext">Any media or data that can be used in your game or project. An asset may come from a file created outside of Unity, such as a 3D Model, an audio file or an image. You can also create some asset types in Unity, such as an Animator Controller, an Audio Mixer or a Render Texture. <a href="AssetWorkflow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Asset" aria-label="Go to glossary anchor for Asset">Glossary</a></span></span></span> and <span class="tooltip"><a href="#objects-provider">Objects</a><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Asset" aria-label="Go to glossary anchor for Asset">Glossary</a></span></span></span> and <span class="tooltip"><a href="#objects-provider">Objects</a><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Object" aria-label="Go to glossary anchor for Object">Glossary</a></span></span></span> providers).</p>
+
+<p>From the <strong>More</strong>(<strong>⋮</strong>) menu, select <strong>Show more results</strong> to enable “fuzzy” search in the Hierarchy Search Provider. Fuzzy searches are more resource intensive than direct searches, but usually return more matches. They can be slower in larger Scenes and may cause a lag.</p>
+
+<p>
+<strong><a href="search-filters.html#search-tokens">Search token</a>:</strong> <code>h:</code> (for “hierarchy”)</p>
+
+<p>
+<strong><a href="search-usage.html#default-actions">Default action</a>:</strong> Select the GameObject in the Scene.</p>
+
+<p><strong><a href="search-usage.html#additional-actions">Context menu actions</a>:</strong></p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Action:</th>
+	<th style="text-align:left;">Function:</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Select</strong></td>
+	<td style="text-align:left;">Selects the GameObject in the Scene and the Hierarchy window.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Open</strong></td>
+	<td style="text-align:left;">Opens the Project Asset that contains the GameObject.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Hide/Show</strong></td>
+	<td style="text-align:left;">Hides/Shows the GameObject in the <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<img src="../uploads/Main/search-provider-scene.png" alt="scene provider"><br><em>Hierarchy Search Provider</em>
+</p>
+
+<h2>Sub-filters</h2>
+
+<p>Use these tokens to further limit your Hierarchy searches.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Filter</strong></th>
+	<th style="text-align:left;"><strong>Search token</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Component type</strong></td>
+	<td style="text-align:left;"><code>t:</code></td>
+	<td style="text-align:left;">
+<code>t:collid</code> <br><br>Searches all GameObjects that have a component containing the word collid (ex: Collider, Collider2d, MyCustomCollider).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Instance id</strong></td>
+	<td style="text-align:left;"><code>id:</code></td>
+	<td style="text-align:left;">
+<code>id       :210</code> <br><br>Searches all GameObjects whose instanceID contains the word 210 (ex: 21064). <br><br><code>id=21064</code> <br><br>Searches all GameObjects whose instanceID is exactly 21064.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Path</strong></td>
+	<td style="text-align:left;"><code>path:parent/to/child</code></td>
+	<td style="text-align:left;">
+<code>path:Wall5/Br</code> <br><br>Searches all GameObjects whose path matches the partial path <code>Wall5/Br</code> (e.g.: /Structures/Wall5/Brick)<br><br> <code>path=/Structures/Wall5/Brick</code> <br><br>Searches all GameObjects with a scene path that is exactly /Structures/Wall5/Brick.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Tag</strong></td>
+	<td style="text-align:left;"><code>tag:</code></td>
+	<td style="text-align:left;">
+<code>tag:resp</code> <br><br>Searches all GameObjects that have a tag containing the word resp (e.g.: Respawn)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Layer</strong></td>
+	<td style="text-align:left;"><code>layer:&lt;layer number&gt;</code></td>
+	<td style="text-align:left;">
+<code>layer:8</code> <br><br>Searches all GameObjects that are on layer 8 (e.g.: 8: Terrain)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Size</strong></td>
+	<td style="text-align:left;"><code>size:number</code></td>
+	<td style="text-align:left;">
+<code>size&gt;5</code> <br><br>Searches all GameObjects with an AABB volume size larger than 5.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Overlap</strong></td>
+	<td style="text-align:left;"><code>overlap:number</code></td>
+	<td style="text-align:left;">
+<code>overlap&gt;3</code> <br><br>Searches all GameObjects that renderer bounds intersects with more than 3 other GameObjects.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Dependencies</strong></td>
+	<td style="text-align:left;"><code>ref:&lt;asset name&gt;</code></td>
+	<td style="text-align:left;">
+<code>ref:stone</code> <br><br>Searches all GameObjects and their components that have a dependency on an asset whose name contains the word stone</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Child</strong></td>
+	<td style="text-align:left;"><code>is:child</code></td>
+	<td style="text-align:left;">
+<code>is:child</code> <br><br>Searches all GameObjects that are the child of a GameObject.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Leaf</td>
+	<td style="text-align:left;"><code>is:leaf</code></td>
+	<td style="text-align:left;">
+<code>is:leaf</code> <br><br>Searches all GameObjects that don’t have a child.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Root</strong></td>
+	<td style="text-align:left;"><code>is:root</code></td>
+	<td style="text-align:left;">
+<code>is:root</code> <br><br>Searches all GameObjects that don’t have a parent (i.e. that root objects in the scene).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Visible</strong></td>
+	<td style="text-align:left;"><code>is:visible</code></td>
+	<td style="text-align:left;">
+<code>is:visible</code> <br><br>Searches all GameObjects that are visible by the camera of the Scene View.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Hidden</strong></td>
+	<td style="text-align:left;"><code>is:hidden</code></td>
+	<td style="text-align:left;">
+<code>is:hidden</code> <br><br>Searches all GameObjects that are hidden according to the SceneVisibilityManager.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Static</strong></td>
+	<td style="text-align:left;"><code>is:static</code></td>
+	<td style="text-align:left;">
+<code>is:static</code> <br><br>Searches all GameObjects that are static.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Prefab</strong></td>
+	<td style="text-align:left;"><code>is:prefab</code></td>
+	<td style="text-align:left;">
+<code>is:prefab</code> <br><br>Searches all GameObjects that are part of a Prefab.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Scene Properties</h2>
+
+<p>You can use the special <code>p(&lt;partial propertyname&gt;)</code> syntax to filter objects according to the value of a property in order to match the partial name of the property against any of the components of an object. This is a dynamic operation that doesn’t use an index. Here are some examples of queries using <code>p()</code>:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"></th>
+	<th style="text-align:left;"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>p(drawmode)=Simple</code></td>
+	<td style="text-align:left;">Matches the <code>drawmode</code> property of a <span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> renderer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>p(orthographic size)&gt;2</code></td>
+	<td style="text-align:left;">Matches a Camera with an orthographic size higher than 2.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>p(istrigger)=false</code></td>
+	<td style="text-align:left;">Matches all GameObjects where the <code>IsTrigger</code> property in a Collider2d is NOT a trigger.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>p(sprite)=bee</code></td>
+	<td style="text-align:left;">Matches all GameObjects with a <code>Sprite</code> property (e.g.: Sprite Renderer) that links to an Asset whose name is exactly <code>bee</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>p(sprite):bee</code></td>
+	<td style="text-align:left;">Matches all GameObjects with a <code>Sprite</code> property (e.g.: Sprite Renderer) that links to a GameObject with a name containing the word <code>bee</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>p(spri):bee</code></td>
+	<td style="text-align:left;">Matches all GameObjects with a property containing the word <code>spri</code> (such as the Sprite property of a Sprite Renderer component) that links to a GameObject Asset with a name containing the word <code>bee</code>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Unity indexes property names according to their internal name, which might be different than the display name in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>.
+To find the internal name of a property, check the Inspector in Debug mode.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="search-assets.html"></a></span><div class="tip">Search Project Assets</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="search-menu.html"></a></span><div class="tip">Search the Unity main menu</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

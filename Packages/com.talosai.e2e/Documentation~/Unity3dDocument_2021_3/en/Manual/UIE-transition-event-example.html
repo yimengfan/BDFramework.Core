@@ -1,0 +1,383 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create a transition event</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-transition-event-example.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-transition-event-example.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-transition-event-example.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-transition-event-example.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-transition-event-example.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-transition-event-example.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-transition-event-example.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-transition-event-example.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-Events.html">Control behavior with events</a></li>
+<li><a href="UIE-event-examples.html">Event examples</a></li>
+<li>Create a transition event</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-drag-across-windows.html"></a></span><div class="tip">Create a drag-and-drop UI to drag between Editor windows</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-transition-event-loop-example.html"></a></span><div class="tip">Create looping transitions</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h2>Create a transition event</h2>
+
+<p>
+<strong>Version</strong>: 2021.3+</p>
+
+<p>This example demonstrates the lifecycle of a transition event. </p>
+
+<h2>Example overview</h2>
+
+<p>The example creates a custom Editor window with a button and color palette. If you click the button, the following appears:</p>
+
+<ul>
+<li>A transition starts to change the color palette from blue to green.</li>
+<li>The transition events that are sent during the transition.</li>
+<li>The duration of the events.</li>
+</ul>
+
+<p>You can find the completed files that this example creates in this <a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/master/transition-events-example">GitHub repository</a>.</p>
+
+<h2>Prerequisites</h2>
+
+<p>This guide is for developers familiar with the Unity Editor, <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit, and C# scripting. Before you start, get familiar with the following:</p>
+
+<ul>
+<li><a href="UIE-UXML.html">UXML</a></li>
+<li><a href="UIE-Transitions.html">USS transition</a></li>
+<li><a href="UIE-Transition-Events.html">Transition events</a></li>
+</ul>
+
+<h2>Create the example</h2>
+
+<ol>
+<li><p>Create a project in Unity with any template.</p></li>
+<li><p>From the menu, select <strong>Assets</strong> &gt; <strong>Create</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>Editor Window</strong>.</p></li>
+<li><p>In the <strong>UI Toolkit Editor Window Creator</strong> window, enter <code>TransitionExample</code>.</p></li>
+<li><p>Save your changes. This creates three files as <code>TransitionExample.cs</code>, <code>TransitionExample.uss</code>, and <code>TransitionExample.uxml</code>.</p></li>
+<li>
+<p>Replace <code>TransitionExample.cs</code> with the following content:</p>
+
+<pre><code class="lang-csharp">using System;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class TransitionExample : EditorWindow
+{
+    [SerializeField] private VisualTreeAsset m_VisualTreeAsset = default;
+
+    private Button clickMeButton;
+    private VisualElement colorChanger;
+    private Label eventLabel;
+    private Label timeLabel;
+
+    private DateTime lastEvent;
+    private static readonly TimeSpan NearlyInstantaneousThreshold = TimeSpan.FromMilliseconds(10);
+
+    private static readonly string ClickMeButtonClass = &quot;click-me&quot;;
+    private static readonly string ColorChangerClass = &quot;color-changer&quot;;
+    private static readonly string ColorChangerTransitionClass = &quot;color-transition&quot;;
+    private static readonly string EventLabelName = &quot;eventLabel&quot;;
+    private static readonly string TimeLabelName = &quot;timeLabel&quot;;
+    private static readonly string TimeBelowThresholdText = &quot;Almost instantaneous.&quot;;
+
+    [MenuItem(&quot;Window/UI Toolkit/Transition Example&quot;)]
+    public static void ShowExample()
+    {
+        TransitionExample wnd = GetWindow&lt;TransitionExample&gt;();
+        wnd.titleContent = new GUIContent(&quot;TransitionExample&quot;);
+        wnd.minSize = new Vector2(500f, 400f);
+    }
+
+    public void CreateGUI()
+    {
+        lastEvent = DateTime.Now;
+
+        // Each editor window contains a root VisualElement object
+        VisualElement root = rootVisualElement;
+
+        // Instantiate UXML
+        VisualElement uxmlAsset = m_VisualTreeAsset.Instantiate();
+        root.Add(uxmlAsset);
+
+        // Get the relevant elements by querying the root element
+        clickMeButton = root.Q&lt;Button&gt;(className: ClickMeButtonClass);
+
+        colorChanger = root.Q&lt;VisualElement&gt;(className: ColorChangerClass);
+
+        eventLabel = root.Q&lt;Label&gt;(name: EventLabelName);
+
+        timeLabel = root.Q&lt;Label&gt;(name: TimeLabelName);
+
+        // Add callbacks for clicking on the button and monitoring the color changing element.
+        clickMeButton.RegisterCallback&lt;ClickEvent&gt;(OnClickEvent);
+
+        colorChanger.RegisterCallback&lt;TransitionRunEvent&gt;(OnTransitionRun);
+        colorChanger.RegisterCallback&lt;TransitionStartEvent&gt;(OnTransitionStart);
+        colorChanger.RegisterCallback&lt;TransitionEndEvent&gt;(OnTransitionEnd);
+        colorChanger.RegisterCallback&lt;TransitionCancelEvent&gt;(OnTransitionCancel);
+    }
+
+    private void OnDisable()
+    {
+        clickMeButton.UnregisterCallback&lt;ClickEvent&gt;(OnClickEvent);
+
+        colorChanger.UnregisterCallback&lt;TransitionRunEvent&gt;(OnTransitionRun);
+        colorChanger.UnregisterCallback&lt;TransitionStartEvent&gt;(OnTransitionStart);
+        colorChanger.UnregisterCallback&lt;TransitionEndEvent&gt;(OnTransitionEnd);
+        colorChanger.UnregisterCallback&lt;TransitionCancelEvent&gt;(OnTransitionCancel);
+    }
+
+    private void OnClickEvent(ClickEvent evt)
+    {
+        colorChanger.ToggleInClassList(ColorChangerTransitionClass);
+    }
+
+    private void OnTransitionRun(TransitionRunEvent evt)
+    {
+        DisplayLatestEvent(&quot;TransitionRunEvent&quot;, DateTime.Now);
+    }
+
+    private void OnTransitionStart(TransitionStartEvent evt)
+    {
+        DisplayLatestEvent(&quot;TransitionStartEvent&quot;, DateTime.Now);
+    }
+
+    private void OnTransitionEnd(TransitionEndEvent evt)
+    {
+        DisplayLatestEvent(&quot;TransitionEndEvent&quot;, DateTime.Now);
+    }
+
+    private void OnTransitionCancel(TransitionCancelEvent evt)
+    {
+        DisplayLatestEvent(&quot;TransitionCancelEvent&quot;, DateTime.Now);
+    }
+
+    private void DisplayLatestEvent(string eventType, DateTime timestamp)
+    {
+        // If two events are sent too close together, add both to the Latest event line.
+        // This happens if the delay is set to 0 and the TransitionRun and TransitionStart
+        // are sent at the same time, or if the button was pressed before the transition
+        // was over, thus sending TransitionCancel and TransitionRun (and potentially
+        // TransitionStart) events close together.
+        var elapsed = timestamp - lastEvent;
+        if (elapsed &lt;= NearlyInstantaneousThreshold)
+        {
+            timeLabel.text = TimeBelowThresholdText;
+            eventLabel.text += eventType;
+        }
+        else
+        {
+            timeLabel.text = $&quot;{elapsed:s\\.ff} s&quot;;
+            eventLabel.text = eventType;
+        }
+
+        lastEvent = timestamp;
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>Replace <code>TransitionExample.uxml</code> with the following content:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot;
+        xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; engine=&quot;UnityEngine.UIElements&quot; editor=&quot;UnityEditor.UIElements&quot;
+        noNamespaceSchemaLocation=&quot;../../UIElementsSchema/UIElements.xsd&quot; editor-extension-mode=&quot;False&quot;&gt;
+    &lt;Style src=&quot;TransitionExample.uss&quot;/&gt;
+    &lt;ui:VisualElement class=&quot;main-container&quot;&gt;
+        &lt;ui:Button text=&quot;Click Me!&quot; class=&quot;click-me&quot;/&gt;
+        &lt;ui:VisualElement class=&quot;color-changer&quot;/&gt;
+        &lt;ui:VisualElement class=&quot;label-section&quot;&gt;
+            &lt;ui:VisualElement class=&quot;label-line&quot;&gt;
+                &lt;ui:Label text=&quot;Latest event(s) :  &quot;/&gt;
+                &lt;ui:Label name=&quot;eventLabel&quot;/&gt;
+            &lt;/ui:VisualElement&gt;
+            &lt;ui:VisualElement class=&quot;label-line&quot;&gt;
+                &lt;ui:Label text=&quot;Time since last event :  &quot;/&gt;
+                &lt;ui:Label name=&quot;timeLabel&quot;/&gt;
+            &lt;/ui:VisualElement&gt;
+        &lt;/ui:VisualElement&gt;
+    &lt;/ui:VisualElement&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+</li>
+<li>
+<p>Replace <code>TransitionExample.uss</code> with the following content:</p>
+
+<pre><code class="lang-css">.click-me {
+    width: 250px;
+    height: 50px;
+    font-size: 40px;
+    -unity-font-style: bold-and-italic;
+    margin: 30px;
+}
+
+.color-changer {
+    margin: 10px;
+    width: 150px;
+    height: 150px;
+    border-width: 10px;
+    border-radius: 75px;
+    background-color: rgb(0, 31, 138);
+    transition: background-color 3s ease-in-out 1s;
+}
+
+.main-container {
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+    background-color: rgb(60, 60, 60);
+}
+
+.label-section {
+    margin: 10px;
+    border-width: 2px;
+    width: 95%;
+    align-items: center;
+}
+
+.label-line {
+    flex-direction: row;
+    margin: 5px;
+    flex-grow: 1;
+    align-items: center;
+    width: 90%;
+    height: 25px;
+    font-size: 14px;
+    padding: 0;
+}
+
+.color-transition {
+    background-color: rgb(177, 221, 111);
+}
+</code></pre>
+</li>
+<li><p>Select <code>TransitionExample.cs</code> and drag <code>TransitionExample.uxml</code> to the <strong><span class="tooltip"><strong>Visual Tree</strong><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Visualtree" aria-label="Go to glossary anchor for Visualtree">Glossary</a></span></span></span> Asset</strong> field in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#Visualtree" aria-label="Go to glossary anchor for Visualtree">Glossary</a></span></span></span> Asset</strong> field in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> if it’s not already there.</p></li>
+<li><p>To try the example, from the menu, select <strong>Window</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>Transition Example</strong>.</p></li>
+<li><p>Click the button to view the color transition and the description of the events sent. There is a long delay between the <code>TransitionRunEvent</code> and the <code>TransitionStartEvent</code>. During the long duration, you can click the button again to interrupt the transition.</p></li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-USS.html">USS</a></li>
+<li><a href="UIE-Events-Handling.html">Handle events</a></li>
+<li><a href="UIE-transition-event-loop-example.html">Create looping transitions</a></li>
+<li><a href="UIE-transition-example.html">Create a simple transition with UI Builder and C# scripts</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-drag-across-windows.html"></a></span><div class="tip">Create a drag-and-drop UI to drag between Editor windows</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-transition-event-loop-example.html"></a></span><div class="tip">Create looping transitions</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

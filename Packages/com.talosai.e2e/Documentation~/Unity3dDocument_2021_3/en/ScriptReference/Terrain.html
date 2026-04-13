@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Terrain</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">Terrain</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEngine</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Inherits from:<a href="Behaviour.html" class="cl">Behaviour</a></p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Implemented in:<a href="UnityEngine.TerrainModule.html" class="cl">UnityEngine.TerrainModule</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>The Terrain component renders the terrain.</p>
+              </div>
+              <div class="subsection">
+                <h3>Static Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Terrain-activeTerrain.html">activeTerrain</a></td><td class="desc">The active Terrain. This is a convenient function to get to the main Terrain in the Scene.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-activeTerrains.html">activeTerrains</a></td><td class="desc">The active terrains in the Scene.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-compressedHolesFormat.html">compressedHolesFormat</a></td><td class="desc">Graphics format of the Terrain holes Texture when it is compressed.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-compressedHolesTextureFormat.html">compressedHolesTextureFormat</a></td><td class="desc">Texture format of the Terrain holes Texture when it is compressed.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-heightmapFormat.html">heightmapFormat</a></td><td class="desc">Graphics format of the Terrain heightmap.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-heightmapRenderTextureFormat.html">heightmapRenderTextureFormat</a></td><td class="desc">RenderTextureFormat of the terrain heightmap.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-holesFormat.html">holesFormat</a></td><td class="desc">Graphics format of the Terrain holes Texture when it is not compressed.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-holesRenderTextureFormat.html">holesRenderTextureFormat</a></td><td class="desc">Render texture format of the Terrain holes Texture.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-normalmapFormat.html">normalmapFormat</a></td><td class="desc">Graphics format of the Terrain normal map texture.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-normalmapRenderTextureFormat.html">normalmapRenderTextureFormat</a></td><td class="desc">Render texture format of the Terrain normal map texture.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-normalmapTextureFormat.html">normalmapTextureFormat</a></td><td class="desc">Texture format of the Terrain normal map texture.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Terrain-allowAutoConnect.html">allowAutoConnect</a></td><td class="desc">Specifies if the terrain tile will be automatically connected to adjacent tiles.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-bakeLightProbesForTrees.html">bakeLightProbesForTrees</a></td><td class="desc">Whether to bake an array of internal light probes for Tree Editor trees (Editor only).</td></tr>
+      <tr><td class="lbl"><a href="Terrain-basemapDistance.html">basemapDistance</a></td><td class="desc">Heightmap patches beyond basemap distance will use a precomputed low res basemap.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-bottomNeighbor.html">bottomNeighbor</a></td><td class="desc">Terrain bottom neighbor.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-collectDetailPatches.html">collectDetailPatches</a></td><td class="desc">Collect detail patches from memory.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-deringLightProbesForTrees.html">deringLightProbesForTrees</a></td><td class="desc">Removes ringing from light probes on Tree Editor trees (Editor only).</td></tr>
+      <tr><td class="lbl"><a href="Terrain-detailObjectDensity.html">detailObjectDensity</a></td><td class="desc">Density of detail objects.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-detailObjectDistance.html">detailObjectDistance</a></td><td class="desc">Detail objects will be displayed up to this distance.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-drawHeightmap.html">drawHeightmap</a></td><td class="desc">Indicates whether Unity draws the Terrain geometry itself.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-drawInstanced.html">drawInstanced</a></td><td class="desc">Set to true to enable the terrain instance renderer. The default value is false.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-drawTreesAndFoliage.html">drawTreesAndFoliage</a></td><td class="desc">Specify if terrain trees and details should be drawn.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-editorRenderFlags.html">editorRenderFlags</a></td><td class="desc">Controls what part of the terrain should be rendered.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-groupingID.html">groupingID</a></td><td class="desc">Grouping ID for auto connect.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-heightmapMaximumLOD.html">heightmapMaximumLOD</a></td><td class="desc">Lets you essentially lower the heightmap resolution used for rendering.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-heightmapPixelError.html">heightmapPixelError</a></td><td class="desc">An approximation of how many pixels the terrain will pop in the worst case when switching lod.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-keepUnusedRenderingResources.html">keepUnusedRenderingResources</a></td><td class="desc">Defines whether Unity frees per-Camera rendering resources for the Terrain when those resources aren't in use after a certain number of frames.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-leftNeighbor.html">leftNeighbor</a></td><td class="desc">The Terrain tile to the left, which is in the negative X direction.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-lightmapIndex.html">lightmapIndex</a></td><td class="desc">The index of the baked lightmap applied to this terrain.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-lightmapScaleOffset.html">lightmapScaleOffset</a></td><td class="desc">The UV scale &amp; offset used for a baked lightmap.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-materialTemplate.html">materialTemplate</a></td><td class="desc">The custom material Unity uses to render the Terrain.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-normalmapTexture.html">normalmapTexture</a></td><td class="desc">Returns the normal map texture computed from sampling the heightmap. It is only used when terrain is rendered using instancing.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-patchBoundsMultiplier.html">patchBoundsMultiplier</a></td><td class="desc">Set the terrain bounding box scale.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-preserveTreePrototypeLayers.html">preserveTreePrototypeLayers</a></td><td class="desc">Allows you to specify how Unity chooses the layer for tree instances.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-realtimeLightmapIndex.html">realtimeLightmapIndex</a></td><td class="desc">The index of the realtime lightmap applied to this terrain.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-realtimeLightmapScaleOffset.html">realtimeLightmapScaleOffset</a></td><td class="desc">The UV scale &amp; offset used for a realtime lightmap.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-reflectionProbeUsage.html">reflectionProbeUsage</a></td><td class="desc">How reflection probes are used for terrain. See ReflectionProbeUsage.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-renderingLayerMask.html">renderingLayerMask</a></td><td class="desc">Determines which rendering layers the Terrain renderer lives on.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-rightNeighbor.html">rightNeighbor</a></td><td class="desc">The Terrain tile to the left, which is in the positive X direction.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-shadowCastingMode.html">shadowCastingMode</a></td><td class="desc">Allows you to set the shadow casting mode for the terrain.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-terrainData.html">terrainData</a></td><td class="desc">The Terrain Data that stores heightmaps, terrain textures, detail meshes and trees.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-topNeighbor.html">topNeighbor</a></td><td class="desc">Terrain top neighbor.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-treeBillboardDistance.html">treeBillboardDistance</a></td><td class="desc">Distance from the camera where trees will be rendered as billboards only.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-treeCrossFadeLength.html">treeCrossFadeLength</a></td><td class="desc">Total distance delta that trees will use to transition from billboard orientation to mesh orientation.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-treeDistance.html">treeDistance</a></td><td class="desc">The maximum distance at which trees are rendered.</td></tr>
+      <tr><td class="lbl"><a href="Terrain-treeLODBiasMultiplier.html">treeLODBiasMultiplier</a></td><td class="desc">The multiplier to the current LOD bias used for rendering LOD trees (i.e. SpeedTree trees).</td></tr>
+      <tr><td class="lbl"><a href="Terrain-treeMaximumFullLODCount.html">treeMaximumFullLODCount</a></td><td class="desc">Maximum number of trees rendered at full LOD.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Public Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Terrain.AddTreeInstance.html">AddTreeInstance</a></td><td class="desc">Adds a tree instance to the terrain.</td></tr>
+      <tr><td class="lbl"><a href="Terrain.Flush.html">Flush</a></td><td class="desc">Flushes any change done in the terrain so it takes effect.</td></tr>
+      <tr><td class="lbl"><a href="Terrain.GetClosestReflectionProbes.html">GetClosestReflectionProbes</a></td><td class="desc">Fills the list with reflection probes whose AABB intersects with terrain's AABB. Their weights are also provided. Weight shows how much influence the probe has on the terrain, and is used when the blending between multiple reflection probes occurs.</td></tr>
+      <tr><td class="lbl"><a href="Terrain.GetKeepUnusedCameraRenderingResources.html">GetKeepUnusedCameraRenderingResources</a></td><td class="desc"></td></tr>
+      <tr><td class="lbl"><a href="Terrain.GetPosition.html">GetPosition</a></td><td class="desc">Get the position of the terrain.</td></tr>
+      <tr><td class="lbl"><a href="Terrain.GetSplatMaterialPropertyBlock.html">GetSplatMaterialPropertyBlock</a></td><td class="desc">Get the previously set splat material properties by copying to the dest MaterialPropertyBlock object.</td></tr>
+      <tr><td class="lbl"><a href="Terrain.SampleHeight.html">SampleHeight</a></td><td class="desc">Samples the height at the given position defined in world space, relative to the Terrain space.</td></tr>
+      <tr><td class="lbl"><a href="Terrain.SetKeepUnusedCameraRenderingResources.html">SetKeepUnusedCameraRenderingResources</a></td><td class="desc">Defines whether Unity cleans up rendering resources for a given Camera during garbage collection.</td></tr>
+      <tr><td class="lbl"><a href="Terrain.SetNeighbors.html">SetNeighbors</a></td><td class="desc">Lets you set up the connection between neighboring Terrain tiles. This ensures LOD matches up on neighboring Terrain tiles.</td></tr>
+      <tr><td class="lbl"><a href="Terrain.SetSplatMaterialPropertyBlock.html">SetSplatMaterialPropertyBlock</a></td><td class="desc">Set the additional material properties when rendering the terrain heightmap using the splat material.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Terrain.CreateTerrainGameObject.html">CreateTerrainGameObject</a></td><td class="desc">Creates a Terrain including collider from TerrainData.</td></tr>
+      <tr><td class="lbl"><a href="Terrain.GetActiveTerrains.html">GetActiveTerrains</a></td><td class="desc">Populates a List of Terrains with the active Terrains in the Scene.</td></tr>
+      <tr><td class="lbl"><a href="Terrain.SetConnectivityDirty.html">SetConnectivityDirty</a></td><td class="desc">Marks the current connectivity status as invalid.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Inherited Members</h3>
+      
+      <div class="subsection"><h3>Properties</h3><table class="list"><thead><tr><th>Property</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Behaviour-enabled.html">enabled</a></td><td class="desc">Enabled Behaviours are Updated, disabled Behaviours are not.</td></tr>
+        <tr><td class="lbl"><a href="Behaviour-isActiveAndEnabled.html">isActiveAndEnabled</a></td><td class="desc">Reports whether a GameObject and its associated Behaviour is active and enabled.</td></tr>
+        <tr><td class="lbl"><a href="Component-gameObject.html">gameObject</a></td><td class="desc">The game object this component is attached to. A component is always attached to a game object.</td></tr>
+        <tr><td class="lbl"><a href="Component-tag.html">tag</a></td><td class="desc">The tag of this game object.</td></tr>
+        <tr><td class="lbl"><a href="Component-transform.html">transform</a></td><td class="desc">The Transform attached to this GameObject.</td></tr>
+        <tr><td class="lbl"><a href="Object-hideFlags.html">hideFlags</a></td><td class="desc">Should the object be hidden, saved with the Scene or modifiable by the user?</td></tr>
+        <tr><td class="lbl"><a href="Object-name.html">name</a></td><td class="desc">The name of the object.</td></tr>
+      </table></div>
+      
+      
+      
+      <div class="subsection"><h3>Public Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Component.BroadcastMessage.html">BroadcastMessage</a></td><td class="desc">Calls the method named methodName on every MonoBehaviour in this game object or any of its children.</td></tr>
+        <tr><td class="lbl"><a href="Component.CompareTag.html">CompareTag</a></td><td class="desc">Checks the GameObject's tag against the defined tag.</td></tr>
+        <tr><td class="lbl"><a href="Component.GetComponent.html">GetComponent</a></td><td class="desc">Gets a reference to a component of type T on the same GameObject as the component specified.</td></tr>
+        <tr><td class="lbl"><a href="Component.GetComponentInChildren.html">GetComponentInChildren</a></td><td class="desc">Gets a reference to a component of type T on the same GameObject as the component specified, or any child of the GameObject.</td></tr>
+        <tr><td class="lbl"><a href="Component.GetComponentInParent.html">GetComponentInParent</a></td><td class="desc">Gets a reference to a component of type T on the same GameObject as the component specified, or any parent of the GameObject.</td></tr>
+        <tr><td class="lbl"><a href="Component.GetComponents.html">GetComponents</a></td><td class="desc">Gets references to all components of type T on the same GameObject as the component specified.</td></tr>
+        <tr><td class="lbl"><a href="Component.GetComponentsInChildren.html">GetComponentsInChildren</a></td><td class="desc">Gets references to all components of type T on the same GameObject as the component specified, and any child of the GameObject.</td></tr>
+        <tr><td class="lbl"><a href="Component.GetComponentsInParent.html">GetComponentsInParent</a></td><td class="desc">Gets references to all components of type T on the same GameObject as the component specified, and any parent of the GameObject.</td></tr>
+        <tr><td class="lbl"><a href="Component.SendMessage.html">SendMessage</a></td><td class="desc">Calls the method named methodName on every MonoBehaviour in this game object.</td></tr>
+        <tr><td class="lbl"><a href="Component.SendMessageUpwards.html">SendMessageUpwards</a></td><td class="desc">Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.</td></tr>
+        <tr><td class="lbl"><a href="Component.TryGetComponent.html">TryGetComponent</a></td><td class="desc">Gets the component of the specified type, if it exists.</td></tr>
+        <tr><td class="lbl"><a href="Object.GetInstanceID.html">GetInstanceID</a></td><td class="desc">Gets  the instance ID of the object.</td></tr>
+        <tr><td class="lbl"><a href="Object.ToString.html">ToString</a></td><td class="desc">Returns the name of the object.</td></tr>
+      </table></div>
+      
+      <div class="subsection"><h3>Static Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object.Destroy.html">Destroy</a></td><td class="desc">Removes a GameObject, component or asset.</td></tr>
+        <tr><td class="lbl"><a href="Object.DestroyImmediate.html">DestroyImmediate</a></td><td class="desc">Destroys the object obj immediately. You are strongly recommended to use Destroy instead.</td></tr>
+        <tr><td class="lbl"><a href="Object.DontDestroyOnLoad.html">DontDestroyOnLoad</a></td><td class="desc">Do not destroy the target Object when loading a new Scene.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindAnyObjectByType.html">FindAnyObjectByType</a></td><td class="desc">Retrieves any active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindFirstObjectByType.html">FindFirstObjectByType</a></td><td class="desc">Retrieves the first active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectOfType.html">FindObjectOfType</a></td><td class="desc">Returns the first active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectsByType.html">FindObjectsByType</a></td><td class="desc">Retrieves a list of all loaded objects of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectsOfType.html">FindObjectsOfType</a></td><td class="desc">Gets a list of all loaded objects of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.Instantiate.html">Instantiate</a></td><td class="desc">Clones the object original and returns the clone.</td></tr>
+      </table></div>
+      <div class="subsection"><h3>Operators</h3><table class="list"><thead><tr><th>Operator</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object-operator_Object.html">bool</a></td><td class="desc">Does the object exist?</td></tr>
+        <tr><td class="lbl"><a href="Object-operator_ne.html">operator !=</a></td><td class="desc">Compares if two objects refer to a different object.</td></tr>
+        <tr><td class="lbl"><a href="Object-operator_eq.html">operator ==</a></td><td class="desc">Compares two object references to see if they refer to the same object.</td></tr>
+      </table></div>
+      
+      
+      
+    </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

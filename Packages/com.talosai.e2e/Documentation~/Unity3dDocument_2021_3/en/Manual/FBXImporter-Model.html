@@ -1,0 +1,638 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Model tab</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/FBXImporter-Model.html">English</a></li>
+<li><a href="/cn/current/Manual/FBXImporter-Model.html">中文</a></li>
+<li><a href="/ja/current/Manual/FBXImporter-Model.html">日本語</a></li>
+<li><a href="/kr/current/Manual/FBXImporter-Model.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/FBXImporter-Model.html">English</a></li>
+<li><a href="/cn/current/Manual/FBXImporter-Model.html">中文</a></li>
+<li><a href="/ja/current/Manual/FBXImporter-Model.html">日本語</a></li>
+<li><a href="/kr/current/Manual/FBXImporter-Model.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="models.html">Models</a></li>
+<li><a href="models-importing.html">Importing models into Unity</a></li>
+<li><a href="class-FBXImporter.html">Model Import Settings window</a></li>
+<li>Model tab</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-FBXImporter.html"></a></span><div class="tip">Model Import Settings window</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="FBXImporter-Rig.html"></a></span><div class="tip">Rig tab</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Model tab</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <strong>Import Settings</strong> for a <span class="tooltip"><strong>Model file</strong><span class="tooltiptext">A file containing a 3D data, which may include definitions for meshes, bones, animation, materials and textures. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about 3D-formats.html" href="3D-formats.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Modelfile" aria-label="Go to glossary anchor for Modelfile">Glossary</a></span></span></span> appear in the <span class="tooltip"><strong>Model</strong><span class="tooltiptext">A 3D model representation of an object, such as a character, a building, or a piece of furniture. <a href="3D-formats.html" href="Glossary.html#Modelfile" aria-label="Go to glossary anchor for Modelfile">Glossary</a></span></span></span> appear in the <span class="tooltip"><strong>Model</strong><span class="tooltiptext">A 3D model representation of an object, such as a character, a building, or a piece of furniture. <a href="3D-formats.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Model" aria-label="Go to glossary anchor for Model">Glossary</a></span></span></span> tab of the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#Model" aria-label="Go to glossary anchor for Model">Glossary</a></span></span></span> tab of the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window when you select the Model. These settings affect various elements and properties stored inside the Model. Unity uses these settings to import each Asset, so you can adjust any settings to apply to different Assets in your Project.</p>
+
+<figure>
+<img src="../uploads/Main/FBXImporter-Model.png" alt="Import settings for the Model">
+<figcaption>Import settings for the Model</figcaption>
+</figure>
+
+<p>This section provides information about each of the sections on the Model tab:</p>
+
+<p>
+<strong>(A)</strong> <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #sceneprops">Scene</a><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="#sceneprops">Scene</a><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>-level properties, such as whether to import Lights and Cameras, and what scale factor to use.</p>
+
+<p>
+<strong>(B)</strong> Properties specific to <a href="#meshprops">Meshes</a>.</p>
+
+<p>
+<strong>(C)</strong> <a href="#geoprops">Geometry</a>-related properties, for dealing with topology, UVs, and normals.</p>
+
+<p><a name="sceneprops" aria-hidden="true"></a></p>
+
+<h2>Scene</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Scale Factor</strong></td>
+	<td style="text-align:left;">Set this value to apply a global scale on the imported Model whenever the original file scale (from the Model file) does not fit the intended scale in your Project. Unity’s physics system expects 1 meter in the game world to be 1 unit in the imported file.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<a name="ConvertUnits" aria-hidden="true"></a><strong>Convert Units</strong>
+</td>
+	<td style="text-align:left;">Enable this option to convert the <a href="CreatingDCCAssets.html#Scaling">Model scaling</a> defined in the Model file to Unity’s scale.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bake Axis Conversion</strong></td>
+	<td style="text-align:left;">Enable this property to bake the results of axis conversion directly into your application’s asset data (for example, vertex or animation data) when you import a Model that uses a different axis system than Unity. Disable this property to compensate the <span class="tooltip"><strong>Transform component</strong><span class="tooltiptext">A Transform component determines the Position, Rotation, and Scale of each object in the scene. Every GameObject has a Transform. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Transform.html" href="class-Transform.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#TransformComponent" aria-label="Go to glossary anchor for TransformComponent">Glossary</a></span></span></span> of the root <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#TransformComponent" aria-label="Go to glossary anchor for TransformComponent">Glossary</a></span></span></span> of the root <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> at runtime to simulate axis conversion.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Import BlendShapes</strong></td>
+	<td style="text-align:left;">Enable this property to allow Unity to import blend shapes with your Mesh. See <a href="#BlendShapesImportProperties">Importing blend shapes</a> below for details.<br><br><strong>Note</strong>: Importing blend shape normals requires smoothing groups in the FBX file.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Import Visibility</strong></td>
+	<td style="text-align:left;">Import the FBX settings that define whether or not MeshRenderer components are enabled (visible). See <a href="#VisibilityImportProperties">Importing Visibility</a> below for details.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Import Cameras</strong></td>
+	<td style="text-align:left;">Import cameras from your .FBX file. See <a href="#CameraImportProperties">Importing Cameras</a> below for details.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Import Lights</strong></td>
+	<td style="text-align:left;">Import lights from your .FBX file. See <a href="#LightImportProperties">Importing Lights</a> below for details.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Preserve Hierarchy</strong></td>
+	<td style="text-align:left;">Always create an explicit prefab root, even if this model only has a single root. Normally, the FBX Importer strips any empty root nodes from the model as an optimization strategy. However, if you have multiple FBX files with portions of the same hierarchy you can use this option to preserve the original hierarchy. <br><br>For example, file1.fbx contains a rig and a Mesh and file2.fbx contains the same rig but only the animation for that rig. If you import file2.fbx without enabling this option, Unity strips the root node, the hierarchies don’t match, and the animation breaks.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Sort Hierarchy By Name</strong></td>
+	<td style="text-align:left;">Enable this property to sort GameObjects by alphabetical order within the hierarchy. Disable this property to preserve the hierarchy order defined in the FBX file.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="BlendShapesImportProperties" aria-hidden="true"></a></p>
+
+<h3>Importing blend shapes</h3>
+
+<p>Unity supports blend shapes (morphing) and can import blend shapes from FBX and DAE files exported from 3D modeling applications. You can also import animation from FBX files. Unity supports vertex-level animation for blend shapes on vertices, normals and tangents.</p>
+
+<p>Skin and blend shapes can affect Meshes at the same time. When Unity imports Meshes containing blend shapes, it uses the <a href="class-SkinnedMeshRenderer.html">SkinnedMeshRenderer</a> component (instead of the <a href="class-MeshRenderer.html">MeshRenderer</a> component), regardless of whether it has skin or not.</p>
+
+<p>Unity imports blend shape animation as part of regular animation: it animates blend shape weights on SkinnedMeshRenderers.</p>
+
+<p>Choose either of these methods to import blend shapes with normals:</p>
+
+<ul>
+<li>
+<p>Set the <a href="#blendshapenormals">Blend Shape Normals</a> property to <strong>Import</strong> so that Unity uses the normals from the FBX file. For more information, see the documentation for the <a href="#blendshapenormals">Blend Shape Normals</a> property below.</p>
+
+<p><em>OR</em></p>
+</li>
+<li><p>Set the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #blendshapenormals">Blend Shape Normals</a> property to <strong>Calculate</strong> so that Unity uses the same logic to calculate normals on a <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html" href="#blendshapenormals">Blend Shape Normals</a> property to <strong>Calculate</strong> so that Unity uses the same logic to calculate normals on a <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> and blend shapes.</p></li>
+</ul>
+
+<p>
+<strong>Note:</strong> If you want tangents on your blend shapes then set the <a href="#Tangents">Tangents</a> import setting to <strong>Calculate</strong>.</p>
+
+<p><a name="VisibilityImportProperties" aria-hidden="true"></a></p>
+
+<h3>Importing visibility</h3>
+
+<p>Unity can read visibility properties from FBX files with the <strong>Import Visibility</strong> property. Values and <span class="tooltip"><strong>animation curves</strong><span class="tooltiptext">Allows you to add data to an imported clip so you can animate the timings of other items based on the state of an animator. For example, for a game set in icy conditions, you could use an extra animation curve to control the emission rate of a particle system to show the player’s condensing breath in the cold air. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationCurvesOnImportedClips.html" href="AnimationCurvesOnImportedClips.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationCurves" aria-label="Go to glossary anchor for AnimationCurves">Glossary</a></span></span></span> can enable or disable MeshRenderer components by controlling the <a href="../ScriptReference/Renderer-enabled.html">Renderer.enabled</a> property.</p>
+
+<p>Visibility inheritance is true by default but can be overridden. For example, if the visibility on a parent Mesh is set to 0, all of the renderers on its children are also disabled. In this case, one animation curve is created for each child’s <code>Renderer.enabled</code> property.</p>
+
+<p>Some 3D modeling applications either do not support or have limitations regarding visibility properties. For more information, see:</p>
+
+<ul>
+<li><a href="HOWTO-ImportObjectsFrom3DApps.html#Maya">Limitations on importing Models into Unity from Autodesk® Maya®</a></li>
+<li><a href="HOWTO-ImportObjectsFrom3DApps.html#Blender">Limitations on importing Models into Unity from Blender</a></li>
+</ul>
+
+<p><a name="CameraImportProperties" aria-hidden="true"></a></p>
+
+<h3>Importing cameras</h3>
+
+<p>Unity supports the following properties when importing Cameras from an .FBX file:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<strong>Projection</strong> mode</td>
+	<td style="text-align:left;">Orthographic or perspective. Does not support animation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Field of View</strong></td>
+	<td style="text-align:left;">Supports animation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">All <strong>Physical Camera</strong> properties</td>
+	<td style="text-align:left;">If you import a Camera with Physical Properties (for example, from Maya), Unity creates a Camera with the <strong>Physical Camera</strong> property enabled and the <strong>Focal Length</strong>, <strong>Sensor Type</strong>, <strong>Sensor Size</strong>, <strong>Lens Shift</strong>, and <strong>Gate Fit</strong> values from the FBX file.<br><strong><em>Note:</em></strong> Not all 3D modeling applications have a concept of <em>Gate Fit</em>. When not supported by the 3D modeling application, the default value in Unity is <strong>None</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Near</strong> and <strong>Far</strong> <span class="tooltip"><strong>Clipping Plane</strong><span class="tooltiptext">A plane that limits how far or close a camera can see from its current position. A camera’s viewable range is between the far and near clipping planes. See far clipping plane and near clipping plane. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Camera.html" href="class-Camera.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#clippingplane" aria-label="Go to glossary anchor for clippingplane">Glossary</a></span></span></span> distance</td>
+	<td style="text-align:left;">Unity does not import any animation on these properties. When exporting from 3ds Max, enable the <strong>Clip Manually</strong> setting; otherwise the default values are applied on import.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Target Cameras</strong></td>
+	<td style="text-align:left;">If you import a Target Camera, Unity creates a camera with a <a href="class-LookAtConstraint.html">LookAt</a> constraint using the target object as the source.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="LightImportProperties" aria-hidden="true"></a></p>
+
+<h3>Importing lights</h3>
+
+<p>The following Light types are supported:</p>
+
+<ul>
+<li>Omni</li>
+<li>Spot</li>
+<li>Directional</li>
+<li>Area</li>
+</ul>
+
+<p>The following Light properties are supported:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property:</strong></th>
+	<th style="text-align:left;"><strong>Function:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Range</strong></td>
+	<td style="text-align:left;">The <strong>FarAttenuationEndValue</strong> is used if <strong>UseFarAttenuation</strong> is enabled. <strong>FarAttenuationEndValue</strong> does not support animation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color</strong></td>
+	<td style="text-align:left;">Supports animation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Intensity</strong></td>
+	<td style="text-align:left;">Supports animation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spot Angle</strong></td>
+	<td style="text-align:left;">Supports animation. Only available for Spot lights.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note</strong>: In 3ds Max, the exported default value is the value of the property at the current selected frame. To avoid confusion, move the playhead to frame 0 when exporting.</p>
+
+<h4>Limitations</h4>
+
+<p>Some 3D modeling applications apply scaling on light properties. For instance, you can scale a spot light by its hierarchy and affect the light cone. Unity does not do this, which may cause lights to look different in Unity.</p>
+
+<p>The FBX format does not define the width and height of area lights. Some 3D modeling applications don’t have this property and only allow you to use scaling to define the rectangle or disc area. Because of this, area lights always have a size of 1 when imported.</p>
+
+<p>Targeted light animations are not supported unless their animation is baked.</p>
+
+<p><a name="meshprops" aria-hidden="true"></a></p>
+
+<h2>Meshes property section</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Mesh Compression</strong></td>
+	<td style="text-align:left;">Set the level of compression ratio to reduce the file size of the Mesh. Increasing the compression ratio lowers the precision of the Mesh by using the mesh bounds and a lower bit depth per component to compress the mesh data.<br><br>It’s best to turn it up as high as possible without the Mesh looking too different from the uncompressed version. This is useful for <a href="ReducingFilesize.html">optimizing game size</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Off</strong></td>
+	<td style="text-align:left;">Don’t use <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Low</strong></td>
+	<td style="text-align:left;">Use a low compression ratio.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Medium</strong></td>
+	<td style="text-align:left;">Use a medium compression ratio.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>High</strong></td>
+	<td style="text-align:left;">Use a high compression ratio.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Read/Write Enabled</strong></td>
+	<td style="text-align:left;">When you enable this option, Unity uploads the Mesh data to GPU-addressable memory, but also keeps it in CPU-addressable memory. This means that Unity can access the Mesh data at run time, and you can access it from your scripts. For example, you might want to do this if you’re generating a Mesh procedurally, or if you want to copy some data from a Mesh. <br><br>When this option is disabled, Unity uploads the Mesh data to GPU-addressable memory, and then removes it from CPU-addressable memory. <br><br>By default, this option is disabled. In most cases, to save runtime memory usage, leave this option disabled. For information on when to enable Read/Write Enabled, see <a href="../ScriptReference/Mesh-isReadable.html">Mesh.isReadable</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Optimize Mesh</strong></td>
+	<td style="text-align:left;">Determine the order in which triangles are listed in the Mesh for better GPU performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Nothing</strong></td>
+	<td style="text-align:left;">No optimization.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Everything</strong></td>
+	<td style="text-align:left;">Let Unity reorder the vertices and indices for both polygons and vertices. This is the default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Polygon Order</strong></td>
+	<td style="text-align:left;">Reorder only the polygons.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Vertex Order</strong></td>
+	<td style="text-align:left;">Reorder only the vertices.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Generate Colliders</strong></td>
+	<td style="text-align:left;">Enable to import your Meshes with Mesh <span class="tooltip"><strong>Colliders</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> automatically attached. This is useful for quickly generating a <span class="tooltip"><strong>collision</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a href="CollidersOverview.html" href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> automatically attached. This is useful for quickly generating a <span class="tooltip"><strong>collision</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collision" aria-label="Go to glossary anchor for Collision">Glossary</a></span></span></span> Mesh for environment geometry, but should be avoided for geometry you are moving.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="geoprops" aria-hidden="true"></a></p>
+
+<h2>Geometry properties section</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Keep Quads</strong></td>
+	<td style="text-align:left;">Enable this to stop Unity from converting polygons that have four vertices to triangles. For example, if you are using <a href="SL-SurfaceShaderTessellation.html">Tessellation Shaders</a>, you may want to enable this option because tessellating quads may be more efficient than tessellating polygons. <br><br>Unity can import any type of polygon (triangle to N-gon). Polygons that have <em>more</em> than four vertices are always converted to triangles regardless of this setting. However, if a mesh has quads and triangles (or N-gons that get converted to triangles), Unity creates two submeshes to separate quads and triangles. Each submesh contains either triangles only or quads only. <br><br><strong>Tip:</strong> If you want to import quads into Unity from 3ds Max, you have to export it as an Editable Poly.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Weld Vertices</strong></td>
+	<td style="text-align:left;">Combine vertices that share the same position in space, provided that they share the same properties overall (including, UVs, Normals, Tangents, and VertexColor). <br><br>This optimizes the vertex count on Meshes by reducing their overall number. This option is enabled by default. <br><br>In some cases, you might need to switch this optimization off when importing your Meshes. For example, if you intentionally have duplicate vertices which occupy the same position in your Mesh, you may prefer to use scripting to read or manipulate the individual vertex and triangle data.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Index Format</strong></td>
+	<td style="text-align:left;">Define the size of the Mesh index buffer. <br><br><strong>Note:</strong> For bandwidth and memory storage size reasons, you generally want to keep <strong>16 bit</strong> indices as default, and only use <strong>32 bit</strong> when necessary, which is what the <strong>Auto</strong> option uses.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Auto</strong></td>
+	<td style="text-align:left;">Let Unity decide whether to use 16 or 32 bit indices when importing a Mesh, depending on the Mesh vertex count. This is the default for Assets added in Unity 2017.3 and onwards.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>16 bit</strong></td>
+	<td style="text-align:left;">Use 16 bit indices when importing a Mesh. If the Mesh is larger, then it is split into &lt;64k vertex chunks. This was the default setting for Projects made in Unity 2017.2 or previous.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>32 bit</strong></td>
+	<td style="text-align:left;">Use 32 bit indices when importing a Mesh. If you are using GPU-based rendering pipelines (for example with compute shader triangle culling), using 32 bit indices ensures that all Meshes use the same index format. This reduces <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> complexity, because they only need to handle one format.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Legacy Blend Shape Normals</strong></td>
+	<td style="text-align:left;">Enable this option to compute normals based on the <strong>Smoothing Angle</strong> value.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="Normals" aria-hidden="true"></a><span class="tooltip"><strong>Normals</strong><span class="tooltiptext">The direction perpendicular to the surface of a mesh, represented by a Vector. Unity uses normals to determine object orientation and apply shading. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VectorCookbook.html" href="VectorCookbook.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normal" aria-label="Go to glossary anchor for Normal">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Defines if and how normals should be calculated. This is useful for <a href="ReducingFilesize.html">optimizing game size</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Import</strong></td>
+	<td style="text-align:left;">Import normals from the file. This is the default option. If the file doesn’t contain normals, they will be calculated.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Calculate</strong></td>
+	<td style="text-align:left;">Calculate normals based on <strong>Normals Mode</strong>, <strong>Smoothness Source</strong>, and <strong>Smoothing Angle</strong> (below).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">Disable normals. Use this option if the Mesh is neither normal mapped nor affected by real-time lighting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="blendshapenormals" aria-hidden="true"></a><strong>Blend Shape Normals</strong>
+</td>
+	<td style="text-align:left;">Defines if and how Unity should calculate normals for blend shapes. This value should match the value for the <strong>Normals</strong> property.<br><br>This property is only visible when <strong>Legacy Blend Shape Normals</strong> is disabled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Import</strong></td>
+	<td style="text-align:left;">Import normals from the file. If the blend shape does not contain normals, the FBX SDK uses its own method to calculate normals, resulting in normal values that usually differ from the normal values that Unity creates with the <strong>Calculate</strong> option.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Calculate</strong></td>
+	<td style="text-align:left;">Calculate normals based on <strong>Normals Mode</strong>, <strong>Smoothness Source</strong>, and <strong>Smoothing Angle</strong> (below).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">The blend shape normals do not contribute to the base shape.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Normals Mode</strong></td>
+	<td style="text-align:left;">Define how the normals are calculated by Unity. This is only available when <strong>Normals</strong> is set to <strong>Calculate</strong> or <strong>Import</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Unweighted Legacy</strong></td>
+	<td style="text-align:left;">The legacy method of computing the normals (prior to version 2017.1). In some cases it gives slightly different results compared to the current implementation. It is the default for all FBX <span class="tooltip"><strong>prefabs</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> imported before the migration of the Project to the latest version of Unity.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Unweighted</strong></td>
+	<td style="text-align:left;">The normals are not weighted.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Area Weighted</strong></td>
+	<td style="text-align:left;">The normals are weighted by face area.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Angle Weighted</strong></td>
+	<td style="text-align:left;">The normals are weighted by the vertex angle on each face.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Area and Angle Weighted</strong></td>
+	<td style="text-align:left;">The normals are weighted by both the face area and the vertex angle on each face. This is the default option.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Smoothness Source</strong></td>
+	<td style="text-align:left;">Set how to determine the smoothing behavior (which edges should be smooth and which should be hard).<br><br>This property is only visible when <strong>Legacy Blend Shape Normals</strong> is disabled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Prefer Smoothing Groups</strong></td>
+	<td style="text-align:left;">Use smoothing groups from the Model file, where possible.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>From Smoothing Groups</strong></td>
+	<td style="text-align:left;">Use smoothing groups from the Model file only.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>From Angle</strong></td>
+	<td style="text-align:left;">Use the <strong>Smoothing Angle</strong> value to determine which edges should be smooth.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">Don’t split any vertices at hard edges.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Smoothing Angle</strong></td>
+	<td style="text-align:left;">Control whether vertices are split for hard edges: typically higher values result in fewer vertices. <br><br><strong>Note:</strong> Use this setting only on very smooth organics or very high poly models. Otherwise, you are better off manually smoothing inside your 3D modeling software and then importing with the <strong>Normals</strong> option set to <strong>Import</strong> (above). Since Unity bases hard edges on a single angle and nothing else, you might end up with smoothing on some parts of the Model by mistake.<br><br>Only available if <strong>Normals</strong> is set to <strong>Calculate</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2">
+<a name="Tangents" aria-hidden="true"></a><strong>Tangents</strong>
+</td>
+	<td style="text-align:left;">Define how vertex tangents should be imported or calculated. This is only available when <strong>Normals</strong> is set to <strong>Calculate</strong> or <strong>Import</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Import</strong></td>
+	<td style="text-align:left;">Import vertex tangents from FBX files if <strong>Normals</strong> is set to <strong>Import</strong>. If the Mesh has no tangents, it won’t work with normal-mapped shaders.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Calculate Tangent Space</strong></td>
+	<td style="text-align:left;">Calculate tangents using MikkTSpace. This is the default option if <strong>Normals</strong> is set to <strong>Calculate</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Calculate Legacy</strong></td>
+	<td style="text-align:left;">Calculate tangents with legacy algorithm.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Calculate Legacy - Split Tangent</strong></td>
+	<td style="text-align:left;">Calculate tangents with legacy algorithm, with splits across UV charts. Use this if <span class="tooltip"><strong>normal map</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normalmap" aria-label="Go to glossary anchor for Normalmap">Glossary</a></span></span></span> lighting is broken by seams on your Mesh. This usually only applies to characters.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">Don’t import vertex tangents. The Mesh has no tangents, so this doesn’t work with normal-mapped shaders.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Swap UVs</strong></td>
+	<td style="text-align:left;">Swap UV channels in your Meshes. Use this option if your diffuse Texture uses UVs from the <span class="tooltip"><strong>lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span>. Unity supports up to eight UV channels but not all 3D modeling applications export more than two.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Generate Lightmap UVs</strong></td>
+	<td style="text-align:left;">Creates a second UV channel for Lightmapping. See documentation on <a href="LightingGiUvs-GeneratingLightmappingUVs.html">generating lightmap UVs</a> for more information.</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<ul>
+<li><span class="page-history"><strong>Normals Mode</strong>, <strong>Light</strong> and <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> import options added in Unity <a href="../Manual/30_search.html?q=newin20171">2017.1</a> <span class="search-words">NewIn20171</span></span></li>
+<li><span class="page-history"><span class="tooltip"><strong>Materials</strong><span class="tooltiptext">An asset that defines how a surface should be rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Material.html" href="class-Material.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span> tab added in <a href="https://docs.unity3d.com/2017.2/Documentation/Manual/30_search.html?q=newin20172">2017.2</a> <span class="search-words">NewIn20172</span></span></li>
+<li><span class="page-history"><strong>Index Format</strong> property added in <a href="https://docs.unity3d.com/2017.3/Documentation/Manual/30_search.html?q=newin20173">2017.3</a> <span class="search-words">NewIn20173</span></span></li>
+<li><span class="page-history">Updated description of read/write enabled setting and reorganized properties table, to match improvements in Unity <a href="../Manual/30_search.html?q=newin20173">2017.3</a> <span class="search-words">NewIn20173</span></span></li>
+<li><span class="page-history">Added <strong>Legacy Blend Shape Normals</strong> and <strong>Sort Hierarchy By Name</strong> properties in Unity <a href="../Manual/30_search.html?q=newin20193">2019.3</a> <span class="search-words">NewIn20193</span></span></li>
+</ul>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-FBXImporter.html"></a></span><div class="tip">Model Import Settings window</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="FBXImporter-Rig.html"></a></span><div class="tip">Rig tab</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

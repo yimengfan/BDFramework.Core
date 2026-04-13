@@ -1,0 +1,335 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: How to get, set, and configure the active render pipeline</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/srp-setting-render-pipeline-asset.html">English</a></li>
+<li><a href="/cn/current/Manual/srp-setting-render-pipeline-asset.html">中文</a></li>
+<li><a href="/ja/current/Manual/srp-setting-render-pipeline-asset.html">日本語</a></li>
+<li><a href="/kr/current/Manual/srp-setting-render-pipeline-asset.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/srp-setting-render-pipeline-asset.html">English</a></li>
+<li><a href="/cn/current/Manual/srp-setting-render-pipeline-asset.html">中文</a></li>
+<li><a href="/ja/current/Manual/srp-setting-render-pipeline-asset.html">日本語</a></li>
+<li><a href="/kr/current/Manual/srp-setting-render-pipeline-asset.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="render-pipelines.html">Render pipelines</a></li>
+<li>How to get, set, and configure the active render pipeline</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="render-pipelines-feature-comparison.html"></a></span><div class="tip">  # Render pipeline feature comparison</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="BestPracticeLightingPipelines.html"></a></span><div class="tip">Choosing and configuring a render pipeline and lighting solution</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>How to get, set, and configure the active render pipeline</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page contains information on how to get, set, and configure the <span class="tooltip"><strong>render pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> that Unity is currently using. The render pipeline that Unity is currently using is called the active render pipeline.</p>
+
+<h2>Overview</h2>
+
+<p>To render content, Unity can either use the Built-in Render Pipeline or a render pipeline based on the <a href="ScriptableRenderPipeline.html">Scriptable Render Pipeline</a> (SRP), which includes the Universal Render Pipeline (URP) and the High Definition Render Pipeline (HDRP).</p>
+
+<p>To specify which Scriptable Render Pipeline Unity uses, you use Render Pipeline Assets. A Render Pipeline Asset tells Unity which SRP to use, and how to configure it. If you don’t specify a Render Pipeline Asset, Unity uses the Built-in Render Pipeline.</p>
+
+<p>You can create multiple Render Pipeline Assets that use the same render pipeline, but with different configurations; for example, you can use different Render Pipeline Assets for different hardware quality levels. For a general introduction to Render Pipeline Assets, see <a href="scriptable-render-pipeline-introduction.html">Scriptable Render Pipeline introduction</a>. For information on URP’s Render Pipeline Asset, see <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/manual/universalrp-asset.html">The Universal Render Pipeline Asset</a>, and for HDRP’s Render Pipeline Asset, see <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest/index.html?subfolder=/manual/HDRP-Asset.html">The High Definition Render Pipeline Asset</a>.</p>
+
+<p>As soon as you change the active Render Pipeline Asset in the Unity Editor or at runtime, Unity uses the new active render pipeline to render content. If you are in the Unity Editor, this includes the Game view, the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view, and previews for Materials in the Project panel and the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view, and previews for Materials in the Project panel and the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>.</p>
+
+<p>When you change the active render pipeline, you must ensure that the assets and code in your project are compatible with the new render pipeline; otherwise, you might experience errors or unintended visual effects.</p>
+
+<p><a name="determine-the-active-render-pipeline" aria-hidden="true"></a></p>
+
+<h2>Determining the active render pipeline</h2>
+
+<p>Settings in both <a href="class-GraphicsSettings.html">Graphics settings</a> and <a href="class-QualitySettings.html">Quality settings</a> determine the active render pipeline.</p>
+
+<p>For each quality level in the <strong>Quality</strong> settings window, Unity uses the Render Pipeline Asset assigned to <strong>Render Pipeline Asset</strong>. If the property is unassigned, Unity uses the Render Pipeline Asset assigned to <strong>Default Render Pipeline Asset</strong> in the <strong>Graphics</strong> settings window instead.</p>
+
+<p>If both <strong>Render Pipeline Asset</strong> and <strong>Default Render Pipeline</strong> aren’t set, Unity uses the Built-In Render Pipeline.</p>
+
+<p><a name="set-active-render-pipeline-editor" aria-hidden="true"></a></p>
+
+<h2>How to set the active render pipeline in the Editor UI</h2>
+
+<h3>Activating the Built-in Render Pipeline</h3>
+
+<p>To set the active render pipeline to the Built-in Render Pipeline, remove any Render Pipeline Assets from graphics settings and quality settings.</p>
+
+<p>To do this:</p>
+
+<ol>
+<li>Select <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Quality</strong>.</li>
+<li>For each quality level, if a Render Pipeline Asset is assigned to <strong>Render Pipeline Asset</strong>, unassign it.</li>
+<li>Select <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Graphics</strong>.</li>
+<li>If a Render Pipeline Asset is assigned to <strong>Default Render Pipeline</strong>, unassign it.</li>
+</ol>
+
+<h3>Activating URP, HDRP, or a custom render pipeline based on SRP</h3>
+
+<p>To set the active render pipeline to one that is based on SRP, tell Unity which Render Pipeline Asset to use as the default active render pipeline, and optionally which Render Pipeline Assets to use for each quality level. </p>
+
+<p>To do this:</p>
+
+<ol>
+<li>In your Project folder, locate the Render Pipeline Asset(s) that you want to use.</li>
+<li>Set the default render pipeline, which Unity uses when there is no override for a given quality level. If you do not set this, Unity uses the Built-in Render Pipeline when no override applies.
+
+<ol>
+<li>Select <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Graphics</strong>.</li>
+<li>Set <strong>Default Render Pipeline</strong> to the Render Pipeline Asset you want to use.</li>
+</ol>
+</li>
+<li>
+<strong>Optional</strong>: Set override Render Pipeline Assets for different quality levels.
+
+<ol>
+<li>Select <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Quality</strong>.</li>
+<li>Set <strong>Render Pipeline Asset</strong> to the Render Pipeline Asset you want to use.</li>
+</ol>
+</li>
+</ol>
+
+<p><a name="get-set-active-render-pipeline-scripts" aria-hidden="true"></a></p>
+
+<h2>How to get and set the active render pipeline in C# scripts</h2>
+
+<p>In C# <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>, you can get and set the active render pipeline and receive a callback when the active render pipeline changes. You can do this in Edit Mode or Play Mode in the Unity Editor, or at runtime in your application.</p>
+
+<p>To do this, use the following APIs:</p>
+
+<ul>
+<li>There are several ways to get the active render pipeline:
+
+<ul>
+<li>To get a reference to the Render Pipeline Asset that defines the active render pipeline, use <a href="../ScriptReference/Rendering.GraphicsSettings-currentRenderPipeline.html">GraphicsSettings.currentRenderPipeline</a>.</li>
+<li>To get a reference to the Render Pipeline Asset that defines the active render pipeline and to determine whether Unity is using the default value or an override value, get the values of <a href="../ScriptReference/Rendering.GraphicsSettings-defaultRenderPipeline.html">GraphicsSettings.defaultRenderPipeline</a> and <a href="../ScriptReference/QualitySettings-renderPipeline.html">QualitySettings.renderPipeline</a>. For information on how to use these values, see <a href="#determine-the-active-render-pipeline">Determining the active render pipeline</a> or the following code sample.</li>
+<li>To get the <a href="../ScriptReference/Rendering.RenderPipeline.html">RenderPipeline</a> instance for the active render pipeline, use <a href="../ScriptReference/Rendering.RenderPipelineManager-currentPipeline.html">RenderPipelineManager.currentPipeline</a>. <strong>Note:</strong> Unity updates this property only after it has rendered at least one frame with the active render pipeline.</li>
+</ul>
+</li>
+<li>To set the active render pipeline, set the values of <a href="../ScriptReference/Rendering.GraphicsSettings-defaultRenderPipeline.html">GraphicsSettings.defaultRenderPipeline</a> and <a href="../ScriptReference/QualitySettings-renderPipeline.html">QualitySettings.renderPipeline</a>. For information on how to use these values, see <a href="#determine-the-active-render-pipeline">Determining the active render pipeline</a> or the following code sample.</li>
+<li>To detect and execute code when the type of the active render pipeline changes, use <a href="../ScriptReference/Rendering.RenderPipelineManager-activeRenderPipelineTypeChanged.html">RenderPipelineManager.activeRenderPipelineTypeChanged</a>.</li>
+</ul>
+
+<p>The following example code shows how to use these APIs:</p>
+
+<pre><code>using UnityEngine;
+using UnityEngine.Rendering;
+ 
+public class ActiveRenderPipelineExample : MonoBehaviour
+{
+    // In the Inspector, assign a Render Pipeline Asset to each of these fields
+    public RenderPipelineAsset defaultRenderPipelineAsset;
+    public RenderPipelineAsset overrideRenderPipelineAsset;
+ 
+    void Start()
+    {
+        GraphicsSettings.defaultRenderPipeline = defaultRenderPipelineAsset;
+        QualitySettings.renderPipeline = overrideRenderPipelineAsset;
+
+        DisplayCurrentRenderPipeline();
+    }
+
+    void Update()
+    {
+        // When the user presses the left shift key, switch the default render pipeline
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+            SwitchDefaultRenderPipeline();
+            DisplayCurrentRenderPipeline();
+        }
+        // When the user presses the right shift key, switch the override render pipeline
+        else if (Input.GetKeyDown(KeyCode.RightShift)) {
+            SwitchOverrideRenderPipeline();
+            DisplayCurrentRenderPipeline();
+        }
+    }
+
+    // Switch the default render pipeline between null,
+    // and the render pipeline defined in defaultRenderPipelineAsset
+    void SwitchDefaultRenderPipeline()
+    {
+        if (GraphicsSettings.defaultRenderPipeline == defaultRenderPipelineAsset)
+        {
+            GraphicsSettings.defaultRenderPipeline = null;
+        }
+        else
+        {
+            GraphicsSettings.defaultRenderPipeline = defaultRenderPipelineAsset;
+        }
+    }
+
+    // Switch the override render pipeline between null,
+    // and the render pipeline defined in overrideRenderPipelineAsset
+    void SwitchOverrideRenderPipeline()
+    {
+        if (QualitySettings.renderPipeline == overrideRenderPipelineAsset)
+        {
+            QualitySettings.renderPipeline = null;
+        }
+        else
+        {
+           QualitySettings.renderPipeline = overrideRenderPipelineAsset;
+        }
+    }
+
+    // Print the current render pipeline information to the console
+    void DisplayCurrentRenderPipeline()
+    {
+        // GraphicsSettings.defaultRenderPipeline determines the default render pipeline
+        // If it is null, the default is the Built-in Render Pipeline
+        if (GraphicsSettings.defaultRenderPipeline != null)
+        {
+            Debug.Log(&quot;The default render pipeline is defined by &quot; + GraphicsSettings.defaultRenderPipeline.name);
+        }
+        else
+        {
+            Debug.Log(&quot;The default render pipeline is the Built-in Render Pipeline&quot;);
+        }
+
+        // QualitySettings.renderPipeline determines the override render pipeline for the current quality level
+        // If it is null, no override exists for the current quality level
+        if (QualitySettings.renderPipeline != null)
+        {
+            Debug.Log(&quot;The override render pipeline for the current quality level is defined by &quot; + QualitySettings.renderPipeline.name);
+        }
+        else
+        {
+            Debug.Log(&quot;No override render pipeline exists for the current quality level&quot;);
+        }
+
+        // If an override render pipeline is defined, Unity uses that
+        // Otherwise, it falls back to the default value
+        if (QualitySettings.renderPipeline != null)
+        {
+            Debug.Log(&quot;The active render pipeline is the override render pipeline&quot;);
+        }
+        else
+        {
+            Debug.Log(&quot;The active render pipeline is the default render pipeline&quot;);
+        }
+
+        // To get a reference to the Render Pipeline Asset that defines the active render pipeline,
+        // without knowing if it is the default or an override, use GraphicsSettings.currentRenderPipeline
+        if (GraphicsSettings.currentRenderPipeline != null)
+        {
+            Debug.Log(&quot;The active render pipeline is defined by &quot; +GraphicsSettings.currentRenderPipeline.name);
+        }
+        else
+        {
+            Debug.Log(&quot;The active render pipeline is the Built-in Render Pipeline&quot;);
+        }
+    }
+}
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="render-pipelines-feature-comparison.html"></a></span><div class="tip">  # Render pipeline feature comparison</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="BestPracticeLightingPipelines.html"></a></span><div class="tip">Choosing and configuring a render pipeline and lighting solution</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

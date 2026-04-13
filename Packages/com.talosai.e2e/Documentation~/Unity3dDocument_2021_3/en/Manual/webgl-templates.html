@@ -1,0 +1,559 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: WebGL templates</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="platforms" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/webgl-templates.html">English</a></li>
+<li><a href="/cn/current/Manual/webgl-templates.html">中文</a></li>
+<li><a href="/ja/current/Manual/webgl-templates.html">日本語</a></li>
+<li><a href="/kr/current/Manual/webgl-templates.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/webgl-templates.html">English</a></li>
+<li><a href="/cn/current/Manual/webgl-templates.html">中文</a></li>
+<li><a href="/ja/current/Manual/webgl-templates.html">日本語</a></li>
+<li><a href="/kr/current/Manual/webgl-templates.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="webgl.html">WebGL</a></li>
+<li><a href="webgl-building-distribution.html">Building and distributing a WebGL project</a></li>
+<li>WebGL templates</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="webgl-distributionsize-codestripping.html"></a></span><div class="tip">Distribution size and code stripping</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="webgl-deploying.html"></a></span><div class="tip">Compressed builds and server configuration</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>WebGL templates</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Important:</strong> To use the templates feature in <span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span>, you need prior knowledge of JavaScript concepts and terminology.</p>
+
+<p>When you build a WebGL project, Unity embeds the Player in a HTML page such that a browser can open it. A WebGL template is a configuration setting that lets you control the appearance of this HTML page, so that you can: test, demonstrate, and preview your WebGL application in a browser.</p>
+
+<p>To access WebGL templates:</p>
+
+<ol>
+<li>Go to <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html">Player settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html" href="class-PlayerSettings.html">Player settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span> (menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong>), and set the platform-specific settings to WebGL.</li>
+<li>Open <strong>Resolution and Presentation</strong>.</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/WebGLResolutionandPresentationWindow.png" alt="Image of Player Resolution and Presentation window. ">
+<figcaption>Image of Player Resolution and Presentation window. </figcaption>
+</figure>
+
+<p>By default, the WebGL Template setting has two options:</p>
+
+<ul>
+<li>Default: A white page with a loading bar on a grey canvas.</li>
+<li>Minimal: A minimal WebGL template with only the necessary boilerplate code to run the WebGL content.</li>
+</ul>
+
+<p>These built-in HTML pages are useful for testing and demonstrating a minimal Player.</p>
+
+<p>You can also use JavaScript to build and supply your own WebGL templates to host the Player. This is useful for production purposes, so that you can preview the Player hosted in the page where it’s eventually deployed. For example, if the Unity Player content interacts with other elements in the page via the external call interface, you should test it with a page that contains those interacting elements.</p>
+
+<h2>Add a WebGL template</h2>
+
+<p>To add custom templates to your project, navigate to your Project’s <code>Assets</code> folder and create a folder called <code>WebGLTemplates</code>. Each template is a subfolder within the <code>WebGLTemplates</code> folder. Each template subfolder contains an <code>index.html</code> file along with any other resources the page needs, such as images or stylesheets.</p>
+
+<p>The easiest way to create a new custom WebGL template is to make a copy of the built-in Default or Minimal templates, which are stored in corresponding subfolders under <code>&lt;Unity Installation&gt;/PlaybackEngines/WebGLSupport/BuildTools/WebGLTemplates/</code>. Every Unity Project includes these templates by default. Copy a template and place it in your own <code>Project/Assets/WebGLTemplates</code> folder, and rename it to something meaningful so you can identify your template later.</p>
+
+<p>
+<strong>Note:</strong> On Mac, you can locate the Unity Installation folder in the Applications folder.</p>
+
+<p>Templates in your Project’s <code>WebGLTemplates</code> folder appear in the Unity Player Settings’ WebGL Template setting. The name of the template is the same as its folder. To give this option a thumbnail image for easy reference, add a <code>128x128-pixel</code> image to the template folder and name it <code>thumbnail.png</code>.</p>
+
+<h2>Template variables, macros, and conditional directives</h2>
+
+<p>During the build process, Unity pre-processes template files and evaluates all macros and conditional directives included in those files. As part of this process, Unity finds and replaces all macro declarations with the values the Editor supplies. Unity automatically pre-processes all .html, .php, .css, .js and .json files in the template folder.</p>
+
+<h3>Internal preprocessor variables</h3>
+
+<p>The following internal preprocessor variables refer to data in the Project, and Unity assigns value to them at build time according to the values the Editor supplies. Javascript macros and conditional directives can use these internal preprocessor variables.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Variable</strong></th>
+	<th style="text-align:left;"><strong>Type</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">COMPANY_NAME</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">The Company Name defined in the Player Settings.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">PRODUCT_NAME</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">The Product Name defined in the Player Settings.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">PRODUCT_VERSION</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">The Version defined in the Player Settings.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">WIDTH</td>
+	<td style="text-align:left;">Integer</td>
+	<td style="text-align:left;">The Default Canvas Width defined in the Player Settings &gt; Resolution and Presentation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">HEIGHT</td>
+	<td style="text-align:left;">Integer</td>
+	<td style="text-align:left;">The Default Canvas Height in the Player Settings &gt; Resolution and Presentation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">SPLASH_SCREEN_STYLE</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">This’s set to the “Dark” value when Splash Style Player Settings &gt; Splash Image is set to Light on Dark, otherwise it’s set to the “Light” value.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">BACKGROUND_COLOR</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">Represents the Background Color defined in a form of a hex triplet.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">UNITY_VERSION</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">The Unity version.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">DEVELOPMENT_PLAYER</td>
+	<td style="text-align:left;">Boolean</td>
+	<td style="text-align:left;">This’s set to true if the <span class="tooltip"><strong>Development Build</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview" href="https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DevelopmentBuild" aria-label="Go to glossary anchor for DevelopmentBuild">Glossary</a></span></span></span> option is enabled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">DECOMPRESSION_FALLBACK</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">This’s set to <code>Gzip</code> or <code>Brotli</code>, depending on the <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> method you use and the type of decompressor included in the build. If neither is included, the variable is set to an empty string.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">INITIAL_MEMORY</td>
+	<td style="text-align:left;">Integer</td>
+	<td style="text-align:left;">The initial size of the WASM memory heap in megabytes (MB).</td>
+</tr>
+<tr>
+	<td style="text-align:left;">USE_WASM</td>
+	<td style="text-align:left;">Boolean</td>
+	<td style="text-align:left;">This is set to true if the current build is a WebAssembly build.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">USE_THREADS</td>
+	<td style="text-align:left;">Boolean</td>
+	<td style="text-align:left;">This is set to true if the current build uses threads.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">USE_WEBGL_1_0</td>
+	<td style="text-align:left;">Boolean</td>
+	<td style="text-align:left;">This is set to true if the current build supports the WebGL1.0 graphics API.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">USE_WEBGL_2_0</td>
+	<td style="text-align:left;">Boolean</td>
+	<td style="text-align:left;">This is set to true if the current build supports the WebGL2.0 graphics API.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">USE_DATA_CACHING</td>
+	<td style="text-align:left;">Boolean</td>
+	<td style="text-align:left;">This is set to true if the current build uses indexedDB caching for the downloaded files.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">LOADER_FILENAME</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">This is set to the filename of the build loader script.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">DATA_FILENAME</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">This is set to the filename of the main data file.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">FRAMEWORK_FILENAME</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">This is set to the filename of the build framework script.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">CODE_FILENAME</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">This is set to the filename of the WebAssembly module when the current build is a WebAssembly build, otherwise it’s set to the filename of the <code>asm.js</code> module.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">MEMORY_FILENAME</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">This is set to the filename of the memory file when memory is stored in an external file, otherwise it’s set to an empty string.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">SYMBOLS_FILENAME</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">This is set to the filename of the JSON file containing debug symbols when the current build is using debug symbols, otherwise it’s set to an empty string.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">BACKGROUND_FILENAME</td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">This is set to the filename of the background image when the background image is selected in the Player Settings &gt; Splash Image, otherwise it’s set to an empty string.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>JavaScript macros</h2>
+
+<p>JavaScript macros are blocks of JavaScript code in template files, surrounded by three sets of curly brackets. This JavaScript code can use the internal preprocessor variables listed above. These variables are assigned at build time according to the values the Editor supplies. During the build, the preprocessor evaluates all macros and replaces them with the output of the variable.</p>
+
+<p>You can use JavaScript macros to preprocess values supplied by the Editor. These macros can be as complex as you like. They can include multiple operators, loops, functions, and any other JavaScript constructs.</p>
+
+<p>The following example line is from the <code>index.html</code> file used in the Default template:</p>
+
+<p><code>&lt;div id=&quot;unity-build-title&quot;&gt;{{{ PRODUCT_NAME }}}&lt;/div&gt;</code></p>
+
+<p>If the value of the <strong>Product Name</strong> in the Player Settings is set to <code>My WebGL Game</code>, the internal preprocessor variable <code>PRODUCT_NAME</code> has the value <code>My WebGL Game</code>. In the output <code>index.html</code> file, the line appears as:</p>
+
+<p><code>&lt;div id=&quot;unity-build-title&quot;&gt;My WebGL Game&lt;/div&gt;</code></p>
+
+<p>Below is a more complex example from the same <code>index.html</code> template file:</p>
+
+<p><code>canvas.style.background = &quot;url('&quot; + buildUrl + &quot;/{{{ BACKGROUND_FILENAME.replace(/'/g, '%27') }}}') center / cover&quot;;</code></p>
+
+<p>If the target build folder is called <code>Let’s try WebGL</code>, and if you select a background image in the Player Settings, the internal preprocessor variable <code>BACKGROUND_FILENAME</code> has the value <code>Let’s try WebGL.jpg</code>. In the output <code>index.html</code> file, the line changes into:</p>
+
+<p><code>canvas.style.background = &quot;url('&quot; + buildUrl + &quot;/Let%27s try WebGL.jpg') center / cover&quot;;</code></p>
+
+<h2>Conditional directives</h2>
+
+<p>Conditional directives <strong>#if</strong>, <strong>#else</strong>, and <strong>#endif</strong> control whether Unity includes a specific portion of the preprocessed file in the output file, or discards it for the current build.</p>
+
+<p>Code that starts with an <strong>#if</strong> directive and ends with an <strong>#endif</strong> directive is called a conditional group. Conditional groups can also include <strong>#else</strong> directives. Unity evaluates the expression written after the <strong>#if</strong> as a JavaScript expression. If this expression has a truthy value that translates to true when evaluated in a Boolean context, then Unity keeps the line group immediately following the <strong>#if</strong> directive in the output file. If the <strong>#if</strong> expression is false, and an <strong>#else</strong> directive is included in the conditional group, Unity keeps the line group immediately following the <strong>#else</strong> directive in the output.
+An example of a conditional group is as follows:</p>
+
+<pre><code class="lang-js">#if EXPRESSION
+  // this block is included in the output if EXPRESSION has a truthy value
+#else
+  // this block is included in the output otherwise
+#endif
+</code></pre>
+
+<p>Evaluated JavaScript expressions can include brackets, logical operators and other JavaScript constructs. Conditional directives can be nested.</p>
+
+<h2>Custom user variables</h2>
+
+<p>When you select a WebGL template, Unity parses the template and looks for Javascript macros and conditional directives.
+JavaScript variables are treated as custom user variables if they’re:</p>
+
+<ul>
+<li>Used inside JavaScript macros and conditional directives.</li>
+<li>Not declared in the template code.</li>
+<li>Not internal pre-processor variables.</li>
+</ul>
+
+<p>Unity automatically adds these custom user variables to the <strong>Resolution and Presentation</strong> section in the <strong>Player Settings</strong> window.</p>
+
+<p>As an example, if you want to control the title of the generated <code>index.html</code> page directly from the <strong>Player Settings</strong> window, you first need to modify the <code>&amp;lt;title&amp;gt;</code> line of the <code>index.html</code> in your custom template, like this:
+<code>
+&lt;title&gt;{{{ PAGE_TITLE }}}&lt;/title&gt;
+</code>
+After you’ve done this, re-select your custom template. This parses the template again, and you should find a <strong>Page Title</strong> field in the <strong>Resolution and Presentation</strong> &gt; <strong>WebGL Template</strong> section of the <strong>Player Settings window</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/WebGLResolutionandPresentationCustomTemplate.png" alt="Image of Resolution and Presentation window with custom template">
+<figcaption>Image of Resolution and Presentation window with custom template</figcaption>
+</figure>
+
+<p>When you enter text into this field and build your Project, the custom variable PAGE_TITLE used in the template macro automatically becomes the text in the <strong>Page Title</strong> field.</p>
+
+<p>If you would like to use custom integer or float variables in your macros, use <code>parseInt()</code> or <code>parseFloat()</code> JavaScript functions in your macros to preprocess string values supplied by the Editor. This is because custom user variables are always assigned a string value.</p>
+
+<p>
+<strong>Note</strong>: Underscore characters in variable names display as spaces inside the field to improve readability.</p>
+
+<h3>Structure of the index.html file</h3>
+
+<p>The <code>index.html</code> contains the code necessary to load the build and should include the following:</p>
+
+<ul>
+<li>A <code>&lt;canvas&gt;</code> element. Unity runtime uses the <code>&lt;canvas&gt;</code> element to render the application.</li>
+<li>JavaScript code to download the build loader. For example:</li>
+</ul>
+
+<pre><code class="lang-js">var buildUrl = &quot;Build&quot;;
+var loaderUrl = buildUrl + &quot;/{{{ LOADER_FILENAME }}}&quot;;
+var script = document.createElement(&quot;script&quot;);
+script.src = loaderUrl;
+script.onload = () =&gt; {
+  // code for instantiating the build
+};
+document.body.appendChild(script);`
+</code></pre>
+
+<p>In this example, <code>{{{ LOADER_FILENAME }}}</code> is automatically resolved by the template preprocessor when the build is generated.</p>
+
+<p>Alternatively, you can download the build loader using a script tag, for example:
+<code>lang-js
+&lt;script src=&quot;Build/{{{ LOADER_FILENAME }}}&quot;&gt;&lt;/script&gt;
+</code>
+</p>
+
+<ul>
+<li>JavaScript code for instantiating a build. Unity builds are instantiated using the <code>createUnityInstance()</code> function, which is defined in the build loader script.</li>
+</ul>
+
+<h2>The instantiation function: createUnityInstance()</h2>
+
+<p>The <code>createUnityInstance()</code> function creates a new instance of your content. You can use it like this:
+<code>
+createUnityInstance(canvas, config,  onProgress).then(onSuccess).catch(onError);
+</code>
+</p>
+
+<p>This function returns a Promise object, where:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Object</th>
+	<th style="text-align:left;">Use</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>canvas</code></td>
+	<td style="text-align:left;">Unity runtime uses the <code>canvas</code> object to render the game.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>config</code></td>
+	<td style="text-align:left;">The <code>config</code> object contains the build configuration, such as the code and data URLs, product and company name, and version. For more information on config definition, see the <a href="#build_configuration">Build Configuration</a> section on this page.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>onProgress(progress) {...}</code></td>
+	<td style="text-align:left;">The WebGL loader calls the <code>onProgress</code> callback object every time the download progress updates. The <code>progress</code> argument that comes with the <code>onProgress</code> callback determines the loading progress as a value between 0.0 and 1.0.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>onSuccess(unityInstance) {...}</code></td>
+	<td style="text-align:left;">The <code>onSuccess</code> callback is called after the build has successfully instantiated. The created Unity instance object is provided as an argument. This object can be used for interaction with the build.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>onError(message) {...}</code></td>
+	<td style="text-align:left;">The onError callback is called if an error occurs during build instantiation. An error message is provided as an argument.</td>
+</tr>
+</tbody>
+</table>
+
+<p>The <code>createUnityInstance()</code> function is defined in the build loader script and is specific to the instantiated build. Therefore, if you are embedding two or more builds in the same HTML document, make sure that the <code>createUnityInstance()</code> function is called from an <code>onload</code> callback of the corresponding build loader script. For more information about the Unity WebGL Loader, see <a href="webgl-building.html">Building and Running a WebGL Project</a>.</p>
+
+<h2>Build configuration <a name="build_configuration" aria-hidden="true"></a>
+</h2>
+
+<p>The configuration object contains the build configuration, which consists of code and data URLs, product name, company name, and version. You can define it using the following code:</p>
+
+<pre><code class="lang-js">var buildUrl = &quot;Build&quot;;
+var config = {
+  dataUrl: buildUrl + &quot;/{{{ DATA_FILENAME }}}&quot;,
+  frameworkUrl: buildUrl + &quot;/{{{ FRAMEWORK_FILENAME }}}&quot;,
+  codeUrl: buildUrl + &quot;/{{{ CODE_FILENAME }}}&quot;,
+#if MEMORY_FILENAME
+  memoryUrl: buildUrl + &quot;/{{{ MEMORY_FILENAME }}}&quot;,
+#endif
+#if SYMBOLS_FILENAME
+  symbolsUrl: buildUrl + &quot;/{{{ SYMBOLS_FILENAME }}}&quot;,
+#endif
+  streamingAssetsUrl: &quot;StreamingAssets&quot;,
+  companyName: &quot;{{{ COMPANY_NAME }}}&quot;,
+  productName: &quot;{{{ PRODUCT_NAME }}}&quot;,
+  productVersion: &quot;{{{ PRODUCT_VERSION }}}&quot;,
+  // additional options can go here, see below
+};
+</code></pre>
+
+<p>In the example above, the build folder URL is stored as a separate variable called <code>buildUrl</code>. This is useful in cases where you don’t know the relationship between the embedding page and build folder on the hosting server. It enables you to reuse the embedding code in other HTML documents. An example of when to use this is if you move the <code>Build</code> folder to another location on your server. You can adjust the value of the <code>buildUrl</code> variable on the embedding page, and you can use the same embedding code. This also applies to the <code>StreamingAssets</code> folder (<code>streamingAssetsUrl</code>).</p>
+
+<p>In addition to setting the above URL and field names on the build, you can set the following properties on the <code>config</code> object.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Use</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>matchWebGLToCanvasSize: false</code></td>
+	<td style="text-align:left;">By default (if set to true or unset), Unity synchronizes the WebGL canvas render target size with the Document Object Model (DOM) size of the canvas element (scaled by <code>window.devicePixelRatio</code>). Set this to false if you want to set the canvas DOM size and WebGL render target sizes manually.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>devicePixelRatio: &lt;number&gt;</code></td>
+	<td style="text-align:left;">This field enables forcing the DPI scaling ratio for the rendered page. Set to 1 to force rendering to “standard DPI” (or non-Retina DPI), which can help performance on lower-end mobile devices. By default, this field is unset, meaning the rendered page uses the browser DPR scaling ratio, resulting in High DPI rendering.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>autoSyncPersistentDataPath: true</code></td>
+	<td style="text-align:left;">If set to true, all file writes inside the Unity <code>Application.persistentDataPath</code> directory automatically persist so that the contents are remembered when the user revisits the site the next time. If unset (or set to false), you must manually sync file modifications inside the <code>Application.persistentDataPath</code> directory by calling the <code>JS_FileSystem_Sync()</code> JavaScript function.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Build interaction</h2>
+
+<p>After the build has successfully instantiated, the fulfilment handler callback of the Promise object receives the newly created Unity instance object as an argument. To interact with the build, call the following methods of the Unity instance:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Method</th>
+	<th style="text-align:left;">Use</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>unityInstance.SetFullscreen(fullscreen)</code></td>
+	<td style="text-align:left;">The <code>SetFullscreen</code> method toggles full screen mode. This method doesn’t return a value. <strong>Note</strong>: You need to use a user interaction like a button or key press to activate fullscreen mode. You can’t activate fullscreen mode on startup. <br> - To activate Full screen mode, set the <code>fullscreen</code> argument to 1. <br> - To exit Full screen mode, set the <code>fullscreen</code> argument to 0.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>unityInstance.SendMessage(objectName, methodName, value)</code></td>
+	<td style="text-align:left;">The <code>SendMessage</code> method sends messages to the GameObjects. This method doesn’t return a value. <br>- <code>objectName</code> is the name of an object in your Scene. <br> - <code>methodName</code> is the name of a method in the script, currently attached to that object. <br>- <code>value</code> can be a string, a number, or it can be empty.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>unityInstance.Quit().then(onQuit)</code></td>
+	<td style="text-align:left;">Use the <code>Quit()</code> method to quit the runtime and clean up the memory used by the Unity instance. This method returns a Promise object. <strong>Note</strong>: Some browser add-ons interfere with the garbage collector’s ability to reclaim Unity content from the web page after calling <code>unityInstance.Quit()</code>. Disable browser add-ons to troubleshoot issues or refer to the Mozilla documentation for <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe"><code>&lt;iframe&gt;</code>: The Inline Frame element</a> to quit and unload Unity applications with add-ons enabled.<br> - <code>onQuit</code> callback is called after the build runtime has quit.</td>
+</tr>
+</tbody>
+</table>
+<!-- area:platforms -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="webgl-distributionsize-codestripping.html"></a></span><div class="tip">Distribution size and code stripping</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="webgl-deploying.html"></a></span><div class="tip">Compressed builds and server configuration</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

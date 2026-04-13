@@ -1,0 +1,358 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Animation transitions</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Transition.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Transition.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Transition.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Transition.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-Transition.html">English</a></li>
+<li><a href="/cn/current/Manual/class-Transition.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-Transition.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-Transition.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AnimationSection.html">Animation</a></li>
+<li><a href="comp-AnimationGroup.html">Animation Reference</a></li>
+<li><a href="class-AnimatorController.html">Animator Controller</a></li>
+<li>Animation transitions</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-State.html"></a></span><div class="tip">Animation States</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="MecanimFAQ.html"></a></span><div class="tip">Animation FAQ</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Animation transitions</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use <span class="tooltip"><strong>animation transitions</strong><span class="tooltiptext">Allows a state machine to switch or blend from one animation state to another. Transitions define how long a blend between states should take, and the conditions that activate them. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about StateMachineTransitions.html" href="StateMachineTransitions.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AnimationTransition" aria-label="Go to glossary anchor for AnimationTransition">Glossary</a></span></span></span> in the <span class="tooltip"><a href="StateMachineBasics.html">state machine</a><span class="tooltiptext">The set of states in an Animator Controller that a character or animated GameObject can be in, along with a set of transitions between those states and a variable to remember the current state. The states available will depend on the type of gameplay, but typical states include things like idling, walking, running and jumping. <a href="StateMachineBasics.html" href="Glossary.html#AnimationTransition" aria-label="Go to glossary anchor for AnimationTransition">Glossary</a></span></span></span> in the <span class="tooltip"><a href="StateMachineBasics.html">state machine</a><span class="tooltiptext">The set of states in an Animator Controller that a character or animated GameObject can be in, along with a set of transitions between those states and a variable to remember the current state. The states available will depend on the type of gameplay, but typical states include things like idling, walking, running and jumping. <a href="StateMachineBasics.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#StateMachine" aria-label="Go to glossary anchor for StateMachine">Glossary</a></span></span></span> to switch or blend from one animation state to another. Transitions define the duration of the blend between states and the conditions when a transition occurs. To set these conditions, specify values of parameters in the <span class="tooltip"><strong>Animator Controller</strong><span class="tooltiptext">Controls animation through Animation Layers with Animation State Machines and Animation Blend Trees, controlled by Animation Parameters. The same Animator Controller can be referenced by multiple models with Animator components. <a href="class-AnimatorController.html" href="Glossary.html#StateMachine" aria-label="Go to glossary anchor for StateMachine">Glossary</a></span></span></span> to switch or blend from one animation state to another. Transitions define the duration of the blend between states and the conditions when a transition occurs. To set these conditions, specify values of parameters in the <span class="tooltip"><strong>Animator Controller</strong><span class="tooltiptext">Controls animation through Animation Layers with Animation State Machines and Animation Blend Trees, controlled by Animation Parameters. The same Animator Controller can be referenced by multiple models with Animator components. <a href="class-AnimatorController.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorController" aria-label="Go to glossary anchor for AnimatorController">Glossary</a></span></span></span>.</p>
+
+<p>For example, your character might have a “patrolling” state and a “sleeping” state. You could set the transition between patrolling and sleeping to occur only when an “alertness” parameter value decreases below a certain level.</p>
+
+<figure>
+<img src="../uploads/Main/classTransitionAnimatorPreview.jpg" alt="An example of a transition as viewed in the inspector.">
+<figcaption>An example of a transition as viewed in the inspector.</figcaption>
+</figure>
+
+<p>To name a transition, type its name in the following the field:</p>
+
+<figure>
+<img src="../uploads/Main/AnimatorTransitionName.png" alt="">
+</figure>
+
+<p>The <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window displays the transitions that the state uses:</p>
+
+<figure>
+<img src="../uploads/Main/AnimatorTransitionNameInState.png" alt="">
+</figure>
+
+<p>Only one transition can be active at a given time. However, you can configure the settings to interrupt the currently active transition with another transition. See <a href="#TransitionInterruption">Transition interruption</a>.</p>
+
+<h2>Transition properties</h2>
+
+<p>To view the properties for a transition, select the transition line connecting two states in the <span class="tooltip"><strong>Animator window</strong><span class="tooltiptext">The window where the Animator Controller is visualized and edited. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimatorWindow.html" href="AnimatorWindow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorWindow" aria-label="Go to glossary anchor for AnimatorWindow">Glossary</a></span></span></span>. The properties appear in the Inspector window.</p>
+
+<figure>
+<img src="../uploads/Main/class-Transition-Properties.png" alt="">
+</figure>
+
+<p>Use the following properties to adjust the transition and how it blends between the current and next state.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Has Exit Time</strong></td>
+	<td style="text-align:left;">
+<strong>Exit Time</strong> is a special transition that doesn’t rely on a parameter. Instead, it relies on the normalized time of the state. Check to make the transition happen at the specific time specified in <strong>Exit Time</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Settings</strong></td>
+	<td style="text-align:left;">Fold-out menu containing detailed transition settings. Each transition setting is described below.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Exit Time</strong></td>
+	<td style="text-align:left;">If <strong>Has Exit Time</strong> is checked, this value represents the exact time at which the transition can take effect. This is represented in normalized time (for example, an exit time of 0.75 means that on the first frame where 75% of the animation has played, the <strong>Exit Time</strong> condition is true). On the next frame, the condition is false.<br><br>For looped animations, transitions with exit times smaller than 1 are evaluated every loop, so you can use this to time your transition with the proper timing in the animation every loop. <br><br>Transitions with an <strong>Exit Time</strong> greater than 1 are evaluated only once, so they can be used to exit at a specific time after a fixed number of loops. For example, a transition with an exit time of 3.5 are evaluated once, after three and a half loops.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Fixed Duration</strong></td>
+	<td style="text-align:left;">If the <strong>Fixed Duration</strong> box is checked, the transition time is interpreted in seconds. If the <strong>Fixed Duration</strong> box is not checked, the transition time is interpreted as a fraction of the normalized time of the source state.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Transition Duration</strong></td>
+	<td style="text-align:left;">The duration of the transition, in normalized time or seconds depending on the <strong>Fixed Duration</strong> mode, relative to the current state’s duration. This is visualized in the transition graph as the portion between the two blue markers.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Transition Offset</strong></td>
+	<td style="text-align:left;">The offset of the time to begin playing in the destination state which is transitioned to. For example, a value of 0.5 means the target state begins playing at 50% of the way through its own timeline.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Interruption Source</strong></td>
+	<td style="text-align:left;">Use this to control the circumstances under which this transition may be interrupted (see <a href="#TransitionInterruption">Transition interruption</a> below).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Ordered Interruption</strong></td>
+	<td style="text-align:left;">Determines whether the current transition can be interrupted by other transitions independently of their order (see <a href="#TransitionInterruption">Transition interruption</a> below).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Conditions</strong></td>
+	<td style="text-align:left;">A transition can have a single condition, multiple conditions, or no conditions at all. If your transition has no conditions, the Unity Editor only considers the <strong>Exit Time</strong>, and the transition occurs when the exit time is reached. If your transition has one or more conditions, the conditions must all be met before the transition is triggered.<br><br>A condition consists of: <br><br>- An event parameter (the value considered in the condition). <br>- A conditional predicate (if needed,for example, ‘less than’ or ‘greater than’ for floats). <br>- A parameter value (if needed). <br><br>If you have <strong>Has Exit Time</strong> selected for the transition and have one or more conditions, note that the Unity Editor considers whether the conditions are true after the <strong>Exit Time</strong>. This allows you to ensure that your transition occurs during a certain portion of the animation.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="TransitionInterruption" aria-hidden="true"></a></p>
+
+<h2>Transition interruption</h2>
+
+<p>Use the <strong>Interruption Source</strong> and <strong>Ordered Interruption</strong> properties to control how your transition can be interrupted.</p>
+
+<p>The interruption order works, conceptually, as if transitions are queued and then parsed for a valid transition from the first transition inserted to the last.</p>
+
+<h3>Interruption Source property</h3>
+
+<p>The transitions in <a href="class-State.html">AnyState</a> are always added first in the queue, then other transitions are queued depending on the value of <strong>Interruption Source</strong>:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Value</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">Don’t add any more transitions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Current State</strong></td>
+	<td style="text-align:left;">Queue the transitions from the current state.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Next State</strong></td>
+	<td style="text-align:left;">Queue the transitions from the next state.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Current State then Next State</strong></td>
+	<td style="text-align:left;">Queue the transitions from the current state, then queue the ones from the next state.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Next State then Current State</strong></td>
+	<td style="text-align:left;">Queue the transitions from the next state, then queue the ones from the current state.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Ordered Interruption property</h3>
+
+<p>The property <strong>Ordered Interruption</strong> changes how the queue is parsed.</p>
+
+<p>Depending on its value, parsing the queue ends at a different moment as listed below.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Value</strong></th>
+	<th style="text-align:left;"><strong>Ends when</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Checked</strong></td>
+	<td style="text-align:left;">A valid transition or the current transition has been found.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Unchecked</strong></td>
+	<td style="text-align:left;">A valid transition has been found.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Only an <a href="class-State.html">AnyState</a> transition can be interrupted by itself. To learn more about transition interruptions, refer to <a href="https://unity.com/blog/engine-platform/state-machine-transition-interruptions">State Machine Transition Interruptions</a>.</p>
+
+<h2>Transition graph</h2>
+
+<p>Use the Transition graph to visually adjust the transition settings.</p>
+
+<figure>
+<img src="../uploads/Main/AnimatorTransitionSettingsAndGraph.svg" alt="The Transition graph as shown in the Inspector.">
+<figcaption>The Transition graph as shown in the Inspector.</figcaption>
+</figure>
+
+<p>The white line in the Transition graph represents IK foot contact for each State. The top of the graph represents the Left foot and the bottom represents the Right foot. When the white line is at the top of the graph, the Left foot contacts the floor plane. When the white line is at the bottom, the Right foot contacts the floor plane.</p>
+
+<p>You should adjust the transition settings until there is a smooth transition between states. A white line with a smooth transition avoids foot slips, jumps in animation, and preserves the dynamics of the motion.</p>
+
+<p>Use the following manipulations to adjust the transition settings:</p>
+
+<ul>
+<li>Drag the <strong>Duration “out”</strong> marker to change the <strong>Duration</strong> of the transition.</li>
+<li>Drag the <strong>Duration “in”</strong> marker to change the duration of the transition and the <strong>Exit Time</strong>.</li>
+<li>Drag the target state to adjust the <strong>Transition Offset</strong>.</li>
+<li>Drag the preview playback marker to scrub through the animation blend in the preview window at the bottom of the Inspector.</li>
+</ul>
+
+<h2>Transitions between Blend Tree states</h2>
+
+<p>If either the current or next state belonging to this transition is a <a href="class-BlendTree.html">Blend Tree</a> state, the Blend Tree parameters appear in the Inspector. Adjust these values to preview how your transition would look with the Blend Tree values set to different configurations.
+If your Blend Tree contains clips of differing lengths, you should test what your transition looks like when showing both the short clip and the long clip. Adjusting these values does not affect how the transition behaves at runtime; they are solely for helping you preview how the transition could look in different situations.</p>
+
+<figure>
+<img src="../uploads/Main/AnimatorTransitionInspectorShowingBlendtreeParams.png" alt="The Blend Tree parameter preview controls, visible when either your current or next state is a Blend Tree state.">
+<figcaption>The Blend Tree parameter preview controls, visible when either your current or next state is a Blend Tree state.</figcaption>
+</figure>
+
+<p><a name="Conditions" aria-hidden="true"></a></p>
+
+<h2>Conditions</h2>
+
+<p>A transition can have a single condition, multiple conditions, or no conditions. If your transition has no conditions, the Unity Editor only considers the <strong>Exit Time</strong>, and the transition occurs when the exit time is reached. If your transition has one or more conditions, the conditions must all be met before the transition is triggered.</p>
+
+<p>A condition consists of:</p>
+
+<ul>
+<li>An event parameter, the value of which is considered in the condition.</li>
+<li>A conditional predicate, if needed (for example, less or greater for floats).</li>
+<li>A parameter value, if needed.</li>
+</ul>
+
+<p>If <strong>Has Exit Time</strong> is enabled for the transition and has one or more conditions, these conditions are only checked after the exit time of the state. This allows you to ensure that your transition only occurs during a certain portion of the animation.</p>
+<!-- area:authoring -->
+
+<p><span class="search-words">Transition</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-State.html"></a></span><div class="tip">Animation States</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="MecanimFAQ.html"></a></span><div class="tip">Animation FAQ</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

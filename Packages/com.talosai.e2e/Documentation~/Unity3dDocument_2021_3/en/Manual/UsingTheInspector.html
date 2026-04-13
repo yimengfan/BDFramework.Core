@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: The Inspector window</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UsingTheInspector.html">English</a></li>
+<li><a href="/cn/current/Manual/UsingTheInspector.html">中文</a></li>
+<li><a href="/ja/current/Manual/UsingTheInspector.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UsingTheInspector.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UsingTheInspector.html">English</a></li>
+<li><a href="/cn/current/Manual/UsingTheInspector.html">中文</a></li>
+<li><a href="/ja/current/Manual/UsingTheInspector.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UsingTheInspector.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="UsingTheEditor.html">Unity's interface</a></li>
+<li>The Inspector window</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Hierarchy.html"></a></span><div class="tip">The Hierarchy window</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="InspectorOptions.html"></a></span><div class="tip">Working in the Inspector</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>The Inspector window</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use the <strong>Inspector</strong> window to <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about EditingValueProperties.html">view and edit properties</a> and settings for almost everything in the Unity Editor, including <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="EditingValueProperties.html">view and edit properties</a> and settings for almost everything in the Unity Editor, including <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, Unity components, Assets, Materials, and in-Editor settings and preferences.</p>
+
+<figure>
+<img src="../uploads/Main/InspectorWindowCallout.jpg" alt="The Inspector window docked in the Unity Editor">
+<figcaption>The Inspector window docked in the Unity Editor</figcaption>
+</figure>
+
+<h2>Open an Inspector window</h2>
+
+<p>To open an Inspector window, do one of the following:</p>
+
+<ul>
+<li>From the menu, select <strong>Windows &gt; General &gt; Inspector</strong> to open a floating Inspector window.</li>
+<li>From any window’s More Items menu (⋮), select <strong>Add Tab &gt; Inspector</strong> to open an Inspector in a new tab.</li>
+</ul>
+
+<p>You can open as many Inspector windows as you want, and <a href="CustomizingYourWorkspace.html">reposition, dock, and resize</a> them in the same way you can any other window.</p>
+
+<h2>Control Inspector window focus</h2>
+
+<p>By default, an Inspector window displays properties for the current selection. The contents of the Inspector change whenever the selection changes. To keep the same set of properties open, regardless of the current selection, do one of the following:</p>
+
+<ul>
+<li>
+<a href="InspectorOptions.html#locking-the-inspector">Lock the Inspector</a> window to the current selection. When you lock an Inspector window, it no longer updates if you change the selection.</li>
+<li>Open a <a href="InspectorFocused.html">focused Inspector</a> for a GameObject, Asset, or component. Focused Inspectors only ever display the properties of the items you opened them for.</li>
+</ul>
+
+<h2>Inspect items</h2>
+
+<p>What you can see and edit in an Inspector window depends on what you select. This section describes what an Inspector window displays for different types of items you can select.</p>
+
+<h3>Inspecting GameObjects</h3>
+
+<p>When you select a GameObject (for example, in the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Hierarchy.html">Hierarchy</a> or <span class="tooltip"><a href="UsingTheSceneView.html">Scene view</a><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html" href="Hierarchy.html">Hierarchy</a> or <span class="tooltip"><a href="UsingTheSceneView.html">Scene view</a><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>), the Inspector displays the properties of all of its components and Materials. You can <a href="EditingValueProperties.html">edit the properties</a>, and <a href="InspectorOptions.html#reordering-components">reorder the components</a> in the Inspector window.</p>
+
+<h3>Inspect custom script components</h3>
+
+<p>When GameObjects have custom script components attached, the Inspector displays the <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>’ public variables. You can edit script variables in the same way as you edit any other properties, which means that you can set parameters and default values in your scripts without modifying the code.</p>
+
+<p>For more information, see <a href="VariablesAndTheInspector.html">Variables and the Inspector</a> in the <a href="ScriptingSection.html">Scripting section</a>.</p>
+
+<h3>Inspect Assets</h3>
+
+<p>When you select an <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetWorkflow.html">Asset</a><span class="tooltiptext">Any media or data that can be used in your game or project. An asset may come from a file created outside of Unity, such as a 3D Model, an audio file or an image. You can also create some asset types in Unity, such as an Animator Controller, an Audio Mixer or a Render Texture. <a href="AssetWorkflow.html" href="AssetWorkflow.html">Asset</a><span class="tooltiptext">Any media or data that can be used in your game or project. An asset may come from a file created outside of Unity, such as a 3D Model, an audio file or an image. You can also create some asset types in Unity, such as an Animator Controller, an Audio Mixer or a Render Texture. <a href="AssetWorkflow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Asset" aria-label="Go to glossary anchor for Asset">Glossary</a></span></span></span> (for example, from the <span class="tooltip"><a href="ProjectView.html">Project window</a><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a href="ProjectView.html" href="Glossary.html#Asset" aria-label="Go to glossary anchor for Asset">Glossary</a></span></span></span> (for example, from the <span class="tooltip"><a href="ProjectView.html">Project window</a><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>), the Inspector displays settings that control how Unity imports and uses the Asset at runtime.</p>
+
+<p>Each type of Asset has its own settings. Examples of Asset import settings that you edit in an Inspector window include the:</p>
+
+<ul>
+<li>
+<a href="class-FBXImporter.html">Model Import Settings</a> window.</li>
+<li>
+<a href="class-AudioClip.html">Audio Clip Import Settings</a> window.</li>
+<li>
+<a href="class-TextureImporter.html">Texture Import Settings</a> window.</li>
+</ul>
+
+<h3>Inspect Prefabs</h3>
+
+<p>When you work with Prefabs, the Inspector window displays some additional information and provides some additional options. For example:</p>
+
+<ul>
+<li>When you <a href="EditingPrefabViaInstance.html">Edit a Prefab Instance</a>, the Inspector window provides options for working with the Prefab Asset and applying overrides.</li>
+<li>When you apply <a href="PrefabInstanceOverrides.html">Instance overrides</a>, the Inspector window displays the names of properties you override in bold.</li>
+</ul>
+
+<p>For more information about working with Prefabs in the Inspector window, see the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html">Prefabs</a><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html" href="Prefabs.html">Prefabs</a><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> section.</p>
+
+<p><a name="inspecting-multiple-items" aria-hidden="true"></a></p>
+
+<h2>Inspect multiple Items</h2>
+
+<p>When you have two or more items selected, you can edit all of the properties they have in common in an Inspector window. Unity copies the values you supply to all the selected items. The Inspector window displays a count of the number of selected items.</p>
+
+<h3>Multiple GameObjects</h3>
+
+<p>When you select multiple GameObjects, the Inspector window displays all of the components they have in common.</p>
+
+<ul>
+<li>For property values that are different across two or more selected GameObjects, the Inspector displays a dash (<strong>-</strong>) (1 in the screenshot below).</li>
+<li>For property values that are the same across all selected GameObjects, the Inspector displays the actual values (2 in the screenshot below).</li>
+<li>To apply a property value from one selected GameObject to all of the selected GameObjects, right-click the property name and select <strong>Set to Value of <em>[Name of GameObject]</em></strong> from the context menu (3 in the screenshot below).</li>
+<li>If any of the selected GameObjects has components that are not present on the other selected objects, the Inspector displays a message that some components are hidden.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/MultiObjectEdit.png" alt="Inspector showing multiple selected GameObjects">
+<figcaption>Inspector showing multiple selected GameObjects</figcaption>
+</figure>
+
+<h3>Multiple Assets</h3>
+
+<p>When you select multiple Assets of the same type, the Inspector window displays all of the properties they have in common.</p>
+
+<ul>
+<li>For property values that are the same across all selected Assets, the Inspector displays the actual values.</li>
+<li>For property values that are different across two or more selected Assets, the Inspector displays a dash (<strong>-</strong>) (1 in the screenshot below).</li>
+<li>For properties that you cannot edit for all of the selected Assets at once, the Inspector grays them out (2 in the screenshot below).</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/MultiAssetEdit-Same.png" alt="Inspector showing multiple selected Assets of the same type">
+<figcaption>Inspector showing multiple selected Assets of the same type</figcaption>
+</figure>
+
+<p>When you select multiple Assets of different types, the Inspector displays a list that shows how many of each type of Asset are selected. Click any item in the list to Inspect all Assets of that type.</p>
+
+<figure>
+<img src="../uploads/Main/MultiAssetEdit-Diff.png" alt="Inspector showing multiple selected Assets of different types">
+<figcaption>Inspector showing multiple selected Assets of different types</figcaption>
+</figure>
+
+<h3>Multiple Prefabs</h3>
+
+<p>You can inspect multiple selected instances of a Prefab in the same way as you edit multiple GameObjects, but the Inspector hides the <strong>Select</strong>, <strong>Revert</strong>, and <strong>Apply</strong> buttons (see <a href="EditingPrefabViaInstance.html">Editing a Prefab via its instances</a>).</p>
+
+<h2>Locate an Inspector window’s source</h2>
+
+<p>When you open a GameObject or Asset in an Inspector window, you can locate it in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view or Project View using the <strong>Ping</strong> command.</p>
+
+<p>From the Inspector window’s <strong>More Items</strong> (<strong>⋮</strong>) menu, select <strong>Ping</strong>. Unity highlights the item in the Hierarchy view or the Project view.</p>
+
+<figure>
+<img src="../uploads/Main/inspector-ping.png" alt="The ping command highlights the item currently displayed in the Inspector">
+<figcaption>The ping command highlights the item currently displayed in the Inspector</figcaption>
+</figure>
+
+<hr>
+
+<ul>
+<li><span class="page-history">Component drag and drop added in Unity 5.6</span></li>
+<li><span class="page-history">Reorganized Inspector section pages in Unity 2020.1</span></li>
+</ul>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Hierarchy.html"></a></span><div class="tip">The Hierarchy window</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="InspectorOptions.html"></a></span><div class="tip">Working in the Inspector</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

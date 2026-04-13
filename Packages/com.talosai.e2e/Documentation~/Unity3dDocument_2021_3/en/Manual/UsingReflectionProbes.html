@@ -1,0 +1,231 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Using Reflection Probes</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UsingReflectionProbes.html">English</a></li>
+<li><a href="/cn/current/Manual/UsingReflectionProbes.html">中文</a></li>
+<li><a href="/ja/current/Manual/UsingReflectionProbes.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UsingReflectionProbes.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UsingReflectionProbes.html">English</a></li>
+<li><a href="/cn/current/Manual/UsingReflectionProbes.html">中文</a></li>
+<li><a href="/ja/current/Manual/UsingReflectionProbes.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UsingReflectionProbes.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="LightingOverview.html">Lighting</a></li>
+<li><a href="ReflectionProbes.html">Reflection Probes</a></li>
+<li>Using Reflection Probes</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="RefProbeTypes.html"></a></span><div class="tip">Types of Reflection Probe</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AdvancedRefProbe.html"></a></span><div class="tip">Advanced Reflection Probe Features</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Using Reflection Probes</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>The default Reflection Probe</h2>
+
+<p>Unity includes a dedicated manager—the SkyManager—to ensure that environment lighting affects your <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> by default. The SkyManager automatically generates an <a href="../ScriptReference/RenderSettings-ambientProbe.html">ambient probe</a> and <a href="https://docs.unity3d.com/2021.2/Documentation/ScriptReference/ReflectionProbe-defaultTexture.html">default reflection probe</a> to capture environment lighting.</p>
+
+<p>To disable the environment contribution in the lighting result for a scene or GameObject that does not have manually created light maps and <span class="tooltip"><strong>Light Probes</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html" href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span>, disable the default Reflection Probe and the ambient probe. To disable these probes, see <a href="using-skymanager.html#disableskymanager">Disabling the SkyManager</a>.</p>
+
+<h2>Adding Reflection Probes</h2>
+
+<p>You can add the <a href="class-ReflectionProbe.html">Reflection Probe</a> component to any object in a Scene but it’s standard to add each probe to a separate empty GameObject. The usual workflow is:</p>
+
+<ul>
+<li>Create a new empty GameObject (menu: <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> &gt; <strong>Create Empty</strong>) and then add the Reflection Probe component to it (menu: <span class="tooltip"><strong>Component</strong><span class="tooltiptext">A functional part of a GameObject. A GameObject can contain any number of components. Unity has many built-in components, and you can create your own by writing scripts that inherit from MonoBehaviour. <a href="UsingComponents.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> &gt; <strong>Create Empty</strong>) and then add the Reflection Probe component to it (menu: <span class="tooltip"><strong>Component</strong><span class="tooltiptext">A functional part of a GameObject. A GameObject can contain any number of components. Unity has many built-in components, and you can create your own by writing scripts that inherit from MonoBehaviour. <a href="UsingComponents.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#component" aria-label="Go to glossary anchor for component">Glossary</a></span></span></span> &gt; <strong>Rendering</strong> &gt; <span class="tooltip"><strong>Reflection Probe</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html" href="Glossary.html#component" aria-label="Go to glossary anchor for component">Glossary</a></span></span></span> &gt; <strong>Rendering</strong> &gt; <span class="tooltip"><strong>Reflection Probe</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span>). Alternatively, if you already have a probe in the scene you will probably find it easier to duplicate that instead (menu: <strong>Edit</strong> &gt; <strong>Duplicate</strong>).</li>
+<li>Place the new probe in the desired location and set its <strong>Offset</strong> point and the size of its zone of effect.</li>
+<li>Optionally set other properties on the probe to customise its behaviour.</li>
+<li>Continue adding probes until all required locations have been assigned.</li>
+</ul>
+
+<p>To see the reflections, you will also need at least one reflective object in the scene. A simple test object can be created as follows:</p>
+
+<ul>
+<li>Add a primitive object such as a Sphere to the scene (menu: <strong>GameObject</strong> &gt; <span class="tooltip"><strong>3D Object</strong><span class="tooltiptext">A 3D GameObject such as a cube, terrain or ragdoll. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GameObjects.html" href="GameObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#3DObject" aria-label="Go to glossary anchor for 3DObject">Glossary</a></span></span></span> &gt; <strong>Sphere</strong>).</li>
+<li>Create a new material (menu: <span class="tooltip"><strong>Assets</strong><span class="tooltiptext">Any media or data that can be used in your game or project. An asset may come from a file created outside of Unity, such as a 3D Model, an audio file or an image. You can also create some asset types in Unity, such as an Animator Controller, an Audio Mixer or a Render Texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetWorkflow.html" href="AssetWorkflow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Asset" aria-label="Go to glossary anchor for Asset">Glossary</a></span></span></span> &gt; <strong>Create</strong> &gt; <span class="tooltip"><strong>Material</strong><span class="tooltiptext">An asset that defines how a surface should be rendered. <a href="class-Material.html" href="Glossary.html#Asset" aria-label="Go to glossary anchor for Asset">Glossary</a></span></span></span> &gt; <strong>Create</strong> &gt; <span class="tooltip"><strong>Material</strong><span class="tooltiptext">An asset that defines how a surface should be rendered. <a href="class-Material.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span>) and leave the default <strong>Standard</strong> shader in place.</li>
+<li>Make the material reflective by setting both the <strong>Metallic</strong> and <strong>Smoothness</strong> properties to <strong>1.0</strong>.</li>
+<li>Drag the newly-created material onto the sphere object to assign it.</li>
+</ul>
+
+<p>The sphere can now show the reflections obtained from the probes. A simple arrangement with a single probe is enough to see the basic effect of the reflections.</p>
+
+<p>Finally, the probes must be baked before the reflections become visible. If you have the <strong>Auto Generate</strong> option enabled in the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about lighting-window.html">Lighting window</a> (this is the default setting) then the reflections will update as you position or change objects in the scene, although the response is not instantaneous. If you disable auto baking then you must click the <strong>Bake</strong> button in the Reflection Probe <span class="tooltip"><strong>inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="lighting-window.html">Lighting window</a> (this is the default setting) then the reflections will update as you position or change objects in the scene, although the response is not instantaneous. If you disable auto baking then you must click the <strong>Bake</strong> button in the Reflection Probe <span class="tooltip"><strong>inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> to update the probes. The main reason for disabling auto baking is that the baking process can take quite some time for a complicated scene with many probes.</p>
+
+<h2>Positioning probes</h2>
+
+<p>The position of a probe is primarily determined by the position of its GameObject and so you can simply drag the object to the desired location. Having done this, you should set the probe’s zone of effect; this is an axis-aligned box shape whose dimensions are set by the <strong>Box Size</strong> property. You can set the size values directly or enable the size editing mode in the inspector and drag the sides of the box in the <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> (see the <a href="class-ReflectionProbe.html">Reflection Probe</a> component page for details). The zones of the full set of probes should collectively cover all areas of the scene where a reflective object might pass.</p>
+
+<p>You should place probes close to any large objects in the scene that would be reflected noticeably. Areas around the centres and corners of walls are good candidate locations for probes. Smaller objects might require probes close by if they have a strong visual effect. For example, you would probably want the flames of a campfire to be reflected even if the object itself is small and otherwise insignificant.</p>
+
+<p>When you have probes in all the appropriate places, you then need to define the zone of effect for each probe, which you can do using the <strong>Box Size</strong> property as mentioned above. A wall might need just a single probe zone along most of its length (at least if it has a fairly uniform appearance) but the zone might be relatively narrow in the direction perpendicular to the wall; this would imply that the wall is only reflected by objects that are fairly close to it. An open space whose appearance varies little from place to place can often be covered by a single probe. Note that a probe’s zone is aligned to the main world axes (X, Y and Z) and can’t be rotated. This means that sometimes a group of probes might be needed along a uniform wall if it is not axis-aligned.</p>
+
+<p>By default, a probe’s zone of effect is centred on its view point but this may not be the ideal position for capturing the reflection <span class="tooltip"><strong>cubemap</strong><span class="tooltiptext">A collection of six square textures that can represent the reflections in an environment or the skybox drawn behind your geometry. The six squares form the faces of an imaginary cube that surrounds an object; each face represents the view along the directions of the world axes (up, down, left, right, forward and back). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Cubemap.html" href="class-Cubemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Cubemap" aria-label="Go to glossary anchor for Cubemap">Glossary</a></span></span></span>. For example, the probe zone for a very high wall might extend some distance from the wall but you might want the reflection to be captured from a point close to it rather than the zone’s centre. You can optionally add an offset to view point using the <strong>Box Offset</strong> property (ie, the offset is the position in the GameObject’s local space that the probe’s cubemap view is generated from). Using this, you can easily place the view point anywhere within the zone of effect or indeed outside the zone altogether.</p>
+
+<h2>Overlapping probe zones</h2>
+
+<p>It would be very difficult to position the zones of neighbouring reflection probes without them overlapping and fortunately, it is not necessary to do so. However, this leaves the issue of choosing which probe to use in the overlap areas. By default, Unity calculates the intersection between the reflective object’s bounding box and each of the overlapping probe zones; the zone which has the largest volume of intersection with the bounding box is the one that will be selected.</p>
+
+<figure>
+<img src="../uploads/Main/ProbeZoneOverlap.svg" alt="Probe A is selected since its intersection with the object is larger">
+<figcaption>Probe A is selected since its intersection with the object is larger</figcaption>
+</figure>
+
+<p>You can modify the calculation using the probes’ <strong>Importance</strong> properties. Probes with a higher importance value have priority over those of lower importance within overlap zones. This is useful, say, if you have a small probe zone that is contained completely inside a larger zone (ie, the intersection of the character’s bounding box with the enclosing zone might always be larger and so the small zone would never be used).</p>
+
+<h3>Blending</h3>
+
+<p>To enable Reflection Probe blending navigate to <strong>Graphic Settings</strong> &gt; <strong>Tier settings</strong>. Tier settings are only available in Unity’s <a href="built-in-render-pipeline.html">Built-in Render Pipeline</a>. When blending is enabled, Unity gradually fades out one probe’s cubemap while fading in the other’s as the reflective object passes from one zone to the other. This gradual transition avoids the situation where a distinctive object suddenly “pops” into the reflection as an object crosses the zone boundary.</p>
+
+<p>Blending is controlled using the <strong>Reflection Probes</strong> property of the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshRenderer.html">Mesh Renderer</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html" href="class-MeshRenderer.html">Mesh Renderer</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span> component. Four blending options are available:</p>
+
+<ul>
+<li>
+<strong>Off</strong> - Reflection probe blending is disabled. Only the <span class="tooltip"><strong>skybox</strong><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Skybox.html" href="class-Skybox.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skybox" aria-label="Go to glossary anchor for Skybox">Glossary</a></span></span></span> will be used for reflection</li>
+<li>
+<strong>Blend Probes</strong> - Blends only adjacent probes and ignores the skybox. You should use this for objects that are “indoors” or in covered parts of the scene (eg, caves and tunnels) since the sky is not visible from these place and so should never appear in the reflections.</li>
+<li>
+<strong>Blend Probes and Skybox</strong> - Works like <em>Blend Probes</em> but also allows the skybox to be used in the blending. You should use this option for objects in the open air, where the sky would always be visible.</li>
+<li>
+<strong>Simple</strong> - Disables blending between probes when there are two overlapping reflection probe volumes.</li>
+</ul>
+
+<p>When probes have equal <strong>Importance</strong> values, the blending weight for a given probe zone is calculated by dividing its intersection (volume) with the object’s bounding box by the sum of all probes’ intersections with the box. For example, if the box intersects probe A’s zone by 1.0 cubic units and intersects probe B’s zone by 2.0 cubic units then the blending values will be:</p>
+
+<ul>
+<li>Probe A: 1.0 / (1.0 + 2.0) = 0.33</li>
+<li>Probe B: 2.0 / (1.0 + 2.0) = 0.67</li>
+</ul>
+
+<p>In other words, the blend will incorporate 33% of probe A’s reflection and 67% of probe B’s reflection.</p>
+
+<p>The calculation must be handled slightly differently in the case where one probe is entirely contained within the other, since the inner zone overlaps entirely with the outer. If the object’s bounding box is entirely within the inner zone then that zone’s blending weight is 1.0 (ie, the outer zone is not used at all). When the object is partially outside the inner zone, the intersection volume of its bounding box with the inner zone is divided by the total volume of the box. For example, if the intersection volume is 1.0 cubic units and the bounding box’s volume is 4.0 cubic units, then the blending weight of the inner probe will be 1.0 / 4.0 = 0.25. This value is then subtracted from 1.0 to get the weight for the outer probe which in this case will be 0.75.</p>
+
+<p>When one probe involved in the blend has a higher <strong>Importance</strong> value than another, the more important probe overrides the other in the usual way.
+<br>
+<br>
+</p>
+
+<hr>
+
+<ul>
+<li><p><span class="page-history">Updated in 5.6</span></p></li>
+<li><p><span class="page-edit">2017–06–06 Page published
+</span></p></li>
+</ul>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="RefProbeTypes.html"></a></span><div class="tip">Types of Reflection Probe</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AdvancedRefProbe.html"></a></span><div class="tip">Advanced Reflection Probe Features</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

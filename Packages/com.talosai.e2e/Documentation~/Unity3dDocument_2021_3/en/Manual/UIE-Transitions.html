@@ -1,0 +1,651 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: USS transition</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Transitions.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Transitions.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Transitions.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Transitions.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Transitions.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Transitions.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Transitions.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Transitions.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-USS.html">Style UI</a></li>
+<li><a href="UIE-uss-properties.html">USS properties</a></li>
+<li>USS transition</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Transform.html"></a></span><div class="tip">USS transform</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-USS-Properties-Reference.html"></a></span><div class="tip">USS properties reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>USS transition</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>USS transitions are similar to <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions">CSS transitions</a>. A USS transition changes property values over a given duration. You can use a USS transition to create an animation that changes the appearance of a <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions">CSS transitions</a>. A USS transition changes property values over a given duration. You can use a USS transition to create an animation that changes the appearance of a <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span>. For example, you can use a <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html" href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span>. For example, you can use a <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> transition to make UI elements that change size or color when a user hovers their cursor over them. </p>
+
+<p>You can use the controls in the <a href="UIBuilder.html">UI Builder</a>, a <a href="UIE-USS.html">USS file</a>, or a C# script to set the transition properties for a visual element.</p>
+
+<p>The following table lists the transition properties and their corresponding C# methods:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>C# method</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>transition-property</code></td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.IStyle-transitionProperty.html"><code>IStyle.transitionProperty</code></a></td>
+	<td style="text-align:left;">Which USS properties the transition applies to.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>transition-duration</code></td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.IStyle-transitionDuration.html"><code>IStyle.transitionDuration</code></a></td>
+	<td style="text-align:left;">How long the transition takes to complete.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>transition-timing-function</code></td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.IStyle-transitionTimingFunction.html"><code>IStyle.transitionTimingFunction</code></a></td>
+	<td style="text-align:left;">How the property moves between values over time.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>transition-delay</code></td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.IStyle-transitionDelay.html"><code>IStyle.transitionDelay</code></a></td>
+	<td style="text-align:left;">When the transition starts.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>transition</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Shorthand for <code>transition-property</code>, <code>transition-duration</code>, <code>transition-timing-function</code>, and <code>transition-delay</code>.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Starting of a transition</h2>
+
+<p>A transition triggers if you set a transition duration on the style and the style value changes. You can use pseudo-classes, C# methods, or events to trigger the transition. </p>
+
+<p>
+<strong>Note</strong>: A transition animation on a frame is triggered when the property’s current state is different from the previous state. The first frame in a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> has no previous state. You must start a transition animation after the first frame.</p>
+
+<p>The following transition example changes the color and rotation of the label when you hover over it. The transition has a duration of 2 seconds.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/transition-gif.gif" alt="A transition example">
+<figcaption>A transition example</figcaption>
+</figure>
+
+<p>To implement this example, do the following:</p>
+
+<ol>
+<li>Set the transition properties for the visual element.</li>
+<li>Set the transition duration.</li>
+<li>Set the start and end style values.</li>
+</ol>
+
+<p>The example USS looks like this:</p>
+
+<pre><code class="lang-css">/* Set the transition properties, duration, and start style values. */
+.labelClass {
+    transiton-property: color, rotate;
+    transition-duration: 2s;
+    color: black;
+}
+
+/* The Label:hover triggers the transition. Set the end values for the trigger. */
+.labelClass:hover {
+    rotate: 10deg;
+    color: red;
+} 
+</code></pre>
+
+<p>
+<strong>Note</strong>: The example sets the transition on the element rather than the <code>:hover</code>. If you set the transition on the <code>:hover</code>, the transition doesn’t work if the cursor leaves the element.</p>
+
+<p>To learn how to trigger a transition with C# events, refer to <a href="UIE-transition-example.html">Create a simple transition with UI Builder and C# scripts</a>.</p>
+
+<h3>Match the value units</h3>
+
+<p>For properties that you set with a value and unit, make sure the units match. Pay special attention to transitions to or from default values. For example, the default value of the <code>translate</code> attribute is <code>0px</code>. If you try to transition from this value to a percentage value, the transition doesn’t work. </p>
+
+<p>The following transition example offsets the visual element to the left by <code>50px</code> over 2 seconds. The default value of the <code>left</code> property is <code>auto</code>. You must explicitly set the unit to <code>0px</code> for the transition to work.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/transition-offset-left.gif" alt="An offset to left transition example">
+<figcaption>An offset to left transition example</figcaption>
+</figure>
+
+<p>The example USS looks like this:</p>
+
+<pre><code class="lang-css">.boxClass:hover {
+    left: 50px;
+}
+
+.boxClass {
+    transition-property: left;
+    transition-duration: 2s;
+    transition-timing-function: ease-in-out-sine;
+    left: 0px;
+}
+</code></pre>
+
+<h3>Transitions for an inherited property</h3>
+
+<p>For visual elements in a hierarchy, USS transitions behave the same as <a href="https://drafts.csswg.org/css-transitions/#starting">CSS transitions</a>. If you set transitions for an inherited property, such as <code>color</code>, transitions applied to the parent elements cascade to the child elements. To find out which property is inherited, refer to <a href="UIE-USS-Properties-Reference.html">USS property reference</a>.</p>
+
+<h3>Interrupt transitions</h3>
+
+<p>When an incomplete transition is <code>interruptedSame</code>, USS transitions behave the same as CSS transitions. The reverse transition might be faster. For more information, refer to <a href="https://drafts.csswg.org/css-transitions/#reversing">Faster reversing of interrupted transitions</a>
+</p>
+
+<h3>Transition events</h3>
+
+<p>
+<a href="UIE-UIE-Transition-Events">Transition events</a> are generated by transitions. You can use them to detect when a transition starts and ends. For an example, refer to <a href="UIE-transition-event-example.html">Create a transition event</a>.</p>
+
+<p><a name="transition-properties" aria-hidden="true"></a></p>
+
+<h2>Transition controls in the UI Builder</h2>
+
+<p>You can use the controls in the <strong>Transition Animations</strong> section of the <strong><span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> in the UI Builder to set transition rules of a visual element. You can set multiple transitions on a visual element. To add another transition, click <strong>Add Transition</strong>. To remove it, click the minus sign.</p>
+
+<figure>
+<img src="../uploads/Main/UIBuilder/example-transition.png" alt="This transition causes a visual element to adjust its scale over 500 milliseconds in a linear fashion after a delay of 20 milliseconds.">
+<figcaption>This transition causes a visual element to adjust its scale over 500 milliseconds in a linear fashion after a delay of 20 milliseconds.</figcaption>
+</figure>
+
+<h2>Transition property</h2>
+
+<p>The transition property defines which USS properties the transition applies to. </p>
+
+<h3>Keywords</h3>
+
+<p>The transition property supports the following keywords:</p>
+
+<ul>
+<li>
+<code>all</code>: Applies transitions to all properties and overrides any preceding transitions. This is the default value.</li>
+<li>
+<code>initial</code>: Applies transitions to all properties.</li>
+<li>
+<code>none</code>: Ignores transitions for all properties.</li>
+<li>
+<code>ignored</code>: Ignores transitions for the specified duration, delay, and easing function.</li>
+</ul>
+
+<p><a name="discrete" aria-hidden="true"></a></p>
+
+<h3>Animatability</h3>
+
+<p>You can apply transitions to most USS properties. However, the animatability for certain properties is different. The animatability of USS properties falls into the following categories:</p>
+
+<ul>
+<li>
+<strong>Fully animatable</strong>: Supports transition from the start value to the end value, at a speed that follows the easing function and transition duration.</li>
+<li>
+<strong>Discrete</strong>: Supports transition between values in a single step from the start value to the end value.</li>
+<li>
+<strong>Non-animatable</strong>: Doesn’t support transition.</li>
+</ul>
+
+<p>To find out the animatability of each property, see <a href="UIE-USS-Properties-Reference.html">USS property reference</a>.</p>
+
+<p>
+<strong>Note</strong>: It’s recommended that you use transitions with the <a href="UIE-Transform.html">USS transform properties</a>. Although you can use transitions on other USS properties, it might result in animations with low frame rates because value changes on these properties might cause layout recalculations. Layout recalculations in each frame can slow down the frame rate of your transition animation. All color properties, such as <code>color</code>, <code>background-color</code>, tint, and <code>opacity</code>, also have a fast pass that prevents the regeneration of the geometry.</p>
+
+<h3>USS examples</h3>
+
+<p>You can supply a single USS property, a keyword, or a comma-separated list of them to <code>transition-property</code>.</p>
+
+<pre><code class="lang-css">transition-property: scale;
+transition-property: translate, all, rotate;
+transition-property: initial;
+transition-property: none;
+</code></pre>
+
+<h3>C# examples</h3>
+
+<p>The <a href="../ScriptReference/UIElements.IStyle-transitionProperty.html"><code>IStyle.transitionProperty</code></a> property is of type <code>StyleList&lt;StylePropertyName&gt;</code>. <a href="../ScriptReference/UIElements.StylePropertyName.html"><code>StylePropertyName</code></a> is a struct that you can <a href="../ScriptReference/UIElements.StylePropertyName-ctor.html">construct</a> from a string. <a href="../ScriptReference/UIElements.StyleList_1.html"><code>StyleList</code></a> is a struct you can <a href="../ScriptReference/UIElements.StyleList_1-ctor.html">construct</a> from a list of <code>StylePropertyName</code>.</p>
+
+<pre><code class="lang-cs">//Create a list that contains the rotate property, and use it to set transitionProperty.
+List&lt;StylePropertyName&gt; properties = new List&lt;StylePropertyName&gt;();
+properties.Add(new StylePropertyName(&quot;rotate&quot;));
+//Given a VisualElement named &quot;element&quot;...
+element.style.transitionProperty = new StyleList&lt;StylePropertyName&gt;(properties);
+</code></pre>
+
+<p>You can use implicit conversions to simplify the above code as follows:</p>
+
+<pre><code class="lang-cs">//Given a VisualElement named &quot;element&quot;...
+element.style.transitionProperty = new List&lt;StylePropertyName&gt; { &quot;rotate&quot; };
+</code></pre>
+
+<h2>Transition duration</h2>
+
+<p>The transition duration sets how long the transition takes to complete.</p>
+
+<h3>Keywords</h3>
+
+<p>The transition duration supports the following keywords:</p>
+
+<ul>
+<li>
+<code>initial</code>: Sets the duration to <code>0s</code>. This is the default value.</li>
+</ul>
+
+<h3>USS examples</h3>
+
+<p>You can supply a number with a unit, a keyword, or a comma-separated list of numbers and units to <code>transition-duration</code>.</p>
+
+<pre><code class="lang-css">transition-duration: 2s;
+transition-duration: 800ms;
+transition-duration: 3s, 1500ms, 1.75s;
+transition-duration: initial;
+</code></pre>
+
+<p>If you supply multiple values, each value applies to the corresponding property specified in <code>transition-property</code>. In the following example, the original duration for scale is <code>1s</code>, but <code>all</code> overrides it to <code>2s</code>.</p>
+
+<pre><code class="lang-css">transition-property: scale, all, rotate;
+transition-duration: 1s, 2s, 3s;
+</code></pre>
+
+<h3>C# examples</h3>
+
+<p>The <a href="../ScriptReference/UIElements.IStyle-transitionDuration.html"><code>IStyle.transitionDuration</code></a> property is of type <code>StyleList&lt;TimeValue&gt;</code>. <a href="../ScriptReference/UIElements.TimeValue.html"><code>TimeValue</code></a> is a struct that you can <a href="../ScriptReference/UIElements.TimeValue-ctor.html">construct</a> from a number and a <a href="../ScriptReference/UIElements.TimeUnit.html"><code>TimeUnit</code></a> enum. <a href="../ScriptReference/UIElements.StyleList_1.html"><code>StyleList</code></a> is a struct you can <a href="../ScriptReference/UIElements.StyleList_1-ctor.html">construct</a> from a list of <code>TimeValue</code>.</p>
+
+<pre><code class="lang-cs">//Create a list that contains durations 2s and 500ms and use it to set transitionDuration.
+List&lt;TimeValue&gt; durations = new List&lt;TimeValue&gt;();
+durations.Add(new TimeValue(2f, TimeUnit.Second));
+durations.Add(new TimeValue(500f, TimeUnit.Millisecond));
+//Given a VisualElement named &quot;element&quot;...
+element.style.transitionDuration = new StyleList&lt;TimeValue&gt;(durations);
+</code></pre>
+
+<p>You can use implicit conversions to simplify the above code as follows:</p>
+
+<pre><code class="lang-cs">//Given a VisualElement named &quot;element&quot;...
+element.style.transitionDuration = new List&lt;TimeValue&gt; { 2, new (500, TimeUnit.Millisecond) };
+</code></pre>
+
+<h2>Transition timing function</h2>
+
+<p>The transition timing function sets how the property moves between values over time. </p>
+
+<h3>Keywords</h3>
+
+<p>The transition timing function supports the following keywords. The default value is <code>initial</code>, which sets the easing function to <code>ease</code>.</p>
+
+<ul>
+<li><code>initial</code></li>
+<li><code>ease</code></li>
+<li><code>ease-in</code></li>
+<li><code>ease-out</code></li>
+<li><code>ease-in-out</code></li>
+<li><code>linear</code></li>
+<li><code>ease-in-sine</code></li>
+<li><code>ease-out-sine</code></li>
+<li><code>ease-in-out-sine</code></li>
+<li><code>ease-in-cubic</code></li>
+<li><code>ease-out-cubic</code></li>
+<li><code>ease-in-out-cubic</code></li>
+<li><code>ease-in-circ</code></li>
+<li><code>ease-out-circ</code></li>
+<li><code>ease-in-out-circ</code></li>
+<li><code>ease-in-elastic</code></li>
+<li><code>ease-out-elastic</code></li>
+<li><code>ease-in-out-elastic</code></li>
+<li><code>ease-in-back</code></li>
+<li><code>ease-out-back</code></li>
+<li><code>ease-in-out-back</code></li>
+<li><code>ease-in-bounce</code></li>
+<li><code>ease-out-bounce</code></li>
+<li><code>ease-in-out-bounce</code></li>
+</ul>
+
+<p>For detailed information about each function, refer to <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function">MDN’s documentation for the <code>transition-timing-function</code> CSS attribute</a> or <a href="https://easings.net/">easings.net</a>.</p>
+
+<h3>USS examples</h3>
+
+<p>You can supply an easing function, a keyword, or a comma-separated list of easing functions to <code>transition-timing-function</code>.</p>
+
+<pre><code class="lang-css">transition-timing-function: linear;
+transition-timing-function: ease-in, ease-out-circ, ease-in-out-cubic;
+transition-timing-function: initial;
+</code></pre>
+
+<h3>C# examples</h3>
+
+<p>The <a href="../ScriptReference/UIElements.IStyle-transitionTimingFunction.html"><code>IStyle.transitionTimingFunction</code></a> property is of type <code>StyleList&lt;EasingFunction&gt;</code>. <a href="../ScriptReference/UIElements.EasingFunction.html"><code>EasingFunction</code></a> is a struct that you can <a href="../ScriptReference/UIElements.EasingFunction-ctor.html">construct</a> from an <a href="../ScriptReference/UIElements.EasingMode.html"><code>EasingMode</code></a> enum.</p>
+
+<pre><code class="lang-cs">//Create a list that contains the Linear easing function, and use it to set transitionTimingFunction.
+List&lt;EasingFunction&gt; easingFunctions = new List&lt;EasingFunction&gt;();
+easingFunctions.Add(new EasingFunction(EasingMode.Linear));
+//Given a VisualElement named &quot;element&quot;...
+element.style.transitionTimingFunction = new StyleList&lt;EasingFunction&gt;(easingFunctions);
+</code></pre>
+
+<p>You can use implicit conversions to simplify the above code as follows:</p>
+
+<pre><code class="lang-cs">//Given a VisualElement named &quot;element&quot;...
+element.style.transitionTimingFunction = new List&lt;EasingFunction&gt; { EasingMode.Linear };
+</code></pre>
+
+<h2>Transition delay</h2>
+
+<p>The transition delay sets when the transition starts. </p>
+
+<h3>Keywords</h3>
+
+<p>The transition delay supports the following keywords:</p>
+
+<ul>
+<li>
+<code>initial</code>: Sets the delay to <code>0s</code>. This is the default value.</li>
+</ul>
+
+<h3>USS examples</h3>
+
+<p>You can supply a number with a unit, a keyword, or a comma-separated list of numbers and units to <code>transition-delay</code>.</p>
+
+<pre><code class="lang-css">transition-delay: 0s;
+transition-delay: 300ms;
+transition-delay: 2s, 650ms, 2.75s;
+transition-delay: initial;
+</code></pre>
+
+<h3>C# examples</h3>
+
+<p>The <a href="../ScriptReference/UIElements.IStyle-transitionDelay.html"><code>IStyle.transitionDelay</code></a> property is of type <code>StyleList&lt;TimeValue&gt;</code>. <a href="../ScriptReference/UIElements.TimeValue.html"><code>TimeValue</code></a> is a struct that you can <a href="../ScriptReference/UIElements.TimeValue-ctor.html">construct</a> from a number and a <a href="../ScriptReference/UIElements.TimeUnit.html"><code>TimeUnit</code></a> enum. <a href="../ScriptReference/UIElements.StyleList_1.html"><code>StyleList</code></a> is a struct you can <a href="../ScriptReference/UIElements.StyleList_1-ctor.html">construct</a> from a list of <code>TimeValue</code>.</p>
+
+<pre><code class="lang-cs">//Create a list that contains delays 0.5s and 200ms, and use it to set transitionDelay.
+List&lt;TimeValue&gt; delays = new List&lt;TimeValue&gt;();
+delays.Add(new TimeValue(0.5f, TimeUnit.Second));
+delays.Add(new TimeValue(200f, TimeUnit.Millisecond));
+//Given a VisualElement named &quot;element&quot;...
+element.style.transitionDelay = new StyleList&lt;TimeValue&gt;(delays);
+</code></pre>
+
+<p>You can use implicit conversions to simplify the above code as follows:</p>
+
+<pre><code class="lang-cs">//Given a VisualElement named &quot;element&quot;...
+element.style.transitionDelay = new List&lt;TimeValue&gt; { 0.5f, new(200, TimeUnit.Millisecond) };
+</code></pre>
+
+<h2>USS <code>transition</code>
+</h2>
+
+<p>You can supply one transition, a keyword, or a comma-separated list of transitions to <code>transition</code>. You separate properties within a transition by a space in the following order:</p>
+
+<ol>
+<li><code>transition-property</code></li>
+<li><code>transition-delay</code></li>
+<li><code>transition-duration</code></li>
+<li><code>transition-timing-function</code></li>
+</ol>
+
+<h3>Keywords</h3>
+
+<p>
+<code>transition</code> only supports the keyword <code>initial</code>, which represents the initial value of each transition property:</p>
+
+<ul>
+<li>
+<code>transition-delay</code>: <code>0s</code>
+</li>
+<li>
+<code>transition-duration</code>: <code>0s</code>
+</li>
+<li>
+<code>transition-property</code>: <code>all</code>
+</li>
+<li>
+<code>transition-timing-function</code>: <code>ease</code>
+</li>
+</ul>
+
+<h3>USS examples</h3>
+
+<pre><code class="lang-css">/*One transition*/
+transition: width 2s ease-out;
+
+/*Two transitions*/
+transition: margin-right 4s, color 1s;
+</code></pre>
+
+<h2>Transition on multiple property examples</h2>
+
+<p>This section includes examples that apply transitions on multiple properties. </p>
+
+<h3>Example 1</h3>
+
+<p>This example applies transitions on the <code>scale</code> and <code>transform-origin</code> properties:</p>
+
+<ul>
+<li>The first transition is on the <code>scale</code> property. It has a duration of <code>4s</code>, a delay of <code>0s</code>, and the <code>ease-in-sine</code> easing function.</li>
+<li>The second transition is on the <code>transform-origin</code> property. It has a duration of <code>3s</code>, a delay of <code>600ms</code>, and the <code>ease-out-elastic</code> easing function.</li>
+</ul>
+
+<pre><code class="lang-css">.classA {
+    transition-property: scale, transform-origin;
+    transition-duration: 4s, 3s;
+    transition-delay: 0s, 600ms;
+    transition-timing-function: ease-in-sine, ease-out-elastic;
+}
+</code></pre>
+
+<h3>Example 2</h3>
+
+<p>In this example, the later transitions override earlier transitions, including transitions with the <code>all</code> keyword:</p>
+
+<ul>
+<li>The first transition is on all properties. It applies a duration of 500 milliseconds, a delay of zero seconds, and the <code>linear</code> easing function.</li>
+<li>The second transition is on the <code>translate</code> property. It overrides the transition with a duration of <code>1s</code>, a delay of <code>1s</code>, and the <code>ease-in</code> easing function. All other properties still have a duration of <code>500ms</code>, a delay of <code>0s</code>, and the <code>linear</code> easing function.</li>
+</ul>
+
+<pre><code class="lang-css">.classB {
+    transition-property: all, translate;
+    transition-duration: 500ms, 1s;
+    transition-delay: 0s, 1s;
+    transition-timing-function: linear, ease-in;
+}
+</code></pre>
+
+<h3>Example 3</h3>
+
+<p>This example shows what happens when property value lists are of different lengths. If any property’s list of values is shorter than that for <code>transition-property</code>, Unity repeats its values to make them match. Similarly, if any property’s value list is longer than <code>transition-property</code>, Unity truncates it. </p>
+
+<pre><code class="lang-css">.classC {
+    transition-property: scale, rotate, translate;
+    transition-duration: 1s, 2s;
+    transition-delay: 1s, 2s, 3s, 4s, 5s, 6s, 7s;
+}
+</code></pre>
+
+<p>The following table shows the final results for the example above:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Duration</strong></th>
+	<th style="text-align:left;"><strong>Delay</strong></th>
+	<th style="text-align:left;"><strong>Easing function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>scale</code></td>
+	<td style="text-align:left;"><code>1s</code></td>
+	<td style="text-align:left;"><code>1s</code></td>
+	<td style="text-align:left;"><code>ease</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>rotate</code></td>
+	<td style="text-align:left;"><code>2s</code></td>
+	<td style="text-align:left;"><code>2s</code></td>
+	<td style="text-align:left;"><code>ease</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>translate</code></td>
+	<td style="text-align:left;"><code>1s</code></td>
+	<td style="text-align:left;"><code>3s</code></td>
+	<td style="text-align:left;"><code>ease</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Important</strong>: <code>transition-property</code>, <code>transition-duration</code>, <code>transition-delay</code>, and <code>transition-timing-function</code> are separate USS properties. If you leave any of them undefined, it’s possible that they are defined elsewhere, such as in another USS rule or inline on the UXML element. </p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-performance-consideration-runtime.html">Use usage hints to reduce draw calls and geometry regeneration</a></li>
+<li>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions">Using CSS transitions</a>(Mozilla developer documentation)</li>
+<li>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition">CSS transition</a> (Mozilla developer documentation)</li>
+<li>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition-property">CSS transition-property</a> (Mozilla developer documentation)</li>
+<li>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition-duration">CSS transition-duration property</a> (Mozilla developer documentation)</li>
+<li>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function">CSS transition-timing-function property</a> (Mozilla developer documentation)</li>
+<li>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition-delay">CSS transition-delay property</a> (Mozilla developer documentation)</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Transform.html"></a></span><div class="tip">USS transform</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-USS-Properties-Reference.html"></a></span><div class="tip">USS properties reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

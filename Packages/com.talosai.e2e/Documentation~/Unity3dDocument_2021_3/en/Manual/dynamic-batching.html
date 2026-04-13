@@ -1,0 +1,243 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Dynamic batching</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/dynamic-batching.html">English</a></li>
+<li><a href="/cn/current/Manual/dynamic-batching.html">中文</a></li>
+<li><a href="/ja/current/Manual/dynamic-batching.html">日本語</a></li>
+<li><a href="/kr/current/Manual/dynamic-batching.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/dynamic-batching.html">English</a></li>
+<li><a href="/cn/current/Manual/dynamic-batching.html">中文</a></li>
+<li><a href="/ja/current/Manual/dynamic-batching.html">日本語</a></li>
+<li><a href="/kr/current/Manual/dynamic-batching.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="graphics-performance-profiling.html">Graphics performance and profiling</a></li>
+<li><a href="optimizing-draw-calls.html">Optimizing draw calls</a></li>
+<li><a href="DrawCallBatching.html">Draw call batching</a></li>
+<li>Dynamic batching</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="static-batching.html"></a></span><div class="tip">Static batching</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="combining-meshes.html"></a></span><div class="tip">Manually combining meshes</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Dynamic batching</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Dynamic batching is a <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DrawCallBatching.html">draw call batching</a> method that batches moving <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="DrawCallBatching.html">draw call batching</a> method that batches moving <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> to reduce <a href="optimizing-draw-calls.html">draw calls</a>. <span class="tooltip"><strong>Dynamic batching</strong><span class="tooltiptext">An automatic Unity process which attempts to render multiple meshes as if they were a single mesh for optimized graphics performance. The technique transforms all of the GameObject vertices on the CPU and groups many similar vertices together. <a href="DrawCallBatching.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> to reduce <a href="optimizing-draw-calls.html">draw calls</a>. <span class="tooltip"><strong>Dynamic batching</strong><span class="tooltiptext">An automatic Unity process which attempts to render multiple meshes as if they were a single mesh for optimized graphics performance. The technique transforms all of the GameObject vertices on the CPU and groups many similar vertices together. <a href="DrawCallBatching.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#DynamicBatching" aria-label="Go to glossary anchor for DynamicBatching">Glossary</a></span></span></span> works differently between meshes and geometries that Unity generates dynamically at runtime, such as <span class="tooltip"><a href="ParticleSystems.html">particle systems</a><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a href="class-ParticleSystem.html" href="Glossary.html#DynamicBatching" aria-label="Go to glossary anchor for DynamicBatching">Glossary</a></span></span></span> works differently between meshes and geometries that Unity generates dynamically at runtime, such as <span class="tooltip"><a href="ParticleSystems.html">particle systems</a><span class="tooltiptext">A component that simulates fluid entities such as liquids, clouds and flames by generating and animating large numbers of small 2D images in the scene. <a href="class-ParticleSystem.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#particlesystem" aria-label="Go to glossary anchor for particlesystem">Glossary</a></span></span></span>. For information about the internal differences between meshes and dynamic geometries, see <a href="#dynamic-batching-meshes">Dynamic batching for meshes</a> and <a href="#dynamic-batching-dynamic-geometry">Dynamic batching for dynamically generated geometries</a>.</p>
+
+<p>
+<strong>Note</strong>: Dynamic batching for meshes was designed to optimize performance on old low-end devices. On modern consumer hardware, the work dynamic batching does on the CPU can be greater than the overhead of a draw call. This negatively affects performance. For more information, see <a href="#dynamic-batching-meshes">Dynamic batching for meshes</a>.</p>
+
+<h2>Requirements and compatibility</h2>
+
+<p>This section includes information about the <span class="tooltip"><strong>render pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> compatibility of dynamic batching.</p>
+
+<h3>Render pipeline compatibility</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>Universal Render Pipeline (URP)</strong></th>
+	<th style="text-align:left;"><strong>High Definition Render Pipeline (HDRP)</strong></th>
+	<th style="text-align:left;"><strong>Custom Scriptable Render Pipeline (SRP)</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Dynamic Batching</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Using dynamic batching</h2>
+
+<p>Unity always uses dynamic batching for dynamic geometry such as Particle Systems</p>
+
+<p>To use dynamic batching for meshes:</p>
+
+<ol>
+<li>Go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong>.</li>
+<li>In <strong>Other Settings</strong>, enable <strong>Dynamic Batching</strong>.</li>
+</ol>
+
+<p>Unity automatically batches moving meshes into the same draw call if they fulfill the criteria described in the <a href="DrawCallBatching.html#using-draw-call-batching">common usage information</a>.</p>
+
+<p><a name="dynamic-batching-meshes" aria-hidden="true"></a></p>
+
+<h2>Dynamic batching for meshes</h2>
+
+<p>Dynamic batching for meshes works by transforming all vertices into world space on the CPU, rather than on the GPU. This means dynamic batching is only an optimization if the transformation work is less resource intensive than doing a draw call. </p>
+
+<p>The resource requirements of a draw call depend on many factors, primarily the graphics API. For example, on consoles or modern APIs like Apple Metal, the draw call overhead is generally much lower, and often dynamic batching doesn’t produce a gain in performance. To determine whether it’s beneficial to use dynamic batching in your application, <a href="Profiler.html">profile</a> your application with and without dynamic batching.</p>
+
+<p>Unity can use dynamic batching for shadows casters, even if their materials are different, as long as the material values Unity needs for the shadow pass are the same. For example, multiple crates can use materials that have different textures. Although the material assets are different, the difference is irrelevant for the shadow caster pass and Unity can batch shadows for the crate GameObjects in the shadow render step.</p>
+
+<h3>Limitations</h3>
+
+<p>In the following scenarios, Unity either can’t use dynamic batching at all or can only apply dynamic batching to a limited extent:</p>
+
+<ul>
+<li>Unity can’t apply dynamic batching to meshes that contain more than 900 vertex attributes and 300 vertices. This is because dynamic batching for meshes has an overhead per vertex. For example, if your <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> uses vertex position, vertex normal, and a single UV, then Unity can batch up to 300 vertices. However, if your shader uses vertex position, vertex normal, UV0, UV1, and vertex tangent, then Unity can only batch 180 vertices.</li>
+<li>If GameObjects use different material instances, Unity can’t batch them together, even if they are essentially the same. The only exception to this is shadow caster rendering.</li>
+<li>GameObjects with lightmaps have additional renderer parameters. This means that, if you want to batch lightmapped GameObjects, they must point to the same <span class="tooltip"><strong>lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> location.</li>
+<li>Unity can’t fully apply dynamic batching to GameObjects that use multi-pass shaders.
+
+<ul>
+<li>Almost all Unity shaders support several lights in <span class="tooltip"><strong>forward rendering</strong><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderTech-ForwardRendering.html" href="RenderTech-ForwardRendering.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ForwardRendering" aria-label="Go to glossary anchor for ForwardRendering">Glossary</a></span></span></span>. To achieve this, they process an additional render pass for each light. Unity only batches the first render pass. It can’t batch the draw calls for the additional per-pixel lights.</li>
+<li>The <a href="RenderingPaths.html">Legacy Deferred rendering path</a> doesn’t support dynamic batching because it draws GameObjects in two render passes. The first pass is a light pre-pass and the second pass renders the GameObjects.</li>
+</ul>
+</li>
+</ul>
+
+<p><a name="dynamic-batching-dynamic-geometry" aria-hidden="true"></a></p>
+
+<h2>Dynamic batching for dynamically generated geometries</h2>
+
+<p>The following renderers dynamically generate geometries, such as particles and lines, that you can optimize using dynamic batching:</p>
+
+<ul>
+<li><a href="Built-inParticleSystem.html">Built-in Particle Systems</a></li>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LineRenderer.html">Line Renderers</a><span class="tooltiptext">A component that takes an array of two or more points in 3D space and draws a straight line between each one. You can use a single Line Renderer component to draw anything from a simple straight line to a complex spiral. <a href="class-LineRenderer.html" href="class-LineRenderer.html">Line Renderers</a><span class="tooltiptext">A component that takes an array of two or more points in 3D space and draws a straight line between each one. You can use a single Line Renderer component to draw anything from a simple straight line to a complex spiral. <a href="class-LineRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LineRenderer" aria-label="Go to glossary anchor for LineRenderer">Glossary</a></span></span></span></li>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TrailRenderer.html">Trail Renderers</a><span class="tooltiptext">A visual effect that lets you to make trails behind GameObjects in the Scene as they move. <a href="class-TrailRenderer.html" href="class-TrailRenderer.html">Trail Renderers</a><span class="tooltiptext">A visual effect that lets you to make trails behind GameObjects in the Scene as they move. <a href="class-TrailRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TrailRenderer" aria-label="Go to glossary anchor for TrailRenderer">Glossary</a></span></span></span></li>
+</ul>
+
+<p>Dynamic batching for dynamically generated geometries works differently than it does for meshes:</p>
+
+<ol>
+<li>For each renderer, Unity builds all dynamically batchable content into one large vertex buffer.</li>
+<li>The renderer sets up the material state for the batch.</li>
+<li>Unity then binds the vertex buffer to the GPU.</li>
+<li>For each Renderer in the batch, Unity updates the offset in the vertex buffer and submits a new draw call.</li>
+</ol>
+
+<p>This approach is similar to how Unity submits draw calls for <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about static-batching.html">static batching</a><span class="tooltiptext">A technique Unity uses to draw GameObjects on the screen that combines static (non-moving) GameObjects into big Meshes, and renders them in a faster way. <a href="DrawCallBatching.html" href="static-batching.html">static batching</a><span class="tooltiptext">A technique Unity uses to draw GameObjects on the screen that combines static (non-moving) GameObjects into big Meshes, and renders them in a faster way. <a href="DrawCallBatching.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#StaticBatching" aria-label="Go to glossary anchor for StaticBatching">Glossary</a></span></span></span>.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="static-batching.html"></a></span><div class="tip">Static batching</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="combining-meshes.html"></a></span><div class="tip">Manually combining meshes</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

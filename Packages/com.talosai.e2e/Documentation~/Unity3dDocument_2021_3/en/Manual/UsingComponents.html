@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Use components</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UsingComponents.html">English</a></li>
+<li><a href="/cn/current/Manual/UsingComponents.html">中文</a></li>
+<li><a href="/ja/current/Manual/UsingComponents.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UsingComponents.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UsingComponents.html">English</a></li>
+<li><a href="/cn/current/Manual/UsingComponents.html">中文</a></li>
+<li><a href="/ja/current/Manual/UsingComponents.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UsingComponents.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="CreatingGameplay.html">Create Gameplay</a></li>
+<li><a href="GameObjects.html">GameObjects</a></li>
+<li>Use components</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Components.html"></a></span><div class="tip">Introduction to components</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="PrimitiveObjects.html"></a></span><div class="tip">Primitive and placeholder objects</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Use components</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can use different components to change or add functions to your <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. You can use the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. You can use the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window to change the properties of any component, or you can use <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html" href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window to change the properties of any component, or you can use <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>. </p>
+
+<p>For more information on how to use your components with scripts, see the <a href="https://docs.unity3d.com/2022.2/Documentation/ScriptReference/Component.html">components script reference</a> page.</p>
+
+<h2>Add components</h2>
+
+<p>You can add components to the selected GameObject through the Component menu. To add a Rigidbody component, select the GameObject and select <strong>Component</strong> &gt; <strong>Physics</strong> &gt; <strong>Rigidbody</strong> from the menu. The Inspector displays the Rigidbody’s properties. If you press <strong>Play</strong> while you have the empty GameObject selected, the Y position of the GameObject’s transform decreases. This is because the physics system in Unity causes the GameObject to fall under gravity.</p>
+
+<figure>
+<img src="../uploads/Main/RigidBodyGO1.png" alt="A GameObject with a Rigidbody component attached">
+<figcaption>A GameObject with a Rigidbody component attached</figcaption>
+</figure>
+
+<p>You can also add components in the <strong>Component</strong> browser. To open the Component browser, select <strong>Add Component</strong> in the Inspector.</p>
+
+<figure>
+<img src="../uploads/Main/ComponentBrowser1.png" alt="The Component browser">
+<figcaption>The Component browser</figcaption>
+</figure>
+
+<p>You can navigate the components by category in the browser or use the search box to locate components by name.</p>
+
+<p>A component must be in the same project as the GameObject you want to attach it to. A component can be specific to a package or created by a script. The Unity Editor can’t search for components from:</p>
+
+<ul>
+<li>Other projects.</li>
+<li>Scripts that are not attached to the project.</li>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Packages.html">Packages</a><span class="tooltiptext">Packages are collections of assets to be shared and re-used in Unity. The <a href="upm-ui.html">Unity Package Manager</a> (UPM) can display, add, and remove packages from your project. These packages are native to the Unity Package Manager and provide a fundamental method of delivering Unity functionality. However, the Unity Package Manager can also display <a href="AssetStorePackages.html">Asset Store packages</a> that you downloaded from the Asset Store. <a href="Packages.html" href="Packages.html">Packages</a><span class="tooltiptext">Packages are collections of assets to be shared and re-used in Unity. The <a href="upm-ui.html">Unity Package Manager</a> (UPM) can display, add, and remove packages from your project. These packages are native to the Unity Package Manager and provide a fundamental method of delivering Unity functionality. However, the Unity Package Manager can also display <a href="AssetStorePackages.html">Asset Store packages</a> that you downloaded from the Asset Store. <a href="Packages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Packages" aria-label="Go to glossary anchor for Packages">Glossary</a></span></span></span> that haven’t been added to the project.</li>
+</ul>
+
+<p>You can attach any number or combination of components to a single GameObject. Some components work best in combination with others. For example, the Rigidbody works with a <span class="tooltip"><strong>Collider</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span>. </p>
+
+<p>For more information about a particular component, see the relevant Component reference page. You can also access the reference page for a component from Unity if you select the help icon (<strong>?</strong>) on the component’s header in the Inspector.</p>
+
+<h2>Edit components</h2>
+
+<p>When you attach a component to a GameObject, the component’s properties contain default values. You can edit these values in the Editor while you build a game, or in scripts when you run the game.</p>
+
+<p>There are two main types of properties: values and references.</p>
+
+<p>You can edit value properties in the Inspector. There are various types of values, including text, toggles and dropdowns.</p>
+
+<p>For reference properties, you can drag a file from the Project view into the property, or use the object picker (circle icon) on the property. Reference properties can reference other types of components, GameObjects, or assets.</p>
+
+<p>For more information about the different property types, see <a href="EditingValueProperties.html">Editing Properties</a>.</p>
+
+<p>The image below shows a GameObject with an <strong><span class="tooltip"><strong>Audio Source</strong><span class="tooltiptext">A component which plays back an Audio Clip in the scene to an audio listener or through an audio mixer. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioSource.html" href="class-AudioSource.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioSource" aria-label="Go to glossary anchor for AudioSource">Glossary</a></span></span></span></strong> component. The values of the <strong>Audio Source</strong> in the Inspector show how you can adjust aspects of a component to suit your project.</p>
+
+<figure>
+<img src="../uploads/Main/AudioReference1.png" alt="The Audio Source with a sound effect referenced properly in the Audio Clip">
+<figcaption>The Audio Source with a sound effect referenced properly in the Audio Clip</figcaption>
+</figure>
+
+<h2>Component context menu commands</h2>
+
+<p>Right click on a component for the context menu with several useful commands.</p>
+
+<p>The same commands are also available from the kebab menu (⋮) in the top-right of the component panel in the Inspector window.</p>
+
+<p>The table below describes the commands available so you can adjust your components:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Command:</strong></th>
+	<th style="text-align:left;"><strong>Description:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Reset</strong></td>
+	<td style="text-align:left;">Restores the values the component’s properties had before the most recent editing session.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Remove Component</strong></td>
+	<td style="text-align:left;">Removes the component from the GameObject. <strong>Note</strong>: Some combinations of components depend on each other (<span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-HingeJoint.html">Hinge Joint</a><span class="tooltiptext">A joint that groups together two Rigidbody components, constraining them to move like they are connected by a hinge. It is perfect for doors, but can also be used to model chains, pendulums and so on. <a href="class-HingeJoint.html" href="class-HingeJoint.html">Hinge Joint</a><span class="tooltiptext">A joint that groups together two Rigidbody components, constraining them to move like they are connected by a hinge. It is perfect for doors, but can also be used to model chains, pendulums and so on. <a href="class-HingeJoint.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#HingeJoint" aria-label="Go to glossary anchor for HingeJoint">Glossary</a></span></span></span> only works when attached to a <span class="tooltip"><a href="class-Rigidbody.html">Rigidbody</a><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a href="class-Rigidbody.html" href="Glossary.html#HingeJoint" aria-label="Go to glossary anchor for HingeJoint">Glossary</a></span></span></span> only works when attached to a <span class="tooltip"><a href="class-Rigidbody.html">Rigidbody</a><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a href="class-Rigidbody.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span>); a warning message is displayed if you try to remove components that others depend on.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Move Up</strong></td>
+	<td style="text-align:left;">Moves the component up in the Inspector. You can also drag and drop components in the Inspector to reorder them.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Move Down</strong></td>
+	<td style="text-align:left;">Moves the component down in the Inspector.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Copy Component</strong></td>
+	<td style="text-align:left;">Copies the type and current property settings of a component.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Paste Component As New</strong></td>
+	<td style="text-align:left;">Pastes the copied property settings of a component as a new component.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Paste Component Values</strong></td>
+	<td style="text-align:left;">Pastes the copied property settings of a component into another component of the same type.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Testing properties</h2>
+
+<p>In <strong>Play Mode</strong>, you can change properties of a component in the Inspector. This lets you see how different values for a property affect gameplay. For example, you can experiment with different heights of jumping. If you create a <strong>Jump Height</strong> property in a script, you can enter Play Mode, change the value, and press the jump button to see what happens. Then, without exiting Play Mode, you can change it again and see the results within seconds. When you exit Play Mode, the properties revert to their pre-Play Mode values. With this workflow, you can experiment, adjust, and refine your gameplay in less time.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Components.html"></a></span><div class="tip">Introduction to components</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="PrimitiveObjects.html"></a></span><div class="tip">Primitive and placeholder objects</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

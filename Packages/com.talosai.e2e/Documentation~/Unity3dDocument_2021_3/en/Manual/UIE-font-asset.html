@@ -1,0 +1,292 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Introduction to font assets</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-font-asset.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-font-asset.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-font-asset.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-font-asset.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-font-asset.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-font-asset.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-font-asset.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-font-asset.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-work-with-text.html">Work with text</a></li>
+<li><a href="UIE-font-asset-landing.html">Font assets</a></li>
+<li>Introduction to font assets</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-font-asset-landing.html"></a></span><div class="tip">Font assets</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-font-asset-properties.html"></a></span><div class="tip">Font Asset properties reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Introduction to font assets</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Font assets act as containers for fonts. With font assets, you can import fonts into your projects and create variations of a font from one file and not change the original font. Another reason to create font asset is to deal with languages with massive character sets, such as Chinese. You can include only the characters you need, rather than the full set of characters.</p>
+
+<p>You can convert TrueType (<code>.ttf</code>), OpenType (<code>.otf</code>), or TrueType Collection(<code>.ttc</code>) fonts to font assets. A font asset includes a font atlas texture file that contains all of the characters. There are several <a href="#atlas-population-modes">atlas populate modes</a> and <a href="#atlas-render-modes">render modes</a> to choose when you create a font asset. </p>
+
+<p><a name="atlas-population-modes" aria-hidden="true"></a></p>
+
+<h2>Atlas population modes</h2>
+
+<p>TextCore supports the <strong>Static</strong>, <strong>Dynamic</strong>, and <strong>Dynamic OS</strong> atlas population modes.</p>
+
+<h3>Static font asset</h3>
+
+<p>Static font assets pre-bake characters into the atlas texture during conversion. Use static font assets to contain known text in your project, such as labels and section titles. When you create a static font asset, the font atlas is empty by default. You must manually generate the font atlas and include all the characters required for the project. The project build doesn’t require you to include the font source file, so it’s fast and efficient.</p>
+
+<p>See instructions on how to <a href="UIE-get-started-with-text.html#create-a-static-font-asset">create a Static font asset</a>.</p>
+
+<h3>Dynamic font asset</h3>
+
+<p>Dynamic font assets start with an empty atlas texture. Dynamic font assets look for characters in the source font file and adds the characters dynamically as you use them in a <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>. Use Dynamic font assets for unknown text in your project, such as any <span class="tooltip"><strong>text input fields</strong><span class="tooltiptext">A field that allows the user to input a Text string <a href="script-InputField.html" href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span>. Use Dynamic font assets for unknown text in your project, such as any <span class="tooltip"><strong>text input fields</strong><span class="tooltiptext">A field that allows the user to input a Text string <a href="script-InputField.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TextInputField" aria-label="Go to glossary anchor for TextInputField">Glossary</a></span></span></span>. Dynamic fonts assets are flexible, but they have additional performance overhead because the project build requires to include all source font files.</p>
+
+<p>See instructions on how to <a href="UIE-get-started-with-text.html#create-a-dynamic-font-asset">create a Dynamic font asset</a>.</p>
+
+<h3>Dynamic OS font asset</h3>
+
+<p>Dynamic OS font assets are a dynamic font asset that references the font file on the operating system instead of the source font file. Compared to the Dynamic font asset, dynamic OS font assets have less memory overhead. The project build doesn’t require to include the font source files. Make sure that the fonts are on the operating system of the targeted platforms. Dynamic OS font assets are great candidates for fallback font assets.</p>
+
+<p>To create a dynamic OS font asset, import the font from the operating system to your project, and use it to create a dynamic font asset and change the <strong>Atlas Population Mode</strong> to <strong>Dynamic OS</strong>.</p>
+
+<p><a name="atlas-render-modes" aria-hidden="true"></a></p>
+
+<h2>Atlas render modes</h2>
+
+<p>TextCore supports atlas render modes for bitmap and Signed Distance Field (SDF).</p>
+
+<h3>Bitmap fonts</h3>
+
+<p>Bitmap rendering generates font assets that perfectly aligns each <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> of the font with <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> of the font with <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> and GUI pixels. Use the following render modes for pixel art:</p>
+
+<ul>
+<li>
+<strong>SMOOTH</strong> or <strong>SMOOTH_HINTED</strong> to render text to an antialiased bitmap. <strong>SMOOTH_HINTED</strong> aligns character pixels with texture pixels for clearer images.</li>
+<li>
+<strong>RASTER</strong> or <strong>RASTER_HINTE</strong> to render text to a non-antialiased bitmap. <strong>RASTER_HINTE</strong> aligns character pixels with texture pixels for a clearer image.</li>
+</ul>
+
+<p><a name="sdf-fonts" aria-hidden="true"></a></p>
+
+<h3>SDF fonts</h3>
+
+<p>SDF rendering generates font assets that look crisp when you transform or magnify them. SDF rendering supports effects such as outlines and drop shadows.</p>
+
+<p>Unlike bitmap font textures, SDF font assets contain contour distance information. In font atlases, this information looks like grayscale gradients that run from the middle of each glyph to a point past its edge. The gradient’s mid-point corresponds to the edge of the glyph.</p>
+
+<p>The images below show bitmap and SDF font assets and the rendered text they produce. The bitmap fonts produce text whose edges are more or less jagged and blurry, depending on how far the text is from the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>, and how it’s transformed and distorted. The SDF font produces text with smooth edges regardless of the distance from the camera.</p>
+
+<figure>
+<img src="../uploads/Main/font/FontAsssetBMPRaster.png" alt="A bitmap font, atlas texture and rendered result">
+<figcaption>A bitmap font, atlas texture and rendered result</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/font/FontAsssetBMPSmooth.png" alt="A smoothed bitmap, atlas texture and rendered result">
+<figcaption>A smoothed bitmap, atlas texture and rendered result</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/font/FontAsssetSDF.png" alt="An SDF font, atlas texture and rendered result">
+<figcaption>An SDF font, atlas texture and rendered result</figcaption>
+</figure>
+
+<p>Use the following render mode for SDF fonts:</p>
+
+<ul>
+<li>
+<strong>SDFAA</strong>: Use this mode to produce font atlases for most use cases except when you render large text such as titles that exceed 90 point size on screen with a large outline. <strong>SDFAA</strong> is the default mode for Dynamic or Dynamic OS font assets for fast generation. <strong>SDFAA</strong> is a faster but less accurate SDF generation mode.</li>
+<li>
+<strong>SDFAA_HINTED</strong> Use this mode to align character pixels with texture pixels for a crisper result.</li>
+<li>
+<strong>SDF32</strong>: Default mode for Static font assets. Use this mode for fonts with complex or small characters. It’s a slower and accurate SDF generation mode with 32x oversampling.</li>
+<li>
+<strong>SDF16</strong>: Use this mode for Static font assets and mostly large text, such as titles that are 72 point size or larger. It’s a slower and accurate SDF generation mode with 16x oversampling.</li>
+<li>
+<strong>SDF8</strong>: Use this mode for a slower and accurate SDF generation with 8x oversampling.</li>
+<li>
+<strong>SDF</strong>: Use this mode for a slower and accurate SDF generation without oversampling.</li>
+</ul>
+
+<h2>Font asset variant</h2>
+
+<p>If you want to make changes only to a font asset’s metrics, instead of creating a new font asset, create a font asset variant based on another font asset. A font asset variant can have styling that distinguishes it from the original font asset , without consuming extra space for textures. The variant stores its own <a href="UIE-font-asset-properties.html">Face Info, Character, Glyph, and Adjustment Pair data</a>, but still refers to the original atlas. </p>
+
+<p>To create a font asset variant, right-click the font asset and select <strong>Create</strong> &gt; <strong>Text</strong>&gt; <strong>Font Asset Variant</strong>.</p>
+
+<p><a name="padding" aria-hidden="true"></a></p>
+
+<h2>Padding</h2>
+
+<p>Characters in the font texture need padding between them so they can be rendered separately. This padding is specified in pixels. Padding also creates room for the SDF gradient. The larger the padding, the smoother the transition, which allows for higher-quality rendering and larger effects, like thick outlines. Use a padding of <code>5</code> for a <code>512x512</code> texture. A good rule of thumb is to have a sampling to padding ration of <code>1:10</code>.</p>
+
+<p><a name="multi-atlas" aria-hidden="true"></a></p>
+
+<h2>Enable Multi Atlas Textures for large texture</h2>
+
+<p>For most fonts, use a <code>512x512</code> texture resolution if you include all ASCII characters. To support thousands of characters, use large textures and enable <strong>Multi Atlas Textures</strong> in the font asset’s <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window. This automatically creates new textures of the same size once the main texture is full. </p>
+
+<p>You can also enable <strong>Multi Atlas Textures</strong> if you design for mobile devices, where an imposed maximum texture size prevents an entire set of glyphs from fitting in a single atlas of sufficient quality.</p>
+
+<h2>Use a font asset</h2>
+
+<p>To use a font asset, in UI Builder, select the font from <strong>Font Asset</strong> in the Inspector window. </p>
+
+<p>
+<strong>Note</strong>: The <strong>Font</strong> field is for backward compatibility. If you want to use a font from the <strong>Font</strong> list for your legacy projects, you must select <strong>None</strong> from <strong>Font Asset</strong>. Otherwise, the font you selected from <strong>Font</strong> won’t take effect.</p>
+
+<p>You can apply a font asset to a text element in USS with the following syntax:</p>
+
+<pre><code class="lang-css">-unity-font-definition: &lt;resource&gt; | &lt;url&gt;
+</code></pre>
+
+<p>For example:</p>
+
+<pre><code class="lang-css">Label {
+-unity-font-definition: url(“/Assets/UI Toolkit/Resources/Fonts &amp; Materials/LiberationSans SDF.asset”);
+}
+</code></pre>
+
+<p>For more information, see <a href="UIE-USS-SupportedProperties.html#unity-font">USS text properties</a>.</p>
+
+<h2>Best practices</h2>
+
+<p>In summary, consider the following when you create a font asset: </p>
+
+<ul>
+<li>
+<strong>User input text</strong>: Use Dynamic or Dynamic OS population mode, and SDFAA mode for fast generation. You might need to add fallbacks for localization.</li>
+<li>
+<strong>Generic labels</strong>: Use the Static population mode and SDF16 mode with smaller sampling point size.</li>
+<li>
+<strong>Titles</strong>: Use the Static population mode and SDF32 mode with higher sampling point size.</li>
+<li>
+<strong>Pixel Art</strong>: Use any of the bitmap font render modes.</li>
+<li>
+<strong>Padding</strong>: Use a sampling to padding ration of <code>1:10</code>.</li>
+<li>Enable <strong>Multi Atlas Textures</strong> for large texture.</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-font-asset-properties.html">Font Asset properties reference</a></li>
+<li><a href="UIE-font-creator-properties.html">Font Asset Creator properties reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-font-asset-landing.html"></a></span><div class="tip">Font assets</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-font-asset-properties.html"></a></span><div class="tip">Font Asset properties reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

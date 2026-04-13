@@ -1,0 +1,226 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Importing assets</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ImportingAssets.html">English</a></li>
+<li><a href="/cn/current/Manual/ImportingAssets.html">中文</a></li>
+<li><a href="/ja/current/Manual/ImportingAssets.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ImportingAssets.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ImportingAssets.html">English</a></li>
+<li><a href="/cn/current/Manual/ImportingAssets.html">中文</a></li>
+<li><a href="/ja/current/Manual/ImportingAssets.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ImportingAssets.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AssetWorkflow.html">Asset Workflow</a></li>
+<li>Importing assets</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetWorkflow.html"></a></span><div class="tip">Asset Workflow</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ParallelImport.html"></a></span><div class="tip">Importing assets simultaneously</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Importing assets</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can bring assets created outside of Unity into your Unity project. To do this, you can either export the file directly into the <code>Assets</code> folder for your project, or copy it into that folder. For many common formats, you can save your source file directly into your project’s <code>Assets</code> folder and Unity can read it. Unity also detects when you save new changes to the file and re-imports files as necessary.</p>
+
+<p>When you create a Unity project, Unity creates a folder (named after your project) which contains the following subfolders:</p>
+
+<ul>
+<li><code>Temp</code></li>
+<li><code>Library</code></li>
+<li><code>Assets</code></li>
+<li><code>ProjectSettings</code></li>
+<li><code>Logs</code></li>
+<li><code>Packages</code></li>
+</ul>
+
+<p>You can save or copy files that you want to use in your project into the <code>Assets</code> folder, and you can use the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span> inside Unity to view the contents of your <code>Assets</code> folder. Therefore, if you save or copy a file to your <code>Assets</code> folder, Unity imports it and appears in your Project window.</p>
+
+<p>When you modify a file in Unity, Unity does not modify your original source file, even though you can often choose between various ways to compress, modify, or otherwise process the asset within Unity. Instead, the import process reads your source file, and creates a game-ready representation of your asset internally, matching your chosen import settings. If you modify the import settings for an asset, or make a change to the source file in the <code>Assets</code> folder, Unity re-imports the asset again to reflect your changes. </p>
+
+<p>
+<strong>Warning:</strong> In most cases, the items that appear in your Project window represent actual files on your computer. If you delete them within the Unity Editor Project window, you also delete them from your computer.</p>
+
+<p>Unity automatically detects files as they are added to the <code>Assets</code> folder, or if they are modified. When you put any asset into your <code>Assets</code> folder, it appears in your Project window.</p>
+
+<figure>
+<img src="../uploads/Main/ProjectBrowser.png" alt="The Project window shows Assets that Unity has imported into your project">
+<figcaption>The Project window shows Assets that Unity has imported into your project</figcaption>
+</figure>
+
+<p>If you drag a file from your computer’s file browser into Unity’s Project window, Unity makes a copy and places it into your <code>Assets</code> folder. You can then access this copy from the Project window.</p>
+
+<p>To bring collections of assets into your project from another Unity project, you can use <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetPackages.html">Asset packages</a><span class="tooltiptext">A collection of files and data from Unity projects, or elements of projects, which are compressed and stored in one file, similar to Zip files, with the <code>.unitypackage</code> extension. Asset packages are a handy way of sharing and re-using Unity projects and collections of assets. <a href="AssetPackages.html" href="AssetPackages.html">Asset packages</a><span class="tooltiptext">A collection of files and data from Unity projects, or elements of projects, which are compressed and stored in one file, similar to Zip files, with the <code>.unitypackage</code> extension. Asset packages are a handy way of sharing and re-using Unity projects and collections of assets. <a href="AssetPackages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Assetpackage" aria-label="Go to glossary anchor for Assetpackage">Glossary</a></span></span></span>.</p>
+
+<p><a name="importSettings" aria-hidden="true"></a></p>
+
+<h2>Asset Import Settings</h2>
+
+<p>The simplest way to safely move or rename your assets is to always do it from within Unity’s project folder. This way, Unity automatically moves or renames the corresponding meta file. To read more about .meta files and the import process, see <a href="AssetWorkflow.html#howUnityImportsAssets">How Unity imports assets</a>.</p>
+
+<p>Each type of asset that Unity supports has a set of Import Settings, which affect how the asset appears or behaves. To view an asset’s import settings, select the asset in the Project View. The import settings for this asset will appear in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>. The options that appear vary depending on the type of asset selected.</p>
+
+<p>For example, an image’s import settings allow you to choose whether Unity imports it as a Texture, a 2D <span class="tooltip"><strong>sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span>, or a <span class="tooltip"><strong>normal map</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normalmap" aria-label="Go to glossary anchor for Normalmap">Glossary</a></span></span></span>. The import settings for an FBX file allow you to adjust the scale, generate normals or <span class="tooltip"><strong>lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a href="Lightmapping.html" href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span>, or a <span class="tooltip"><strong>normal map</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normalmap" aria-label="Go to glossary anchor for Normalmap">Glossary</a></span></span></span>. The import settings for an FBX file allow you to adjust the scale, generate normals or <span class="tooltip"><strong>lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> coordinates, and split &amp; trim <span class="tooltip"><strong>animation clips</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a href="class-AnimationClip.html" href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> coordinates, and split &amp; trim <span class="tooltip"><strong>animation clips</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> defined in the file.</p>
+
+<figure>
+<img src="../uploads/Main/AssetWorkflowImportSettings.png" alt="Clicking on an image asset in the Project window shows the import settings for that asset in the Inspector">
+<figcaption>Clicking on an image asset in the Project window shows the import settings for that asset in the Inspector</figcaption>
+</figure>
+
+<p>For other asset types, the import settings look different. The various settings you see relate to the type of asset selected. Here’s an example of an Audio asset, with its related import settings shown in the inspector:</p>
+
+<figure>
+<img src="../uploads/Main/ImportSettingsAudioExample.png" alt="An Audio asset selected in the Project window shows the Audio import settings for that asset in the Inspector">
+<figcaption>An Audio asset selected in the Project window shows the Audio import settings for that asset in the Inspector</figcaption>
+</figure>
+
+<p>If you are developing a cross-platform project, you can override the “default” settings and assign different import settings on a per-platform basis.</p>
+
+<p><a name="processing" aria-hidden="true"></a></p>
+
+<h2>Asset processing</h2>
+
+<p>Unity reads and processes any files that you add to the <code>Assets</code> folder, and converts the contents of the file to internal game-ready data. The asset files themselves remain unchanged, and the internal data is stored in the project’s <code>Library</code> folder. This data is part of the Unity Editor’s <a href="AssetDatabase.html">Asset Database</a>.</p>
+
+<p>Using internal formats for assets allows Unity to have internal versions of your assets ready to use at runtime in the Editor, and to keep your unmodified source files in the <code>Assets</code> folder. A distinction between the asset files and the internal versions means that you can quickly edit the asset file, and have the Editor pick up the changes automatically. For example, you can save <code>.psd</code> files directly into your <code>Assets</code> folder, but hardware such as mobile devices and PC graphics cards can’t process that format directly in order to render them as textures. Instead, Unity can convert an internal version into a format that those platforms can process.</p>
+
+<p>Unity stores the internal representation of your assets in the <code>Library</code> folder, which behaves like a cache folder. As a user, you should never need to alter the <code>Library</code> folder manually; if you do, you might negatively affect your project in the Unity Editor. This also means that you should not include the <code>Library</code> folder under <span class="tooltip"><strong>version control</strong><span class="tooltiptext">A system for managing file changes. You can use Unity in conjunction with most common version control tools, including Perforce, Git, Mercurial and PlasticSCM. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VersionControl.html" href="VersionControl.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VersionControl" aria-label="Go to glossary anchor for VersionControl">Glossary</a></span></span></span>.</p>
+
+<p>
+<strong>Note:</strong> If your project is not open in Unity, you can safely delete the <code>Library</code> folder, because Unity can regenerate all of its data from the <code>Assets</code> and <code>ProjectSettings</code> folders the next time you launch your project.</p>
+
+<h2>Complex assets</h2>
+
+<p>In some cases, Unity might create multiple assets while importing a single asset file. For example:</p>
+
+<ul>
+<li>When a 3D file (such as an FBX file) defines Materials or contains embedded Textures. To handle this, Unity extracts the <a href="FBXImporter-Materials.html">Materials and embedded Textures</a> as separate assets.</li>
+<li>When you want to import an image file as multiple 2D sprites. You should use the 2D <a href="SpriteEditor.html">Sprite Editor</a> to define multiple sprites from a single graphic image. Unity displays each sprite defined in the Editor as a separate Sprite asset in the Project window.</li>
+<li>When a 3D file contains multiple animation timelines or multiple clips. To handle this, Unity automatically defines separate animation timelines or clips based on its <a href="Splittinganimations.html">animation import settings</a>. The resulting multiple animation clips appear as separate Animation Clip assets in the Project window.</li>
+</ul>
+
+<h2>See also</h2>
+
+<ul>
+<li><a href="AssetPackages.html">Asset packages</a></li>
+<li><a href="Materials.html">Materials and Shaders</a></li>
+<li><a href="Textures.html">Textures and Videos</a></li>
+<li><a href="SpriteEditor.html">Sprite Editor</a></li>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SpritePacker.html">Sprite Packer</a><span class="tooltiptext">A facility that packs graphics from several sprite textures tightly together within a single texture known as an atlas. Unity provides a Sprite Packer utility to automate the process of generating atlases from the individual sprite textures. <a href="SpritePacker.html" href="SpritePacker.html">Sprite Packer</a><span class="tooltiptext">A facility that packs graphics from several sprite textures tightly together within a single texture known as an atlas. Unity provides a Sprite Packer utility to automate the process of generating atlases from the individual sprite textures. <a href="SpritePacker.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SpritePacker" aria-label="Go to glossary anchor for SpritePacker">Glossary</a></span></span></span></li>
+<li><a href="AudioFiles.html">Audio Files</a></li>
+<li><a href="TrackerModules.html">Tracker Modules</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetWorkflow.html"></a></span><div class="tip">Asset Workflow</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ParallelImport.html"></a></span><div class="tip">Importing assets simultaneously</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

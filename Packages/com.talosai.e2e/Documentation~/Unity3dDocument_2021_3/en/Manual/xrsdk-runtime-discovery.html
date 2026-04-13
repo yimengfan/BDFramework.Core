@@ -1,0 +1,277 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Runtime discovery and activation of subsystems</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xrsdk-runtime-discovery.html">English</a></li>
+<li><a href="/cn/current/Manual/xrsdk-runtime-discovery.html">中文</a></li>
+<li><a href="/ja/current/Manual/xrsdk-runtime-discovery.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xrsdk-runtime-discovery.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xrsdk-runtime-discovery.html">English</a></li>
+<li><a href="/cn/current/Manual/xrsdk-runtime-discovery.html">中文</a></li>
+<li><a href="/ja/current/Manual/xrsdk-runtime-discovery.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xrsdk-runtime-discovery.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="XR.html">XR</a></li>
+<li><a href="xr-sdk.html">Unity XR SDK</a></li>
+<li>Runtime discovery and activation of subsystems</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="xrsdk-unity-subsystems-manifest-json.html"></a></span><div class="tip">UnitySubsystemsManifest.json</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="xrsdk-subsystems-landing.html"></a></span><div class="tip">Subsystems</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Runtime discovery and activation of subsystems</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Note:</strong> The Unity <span class="tooltip"><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html" href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> SDK is no longer available as we have focused our investments towards <a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@latest">OpenXR</a>.</p>
+
+<p>Add the following script to your project in order to scan for and create or start a Display subsystem with the <code>id</code> of <code>Display0</code>. You can change the <code>match</code> variable if you want to load other Display subsystems:</p>
+
+<pre><code class="csharp">using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Experimental.XR;
+using UnityEngine.XR;
+
+public class Display : MonoBehaviour
+{
+    public string match = &quot;Display0&quot;;
+
+    // Use this for initialization
+    void Start ()
+    {
+        List&lt;XRDisplaySubsystemDescriptor&gt; displays = new List&lt;XRDisplaySubsystemDescriptor&gt;();
+        SubsystemManager.GetSubsystemDescriptors(displays);
+        Debug.Log(&quot;Number of display providers found: &quot; + displays.Count);
+
+        foreach (var d in displays)
+        {
+            Debug.Log(&quot;Scanning display id: &quot; + d.id);
+
+            if (d.id.Contains(match))
+            {
+                Debug.Log(&quot;Creating display &quot; + d.id);
+                XRDisplaySubsystem dispInst = d.Create();
+
+                if (dispInst != null)
+                {
+                    Debug.Log(&quot;Starting display &quot; + d.id);
+                    dispInst.Start();
+                }
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>The <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.xr.management@latest">XR Management</a> package is the user-facing <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html" href="https://docs.unity3d.com/Packages/com.unity.xr.management@latest">XR Management</a> package is the user-facing <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> used to configure loading of subsystems at runtime. It uses the same underlying APIs (described above) to create and manage subsystems. If you want your provider to show up in the XR Settings UI, write an <a href="https://docs.unity3d.com/Packages/com.unity.xr.management@latest?subfolder=/manual/Provider.html">XRLoader</a>.</p>
+
+<p>If your <span class="tooltip"><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Plugins.html" href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> fails to load, see the <a href="#troubleshooting">troubleshooting</a> section below.</p>
+
+<p><a name="troubleshooting" aria-hidden="true"></a></p>
+
+<h2>Troubleshooting plug-in discovery at runtime</h2>
+
+<p>To troubleshoot the initialization or starting of your subsystem Provider, check the <a href="LogFiles.html">editor log or player output log</a> for lines that start with <code>[XR]</code> or <code>[Subsystems]</code>.</p>
+
+<h2>No subsystems found in C#</h2>
+
+<p>If you just added a .json and plug-in files, make sure you relaunch Unity. Currently, Unity only discovers these files at start-up. Also, make sure that the Provider uses the correct <a href="xrsdk-provider-setup.html#file-layout">file layout</a>.</p>
+
+<h2>Errors finding and parsing the UnitySubsystemsManifest.json file</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Error</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">[XR] 3 ‘displays’ descriptors matched in Assets/UnityXRDisplayExample/UnitySubsystemsManifest.json</td>
+	<td style="text-align:left;">Unity successfully found display descriptors and registers three different <code>id</code>s for this plug-in.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">[XR] No descriptors matched for inputs in Assets/UnityXRDisplayExample/UnitySubsystemsManifest.json.</td>
+	<td style="text-align:left;">The .json file contains no input descriptors. This is normal if you’re not implementing an input subsystem.<br>If you were expecting Unity to find descriptors in your .json file, they could be malformed. See documentation on <a href="xrsdk-unity-subsystems-manifest-json.html">UnitySubsystemsManifest.json</a> for the correct format to use.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">[XR] Failed to parse json header for Assets/UnityXRDisplayExample/UnitySubsystemsManifest.json (did you forget to include name or libraryName fields?)</td>
+	<td style="text-align:left;">This likely means you have a malformed .json file. Run it through a validation tool, such as <a href="https://jsonlint.com/">json linter</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Errors finding and loading the provider plug-in</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Error</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">[XR] PluginName failed to register Provider for DisplayId (json name or id doesn’t match?)</td>
+	<td style="text-align:left;">This means that the first two arguments to <code>RegisterLifecycleProvider</code> don’t match the .json file.<br>The first argument, <code>pluginName</code>, should match the <code>name</code> field in the .json file.<br>The second argument, <code>id</code>, should match the <code>id</code> field of the subsystem in the .json file.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">[XR] Unable to load plugin PluginName for subsystem DisplayId</td>
+	<td style="text-align:left;">Your plug-in couldn’t be found, it was built for the wrong architecture, or it has missing dependencies that need to be loaded. In the later case, you can use the <a href="http://www.dependencywalker.com/">Dependency Walker</a> tool to find out if there are missing dependencies.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Errors initializing the provider</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Error</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">[XR] Failed to initialize subsystem DisplayId [error: 1]</td>
+	<td style="text-align:left;">Unity called out to your <code>Initialize</code> method, but it returned <code>kUnitySubsystemErrorCodeFailure</code>. Double-check the implementation of your <code>Initialize</code> method.</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="xrsdk-unity-subsystems-manifest-json.html"></a></span><div class="tip">UnitySubsystemsManifest.json</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="xrsdk-subsystems-landing.html"></a></span><div class="tip">Subsystems</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

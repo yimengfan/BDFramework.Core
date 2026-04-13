@@ -1,0 +1,580 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Terrain settings</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/terrain-OtherSettings.html">English</a></li>
+<li><a href="/cn/current/Manual/terrain-OtherSettings.html">中文</a></li>
+<li><a href="/ja/current/Manual/terrain-OtherSettings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/terrain-OtherSettings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/terrain-OtherSettings.html">English</a></li>
+<li><a href="/cn/current/Manual/terrain-OtherSettings.html">中文</a></li>
+<li><a href="/ja/current/Manual/terrain-OtherSettings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/terrain-OtherSettings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="CreatingEnvironments.html">World building</a></li>
+<li><a href="script-Terrain.html">Terrain</a></li>
+<li>Terrain settings</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="terrain-Heightmaps.html"></a></span><div class="tip">Working with Heightmaps</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="terrain-Runtime.html"></a></span><div class="tip">Using Terrain at runtime</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Terrain settings</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The final tool on the five-icon <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> is for settings. In the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> is for settings. In the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, click the gear icon to reveal the <strong><span class="tooltip"><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a href="terrain-UsingTerrains.html" href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, click the gear icon to reveal the <strong><span class="tooltip"><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> settings</strong>.</p>
+
+<h2>Basic Terrain</h2>
+
+<figure>
+<img src="../uploads/Main/TerrainSettings01.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong><em>Property</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Grouping ID</strong></td>
+	<td style="text-align:left;">The grouping ID for the <strong>Auto connect</strong> feature.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Auto Connect</strong></td>
+	<td style="text-align:left;">Check this box to automatically connect the current Terrain tile to to neighboring tiles sharing the same <strong>Grouping ID</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Reconnect</strong></td>
+	<td style="text-align:left;">On rare occasions, you might lose connections between Terrain tiles if you change the <strong>Grouping ID</strong>, or disable <strong>Auto connect</strong> for one or more tiles. To recreate connections between tiles, click the <strong>Reconnect</strong> button. <strong>Reconnect</strong> only connects two adjacent tiles if they have the same <strong>Grouping ID</strong> and if both tiles have <strong>Auto Connect</strong> enabled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Draw</strong></td>
+	<td style="text-align:left;">Check this box to enable rendering of the Terrain.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Draw Instanced</strong></td>
+	<td style="text-align:left;">Check this box to enable instanced rendering.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong><span class="tooltip"><strong>Pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> Error</strong></td>
+	<td style="text-align:left;">The accuracy of the mapping between Terrain maps (such as heightmaps and Textures) and generated Terrain. Higher values indicate lower accuracy, but with lower rendering overhead.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Base Map Dist.</strong></td>
+	<td style="text-align:left;">The maximum distance at which Unity displays Terrain Textures at full resolution. Beyond this distance, the system uses a lower resolution composite image for efficiency.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Cast Shadows</strong></td>
+	<td style="text-align:left;">Use this to define how the Terrain casts shadows onto other objects in the <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. <a href="../ScriptReference/Rendering.ShadowCastingMode.html">Rendering.ShadowCastingMode</a> controls how the Terrain shadow interacts with Scene objects.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Off</em></td>
+	<td style="text-align:left;">The Terrain does not cast shadows.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>On</em></td>
+	<td style="text-align:left;">The Terrain casts shadows.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Two Sided</em></td>
+	<td style="text-align:left;">Casts two-sided shadows from either side of the Terrain. The Progressive <span class="tooltip"><strong>Lightmapper</strong><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmapper" aria-label="Go to glossary anchor for Lightmapper">Glossary</a></span></span></span> supports two-sided shadows. Enlighten Baked and Enlighten Realtime <span class="tooltip"><strong>Global Illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span> do not.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Shadows Only</em></td>
+	<td style="text-align:left;">Shadows from the Terrain are visible, but the Terrain itself is not.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong><span class="tooltip"><strong>Reflection Probes</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ReflectionProbe.html" href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Use this to set how Unity uses Reflection Probes on Terrain. This setting only has an effect when <strong>Material</strong> is set to <strong>Built In Standard</strong>, or if you use a custom Material (with <strong>Material</strong> set to <strong>Custom</strong>) that supports rendering with reflection.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Off</em></td>
+	<td style="text-align:left;">Disables Reflection Probes, and uses a <span class="tooltip"><strong>skybox</strong><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Skybox.html" href="class-Skybox.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skybox" aria-label="Go to glossary anchor for Skybox">Glossary</a></span></span></span> for reflection.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Blend Probes</em></td>
+	<td style="text-align:left;">Enables Reflection Probes. Blending occurs only between probes. Uses default reflection if there are no Reflection Probes nearby, but no blending between default reflection and probe.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Blend Probes And Skybox</em></td>
+	<td style="text-align:left;">Enables Reflection probes. Blending occurs between probes, or between probes and default reflection.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><em>Simple</em></td>
+	<td style="text-align:left;">Enables Reflection probes, but no blending occurs between probes when there are two overlapping volumes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Material</strong></td>
+	<td style="text-align:left;">Lets you specify the Material to use for rendering Terrain.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Create</strong></td>
+	<td style="text-align:left;">The <strong>Create</strong> button only appears when you select a default Terrain Material. It does not appear when you select a custom Material. When you click <strong>Create</strong>, Unity creates a copy of the Material in your Project folder, which you can modify, and then automatically selects this new copy.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Tree and Detail Objects</h2>
+
+<figure>
+<img src="../uploads/Main/TerrainSettings02.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Draw</strong></td>
+	<td style="text-align:left;">Check this box to draw trees, grass, and details.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bake Light Probes For Trees</strong></td>
+	<td style="text-align:left;">If you check this box, Unity creates internal Light Probes at the position of each tree, and applies them to tree renderers for lighting. These probes are internal, and don’t affect other renderers in the Scene.<br><br>If you don’t check this box, trees are still affected by <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LightProbeGroup.html">Light Probe Groups</a><span class="tooltiptext">A component that enables you to add Light Probes to GameObjects in your scene. <a href="class-LightProbeGroup.html" href="class-LightProbeGroup.html">Light Probe Groups</a><span class="tooltiptext">A component that enables you to add Light Probes to GameObjects in your scene. <a href="class-LightProbeGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbeGroup" aria-label="Go to glossary anchor for LightProbeGroup">Glossary</a></span></span></span>. This option is only effective for trees with Light Probe enabled on their prototype Prefab.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Remove Light Probe Ringing</strong></td>
+	<td style="text-align:left;">If you check this box, Unity removes visible overshooting, which often appears as ringing on <span class="no tooltip">GameObjects</span> that are affected by intense lighting. This setting reduces contrast, and is dependent on Bake Light Probes for Trees. For more information, see <a href="class-LightProbeGroup.html#Ringing">Light Probe Groups: Ringing</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Preserve Tree Prototype Layers</strong></td>
+	<td style="text-align:left;">Check this box if you want your tree instances to take on the layer values of their prototype <span class="tooltip"><strong>Prefabs</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span>, instead of the Terrain <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html" href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span>, instead of the Terrain <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>’s layer values.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Detail Distance</strong></td>
+	<td style="text-align:left;">The distance from the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> beyond which details are culled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Detail Density</strong></td>
+	<td style="text-align:left;">The number of detail/grass objects in a given unit of area. Set this value lower to reduce rendering overhead.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Tree Distance</strong></td>
+	<td style="text-align:left;">The distance from the camera beyond which trees are culled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Billboard</strong><span class="tooltiptext">A textured 2D object that rotates so that it always faces the Camera. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-BillboardRenderer.html" href="class-BillboardRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Billboard" aria-label="Go to glossary anchor for Billboard">Glossary</a></span></span></span> Start</strong></td>
+	<td style="text-align:left;">The distance from the camera at which Billboard images replace 3D Tree objects.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Fade Length</strong></td>
+	<td style="text-align:left;">The distance over which Trees transition between <span class="tooltip"><strong>3D objects</strong><span class="tooltiptext">A 3D GameObject such as a cube, terrain or ragdoll. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GameObjects.html" href="GameObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#3DObject" aria-label="Go to glossary anchor for 3DObject">Glossary</a></span></span></span> and Billboards.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Max <span class="no tooltip">Mesh</span> Trees</strong></td>
+	<td style="text-align:left;">The maximum number of visible Trees that are represented as solid 3D meshes. Beyond this limit, Billboards replace Trees.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Wind Settings for Grass</h2>
+
+<figure>
+<img src="../uploads/Main/TerrainSettings03.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Speed</strong></td>
+	<td style="text-align:left;">The speed of the wind as it blows across the grass.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Size</strong></td>
+	<td style="text-align:left;">The size of ripples on grassy areas as the wind blows over them.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bending</strong></td>
+	<td style="text-align:left;">The degree to which the wind bends over grass objects.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Grass Tint</strong></td>
+	<td style="text-align:left;">The overall color tint applied to grass objects. The final color that appears is the <strong>Grass Tint</strong> multiplied by the <strong>Healthy Color</strong> and <strong>Dry Color</strong> settings of each grass object.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Wind Settings for Grass</strong> have no connection with <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-WindZone.html">Wind Zone</a><span class="tooltiptext">A GameObject that adds the effect of wind to your terrain. For instance, Trees within a wind zone will bend in a realistic animated fashion and the wind itself will move in pulses to create natural patterns of movement among the tree. <a href="class-WindZone.html" href="class-WindZone.html">Wind Zone</a><span class="tooltiptext">A GameObject that adds the effect of wind to your terrain. For instance, Trees within a wind zone will bend in a realistic animated fashion and the wind itself will move in pulses to create natural patterns of movement among the tree. <a href="class-WindZone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#windzone" aria-label="Go to glossary anchor for windzone">Glossary</a></span></span></span> components. The two are unrelated.</p>
+
+<h2>Mesh Resolution</h2>
+
+<figure>
+<img src="../uploads/Main/TerrainSettings04.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Terrain Width</strong></td>
+	<td style="text-align:left;">The size of the Terrain GameObject in its X-axis, in world units.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Terrain Length</strong></td>
+	<td style="text-align:left;">The size of the Terrain GameObject in its Z-axis, in world units.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Terrain Height</strong></td>
+	<td style="text-align:left;">The difference in Y-coordinate between the lowest possible <span class="tooltip"><strong>heightmap</strong><span class="tooltiptext">A greyscale Texture that stores height data for an object. Each pixel stores the height difference perpendicular to the face that pixel represents.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Heightmap" aria-label="Go to glossary anchor for Heightmap">Glossary</a></span></span></span> value and the highest one, in world units.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Detail Resolution Per Patch</strong></td>
+	<td style="text-align:left;">The number of cells in a single patch (mesh). This value is squared to form a grid of cells, and must be a divisor of the detail resolution.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Detail Resolution</strong></td>
+	<td style="text-align:left;">The number of cells available for placing details onto the Terrain tile. This value is squared to make a grid of cells.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Holes Settings</h2>
+
+<figure>
+<img src="../uploads/Main/TerrainSettings05.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong><em>Property</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Compress Holes Texture</strong></td>
+	<td style="text-align:left;">If you check this box, Unity compresses the Terrain Holes Texture to the DXT1 graphics format in the Player during runtime. If you don’t check this box, Unity does not compress the Texture.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Texture Resolutions</h2>
+
+<figure>
+<img src="../uploads/Main/TerrainSettings06.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong><em>Property</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Heightmap Resolution</strong></td>
+	<td style="text-align:left;">The pixel resolution of the Terrain’s heightmap. This value must be a power of two plus one, for example, 513, which is 512 + 1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Control Texture Resolution</strong></td>
+	<td style="text-align:left;">The resolution of the splatmap that controls the blending of the different Terrain Textures.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Base Texture Resolution</strong></td>
+	<td style="text-align:left;">The resolution of the composite Texture to use on the Terrain when you view it from a distance greater than the Basemap Distance.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Require resampling on change</strong> indicates that when you change properties under <strong>Texture Resolutions</strong>, the Editor resizes the Terrain tile’s content to the new size you specify, which can potentially affect the quality of your content.</p>
+
+<h3>Heightmap Import/Export buttons</h3>
+
+<p>The <strong>Import Raw</strong> and <strong>Export Raw</strong> buttons allow you to set or save the Terrain’s heightmap to an image file in the RAW grayscale format. You can create RAW format files in third-party terrain editing tools (such as Bryce), and you can open, edit, and save them in Photoshop. This allows for sophisticated generation and editing of terrains outside Unity.</p>
+
+<h2>Lighting</h2>
+
+<figure>
+<img src="../uploads/Main/TerrainSettings07.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong><em>Property</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Contribute Global Illumination</strong></td>
+	<td style="text-align:left;">Enable this check box to indicate to Unity that the Terrain influences Global Illumination computations. When you enable this property, <strong>Lightmapping</strong> properties appear.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Receive Global Illumination</strong></td>
+	<td style="text-align:left;">You can only configure this option if you’ve enabled <strong>Contribute Global Illumination</strong> above. If you don’t enable <strong>Contribute Global Illumination</strong>, the Terrain registers as non-static, and receives Global Illumination from <span class="tooltip"><strong>Light Probes</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html" href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span>.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Lightmapping</h2>
+
+<figure>
+<img src="../uploads/Main/TerrainSettings08.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong><em>Property</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Scale in <span class="tooltip"><strong>Lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Lets you specify the relative size of an object’s UVs within a lightmap. If you set this to zero, the object is not lightmapped, but still contributes lighting to other objects in the Scene. A value greater than 1.0 increases the number of pixels (the lightmap resolution) used for this GameObject, while a value less than 1.0 decreases it.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Lightmap Parameters</strong></td>
+	<td style="text-align:left;">Lets you adjust advanced parameters that affect the process of generating a lightmap for an object using global illumination. See <a href="class-LightmapParameters.html">Lightmap Parameters</a> for more information about these settings.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Rendering <span class="tooltip"><strong>Layer Mask</strong><span class="tooltiptext">A value defining which layers to include or exclude from an operation, such as rendering, collision or your own code. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Layers.html" href="Layers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LayerMask" aria-label="Go to glossary anchor for LayerMask">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Determines which rendering layer this Terrain lives on. When you use a <a href="ScriptableRenderPipeline.html">scriptable render pipeline</a>, you can specify an additional rendering-specific layer mask. This filters the renderers based on the mask the renderer has and the mask passed to the <a href="../ScriptReference/Rendering.ScriptableRenderContext.DrawRenderers.html">DrawRenderers</a> command.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Terrain Collider</h2>
+
+<figure>
+<img src="../uploads/Main/TerrainSettings09.png" alt="">
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Material</strong></td>
+	<td style="text-align:left;">A reference to the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/PhysicMaterial.html">Physic Material</a><span class="tooltiptext">A physics asset for adjusting the friction and bouncing effects of colliding objects. <a href="class-PhysicMaterial.html" href="../ScriptReference/PhysicMaterial.html">Physic Material</a><span class="tooltiptext">A physics asset for adjusting the friction and bouncing effects of colliding objects. <a href="class-PhysicMaterial.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#PhysicMaterial" aria-label="Go to glossary anchor for PhysicMaterial">Glossary</a></span></span></span> that determines how this Terrain’s <span class="tooltip"><strong>Collider</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a href="CollidersOverview.html" href="Glossary.html#PhysicMaterial" aria-label="Go to glossary anchor for PhysicMaterial">Glossary</a></span></span></span> that determines how this Terrain’s <span class="tooltip"><strong>Collider</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Collider" aria-label="Go to glossary anchor for Collider">Glossary</a></span></span></span> interacts with other Colliders in the Scene.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Terrain Data</strong></td>
+	<td style="text-align:left;">The TerrainData Asset that stores heightmaps, Terrain Textures, detail Meshes, and Trees.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Enable Tree Colliders</strong></td>
+	<td style="text-align:left;">Check this box to enable Tree Colliders.</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<ul>
+<li><p><span class="page-edit">2020–01–16 Page amended
+</span></p></li>
+<li><p><span class="page-history">Updated content to reflect new UI and options</span></p></li>
+</ul>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="terrain-Heightmaps.html"></a></span><div class="tip">Working with Heightmaps</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="terrain-Runtime.html"></a></span><div class="tip">Using Terrain at runtime</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

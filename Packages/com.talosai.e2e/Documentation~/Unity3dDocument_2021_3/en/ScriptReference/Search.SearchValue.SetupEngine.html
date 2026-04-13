@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Search.SearchValue.SetupEngine</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">
+                  <a href="Search.SearchValue.html">SearchValue</a>.SetupEngine</h1>
+                <div class="clear">
+                </div>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public static void <span class="sig-kw">SetupEngine</span>(QueryEngine&lt;T&gt; <span class="sig-kw">queryEngine</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">queryEngine</td>
+                    <td class="desc">Query engine to add extended search value filters and parsers.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Extended a query engine to work with dynamic search values.</p>
+              </div>
+              <div class="subsection">
+        <p>Here's a few example of custom providers that use the extended search value when setting up a <a href="Search.QueryEngine.html">QueryEngine</a>.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using <a href="Rendering.VirtualTexturing.System.html">System</a>;
+using System.Collections.Generic;
+using System.Linq;
+using <a href="UnityEditor.html">UnityEditor</a>;
+using UnityEditor.Search;
+using UnityEngine;<br /><br />static class EasySearchProviderExample
+{
+    enum ExampleProvider { win, material, shader, folder, component, project, res }<br /><br />    /// &lt;summary&gt;
+    /// Search opened editor windows
+    /// &lt;/summary&gt;
+    [SearchItemProvider]
+    public static <a href="Search.SearchProvider.html">SearchProvider</a> ExampleWindows()
+    {
+        return EasySearchProvider.Create(ExampleProvider.win.ToString(), _ =&gt; <a href="Resources.FindObjectsOfTypeAll.html">Resources.FindObjectsOfTypeAll</a>&lt;<a href="EditorWindow.html">EditorWindow</a>&gt;())
+            .AddAction("select", win =&gt; win.Focus())
+            .AddFilter("floating", "Floating", win =&gt; !win.docked)
+            .AddOption(<a href="Search.ShowDetailsOptions.Inspector.html">ShowDetailsOptions.Inspector</a>)
+            .AddOption(EasyOptions.DisplayFilterValueInDescription)
+            .AddByReflectionActions();
+    }<br /><br />    /// &lt;summary&gt;
+    /// Search any loaded material and select them in the inspector.
+    /// &lt;/summary&gt;
+    [SearchItemProvider]
+    public static <a href="Search.SearchProvider.html">SearchProvider</a> ExampleMaterials()
+    {
+        return EasySearchProvider.Create(_ =&gt; <a href="Resources.FindObjectsOfTypeAll.html">Resources.FindObjectsOfTypeAll</a>&lt;<a href="Material.html">Material</a>&gt;())
+            .AddAction("select", o =&gt; <a href="Selection-activeObject.html">Selection.activeObject</a> = o)
+            .AddOption(<a href="Search.ShowDetailsOptions.Actions.html">ShowDetailsOptions.Actions</a> | <a href="Search.ShowDetailsOptions.Inspector.html">ShowDetailsOptions.Inspector</a>)
+            .RemoveOption(<a href="Search.ShowDetailsOptions.Description.html">ShowDetailsOptions.Description</a>);
+    }<br /><br />    /// &lt;summary&gt;
+    /// Search any loaded shader.
+    /// Select them in the inspector.
+    /// View the shader source in the preview inspector.
+    /// &lt;/summary&gt;
+    [SearchItemProvider]
+    public static <a href="Search.SearchProvider.html">SearchProvider</a> ExampleShaders()
+    {
+        static string ReadSource(<a href="Shader.html">Shader</a> shader)
+        {
+            var shaderPath = <a href="AssetDatabase.GetAssetPath.html">AssetDatabase.GetAssetPath</a>(shader);
+            if (string.IsNullOrEmpty(shaderPath))
+                return <a href="ShaderUtil.GetShaderData.html">ShaderUtil.GetShaderData</a>(shader).ToString();
+            if (System.IO.File.Exists(shaderPath))
+                return $"&lt;size=8&gt;{System.IO.File.ReadAllText(shaderPath)}&lt;/size&gt;";
+            return shaderPath;
+        }<br /><br />        static string FetchShaderSource(<a href="Shader.html">Shader</a> shader, <a href="Search.SearchItemOptions.html">SearchItemOptions</a> options)
+        {
+            if ((options &amp; <a href="Search.SearchItemOptions.FullDescription.html">SearchItemOptions.FullDescription</a>) != 0)
+                return ReadSource(shader) ?? shader.ToString();
+            return <a href="AssetDatabase.GetAssetPath.html">AssetDatabase.GetAssetPath</a>(shader);
+        }<br /><br />        return EasySearchProvider.Create(_ =&gt; <a href="Resources.FindObjectsOfTypeAll.html">Resources.FindObjectsOfTypeAll</a>&lt;<a href="Shader.html">Shader</a>&gt;())
+            .AddAction("select", o =&gt; <a href="Selection-activeObject.html">Selection.activeObject</a> = o)
+            .AddOption(<a href="Search.ShowDetailsOptions.Actions.html">ShowDetailsOptions.Actions</a> | <a href="Search.ShowDetailsOptions.Inspector.html">ShowDetailsOptions.Inspector</a> | <a href="Search.ShowDetailsOptions.Description.html">ShowDetailsOptions.Description</a>)
+            .AddFilter("source", "Source Code", s =&gt; ReadSource(s))
+            .SetDescriptionHandler(FetchShaderSource);
+    }<br /><br />    /// &lt;summary&gt;
+    /// Search any active game object component.
+    /// &lt;/summary&gt;
+    [SearchItemProvider]
+    public static <a href="Search.SearchProvider.html">SearchProvider</a> ExampleComponents()
+    {
+        return EasySearchProvider.Create(_ =&gt; <a href="Resources.FindObjectsOfTypeAll.html">Resources.FindObjectsOfTypeAll</a>&lt;<a href="Component.html">Component</a>&gt;())
+            .SetDescriptionHandler((obj, options) =&gt; obj.GetType().FullName)
+            .AddAction("ping", o =&gt; <a href="EditorGUIUtility.PingObject.html">EditorGUIUtility.PingObject</a>(o.gameObject))
+            .AddAction("select", o =&gt; <a href="Selection-activeObject.html">Selection.activeObject</a> = o)
+            .AddOption(<a href="Search.ShowDetailsOptions.Actions.html">ShowDetailsOptions.Actions</a> | <a href="Search.ShowDetailsOptions.Inspector.html">ShowDetailsOptions.Inspector</a>)
+            .RemoveOption(<a href="Search.ShowDetailsOptions.Description.html">ShowDetailsOptions.Description</a>);
+    }<br /><br />    /// &lt;summary&gt;
+    /// Search all project folders.
+    /// &lt;/summary&gt;
+    /// &lt;returns&gt;&lt;/returns&gt;
+    [SearchItemProvider]
+    public static <a href="Search.SearchProvider.html">SearchProvider</a> ExampleFolders()
+    {
+        var folderIcon = <a href="EditorGUIUtility.FindTexture.html">EditorGUIUtility.FindTexture</a>("<a href="WSA.Folder.html">Folder</a> Icon");
+        return EasySearchProvider.Create(ExampleProvider.folder.ToString(), "Folders",
+            _ =&gt; System.IO.Directory.EnumerateDirectories("Assets", "*", System.IO.SearchOption.AllDirectories).Select(d =&gt; d.Replace("<br />", "/")))
+            .SetThumbnailHandler(dir =&gt; folderIcon)
+            .AddAction("open", dir =&gt; EditorUtility.RevealInFinder(dir))
+            .AddAction("select", dir =&gt; <a href="Selection-activeObject.html">Selection.activeObject</a> =<a href="AssetDatabase.LoadMainAssetAtPath.html">AssetDatabase.LoadMainAssetAtPath</a>(dir))
+            .AddOption(EasyOptions.DescriptionSameAsLabel | EasyOptions.SortByName);
+    }<br /><br />    /// &lt;summary&gt;
+    /// Search editor bundle resources.
+    /// Note: that bundle resources are cached once.
+    /// &lt;/summary&gt;
+    /// &lt;returns&gt;&lt;/returns&gt;
+    [SearchItemProvider]
+    public static <a href="Search.SearchProvider.html">SearchProvider</a> ExampleEditorBundles()
+    {
+        Func&lt;UnityEngine.Object, bool&gt; FR = r =&gt; string.Equals(<a href="AssetDatabase.GetAssetPath.html">AssetDatabase.GetAssetPath</a>(r), "Library/unity editor resources", StringComparison.Ordinal);
+        return EasySearchProvider.Create(ExampleProvider.res.ToString(), "<a href="Resources.html">Resources</a>", <a href="Resources.FindObjectsOfTypeAll.html">Resources.FindObjectsOfTypeAll</a>&lt;UnityEngine.Object&gt;().Where(FR))
+            .SetDescriptionHandler(r =&gt; $"{r.GetType().FullName} ({r.GetInstanceID()})")
+            .AddAction("select", o =&gt; <a href="Selection-activeObject.html">Selection.activeObject</a> = o)
+            .AddAction("copy", "Copy Name", r =&gt; <a href="EditorGUIUtility-systemCopyBuffer.html">EditorGUIUtility.systemCopyBuffer</a> = r.name)
+            .AddOption(<a href="Search.ShowDetailsOptions.Actions.html">ShowDetailsOptions.Actions</a> | <a href="Search.ShowDetailsOptions.Inspector.html">ShowDetailsOptions.Inspector</a>)
+            .AddOption(EasyOptions.YieldAllItemsIfSearchQueryEmpty);
+    }<br /><br />    [<a href="MenuItem.html">MenuItem</a>("Window/Search/Easy")]
+    public static void ShowProvider()
+    {
+        <a href="Search.SearchService.ShowContextual.html">SearchService.ShowContextual</a>(Enum.GetValues(typeof(ExampleProvider)).Cast&lt;ExampleProvider&gt;().Select(e =&gt; e.ToString()).ToArray());
+    }
+}
+</pre>
+      </div>
+              <div class="subsection">
+        <p>Easy search providers.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using <a href="Rendering.VirtualTexturing.System.html">System</a>;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using <a href="UnityEditor.html">UnityEditor</a>;
+using UnityEditor.Search;
+using UnityEditor.Search.Providers;
+using UnityEngine;<br /><br />[<a href="Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics.Flags.html">Flags</a>]
+enum EasyOptions
+{
+    None = 0,<br /><br />    YieldAllItemsIfSearchQueryEmpty = 1 &lt;&lt; 5,
+    DescriptionSameAsLabel = 1 &lt;&lt; 6,
+    SortByName = 1 &lt;&lt; 7,
+    DisplayFilterValueInDescription = 1 &lt;&lt; 8,
+}<br /><br />static class EasyOptionsExtensions
+{
+    public static bool HasAny(this EasyOptions flags, in EasyOptions f) =&gt; (flags &amp; f) != 0;
+    public static bool HasAll(this EasyOptions flags, in EasyOptions all) =&gt; (flags &amp; all) == all;
+}<br /><br />static class EasySearchProvider
+{
+    public static EasySearchProvider&lt;T&gt; Create&lt;T&gt;(string id, Func&lt;<a href="Search.SearchContext.html">SearchContext</a>, IEnumerable&lt;T&gt;&gt; fetchObjects)
+    {
+        return Create(id, null, fetchObjects);
+    }<br /><br />    public static EasySearchProvider&lt;T&gt; Create&lt;T&gt;(Func&lt;<a href="Search.SearchContext.html">SearchContext</a>, IEnumerable&lt;T&gt;&gt; fetchObjects)
+    {
+        return Create(typeof(T).Name.ToLowerInvariant(), null, fetchObjects);
+    }<br /><br />    public static EasySearchProvider&lt;T&gt; Create&lt;T&gt;(string id, string label, Func&lt;<a href="Search.SearchContext.html">SearchContext</a>, IEnumerable&lt;T&gt;&gt; fetchObjects)
+    {
+        return new EasySearchProvider&lt;T&gt;(id, label, fetchObjects);
+    }<br /><br />    public static EasySearchProvider&lt;T&gt; Create&lt;T&gt;(string id, string label, IEnumerable&lt;T&gt; objects)
+    {
+        return new EasySearchProvider&lt;T&gt;(id, label, objects);
+    }
+}<br /><br />readonly struct EasyFilter
+{
+    public readonly string name;
+    public readonly string label;
+    public readonly Func&lt;object, object&gt; func;<br /><br />    public EasyFilter(string name, string label, Func&lt;object, object&gt; func)
+    {
+        this.name = name;
+        this.label = label;
+        this.func = func;
+    }
+}<br /><br />class EasySearchProvider&lt;T&gt; : <a href="Search.SearchProvider.html">SearchProvider</a>
+{
+    private bool m_FiltersAdded;
+    private EasyOptions m_Options;
+    private <a href="Search.QueryEngine.html">QueryEngine</a>&lt;T&gt; m_QueryEngine;
+    private List&lt;EasyFilter&gt; m_Filters;<br /><br />    private T[] m_CachedObjects;
+    private Func&lt;<a href="Search.SearchContext.html">SearchContext</a>, IEnumerable&lt;T&gt;&gt; m_FetchObjects;<br /><br />    public EasySearchProvider(string id, string displayName, IEnumerable&lt;T&gt; objects)
+        : this(id, displayName, null as Func&lt;<a href="Search.SearchContext.html">SearchContext</a>, IEnumerable&lt;T&gt;&gt;)
+    {
+        m_CachedObjects = objects.ToArray();
+        m_FetchObjects = _ =&gt; m_CachedObjects;
+    }<br /><br />    public EasySearchProvider(string id, string displayName, Func&lt;<a href="Search.SearchContext.html">SearchContext</a>, IEnumerable&lt;T&gt;&gt; fetchObjects)
+        : base(id, displayName ?? <a href="ObjectNames.NicifyVariableName.html">ObjectNames.NicifyVariableName</a>(typeof(T).Name))
+    {
+        active = false;
+        m_FetchObjects = fetchObjects;
+        m_Filters = new List&lt;EasyFilter&gt;();<br /><br />        showDetails = false;
+        showDetailsOptions = <a href="Search.ShowDetailsOptions.None.html">ShowDetailsOptions.None</a>;
+        fetchItems = (context, items, provider) =&gt; FetchItems(context);
+        fetchPropositions = FetchPropositions;
+        fetchDescription = FetchDescription;
+        fetchThumbnail = FetchThumbnail;
+        startDrag = StartDrag;
+        toObject = ToObject;<br /><br />        m_QueryEngine = new <a href="Search.QueryEngine.html">QueryEngine</a>&lt;T&gt;();
+        m_QueryEngine.SetSearchDataCallback(SearchWords, s =&gt; s.ToLowerInvariant(), StringComparison.Ordinal);
+        <a href="Search.SearchValue.SetupEngine.html">SearchValue.SetupEngine</a>(m_QueryEngine);<br /><br />        var dataType = typeof(T);
+        if (!dataType.IsPrimitive &amp;&amp; dataType != typeof(string))
+        {
+            AddByReflectionFilters();
+            AddFilter("t", "Object Type", obj =&gt; obj.GetType().Name);
+        }
+    }<br /><br />    public EasySearchProvider&lt;T&gt; AddOption(in EasyOptions options)
+    {
+        m_Options |= options;
+        return this;
+    }<br /><br />    public EasySearchProvider&lt;T&gt; AddOption(<a href="Search.ShowDetailsOptions.html">ShowDetailsOptions</a> showDetailsOptions)
+    {
+        this.showDetailsOptions |= showDetailsOptions;
+        this.showDetails = this.showDetailsOptions != <a href="Search.ShowDetailsOptions.None.html">ShowDetailsOptions.None</a>;
+        return this;
+    }<br /><br />    public EasySearchProvider&lt;T&gt; AddAction(string name, Action&lt;T&gt; handler)
+    {
+        actions.Insert(0, new <a href="Search.SearchAction.html">SearchAction</a>(id, name,
+            new <a href="GUIContent.html">GUIContent</a>(<a href="ObjectNames.NicifyVariableName.html">ObjectNames.NicifyVariableName</a>(name)),
+            (items) =&gt; ActionToDataHandler(items, handler)));
+        return this;
+    }<br /><br />    public EasySearchProvider&lt;T&gt; AddAction(string name, string label, Action&lt;T&gt; handler)
+    {
+        actions.Insert(Math.Min(1, actions.Count), new <a href="Search.SearchAction.html">SearchAction</a>(id, name, new <a href="GUIContent.html">GUIContent</a>(label),
+            (items) =&gt; ActionToDataHandler(items, handler)));
+        return this;
+    }<br /><br />    public EasySearchProvider&lt;T&gt; RemoveOption(<a href="Search.ShowDetailsOptions.html">ShowDetailsOptions</a> showDetailsOptions)
+    {
+        this.showDetailsOptions &amp;= ~showDetailsOptions;
+        this.showDetails = this.showDetailsOptions != <a href="Search.ShowDetailsOptions.None.html">ShowDetailsOptions.None</a>;
+        return this;
+    }<br /><br />    public EasySearchProvider&lt;T&gt; SetDescriptionHandler(Func&lt;T, <a href="Search.SearchItemOptions.html">SearchItemOptions</a>, string&gt; handler)
+    {
+        fetchDescription = (item, context) =&gt; FetchObjectDescription(item, context, handler);
+        return AddOption(<a href="Search.ShowDetailsOptions.Description.html">ShowDetailsOptions.Description</a>);
+    }<br /><br />    public EasySearchProvider&lt;T&gt; SetDescriptionHandler(Func&lt;T, string&gt; handler)
+    {
+        return SetDescriptionHandler((T o, <a href="Search.SearchItemOptions.html">SearchItemOptions</a> options) =&gt; handler(o));
+    }<br /><br />    public EasySearchProvider&lt;T&gt; SetThumbnailHandler(Func&lt;T, <a href="Texture2D.html">Texture2D</a>&gt; handler)
+    {
+        this.fetchThumbnail = (item, context) =&gt; FetchObjectThumbnail(item, context, handler);
+        return this;
+    }<br /><br />    public EasySearchProvider&lt;T&gt; AddFilter&lt;TResult&gt;(string filter, in string label, Func&lt;T, TResult&gt; func)
+    {
+        if (m_Filters.Any(f =&gt; string.Equals(f.name, filter, StringComparison.Ordinal)))
+            return this;<br /><br />        m_Filters.Add(new EasyFilter(filter, label, o =&gt; func((T)o)));
+        m_QueryEngine.AddFilter(filter, func);
+        return this;
+    }<br /><br />    public EasySearchProvider&lt;T&gt; AddByReflectionActions()
+    {
+        foreach (var m in typeof(T).GetMethods().OrderBy(m =&gt; m.Name))
+        {
+            if (m.GetParameters().<a href="UIElements.Length.html">Length</a> &gt; 0 || m.IsStatic)
+                continue;<br /><br />            actions.Add(new <a href="Search.SearchAction.html">SearchAction</a>(id, m.Name) { handler = item =&gt; HandleMethod(item, m), closeWindowAfterExecution = false });
+        }
+        return this;
+    }<br /><br />    void StartDrag(<a href="Search.SearchItem.html">SearchItem</a> item, <a href="Search.SearchContext.html">SearchContext</a> context)
+    {
+        var data = (T)item.data;
+        <a href="DragAndDrop.PrepareStartDrag.html">DragAndDrop.PrepareStartDrag</a>();
+        if (data is UnityEngine.Object uo)
+            <a href="DragAndDrop-objectReferences.html">DragAndDrop.objectReferences</a> = new [] { uo };
+        else
+            <a href="DragAndDrop.SetGenericData.html">DragAndDrop.SetGenericData</a>(item.data.GetType().Name, item.data);
+        <a href="DragAndDrop.StartDrag.html">DragAndDrop.StartDrag</a>(GetName(data));
+    }<br /><br />    string FetchObjectDescription(<a href="Search.SearchItem.html">SearchItem</a> item, <a href="Search.SearchContext.html">SearchContext</a> context, Func&lt;T, <a href="Search.SearchItemOptions.html">SearchItemOptions</a>, string&gt; handler)
+    {
+        if (item.data is T obj)
+            return handler(obj, item.options);
+        return null;
+    }<br /><br />    <a href="Texture2D.html">Texture2D</a> FetchObjectThumbnail(<a href="Search.SearchItem.html">SearchItem</a> item, <a href="Search.SearchContext.html">SearchContext</a> context, Func&lt;T, <a href="Texture2D.html">Texture2D</a>&gt; handler)
+    {
+        if (item.data is T obj)
+            return handler(obj);
+        return null;
+    }<br /><br />    void ActionToDataHandler(<a href="Search.SearchItem.html">SearchItem</a>[] items, Action&lt;T&gt; handler)
+    {
+        foreach (var item in items)
+        {
+            if (item.data is T obj)
+                handler(obj);
+        }
+    }<br /><br />    void AddByReflectionFilters()
+    {
+        foreach (var prop in typeof(T).GetProperties())
+        {
+            var type = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
+            var filterName = <a href="ObjectNames.NicifyVariableName.html">ObjectNames.NicifyVariableName</a>(prop.Name).Replace(" ", "").ToLowerInvariant();
+            AddFilter(filterName, $"C# {type.Name}", obj =&gt; FetchPropertyValue(obj, prop));
+        }<br /><br />        foreach (var prop in typeof(T).GetFields())
+        {
+            var type = Nullable.GetUnderlyingType(prop.FieldType) ?? prop.FieldType;
+            var filterName = <a href="ObjectNames.NicifyVariableName.html">ObjectNames.NicifyVariableName</a>(prop.Name).Replace(" ", "").ToLowerInvariant();
+            AddFilter(filterName, $"C# {type.Name}", obj =&gt; FetchPropertyValue(obj, prop));
+        }
+    }<br /><br />    IEnumerable&lt;<a href="Search.SearchProposition.html">SearchProposition</a>&gt; FetchPropositions(<a href="Search.SearchContext.html">SearchContext</a> context, SearchPropositionOptions options)
+    {
+        foreach (var f in m_Filters)
+            yield return new <a href="Search.SearchProposition.html">SearchProposition</a>(f.name, f.name, f.label);
+    }<br /><br />    IEnumerable&lt;string&gt; SearchWords(T obj)
+    {
+        yield return GetName(obj).ToLowerInvariant();
+        yield return obj.ToString().ToLowerInvariant();
+    }<br /><br />    string GetName(T obj)
+    {
+        if (TryGetProperty(obj, "name", out var objName) &amp;&amp; objName is string ons &amp;&amp; !string.IsNullOrEmpty(ons))
+            return ons.ToString();
+        return obj.ToString();
+    }<br /><br />    bool TryGetProperty(in T obj, string name, out object value)
+    {
+        var p = obj.GetType().GetProperty(name);
+        if (p != null)
+        {
+            value = p.GetValue(obj);
+            return true;
+        }<br /><br />        value = null;
+        return false;
+    }<br /><br />    IEnumerable&lt;<a href="Search.SearchItem.html">SearchItem</a>&gt; FetchItems(<a href="Search.SearchContext.html">SearchContext</a> context)
+    {
+        if (string.IsNullOrEmpty(context.searchQuery))
+        {
+            if (HasOption(EasyOptions.YieldAllItemsIfSearchQueryEmpty))
+                return SortObjects(m_FetchObjects(context)).Select((o, index) =&gt; CreateItem(context, GetName(o), index, o));
+            return Enumerable.Empty&lt;<a href="Search.SearchItem.html">SearchItem</a>&gt;();
+        }<br /><br />        if (!m_FiltersAdded)
+            AddFilters(m_FetchObjects(context).FirstOrDefault());<br /><br />        var query = m_QueryEngine.Parse(context.searchQuery);
+        if (!query.valid)
+        {
+            context.AddSearchQueryErrors(query.errors.Select(e =&gt; new <a href="Search.SearchQueryError.html">SearchQueryError</a>(e, context, this)));
+            return Enumerable.Empty&lt;<a href="Search.SearchItem.html">SearchItem</a>&gt;();
+        }<br /><br />        return SearchItems(context, query);
+    }<br /><br />    string FetchDescription(<a href="Search.SearchItem.html">SearchItem</a> item, <a href="Search.SearchContext.html">SearchContext</a> context)
+    {
+        if ((item.options &amp; <a href="Search.SearchItemOptions.Compacted.html">SearchItemOptions.Compacted</a>) != 0 || m_Options.HasAny(EasyOptions.DescriptionSameAsLabel))
+            return item.GetLabel(context);<br /><br />        if (m_Options.HasAny(EasyOptions.DisplayFilterValueInDescription))
+        {
+            var description = "";
+            foreach (var f in m_Filters)
+            {
+                if (context.searchQuery.LastIndexOf(f.name) == -1)
+                    continue;<br /><br />                if (description.Length != 0)
+                    description += ", ";
+                description += $"{f.name}={f.func(item.data)}";
+            }<br /><br />            return description;
+        }<br /><br />        return item.data.ToString();
+    }<br /><br />    private <a href="Texture2D.html">Texture2D</a> FetchThumbnail(<a href="Search.SearchItem.html">SearchItem</a> item, <a href="Search.SearchContext.html">SearchContext</a> context)
+    {
+        if (item.data is UnityEngine.Object uo)
+            return <a href="AssetPreview.GetMiniThumbnail.html">AssetPreview.GetMiniThumbnail</a>(uo);
+        return <a href="EditorGUIUtility.FindTexture.html">EditorGUIUtility.FindTexture</a>(item.data.GetType().Name);
+    }<br /><br />    private UnityEngine.Object ToObject(<a href="Search.SearchItem.html">SearchItem</a> item, Type type)
+    {
+        return item.data as UnityEngine.Object;
+    }<br /><br />    IEnumerable&lt;T&gt; SortObjects(IEnumerable&lt;T&gt; items)
+    {
+        if (m_Options.HasAny(EasyOptions.SortByName))
+            items = items.OrderBy(e =&gt; GetName(e));
+        return items;
+    }<br /><br />    IEnumerable&lt;<a href="Search.SearchItem.html">SearchItem</a>&gt; SearchItems(<a href="Search.SearchContext.html">SearchContext</a> context, Query&lt;T&gt; query)
+    {
+        int index = 0;
+        foreach (var o in SortObjects(m_FetchObjects(context)))
+        {
+            if (o == null || o.Equals(default(T)))
+            {
+                yield return null;
+                continue;
+            }<br /><br />            if (!query.Test(o))
+            {
+                yield return null;
+                continue;
+            }<br /><br />            var score = index++;
+            var name = GetName(o);
+            if (!m_Options.HasAny(EasyOptions.SortByName))
+                score = ComputeScore(name);
+            yield return CreateItem(context, name, score, o);
+        }
+    }<br /><br />    void AddFilters(T o)
+    {
+        if (o == null)
+            return;<br /><br />        if (o is UnityEngine.Object uo)
+        {
+            using (var so = new <a href="SerializedObject.html">SerializedObject</a>(uo))
+            {
+                var p = so.GetIterator();
+                var next = p.NextVisible(true);
+                while (next)
+                {
+                    var propertyPath = p.propertyPath;
+                    var filterName = <a href="ObjectNames.NicifyVariableName.html">ObjectNames.NicifyVariableName</a>(propertyPath).Replace(" ", "").ToLowerInvariant();<br /><br />                    AddFilter(filterName, $"{p.displayName} ({p.propertyType})", obj =&gt; FetchPropertyValue(obj, propertyPath));
+                    next = p.NextVisible(p.hasChildren);
+                }
+            }
+        }<br /><br />        m_FiltersAdded = true;
+    }<br /><br />    private void HandleMethod(<a href="Search.SearchItem.html">SearchItem</a> item, <a href="Profiling.FrameDataView.MethodInfo.html">MethodInfo</a> mi)
+    {
+        var result = mi.Invoke(item.data, null);
+        var unityObject = item.data as UnityEngine.Object;
+        if (result != null)
+            <a href="Debug.Log.html">Debug.Log</a>(result, unityObject);
+        else
+            <a href="Debug.Log.html">Debug.Log</a>($"Executed {mi.DeclaringType.FullName}.{mi.Name}", unityObject);
+    }<br /><br />    <a href="Search.SearchValue.html">SearchValue</a> FetchPropertyValue(in T obj, in FieldInfo prop) =&gt; new <a href="Search.SearchValue.html">SearchValue</a>(prop.GetValue(obj));
+    <a href="Search.SearchValue.html">SearchValue</a> FetchPropertyValue(in T obj, in PropertyInfo prop) =&gt; new <a href="Search.SearchValue.html">SearchValue</a>(prop.GetValue(obj));<br /><br />    <a href="Search.SearchValue.html">SearchValue</a> FetchPropertyValue(in T obj, in string propertyPath)
+    {
+        if (obj is UnityEngine.Object uo)
+        {
+            using (var so = new <a href="SerializedObject.html">SerializedObject</a>(uo))
+            {
+                var p = so.FindProperty(propertyPath);
+                if (p == null)
+                    return <a href="Search.SearchValue-invalid.html">SearchValue.invalid</a>;
+                return SearchValue.ConvertPropertyValue(p);
+            }
+        }<br /><br />        return <a href="Search.SearchValue-invalid.html">SearchValue.invalid</a>;
+    }<br /><br />    <a href="Search.SearchItem.html">SearchItem</a> CreateItem(in <a href="Search.SearchContext.html">SearchContext</a> context, in string name, in int score, in T o)
+    {
+        if (o == null)
+            return null;
+        return CreateItem(context, Guid.NewGuid().ToString("N"), score, name, null, null, o);
+    }<br /><br />    int ComputeScore(in string name)
+    {
+        if (name.Length &gt; 2)
+        {
+            var sp = Math.Max(0, name.LastIndexOf('/'));
+            if (sp + 2 &lt; name.Length)
+                return name[sp] * 5 + name[sp + 1] * 2 + name[sp + 2];
+        }
+        return 99;
+    }<br /><br />    bool HasOption(in EasyOptions option)
+    {
+        return m_Options.HasAny(option);
+    }
+}</pre>
+      </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

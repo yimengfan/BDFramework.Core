@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Introduction to the Audio Source component</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AudioSource-overview.html">English</a></li>
+<li><a href="/cn/current/Manual/AudioSource-overview.html">中文</a></li>
+<li><a href="/ja/current/Manual/AudioSource-overview.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AudioSource-overview.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AudioSource-overview.html">English</a></li>
+<li><a href="/cn/current/Manual/AudioSource-overview.html">中文</a></li>
+<li><a href="/ja/current/Manual/AudioSource-overview.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AudioSource-overview.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Audio.html">Audio</a></li>
+<li>Audio Reference</li>
+<li><a href="class-AudioSource.html">Audio Source</a></li>
+<li>Introduction to the Audio Source component</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-AudioSource.html"></a></span><div class="tip">Audio Source</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AudioSource-reference.html"></a></span><div class="tip">Audio Source component reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Introduction to the Audio Source component</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Attach an <strong>Audio Source</strong> component to a <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> to control how and where sounds play in your <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> to control how and where sounds play in your <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. </p>
+
+<p>Audio sources are components that let you integrate sound effects, music, commentary, and other audio features into your application. </p>
+
+<p>They interact with other audio components in Unity that allow you to edit, enhance, and output sound in your scene, including: </p>
+
+<ul>
+<li>Audio Clips</li>
+<li>Audio Listeners</li>
+<li>Audio Mixers</li>
+</ul>
+
+<p>This page covers how the audio source interacts with these audio components. For more information about the <strong>Audio Source</strong> component’s properties and how to set up the component, refer to <a href="AudioSource-reference.html">Audio Source component reference</a> and <a href="AudioSource-create.html">Set up an Audio Source component</a>.</p>
+
+<h2>Audio clips</h2>
+
+<p>The <strong>Audio Source</strong> component requires an <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioClip.html">Audio Clip</a><span class="tooltiptext">A container for audio data in Unity. Unity supports mono, stereo and multichannel audio assets (up to eight channels). Unity can import .aif, .wav, .mp3, and .ogg audio file format, and .xm, .mod, .it, and .s3m tracker module formats. <a href="class-AudioClip.html" href="class-AudioClip.html">Audio Clip</a><span class="tooltiptext">A container for audio data in Unity. Unity supports mono, stereo and multichannel audio assets (up to eight channels). Unity can import .aif, .wav, .mp3, and .ogg audio file format, and .xm, .mod, .it, and .s3m tracker module formats. <a href="class-AudioClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioClip" aria-label="Go to glossary anchor for AudioClip">Glossary</a></span></span></span> to play sound in your scene. Audio clips are containers that hold the actual audio data, so you must assign one to the Audio Source component so it has audio data to edit and play. For instructions, refer to <a href="AudioSource-create.html#assign-an-audio-resource-to-your-audio-source">Assign an audio clip to your audio source</a>.</p>
+
+<p>For a list of the audio file formats Unity supports, refer to <a href="class-AudioClip.html#audio-file-compatibility">Audio file compatibility</a>.</p>
+
+<h2>Output method of the audio source</h2>
+
+<p>In the <strong>Audio Source</strong> component, the <strong>Output</strong> property specifies where the audio source will send the audio signal in the audio processing pipeline.</p>
+
+<p>This property accepts an <strong>Audio Mixer Group</strong>. The Audio Mixer is a tool that lets you post-process the audio with effects. You can then assign your Audio Mixer to the property to make sure your audio source applies your effects to the audio. </p>
+
+<p>If you set the property to <strong>None</strong>, the sound will bypass your mixer and the audio will play without your effects. This is the default behavior. </p>
+
+<p>Then, any <strong>Audio Listener</strong> components in the scene detects the audio from nearby audio sources, and outputs the audio to the user so they can hear it. Audio listeners are usually found on <span class="tooltip"><strong>cameras</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> in the scene, but you can also assign them to other objects. </p>
+
+<p>For more information about these components, refer to <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioListener.html">Audio Listener</a><span class="tooltiptext">A component that acts like a microphone, receiving sound from Audio Sources in the scene and outputting to the computer speakers. <a href="class-AudioListener.html" href="class-AudioListener.html">Audio Listener</a><span class="tooltiptext">A component that acts like a microphone, receiving sound from Audio Sources in the scene and outputting to the computer speakers. <a href="class-AudioListener.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioListener" aria-label="Go to glossary anchor for AudioListener">Glossary</a></span></span></span> and <a href="AudioMixer.html">Audio Mixer</a>.</p>
+
+<p><a name="audio-listener" aria-hidden="true"></a></p>
+
+<h2>Configure your audio source</h2>
+
+<p>You can configure the audio source to play the clip as 2D, 3D, or as a mixture (<em>SpatialBlend</em>). The audio can be spread out between speakers (stereo to 7.1) (<em>Spread</em>) and morphed between 3D and 2D (<em>SpatialBlend</em>). </p>
+
+<p>If you set <strong>SpatialBlend</strong> to <code>0.0f</code>, then Unity will treat the audio clip as a 2D sound. If you set it to <code>1.0f</code>, the clip is fully 3D. Anything in between is a blend of 2D and 3D.</p>
+
+<p>Use falloff curves to control the spread over distance. Also, if the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioListener.html">listener</a> is within one or multiple <a href="class-AudioReverbZone.html">Reverb Zones</a>, this applies reverberation to the source. You can also apply individual filters to each audio source for an even richer audio experience. For more details, refer to <span class="tooltip"><a href="class-AudioEffect.html">Audio Effects</a><span class="tooltiptext">Any effect that can modify the output of Audio Mixer components, such as filtering frequency ranges of a sound or applying reverb. <a href="class-AudioEffectMixer.html" href="class-AudioListener.html">listener</a> is within one or multiple <a href="class-AudioReverbZone.html">Reverb Zones</a>, this applies reverberation to the source. You can also apply individual filters to each audio source for an even richer audio experience. For more details, refer to <span class="tooltip"><a href="class-AudioEffect.html">Audio Effects</a><span class="tooltiptext">Any effect that can modify the output of Audio Mixer components, such as filtering frequency ranges of a sound or applying reverb. <a href="class-AudioEffectMixer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioEffect" aria-label="Go to glossary anchor for AudioEffect">Glossary</a></span></span></span>.</p>
+
+<p>For a list of Audio Source settings, refer to <a href="AudioSource-reference.html">Audio Source component reference</a>. </p>
+
+<h2>API resources</h2>
+
+<p>The following is a list of useful API for AudioSource and its related properties. </p>
+
+<ul>
+<li><a href="../ScriptReference/AudioSource.html">AudioSource</a></li>
+<li><a href="../ScriptReference/AudioClip.html">AudioClip</a></li>
+<li><a href="../ScriptReference/AudioListener.html">AudioListener</a></li>
+<li><a href="../ScriptReference/Audio.AudioMixer.html">AudioMixer</a></li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Class-AudioSource.html">Audio Source</a><span class="tooltiptext">A component which plays back an Audio Clip in the scene to an audio listener or through an audio mixer. <a href="class-AudioSource.html" href="Class-AudioSource.html">Audio Source</a><span class="tooltiptext">A component which plays back an Audio Clip in the scene to an audio listener or through an audio mixer. <a href="class-AudioSource.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioSource" aria-label="Go to glossary anchor for AudioSource">Glossary</a></span></span></span></li>
+<li><a href="AudioSource-overview.html">Introduction to the Audio Source component</a></li>
+<li><a href="AudioSource-create.html">Set up an Audio Source component</a></li>
+<li><a href="AudioSource-reference.html">Audio Source component reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-AudioSource.html"></a></span><div class="tip">Audio Source</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AudioSource-reference.html"></a></span><div class="tip">Audio Source component reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

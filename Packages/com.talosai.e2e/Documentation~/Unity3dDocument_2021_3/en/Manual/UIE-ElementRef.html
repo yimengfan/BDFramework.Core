@@ -1,0 +1,773 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: UXML elements reference</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-ElementRef.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-ElementRef.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-ElementRef.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-ElementRef.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-ElementRef.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-ElementRef.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-ElementRef.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-ElementRef.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-structure-ui.html">Structure UI</a></li>
+<li>UXML elements reference</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-encapsulate-uxml-with-logic.html"></a></span><div class="tip">Encapsulate UXML documents with logic</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-uxml-element-BindableElement.html"></a></span><div class="tip">UXML element BindableElement</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>UXML elements reference</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The following tables outline the UXML elements available in the <code>UnityEngine.UIElements</code> and <code>UnityEditor.UIElements</code> namespaces.</p>
+
+<h2>Base elements</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Element</strong></th>
+	<th style="text-align:left;"><strong>Namespace</strong></th>
+	<th style="text-align:left;"><strong>Permitted child elements</strong></th>
+	<th style="text-align:left;"><strong>C# class</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-BindableElement.html"><code>BindableElement</code></a></strong></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.BindableElement.html"><code>UnityEngine.UIElements.BindableElement</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-VisualElement.html"><code>VisualElement</code></a></strong></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.VisualElement.html"><code>UnityEngine.UIElements.VisualElement</code></a></td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="built-in-controls" aria-hidden="true"></a></p>
+
+<h2>Built-in controls</h2>
+
+<p>The following table is a reference of all built-in controls available for <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit.</p>
+<div class="wide-table">
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Element</strong></th>
+	<th style="text-align:left;"><strong>Bindable</strong></th>
+	<th style="text-align:left;"><strong>Data type</strong></th>
+	<th style="text-align:left;"><strong>Namespace</strong></th>
+	<th style="text-align:left;"><strong>Permitted child elements</strong></th>
+	<th style="text-align:left;"><strong>C# class</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-BoundsField.html"><code>BoundsField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Bounds.html"><code>UnityEngine.Bounds</code></a></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.BoundsField.html"><code>UnityEngine.UIElements.BoundsField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-BoundsIntField.html"><code>BoundsIntField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><a href="../ScriptReference/BoundsInt.html"><code>UnityEngine.BoundsInt</code></a></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.BoundsIntField.html"><code>UnityEngine.UIElements.BoundsIntField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-Box.html"><code>Box</code></a></strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Box.html"><code>UnityEngine.UIElements.Box</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-Button.html"><code>Button</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>string</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">None</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Button.html"><code>UnityEngine.UIElements.Button</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-ColorField.html"><code>ColorField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Color.html"><code>UnityEngine.Color</code></a></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ColorField.html"><code>UnityEditor.UIElements.ColorField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-CurveField.html"><code>CurveField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><a href="../ScriptReference/AnimationCurve.html"><code>UnityEngine.AnimationCurve</code></a></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.CurveField.html"><code>UnityEditor.UIElements.CurveField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-DoubleField.html"><code>DoubleField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>double</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.DoubleField.html"><code>UnityEngine.UIElements.DoubleField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-DropdownField.html"><code>DropdownField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>string</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.DropdownField.html"><code>UnityEngine.UIElements.DropdownField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-EnumField.html"><code>EnumField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>Enum</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.EnumField.html"><code>UnityEngine.UIElements.EnumField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-EnumFlagsField.html"><code>EnumFlagsField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>Enum</code></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.EnumFlagsField.html"><code>UnityEditor.UIElements.EnumFlagsField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-FloatField.html"><code>FloatField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>float</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.FloatField.html"><code>UnityEngine.UIElements.FloatField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-Foldout.html"><code>Foldout</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>bool</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Foldout.html"><code>UnityEngine.UIElements.Foldout</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-GradientField.html"><code>GradientField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Gradient.html"><code>UnityEngine.Gradient</code></a></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.GradientField.html"><code>UnityEditor.UIElements.GradientField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-GroupBox.html"><code>GroupBox</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.GroupBox.html"><code>UnityEngine.UIElements.GroupBox</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-Hash128Field.html"><code>Hash128Field</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Hash128.html"><code>UnityEngine.Hash128</code></a></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Hash128Field.html"><code>UnityEngine.UIElements.Hash128Field</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-HelpBox.html"><code>HelpBox</code></a></strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.HelpBox.html"><code>UnityEngine.UIElements.HelpBox</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-IMGUIContainer.html"><code>IMGUIContainer</code></a></strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">None</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.IMGUIContainer.html"><code>UnityEngine.UIElements.IMGUIContainer</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-Image.html"><code>Image</code></a></strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">None</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Image.html"><code>UnityEngine.UIElements.Image</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-InspectorElement.html"><code>InspectorElement</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.InspectorElement.html"><code>UnityEditor.UIElements.InspectorElement</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-IntegerField.html"><code>IntegerField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>int</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.IntegerField.html"><code>UnityEngine.UIElements.IntegerField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-Label.html"><code>Label</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>string</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">None</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Label.html"><code>UnityEngine.UIElements.Label</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-LayerField.html"><code>LayerField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>int</code></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.LayerField.html"><code>UnityEditor.UIElements.LayerField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-LayerMaskField.html"><code>LayerMaskField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>int</code></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.LayerMaskField.html"><code>UnityEditor.UIElements.LayerMaskField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-ListView.html"><code>ListView</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>IList</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">None</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ListView.html"><code>UnityEngine.UIElements.ListView</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-LongField.html"><code>LongField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>long</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.LongField.html"><code>UnityEngine.UIElements.LongField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-MaskField.html"><code>MaskField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>int</code></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.MaskField.html"><code>UnityEditor.UIElements.MaskField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-MinMaxSlider.html"><code>MinMaxSlider</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Vector2.html"><code>UnityEngine.Vector2</code></a></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.MinMaxSlider.html"><code>UnityEngine.UIElements.MinMaxSlider</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-ObjectField.html"><code>ObjectField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Object.html"><code>UnityEngine.Object</code></a></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ObjectField.html"><code>UnityEditor.UIElements.ObjectField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-PopupWindow.html"><code>PopupWindow</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>string</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.PopupWindow.html"><code>UnityEngine.UIElements.PopupWindow</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-ProgressBar.html"><code>ProgressBar</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>float</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ProgressBar.html"><code>UnityEngine.UIElements.ProgressBar</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-PropertyField.html"><code>PropertyField</code></a></strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.PropertyField.html"><code>UnityEditor.UIElements.PropertyField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-RadioButton.html"><code>RadioButton</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>bool</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.RadioButton.html"><code>UnityEngine.UIElements.RadioButton</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-RadioButtonGroup.html"><code>RadioButtonGroup</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>int</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.RadioButtonGroup.html"><code>UnityEngine.UIElements.RadioButtonGroup</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-RectField.html"><code>RectField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Rect.html"><code>UnityEngine.Rect</code></a></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.RectField.html"><code>UnityEngine.UIElements.RectField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-RectIntField.html"><code>RectIntField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><a href="../ScriptReference/RectInt.html"><code>UnityEngine.RectInt</code></a></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.RectIntField.html"><code>UnityEngine.UIElements.RectIntField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-RepeatButton.html"><code>RepeatButton</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>string</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">None</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.RepeatButton.html"><code>UnityEngine.UIElements.RepeatButton</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-ScrollView.html"><code>ScrollView</code></a></strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ScrollView.html"><code>UnityEngine.UIElements.ScrollView</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-Scroller.html"><code>Scroller</code></a></strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">None</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Scroller.html"><code>UnityEngine.UIElements.Scroller</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-Slider.html"><code>Slider</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>float</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Slider.html"><code>UnityEngine.UIElements.Slider</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-SliderInt.html"><code>SliderInt</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>int</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.SliderInt.html"><code>UnityEngine.UIElements.SliderInt</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-TagField.html"><code>TagField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>string</code></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.TagField.html"><code>UnityEditor.UIElements.TagField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-TextElement.html"><code>TextElement</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>string</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">None</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.TextElement.html"><code>UnityEngine.UIElements.TextElement</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-TextField.html"><code>TextField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>string</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.TextField.html"><code>UnityEngine.UIElements.TextField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-TemplateContainer.html"><code>TemplateContainer</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.TemplateContainer.html"><code>UnityEngine.UIElements.TemplateContainer</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-Toggle.html"><code>Toggle</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>bool</code></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Toggle.html"><code>UnityEngine.UIElements.Toggle</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-Toolbar.html"><code>Toolbar</code></a></strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Toolbar.html"><code>UnityEditor.UIElements.Toolbar</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-ToolbarBreadcrumbs.html"><code>ToolbarBreadcrumbs</code></a></strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ToolbarBreadcrumbs.html"><code>UnityEditor.UIElements.ToolbarBreadcrumbs</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-ToolbarButton.html"><code>ToolbarButton</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">None</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ToolbarButton.html"><code>UnityEditor.UIElements.ToolbarButton</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-ToolbarMenu.html"><code>ToolbarMenu</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">None</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ToolbarMenu.html"><code>UnityEditor.UIElements.ToolbarMenu</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-ToolbarPopupSearchField.html"><code>ToolbarPopupSearchField</code></a></strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>string</code></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ToolbarPopupSearchField.html"><code>UnityEditor.UIElements.ToolbarPopupSearchField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-ToolbarSearchField.html"><code>ToolbarSearchField</code></a></strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>string</code></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ToolbarSearchField.html"><code>UnityEditor.UIElements.ToolbarSearchField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-ToolbarSpacer.html"><code>ToolbarSpacer</code></a></strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ToolbarSpacer.html"><code>UnityEditor.UIElements.ToolbarSpacer</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-ToolbarToggle.html"><code>ToolbarToggle</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><code>bool</code></td>
+	<td style="text-align:left;"><code>UnityEditor.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.ToolbarToggle.html"><code>UnityEditor.UIElements.ToolbarToggle</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-TwoPaneSplitView.html"><code>TwoPaneSplitView</code></a></strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">None</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.TwoPaneSplitView.html"><code>UnityEngine.UIElements.TwoPaneSplitView</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-Vector2Field.html"><code>Vector2Field</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Vector2.html"><code>UnityEngine.Vector2</code></a></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Vector2Field.html"><code>UnityEngine.UIElements.Vector2Field</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-Vector2IntField.html"><code>Vector2IntField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Vector2Int.html"><code>UnityEngine.Vector2Int</code></a></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Vector2IntField.html"><code>UnityEngine.UIElements.Vector2IntField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-Vector3Field.html"><code>Vector3Field</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Vector3.html"><code>UnityEngine.Vector3</code></a></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Vector3Field.html"><code>UnityEngine.UIElements.Vector3Field</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-Vector3IntField.html"><code>Vector3IntField</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Vector3Int.html"><code>UnityEngine.Vector3Int</code></a></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Vector3IntField.html"><code>UnityEngine.UIElements.Vector3IntField</code></a></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="UIE-uxml-element-Vector4Field.html"><code>Vector4Field</code></a></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;"><a href="../ScriptReference/Vector4.html"><code>UnityEngine.Vector4</code></a></td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">Any number of <code>VisualElement</code>
+</td>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.Vector4Field.html"><code>UnityEngine.UIElements.Vector4Field</code></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><a name="templates" aria-hidden="true"></a></p>
+
+<h2>Templates</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Element</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Namespace</strong></th>
+	<th style="text-align:left;"><strong>Permitted child elements</strong></th>
+	<th style="text-align:left;"><strong>Attributes</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>Template</code></td>
+	<td style="text-align:left;">A reference to another UXML template that can be instantiated using the <code>Instance</code> element.</td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">None</td>
+	<td style="text-align:left;">
+<code>name</code>: A unique string identifier for this element<br><code>path</code>: The path of the UXML file to load</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>Instance</code></td>
+	<td style="text-align:left;">Instance of a <code>Template</code>
+</td>
+	<td style="text-align:left;"><code>UnityEngine.UIElements</code></td>
+	<td style="text-align:left;">None</td>
+	<td style="text-align:left;">
+<code>template</code>: The <code>name</code> of the <code>Template</code> to instantiate</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-encapsulate-uxml-with-logic.html"></a></span><div class="tip">Encapsulate UXML documents with logic</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-uxml-element-BindableElement.html"></a></span><div class="tip">UXML element BindableElement</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

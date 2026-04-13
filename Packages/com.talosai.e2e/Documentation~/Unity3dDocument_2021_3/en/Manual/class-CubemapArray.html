@@ -1,0 +1,342 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Cubemap arrays</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-CubemapArray.html">English</a></li>
+<li><a href="/cn/current/Manual/class-CubemapArray.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-CubemapArray.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-CubemapArray.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-CubemapArray.html">English</a></li>
+<li><a href="/cn/current/Manual/class-CubemapArray.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-CubemapArray.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-CubemapArray.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Textures.html">Textures</a></li>
+<li>Cubemap arrays</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-Cubemap.html"></a></span><div class="tip">Cubemaps</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="svt-streaming-virtual-texturing.html"></a></span><div class="tip">Streaming Virtual Texturing</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Cubemap arrays</h1>
+<!--BeginSwitchLink--><a href='../ScriptReference/CubemapArray.html' title='Go to CubemapArray page in the Scripting Reference' class='switch-link gray-btn sbtn left'>Switch to Scripting</a><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A <span class="tooltip"><strong>cubemap</strong><span class="tooltiptext">A collection of six square textures that can represent the reflections in an environment or the skybox drawn behind your geometry. The six squares form the faces of an imaginary cube that surrounds an object; each face represents the view along the directions of the world axes (up, down, left, right, forward and back). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Cubemap.html" href="class-Cubemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Cubemap" aria-label="Go to glossary anchor for Cubemap">Glossary</a></span></span></span> array is an array of cubemaps that are the same size and format, and that the GPU can access as a single texture resource. Cubemap arrays are often used for implementing efficient <span class="tooltip"><strong>reflection probe</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html" href="Glossary.html#Cubemap" aria-label="Go to glossary anchor for Cubemap">Glossary</a></span></span></span> array is an array of cubemaps that are the same size and format, and that the GPU can access as a single texture resource. Cubemap arrays are often used for implementing efficient <span class="tooltip"><strong>reflection probe</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span>, lighting and shadowing systems.</p>
+
+<p>In your Unity Project, the Unity Editor represents cubemap arrays as Texture Assets.To configure a Texture Asset’s import settings you can use the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html">Inspector</a><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="class-TextureImporter.html">Inspector</a><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, or write a script that uses the <a href="../ScriptReference/TextureImporter.html">TextureImporter</a> API. In the Unity engine, Unity uses the <a href="../ScriptReference/CubemapArray.html">CubemapArray</a> class to represent cubemap arrays.</p>
+
+<h2>Creating a cubemap array</h2>
+
+<p>To create a cubemap array in your Project, you must use a script.</p>
+
+<p>The following example is an Editor script that creates an instance of the <code>CubemapArray</code> class, populates it with color data, and then saves it to your Project as a Texture Asset.</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+using UnityEditor;
+
+public class CreateCubeArrayTexture : MonoBehaviour
+{
+    [UnityEditor.MenuItem(&quot;CreateExamples/CubemapArray&quot;)]
+    static void CreateCubemapArray()
+    {
+        // Configure the cubemap array and color data
+        int faceSize = 16;
+        int arraySize = 4;
+        int[] kCubeXRemap = new int[] { 2, 2, 0, 0, 0, 0 };
+        int[] kCubeYRemap = new int[] { 1, 1, 2, 2, 1, 1 };
+        int[] kCubeZRemap = new int[] { 0, 0, 1, 1, 2, 2 };
+        float[] kCubeXSign = new float[] { -1.0F, 1.0F, 1.0F, 1.0F, 1.0F, -1.0F };
+        float[] kCubeYSign = new float[] { -1.0F, -1.0F, 1.0F, -1.0F, -1.0F, -1.0F };
+        float[] kCubeZSign = new float[] { 1.0F, -1.0F, 1.0F, -1.0F, 1.0F, -1.0F };
+        var baseCols = new Color[] { Color.white, new Color(1, .5f, .5f, 1), new Color(.5f, 1, .5f, 1), new Color(.5f, .5f, 1, 1), Color.gray };
+        
+        // Create an instance of CubemapArray
+        var tex = new CubemapArray(faceSize, arraySize, TextureFormat.ARGB32, true);
+        tex.filterMode = FilterMode.Trilinear;
+        
+        // Iterate over each cubemap
+        var col = new Color[tex.width * tex.width];
+        float invSize = 1.0f / tex.width;
+        for (var i = 0; i &lt; tex.cubemapCount; ++i)
+        {
+            var baseCol = baseCols[i % baseCols.Length];
+
+            // Iterate over each face of the current cubemap
+            for (var face = 0; face &lt; 6; ++face)
+            {
+                var idx = 0;
+                Vector3 signScale = new Vector3(kCubeXSign[face], kCubeYSign[face], kCubeZSign[face]);
+                
+                // Iterate over each pixel of the current face
+                for (int y = 0; y &lt; tex.width; ++y)
+                {
+                    for (int x = 0; x &lt; tex.width; ++x)
+                    {
+                        // Calculate a &quot;normal direction&quot; color for the current pixel
+                        Vector3 uvDir = new Vector3(x * invSize * 2.0f - 1.0f, y * invSize * 2.0f - 1.0f, 1.0f);
+                        uvDir = uvDir.normalized;
+                        uvDir.Scale(signScale);
+                        Vector3 dir = Vector3.zero;
+                        dir[kCubeXRemap[face]] = uvDir[0];
+                        dir[kCubeYRemap[face]] = uvDir[1];
+                        dir[kCubeZRemap[face]] = uvDir[2];
+
+                        // Shift the color into the 0.4..1.0 range
+                        Color c = new Color(dir.x * 0.3f + 0.7f, dir.y * 0.3f + 0.7f, dir.z * 0.3f + 0.7f, 1.0f);
+                        
+                        // Add a pattern to some pixels, so that mipmaps are more clearly visible
+                        if (((x ^ y) &amp; 3) == 1)
+                            c *= 0.5f;
+                        
+                        // Tint the color with the baseCol tint
+                        col[idx] = baseCol * c;
+                        ++idx;
+                    }
+                }
+
+                // Copy the color values for this face to the texture
+                tex.SetPixels(col, (CubemapFace)face, i);
+            }
+        }
+
+        // Apply the changes to the texture and upload the updated texture to the GPU
+        tex.Apply();        
+
+        // Save the texture to your Unity Project
+        AssetDatabase.CreateAsset(tex, &quot;Assets/ExampleCubemapArray.asset&quot;);
+        UnityEditor.AssetDatabase.SaveAssets();
+    }
+}
+</code></pre>
+
+<h2>Previewing a cubemap array</h2>
+
+<p>To preview a cubemap array in the Inspector window, navigate to the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span> and select the Texture Asset. The Texture import settings for this Texture Asset are now visible in the Inspector, and Unity renders a preview of the cubemap array at the bottom of the Inspector.</p>
+
+<figure>
+<img src="../uploads/Main/cubemap-array-preview.png" alt="">
+</figure>
+
+<p>The following controls are available in the <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span>:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Control</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Filter Mode</strong></td>
+	<td style="text-align:left;">The filtering to use for the preview. See the documentation on <a href="../ScriptReference/FilterMode.html">Filter Mode</a>
+</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Using a cubemap array in a shader</h2>
+
+<p>Here is an example of a <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> that uses a cubemap array.</p>
+
+<pre><code class="lang-hlsl">Shader &quot;CubemapArrayShaderExample&quot; {
+Properties {
+    _MainTex (&quot;CubemapArray&quot;, CubeArray) = &quot;&quot; {}
+    _Mip (&quot;Mip&quot;, Float) = 0.0
+    _Intensity (&quot;Intensity&quot;, Float) = 1.0
+    _SliceIndex (&quot;Slice&quot;, Int) = 0
+    _Exposure (&quot;Exposure&quot;, Float) = 0.0
+}
+
+SubShader {
+    Tags {&quot;Queue&quot;=&quot;Transparent&quot; &quot;IgnoreProjector&quot;=&quot;True&quot; &quot;RenderType&quot;=&quot;Transparent&quot; &quot;ForceSupported&quot; = &quot;True&quot;}
+
+    Pass {
+
+        HLSLPROGRAM
+        #pragma vertex vert
+            #pragma fragment frag
+            #pragma require sampleLOD
+            #pragma require cubearray
+            #include &quot;UnityCG.cginc&quot;
+    
+    
+    
+            struct appdata {
+                float4 pos : POSITION;
+                float3 nor : NORMAL;
+            };
+    
+            struct v2f {
+                float3 uv : TEXCOORD0;
+                float4 pos : SV_POSITION;
+            };
+    
+            uniform int _SliceIndex;
+            float _Mip;
+            half _Alpha;
+            half _Intensity;
+            float _Exposure;
+    
+           v2f vert (appdata v) {
+                v2f o;
+                o.pos = UnityObjectToClipPos(v.pos);
+                float3 viewDir = -normalize(ObjSpaceViewDir(v.pos));
+                o.uv = reflect(viewDir, v.nor);
+                return o;
+            }
+    
+            half4 _MainTex_HDR;
+            UNITY_DECLARE_TEXCUBEARRAY(_MainTex);
+            fixed4 frag (v2f i) : COLOR0
+            {
+                fixed4 c = UNITY_SAMPLE_TEXCUBEARRAY(_MainTex, float4(i.uv, _SliceIndex));
+                fixed4 cmip = UNITY_SAMPLE_TEXCUBEARRAY_LOD(_MainTex, float4(i.uv, _SliceIndex), _Mip);
+                if (_Mip &gt;= 0.0)
+                    c = cmip;
+                c.rgb = DecodeHDR (c, _MainTex_HDR) * _Intensity;
+                c.rgb *= exp2(_Exposure);
+                c = lerp (c, c.aaaa, _Alpha);
+                return c;
+            }
+            ENDHLSL
+        }
+    }
+    Fallback Off
+}
+
+</code></pre>
+
+<p>If you use this shader with the Cubemap Array created in the example at the top of the page, the result looks like this:</p>
+
+<figure>
+<img src="../uploads/Main/cubemap-array-shader-example.png" alt="">
+</figure>
+
+<hr>
+
+<p><span class="page-history">[Cubemap array support] added in <a href="https://docs.unity3d.com/2020.1/Documentation/Manual/30_search.html?q=newin20201">2020.1</a> <span class="search-words">NewIn20201</span></span></p>
+<!-- area:graphics -->
+
+<p><span class="search-words">CubemapArray</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-Cubemap.html"></a></span><div class="tip">Cubemaps</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="svt-streaming-virtual-texturing.html"></a></span><div class="tip">Streaming Virtual Texturing</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

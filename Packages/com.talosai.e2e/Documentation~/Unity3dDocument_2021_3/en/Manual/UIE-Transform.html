@@ -1,0 +1,479 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: USS transform</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Transform.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Transform.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Transform.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Transform.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Transform.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Transform.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Transform.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Transform.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-USS.html">Style UI</a></li>
+<li><a href="UIE-uss-properties.html">USS properties</a></li>
+<li>USS transform</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-9-slice-images-with-ui-toolkit.html"></a></span><div class="tip">9-Slice images with UI Toolkit</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Transitions.html"></a></span><div class="tip">USS transition</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>USS transform</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The transform properties apply a 2D transformation to a <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span>. You can use them to rotate, scale, or move a visual element.</p>
+
+<p>If you change the layout of an element, Unity recalculates the layout of other elements in the same hierarchy. This recalculation might reduce an animation’s frame rate. Applying transform to an element reduces recalculations because it doesn’t change the layout of other elements in the hierarchy.</p>
+
+<p>It’s possible to use transform to define the static appearance of a visual element. However, transform is best used for changes and animations. For example, if you want to make a visual element shake when an event happens in an application, set the position of the visual element using the regular layout properties such as <code>top</code> and <code>left</code>, and then use <code>translate</code> to align an offset relative to the initial position.</p>
+
+<p>Transform includes the following properties:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>USS syntax</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Transform Origin</strong></td>
+	<td style="text-align:left;"><code>transform-origin</code></td>
+	<td style="text-align:left;">Represents the point of origin where rotation, scaling, and translation occur.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Translate</strong></td>
+	<td style="text-align:left;"><code>translate</code></td>
+	<td style="text-align:left;">Repositions the visual element in horizontal or vertical directions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale</strong></td>
+	<td style="text-align:left;"><code>scale</code></td>
+	<td style="text-align:left;">Changes the apparent size, padding, border, and margins of a visual element. Negative values flip visual elements along the scale axis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rotate</strong></td>
+	<td style="text-align:left;"><code>rotate</code></td>
+	<td style="text-align:left;">Rotates a visual element. Positive values represent clockwise rotation and negative values represent counterclockwise rotation. You can set rotation with <code>deg</code>, <code>grad</code>, <code>rad</code>, or <code>turn</code> units. For more information on these units, see <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/angle">MDN Web Docs’s page on the <code>&lt;angle&gt;</code> CSS data type</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note</strong>: All transformations are performed in the following order: </p>
+
+<ol>
+<li>Scale</li>
+<li>Rotate</li>
+<li>Translate</li>
+</ol>
+
+<p>You can set transform properties for a visual element using the controls in the <a href="UIBuilder.html">UI Builder</a>, within a <a href="UIE-USS.html">USS</a> file, or using a C# script.</p>
+
+<h2>Transform controls in the UI Builder</h2>
+
+<p>You can use the controls in the <strong>Transform</strong> section of the <strong><span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> in the <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html" href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> in the <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Builder to set the transform properties of a visual element.</p>
+
+<h3>Pivot Origin</h3>
+
+<p>The <strong>Pivot Origin</strong> widget sets the transform origin property. To use it, do one of the following:</p>
+
+<ul>
+<li>Click a point in the widget to set the origin to a corner, the center of an edge, or the center. You can also define the values using the keyboard. When the widget is in focus, use the arrow keys to specify a point in the widget.</li>
+<li>Enter values for <strong>X</strong> and <strong>Y</strong> and specify the unit.</li>
+</ul>
+
+<p>
+<strong>Tip</strong>: You can enter <code>%</code> or <code>px</code> after values. This automatically changes the displayed unit in the unit selector. You can also drag to define the values in the <strong>X</strong> and <strong>Y</strong> boxes.</p>
+
+<p>
+<strong>Note</strong>: The default value for the transform origin is center.</p>
+
+<p>If you use percentages for both the X and Y values, the widget shows the new origin point when you edit the X and Y text boxes. </p>
+
+<p>If you specify a transform origin point outside the element, such as having a value less than 0% or greater than 100%, the widget shows the directions of the X and Y axes.</p>
+
+<figure>
+<img src="../uploads/Main/TransformOriginWgt.png" alt="">
+</figure>
+
+<h3>Translate</h3>
+
+<p>The <strong>Translate</strong> control sets the translate property. To use it, enter values in the <strong>X</strong> and <strong>Y</strong> boxes and specify the unit.</p>
+
+<p>
+<strong>Tip</strong>: You can enter <code>%</code> or <code>px</code> after values. This automatically changes the displayed unit in the unit selector. You can also drag to define the values in the <strong>X</strong> and <strong>Y</strong> boxes.</p>
+
+<h3>Scale</h3>
+
+<p>The <strong>Scale</strong> control sets the scale property. To use it, enter values in the <strong>X</strong> and <strong>Y</strong> boxes and specify the unit.</p>
+
+<p>
+<strong>Tip</strong>: You can enter <code>%</code> or <code>px</code> after values. This automatically changes the displayed unit in the unit selector. You can also drag to define the values in the <strong>X</strong> and <strong>Y</strong> boxes.</p>
+
+<h3>Rotate</h3>
+
+<p>The <strong>Rotate</strong> control sets the rotate property. To use it, enter a value and specify the unit.</p>
+
+<p>
+<strong>Tip</strong>: You can type <code>deg</code>, <code>grad</code>, <code>rad</code>, or <code>turn</code> after a value in the <strong>Rotate</strong> box. This automatically changes the displayed unit in the unit selector.</p>
+
+<h2>USS transform properties</h2>
+
+<p>You can use styling rules to set the transform properties for a visual element. You can set the styling rules within a USS file or inline in a UXML file.</p>
+
+<h3><code>transform-origin</code></h3>
+
+<p>The <code>transform-origin</code> property sets the transform origin along the X and Y axes in <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> or percentages. </p>
+
+<p>You can also use keywords to set the value of the <code>transform-origin</code> attribute. These keywords match the dots in the widget in the UI Builder. The following keywords are supported:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Pivot point</strong></th>
+	<th style="text-align:left;"><strong>Keywords</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Center</strong></td>
+	<td style="text-align:left;"><ul>
+<li><code>center</code></li>
+<li>
+<code>center center</code> (This is the default value)</li>
+</ul></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Center of left edge</strong></td>
+	<td style="text-align:left;"><ul>
+<li><code>left</code></li>
+<li><code>left center</code></li>
+<li><code>center left</code></li>
+</ul></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Center of right edge</strong></td>
+	<td style="text-align:left;"><ul>
+<li><code>right</code></li>
+<li><code>right center</code></li>
+<li><code>center right</code></li>
+</ul></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Center of top edge</strong></td>
+	<td style="text-align:left;"><ul>
+<li><code>top</code></li>
+<li><code>top center</code></li>
+<li><code>center top</code></li>
+</ul></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Center of bottom edge</strong></td>
+	<td style="text-align:left;"><ul>
+<li><code>bottom</code></li>
+<li><code>bottom center</code></li>
+<li><code>center bottom</code></li>
+</ul></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Top-left corner</strong></td>
+	<td style="text-align:left;"><ul>
+<li><code>top left</code></li>
+<li><code>left top</code></li>
+</ul></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Top-right corner</strong></td>
+	<td style="text-align:left;"><ul>
+<li><code>top right</code></li>
+<li><code>right top</code></li>
+</ul></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bottom-left corner</strong></td>
+	<td style="text-align:left;"><ul>
+<li><code>bottom left</code></li>
+<li><code>left bottom</code></li>
+</ul></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bottom-right corner</strong></td>
+	<td style="text-align:left;"><ul>
+<li><code>bottom right</code></li>
+<li><code>right bottom</code></li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Examples</strong></p>
+
+<pre><code class="lang-css">transform-origin: 0% 100%;
+transform-origin: 20px 10px;
+transform-origin: 0px 100%;
+transform-origin: 60% 10px;
+</code></pre>
+
+<h3><code>translate</code></h3>
+
+<p>The <code>translate</code> property sets the translation along the X and Y axes in pixels or percentages relative to the size of this visual element. You can omit Y if it equals X.</p>
+
+<p><strong>Examples</strong></p>
+
+<pre><code class="lang-css">translate: 80%;
+translate: 35px;
+translate: 5% 10px;
+translate: 24px 0%;
+</code></pre>
+
+<h3><code>scale</code></h3>
+
+<p>The <code>scale</code> property sets the scale along the X and Y axes as a pair of (float) multipliers. You can omit Y if it equals X.</p>
+
+<p>The keyword <code>none</code> sets no scale.</p>
+
+<p><strong>Examples</strong></p>
+
+<pre><code class="lang-css">scale: 2.5;
+scale: -1 1;
+scale: none;
+</code></pre>
+
+<h3><code>rotate</code></h3>
+
+<p>The <code>rotate</code> property sets the rotation using a number or a unit. </p>
+
+<p>The keyword <code>none</code> sets no rotation.</p>
+
+<p><strong>Examples</strong></p>
+
+<pre><code class="lang-css">rotate: 45deg;
+rotate: -100grad;
+rotate: -3.14rad;
+rotate: 0.75turn;
+rotate: none;
+</code></pre>
+
+<h2>
+<a name="CSharp" aria-hidden="true"></a>Transform C# properties</h2>
+
+<p>You can set the transform properties for a visual element in a C# script.</p>
+
+<h3><code>IStyle.transformOrigin</code></h3>
+
+<p>The <a href="../ScriptReference/UIElements.IStyle-transformOrigin.html"><code>IStyle.transformOrigin</code></a> property sets the transform origin. </p>
+
+<p>The <code>transformOrigin</code> property of the <a href="../ScriptReference/UIElements.VisualElement-style.html"><code>style</code></a> is of type <a href="../ScriptReference/UIElements.StyleTransformOrigin.html"><code>StyleTransformOrigin</code></a>. Its <a href="../ScriptReference/UIElements.StyleTransformOrigin-ctor.html">constructor</a> takes a <a href="../ScriptReference/UIElements.TransformOrigin.html"><code>TransformOrigin</code></a> as an argument. You can construct a new <a href="../ScriptReference/UIElements.TransformOrigin.html"><code>TransformOrigin</code></a> using an X value and a Y value. The X value and the Y value are of type <a href="../ScriptReference/UIElements.Length.html"><code>Length</code></a>.</p>
+
+<p><strong>Examples</strong></p>
+
+<pre><code class="lang-cs">//This example sets the transform origin of the element to be 100 pixels from the left edge and 50% of the way down from the top edge.
+element.style.transformOrigin = new StyleTransformOrigin(new TransformOrigin(new Length(100f, LengthUnit.Pixel), new Length(50f, LengthUnit.Percent)));
+</code></pre>
+
+<p>You can simplify the above code as follows using implicit conversions:</p>
+
+<pre><code class="lang-cs">element.style.transformOrigin = new TransformOrigin(100, Length.Percent(50));
+</code></pre>
+
+<h3><code>IStyle.translate</code></h3>
+
+<p>The <a href="../ScriptReference/UIElements.IStyle-translate.html"><code>IStyle.translate</code></a> property sets the translation.</p>
+
+<p>
+<a href="../ScriptReference/UIElements.IStyle-translate.html"><code>IStyle.translate</code></a> is of type <a href="../ScriptReference/UIElements.StyleTranslate.html"><code>StyleTranslate</code></a>. Its constructor takes a <a href="../ScriptReference/UIElements.Translate.html"><code>Translate</code></a> as an argument. You can construct a new <a href="../ScriptReference/UIElements.Translate.html"><code>Translate</code></a> using an X value and a Y value. The X value and the Y value are of type <a href="../ScriptReference/UIElements.Length.html"><code>Length</code></a>.</p>
+
+<p><strong>Examples</strong></p>
+
+<pre><code class="lang-cs">//This example sets the translation of the element. The X-axis is 10% and the Y-axis is 50 pixels.
+element.style.translate = new StyleTranslate(new Translate(new Length(10f, LengthUnit.Percent), new Length(50f, LengthUnit.Pixel)));
+</code></pre>
+
+<p>You can simplify the above code as follows using implicit conversions:</p>
+
+<pre><code class="lang-cs">element.style.translate = new Translate(Length.Percent(10), 50);
+</code></pre>
+
+<h3><code>IStyle.scale</code></h3>
+
+<p>The <a href="../ScriptReference/UIElements.IStyle-scale.html"><code>IStyle.scale</code></a> property sets the scale.</p>
+
+<p>
+<a href="../ScriptReference/UIElements.IStyle-scale.html"><code>IStyle.scale</code></a> is of type <a href="../ScriptReference/UIElements.StyleScale.html"><code>StyleScale</code></a>. <a href="../ScriptReference/UIElements.StyleScale.html"><code>StyleScale</code></a>’s <a href="../ScriptReference/UIElements.StyleScale-ctor.html">constructor</a> takes a <a href="../ScriptReference/UIElements.Scale.html">Scale</a> as an argument. You can <a href="../ScriptReference/UIElements.Scale-ctor.html">construct</a> this <code>Scale</code> with a <code>Vector2</code>.</p>
+
+<p><strong>Examples</strong></p>
+
+<pre><code class="lang-cs">element.style.scale = new StyleScale(new Scale(new Vector2(0.5f, -1f)));
+</code></pre>
+
+<p>You can simplify the code above as follows using implicit conversions:</p>
+
+<pre><code class="lang-cs">element.style.scale = new Scale(new Vector2(0.5f, -1));
+</code></pre>
+
+<h3><code>IStyle.rotate</code></h3>
+
+<p>The <a href="../ScriptReference/UIElements.IStyle-rotate.html"><code>IStyle.rotate</code></a> property sets the rotation.</p>
+
+<p>The <a href="../ScriptReference/UIElements.IStyle-rotate.html"><code>IStyle.rotate</code></a> property is of type <a href="../ScriptReference/UIElements.StyleRotate.html"><code>StyleRotate</code></a>. The <a href="../ScriptReference/UIElements.StyleRotate.html"><code>StyleRotate</code></a>’s <a href="../ScriptReference/UIElements.StyleRotate-ctor.html">constructor</a> takes a <a href="../ScriptReference/UIElements.Rotate.html"><code>Rotate</code></a> as an argument. You can <a href="../ScriptReference/UIElements.Rotate-ctor.html">construct</a> this <code>Rotate</code> with an <a href="../ScriptReference/UIElements.Angle.html"><code>Angle</code></a>. You can <a href="../ScriptReference/UIElements.Angle-ctor.html">construct</a> an <code>Angle</code> with a float and an optional <a href="../ScriptReference/UIElements.AngleUnit.html"><code>AngleUnit</code></a> enum, or you can use static methods <a href="../ScriptReference/UIElements.Angle.Degrees.html"><code>Degrees()</code></a>, <a href="../ScriptReference/UIElements.Angle.Gradians.html"><code>Gradians()</code></a>, <a href="../ScriptReference/UIElements.Angle.Radians.html"><code>Radians()</code></a>, and <a href="../ScriptReference/UIElements.Angle.Turns.html"><code>Turns()</code></a>. The only <code>AngleUnit</code> available is degrees.</p>
+
+<p><strong>Examples</strong></p>
+
+<pre><code class="lang-cs">//Rotate by 180 degrees
+elements[0].style.rotate = new StyleRotate(new Rotate(new Angle(180f, AngleUnit.Degree)));
+//You can simplify the above code as follows:
+elements[0].style.rotate = new Rotate(Angle.Degrees(180));
+//Rotate by 200 gradians
+elements[1].style.rotate = new StyleRotate(new Rotate(new Angle(200f, AngleUnit.Gradian)));
+//Rotate by pi radians
+elements[2].style.rotate = new StyleRotate(new Rotate(new Angle(Mathf.PI, AngleUnit.Radian)));
+//Rotate by half a turn
+elements[3].style.rotate = new StyleRotate(new Rotate(new Angle(0.5f, AngleUnit.Turn)));
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-LayoutEngine.html">Layout engine</a></li>
+<li>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-origin">CSS transform-origin property</a> (Mozilla developer documentation)</li>
+<li>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/translate">CSS translate property</a> (Mozilla developer documentation)</li>
+<li>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/rotate">CSS rotate property</a> (Mozilla developer documentation)</li>
+<li>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/scale">CSS scale property</a> (Mozilla developer documentation)</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-9-slice-images-with-ui-toolkit.html"></a></span><div class="tip">9-Slice images with UI Toolkit</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Transitions.html"></a></span><div class="tip">USS transition</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

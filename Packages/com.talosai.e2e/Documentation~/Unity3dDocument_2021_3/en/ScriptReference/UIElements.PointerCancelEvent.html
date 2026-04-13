@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: PointerCancelEvent</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">PointerCancelEvent</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEngine.UIElements</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Inherits from:<a href="UIElements.PointerEventBase_1.html" class="cl">UIElements.PointerEventBase_1</a></p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Implemented in:<a href="UnityEngine.UIElementsModule.html" class="cl">UnityEngine.UIElementsModule</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>
+ This event is sent when pointer interaction is cancelled.
+ </p>
+              </div>
+              <div class="subsection">
+        <p>
+ A PointerCancelEvent can trickle down or bubble up, but cannot be cancelled.
+ Disabled elements won't receive this event by default.<br /><br /> See <a href="UIElements.PointerEventBase_1.html">PointerEventBase&lt;T0&gt;</a> to see how PointerCancelEvent relates to other pointer events.
+ </p>
+      </div>
+              <div class="subsection">
+                <h3>Constructors</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Constructor</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="UIElements.PointerCancelEvent-ctor.html">PointerCancelEvent</a></td><td class="desc">
+ Constructor. Avoid creating new event instances. Instead, use GetPooled() to get an instance from a pool of reusable event instances.
+ </td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Protected Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="UIElements.PointerCancelEvent.Init.html">Init</a></td><td class="desc">
+ Resets the event members to their initial values.
+ </td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Inherited Members</h3>
+      
+      <div class="subsection"><h3>Properties</h3><table class="list"><thead><tr><th>Property</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="UIElements.EventBase-bubbles.html">bubbles</a></td><td class="desc">
+ Returns whether this event type bubbles up in the event propagation path.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase-currentTarget.html">currentTarget</a></td><td class="desc">
+ The current target of the event. This is the VisualElement, in the propagation path, for which event handlers are currently being executed.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase-dispatch.html">dispatch</a></td><td class="desc">
+ Indicates whether the event is being dispatched to a visual element. An event cannot be redispatched while it being dispatched. If you need to recursively dispatch an event, it is recommended that you use a copy of the event.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase-eventTypeId.html">eventTypeId</a></td><td class="desc">
+ Retrieves the type ID for this event instance.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase-imguiEvent.html">imguiEvent</a></td><td class="desc">
+ The IMGUIEvent at the source of this event. The source can be null since not all events are generated by IMGUI.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase-isDefaultPrevented.html">isDefaultPrevented</a></td><td class="desc">
+ Returns true if the default actions should not be executed for this event.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase-isImmediatePropagationStopped.html">isImmediatePropagationStopped</a></td><td class="desc">
+ Indicates whether StopImmediatePropagation() was called for this event.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase-isPropagationStopped.html">isPropagationStopped</a></td><td class="desc">
+ Whether StopPropagation() was called for this event.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase-originalMousePosition.html">originalMousePosition</a></td><td class="desc">
+ The original mouse position of the IMGUI event, before it is transformed to the current target local coordinates.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase-pooled.html">pooled</a></td><td class="desc">
+ Whether the event is allocated from a pool of events.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase-propagationPhase.html">propagationPhase</a></td><td class="desc">
+ The current propagation phase for this event. 
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase-target.html">target</a></td><td class="desc">
+ The target visual element that received this event. Unlike currentTarget, this target does not change when the event is sent to other elements along the propagation path.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase-timestamp.html">timestamp</a></td><td class="desc">
+ The time when the event was created, in milliseconds.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase-tricklesDown.html">tricklesDown</a></td><td class="desc">
+ Returns whether this event is sent down the event propagation path during the TrickleDown phase.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase_1-eventTypeId.html">eventTypeId</a></td><td class="desc">
+ Retrieves the type ID for this event instance.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-actionKey.html">actionKey</a></td><td class="desc">
+ Gets a boolean value that indicates whether the platform-specific action key is pressed. True means the action
+ key is pressed. False means it isn't.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-altitudeAngle.html">altitudeAngle</a></td><td class="desc">
+ Gets the angle of the stylus relative to the surface, in radians
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-altKey.html">altKey</a></td><td class="desc">
+ Gets a boolean value that indicates whether the Alt key is pressed. True means the Alt key is pressed.
+ False means it isn't.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-azimuthAngle.html">azimuthAngle</a></td><td class="desc">
+ Gets the angle of the stylus relative to the x-axis, in radians.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-button.html">button</a></td><td class="desc">
+ Gets a value that indicates which mouse button was pressed: 0 is the left button, 1 is the right button, 2 is the middle button.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-clickCount.html">clickCount</a></td><td class="desc">
+ Gets the number of times the button was pressed.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-commandKey.html">commandKey</a></td><td class="desc">
+ Gets a boolean value that indicates whether the Windows/Cmd key is pressed. True means the Windows/Cmd key
+ is pressed. False means it isn't.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-ctrlKey.html">ctrlKey</a></td><td class="desc">
+ Gets a boolean value that indicates whether the Ctrl key is pressed. True means the Ctrl key is pressed.
+ False means it isn't.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-currentTarget.html">currentTarget</a></td><td class="desc">
+ Gets the current target of the event.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-deltaPosition.html">deltaPosition</a></td><td class="desc">
+ Gets the difference between the pointer's position during the previous mouse event and its position during the
+ current mouse event.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-deltaTime.html">deltaTime</a></td><td class="desc">
+ Gets the amount of time that has elapsed since the last recorded change in pointer values, in seconds.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-isPrimary.html">isPrimary</a></td><td class="desc">
+ Gets a boolean value that indicates whether the pointer is a primary pointer. True means the pointer is a primary
+ pointer. False means it isn't.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-localPosition.html">localPosition</a></td><td class="desc">
+ Gets the pointer position in the current target's coordinate system.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-modifiers.html">modifiers</a></td><td class="desc">
+ Gets flags that indicate whether modifier keys (Alt, Ctrl, Shift, Windows/Cmd) are pressed.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-pointerId.html">pointerId</a></td><td class="desc">
+ Gets the identifier of the pointer that sent the event.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-pointerType.html">pointerType</a></td><td class="desc">
+ Gets the type of pointer that created the event.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-position.html">position</a></td><td class="desc">
+ Gets the pointer position in the Screen or World coordinate system.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-pressedButtons.html">pressedButtons</a></td><td class="desc">
+ Gets a bitmask that describes the buttons that are currently pressed.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-pressure.html">pressure</a></td><td class="desc">
+ Gets the amount of pressure currently applied by a touch.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-radius.html">radius</a></td><td class="desc">
+ Gets an estimate of the radius of a touch.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-radiusVariance.html">radiusVariance</a></td><td class="desc">
+ Gets the accuracy of the touch radius.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-shiftKey.html">shiftKey</a></td><td class="desc">
+ Gets a boolean value that indicates whether the Shift key is pressed. True means the Shift key is pressed.
+ False means it isn't.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-tangentialPressure.html">tangentialPressure</a></td><td class="desc">
+ Gets the pressure applied to an additional pressure-sensitive control on the stylus.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1-twist.html">twist</a></td><td class="desc">
+ Gets the rotation of the stylus around its axis, in radians.
+ </td></tr>
+      </table></div>
+      
+      
+      
+      <div class="subsection"><h3>Public Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="UIElements.EventBase.Dispose.html">Dispose</a></td><td class="desc">
+ Implementation of IDisposable.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase.PreventDefault.html">PreventDefault</a></td><td class="desc">
+ Indicates whether the default actions are prevented from being executed for this event.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase.StopImmediatePropagation.html">StopImmediatePropagation</a></td><td class="desc">
+ Immediately stops the propagation of the event. The event isn't sent to other elements along the propagation path. This method prevents other event handlers from executing on the current target.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase.StopPropagation.html">StopPropagation</a></td><td class="desc">
+ Stops propagating this event. The event is not sent to other elements along the propagation path. This method does not prevent other event handlers from executing on the current target.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase_1.Dispose.html">Dispose</a></td><td class="desc">
+ Implementation of IDispose.
+ </td></tr>
+      </table></div>
+      <div class="subsection"><h3>Protected Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="UIElements.EventBase.PostDispatch.html">PostDispatch</a></td><td class="desc">
+ Allows subclasses to perform custom logic after the event has been dispatched.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase.PreDispatch.html">PreDispatch</a></td><td class="desc">
+ Allows subclasses to perform custom logic before the event is dispatched.
+ </td></tr>
+      </table></div>
+      <div class="subsection"><h3>Static Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="UIElements.EventBase.RegisterEventType.html">RegisterEventType</a></td><td class="desc">
+ Registers an event class to the event type system.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase_1.GetPooled.html">GetPooled</a></td><td class="desc">
+ Gets an event from the event pool. Use this function instead of creating new events. Events obtained using this method need to be released back to the pool. You can use Dispose() to release them.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.EventBase_1.TypeId.html">TypeId</a></td><td class="desc">
+ Retrieves the type ID for this event instance.
+ </td></tr>
+        <tr><td class="lbl"><a href="UIElements.PointerEventBase_1.GetPooled.html">GetPooled</a></td><td class="desc">
+ Gets an event from the event pool and initializes it with the given values. Use this function instead of creating new events.
+ Events obtained using this method need to be released back to the pool. You can use Dispose() to release them.
+ </td></tr>
+      </table></div>
+      
+      
+      
+      
+    </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

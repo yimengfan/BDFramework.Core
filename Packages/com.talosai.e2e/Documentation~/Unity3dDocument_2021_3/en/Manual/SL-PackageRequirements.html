@@ -1,0 +1,350 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: ShaderLab: specifying package requirements</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-PackageRequirements.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-PackageRequirements.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-PackageRequirements.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-PackageRequirements.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-PackageRequirements.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-PackageRequirements.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-PackageRequirements.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-PackageRequirements.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="Shaders.html">Shaders</a></li>
+<li><a href="shader-writing.html">Writing shaders</a></li>
+<li><a href="SL-Reference.html">ShaderLab</a></li>
+<li>ShaderLab: specifying package requirements</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="shader-shaderlab-code-blocks.html"></a></span><div class="tip">ShaderLab: adding shader programs</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="shader-shaderlab-commands.html"></a></span><div class="tip">ShaderLab: commands</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>ShaderLab: specifying package requirements</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Some <span class="tooltip"><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> need to support multiple <span class="tooltip"><strong>render pipelines</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html" href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> need to support multiple <span class="tooltip"><strong>render pipelines</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> simultaneously. Adding package requirements to <a href="SL-SubShader.html">SubShaders</a> and <a href="SL-Pass.html">Passes</a> enables you to avoid compilation errors when shader code uses an include file from a package that is not installed or requires a specific version of a package to compile.</p>
+
+<h2>Render pipeline compatibility</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature name</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>Universal Render Pipeline (URP)</strong></th>
+	<th style="text-align:left;"><strong>High Definition Render Pipeline (HDRP)</strong></th>
+	<th style="text-align:left;"><strong>Custom SRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>ShaderLab</strong><span class="tooltiptext">Unity’s language for defining the structure of Shader objects. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-Shader.html" href="SL-Shader.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span>: PackageRequirements block</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Using the PackageRequirements block</h2>
+
+<p>To specify package requirements for a SubShader or a Pass, you use the <code>PackageRequirements</code> block. ShaderLab supports a single <code>PackageRequirements</code> block per SubShader or Pass, but each block can specify multiple package requirements.</p>
+
+<p>
+<strong>Note</strong>: if you provide a <code>PackageRequirements</code> block, it must come before all other declarations inside the SubShader or Pass.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Signature</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>PackageRequirements{    [requirement definition]}</code></td>
+	<td style="text-align:left;">Defines the package requirements for the Pass or SubShader.</td>
+</tr>
+</tbody>
+</table>
+
+<p>There are multiple ways to declare package requirements. Each one provides a different behavior. They are:</p>
+
+<ul>
+<li>
+<strong>“&lt;package name&gt;”</strong>: Specifies that the SubShader or Pass works with any version of the package.</li>
+<li>
+<strong>“&lt;package name&gt;”: “&lt;version restrictions&gt;”</strong>: Specifies that the SubShader or Pass only works with a subset of package versions.</li>
+<li>
+<strong>“&lt;package name&gt;”: “unity=&lt;version restrictions&gt;”</strong>: Specifies that the SubShader or Pass only works with a subset of Unity versions and requires a package with the given name.</li>
+<li>
+<strong>“unity”:“&lt;version restrictions&gt;”</strong>: Specifies that the SubShader or Pass only works with a subset of Unity versions.</li>
+</ul>
+
+<p>Version restrictions define a set of version ranges. If the installed version of a required package is not inside any of the ranges, the package requirement is not met. Similarly, if a requirement specifies a set of Unity version restrictions, the same applies to the current version of Unity. For information about the syntax of version restrictions, see <a href="#version-syntax">Version syntax</a>.</p>
+
+<p>If a SubShader or Pass declares package requirements that the project does not meet, Unity excludes the SubShader or Pass from further processing and compilation. This happens if the project does not include the required packages, or includes them but not with a compatible version. If a shader does not contain a single SubShader that meets the requirements, or if no SubShader contains Passes that meet the requirements, the <span class="tooltip"><strong>Console window</strong><span class="tooltiptext">A Unity Editor window that shows errors, warnings and other messages generated by Unity, or your own scripts. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Console.html" href="Console.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Consolewindow" aria-label="Go to glossary anchor for Consolewindow">Glossary</a></span></span></span> shows a warning message.</p>
+
+<p>
+<strong>Note:</strong> The <code>PackageRequirements</code> block must come before all other declarations inside the SubShader or Pass.</p>
+
+<p><a name="version-syntax" aria-hidden="true"></a></p>
+
+<h3>Version syntax</h3>
+
+<p>In ShaderLab’s package requirements, a version uses the <code>major.minor</code> or <code>major.minor.patch</code> format. If you only use <code>major.minor</code>, Unity uses <code>0</code> for the <code>patch</code>. Package versions can also include a <code>-preview</code> or a <code>-preview.n</code> postfix where <code>-preview</code> is equivalent to <code>-preview.0</code>. Preview versions come before non-preview versions, so <code>1.2.3-preview.4</code> comes after <code>1.2.2</code> but before <code>1.2.3</code>.</p>
+
+<p>There are multiple ways to specify a version range. Each one provides a different behavior. They are:</p>
+
+<ul>
+<li>
+<strong>&lt;version&gt;</strong>: Includes the version you enter and all versions after that. For example, <code>1.2.3</code> includes all versions starting with <code>1.2.3</code>;</li>
+<li>
+<strong>[&lt;version&gt;]</strong>: Specifies the exact version. For example, <code>[1.2.3]</code> only includes version <code>1.2.3</code>;</li>
+<li>
+<strong>[&lt;version1&gt;,&lt;version2&gt;]</strong>: Specifies a range between &lt;version1&gt; and &lt;version2&gt;. Using square brackets and round brackets causes the range to include or exclude to version respectively. The opening bracket affects &lt;version1&gt; and the closing bracket affects &lt;version2&gt;. Example: <code>[1.2.3,2.3.4)</code> includes all versions from 1.2.3 to 2.3.3.</li>
+</ul>
+
+<p>You can also specify sets of version ranges for a single package. To create a set of version ranges from individual ranges, use a semicolon as a separator. For example, <code>[2.0,3.4.5];[3.7];4.0</code> includes versions from 2.0.0 to 3.4.5, version 3.7.0, and version 4.0.0 and above.</p>
+
+<p>When you set the versions for a package, be aware of the following:</p>
+
+<ul>
+<li>Versions, version ranges, and sets of version ranges cannot contain any extra characters.</li>
+<li>Version ranges cannot be empty.</li>
+<li>Sets of version ranges cannot have intersections.</li>
+<li>Package requirements are sensitive to whitespace.</li>
+</ul>
+
+<p>If the syntax does not adhere to the above, the version restriction is invalid. For more information on what happens with invalid package requirements, see <a href="#error-checking">Error checking</a>.</p>
+
+<h3>Example</h3>
+
+<p>The following code example shows how to specify package requirements in both a SubShader and a Pass. The SubShader declares a single package requirement for a package called “com.my.package” and works with any version of this package starting from 2.2.0. The SubShader has two Passes:</p>
+
+<ul>
+<li><p>The first Pass requires:</p></li>
+<li><p>The Universal Render Pipeline package with a version between 10.2.1 and 11.0.</p></li>
+<li><p>The Text <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> Pro package with a version of 3.2 or above.</p></li>
+<li><p>The second Pass requires:</p></li>
+<li><p>The High-Definition Render Pipeline package with a version between 8.0 to 8.5</p></li>
+</ul>
+
+<pre><code>Shader &quot;Examples/ExampleShader&quot;
+{
+    SubShader
+    {
+        PackageRequirements
+        {
+            &quot;com.my.package&quot;: &quot;2.2&quot;
+        }
+        Pass
+        {
+            PackageRequirements
+            {
+                &quot;com.unity.render-pipelines.universal&quot;: &quot;[10.2.1,11.0]&quot;
+                &quot;com.unity.textmeshpro&quot;: &quot;3.2&quot;
+            }
+
+            // The rest of the code for the Pass
+        }
+        Pass
+        {
+            PackageRequirements
+            {
+                &quot;com.unity.render-pipelines.high-definition&quot;: &quot;[8.0,8.5]&quot;
+            }
+
+            // The rest of the code for the Pass
+
+        }
+    }
+}
+</code></pre>
+
+<p><a name="error-checking" aria-hidden="true"></a></p>
+
+<h3>Error checking</h3>
+
+<p>If you define package requirements that can never be satisfied, the shader import process fails with an error. This section provides examples of the most common invalid package requirement definitions.</p>
+
+<h4>Malformed versions or empty package name</h4>
+
+<pre><code>PackageRequirements {
+  &quot;com.some.package.x&quot;: &quot;[10.2.1,9.0]&quot;        // Error, empty version range
+  &quot;com.some.package.y&quot;: &quot;[10.2.1.9,11.0]&quot;     // Error, incorrect version format
+  &quot;com.some.package.z&quot;: &quot;[2.3,3.5],[3.0,4.0]&quot; // Error, ranges intersect
+  &quot;com.some.package.z&quot; : &quot;[10.2.1,11.0]&quot;      // Error, extra whitespace after the package name
+  &quot;&quot; : &quot;[2.3.4,3.4.5]&quot;                        // Error, no package name provided
+}
+</code></pre>
+
+<h4>Multiple dependencies on the same package</h4>
+
+<pre><code>PackageRequirements {
+  &quot;com.some.package.x&quot;: &quot;[10.2.1,11.0]&quot;
+  &quot;com.some.package.x&quot;: &quot;[11.2.1,12.0]&quot; // Error, dependency on &quot;com.some.package.x&quot; declared twice
+  &quot;unity&quot; : &quot;2021.2&quot;
+  &quot;unity&quot; : &quot;2021.3&quot; // Error, dependency on Unity version declared twice
+}
+</code></pre>
+
+<h4>Conflicting dependency declarations</h4>
+
+<pre><code>PackageRequirements {
+  &quot;com.some.package.x&quot;: &quot;unity=[2021.2.1,2021.3.3]&quot;
+  &quot;unity&quot; : &quot;2021.2&quot;    // Error: Unity version requirement cannot be declared on a package and on its own simultaneously
+}
+</code></pre>
+
+<h4>Conflicting dependency declarations between SubShaders and Passes</h4>
+
+<pre><code>SubShader {
+  PackageRequirements {
+    &quot;com.some.package.x&quot;: &quot;[2.3.4,3.4.5]&quot;
+    &quot;com.some.package.z&quot;: &quot;[1.1,3.2]&quot;
+    &quot;unity&quot;: &quot;2021.2&quot;
+  }
+  Pass {
+    PackageRequirements {
+      &quot;com.some.package.y&quot;: &quot;[1.2.2,2.5]&quot;               // Fine, SubShader doesn’t declare a dependency on &quot;com.some.package.y&quot;
+      &quot;com.some.package.z&quot;: &quot;[2.0,3.1]&quot;                 // Fine, SubShader dependency intersects the provided version range
+      &quot;com.some.package.x&quot;: &quot;[1.1.1, 2.2.2]&quot;            // Error, SubShader version range for &quot;com.some.package.x&quot; does not intersect the provided range
+      &quot;com.some.package.w&quot;: &quot;unity=[2021.2.1,2021.2.5]&quot; // Fine, SubShader dependency intersects the provided version range
+      &quot;com.some.package.u&quot;: &quot;unity=[2020.2.1,2020.2.5]&quot; // Error, SubShader Unity version range does not intersect the provided range
+    }
+  }
+}
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="shader-shaderlab-code-blocks.html"></a></span><div class="tip">ShaderLab: adding shader programs</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="shader-shaderlab-commands.html"></a></span><div class="tip">ShaderLab: commands</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

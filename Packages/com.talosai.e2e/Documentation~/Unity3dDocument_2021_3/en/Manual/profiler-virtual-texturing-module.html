@@ -1,0 +1,276 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Virtual Texturing Profiler module</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/profiler-virtual-texturing-module.html">English</a></li>
+<li><a href="/cn/current/Manual/profiler-virtual-texturing-module.html">中文</a></li>
+<li><a href="/ja/current/Manual/profiler-virtual-texturing-module.html">日本語</a></li>
+<li><a href="/kr/current/Manual/profiler-virtual-texturing-module.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/profiler-virtual-texturing-module.html">English</a></li>
+<li><a href="/cn/current/Manual/profiler-virtual-texturing-module.html">中文</a></li>
+<li><a href="/ja/current/Manual/profiler-virtual-texturing-module.html">日本語</a></li>
+<li><a href="/kr/current/Manual/profiler-virtual-texturing-module.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="Profiler.html">Profiler overview</a></li>
+<li><a href="ProfilerWindow.html">The Profiler window</a></li>
+<li>Virtual Texturing Profiler module</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="profiler-video-profiler-module.html"></a></span><div class="tip">Video Profiler module</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Profiler-customizing.html"></a></span><div class="tip">Customizing the Profiler</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Virtual Texturing Profiler module</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Virtual Texturing <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> module displays statistics about <a href="svt-streaming-virtual-texturing.html">Streaming Virtual Texturing</a> in your application. Virtual Texturing reduces the amount of GPU memory that your application uses, and the loading times of textures in your application if there are a lot of high resolution textures in a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> module displays statistics about <a href="svt-streaming-virtual-texturing.html">Streaming Virtual Texturing</a> in your application. Virtual Texturing reduces the amount of GPU memory that your application uses, and the loading times of textures in your application if there are a lot of high resolution textures in a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<p>
+<strong>Note:</strong> To use the Virtual Texturing Profiler module, in your project’s <strong>Player Settings</strong>, you must enable <strong>Virtual Texturing</strong> (<strong>Edit &gt; Project Settings &gt; Player &gt; Other Settings</strong>).</p>
+
+<figure>
+<img src="../uploads/Main/profiler-virtual-texturing.png" alt="Virtual Texturing Profiler module">
+<figcaption>Virtual Texturing Profiler module</figcaption>
+</figure>
+
+<p>The chart displays information about the texture tiles that are on screen while your application is running, and how much memory the textures use. When you select the Virtual Texturing module, the lower pane of the Profiler window displays statistics such as how much cache size the virtual textures use.</p>
+
+<p>The Virtual Texturing Profiler module’s chart is divided into the following categories:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Chart</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Required Tiles</strong></td>
+	<td style="text-align:left;">The number of texture tiles that were visible on screen. These are the tiles that the <span class="tooltip"><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> tried to sample to render the selected frame.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Max Cache Mip Bias</strong></td>
+	<td style="text-align:left;">The automatic mipmap bias applied to all textures with the same <span class="tooltip"><strong>texture format</strong><span class="tooltiptext">A file format for handling textures during real-time rendering by 3D graphics hardware, such as a graphics card or mobile device. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporterOverride.html" href="class-TextureImporterOverride.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TextureFormat" aria-label="Go to glossary anchor for TextureFormat">Glossary</a></span></span></span>. If this value isn’t zero, then the cache isn’t large enough to hold all the tiles of that format that are visible. The higher the mipmap bias, the lower the texture quality.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Max Cache Demand</strong></td>
+	<td style="text-align:left;">The highest cache demand of all GPU caches in the selected frame.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Missing Streaming Tiles</strong></td>
+	<td style="text-align:left;">The number of tiles that were visible on the screen but weren’t in video memory. Your application streams these tiles from the disk or copies them from main memory as soon as possible.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Missing Disk Data</strong></td>
+	<td style="text-align:left;">The remaining data (in bytes) that your application needed to read from the disk to satisfy the selected frame.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="markers" aria-hidden="true"></a></p>
+
+<h2>Module details pane</h2>
+
+<p>When you click on the Virtual Texturing Profiler module, the details pane in the lower half of the window displays further detailed statistics. These statistics are also available via the <a href="../ScriptReference/Unity.Profiling.ProfilerRecorder.html">ProfilerRecorder API</a> and in the <a href="profiler-module-editor.html">Profiler Module Editor</a> so you can add them to a <a href="Profiler-customizing.html">custom Profiler module</a>.</p>
+
+<p>The statistics in the details pane are as follows:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Statistic</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>System Statistics</strong></td>
+	<td style="text-align:left;">This section of the details pane displays information about your application’s texture tiles and the resources they used during the Profiler capture. These statistics are available for both player builds, and profiling Play mode in the Unity Editor.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Tiles required this frame</td>
+	<td style="text-align:left;">The number of texture tiles that were visible on screen. These are the tiles that the shaders tried to sample to render the selected frame. If all these tiles are in the GPU cache then Unity renders the frame with the highest possible texture quality for the cache size. <br><br>Unless the Scene was frozen, then some of the tiles weren’t in the GPU memory yet. In this case, the virtual texturing sample uses a lower quality sample from a higher mipmap that’s in memory, until the higher quality sample arrives in memory.<br><br>The cache mipmap bias affects the number of required tiles. If the mipmap bias isn’t zero for all caches then the number of required tiles is lower than the number required for the optimal texture quality.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Max Cache Mip Bias</td>
+	<td style="text-align:left;">The mipmap bias of the GPU cache with the highest mipmap bias. If this isn’t zero then at least one of the caches isn’t large enough to hold all the texture tiles to render the selected frame at the optimal texture quality.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Max Cache Demand</td>
+	<td style="text-align:left;">The highest cache demand of all GPU caches the selected frame represented as a percentage of the GPU. The GPU cache that has the highest demand might need to be larger to avoid mipmap biasing for this cache.<br><br>If the Max Cache Demand statistic is a low percentage then the caches might be too large for the render resolution and content. The main downside of this is that your application is using more GPU memory than it needs but this isn’t a problem if your application isn’t memory constrained.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Total CPU Cache Size</td>
+	<td style="text-align:left;">The amount of memory that Unity allocated to stored texture tiles after it loaded them from disk.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Total GPU Cache Size</td>
+	<td style="text-align:left;">The size of all GPU caches that the Virtual Texturing module allocated in the selected frame. Unity creates a GPU cache when a material that uses a texture of that texture format is rendered.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Atlases</td>
+	<td style="text-align:left;">The number of virtual texture spaces or atlases (maximum of 64). Unity atlasses the textures that are streamed with virtual texturing into large virtual texture spaces. This is automatic and transparent.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Player Build Statistics</strong></td>
+	<td style="text-align:left;">This section of the details pane displays information about your application’s texture tiles that are only available when you profile a build of your application.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Missing Disk Data</td>
+	<td style="text-align:left;">The remaining data (in bytes) that the application needed to read from disk to satisfy the selected frame. There might be more disk read requests queued up from requests in previous frames that aren’t visible anymore. As such, this is the minimum amount of data that the application reads from disk if no new tiles become visible. The actual amount of data the application reads might be larger.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Missing Streaming Tiles</td>
+	<td style="text-align:left;">The number of tiles that were visible on the screen but weren’t in memory yet. These tiles were streamed from disk as soon as possible. This number might be higher if, for example, the <span class="tooltip"><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> moves. This statistic falls to zero if the scene and camera froze and no new tiles were visible.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Read From Disk</td>
+	<td style="text-align:left;">The number of bytes of disk read operations that Unity completed in the selected frame.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Per Cache Statistics</strong></td>
+	<td style="text-align:left;">Displays statistics about the cache. Only available when you profile a build of your application.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Cache Format</td>
+	<td style="text-align:left;">The <a href="../ScriptReference/Experimental.Rendering.GraphicsFormat.html">graphics formats</a> that the textures in your application used.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Demand</td>
+	<td style="text-align:left;">The amount of cache demand each <a href="../ScriptReference/Experimental.Rendering.GraphicsFormat.html">graphics format</a> used. <strong>Note:</strong> This statistic is not available in custom profilers</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Bias</td>
+	<td style="text-align:left;">The amount of mipmap bias cache each <a href="../ScriptReference/Experimental.Rendering.GraphicsFormat.html">graphics format</a> used. <strong>Note:</strong> This statistic is not available in custom profilers</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="profiler-video-profiler-module.html"></a></span><div class="tip">Video Profiler module</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Profiler-customizing.html"></a></span><div class="tip">Customizing the Profiler</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

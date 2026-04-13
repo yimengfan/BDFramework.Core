@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Camera.RenderToCubemap</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">
+                  <a href="Camera.html">Camera</a>.RenderToCubemap</h1>
+                <div class="clear">
+                </div>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <a aria-label="go to usermanual page" href='../Manual/class-Camera.html' title='Go to Camera Component in the Manual' class='switch-link gray-btn sbtn left show'>Switch to Manual</a>
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public bool <span class="sig-kw">RenderToCubemap</span>(<a href="Cubemap.html">Cubemap</a> <span class="sig-kw">cubemap</span>,
+int <span class="sig-kw">faceMask</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">cubemap</td>
+                    <td class="desc">The cube map to render to.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">faceMask</td>
+                    <td class="desc">A bitmask which determines which of the six faces are rendered to.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Returns</h3>
+                <p>
+                  <strong>bool</strong>
+        False if rendering fails, else true.
+      </p>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Render into a static cubemap from this camera.</p>
+              </div>
+              <div class="subsection">
+        <p>This function is mostly useful in the editor for "baking" static cubemaps of your Scene. See
+wizard example below. If you want a real-time-updated cubemap, use RenderToCubemap variant that uses
+a RenderTexture with a cubemap dimension, see below.<br /><br />Camera's position, clear flags and clipping plane distances will be used to
+render into cubemap faces. <code class="varname">faceMask</code> is a bitfield indicating which cubemap faces should be rendered into. Each
+bit that is set corresponds to a face. Bit numbers are integer values of <a href="CubemapFace.html">CubemapFace</a> enum.
+By default all six cubemap faces will be rendered (default value 63 has six lowest bits on).<br /><br />This function will return <code class="varname">false</code> if rendering to cubemap fails. Some graphics hardware does not
+support the functionality.<br /><br />Note also that ReflectionProbes are a more advanced way of performing real-time reflections.  Cubemaps can be created in the editor by selecting the Create-&gt;Legacy option.<br /><br />Additional resources: <a href="../Manual/class-Cubemap.html">Cubemap assets</a>, <a href="../Manual/shader-ReflectiveFamily.html">Reflective shaders</a>.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using UnityEngine;
+using <a href="UnityEditor.html">UnityEditor</a>;
+using System.Collections;<br /><br />public class RenderCubemapWizard : <a href="ScriptableWizard.html">ScriptableWizard</a>
+{
+    public <a href="Transform.html">Transform</a> renderFromPosition;
+    public <a href="Cubemap.html">Cubemap</a> cubemap;<br /><br />    void OnWizardUpdate()
+    {
+        string helpString = "Select transform to render from and cubemap to render into";
+        bool isValid = (renderFromPosition != null) &amp;&amp; (cubemap != null);
+    }<br /><br />    void OnWizardCreate()
+    {
+        // create temporary camera for rendering
+        <a href="GameObject.html">GameObject</a> go = new <a href="GameObject.html">GameObject</a>("CubemapCamera");
+        go.AddComponent&lt;<a href="Camera.html">Camera</a>&gt;();
+        // place it on the object
+        go.transform.position = renderFromPosition.position;
+        go.transform.rotation = <a href="Quaternion-identity.html">Quaternion.identity</a>;
+        // render into cubemap
+        go.GetComponent&lt;<a href="Camera.html">Camera</a>&gt;().RenderToCubemap(cubemap);<br /><br />        // destroy temporary camera
+        DestroyImmediate(go);
+    }<br /><br />    [<a href="MenuItem.html">MenuItem</a>("<a href="GameObject.html">GameObject</a>/Render into <a href="Cubemap.html">Cubemap</a>")]
+    static void RenderCubemap()
+    {
+        <a href="ScriptableWizard.DisplayWizard.html">ScriptableWizard.DisplayWizard</a>&lt;RenderCubemapWizard&gt;(
+            "Render cubemap", "Render!");
+    }
+}
+</pre>
+      </div>
+              <hr class="section" />
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public bool <span class="sig-kw">RenderToCubemap</span>(<a href="RenderTexture.html">RenderTexture</a> <span class="sig-kw">cubemap</span>,
+int <span class="sig-kw">faceMask</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">faceMask</td>
+                    <td class="desc">A bitfield indicating which cubemap faces should be rendered into.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">cubemap</td>
+                    <td class="desc">The texture to render to.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Returns</h3>
+                <p>
+                  <strong>bool</strong>
+        False if rendering fails, else true.
+      </p>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Render into a cubemap from this camera.</p>
+              </div>
+              <div class="subsection">
+        <p>This is used for real-time reflections into cubemap render textures. It can be quite expensive though,
+especially if all six cubemap faces are rendered each frame.<br /><br />The Camera's position, clear flags and clipping plane distances will be used to
+render into cubemap faces. <code class="varname">faceMask</code> is a bitfield indicating which cubemap faces should be rendered into. Each
+bit that is set corresponds to a face. Bit numbers are integer values of <a href="CubemapFace.html">CubemapFace</a> enum.
+By default all six cubemap faces will be rendered (default value 63 has six lowest bits on).<br /><br />This function will return <code class="varname">false</code> if rendering to cubemap fails. Some graphics hardware does not
+support the functionality.<br /><br />Note that the RenderTexture must have <a href="RenderTexture-dimension.html">RenderTexture.dimension</a> set to <a href="Rendering.TextureDimension.Cube.html">TextureDimension.Cube</a>.  This is illustrated in the example following.<br /><br />Additional resources: RenderTexture.isCubemap, <a href="../Manual/shader-ReflectiveFamily.html">Reflective shaders</a>.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using UnityEngine;<br /><br />[<a href="ExecuteInEditMode.html">ExecuteInEditMode</a>]
+public class Example : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    // Attach this script to an object that uses a Reflective shader.
+    // Real-time reflective cubemaps!<br /><br />    int cubemapSize = 128;
+    bool oneFacePerFrame = false;
+    <a href="Camera.html">Camera</a> cam;
+    <a href="RenderTexture.html">RenderTexture</a> renderTexture;<br /><br />
+    void Start()
+    {
+        // render all six faces at startup
+        UpdateCubemap(63);
+    }<br /><br />    void OnDisable()
+    {
+        DestroyImmediate(cam);
+        DestroyImmediate(renderTexture);
+    }<br /><br />    void LateUpdate()
+    {
+        if (oneFacePerFrame)
+        {
+            var faceToRender = <a href="Time-frameCount.html">Time.frameCount</a> % 6;
+            var faceMask = 1 &lt;&lt; faceToRender;
+            UpdateCubemap(faceMask);
+        }
+        else
+        {
+            UpdateCubemap(63); // all six faces
+        }
+    }<br /><br />    void UpdateCubemap(int faceMask)
+    {
+        if (!cam)
+        {
+            <a href="GameObject.html">GameObject</a> obj = new <a href="GameObject.html">GameObject</a>("CubemapCamera", typeof(<a href="Camera.html">Camera</a>));
+            obj.hideFlags = <a href="HideFlags.HideAndDontSave.html">HideFlags.HideAndDontSave</a>;
+            obj.transform.position = transform.position;
+            obj.transform.rotation = <a href="Quaternion-identity.html">Quaternion.identity</a>;
+            cam = obj.GetComponent&lt;<a href="Camera.html">Camera</a>&gt;();
+            cam.farClipPlane = 100; // don't render very far into cubemap
+            cam.enabled = false;
+        }<br /><br />        if (!renderTexture)
+        {
+            renderTexture = new <a href="RenderTexture.html">RenderTexture</a>(cubemapSize, cubemapSize, 16);
+            renderTexture.dimension = UnityEngine.Rendering.TextureDimension.Cube;
+            renderTexture.hideFlags = <a href="HideFlags.HideAndDontSave.html">HideFlags.HideAndDontSave</a>;
+            GetComponent&lt;<a href="Renderer.html">Renderer</a>&gt;().sharedMaterial.SetTexture("_Cube", renderTexture);
+        }<br /><br />        cam.transform.position = transform.position;
+        cam.RenderToCubemap(renderTexture, faceMask);
+    }
+}
+</pre>
+      </div>
+              <hr class="section" />
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public bool <span class="sig-kw">RenderToCubemap</span>(<a href="RenderTexture.html">RenderTexture</a> <span class="sig-kw">cubemap</span>,
+int <span class="sig-kw">faceMask</span>,
+<a href="Camera.MonoOrStereoscopicEye.html">Camera.MonoOrStereoscopicEye</a> <span class="sig-kw">stereoEye</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">cubemap</td>
+                    <td class="desc">The texture to render to.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">faceMask</td>
+                    <td class="desc">A bitfield indicating which cubemap faces should be rendered into. Set to the integer value 63 to render all faces.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">stereoEye</td>
+                    <td class="desc">A Camera eye corresponding to the left or right eye for stereoscopic rendering, or neither for non-stereoscopic rendering.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Returns</h3>
+                <p>
+                  <strong>bool</strong>
+        False if rendering fails, else true.
+      </p>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Render one side of a stereoscopic 360-degree image into a cubemap from this camera.</p>
+              </div>
+              <div class="subsection">
+        <p>Setting the <code class="varname">stereoEye</code> parameter to <a href="Camera.MonoOrStereoscopicEye.Left.html">Camera.MonoOrStereoscopicEye.Left</a> or <a href="Camera.MonoOrStereoscopicEye.Right.html">Camera.MonoOrStereoscopicEye.Right</a> renders the left or right eye point-of-view of a stereo 360 image with proper world space transform. Setting <code class="varname">stereoEye</code> to <a href="Camera.MonoOrStereoscopicEye.Mono.html">Camera.MonoOrStereoscopicEye.Mono</a> renders a monoscopic view of the Scene. After rendering the separate left and right cubemaps, you can convert them into equirectangular panoramic images that occupy one texture.<br /><br />When rendering either side of a stereoscopic view, the camera uses its <a href="Camera-stereoSeparation.html">stereoSeparation</a> value as the inter-pupillary distance (IPD), unless VR Support is enabled. When using a VR camera, the VR device IPD overrides the <a href="Camera-stereoSeparation.html">stereoSeparation</a> value.<br /><br />                  Unity uses the Camera's position, clear flags and clipping plane distances to
+                  render into the cubemap faces. The camera is rotated for each face. <code class="varname">faceMask</code> is a bitfield indicating which cubemap faces should be rendered into. Each
+                  bit that is set corresponds to a face. Bit numbers are integer values of <a href="CubemapFace.html">CubemapFace</a> enum.
+                  For 360 stereo image capture, all six cubemap faces should be rendered (set <code class="varname">facemask</code> to 63).<br /><br />                  This function will return <code class="varname">false</code> if rendering to the cubemap fails. Some graphics hardware does not
+                  support the functionality.<br /><br />                  Note that the RenderTexture must have <a href="RenderTexture-dimension.html">RenderTexture.dimension</a> set to <a href="Rendering.TextureDimension.Cube.html">TextureDimension.Cube</a>.<br /><br />                  Additional resources: RenderTexture.isCubemap, <a href="../Manual/class-Cubemap.html">Cubemap</a>.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using UnityEngine;
+using UnityEngine.Rendering;<br /><br />//attach this script to your camera object
+public class CreateStereoCubemaps : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    public <a href="RenderTexture.html">RenderTexture</a> cubemapLeftEye;
+    public <a href="RenderTexture.html">RenderTexture</a> cubemapRightEye;
+    public <a href="RenderTexture.html">RenderTexture</a> equirect;
+    public bool renderStereo = true;
+    public float stereoSeparation = 0.064f;<br /><br />    void Start()
+    {
+        cubemapLeftEye = new <a href="RenderTexture.html">RenderTexture</a>(1024, 1024, 24, <a href="RenderTextureFormat.ARGB32.html">RenderTextureFormat.ARGB32</a>);
+        cubemapLeftEye.dimension = <a href="Rendering.TextureDimension.Cube.html">TextureDimension.Cube</a>;
+        cubemapRightEye = new <a href="RenderTexture.html">RenderTexture</a>(1024, 1024, 24, <a href="RenderTextureFormat.ARGB32.html">RenderTextureFormat.ARGB32</a>);
+        cubemapRightEye.dimension = <a href="Rendering.TextureDimension.Cube.html">TextureDimension.Cube</a>;
+        //equirect height should be twice the height of cubemap
+        equirect = new <a href="RenderTexture.html">RenderTexture</a>(1024, 2048, 24, <a href="RenderTextureFormat.ARGB32.html">RenderTextureFormat.ARGB32</a>);
+    }<br /><br />    void LateUpdate()
+    {
+        <a href="Camera.html">Camera</a> cam = GetComponent&lt;<a href="Camera.html">Camera</a>&gt;();<br /><br />        if (cam == null)
+        {
+            cam = GetComponentInParent&lt;<a href="Camera.html">Camera</a>&gt;();
+        }<br /><br />        if (cam == null)
+        {
+            <a href="Debug.Log.html">Debug.Log</a>("stereo 360 capture node has no camera or parent camera");
+        }<br /><br />        if (renderStereo)
+        {
+            cam.stereoSeparation = stereoSeparation;
+            cam.RenderToCubemap(cubemapLeftEye, 63, <a href="Camera.MonoOrStereoscopicEye.Left.html">Camera.MonoOrStereoscopicEye.Left</a>);
+            cam.RenderToCubemap(cubemapRightEye, 63, <a href="Camera.MonoOrStereoscopicEye.Right.html">Camera.MonoOrStereoscopicEye.Right</a>);
+        }
+        else
+        {
+            cam.RenderToCubemap(cubemapLeftEye, 63, <a href="Camera.MonoOrStereoscopicEye.Mono.html">Camera.MonoOrStereoscopicEye.Mono</a>);
+        }<br /><br />        //optional: convert cubemaps to equirect<br /><br />        if (equirect == null)
+            return;<br /><br />        if (renderStereo)
+        {
+            cubemapLeftEye.ConvertToEquirect(equirect, <a href="Camera.MonoOrStereoscopicEye.Left.html">Camera.MonoOrStereoscopicEye.Left</a>);
+            cubemapRightEye.ConvertToEquirect(equirect, <a href="Camera.MonoOrStereoscopicEye.Right.html">Camera.MonoOrStereoscopicEye.Right</a>);
+        }
+        else
+        {
+            cubemapLeftEye.ConvertToEquirect(equirect, <a href="Camera.MonoOrStereoscopicEye.Mono.html">Camera.MonoOrStereoscopicEye.Mono</a>);
+        }
+    }
+}
+</pre>
+      </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

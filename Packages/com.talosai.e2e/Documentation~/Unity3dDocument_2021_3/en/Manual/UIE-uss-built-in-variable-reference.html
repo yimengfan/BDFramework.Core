@@ -1,0 +1,2528 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: USS built-in variable references</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-uss-built-in-variable-reference.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-uss-built-in-variable-reference.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-uss-built-in-variable-reference.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-uss-built-in-variable-reference.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-uss-built-in-variable-reference.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-uss-built-in-variable-reference.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-uss-built-in-variable-reference.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-uss-built-in-variable-reference.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-USS.html">Style UI</a></li>
+<li><a href="UIE-USS-variables.html">USS custom properties (variables)</a></li>
+<li>USS built-in variable references</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-USS-UnityVariables.html"></a></span><div class="tip">Introduction to USS built-in variables</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-get-custom-styles.html"></a></span><div class="tip">Get custom styles in C# scripts</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>USS built-in variable references</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The following tables list all the USS built-in variables.</p>
+
+<h2>metrics</h2>
+<div class="wide-table">
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Group</strong></th>
+	<th style="text-align:left;"><strong>Role/Control</strong></th>
+	<th style="text-align:left;"><strong>Name</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Professional</strong></th>
+	<th style="text-align:left;"><strong>Personal</strong></th>
+	<th style="text-align:left;"><strong>Runtime</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>metrics</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-metrics-default-border_radius</code></td>
+	<td style="text-align:left;">The default border radius for controls</td>
+	<td style="text-align:left;"><code>3px</code></td>
+	<td style="text-align:left;"><code>3px</code></td>
+	<td style="text-align:left;"><code>0px</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-metrics-default-font_big_size</code></td>
+	<td style="text-align:left;">The big font size</td>
+	<td style="text-align:left;"><code>14px</code></td>
+	<td style="text-align:left;"><code>14px</code></td>
+	<td style="text-align:left;"><code>15px</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-metrics-default-font_normal_size</code></td>
+	<td style="text-align:left;">The normal font size</td>
+	<td style="text-align:left;"><code>12px</code></td>
+	<td style="text-align:left;"><code>12px</code></td>
+	<td style="text-align:left;"><code>14px</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-metrics-default-font_semi_small_size</code></td>
+	<td style="text-align:left;">The semi small font size</td>
+	<td style="text-align:left;"><code>11px</code></td>
+	<td style="text-align:left;"><code>11px</code></td>
+	<td style="text-align:left;"><code>13px</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-metrics-default-font_small_size</code></td>
+	<td style="text-align:left;">The small font size</td>
+	<td style="text-align:left;"><code>10px</code></td>
+	<td style="text-align:left;"><code>10px</code></td>
+	<td style="text-align:left;"><code>12px</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-metrics-default-font_tiny_size</code></td>
+	<td style="text-align:left;">The tiny font size</td>
+	<td style="text-align:left;"><code>9px</code></td>
+	<td style="text-align:left;"><code>9px</code></td>
+	<td style="text-align:left;"><code>11px</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-metrics-default-font_very_big_size</code></td>
+	<td style="text-align:left;">The very big font size</td>
+	<td style="text-align:left;"><code>19px</code></td>
+	<td style="text-align:left;"><code>19px</code></td>
+	<td style="text-align:left;"><code>21px</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-metrics-inspector_titlebar-height</code></td>
+	<td style="text-align:left;">The height of a title bar in an <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> view</td>
+	<td style="text-align:left;"><code>22px</code></td>
+	<td style="text-align:left;"><code>22px</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-metrics-single_line-height</code></td>
+	<td style="text-align:left;">The usual height for a single-line Editor control, for example, a one-line text field.<br> See EditorGUIUtility.singleLineHeight</td>
+	<td style="text-align:left;"><code>18px</code></td>
+	<td style="text-align:left;"><code>18px</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-metrics-single_line_large-height</code></td>
+	<td style="text-align:left;">The usual height for a large single-line Editor control, for example, an Inspector title bar label</td>
+	<td style="text-align:left;"><code>20px</code></td>
+	<td style="text-align:left;"><code>20px</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-metrics-single_line_small-height</code></td>
+	<td style="text-align:left;">The usual height for a small single-line Editor control, for example, a mini toggle or a mini text field</td>
+	<td style="text-align:left;"><code>16px</code></td>
+	<td style="text-align:left;"><code>16px</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-metrics-toolbar-height</code></td>
+	<td style="text-align:left;">The height of a <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span> control</td>
+	<td style="text-align:left;"><code>21px</code></td>
+	<td style="text-align:left;"><code>21px</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-metrics-toolbar_button-height</code></td>
+	<td style="text-align:left;">The height of a toolbar button control</td>
+	<td style="text-align:left;"><code>20px</code></td>
+	<td style="text-align:left;"><code>20px</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;">****</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--current-font</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Fonts/Inter/Inter-Regular SDF.asset</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Fonts/Inter/Inter-Regular SDF.asset</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>colors</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">alternated_rows</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-alternated_rows-background</code></td>
+	<td style="text-align:left;">The alternate background color for views with alternating row colors</td>
+	<td style="text-align:left;"><code>#3F3F3F</code></td>
+	<td style="text-align:left;"><code>#CACACA</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">app_toolbar</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-app_toolbar-background</code></td>
+	<td style="text-align:left;">The background color for the main toolbar</td>
+	<td style="text-align:left;"><code>#191919</code></td>
+	<td style="text-align:left;"><code>#8A8A8A</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">app_toolbar_button</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-app_toolbar_button-background</code></td>
+	<td style="text-align:left;">The background color for a button in the main toolbar</td>
+	<td style="text-align:left;"><code>#383838</code></td>
+	<td style="text-align:left;"><code>#C8C8C8</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-app_toolbar_button-background-checked</code></td>
+	<td style="text-align:left;">The background color for a button in the main toolbar when it is checked</td>
+	<td style="text-align:left;"><code>#6A6A6A</code></td>
+	<td style="text-align:left;"><code>#656565</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-app_toolbar_button-background-hover</code></td>
+	<td style="text-align:left;">The background color for a button in the main toolbar when the mouse pointer hovers over them</td>
+	<td style="text-align:left;"><code>#424242</code></td>
+	<td style="text-align:left;"><code>#BBBBBB</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-app_toolbar_button-background-pressed</code></td>
+	<td style="text-align:left;">The background color for a button in the main toolbar when it is pressed</td>
+	<td style="text-align:left;"><code>#6A6A6A</code></td>
+	<td style="text-align:left;"><code>#656565</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-app_toolbar_button-border</code></td>
+	<td style="text-align:left;">The border color for a button in the main toolbar</td>
+	<td style="text-align:left;"><code>#191919</code></td>
+	<td style="text-align:left;"><code>#6B6B6B</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-app_toolbar_button-border_accent</code></td>
+	<td style="text-align:left;">The accent border color for a button in the main toolbar</td>
+	<td style="text-align:left;"><code>#222222</code></td>
+	<td style="text-align:left;"><code>#6B6B6B</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">box</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-box-background</code></td>
+	<td style="text-align:left;">The background color for a box control</td>
+	<td style="text-align:left;"><code>rgba(40, 40, 40, 0.3019608)</code></td>
+	<td style="text-align:left;"><code>rgba(185, 185, 185, 0.9019608)</code></td>
+	<td style="text-align:left;"><code>#DEDEDE</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-box-border</code></td>
+	<td style="text-align:left;">The border color for a box control</td>
+	<td style="text-align:left;"><code>transparent</code></td>
+	<td style="text-align:left;"><code>transparent</code></td>
+	<td style="text-align:left;"><code>#555555</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">button</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-button-background</code></td>
+	<td style="text-align:left;">The background color for a button control</td>
+	<td style="text-align:left;"><code>#585858</code></td>
+	<td style="text-align:left;"><code>#E4E4E4</code></td>
+	<td style="text-align:left;"><code>#BCBCBC</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-button-background-disabled</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#959595</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-button-background-focus</code></td>
+	<td style="text-align:left;">The background color for a button control when it has focus</td>
+	<td style="text-align:left;"><code>#6E6E6E</code></td>
+	<td style="text-align:left;"><code>#BEBEBE</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-button-background-hover</code></td>
+	<td style="text-align:left;">The background color for a button control when the mouse pointer hovers over it</td>
+	<td style="text-align:left;"><code>#676767</code></td>
+	<td style="text-align:left;"><code>#ECECEC</code></td>
+	<td style="text-align:left;"><code>#D1D1D1</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-button-background-hover_pressed</code></td>
+	<td style="text-align:left;">The background color for a button control when it is hoverd and pressed</td>
+	<td style="text-align:left;"><code>#4F657F</code></td>
+	<td style="text-align:left;"><code>#B0D2FC</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-button-background-pressed</code></td>
+	<td style="text-align:left;">The background color for a button control when it is pressed</td>
+	<td style="text-align:left;"><code>#46607C</code></td>
+	<td style="text-align:left;"><code>#96C3FB</code></td>
+	<td style="text-align:left;"><code>#959595</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-button-border</code></td>
+	<td style="text-align:left;">The border color for a button control</td>
+	<td style="text-align:left;"><code>#303030</code></td>
+	<td style="text-align:left;"><code>#B2B2B2</code></td>
+	<td style="text-align:left;"><code>#959595</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-button-border_accent</code></td>
+	<td style="text-align:left;">The border accent color for a button control</td>
+	<td style="text-align:left;"><code>#242424</code></td>
+	<td style="text-align:left;"><code>#939393</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-button-border_accent-focus</code></td>
+	<td style="text-align:left;">The border accent color used for a button control when focused</td>
+	<td style="text-align:left;"><code>#7BAEFA</code></td>
+	<td style="text-align:left;"><code>#018CFF</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-button-border-disabled</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#7E7E7E</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-button-border-focus</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#006AA6</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-button-border-hover</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#808080</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-button-border-pressed</code></td>
+	<td style="text-align:left;">The border color for a button control when it is pressed</td>
+	<td style="text-align:left;"><code>#0D0D0D</code></td>
+	<td style="text-align:left;"><code>#707070</code></td>
+	<td style="text-align:left;"><code>#646464</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-button-text</code></td>
+	<td style="text-align:left;">The text color for a button control</td>
+	<td style="text-align:left;"><code>#EEEEEE</code></td>
+	<td style="text-align:left;"><code>#090909</code></td>
+	<td style="text-align:left;"><code>#1B1B1B</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-button-text-disabled</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#2D2D2D</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">default</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-default-background</code></td>
+	<td style="text-align:left;">The default background color for controls</td>
+	<td style="text-align:left;"><code>#282828</code></td>
+	<td style="text-align:left;"><code>#A5A5A5</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-default-border</code></td>
+	<td style="text-align:left;">The default border color for controls</td>
+	<td style="text-align:left;"><code>#232323</code></td>
+	<td style="text-align:left;"><code>#999999</code></td>
+	<td style="text-align:left;"><code>#959595</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-default-text</code></td>
+	<td style="text-align:left;">The default text color</td>
+	<td style="text-align:left;"><code>#D2D2D2</code></td>
+	<td style="text-align:left;"><code>#090909</code></td>
+	<td style="text-align:left;"><code>#1B1B1B</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-default-text-hover</code></td>
+	<td style="text-align:left;">The default text color when the mouse pointer hovers over the text</td>
+	<td style="text-align:left;"><code>#BDBDBD</code></td>
+	<td style="text-align:left;"><code>#090909</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">dropdown</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-dropdown-background</code></td>
+	<td style="text-align:left;">The background color for a dropdown control</td>
+	<td style="text-align:left;"><code>#515151</code></td>
+	<td style="text-align:left;"><code>#DFDFDF</code></td>
+	<td style="text-align:left;"><code>#DFDFDF</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-dropdown-background-hover</code></td>
+	<td style="text-align:left;">The background color for a dropdown control when the mouse pointer hovers over it</td>
+	<td style="text-align:left;"><code>#585858</code></td>
+	<td style="text-align:left;"><code>#E4E4E4</code></td>
+	<td style="text-align:left;"><code>#E8E8E8</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-dropdown-border</code></td>
+	<td style="text-align:left;">The border color for a dropdown control</td>
+	<td style="text-align:left;"><code>#303030</code></td>
+	<td style="text-align:left;"><code>#B2B2B2</code></td>
+	<td style="text-align:left;"><code>#999999</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-dropdown-border_accent</code></td>
+	<td style="text-align:left;">The border accent color for a dropdown control</td>
+	<td style="text-align:left;"><code>#242424</code></td>
+	<td style="text-align:left;"><code>#939393</code></td>
+	<td style="text-align:left;"><code>#939393</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-dropdown-text</code></td>
+	<td style="text-align:left;">The text color for a dropdown control</td>
+	<td style="text-align:left;"><code>#E4E4E4</code></td>
+	<td style="text-align:left;"><code>#090909</code></td>
+	<td style="text-align:left;"><code>#1B1B1B</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">error</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-error-text</code></td>
+	<td style="text-align:left;">The text color for error messages</td>
+	<td style="text-align:left;"><code>#D32222</code></td>
+	<td style="text-align:left;"><code>#5A0000</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">helpbox</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-helpbox-background</code></td>
+	<td style="text-align:left;">The background color for a helpbox control</td>
+	<td style="text-align:left;"><code>rgba(96, 96, 96, 0.2039216)</code></td>
+	<td style="text-align:left;"><code>rgba(235, 235, 235, 0.2039216)</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-helpbox-border</code></td>
+	<td style="text-align:left;">The border color for a helpbox control</td>
+	<td style="text-align:left;"><code>#232323</code></td>
+	<td style="text-align:left;"><code>#A9A9A9</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-helpbox-text</code></td>
+	<td style="text-align:left;">The text color for a helpbox control</td>
+	<td style="text-align:left;"><code>#BDBDBD</code></td>
+	<td style="text-align:left;"><code>#161616</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">highlight</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-highlight-background</code></td>
+	<td style="text-align:left;">The background color for selected items or selected text</td>
+	<td style="text-align:left;"><code>#2C5D87</code></td>
+	<td style="text-align:left;"><code>#3A72B0</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-highlight-background-hover</code></td>
+	<td style="text-align:left;">The background color for items when the mouse pointer hovers over them</td>
+	<td style="text-align:left;"><code>rgba(256, 256, 256, 0.0627451)</code></td>
+	<td style="text-align:left;"><code>rgba(0, 0, 0, 0.0627451)</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-highlight-background-hover-lighter</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>#5F5F5F</code></td>
+	<td style="text-align:left;"><code>#9A9A9A</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-highlight-background-inactive</code></td>
+	<td style="text-align:left;">The background color for selected items or selected text when the control does not have focus</td>
+	<td style="text-align:left;"><code>#4D4D4D</code></td>
+	<td style="text-align:left;"><code>#AEAEAE</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-highlight-text</code></td>
+	<td style="text-align:left;">The text color for selected items or selected text</td>
+	<td style="text-align:left;"><code>#4C7EFF</code></td>
+	<td style="text-align:left;"><code>#0032E6</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-highlight-text-inactive</code></td>
+	<td style="text-align:left;">The text color for selected items or selected text when the control does not have focus</td>
+	<td style="text-align:left;"><code>#FFFFFF</code></td>
+	<td style="text-align:left;"><code>#FFFFFF</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">input_field</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-input_field-background</code></td>
+	<td style="text-align:left;">The background color for an input field control</td>
+	<td style="text-align:left;"><code>#2A2A2A</code></td>
+	<td style="text-align:left;"><code>#F0F0F0</code></td>
+	<td style="text-align:left;"><code>#F0F0F0</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-input_field-background-disabled</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#D1D1D1</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-input_field-border</code></td>
+	<td style="text-align:left;">The border color for an input field control</td>
+	<td style="text-align:left;"><code>#212121</code></td>
+	<td style="text-align:left;"><code>#B7B7B7</code></td>
+	<td style="text-align:left;"><code>#646464</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-input_field-border_accent</code></td>
+	<td style="text-align:left;">The border accent color for an input field control</td>
+	<td style="text-align:left;"><code>#0D0D0D</code></td>
+	<td style="text-align:left;"><code>#A0A0A0</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-input_field-border-focus</code></td>
+	<td style="text-align:left;">The border color for an input field control when it has focus</td>
+	<td style="text-align:left;"><code>#3A79BB</code></td>
+	<td style="text-align:left;"><code>#1D5087</code></td>
+	<td style="text-align:left;"><code>#006AA6</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-input_field-border-hover</code></td>
+	<td style="text-align:left;">The border color for an input field control when the mouse pointer hovers over it</td>
+	<td style="text-align:left;"><code>#656565</code></td>
+	<td style="text-align:left;"><code>#6C6C6C</code></td>
+	<td style="text-align:left;"><code>#323232</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-input_field-text-disabled</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#585858</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">inspector_titlebar</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-inspector_titlebar-background</code></td>
+	<td style="text-align:left;">The background color for a title bar in an Inspector view</td>
+	<td style="text-align:left;"><code>#3E3E3E</code></td>
+	<td style="text-align:left;"><code>#CBCBCB</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-inspector_titlebar-background-hover</code></td>
+	<td style="text-align:left;">The background color for a title bar in an Inspector view when the mouse pointer hovers over it</td>
+	<td style="text-align:left;"><code>#474747</code></td>
+	<td style="text-align:left;"><code>#D6D6D6</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-inspector_titlebar-border</code></td>
+	<td style="text-align:left;">The border color for a title bar in an Inspector view</td>
+	<td style="text-align:left;"><code>#1A1A1A</code></td>
+	<td style="text-align:left;"><code>#7F7F7F</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-inspector_titlebar-border_accent</code></td>
+	<td style="text-align:left;">The border accent color for a title bar in an Inspector view</td>
+	<td style="text-align:left;"><code>#303030</code></td>
+	<td style="text-align:left;"><code>#BABABA</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">label</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-label-text</code></td>
+	<td style="text-align:left;">The text color for a label control</td>
+	<td style="text-align:left;"><code>#C4C4C4</code></td>
+	<td style="text-align:left;"><code>#090909</code></td>
+	<td style="text-align:left;"><code>#1B1B1B</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-label-text-disabled</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#585858</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-label-text-focus</code></td>
+	<td style="text-align:left;">The text color for a label when it has focus</td>
+	<td style="text-align:left;"><code>#81B4FF</code></td>
+	<td style="text-align:left;"><code>#003C88</code></td>
+	<td style="text-align:left;"><code>#00526A</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">link</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-link-text</code></td>
+	<td style="text-align:left;">The text color for unvisited links</td>
+	<td style="text-align:left;"><code>#4C7EFF</code></td>
+	<td style="text-align:left;"><code>#4C7EFF</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">minmax_slider_thumb</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-minmax_slider_thumb-background</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#BCBCBC</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">object_field</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-object_field-background</code></td>
+	<td style="text-align:left;">The background color for an object field control</td>
+	<td style="text-align:left;"><code>#282828</code></td>
+	<td style="text-align:left;"><code>#EDEDED</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-object_field-border</code></td>
+	<td style="text-align:left;">The border color for an object field control</td>
+	<td style="text-align:left;"><code>#202020</code></td>
+	<td style="text-align:left;"><code>#B0B0B0</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-object_field-border-focus</code></td>
+	<td style="text-align:left;">The border color for an object field control when it has focus</td>
+	<td style="text-align:left;"><code>#3A79BB</code></td>
+	<td style="text-align:left;"><code>#1D5087</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-object_field-border-hover</code></td>
+	<td style="text-align:left;">The border color for an object field control when the mouse pointer hovers over it</td>
+	<td style="text-align:left;"><code>#656565</code></td>
+	<td style="text-align:left;"><code>#6C6C6C</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">object_field_button</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-object_field_button-background</code></td>
+	<td style="text-align:left;">The background color for the button in an object field control</td>
+	<td style="text-align:left;"><code>#373737</code></td>
+	<td style="text-align:left;"><code>#DEDEDE</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-object_field_button-background-hover</code></td>
+	<td style="text-align:left;">The background color for the button in an object field control when the mouse pointer hovers over it</td>
+	<td style="text-align:left;"><code>#4C4C4C</code></td>
+	<td style="text-align:left;"><code>#CCCCCC</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">play_mode</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-play_mode-background</code></td>
+	<td style="text-align:left;">The color used to tint the <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> in Play Mode</td>
+	<td style="text-align:left;"><code>#606060</code></td>
+	<td style="text-align:left;"><code>#ECECEC</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">popup</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-popup-background</code></td>
+	<td style="text-align:left;">The background color for a popup window</td>
+	<td style="text-align:left;"><code>#313131</code></td>
+	<td style="text-align:left;"><code>#C1C1C1</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">preview</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-preview-background</code></td>
+	<td style="text-align:left;">The background color for a preview control</td>
+	<td style="text-align:left;"><code>#313131</code></td>
+	<td style="text-align:left;"><code>#C1C1C1</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-preview-border</code></td>
+	<td style="text-align:left;">The border color for a preview control</td>
+	<td style="text-align:left;"><code>#232323</code></td>
+	<td style="text-align:left;"><code>#999999</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-preview-text</code></td>
+	<td style="text-align:left;">The text color for a preview control</td>
+	<td style="text-align:left;"><code>#BDBDBD</code></td>
+	<td style="text-align:left;"><code>#090909</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">preview_overlay</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-preview_overlay-text</code></td>
+	<td style="text-align:left;">The text color for a preview control overlay</td>
+	<td style="text-align:left;"><code>#DEDEDE</code></td>
+	<td style="text-align:left;"><code>#FFFFFF</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">progress</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-progress-background</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>#303030</code></td>
+	<td style="text-align:left;"><code>#606060</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">progress_bar</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-progress_bar-background</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#BCBCBC</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-progress_bar-border</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#808080</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-progress_bar-text</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#1B1B1B</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">progress_bar_progress</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-progress_bar_progress-background</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#E7E7E7</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">scrollbar_button</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-scrollbar_button-background</code></td>
+	<td style="text-align:left;">The background color for a scrollbar’s scroll buttons</td>
+	<td style="text-align:left;"><code>rgba(0, 0, 0, 0.05098039)</code></td>
+	<td style="text-align:left;"><code>rgba(0, 0, 0, 0.05098039)</code></td>
+	<td style="text-align:left;"><code>#F0F0F0</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-scrollbar_button-background-hover</code></td>
+	<td style="text-align:left;">The background color for a scrollbar’s scroll buttons when the mouse pointer hovers over them</td>
+	<td style="text-align:left;"><code>#494949</code></td>
+	<td style="text-align:left;"><code>#A7A7A7</code></td>
+	<td style="text-align:left;"><code>#E7E7E7</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-scrollbar_button-border</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#959595</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-scrollbar_button-border-focus</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#006AA6</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-scrollbar_button-border-hover</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#959595</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">scrollbar_groove</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-scrollbar_groove-background</code></td>
+	<td style="text-align:left;">The background color for a scrollbar’s groove (background)</td>
+	<td style="text-align:left;"><code>rgba(0, 0, 0, 0.05098039)</code></td>
+	<td style="text-align:left;"><code>rgba(0, 0, 0, 0.05098039)</code></td>
+	<td style="text-align:left;"><code>#BCBCBC</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-scrollbar_groove-border</code></td>
+	<td style="text-align:left;">The border color for a scrollbar’s groove</td>
+	<td style="text-align:left;"><code>rgba(0, 0, 0, 0.1019608)</code></td>
+	<td style="text-align:left;"><code>rgba(0, 0, 0, 0.1019608)</code></td>
+	<td style="text-align:left;"><code>#959595</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">scrollbar_thumb</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-scrollbar_thumb-background</code></td>
+	<td style="text-align:left;">The background color for a scrollbar’s thumb/handle</td>
+	<td style="text-align:left;"><code>#5F5F5F</code></td>
+	<td style="text-align:left;"><code>#9A9A9A</code></td>
+	<td style="text-align:left;"><code>#E7E7E7</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-scrollbar_thumb-background-hover</code></td>
+	<td style="text-align:left;">The background color for a scrollbar’s thumb/handle when the mouse pointer hovers over it</td>
+	<td style="text-align:left;"><code>#686868</code></td>
+	<td style="text-align:left;"><code>#8E8E8E</code></td>
+	<td style="text-align:left;"><code>#F0F0F0</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-scrollbar_thumb-background-pressed</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#F0F0F0</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-scrollbar_thumb-border</code></td>
+	<td style="text-align:left;">The border color for a scrollbar’s thumb/handle</td>
+	<td style="text-align:left;"><code>#323232</code></td>
+	<td style="text-align:left;"><code>#B9B9B9</code></td>
+	<td style="text-align:left;"><code>transparent</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-scrollbar_thumb-border-focus</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#00516A</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-scrollbar_thumb-border-hover</code></td>
+	<td style="text-align:left;">The border color for a scrollbar’s thumb/handle when the mouse pointer hovers over it</td>
+	<td style="text-align:left;"><code>#686868</code></td>
+	<td style="text-align:left;"><code>#8E8E8E</code></td>
+	<td style="text-align:left;"><code>transparent</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-scrollbar_thumb-border-pressed</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>transparent</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">slider_groove</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-slider_groove-background</code></td>
+	<td style="text-align:left;">The background color for a slider’s groove (background)</td>
+	<td style="text-align:left;"><code>#5E5E5E</code></td>
+	<td style="text-align:left;"><code>#8F8F8F</code></td>
+	<td style="text-align:left;"><code>#7E7E7E</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-slider_groove-background-disabled</code></td>
+	<td style="text-align:left;">The background color for a slider’s groove when it is disabled</td>
+	<td style="text-align:left;"><code>#575757</code></td>
+	<td style="text-align:left;"><code>#A4A4A4</code></td>
+	<td style="text-align:left;"><code>#7E7E7E</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-slider_groove-background-focus</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#7E7E7E</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-slider_groove-background-hover</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#7E7E7E</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-slider_groove-border</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#646464</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">slider_thumb</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-slider_thumb-background</code></td>
+	<td style="text-align:left;">The background color for a slider’s thumb/handle</td>
+	<td style="text-align:left;"><code>#999999</code></td>
+	<td style="text-align:left;"><code>#616161</code></td>
+	<td style="text-align:left;"><code>#F0F0F0</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-slider_thumb-background-disabled</code></td>
+	<td style="text-align:left;">The background color for a slider’s thumb/handle when it is disabled</td>
+	<td style="text-align:left;"><code>#666666</code></td>
+	<td style="text-align:left;"><code>#9B9B9B</code></td>
+	<td style="text-align:left;"><code>#808080</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-slider_thumb-background-focus</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#F0F0F0</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-slider_thumb-background-hover</code></td>
+	<td style="text-align:left;">The background color for a slider’s thumb/handle when the mouse pointer hovers over it</td>
+	<td style="text-align:left;"><code>#EAEAEA</code></td>
+	<td style="text-align:left;"><code>#4F4F4F</code></td>
+	<td style="text-align:left;"><code>#F0F0F0</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-slider_thumb-border</code></td>
+	<td style="text-align:left;">The border color for a slider’s thumb</td>
+	<td style="text-align:left;"><code>#999999</code></td>
+	<td style="text-align:left;"><code>#616161</code></td>
+	<td style="text-align:left;"><code>#646464</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-slider_thumb-border-disabled</code></td>
+	<td style="text-align:left;">The border color for a slider’s thumb when it is disabled</td>
+	<td style="text-align:left;"><code>#666666</code></td>
+	<td style="text-align:left;"><code>#666666</code></td>
+	<td style="text-align:left;"><code>#7E7E7E</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-slider_thumb-border-focus</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#006AA6</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-slider_thumb-border-hover</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#323232</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">slider_thumb_halo</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-slider_thumb_halo-background</code></td>
+	<td style="text-align:left;">The background color for a slider’s thumb halo</td>
+	<td style="text-align:left;"><code>rgba(16, 111, 205, 0.5019608)</code></td>
+	<td style="text-align:left;"><code>rgba(12, 108, 203, 0.5019608)</code></td>
+	<td style="text-align:left;"><code>rgba(12, 108, 203, 0.5019608)</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">tab</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-tab-background</code></td>
+	<td style="text-align:left;">The background color for an Editor window tab</td>
+	<td style="text-align:left;"><code>#353535</code></td>
+	<td style="text-align:left;"><code>#B6B6B6</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-tab-background-checked</code></td>
+	<td style="text-align:left;">The background color for an Editor window tab when it is selected</td>
+	<td style="text-align:left;"><code>#3C3C3C</code></td>
+	<td style="text-align:left;"><code>#CBCBCB</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-tab-background-hover</code></td>
+	<td style="text-align:left;">The background color for an Editor window tab when the mouse pointer hovers over it</td>
+	<td style="text-align:left;"><code>#303030</code></td>
+	<td style="text-align:left;"><code>#B0B0B0</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-tab-text</code></td>
+	<td style="text-align:left;">The text color for an Editor window tab</td>
+	<td style="text-align:left;"><code>#BDBDBD</code></td>
+	<td style="text-align:left;"><code>#090909</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">toggle</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toggle-text-disabled</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#585858</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">toggle_checkmark</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toggle_checkmark-background</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#F0F0F0</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toggle_checkmark-background-disabled</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#959595</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toggle_checkmark-border</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#646464</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toggle_checkmark-border-disabled</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#7E7E7E</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toggle_checkmark-border-focus</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#006AA6</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toggle_checkmark-border-hover</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#323232</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toggle_checkmark-border-pressed</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;">Undefined</td>
+	<td style="text-align:left;"><code>#323232</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">toolbar</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toolbar-background</code></td>
+	<td style="text-align:left;">The background color for a toolbar control</td>
+	<td style="text-align:left;"><code>#3C3C3C</code></td>
+	<td style="text-align:left;"><code>#CBCBCB</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toolbar-border</code></td>
+	<td style="text-align:left;">The border color for a toolbar control</td>
+	<td style="text-align:left;"><code>#232323</code></td>
+	<td style="text-align:left;"><code>#999999</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">toolbar_button</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toolbar_button-background</code></td>
+	<td style="text-align:left;">The background color for a toolbar button control</td>
+	<td style="text-align:left;"><code>#3C3C3C</code></td>
+	<td style="text-align:left;"><code>#CBCBCB</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toolbar_button-background-checked</code></td>
+	<td style="text-align:left;">The background color for a toolbar button control when it is checked</td>
+	<td style="text-align:left;"><code>#505050</code></td>
+	<td style="text-align:left;"><code>#EFEFEF</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toolbar_button-background-focus</code></td>
+	<td style="text-align:left;">The background color for a toolbar button control when it has focus</td>
+	<td style="text-align:left;"><code>#464646</code></td>
+	<td style="text-align:left;"><code>#C1C1C1</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toolbar_button-background-hover</code></td>
+	<td style="text-align:left;">The background color for a toolbar button control when the mouse pointer hovers over it</td>
+	<td style="text-align:left;"><code>#464646</code></td>
+	<td style="text-align:left;"><code>#C1C1C1</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toolbar_button-border</code></td>
+	<td style="text-align:left;">The border color for a toolbar button control</td>
+	<td style="text-align:left;"><code>#232323</code></td>
+	<td style="text-align:left;"><code>#999999</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toolbar_button-text</code></td>
+	<td style="text-align:left;">The text color for a toolbar button control</td>
+	<td style="text-align:left;"><code>#C4C4C4</code></td>
+	<td style="text-align:left;"><code>#090909</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toolbar_button-text-checked</code></td>
+	<td style="text-align:left;">The text color for a toolbar button control when it is checked</td>
+	<td style="text-align:left;"><code>#C4C4C4</code></td>
+	<td style="text-align:left;"><code>#090909</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-toolbar_button-text-hover</code></td>
+	<td style="text-align:left;">The text color for a toolbar button control</td>
+	<td style="text-align:left;"><code>#BDBDBD</code></td>
+	<td style="text-align:left;"><code>#090909</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">tooltip</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-tooltip-background</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>#373737</code></td>
+	<td style="text-align:left;"><code>#DEDEDE</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-tooltip-border</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>#191919</code></td>
+	<td style="text-align:left;"><code>#8A8A8A</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">visited_link</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-visited_link-text</code></td>
+	<td style="text-align:left;">The text color for visited links</td>
+	<td style="text-align:left;"><code>#FF00FF</code></td>
+	<td style="text-align:left;"><code>#AA00AA</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">warning</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-warning-text</code></td>
+	<td style="text-align:left;">The text color for warning messages</td>
+	<td style="text-align:left;"><code>#F4BC02</code></td>
+	<td style="text-align:left;"><code>#333308</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">window</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-window-background</code></td>
+	<td style="text-align:left;">The background color for a window</td>
+	<td style="text-align:left;"><code>#383838</code></td>
+	<td style="text-align:left;"><code>#C8C8C8</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-window-border</code></td>
+	<td style="text-align:left;">The border color for a window</td>
+	<td style="text-align:left;"><code>#242424</code></td>
+	<td style="text-align:left;"><code>#939393</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-colors-window-text</code></td>
+	<td style="text-align:left;">The text color for a window</td>
+	<td style="text-align:left;"><code>#BDBDBD</code></td>
+	<td style="text-align:left;"><code>#090909</code></td>
+	<td style="text-align:left;"><code>#1B1B1B</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>font</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-font-button-padding-bottom</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>1px</code></td>
+	<td style="text-align:left;"><code>1px</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-font-button-padding-top</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>1px</code></td>
+	<td style="text-align:left;"><code>1px</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-font-popup-padding-bottom</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>1px</code></td>
+	<td style="text-align:left;"><code>1px</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-font-popup-padding-top</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>0</code></td>
+	<td style="text-align:left;"><code>0</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-font-standard-padding-bottom</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>0</code></td>
+	<td style="text-align:left;"><code>0</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-font-standard-padding-bottom-with-border</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>0</code></td>
+	<td style="text-align:left;"><code>0</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>icons</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-arrow_left</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Builtin Skins/DarkSkin/Images/ArrowNavigationLeft.png</code></td>
+	<td style="text-align:left;"><code>Builtin Skins/LightSkin/Images/ArrowNavigationLeft.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-arrow_right</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Builtin Skins/DarkSkin/Images/ArrowNavigationRight.png</code></td>
+	<td style="text-align:left;"><code>Builtin Skins/LightSkin/Images/ArrowNavigationRight.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-clear</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_clear.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/clear.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-color_picker</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_color_picker.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/color_picker.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-console_entry_error</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Icons/d_console.erroricon.png</code></td>
+	<td style="text-align:left;"><code>Icons/console.erroricon.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-console_entry_error_small</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Icons/d_console.erroricon.sml.png</code></td>
+	<td style="text-align:left;"><code>Icons/console.erroricon.sml.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-console_entry_info</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Icons/d_console.infoicon.png</code></td>
+	<td style="text-align:left;"><code>Icons/console.infoicon.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-console_entry_info_small</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Icons/d_console.infoicon.sml.png</code></td>
+	<td style="text-align:left;"><code>Icons/console.infoicon.sml.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-console_entry_warn</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Icons/d_console.warnicon.png</code></td>
+	<td style="text-align:left;"><code>Icons/console.warnicon.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-console_entry_warn_small</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Icons/d_console.warnicon.sml.png</code></td>
+	<td style="text-align:left;"><code>Icons/console.warnicon.sml.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-dropdown</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_dropdown.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/dropdown.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-dropdown_toggle</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_dropdown_toggle.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/dropdown_toggle.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-foldout</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_IN_foldout.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/IN_foldout.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-foldout-checked</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_IN_foldout_on.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/IN_foldout_on.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-foldout-checked_focus</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_IN_foldout_focus_on.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/IN_foldout_focus_on.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-foldout-checked_pressed</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_IN_foldout_act_on.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/IN_foldout_act_on.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-foldout-focus</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_IN_foldout_focus.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/IN_foldout_focus.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-foldout-pressed</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_IN_foldout_act.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/IN_foldout_act.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-link</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Icons/d_UnLinked.png</code></td>
+	<td style="text-align:left;"><code>Icons/UnLinked.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-link-checked</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Icons/d_Linked.png</code></td>
+	<td style="text-align:left;"><code>Icons/Linked.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-lock</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Builtin Skins/DarkSkin/Images/IN LockButton.png</code></td>
+	<td style="text-align:left;"><code>Builtin Skins/LightSkin/Images/IN LockButton.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-lock-checked</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Builtin Skins/DarkSkin/Images/IN LockButton on.png</code></td>
+	<td style="text-align:left;"><code>Builtin Skins/LightSkin/Images/IN LockButton on.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-lock-checked_pressed</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Builtin Skins/DarkSkin/Images/IN LockButton on act.png</code></td>
+	<td style="text-align:left;"><code>Builtin Skins/LightSkin/Images/IN LockButton on act.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-lock-pressed</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Builtin Skins/DarkSkin/Images/IN LockButton act.png</code></td>
+	<td style="text-align:left;"><code>Builtin Skins/LightSkin/Images/IN LockButton act.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-minus</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_ol_minus.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/ol_minus.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-minus-hover</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_ol_minus_act.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/ol_minus_act.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-pane_options</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Builtin Skins/DarkSkin/Images/pane options.png</code></td>
+	<td style="text-align:left;"><code>Builtin Skins/LightSkin/Images/pane options.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-picker</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_pick.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/pick.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-plus</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_ol_plus.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/ol_plus.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-plus-hover</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_ol_plus_act.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/ol_plus_act.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-profiler_timeline_digdown_arrow</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Profiler/d_ProfilerTimelineDigDownArrow.png</code></td>
+	<td style="text-align:left;"><code>Profiler/ProfilerTimelineDigDownArrow.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-profiler_timeline_rollup_arrow</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Profiler/d_ProfilerTimelineRollUpArrow.png</code></td>
+	<td style="text-align:left;"><code>Profiler/ProfilerTimelineRollUpArrow.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-pulldown</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_dropdown.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/dropdown.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-scroll_down</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_scrolldown.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/scrolldown.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-scroll_left</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_scrollleft.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/scrollleft.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-scroll_right</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_scrollright.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/scrollright.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-scroll_up</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_scrollup.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/scrollup.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-search</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_search_icon.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/search_icon.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-search_menu</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_search_menu.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/search_menu.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-shuriken_toggle-checked</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Builtin Skins/DarkSkin/Images/ShurikenToggleNormalOn.png</code></td>
+	<td style="text-align:left;"><code>Builtin Skins/LightSkin/Images/ShurikenToggleNormalOn.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-shuriken_toggle-checked_focus</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Builtin Skins/DarkSkin/Images/ShurikenToggleFocusedOn.png</code></td>
+	<td style="text-align:left;"><code>Builtin Skins/LightSkin/Images/ShurikenToggleFocusedOn.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-shuriken_toggle-checked_hover</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Builtin Skins/DarkSkin/Images/ShurikenToggleHoverOn.png</code></td>
+	<td style="text-align:left;"><code>Builtin Skins/LightSkin/Images/ShurikenToggleHoverOn.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-shuriken_toggle_bg</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Builtin Skins/DarkSkin/Images/ShurikenToggleNormal.png</code></td>
+	<td style="text-align:left;"><code>Builtin Skins/LightSkin/Images/ShurikenToggleNormal.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-shuriken_toggle_bg-focus</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Builtin Skins/DarkSkin/Images/ShurikenToggleFocused.png</code></td>
+	<td style="text-align:left;"><code>Builtin Skins/LightSkin/Images/ShurikenToggleFocused.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-shuriken_toggle_bg-focus_mixed</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Builtin Skins/DarkSkin/Images/ShurikenToggleFocusedMixed.png</code></td>
+	<td style="text-align:left;"><code>Builtin Skins/LightSkin/Images/ShurikenToggleFocusedMixed.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-shuriken_toggle_bg-hover</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Builtin Skins/DarkSkin/Images/ShurikenToggleHover.png</code></td>
+	<td style="text-align:left;"><code>Builtin Skins/LightSkin/Images/ShurikenToggleHover.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-shuriken_toggle_bg-hover_mixed</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Builtin Skins/DarkSkin/Images/ShurikenToggleHoverMixed.png</code></td>
+	<td style="text-align:left;"><code>Builtin Skins/LightSkin/Images/ShurikenToggleHoverMixed.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-shuriken_toggle_bg-mixed</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Builtin Skins/DarkSkin/Images/ShurikenToggleNormalMixed.png</code></td>
+	<td style="text-align:left;"><code>Builtin Skins/LightSkin/Images/ShurikenToggleNormalMixed.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-toggle-checked</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_toggle_on.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/toggle_on.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-toggle-checked_focus</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_toggle_on_focus.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/toggle_on_focus.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-toggle-checked_hover</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_toggle_on_hover.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/toggle_on_hover.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-toggle-focus_mixed</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_toggle_on_focus.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/toggle_on_focus.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-toggle-hover_mixed</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_toggle_on_hover.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/toggle_on_hover.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-toggle-mixed</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_toggle_on.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/toggle_on.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-toggle_bg</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_toggle_bg.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/toggle_bg.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-toggle_bg-focus</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_toggle_bg_focus.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/toggle_bg_focus.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-toggle_bg-focus_mixed</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_toggle_mixed_bg_focus.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/toggle_mixed_bg_focus.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-toggle_bg-hover</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_toggle_bg_hover.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/toggle_bg_hover.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-toggle_bg-hover_mixed</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_toggle_mixed_bg_hover.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/toggle_mixed_bg_hover.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-toggle_bg-mixed</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/d_toggle_mixed_bg.png</code></td>
+	<td style="text-align:left;"><code>UIPackageResources/Images/toggle_mixed_bg.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-window_button_close</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Icons/d_winbtn_win_close.png</code></td>
+	<td style="text-align:left;"><code>Icons/winbtn_win_close.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-window_button_max</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Icons/d_winbtn_win_max.png</code></td>
+	<td style="text-align:left;"><code>Icons/winbtn_win_max.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>--unity-icons-window_button_restore</code></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><code>Icons/d_winbtn_win_restore.png</code></td>
+	<td style="text-align:left;"><code>Icons/winbtn_win_restore.png</code></td>
+	<td style="text-align:left;">Undefined</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-USS-CustomProperties.html">Create USS variables</a></li>
+<li><a href="UIE-USS-UnityVariables.html">Introduction to USS built-in variables</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-USS-UnityVariables.html"></a></span><div class="tip">Introduction to USS built-in variables</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-get-custom-styles.html"></a></span><div class="tip">Get custom styles in C# scripts</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Mesh.SetBoneWeights</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">
+                  <a href="Mesh.html">Mesh</a>.SetBoneWeights</h1>
+                <div class="clear">
+                </div>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <a aria-label="go to usermanual page" href='../Manual/class-Mesh.html' title='Go to Mesh Component in the Manual' class='switch-link gray-btn sbtn left show'>Switch to Manual</a>
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public void <span class="sig-kw">SetBoneWeights</span>(NativeArray&lt;byte&gt; <span class="sig-kw">bonesPerVertex</span>,
+NativeArray&lt;BoneWeight1&gt; <span class="sig-kw">weights</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">bonesPerVertex</td>
+                    <td class="desc">Bone count for each vertex in the Mesh.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">weights</td>
+                    <td class="desc">
+          <a href="BoneWeight1.html">BoneWeight1</a> structs for each vertex, sorted by vertex index.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Sets the bone weights for the Mesh.</p>
+              </div>
+              <div class="subsection">
+        <p>Supports up to 255 bone weights per vertex. The bone weights for each vertex must be sorted with the most significant weights first. Zero weights will be ignored.<br /><br />The weights may be stored with less precision than the floating point values passed in, so do not expect to get the exact same values back using <a href="Mesh.GetAllBoneWeights.html">Mesh.GetAllBoneWeights</a>. The minimum precision used is currently 16-bit normalized integers.<br /><br />Additional resources: <a href="Mesh.GetAllBoneWeights.html">Mesh.GetAllBoneWeights</a>, <a href="Mesh.GetBonesPerVertex.html">Mesh.GetBonesPerVertex</a>, <a href="Mesh-boneWeights.html">Mesh.boneWeights</a>, <a href="Mesh.GetBoneWeights.html">Mesh.GetBoneWeights</a> <a href="ModelImporter-maxBonesPerVertex.html">ModelImporter.maxBonesPerVertex</a>, <a href="QualitySettings-skinWeights.html">QualitySettings.skinWeights</a>, <a href="SkinnedMeshRenderer-quality.html">SkinnedMeshRenderer.quality</a>.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using UnityEngine;
+using Unity.Collections;<br /><br />public class MeshSetBoneWeights : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    void Start()
+    {
+        <a href="Animation.html">Animation</a> animation = gameObject.AddComponent&lt;<a href="Animation.html">Animation</a>&gt;();
+        <a href="SkinnedMeshRenderer.html">SkinnedMeshRenderer</a> renderer = gameObject.AddComponent&lt;<a href="SkinnedMeshRenderer.html">SkinnedMeshRenderer</a>&gt;();<br /><br />        // Build a rectangular mesh using four vertices and two triangles, and assign a material to the renderer
+        <a href="Mesh.html">Mesh</a> mesh = new <a href="Mesh.html">Mesh</a>();
+        mesh.vertices = new <a href="Vector3.html">Vector3</a>[] { new <a href="Vector3.html">Vector3</a>(0, 0, 0), new <a href="Vector3.html">Vector3</a>(5, 0, 0), new <a href="Vector3.html">Vector3</a>(0, 5, 0), new <a href="Vector3.html">Vector3</a>(5, 5, 0) };
+        mesh.triangles = new int[] { 0, 1, 2, 1, 3, 2 };
+        mesh.RecalculateNormals();
+        renderer.material = new <a href="Material.html">Material</a>(<a href="Shader.Find.html">Shader.Find</a>("Standard"));<br /><br />        // Create a <a href="Transform.html">Transform</a> and bind pose for two bones
+        <a href="Transform.html">Transform</a>[] bones = new <a href="Transform.html">Transform</a>[2];
+        <a href="Matrix4x4.html">Matrix4x4</a>[] bindPoses = new <a href="Matrix4x4.html">Matrix4x4</a>[2];<br /><br />        // Create a bottom-left bone as a child of this <a href="GameObject.html">GameObject</a>
+        bones[0] = new <a href="GameObject.html">GameObject</a>("BottomLeftBone").transform;
+        bones[0].parent = transform;
+        bones[0].localRotation = <a href="Quaternion-identity.html">Quaternion.identity</a>;
+        bones[0].localPosition = <a href="Vector3-zero.html">Vector3.zero</a>;
+        // Set the bind pose to the bone's inverse transformation matrix, relative to the root
+        bindPoses[0] = bones[0].worldToLocalMatrix * transform.localToWorldMatrix;<br /><br />        // Create a top-right bone
+        bones[1] = new <a href="GameObject.html">GameObject</a>("TopRightBone").transform;
+        bones[1].parent = transform;
+        bones[1].localRotation = <a href="Quaternion-identity.html">Quaternion.identity</a>;
+        bones[1].localPosition = new <a href="Vector3.html">Vector3</a>(5, 5, 0);
+        bindPoses[1] = bones[1].worldToLocalMatrix * transform.localToWorldMatrix;<br /><br />        // Create an array that describes the number of bone weights per vertex
+        // The array assigns 1 bone weight to vertex 0, 2 bone weights to vertex 1, and so on.
+        byte[] bonesPerVertex = new byte[4] { 1, 2, 2, 1 };<br /><br />        // Create a array with one <a href="BoneWeight1.html">BoneWeight1</a> struct for each of the 6 bone weights
+        <a href="BoneWeight1.html">BoneWeight1</a>[] weights = new <a href="BoneWeight1.html">BoneWeight1</a>[6];<br /><br />        // Assign the bottom-left bone to vertex 0 (the bottom-left corner)
+        weights[0].boneIndex = 0;
+        weights[0].weight = 1;<br /><br />        // Assign both bones to vertex 1 (the bottom-right corner)
+        weights[1].boneIndex = 0;
+        weights[1].weight = 0.5f;<br /><br />        weights[2].boneIndex = 1;
+        weights[2].weight = 0.5f;<br /><br />        // Assign both bones to vertex 2 (the top-left corner)
+        weights[3].boneIndex = 0;
+        weights[3].weight = 0.5f;<br /><br />        weights[4].boneIndex = 1;
+        weights[4].weight = 0.5f;<br /><br />        // Assign the top-right bone to vertex 3 (the top-right corner)
+        weights[5].boneIndex = 1;
+        weights[5].weight = 1;<br /><br />        // Create NativeArray versions of the two arrays
+        var bonesPerVertexArray = new NativeArray&lt;byte&gt;(bonesPerVertex, <a href="Unity.Collections.Allocator.Temp.html">Allocator.Temp</a>);
+        var weightsArray = new NativeArray&lt;<a href="BoneWeight1.html">BoneWeight1</a>&gt;(weights, <a href="Unity.Collections.Allocator.Temp.html">Allocator.Temp</a>);<br /><br />        // Set the bone weights on the mesh
+        mesh.SetBoneWeights(bonesPerVertexArray, weightsArray);
+        bonesPerVertexArray.Dispose();
+        weightsArray.Dispose();<br /><br />        // Assign the bind poses to the mesh
+        mesh.bindposes = bindPoses;<br /><br />        // Assign the bones and the mesh to the renderer
+        renderer.bones = bones;
+        renderer.sharedMesh = mesh;<br /><br />        // Assign a simple back-and-forth animation to the bottom-left bone, and play the animation
+        // <a href="UIElements.Vertex.html">Vertex</a> 0 moves directly with the bone
+        // <a href="UIElements.Vertex.html">Vertex</a> 1 and 2 also move, but there's less movement because the vertices are also weighted to the top-right bone
+        // <a href="UIElements.Vertex.html">Vertex</a> 3 doesn't move, because the top-right bone doesn't move
+        <a href="AnimationCurve.html">AnimationCurve</a> curve = new <a href="AnimationCurve.html">AnimationCurve</a>();
+        curve.keys = new <a href="Keyframe.html">Keyframe</a>[] { new <a href="Keyframe.html">Keyframe</a>(0f, 0f, 0f, 0f), new <a href="Keyframe.html">Keyframe</a>(1f, 3f, 0f, 0f), new <a href="Keyframe.html">Keyframe</a>(2f, 0f, 0f, 0f) };
+        <a href="AnimationClip.html">AnimationClip</a> clip = new <a href="AnimationClip.html">AnimationClip</a>();
+        clip.legacy = true;
+        clip.SetCurve("BottomLeftBone", typeof(<a href="Transform.html">Transform</a>), "m_LocalPosition.z", curve);
+        clip.wrapMode = <a href="WrapMode.Loop.html">WrapMode.Loop</a>;
+        animation.AddClip(clip, "test");
+        animation.Play("test");<br /><br />    }
+}</pre>
+      </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

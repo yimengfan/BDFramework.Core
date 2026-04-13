@@ -1,0 +1,298 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create a bindable custom control</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-create-bindable-custom-control.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-create-bindable-custom-control.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-create-bindable-custom-control.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-create-bindable-custom-control.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-create-bindable-custom-control.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-create-bindable-custom-control.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-create-bindable-custom-control.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-create-bindable-custom-control.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-structure-ui.html">Structure UI</a></li>
+<li><a href="UIE-uxml-examples.html">Structure UI examples</a></li>
+<li>Create a bindable custom control</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-radial-progress.html"></a></span><div class="tip">Use Mesh API to create a radial progress indicator</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-create-custom-style-custom-control.html"></a></span><div class="tip">Create a custom style for a custom control</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create a bindable custom control</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Version</strong>: 2021.3+</p>
+
+<p>This example demonstrates how to create a bindable custom control in a custom Editor window.</p>
+
+<h2>Example overview</h2>
+
+<p>This example creates a custom control bound to a property with the double data type. You can adapt this example to bind to properties with other data types such as a string or an integer.</p>
+
+<figure>
+<img src="../uploads/Main/custom-control-binding-example.png" alt="">
+</figure>
+
+<p>You can find the completed files that this example creates in this <a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/master/create-bindable-custom-control">GitHub repository</a>.</p>
+
+<h2>Prerequisites</h2>
+
+<p>This guide is for developers familiar with the Unity Editor, <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit, and C# scripting. Before you start, get familiar with the following:</p>
+
+<ul>
+<li><a href="UIBuilder.html">UI Builder</a></li>
+<li><span class="tooltip"><a href="UIE-VisualTree.html">Visual Tree</a><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualtree" aria-label="Go to glossary anchor for Visualtree">Glossary</a></span></span></span></li>
+<li><a href="UIE-UXML.html">UXML</a></li>
+<li><a href="UIE-Binding.html">SerializedObject data binding</a></li>
+</ul>
+
+<h2>Create the custom control class</h2>
+
+<p>Create a C# class to define the custom control. </p>
+
+<ol>
+<li><p>Create a Unity project with any template.</p></li>
+<li><p>Create a folder named <code>ExampleField</code> to store your files.</p></li>
+<li>
+<p>In the <code>ExampleField</code> folder, create a C# script named <code>ExampleField.cs</code> and replace its content with the following:</p>
+
+<pre><code class="lang-cs">using UnityEngine.UIElements;
+
+namespace UIToolkitExamples
+{
+    // ExampleField inherits from BaseField with the double type. Therefoe, the ExampleField's underlying value is a double.
+    public class ExampleField : BaseField&lt;double&gt;
+    {
+        // We can provide the existing BaseFieldTraits class as a type parameter for UxmlFactory, and this means we
+        // don't need to define our own traits class or override its Init() method. We do, however, need to provide it
+        // However, you must provide the value type (double) and its attribute description type:
+        // (UxmlDoubleAttributeDescription).
+        public new class UxmlFactory :
+            UxmlFactory&lt;ExampleField, BaseFieldTraits&lt;double, UxmlDoubleAttributeDescription&gt;&gt; { }
+
+        Label m_Input;
+
+        // Default constructor is required for compatibility with UXML factory
+        public ExampleField() : this(null)
+        {
+
+        }
+
+        // Main constructor accepts label parameter to mimic BaseField constructor.
+        // Second argument to base constructor is the input element, the one that displays the value this field is
+        // bound to.
+        public ExampleField(string label) : base(label, new Label() { })
+        {
+            // This is the input element instantiated for the base constructor.
+            m_Input = this.Q&lt;Label&gt;(className: inputUssClassName);
+        }
+
+        // SetValueWithoutNotify needs to be overridden by calling the base version and then making a change to the
+        // underlying value be reflected in the input element.
+        public override void SetValueWithoutNotify(double newValue)
+        {
+            base.SetValueWithoutNotify(newValue);
+
+            m_Input.text = value.ToString(&quot;N&quot;);
+        }
+    }
+}
+</code></pre>
+</li>
+</ol>
+
+<h2>Use the custom control in a UXML file</h2>
+
+<ol>
+<li><p>In the <code>ExampleField</code> folder, create a UI Document named <code>ExampleField.uxml</code>.</p></li>
+<li>
+<p>Open <code>ExampleField.uxml</code> in a text editor and replace its contents with the following:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:example=&quot;UIToolkitExamples&quot;&gt;
+    &lt;example:ExampleField label=&quot;Binding Target&quot; binding-path=&quot;m_Value&quot; /&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+</li>
+<li><p>In Unity, double-click <code>ExampleField.uxml</code> to open it in the UI Builder. The ExampleField displays in the Hierarchy window and is visualized in the <span class="tooltip"><strong>Viewport</strong><span class="tooltiptext">The user’s visible area of an app on their screen.<br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Viewport" aria-label="Go to glossary anchor for Viewport">Glossary</a></span></span></span>. If you select the ExampleField in the Hierarchy window, the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#Viewport" aria-label="Go to glossary anchor for Viewport">Glossary</a></span></span></span>. If you select the ExampleField in the Hierarchy window, the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window shows the values assigned to the <strong>Binding Path</strong> and <strong>Label</strong> boxes.</p></li>
+</ol>
+
+<h2>Create the class and custom Editor for the binding target</h2>
+
+<ol>
+<li>
+<p>In the <code>ExampleField</code> folder, create a C# script named <code>ExampleFieldComponent.cs</code> and replace its contents with the following:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+
+namespace UIToolkitExamples
+{
+    public class ExampleFieldComponent : MonoBehaviour
+    {
+        [SerializeField]
+        double m_Value;
+    }
+}
+</code></pre>
+</li>
+<li><p>In the <code>ExampleField</code> folder, create a folder named <code>Editor</code>.</p></li>
+<li>
+<p>In the <code>Editor</code> folder, create a C# script named <code>ExampleFieldCustomEditor.cs</code> and replace its contents with the following:</p>
+
+<pre><code class="lang-cs">using UnityEditor;
+using UnityEngine.UIElements;
+using UnityEngine;
+
+namespace UIToolkitExamples
+{
+    [CustomEditor(typeof(ExampleFieldComponent))]
+    public class ExampleFieldCustomEditor : Editor
+    {
+        [SerializeField]
+        VisualTreeAsset m_Uxml;
+
+        public override VisualElement CreateInspectorGUI()
+        {
+            var parent = new VisualElement();
+
+            m_Uxml?.CloneTree(parent);
+
+            return parent;
+        }
+    }
+}
+</code></pre>
+</li>
+<li><p>In Unity, select <code>ExampleFieldCustomEditor.cs</code> in the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>.</p></li>
+<li><p>Drag <code>ExampleField.uxml</code> into the <strong>Uxml</strong> box in the Inspector window.</p></li>
+</ol>
+
+<h2>Test the example</h2>
+
+<ol>
+<li>In Unity, add an empty <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> to a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> to a <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</li>
+<li>Add the <code>ExampleFieldComponent</code> component to the GameObject. The custom control appears in the Inspector with the default value of <code>0</code> for the Binding Target. If you change the value of the underlying double property, the UI reflects that change.</li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-create-custom-controls.html">Custom controls</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-radial-progress.html"></a></span><div class="tip">Use Mesh API to create a radial progress indicator</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-create-custom-style-custom-control.html"></a></span><div class="tip">Create a custom style for a custom control</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

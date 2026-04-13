@@ -1,0 +1,370 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Troubleshooting on iOS devices</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="platforms" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/TroubleShootingIPhone.html">English</a></li>
+<li><a href="/cn/current/Manual/TroubleShootingIPhone.html">中文</a></li>
+<li><a href="/ja/current/Manual/TroubleShootingIPhone.html">日本語</a></li>
+<li><a href="/kr/current/Manual/TroubleShootingIPhone.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/TroubleShootingIPhone.html">English</a></li>
+<li><a href="/cn/current/Manual/TroubleShootingIPhone.html">中文</a></li>
+<li><a href="/ja/current/Manual/TroubleShootingIPhone.html">日本語</a></li>
+<li><a href="/kr/current/Manual/TroubleShootingIPhone.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="iphone.html">iOS</a></li>
+<li><a href="ios-developing.html">Developing for iOS</a></li>
+<li><a href="ios-testing-and-debugging.html">Test and debug an iOS application</a></li>
+<li>Troubleshooting on iOS devices</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="iOSManagedStackTraces.html"></a></span><div class="tip">Managed stack traces on iOS</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="iphone-bugreporting.html"></a></span><div class="tip">Report crash bugs for iOS</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Troubleshooting on iOS devices</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use the following information to help find solutions to common crashes and other problems when running your Unity application on <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> devices.</p>
+
+<p>
+<strong>Note</strong>: If your issue persists after troubleshooting, refer to <a href="iphone-bugreporting.html">Report crash bugs for iOS</a>.</p>
+
+<ul>
+<li><a href="#xcode-displays-interrupted">Application stops responding and Xcode displays interrupted in the status bar</a></li>
+<li><a href="#xcode-displays-program-received-signal">Xcode console displays Program received signal: “SIGBUS” or EXC_BAD_ACCESS error</a></li>
+<li><a href="#did-receive-memory-warning">Xcode console shows WARNING -&gt; applicationDidReceiveMemoryWarning() and then the application crashes</a></li>
+<li><a href="#crashes-loading-scene">Application launches correctly from Xcode, but crashes loading the first scene on the device</a></li>
+<li><a href="#killed-by-springboard">Killed by SpringBoard appears in the Xcode Organizer console</a></li>
+<li><a href="#crashes-security-cryptography">Crashes occur on the device when using System.Security.Cryptography and managed code stripping</a></li>
+<li><a href="#crashes-security-cryptography-md5">Application crashes when using System.Security.Cryptography.MD5 and managed code stripping</a></li>
+<li><a href="#recursive-player-loop">PlayerLoop called recursively! error message occurs when using Cocoa via a native function</a></li>
+<li><a href="#profiler-unable-access-app">The Profiler or Debugger is unable to access the application</a></li>
+<li><a href="#branch-out-of-range">Xcode displays error ARM64 branch out of range (&lt;value&gt; max is +/–128MB)</a></li>
+<li><a href="#simulator-not-visible">iOS simulators aren’t visible on ARM-based Macs running Xcode 14.3</a></li>
+<li><a href="#additional-resources">Additional resources</a></li>
+</ul>
+
+<p><a name="xcode-displays-interrupted" aria-hidden="true"></a></p>
+
+<h2>Application stops responding and Xcode displays interrupted in the status bar</h2>
+
+<p>The following list provides some common reasons for this issue:</p>
+
+<ul>
+<li>Scripting errors, such as using uninitialized variables.</li>
+<li>Use of third party Thumb compiled native libraries. These libraries can trigger a known problem in the iOS SDK linker and might cause random crashes.</li>
+<li>Use of generic types with value types as parameters. For example <code>List&lt;int&gt;</code>, <code>List&lt;SomeStruct&gt;</code>, <code>List&lt;SomeEnum&gt;</code> for serialized script properties.</li>
+<li>Use of reflection when managed code stripping is enabled.</li>
+<li>Errors in the native <span class="tooltip"><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Plugins.html" href="Plugins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Plug-in" aria-label="Go to glossary anchor for Plug-in">Glossary</a></span></span></span> interface where the managed code method signature doesn’t match the native code function signature.</li>
+</ul>
+
+<p>Information from the Xcode debugger console can often help detect these problems. Access the debugger console from <strong>View</strong> &gt; <strong>Debug Area</strong> &gt; <strong>Activate Console</strong>.</p>
+
+<p><a name="xcode-displays-program-received-signal" aria-hidden="true"></a></p>
+
+<h2>Xcode console displays Program received signal: “SIGBUS” or EXC_BAD_ACCESS error</h2>
+
+<p>This message typically appears on iOS devices when your application receives a <code>NullReferenceException</code>. Use native stack traces to find out where the fault occurred.</p>
+
+<p>Native stack traces are a useful tool for fault investigation, but using them requires some expertise. You generally can’t continue after these hardware memory access faults happen. To access a native stack trace, type <code>bt all</code> into the Xcode debugger console. Inspect the printed stack traces as they can contain information about where the error occurred. For example, a typical stack trace might look like this:</p>
+
+<pre><code>...
+Thread 1 (thread 11523): 
+
+1. 0 0x006267d0 in m_OptionsMenu_Start ()
+1. 1 0x002e4160 in wrapper_runtime_invoke_object_runtime_invoke_void__this___object_intptr_intptr_intptr ()
+1. 2 0x00a1dd64 in mono_jit_runtime_invoke (method=0x18b63bc, obj=0x5d10cb0, params=0x0, exc=0x2fffdd34) at /Users/mantasp/work/unity/unity-mono/External/Mono/mono/mono/mini/mini.c:4487
+1. 3 0x0088481c in MonoBehaviour::InvokeMethodOrCoroutineChecked ()
+...
+</code></pre>
+
+<p>Locate the stack trace for <strong>Thread 1</strong>, which is the main thread. The initial lines of the stack trace will point to the place where the error occurred. In this example, the trace indicates that the <code>NullReferenceException</code> happened inside the <code>_OptionsMenu_</code> script’s <code>_Start_</code> method. Inspecting this method implementation can help reveal the cause of the problem. Typically, NullReferenceExceptions happen inside the <code>_Start_</code> method when incorrect assumptions are made about initialization order.</p>
+
+<p>Sometimes only a partial stack trace is displayed in the debugger console. For example:</p>
+
+<pre><code>Thread 1 (thread 11523): 
+
+1. 0 0x0062564c in start ()
+</code></pre>
+
+<p>This message indicates that native symbols were stripped during the release build of the application. To investigate further, access the full stack trace using the following steps:</p>
+
+<ol>
+<li>Remove the application from the device.</li>
+<li>Clean all targets.</li>
+<li>Select <strong>Product</strong> &gt; <strong>Run</strong>.</li>
+<li>Retrieve the stack traces as described previously.</li>
+</ol>
+
+<p><a name="did-receive-memory-warning" aria-hidden="true"></a></p>
+
+<h2>Xcode console shows WARNING -&gt; applicationDidReceiveMemoryWarning() and then the application crashes</h2>
+
+<p>You might encounter a warning message like <code>Program received signal: &quot;0&quot;</code>. This warning message is often not fatal, and indicates that iOS is low on memory. Typically, background processes like Mail will free some memory and your application can continue to run. However, if your application continues to use memory or ask for more, iOS will start terminating applications including your own. Apple doesn’t document what memory usage is safe, but observations have shown that applications using less than 50% of all device RAM don’t have major memory usage problems.</p>
+
+<p>The main metric to use is how much RAM your application uses. Your application memory usage consists of the following components:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Component</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Application code</strong></td>
+	<td style="text-align:left;">The OS needs to load and keep your application code in RAM, but some of it might be discarded if required.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Native heap</strong></td>
+	<td style="text-align:left;">Used by the engine to store its state and your assets in RAM.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Managed heap</strong></td>
+	<td style="text-align:left;">Used by your <span class="tooltip"><strong>il2cpp</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html" href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> runtime to store C# objects.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Metal memory pools</strong></td>
+	<td style="text-align:left;">Used to store Textures, framebuffers, and compiled <span class="tooltip"><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>You can track application memory usage in Xcode. For more information, refer to <a href="https://developer.apple.com/documentation/xcode/gathering-information-about-memory-use">Gathering information about memory use</a> (Apple Developer).</p>
+
+<p>To keep memory usage low, use the following suggestions:</p>
+
+<ul>
+<li>Reduce the application binary size: Use the strongest iOS stripping options and avoid unnecessary dependencies on different .NET libraries. For more information, refer to <a href="class-PlayerSettings.html">Player</a> settings and <a href="iphone-playerSizeOptimization.html">Optimizing the size of the built iOS Player</a>.</li>
+<li>Reduce the size of your content: Use PVRTC <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> for textures and use low poly models. For more information, refer to <a href="ReducingFilesize.html">reducing file size</a>.</li>
+<li>Don’t allocate more memory than necessary in your <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>: Track mono heap size and usage with the <a href="ProfilerWindow.html">Profiler window</a>.</li>
+</ul>
+
+<p>Querying the OS about the amount of free memory might seem to be the most efficient way to evaluate how well your application is performing. However, the free memory statistic is likely to be unreliable as the OS uses a lot of dynamic buffers and caches. It’s recommended to keep track of memory consumption for your application and use that as the main metric, combined with the Xcode memory tools especially after loading new <span class="tooltip"><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<p><a name="crashes-loading-scene" aria-hidden="true"></a></p>
+
+<h2>Application launches correctly from Xcode, but crashes loading the first scene on the device</h2>
+
+<p>It’s recommended to inspect the device logs to get more details. To do this, use the following steps:</p>
+
+<ol>
+<li>Connect the target device to your macOS device.</li>
+<li>From Xcode, select <strong>Window</strong> &gt; <strong>Devices and Simulators</strong>.</li>
+<li>Select your target device in the window’s left <span class="tooltip"><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Toolbar" aria-label="Go to glossary anchor for Toolbar">Glossary</a></span></span></span>.</li>
+<li>Click <strong>Show the device console</strong> and review the latest messages.</li>
+</ol>
+
+<p>You might also need to investigate crash reports. For more information, refer to <a href="https://developer.apple.com/documentation/xcode/acquiring-crash-reports-and-diagnostic-logs/">Acquiring crash reports and diagnostic logs</a> (Apple Developer).</p>
+
+<p><a name="killed-by-springboard" aria-hidden="true"></a></p>
+
+<h2>Killed by SpringBoard appears in the Xcode Organizer console</h2>
+
+<p>There’s a set time limit to allow an iOS application to render the first frames and process input. If your application exceeds this limit, it is terminated by SpringBoard. For example, this can happen in an application where the size of the first scene is too large. It’s recommended to create a small initial scene with a splash screen, wait for a few frames, and then proceed to load the larger scene. To achieve this, use the following example:</p>
+
+<pre><code>IEnumerator Start() {
+    yield return new WaitForEndOfFrame();
+// Do not forget using UnityEngine.SceneManagement directive
+    SceneManager.LoadScene(&quot;Test&quot;);
+}
+</code></pre>
+
+<p><a name="crashes-security-cryptography" aria-hidden="true"></a></p>
+
+<h2>Crashes occur on the device when using System.Security.Cryptography and managed code stripping</h2>
+
+<p>.NET Cryptography services aren’t compatible with managed code stripping. These services rely on reflection, whereas managed code stripping involves static code analysis. The stripping process can be customized by adding a custom <code>link.xml</code> file to the <code>Assets</code> folder of your Unity project. This specifies the types and namespaces to exclude from stripping. Exclude the <code>System.Security.Crypography</code> namespace from the stripping process to help resolve this issue. For example, add the following to the <code>link.xml</code> file:</p>
+
+<pre><code>&lt;linker&gt;
+       &lt;assembly fullname=&quot;mscorlib&quot;&gt;
+               &lt;namespace fullname=&quot;System.Security.Cryptography&quot; preserve=&quot;all&quot;/&gt;
+       &lt;/assembly&gt;
+&lt;/linker&gt;
+</code></pre>
+
+<p><a name="crashes-security-cryptography-md5" aria-hidden="true"></a></p>
+
+<h2>Application crashes when using System.Security.Cryptography.MD5 and managed code stripping</h2>
+
+<p>You can resolve this issue in the same way as outlined in the previous section, or you can add extra references to specific classes to your script code. To do this, use the following example:</p>
+
+<pre><code>object obj = new MD5CryptoServiceProvider();
+</code></pre>
+
+<p><a name="recursive-player-loop" aria-hidden="true"></a></p>
+
+<h2>PlayerLoop called recursively! error message occurs when using Cocoa via a native function</h2>
+
+<p>Some operations within the <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> will result in iOS redrawing the window immediately. The most common example is adding a UIView with a UIViewController to the main UIWindow. If calling a native function from a script, it will happen inside Unity’s PlayerLoop, resulting in the PlayerLoop being called recursively. When this occurs, you will receive the error message <code>PlayerLoop called recursively!</code>. In such cases, consider using the <a href="https://developer.apple.com/documentation/objectivec/nsobject/1414900-performselector">performSelectorOnMainThread</a> (Apple Developer) method with <code>waitUntilDone</code> set to <strong>false</strong>. It will inform iOS to schedule the operation to run between Unity’s PlayerLoop calls.</p>
+
+<p><a name="profiler-unable-access-app" aria-hidden="true"></a></p>
+
+<h2>The Profiler or Debugger is unable to access the application</h2>
+
+<p>To diagnose this issue, use the following suggestions:</p>
+
+<ul>
+<li>Check that you have built a <strong><span class="tooltip"><strong>Development Build</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview" href="https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#DevelopmentBuild" aria-label="Go to glossary anchor for DevelopmentBuild">Glossary</a></span></span></span></strong>, enabled <strong>Script Debugging</strong>, and enabled <strong>Autoconnect <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a href="Profiler.html" href="Glossary.html#DevelopmentBuild" aria-label="Go to glossary anchor for DevelopmentBuild">Glossary</a></span></span></span></strong>, enabled <strong>Script Debugging</strong>, and enabled <strong>Autoconnect <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span></strong>. For more information on these properties, refer to <a href="BuildSettingsiOS.html">iOS Build Settings reference</a>.</li>
+<li>The application running on the device will make a multicast broadcast to <code>225.0.0.222</code> on UDP port <code>54997</code>. Check that your network settings allow this traffic. The profiler will also make a connection to the remote device on a port in the range <code>55000 - 55511</code> to fetch profiler data from the device. These ports will need to be open for TCP access.</li>
+</ul>
+
+<p><a name="branch-out-of-range" aria-hidden="true"></a></p>
+
+<h2>Xcode displays error ARM64 branch out of range (&lt;value&gt; max is +/–128MB)</h2>
+
+<p>This issue is caused when the built machine code is too large and has hit Xcode limitations. This can occur if you have lots of script code, or are using large external .NET assemblies in a build. Using the <strong>Script Debugging</strong> build setting can also add to this issue, as it creates additional instructions for each function.</p>
+
+<p>To assist with this issue, in the Unity Editor navigate to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong> &gt; <strong>iOS</strong> and try one or more of the following options: </p>
+
+<ul>
+<li>Enable <strong>Strip Engine Code</strong>.</li>
+<li>Use a higher <strong>Managed Stripping Level</strong>.</li>
+<li>Set <strong>IL2CPP Code Generation</strong> to <strong>Faster (smaller) Builds</strong>.</li>
+</ul>
+
+<p>If the issue persists, it’s recommended to split user script code into multiple assemblies. For example, the <code>Plugins</code> folder can be used to place any split code as code at this location is added to a different assembly. It’s also recommended to refer to <a href="ScriptCompileOrderFolders.html">Special folders and script compilation order</a> for information on how special folder names affect script compilation.</p>
+
+<p><a name="simulator-not-visible" aria-hidden="true"></a></p>
+
+<h2>iOS simulators aren’t visible on ARM-based Macs running Xcode 14.3</h2>
+
+<p>Starting with Xcode version 14.3, Apple introduced the <strong>Destination Architecture</strong> option. With <strong>Destination Architecture</strong>, you can use iOS simulators on ARM-based Macs without the need to run Xcode in Rosetta simulator mode.</p>
+
+<p>To view the iOS simulators, use the following steps: </p>
+
+<ol>
+<li>In the Xcode menu bar, select <strong>Product</strong> &gt; <strong>Destination</strong> &gt; <strong>Destination Architectures</strong>.</li>
+<li>Select <strong>Show Rosetta Destinations</strong>, or <strong>Show Both</strong> to view the iOS simulators for both Apple Silicon and Rosetta architectures.</li>
+</ol>
+
+<p><a name="additional-resources" aria-hidden="true"></a></p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="ScriptingRestrictions.html">Scripting Restrictions</a></li>
+<li><a href="iphone-bugreporting.html">Report crash bugs for iOS</a></li>
+</ul>
+<!-- area:platforms -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="iOSManagedStackTraces.html"></a></span><div class="tip">Managed stack traces on iOS</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="iphone-bugreporting.html"></a></span><div class="tip">Report crash bugs for iOS</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

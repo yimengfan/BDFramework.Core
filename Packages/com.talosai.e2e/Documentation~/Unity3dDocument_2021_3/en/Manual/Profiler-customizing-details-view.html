@@ -1,0 +1,335 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Creating a custom module details panel</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Profiler-customizing-details-view.html">English</a></li>
+<li><a href="/cn/current/Manual/Profiler-customizing-details-view.html">中文</a></li>
+<li><a href="/ja/current/Manual/Profiler-customizing-details-view.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Profiler-customizing-details-view.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Profiler-customizing-details-view.html">English</a></li>
+<li><a href="/cn/current/Manual/Profiler-customizing-details-view.html">中文</a></li>
+<li><a href="/ja/current/Manual/Profiler-customizing-details-view.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Profiler-customizing-details-view.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityOverview.html">Working in Unity</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="Profiler.html">Profiler overview</a></li>
+<li><a href="Profiler-customizing.html">Customizing the Profiler</a></li>
+<li>Creating a custom module details panel</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="profiler-module-editor.html"></a></span><div class="tip">Profiler Module Editor</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="LowLevelNativePluginProfiler.html"></a></span><div class="tip">Low-level native plug-in Profiler API</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Creating a custom module details panel</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The module details panel appears in the bottom of the <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> window when you select a module. You can customize this section to show additional details relevant to your module or to display a custom visualization of your performance data. </p>
+
+<p>To create a custom Module details panel for your Profiler module:</p>
+
+<ul>
+<li>
+<a href="#create-details-view-controller">Create a module details panel Controller script</a> to draw a custom module details panel.</li>
+<li>Create a Profiler module script to <a href="#connect-details-view-controller">connect your custom module details panel controller to your custom profiler module</a> .</li>
+</ul>
+
+<p><a name="create-details-view-controller" aria-hidden="true"></a></p>
+
+<h3>Creating a script to control the module details panel</h3>
+
+<p>You can use the <a href="https://docs.unity3d.com/2021.2/Documentation/ScriptReference/Unity.Profiling.Editor.ProfilerModuleViewController.html">ProfilerModuleViewController</a> base class to customize the module details panel in the profiler window. To do this, create a script that controls what appears in the module details panel when you select a specific module. </p>
+
+<p>The script you create to customize the module details panel must:</p>
+
+<ul>
+<li>Define a public constructor for the view controller that calls the base constructor <code>base(profilerWindow)</code>.</li>
+<li>Override <code>CreateView</code> to build the custom module details panel.</li>
+</ul>
+
+<p>For example: </p>
+
+<pre><code class="lang-csharp">
+ public class CustomDetailsViewController : ProfilerModuleViewController
+ {   
+    public CustomDetailsViewController(ProfilerWindow profilerWindow) : base(profilerWindow) { }
+
+    protected override VisualElement CreateView()
+    {
+        // Create your UI.
+    }
+}
+</code></pre>
+
+<p>For an example of a full module details panel controller script, see <a href="#details-view-controller-script">module details panel controller script example</a>.</p>
+
+<p><a name="details-view-controller-script" aria-hidden="true"></a></p>
+
+<h4>Module details panel controller script example</h4>
+
+<p>The below example script creates a module details panel controller that draws a single label in the module details panel that displays text:</p>
+
+<figure>
+<img src="../uploads/Main/Profiler_tank_details_basic.png" alt="">
+</figure>
+
+<p>This module details panel controller script example does the following: </p>
+
+<ul>
+<li>Defines and creates a label to display the value you want to capture, and adds this label to the module details panel.</li>
+<li>Defines a constructor to control the module details panel and uses CreateView to build the custom module details panel.</li>
+<li>Populates the label with data from the current frame, and updates the label after each frame.</li>
+<li>Fetches a counter value as a string that you can display in the module details panel.</li>
+<li>Specifies the text to display in the module details panel, and tells the Profiler to automatically update it each frame.</li>
+</ul>
+
+<pre><code class="lang-csharp">
+ using UnityEditor;
+ using UnityEditorInternal;
+ using Unity.Profiling.Editor;
+ using UnityEngine.UIElements;
+ 
+ public class TankEffectsDetailsViewController : ProfilerModuleViewController
+ {
+    // Define a label, which will display the total particle count for tank trails in the selected frame.
+    Label m_TankTrailParticleCountLabel;
+
+
+    // Define a constructor for the view controller, which calls the base constructor with the Profiler Window passed from the module.
+    public TankEffectsDetailsViewController(ProfilerWindow profilerWindow) : base(profilerWindow) { }
+ 
+    // Override CreateView to build the custom module details panel.6666666667reateView()
+    {
+        var view = new VisualElement();
+
+        // Create the label and add it to the view.
+        m_TankTrailParticleCountLabel = new Label() { style = { paddingTop = 8, paddingLeft = 8 } };
+        view.Add(m_TankTrailParticleCountLabel);
+
+        // Populate the label with the current data for the selected frame. 
+        ReloadData();
+
+        // Be notified when the selected frame index in the Profiler Window changes, so we can update the label.
+        ProfilerWindow.SelectedFrameIndexChanged += OnSelectedFrameIndexChanged;
+
+        return view;
+    }
+
+    // Override Dispose to do any cleanup of the view when it is destroyed. This is a standard C# Dispose pattern.
+    protected override void Dispose(bool disposing)
+    {
+        if (!disposing)
+            return;
+
+        // Unsubscribe from the Profiler window event that we previously subscribed to.
+        ProfilerWindow.SelectedFrameIndexChanged -= OnSelectedFrameIndexChanged;
+
+        base.Dispose(disposing);
+    }
+
+    void ReloadData()
+    {
+        // Retrieve the TankTrailParticleCount counter value from the Profiler as a formatted string.
+        var selectedFrameIndexInt32 = System.Convert.ToInt32(ProfilerWindow.selectedFrameIndex);
+        var value = ProfilerDriver.GetFormattedCounterValue(selectedFrameIndexInt32, GameStatistics.TanksCategory.Name, GameStatistics.TankTrailParticleCountName);
+
+        // Update the label's text with the value.
+        m_TankTrailParticleCountLabel.text = $&quot;The value of '{GameStatistics.TankTrailParticleCountName}' in the selected frame is {value}.&quot;;
+    }
+
+    void OnSelectedFrameIndexChanged(long selectedFrameIndex)
+    {
+        // Update the label with the current data for the newly selected frame.
+        ReloadData();
+    }
+}
+</code></pre>
+
+<h4>Creating custom UI elements in the module details panel</h4>
+
+<p>You can use Unity’s UIToolkit to build custom <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> for the module details panel. For more information, see <a href="UIElements.html">UI Toolkit</a>.</p>
+
+<p>The following example image shows a custom module details panel that belongs to a custom <a href="https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@latest?subfolder=/manual/index.html">Adaptive Performance</a> module:</p>
+
+<figure>
+<img src="../uploads/Main/Adaptive_performance_Profiler.png" alt="">
+</figure>
+
+<p><a name="connect-details-view-controller" aria-hidden="true"></a></p>
+
+<h3>Connect a custom module details panel to a Profiler module</h3>
+
+<p>To display a custom module details panel, you need to instantiate your module details panel controller when you select your Profiler module. To do this, override <code>CreateDetailsViewController</code> to create and draw a new module details panel controller. Unity then invokes this method when it displays your module’s details panel.</p>
+
+<p>The following code example instantiates a custom module details panel for a module called <code>TankEffectsProfilerModule</code>:</p>
+
+<pre><code class="lang-csharp">
+ using Unity.Profiling.Editor;
+
+ [System.Serializable]
+ [ProfilerModuleMetadata(&quot;Tank Effects&quot;)]
+ public class TankEffectsProfilerModule : ProfilerModule
+ {
+    static readonly ProfilerCounterDescriptor[] k_Counters = new ProfilerCounterDescriptor[]
+    {
+        new ProfilerCounterDescriptor(GameStatistics.TankTrailParticleCountName, GameStatistics.TanksCategory),
+        new ProfilerCounterDescriptor(GameStatistics.ShellExplosionParticleCountName, GameStatistics.TanksCategory),
+        new ProfilerCounterDescriptor(GameStatistics.TankExplosionParticleCountName, GameStatistics.TanksCategory),
+    };
+
+    public TankEffectsProfilerModule() : base(k_Counters) { }
+
+    public override ProfilerModuleViewController CreateDetailsViewController()
+    {
+        return new TankEffectsDetailsViewController(ProfilerWindow);
+    }
+}
+</code></pre>
+
+<h2>Visualizing additional counters in the module details panel</h2>
+
+<p>You can display counters in the module details panel that are not included in your module’s chart view. This is useful when you want to show additional data for a frame you select.</p>
+
+<p>The Profiler automatically captures the categories of all counters that belong to a module’s chart view when that module is active. To capture additional counters, write a script to tell the Profiler to capture specific categories when your module is active.</p>
+
+<p>For example, the script below uses the <code>autoEnabledCategoryNames</code> constructor argument to specify the <span class="tooltip"><strong>Scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> and Memory categories. This enables these categories when the module is active:</p>
+
+<pre><code class="lang-csharp"> 
+ using Unity.Profiling;
+ using Unity.Profiling.Editor;
+
+ [System.Serializable]
+ [ProfilerModuleMetadata(&quot;Tank Effects&quot;)]
+ public class TankEffectsProfilerModule : ProfilerModule
+ {
+    static readonly ProfilerCounterDescriptor[] k_Counters = new ProfilerCounterDescriptor[]
+    {
+        new ProfilerCounterDescriptor(GameStatistics.TankTrailParticleCountName, ProfilerCategory.Scripts),
+        new ProfilerCounterDescriptor(GameStatistics.ShellExplosionParticleCountName, ProfilerCategory.Scripts),
+        new ProfilerCounterDescriptor(GameStatistics.TankExplosionParticleCountName, ProfilerCategory.Scripts),
+    };
+
+    // Enable the ProfilerCategory.Scripts and ProfilerCategory.Memory categories when the module is active.
+    static readonly string[] k_AutoEnabledCategoryNames = new string[]
+    {
+        ProfilerCategory.Scripts.Name,
+        ProfilerCategory.Memory.Name
+    };
+
+    // Pass the auto-enabled category names to the base constructor.
+    public TankEffectsProfilerModule() : base(k_Counters, autoEnabledCategoryNames: k_AutoEnabledCategoryNames) { }
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="profiler-module-editor.html"></a></span><div class="tip">Profiler Module Editor</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="LowLevelNativePluginProfiler.html"></a></span><div class="tip">Low-level native plug-in Profiler API</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

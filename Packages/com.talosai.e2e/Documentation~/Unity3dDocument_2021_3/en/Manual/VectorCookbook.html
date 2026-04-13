@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Vectors</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="core" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/VectorCookbook.html">English</a></li>
+<li><a href="/cn/current/Manual/VectorCookbook.html">中文</a></li>
+<li><a href="/ja/current/Manual/VectorCookbook.html">日本語</a></li>
+<li><a href="/kr/current/Manual/VectorCookbook.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/VectorCookbook.html">English</a></li>
+<li><a href="/cn/current/Manual/VectorCookbook.html">中文</a></li>
+<li><a href="/ja/current/Manual/VectorCookbook.html">日本語</a></li>
+<li><a href="/kr/current/Manual/VectorCookbook.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="ScriptingImportantClasses.html">Important Classes </a></li>
+<li>Vectors</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ScriptingTransform.html"></a></span><div class="tip">Transform</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-Quaternion.html"></a></span><div class="tip">Quaternion</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Vectors</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Vectors are a fundamental mathematical concept which allow you to describe a direction and magnitude. In games and apps, vectors are often used to describe some of the fundamental properties such as the position of a character, the speed something is moving, or the distance between two objects.</p>
+
+<p>Vector arithmetic is fundamental to many aspects of computer programming such as graphics, physics and animation, and it is useful to understand it in depth to get the most out of Unity.</p>
+
+<p>Vectors can be expressed in multiple dimensions, and Unity provides the Vector2, Vector3 and Vector4 classes for working with 2D, 3D, and 4D vectors.
+These three types of Vector classes all share many of the same functions, such as magnitude, so most of the information on this page applies to all three types of Vector unless otherwise specified.</p>
+
+<p>This page provides an overview of the Vector classes and their common uses when scripting with them. For an exhaustive reference of every member of the vector classes, see the script reference pages for <a href="../ScriptReference/Vector2.html">Vector2</a>, <a href="../ScriptReference/Vector3.html">Vector3</a> and <a href="../ScriptReference/Vector4.html">Vector4</a>.</p>
+
+<h2>Understanding Vector Arithmetic</h2>
+
+<h3>Addition</h3>
+
+<p>When two vectors are added together, the result is equivalent to taking the original vectors as “steps”, one after the other. Note that the order of the two parameters doesn’t matter, since the result is the same either way.</p>
+
+<figure>
+<img src="../uploads/Main/VectorAdd.png" alt="">
+</figure>
+
+<p>If the first vector is taken as a point in space then the second can be interpreted as an offset or “jump” from that position. For example, to find a point 5 units above a location on the ground, you could use the following calculation:-</p>
+
+<pre><code> var pointInAir = pointOnGround + new Vector2(0, 5);
+</code></pre>
+
+<p>If the vectors represent forces then it is more intuitive to think of them in terms of their direction and magnitude (the magnitude indicates the size of the force). Adding two force vectors results in a new vector equivalent to the combination of the forces. This concept is often useful when applying forces with several separate components acting at once (eg, a rocket being propelled forward may also be affected by a crosswind).</p>
+
+<p>Although the examples here show 2D vectors, the same concept applies to 3D and 4D vectors.</p>
+
+<h3>Subtraction</h3>
+
+<p>Vector subtraction is most often used to get the direction and distance from one object to another. Note that the order of the two parameters <strong>does</strong> matter with subtraction:-</p>
+
+<figure>
+<img src="../uploads/Main/VectorSubtract.png" alt="">
+</figure>
+
+<pre><code>// The vector d has the same magnitude as c but points in the opposite direction.
+var c = b - a;
+var d = a - b;
+
+</code></pre>
+
+<p>As with numbers, adding the negative of a vector is the same as subtracting the positive.</p>
+
+<pre><code>// These both give the same result.
+var c = a - b;
+var c = a + -b;
+
+</code></pre>
+
+<p>The negative of a vector has the same magnitude as the original and points along the same line but in the exact opposite direction.</p>
+
+<h2>Direction and Distance from One Object to Another</h2>
+
+<p>If one point in space is subtracted from another, then the result is a vector that “points” from one object to the other:</p>
+
+<pre><code>// Gets a vector that points from the player's position to the target's.
+var heading = target.position - player.position;
+
+</code></pre>
+
+<p>As well as pointing in the direction of the target object, this vector’s magnitude is equal to the distance between the two positions. You may need a “normalized” vector giving the direction to the target, but with a fixed distance (say for directing a projectile). You can normalize a vector by dividing it by its own magnitude:</p>
+
+<pre><code>var distance = heading.magnitude;
+var direction = heading / distance; // This is now the normalized direction.
+</code></pre>
+
+<p>This approach is preferable to using both the magnitude and normalized properties separately, since they are both quite CPU-hungry (they both involve calculating a square root).</p>
+
+<p>If you only need to use the distance for comparison (for a proximity check, say) then you can avoid the magnitude calculation altogether. The sqrMagnitude property gives the square of the magnitude value, and is calculated like the magnitude but without the time-consuming square root operation. Rather than compare the magnitude against a known distance, you can compare the squared magnitude against the squared distance:-</p>
+
+<pre><code>if (heading.sqrMagnitude &lt; maxRange * maxRange) {
+    // Target is within range.
+}
+</code></pre>
+
+<p>This is much more efficient than using the true magnitude in the comparison.</p>
+
+<p>Sometimes, when working in 3D, you might need an “overground heading” to a target. For example, imagine a player standing on the ground who needs to approach a target floating in the air. If you subtract the player’s position from the target’s then the resulting vector will point upwards towards the target. This is not suitable for orienting the player’s transform since they will also point upwards; what is really needed is a vector from the player’s position to the position on the ground directly below the target. You can obtain this by taking the result of the subtraction and setting the Y coordinate to zero:-</p>
+
+<pre><code>var heading = target.position - player.position;
+heading.y = 0;  // This is the overground heading.
+</code></pre>
+
+<h2>Scalar Multiplication and Division</h2>
+
+<p>When discussing vectors, it is common to refer to an ordinary number (eg, a float value) as a scalar. The meaning of this is that a scalar only has “scale” or magnitude whereas a vector has both magnitude and direction.</p>
+
+<p>Multiplying a vector by a scalar results in a vector that points in the same direction as the original. However, the new vector’s magnitude is equal to the original magnitude multiplied by the scalar value.</p>
+
+<p>Likewise, scalar division divides the original vector’s magnitude by the scalar.</p>
+
+<p>These operations are useful when the vector represents a movement offset or a force. They allow you to change the magnitude of the vector without affecting its direction.</p>
+
+<p>When any vector is divided by its own magnitude, the result is a vector with a magnitude of 1, which is known as a normalized vector. If a normalized vector is multiplied by a scalar then the magnitude of the result will be equal to that scalar value. This is useful when the direction of a force is constant but the strength is controllable (eg, the force from a car’s wheel always pushes forwards but the power is controlled by the driver).</p>
+
+<h2>Dot Product</h2>
+
+<p>The dot product takes two vectors and returns a scalar. This scalar is equal to the magnitudes of the two vectors multiplied together and the result multiplied by the cosine of the angle between the vectors. When both vectors are normalized, the cosine essentially states how far the first vector extends in the second’s direction (or vice-versa - the order of the parameters doesn’t matter).</p>
+
+<figure>
+<img src="../uploads/Main/DotProduct.png" alt="">
+</figure>
+
+<p>Below you can see a comparison of how vectors of varying angles compared with a reference vector return a dot product value between 1 and –1 :</p>
+
+<figure>
+<img src="../uploads/Main/CosineValues.png" alt="">
+</figure>
+
+<p>The dot product is a mathematically simpler operation than calculating the cosine, so it can be used in place of the Mathf.Cos function or the vector magnitude operation in some circumstances (it doesn’t do exactly the same thing but sometimes the effect is equivalent). However, calculating the dot product function takes much less CPU time and so it can be a valuable optimization.</p>
+
+<p>The dot product is useful if you want to calculate the amount of one vector’s magnitude that lies in the direction of another vector.</p>
+
+<p>For example, a car’s speedometer typically works by measuring the rotational speed of the wheels. The car may not be moving directly forward (it may be skidding sideways, for example) in which case part of the motion will not be in the direction the car is facing - and so won’t be measured by the speedometer. The magnitude of an object’s <span class="tooltip"><strong>rigidbody</strong><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Rigidbody.html" href="class-Rigidbody.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span>.velocity vector will give the speed in its direction of overall motion but to isolate the speed in the forward direction, you should use the dot product:</p>
+
+<pre><code>var fwdSpeed = Vector3.Dot(rigidbody.velocity, transform.forward);
+</code></pre>
+
+<p>Naturally, the direction can be anything you like but the direction vector must always be normalized for this calculation. Not only is the result more correct than the magnitude of the velocity, it also avoids the slow square root operation involved in finding the magnitude.</p>
+
+<h2>Cross Product</h2>
+
+<p>The cross product is only meaningful for 3D vectors. It takes two 3D vectors as input and returns another 3D vector as its result.</p>
+
+<p>The result vector is perpendicular to the two input vectors. You can use the “right hand screw rule” to remember the direction of the output vector from the ordering of the input vectors. If you can curl your fingers in the order of the input vectors, your thumb points in the direction of the output vector. If the order of the parameters is reversed then the resulting vector will point in the exact opposite direction but will have the same magnitude.</p>
+
+<p>The magnitude of the result is equal to the magnitudes of the input vectors multiplied together and then that value multiplied by the sine of the angle between them. Some useful values of the sine function are shown below:-</p>
+
+<figure>
+<img src="../uploads/Main/SineValues.png" alt="">
+</figure>
+
+<p>The cross product can seem complicated since it combines several useful pieces of information in its return value. However, like the dot product, it is very efficient mathematically and can be used to optimize code that would otherwise depend on slower transcendental functions such as sine and cosine.</p>
+
+<h2>Computing a Normal/Perpendicular vector</h2>
+
+<p>A “normal” vector (ie. a vector perpendicular to a plane) is required frequently during <span class="tooltip"><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> generation and is also useful in path following and other situations. Given three points in the plane, say the corner points of a mesh triangle, you can find the normal as follows:
+- Pick one of the three points
+- Subtract it from each of the two other points separately (resulting in two new vectors, “Side 1” and “Side 2”)
+- Calculate the cross product of the vectors “Side 1” and “Side 2”
+- The result of the cross product is a new vector that is perpendicular to the plane the three original points lie on - the “normal”.</p>
+
+<figure>
+<img src="../uploads/Main/CalculateNormal.png" alt="">
+</figure>
+
+<pre><code>Vector3 a;
+Vector3 b;
+Vector3 c;
+
+Vector3 side1 = b - a;
+Vector3 side2 = c - a;
+
+Vector3 normal = Vector3.Cross(side1, side2);
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/LeftHandRuleDiagram.png" alt="">
+</figure>
+
+<p>The “left hand rule” can be used to decide the order in which the two vectors should be passed to the cross product function. As you look down at the top side of the surface (from which the normal will point outwards) the first vector should sweep around clockwise to the second:</p>
+
+<p>The result will point in exactly the opposite direction if the order of the input vectors is reversed.</p>
+
+<p>For meshes, the normal vector must also be normalized. This can be done with the normalized property, but there is another trick which is occasionally useful. You can also normalize the perpendicular vector by dividing it by its magnitude:-</p>
+
+<pre><code>float perpLength = perp.magnitude;
+perp /= perpLength;
+</code></pre>
+
+<p>Another useful note is that the area of the triangle is equal to perpLength / 2. This is useful if you need to find the surface area of the whole mesh or want to choose triangles randomly with probability based on their relative areas.</p>
+<!-- area:core -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ScriptingTransform.html"></a></span><div class="tip">Transform</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="class-Quaternion.html"></a></span><div class="tip">Quaternion</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

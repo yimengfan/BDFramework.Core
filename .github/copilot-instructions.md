@@ -21,6 +21,12 @@ This file is the mandatory workspace instruction set for GitHub Copilot in this 
 - Critical configuration files must be documented in code comments or docstrings in Chinese where they are declared, loaded, generated, or written. The comment must explain the file purpose and who produces and consumes it.
 - Every new or changed code path must add or update automated tests. Prefer unit tests first; if a flow cannot be covered purely with unit tests, add the closest automated verification and explain the gap. Relevant tests must pass before the task is considered complete.
 
+## Markdown Documentation Standards
+
+- All `.md` documentation files must be written in English.
+- Keep `.md` files concise and high-signal. Avoid bloated structure, repetitive narration, and low-value trivia.
+- Do not update `.md` files for minor wording churn or routine noise. Update them only when behavior, entrypoints, ownership, or required policy actually changes.
+
 ## Mandatory Conventions
 
 - Important multi-step flows must emit explicit logs at entry, key branch or fallback, and completion or error so runtime debugging does not rely on inference.

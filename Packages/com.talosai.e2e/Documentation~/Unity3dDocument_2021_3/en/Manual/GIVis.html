@@ -1,0 +1,328 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Scene View Draw Modes for lighting</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="graphics" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/GIVis.html">English</a></li>
+<li><a href="/cn/current/Manual/GIVis.html">中文</a></li>
+<li><a href="/ja/current/Manual/GIVis.html">日本語</a></li>
+<li><a href="/kr/current/Manual/GIVis.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/GIVis.html">English</a></li>
+<li><a href="/cn/current/Manual/GIVis.html">中文</a></li>
+<li><a href="/ja/current/Manual/GIVis.html">日本語</a></li>
+<li><a href="/kr/current/Manual/GIVis.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="LightingOverview.html">Lighting</a></li>
+<li>Scene View Draw Modes for lighting</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="GICache.html"></a></span><div class="tip">GI cache</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="models.html"></a></span><div class="tip">Models</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Scene View Draw Modes for lighting</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view has a number of Draw Modes to help you understand and debug the lighting in your Scene.</p>
+
+<p>Use the <span class="tooltip"><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> control bar to select your desired Draw Mode.</p>
+
+<h2>Shading Mode</h2>
+
+<h3>Shaded</h3>
+
+<p>The default <strong>Shading Mode</strong> is <strong>Shaded</strong>. This shows the Scene fully lit according to the current lighting setup.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis2.png" alt="">
+</figure>
+
+<h2>Miscellaneous</h2>
+
+<h3>Shadow Cascades</h3>
+
+<p>Uses color to show the parts of the Scene using different cascade levels. Use this to help you get the shadow distance, cascade count and cascade split ratios just right. Note that this visualization use the Scene view far plane, which is usually bigger than the shadow distance, so you might need to lower the Shadow distance if you want to match the in-game behavior of the <span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> with a small far plane.</p>
+
+<figure>
+<img src="../uploads/Main/ShadCascade4Visualization.png" alt="Shadow Cascades draw mode in the Scene View">
+<figcaption>Shadow Cascades draw mode in the Scene View</figcaption>
+</figure>
+
+<h2>Global Illumination</h2>
+
+<h3>Systems</h3>
+
+<p>The precompute stage will automatically subdivide the scene into systems (i.e. groups of objects sharing the same real-time lightmap) based on proximity and <span class="tooltip"><strong>Lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> Parameters. This is done to allow multithreading and optimizations when updating indirect lighting. This visualization shows the systems with different colors.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis4.png" alt="">
+</figure>
+
+<h3>Clustering</h3>
+
+<p>Enlighten calculates visibility information for geometry with <strong>Contribute GI</strong> enabled. It does this by making use of clusters generated during the Clustering step. Both Enlighten Realtime <span class="tooltip"><strong>Global Illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span> and Enlighten Baked Global Illumination depend on these calculations to compute indirect lighting. This view displays those clusters, which should be larger than lightmap texels. The Cluster Resolution parameter in <a href="class-LightmapParameters.html">Lightmap Parameters</a> determines this ratio. Converting geometry to clusters can be quite memory intensive if the scale of the geometry isn’t correct. Large scenes can generate more clusters than Unity can store in your system’s memory.
+If you are seeing high memory usage or long baking times it could be because the static geometry in your scene splits into many more clusters than necessary. The clustering scene view mode can help you identify the geometry in need of UVs or Indirect Resolution adjustments.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis10.png" alt="">
+</figure>
+
+<h3>Lit Clustering</h3>
+
+<p>This is the Clustering view with <span class="tooltip"><strong>Enlighten Realtime Global Illumination</strong><span class="tooltiptext">A lighting system by Geomerics used in Unity for lightmapping and for Enlighten Realtime Global Illumination. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://www.siliconstudio.co.jp/en/products-service/enlighten/" href="https://www.siliconstudio.co.jp/en/products-service/enlighten/">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#EnlightenRealtimeGlobalIllumination" aria-label="Go to glossary anchor for EnlightenRealtimeGlobalIllumination">Glossary</a></span></span></span> applied.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis11.png" alt="">
+</figure>
+
+<h3>UV Charts</h3>
+
+<p>This shows the optimized UV layout used when calculating Enlighten Realtime Global Illumination. It is automatically generated during the precompute process. It is available as soon as the Instance precompute stage is completed. The UV Charts scene view mode can help you identify the geometry that needs to have UVs or scale adjusted (use the Resolution parameter in Lightmap Parameters to change scale). This view is also useful when adjusting the Indirect Resolution. Each chart has a different color.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis3.png" alt="">
+</figure>
+
+<h3>Contributors/Receivers</h3>
+
+<p>This Draw Mode draws <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> Renderers and <span class="tooltip"><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a href="terrain-UsingTerrains.html" href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> Renderers and <span class="tooltip"><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> in different colors based on whether <strong>ContributeGI</strong> is enabled in their <a href="StaticObjects.html">Static Editor Flags</a>, and the value of their <a href="../ScriptReference/MeshRenderer-receiveGI.html">ReceiveGI</a> property.</p>
+
+<p>In the default colors:</p>
+
+<ul>
+<li>Yellow means that <strong>ContributeGI</strong> is not enabled in the <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>’s Static Editor Flags.</li>
+<li>Blue means that <strong>ContributeGI</strong> is enabled in the GameObject’s Static Editor Flags, and the Renderer’s <strong>ReceiveGI</strong> property is set to <strong>Lightmaps</strong>.</li>
+<li>Red means that <strong>ContributeGI</strong> is enabled in the GameObject’s Static Editor Flags, and the Renderer’s <strong>ReceiveGI</strong> property is set to <strong><span class="tooltip"><strong>Light Probes</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html" href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span></strong>.</li>
+</ul>
+
+<p>You can customize the default colors in the <a href="Preferences.html#colors">Preferences window</a>.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis-contributors-receivers.png" alt="">
+</figure>
+
+<h2>Realtime Global Illumination</h2>
+
+<h3>Albedo</h3>
+
+<p>Enabling <strong>Show lightmap resolution overlay</strong> in the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Manual/class-EditorManager.html">Editor Manager settings</a> indicates the albedo that <span class="tooltip"><strong>lightmappers</strong><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a href="Lightmapping.html" href="https://docs.unity3d.com/Manual/class-EditorManager.html">Editor Manager settings</a> indicates the albedo that <span class="tooltip"><strong>lightmappers</strong><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmapper" aria-label="Go to glossary anchor for Lightmapper">Glossary</a></span></span></span> use to calculate Baked Global Illumination results. Unity calculates the albedo from the material information which can be customized fully by adding a custom meta pass.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis5.png" alt="">
+</figure>
+
+<h3>Emissive</h3>
+
+<p>Shows the emission used when calculating the GI. It is generated from the material information and can be fully customized by adding a custom meta pass.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis6.png" alt="">
+</figure>
+
+<h3>Indirect</h3>
+
+<p>The Indirect view displays indirect lighting as captured in the lightmaps that Enlighten Baked Global Illumination generates. Irradiance is a radiometric unit that describes how much power (radiant flux) a surface receives per unit area. Unity uses the irradiance texture to store indirect light data at runtime. If you disable Enlighten Baked Global Illumination, the Indirect view mode isn’t selectable.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis7.png" alt="">
+</figure>
+
+<p>In the Indirect view mode, you can use a Lightmap Exposure control to help you assess <span class="tooltip"><strong>HDR</strong><span class="tooltiptext">high dynamic range<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#HDR" aria-label="Go to glossary anchor for HDR">Glossary</a></span></span></span> lightmaps more effectively.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis16.png" alt="Comparison of Indirect Lightmaps with different exposure values">
+<figcaption>Comparison of Indirect Lightmaps with different exposure values</figcaption>
+</figure>
+
+<ol>
+<li>
+<strong>Default Exposure</strong>: The lightmap exposure slider at the default value of 0.</li>
+<li>
+<strong>Altered Exposure</strong>: Here the lightmap exposure slider is at a value of –1.</li>
+</ol>
+
+<h3>Directionality</h3>
+
+<p>This view shows the most dominant light direction vector. Please refer to the <a href="LightmappingDirectional.html">Directional Lightmapping</a> page for more info.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis8.png" alt="">
+</figure>
+
+<h2>Baked Global Illumination</h2>
+
+<h3>Baked Lightmap</h3>
+
+<p>The Baked Lightmap view displays baked lightmaps applied to the Scene geometry. In this mode, you can use a Lightmap Exposure control to help you assess HDR lightmaps more effectively.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis9.png" alt="">
+</figure>
+
+<p>Scenes with high lighting intensities might require you to use exposure compensation to bring the Baked Lightmap Scene View into an easily readable range.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis17.png" alt="Comparison of Baked Lightmaps with different exposure values">
+<figcaption>Comparison of Baked Lightmaps with different exposure values</figcaption>
+</figure>
+
+<ol>
+<li>
+<strong>Default Exposure</strong>: The lightmap exposure slider at the default value of 0.</li>
+<li>
+<strong>Altered Exposure</strong>: Here the lightmap exposure slider is at a value of 4.</li>
+</ol>
+
+<h3>Shadowmask</h3>
+
+<p>This displays the <span class="tooltip"><strong>shadowmask</strong><span class="tooltiptext">A Texture that shares the same UV layout and resolution with its corresponding lightmap. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightMode-Mixed-Shadowmask.html" href="LightMode-Mixed-Shadowmask.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Shadowmask" aria-label="Go to glossary anchor for Shadowmask">Glossary</a></span></span></span> texture occlusion values. It colors the mesh and the light <span class="tooltip"><strong>gizmo</strong><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a href="GizmosMenu.html#GizmosIcons" href="Glossary.html#Shadowmask" aria-label="Go to glossary anchor for Shadowmask">Glossary</a></span></span></span> texture occlusion values. It colors the mesh and the light <span class="tooltip"><strong>gizmo</strong><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a href="GizmosMenu.html#GizmosIcons">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Gizmo" aria-label="Go to glossary anchor for Gizmo">Glossary</a></span></span></span> in the same color so one can verify that the light occlusion factors have been baked as expected.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis12.png" alt="">
+</figure>
+
+<h3>Texel Validity</h3>
+
+<p>This mode shows which texels are marked invalid because they mostly “see” backfaces. During lightmap baking, Unity emits rays from each texel. If a significant portion of a texel’s rays are hitting backface geometry, this texel is marked invalid. This is because the texel should not be able to see the backfaces in the first place. Unity handles this by replacing invalid texels with valid neighbors. You can adjust this behaviour using the <strong>Backface Tolerance</strong> parameter (<strong>LightmapParameters</strong> &gt; <strong>General GI</strong>).</p>
+
+<p>This view is not compatible with Enlighten Baked Global Illumination.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis14.png" alt="">
+</figure>
+
+<h3>UV Overlap</h3>
+
+<p>If lightmap charts are too close together in UV space, the <span class="tooltip"><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> values inside them might bleed into one another when the lightmap is sampled by the GPU. This can lead to unexpected artifacts. This mode allows you to identify texels that are too close to texels in other charts. This is useful when you want to troubleshoot your UV issues.</p>
+
+<p>This view is not compatible with Enlighten Baked Global Illumination.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis15.png" alt="">
+</figure>
+
+<h2>Light Overlap</h2>
+
+<p>This mode allows you to see if all static lights have been baked to the shadowmask. If an area of the level is lit by more than four static lights, the exceeding lights will fallback to fully baked and be displayed in red. Relevant for this calculation is not the actual lit surface, but the intersection of the light sources’ volumes. So even though in the screenshot below it looks as if the colored spots on the mesh do not overlap, the cones of the four spotlights end up overlapping below the ground plane along with the directional light.</p>
+
+<figure>
+<img src="../uploads/Main/GIVis13.png" alt="">
+</figure>
+
+<ul>
+<li><span class="page-history">[GI Contributors/Receivers Draw Mode] added in <a href="https://docs.unity3d.com/2020.1/Documentation/Manual/30_search.html?q=newin20201">2020.1</a> <span class="search-words">NewIn20201</span></span></li>
+</ul>
+<!-- area:graphics -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="GICache.html"></a></span><div class="tip">GI cache</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="models.html"></a></span><div class="tip">Models</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

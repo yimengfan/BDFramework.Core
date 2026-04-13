@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: SerializedProperty</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">SerializedProperty</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEditor</p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>SerializedProperty and <a href="SerializedObject.html">SerializedObject</a> are classes for editing properties on objects in a completely generic way that automatically handles undo, multi-object editing and Prefab overrides.</p>
+              </div>
+              <div class="subsection">
+        <p>SerializedProperty is primarily used to read or change the value of a property.  It can also iterate through the properties of an object using <a href="SerializedProperty.Next.html">Next</a>.
+Additional resources: <a href="SerializedObject.html">SerializedObject</a> class, <a href="Editor.html">Editor</a> class.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using UnityEngine;
+using <a href="UnityEditor.html">UnityEditor</a>;<br /><br />public class MyObject : <a href="ScriptableObject.html">ScriptableObject</a>
+{
+    public int myInt = 42;
+}<br /><br />public class SerializedPropertyTest : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    void Start()
+    {
+        MyObject obj = <a href="ScriptableObject.CreateInstance.html">ScriptableObject.CreateInstance</a>&lt;MyObject&gt;();
+        <a href="SerializedObject.html">SerializedObject</a> serializedObject = new UnityEditor.SerializedObject(obj);<br /><br />        <a href="SerializedProperty.html">SerializedProperty</a> serializedPropertyMyInt = serializedObject.FindProperty("myInt");<br /><br />        <a href="Debug.Log.html">Debug.Log</a>("myInt " + serializedPropertyMyInt.intValue);
+    }
+}
+</pre>
+      </div>
+              <div class="subsection">
+                <h3>Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="SerializedProperty-animationCurveValue.html">animationCurveValue</a></td><td class="desc">Value of a animation curve property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-arrayElementType.html">arrayElementType</a></td><td class="desc">Type name of the element in an array property. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-arraySize.html">arraySize</a></td><td class="desc">The number of elements in the array.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-boolValue.html">boolValue</a></td><td class="desc">Value of a boolean property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-boundsIntValue.html">boundsIntValue</a></td><td class="desc">Value of bounds with integer values property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-boundsValue.html">boundsValue</a></td><td class="desc">Value of bounds property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-colorValue.html">colorValue</a></td><td class="desc">Value of a color property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-depth.html">depth</a></td><td class="desc">Nesting depth of the property. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-displayName.html">displayName</a></td><td class="desc">Nice display name of the property. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-doubleValue.html">doubleValue</a></td><td class="desc">Value of a float property as a double.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-editable.html">editable</a></td><td class="desc">Is this property editable? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-enumDisplayNames.html">enumDisplayNames</a></td><td class="desc">Display-friendly names of enumeration of an enum property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-enumNames.html">enumNames</a></td><td class="desc">Names of enumeration of an enum property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-enumValueFlag.html">enumValueFlag</a></td><td class="desc">Int32 representation of an enum property with Mixed Values.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-enumValueIndex.html">enumValueIndex</a></td><td class="desc">Enum index of an enum property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-exposedReferenceValue.html">exposedReferenceValue</a></td><td class="desc">A reference to another Object in the Scene. This reference is resolved in the context of the SerializedObject containing the SerializedProperty.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-fixedBufferSize.html">fixedBufferSize</a></td><td class="desc">The number of elements in the fixed buffer. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-floatValue.html">floatValue</a></td><td class="desc">Value of a float property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-hasChildren.html">hasChildren</a></td><td class="desc">Does it have child properties? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-hash128Value.html">hash128Value</a></td><td class="desc">The value of a Hash128 property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-hasMultipleDifferentValues.html">hasMultipleDifferentValues</a></td><td class="desc">Does this property represent multiple different values due to multi-object editing? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-hasVisibleChildren.html">hasVisibleChildren</a></td><td class="desc">Does it have visible child properties? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-intValue.html">intValue</a></td><td class="desc">Value of an integer property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-isArray.html">isArray</a></td><td class="desc">Is this property an array? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-isDefaultOverride.html">isDefaultOverride</a></td><td class="desc">Allows you to check whether his property is a default override.Certain properties on Prefab instances are default overrides.See PrefabUtility.IsDefaultOverride for more information.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-isExpanded.html">isExpanded</a></td><td class="desc">Is this property expanded in the inspector?</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-isFixedBuffer.html">isFixedBuffer</a></td><td class="desc">Is this property a fixed buffer? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-isInstantiatedPrefab.html">isInstantiatedPrefab</a></td><td class="desc">Is property part of a Prefab instance? (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-longValue.html">longValue</a></td><td class="desc">Value of a integer property as a long.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-managedReferenceFieldTypename.html">managedReferenceFieldTypename</a></td><td class="desc">String corresponding to the value of the managed reference field full type string.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-managedReferenceFullTypename.html">managedReferenceFullTypename</a></td><td class="desc">String corresponding to the value of the managed reference object (dynamic) full type string.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-managedReferenceId.html">managedReferenceId</a></td><td class="desc">Id associated with a managed reference.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-managedReferenceValue.html">managedReferenceValue</a></td><td class="desc">The object assigned to a field with SerializeReference attribute.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-minArraySize.html">minArraySize</a></td><td class="desc">The smallest number of elements in the array across all target objects. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-name.html">name</a></td><td class="desc">Name of the property. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-objectReferenceValue.html">objectReferenceValue</a></td><td class="desc">Value of an object reference property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-prefabOverride.html">prefabOverride</a></td><td class="desc">Allows you to check whether a property's value is overriden (i.e. different to the Prefab it belongs to).</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-propertyPath.html">propertyPath</a></td><td class="desc">Full path of the property. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-propertyType.html">propertyType</a></td><td class="desc">Type of this property (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-quaternionValue.html">quaternionValue</a></td><td class="desc">Value of a quaternion property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-rectIntValue.html">rectIntValue</a></td><td class="desc">Value of a rectangle with integer values property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-rectValue.html">rectValue</a></td><td class="desc">Value of a rectangle property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-serializedObject.html">serializedObject</a></td><td class="desc">
+          SerializedObject this property belongs to (Read Only).</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-stringValue.html">stringValue</a></td><td class="desc">Value of a string property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-tooltip.html">tooltip</a></td><td class="desc">Tooltip of the property. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-type.html">type</a></td><td class="desc">Type name of the property. (Read Only)</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-vector2IntValue.html">vector2IntValue</a></td><td class="desc">Value of a 2D integer vector property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-vector2Value.html">vector2Value</a></td><td class="desc">Value of a 2D vector property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-vector3IntValue.html">vector3IntValue</a></td><td class="desc">Value of a 3D integer vector property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-vector3Value.html">vector3Value</a></td><td class="desc">Value of a 3D vector property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty-vector4Value.html">vector4Value</a></td><td class="desc">Value of a 4D vector property.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Public Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="SerializedProperty.ClearArray.html">ClearArray</a></td><td class="desc">Remove all elements from the array.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.Copy.html">Copy</a></td><td class="desc">Returns a copy of the SerializedProperty iterator in its current state. This is useful if you want to keep a reference to the current property but continue with the iteration.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.CountInProperty.html">CountInProperty</a></td><td class="desc">Count visible children of this property, including this property itself.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.CountRemaining.html">CountRemaining</a></td><td class="desc">Count remaining visible properties.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.DeleteArrayElementAtIndex.html">DeleteArrayElementAtIndex</a></td><td class="desc">Delete the element at the specified index in the array.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.DeleteCommand.html">DeleteCommand</a></td><td class="desc">Deletes the serialized property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.DuplicateCommand.html">DuplicateCommand</a></td><td class="desc">Duplicates the serialized property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.FindPropertyRelative.html">FindPropertyRelative</a></td><td class="desc">Retrieves the SerializedProperty at a relative path to the current property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.GetArrayElementAtIndex.html">GetArrayElementAtIndex</a></td><td class="desc">Returns the element at the specified index in the array.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.GetEndProperty.html">GetEndProperty</a></td><td class="desc">Retrieves the SerializedProperty that defines the end range of this property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.GetEnumerator.html">GetEnumerator</a></td><td class="desc">Retrieves an iterator for enumerating over the visible child properties of the current property.  If the property is an array it will enumerate over the array elements.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.GetFixedBufferElementAtIndex.html">GetFixedBufferElementAtIndex</a></td><td class="desc">Returns the element at the specified index in the fixed buffer.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.InsertArrayElementAtIndex.html">InsertArrayElementAtIndex</a></td><td class="desc">Insert an empty element at the specified index in the array.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.MoveArrayElement.html">MoveArrayElement</a></td><td class="desc">Move an array element from srcIndex to dstIndex.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.Next.html">Next</a></td><td class="desc">Move to next property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.NextVisible.html">NextVisible</a></td><td class="desc">Move to next visible property.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.Reset.html">Reset</a></td><td class="desc">Move to first property of the object.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="SerializedProperty.DataEquals.html">DataEquals</a></td><td class="desc">Compares the data for two SerializedProperties. This method ignores paths and SerializedObjects.</td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.EqualContents.html">EqualContents</a></td><td class="desc">See if contained serialized properties are equal.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

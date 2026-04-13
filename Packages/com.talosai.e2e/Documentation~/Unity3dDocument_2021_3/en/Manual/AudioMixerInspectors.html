@@ -1,0 +1,332 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: AudioGroup Inspector</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AudioMixerInspectors.html">English</a></li>
+<li><a href="/cn/current/Manual/AudioMixerInspectors.html">中文</a></li>
+<li><a href="/ja/current/Manual/AudioMixerInspectors.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AudioMixerInspectors.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AudioMixerInspectors.html">English</a></li>
+<li><a href="/cn/current/Manual/AudioMixerInspectors.html">中文</a></li>
+<li><a href="/ja/current/Manual/AudioMixerInspectors.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AudioMixerInspectors.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Audio.html">Audio</a></li>
+<li><a href="AudioMixer.html">Audio Mixer</a></li>
+<li>AudioGroup Inspector</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AudioMixerSpecifics.html"></a></span><div class="tip">Specifics on the Audio Mixer window</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AudioMixerUsage.html"></a></span><div class="tip">Overview of Usage and API</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>AudioGroup Inspector</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Selecting an AudioGroup in the AudioGroup Hierarchy, the AudioGroup View or the <span class="tooltip"><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span> (as a sub-asset) will show the <span class="tooltip"><strong>inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html" href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span> (as a sub-asset) will show the <span class="tooltip"><strong>inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> for that AudioGroup.</p>
+
+<p>The inspector for the AudioGroup consists of a number of elements:</p>
+
+<h2>Inspector Header</h2>
+
+<p>At the top of the AudioGroup Inspector there is the name of the AudioGroup, along with with the gear dropdown menu common to all Object Inspectors.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerInspectorHeader.png" alt="">
+</figure>
+
+<p>The gear menu contains the following functionality:</p>
+
+<ul>
+<li>
+<strong>Copy all effect settings to all snapshots</strong>: Use this setting to copy all the effect parameter, volume and pitch settings of this AudioGroup to all the other snapshots present within the Audio Mixer. This setting lets you quickly make all snapshots ‘like this one’ for this AudioGroup.</li>
+<li>
+<strong>Toggle CPU usage display</strong>: This toggles CPU performance information for all the effects present in the AudioGroup Inspector. Use this to understand which effects in your DSP setup consume the most resources. To use this setting, enable <strong>Enable FMOD Profiling</strong> (<strong>Edit</strong> &gt; <strong>Preferences</strong> &gt; <strong>Diagnostics</strong> &gt; <strong>Audio</strong>).</li>
+</ul>
+
+<h2>Edit in Playmode</h2>
+
+<p>
+<img src="../uploads/Main/AudioMixerEditInPlaymode1.png" alt="">
+<img src="../uploads/Main/AudioMixerEditInPlaymode2.png" alt=""> </p>
+
+<p>When in Playmode within Unity, the Inspector for an AudioGroup includes a button at the top called <strong>Edit in Playmode</strong>. By default, the parameter values of an Audio Mixer are not editable in Playmode and are fully controlled by the current snapshot within the game.</p>
+
+<p>Edit in Playmode allows you to override the snapshot system and start making edits to the current snapshot directly during playmode. This is a great way to mix and master a game while playing it in realtime.</p>
+
+<h2>Pitch Slider</h2>
+
+<p>At the top of all AudioGroup Inspectors, there is a slider that defines the pitch of playback through that AudioGroup. To change the pitch, either use the slider or enter the pitch manually into the text field to the right.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerPitchSlider.png" alt="">
+</figure>
+
+<h2>Attenuation Unit</h2>
+
+<p>Every AudioGroup within an Audio Mixer has exactly 1 Attenuation Unit.</p>
+
+<p>The Attenuation Unit is where you can apply attenuation / gain to the audio signal passing through the AudioGroup. The attenuation is computed and applied to the signal ‘at the unit’ (not combined with other attenuation settings and applied at the voice source). This allows very complex and interesting setups to be created when combined with Sends / Receives and non linear DSP effects. Attenuation can be applied to –80dB (silence) and gain can be applied to +20dB.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerAttenuationUnit.png" alt="">
+</figure>
+
+<p>Every Attenuation Unit has a VU meter in the inspector. This meter shows the audio signal levels at that point in the signal chain (just after attenuation is applied). This means that if you have DSP effects or Receives after the Attenuation Unit, the metering information seen in the AudioGroup strip for that AudioGroup will be different to the metering information at the Attenuation Unit. This is a great way to debug the signal chain of an AudioGroup by dragging the Attenuation Unit up and down the processing chain to see the metering at different points.</p>
+
+<p>The VU meter shows both RMS and peak hold values.</p>
+
+<ul>
+<li>To move the Attenuation Unit (or any effect) up or down the signal chain, click on the Unit’s header and drag up or down the inspector to reposition it.</li>
+<li>To change the attenuation setting, move the slider above the metering or enter in a value in the text box.</li>
+</ul>
+
+<h2>Effect Units</h2>
+
+<p>Effect Units are general DSP effects that modify the audio signal being played through the AudioGroup, for example Highpass or Reverb. Effect Units can also process side-chain signal information that is sent to it from a Send Unit. The interface for each Effect Unit is different, but for the most part expose a collection of parameters that you can modify to change how the effect is applied to the signal. For example, a Parameter EQ effect has 3 parameters that modify how the signal is processed:</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerEffectUnits.png" alt="">
+</figure>
+
+<p>Unity comes with a collection of in-built effects that you can use within an AudioGroup. There is also the ability to create custom DSP effect plugins that can be used within an Audio Mixer.</p>
+
+<ul>
+<li>To add an effect to the AudioGroup, click the ‘Add Effect’ button at the bottom of the AudioGroup Inspector.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/AudioMixerAddEffect.png" alt="">
+</figure>
+
+<ul>
+<li><p>To change the ordering of the effect within the AudioGroup, left click the effect header and drag up or down to place it in a different position.</p></li>
+<li><p>To remove the effect from the AudioGroup, right click on the effect header and select ‘Remove this effect’.</p></li>
+</ul>
+
+<h2>Send Units</h2>
+
+<p>Sends allow you to diverge the audio signal flow and send a potentially attenuated copy of the signal to be used as a side-chain within another Effect Unit, for example, a side-chain compressor. You can insert Sends anywhere in the signal chain, allowing divergence of signal at any point.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerSendUnits.png" alt="">
+</figure>
+
+<p>Initially, when Sends are added to an AudioGroup, they don’t send to anything, and the Send Level is set to 80dB. To send to another Effect Unit, you must already have an Effect Unit that can accept side-chain signals in the Audio Mixer somewhere. After the destination Effect Unit has been selected, you need to increase the Send Level to send signal to the destination.</p>
+
+<ul>
+<li>To add a Send to an AudioGroup, click the ‘Add Effect’ button at the bottom of the AudioGroup Inspector and choose ‘Send’.</li>
+<li>To connect a Send to another Effect Unit (capable of receiving signal), choose the destination from the drop down menu in the Send Unit Inspector.</li>
+<li>Set the level of signal sent to the destination with “Send Level”</li>
+</ul>
+
+<h2>Receive Units</h2>
+
+<p>Receives are the signal sinks of Sends, they simply take the audio signal that is sent to them from Sends and mix it with the current signal passing through their AudioGroup. There are no parameters to a Receive.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerReceiveUnits.png" alt="">
+</figure>
+
+<p>
+<strong>Note</strong> that if you Solo a Receive unit, this will make the sound stop playing. This is by design.</p>
+
+<h2>Duck Volume Units</h2>
+
+<p>Duck Volume Units allow you to create side-chain <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> from signal sent from Sends. Duck Volume is a great way to control the attenuation of a signal based on audio being played somewhere else in the Audio Mixer.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerDuckVolumeUnits.png" alt="">
+</figure>
+
+<p>Duck Volume Units can be added like any other Effect Unit and must have signal sent to them from at least one Send to be useful.</p>
+
+<h2>Common Options</h2>
+
+<p>Each unit within the AudioGroup Inspector has a number of common features.</p>
+
+<h3>Gear Options</h3>
+
+<ul>
+<li>
+<strong>Allow Wet Mixing</strong> - Toggling this option creates a dry channel around the effect. The slider that appears when this is enabled dictates what percentage of the signal is passed into the wet/dry components. Enabling this increases memory usage and CPU overhead. This is only available on certain units.</li>
+<li>
+<strong>Bypass</strong> - Toggling this will bypass the Effect Unit completely, effectively disabling it in the signal chain.</li>
+<li>
+<strong>Copy Effect Settings to all Snapshots</strong> - Selecting this will copy all the parameter values within this Effect Unit to all the other Snapshots in the Audio Mixer. This is useful when adding a new Effect Unit, making changes to that Effect Unit and wanting those settings to be the same across all Snapshots.</li>
+<li>
+<strong>Add Effect Before</strong> - Allows the insertion of an Effect Unit before the current Effect Unit in the AudioGroup. Select the desired effect from the menu shown.</li>
+<li>
+<strong>Add Effect After</strong> - Allows the insertion of an Effect Unit after the current Effect Unit in the AudioGroup. Select the desired effect from the menu shown.</li>
+<li>
+<strong>Remove This Effect</strong> - Remove this Effect Unit completely from the Audio Mixer. Attenuation Units cannot be removed from AudioGroups.</li>
+</ul>
+
+<h3>Wet Mixing</h3>
+
+<p>Allowing Wet Mixing on a DSP effect allows you to decide how much of the audio signal that is to enter the effect actually is processed by the effect. Enabling Wet Mixing effectively creates a dry channel around the effect. You can then click on the effect slot and drag left and right to increase or decrease the percentage of audio signal that is passed through the DSP effect unit. The rest of the signal is passed through the dry channel. The following diagram illustrates this concept:</p>
+
+<p>Wet mixing is good for when a user wants to control the influence an effect has on the mix and preserve a percentage of the original signal.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerWetMixing.png" alt="">
+</figure>
+
+<h3>Exposed Parameters</h3>
+
+<p>Exposed parameters allow you to bypass the Snapshot system of an Audio Mixer and set the value of any parameter within an Audio Mixer from script. When an exposed parameter is set via script, that parameter is locked to that value and will not change as the the game transitions Snapshots.</p>
+
+<p>Exposing a parameter with an Audio Mixer is done in the AudioGroup Inspector. For any parameter shown in the Inspector (including Pitch, Volume, Send Level and Wet Level), you can right-click on the name of the parameter and choose ‘Expose X to script’.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerExposedParameters1.png" alt="">
+</figure>
+
+<p>After a parameter is exposed, it shows up in the Exposed Parameter drop down in the top right corner of the Audio Mixer Window. Selecting on this drop down reveals all the exposed parameters in the Audio Mixer.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerExposedParameters2.png" alt="">
+</figure>
+
+<ul>
+<li>To rename an Exposed Parameter, right click on the name of the Exposed Parameter and click ‘Rename’. This name will be how you reference the parameter from the AudioMixer API.</li>
+<li>To delete an Exposed Parameter, right click on the name of the Exposed Parameter and click ‘Delete’.</li>
+</ul>
+
+<h3>Transition Overrides</h3>
+
+<p>When transitioning between Snapshots, by default all transitions are done with linear interpolation from the beginning to target values. In some cases this transition behaviour is not desired however, for example when it’s preferable to brick-wall the change at the start or end of the transition.</p>
+
+<p>All of the parameters available within the Audio Mixer can have their transition behaviour changed. Transition behaviours are defined per-Snapshot, with the target Snapshot defining the transition behaviour.</p>
+
+<p>To set the transition override for a particular parameter for the current Snapshot, right click on the parameter name and select the required transition type.</p>
+
+<p>
+<img src="../uploads/Main/AudioMixerTransitionOverrides.png" alt=""> </p>
+
+<h1>Audi Mixer inspector</h1>
+
+<p>The audio mixer asset itself has an inspector that allows specifying the overall activation/suspense behavior of the mixer. Being assets, audio mixers are basically activated when any <span class="tooltip"><strong>audio source</strong><span class="tooltiptext">A component which plays back an Audio Clip in the scene to an audio listener or through an audio mixer. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioSource.html" href="class-AudioSource.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#AudioSource" aria-label="Go to glossary anchor for AudioSource">Glossary</a></span></span></span> plays into the mixer and will stay active as long as there is such a driver supplying audio data to the mixer. Since mixers can also be activated by the audio preview button in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#AudioSource" aria-label="Go to glossary anchor for AudioSource">Glossary</a></span></span></span> plays into the mixer and will stay active as long as there is such a driver supplying audio data to the mixer. Since mixers can also be activated by the audio preview button in the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view, the activation behavior is different from that of scene-objects such as MonoBehaviors. Thus, a mixer may be active (and therefore consuming CPU) even in stop mode.</p>
+
+<p>To avoid running out of CPU resources in a project that contains a large number of mixers that are not supposed to be running all at the same time (say, because specific levels use certain specialized mixers), the audio mixers have functionality built-in to put themselves into suspended mode in which all processing stops. To do this in a natural way that doesn’t lead to audible artefacts such as clicks or missing reverb/echo tails each mixer uses the following strategy:</p>
+
+<p>As long as any audio source is playing into this mixer or the mixer is receiving audio data from other sub-mixers the mixer will keep itself active. After the last sound source has finished playing, the mixer will wait for a second and then continually use loudness-measurement at its own output to decide if it should suspend itself. This is needed because reverb and echo tails can potentially decay very slowly. The loudness threshold at which the mixer suspends itself is determined by enabling Auto Mixer Suspend and setting the Threshold Volume parameter on the mixer asset’s inspector which is shown then the mixer asset is selected in the project browser (not when selecting a sub-asset like a mixer group or snapshot). The value of –80 dB is chosen as the default and matches the lowest value of the faders in the mixer. In practice it is often possible to set it to a significantly larger value to get quicker deactivation and avoid intermediate CPU spikes that could cause stutter.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerSuspendSettings.png" alt="Suspend settings on audio mixer asset">
+<figcaption>Suspend settings on audio mixer asset</figcaption>
+</figure>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AudioMixerSpecifics.html"></a></span><div class="tip">Specifics on the Audio Mixer window</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AudioMixerUsage.html"></a></span><div class="tip">Overview of Usage and API</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

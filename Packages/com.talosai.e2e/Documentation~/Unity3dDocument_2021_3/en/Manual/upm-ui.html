@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Package Manager window</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-ui.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-ui.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-ui.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-ui.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-ui.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-ui.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-ui.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-ui.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li><a href="Packages.html">Unity's Package Manager</a></li>
+<li>Package Manager window</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-config-ssh-git-mac.html"></a></span><div class="tip">Loading SSH keys automatically on macOS</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-ui-access.html"></a></span><div class="tip">Access the Package Manager window</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Package Manager window</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Access the Package Manager window from the Unity Editor’s <strong>Window</strong> menu.</p>
+
+<p>Use the Package Manager window to:</p>
+
+<ul>
+<li>View which <a href="PackagesList.html">packages and feature sets</a> are available for installation or already installed in your project.</li>
+<li>Check <a href="upm-ui-find.html#VersionList">which package versions are available</a>.</li>
+<li>Install, update, or remove <span class="tooltip"><a href="upm-ui-actions.html">UPM packages</a><span class="tooltiptext">A <strong>Package</strong> managed by the <strong>Unity Package Manager</strong>. Refer to <strong>Packages</strong>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UPMpackage" aria-label="Go to glossary anchor for UPMpackage">Glossary</a></span></span></span> or <a href="fs-install.html">feature sets</a>.</li>
+<li>Download and import, update, or remove <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-ui-actions-ap.html">asset packages</a><span class="tooltiptext">A collection of files and data from Unity projects, or elements of projects, which are compressed and stored in one file, similar to Zip files, with the <code>.unitypackage</code> extension. Asset packages are a handy way of sharing and re-using Unity projects and collections of assets. <a href="AssetPackages.html" href="upm-ui-actions-ap.html">asset packages</a><span class="tooltiptext">A collection of files and data from Unity projects, or elements of projects, which are compressed and stored in one file, similar to Zip files, with the <code>.unitypackage</code> extension. Asset packages are a handy way of sharing and re-using Unity projects and collections of assets. <a href="AssetPackages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Assetpackage" aria-label="Go to glossary anchor for Assetpackage">Glossary</a></span></span></span>.</li>
+<li>
+<a href="upm-ui-disable.html">Disable built-in packages</a>.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/upm-ui.png" alt="The Package Manager window">
+<figcaption>The Package Manager window</figcaption>
+</figure>
+
+<p>The Package Manager window displays:</p>
+
+<p>
+<strong>(A)</strong> The experimental package indicator, which warns you if your project contains <a href="pack-exp.html">experimental packages</a>.</p>
+
+<p>
+<strong>(B)</strong> The <strong>add</strong> <img src="../uploads/Main/iconAdd.png" alt=""> button, which you can click to <a href="upm-ui-actions.html">install a package</a> directly into your project by entering a git URL, a local path, or a package name.</p>
+
+<p>
+<strong>(C)</strong> The <a href="upm-ui-filter.html">Packages</a> drop-down menu, which you can use to change what appears in the list (context).</p>
+
+<p>
+<strong>(D)</strong> The <a href="upm-ui-sort.html">Sort</a> drop-down menu, which lets you sort the list of packages and feature sets by name or date.</p>
+
+<p>For <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span> packages, two additional controls give you some <a href="upm-ui-filter2.html">additional filtering options</a>:</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-asset-filters.png" alt="The Filters drop-down menu and the Clear Filters button allow you to narrow down which Asset Store packages appear in the list">
+<figcaption>The <strong>Filters</strong> drop-down menu and the <strong>Clear Filters</strong> button allow you to narrow down which Asset Store packages appear in the list</figcaption>
+</figure>
+
+<p>
+<strong>(E)</strong> <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about #Advanced">Advanced settings</a> <img src="../uploads/Main/iconSettings.png" alt="">, which you can use to access the <span class="tooltip"><strong>project settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a href="comp-ManagerGroup.html" href="#Advanced">Advanced settings</a> <img src="../uploads/Main/iconSettings.png" alt="">, which you can use to access the <span class="tooltip"><strong>project settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span> for the Package Manager or reset your project’s packages and feature sets to default.</p>
+
+<p>
+<strong>(F)</strong> The <a href="upm-ui-search.html">search box</a>, which you can use to look for packages and feature sets by name.</p>
+
+<p>
+<strong>(G)</strong> The <a href="upm-ui-list.html">list view</a>, which displays all packages that match the filter and search parameters you specify.</p>
+
+<p>
+<strong>(H)</strong> The detail view, which displays information specific to the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about fs-details.html">feature set</a> or <span class="tooltip"><a href="upm-ui-details.html">package</a><span class="tooltiptext">A container that stores various types of features and assets for Unity, including Editor or Runtime tools and libraries, Asset collections, and project templates. Packages are self-contained units that the Unity Package Manager can share across Unity projects. Most of the time these are called <em>packages</em>, but occasionally they are called <strong>Unity Package Manager (UPM) packages</strong>. <a href="Packages.html" href="fs-details.html">feature set</a> or <span class="tooltip"><a href="upm-ui-details.html">package</a><span class="tooltiptext">A container that stores various types of features and assets for Unity, including Editor or Runtime tools and libraries, Asset collections, and project templates. Packages are self-contained units that the Unity Package Manager can share across Unity projects. Most of the time these are called <em>packages</em>, but occasionally they are called <strong>Unity Package Manager (UPM) packages</strong>. <a href="Packages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Package" aria-label="Go to glossary anchor for Package">Glossary</a></span></span></span> selected in the list. For example, if a feature set is selected, the information specific to the feature set appears, including which packages it contains.</p>
+
+<p>
+<strong>(I)</strong> The <a href="#StatusBar">status bar</a>, which displays information when Package Manager loads packages and feature sets. This includes errors and warning messages, the number of Asset Store packages available, and a link to load more packages from the Asset Store.</p>
+
+<p>
+<strong>(J)</strong> The <strong>Refresh list</strong> <img src="../uploads/Main/iconReload.png" alt=""> drop-down menu, which lets you force Package Manager to reload or resolve the packages in your project.</p>
+
+<p>
+<strong>(K)</strong> Buttons to perform any of the following actions at the project level:</p>
+
+<ul>
+<li><a href="fs-install.html">Install or remove feature sets</a></li>
+<li>
+<a href="upm-ui-install.html">Install</a>, <a href="upm-ui-update.html">update</a>, or <a href="upm-ui-remove.html">remove</a> UPM packages</li>
+<li>
+<a href="upm-ui-import.html">Download, import</a>, or <a href="upm-ui-update2.html">update</a> asset packages</li>
+<li>
+<a href="upm-ui-disable.html">Disable or enable</a> built-in packages</li>
+</ul>
+
+<p><a name="Advanced" aria-hidden="true"></a></p>
+
+<h2>Advanced settings</h2>
+
+<p>The advanced settings <img src="../uploads/Main/iconSettings.png" alt=""> drop-down menu allows you to perform these actions:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Drop-down menu item</strong></th>
+	<th style="text-align:left;"><strong>Action results</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Advanced Project Settings</strong></td>
+	<td style="text-align:left;">Select this item to open the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PackageManager.html">Package Manager project settings</a>, where you can:<br><br>- Add, edit and remove <a href="upm-scoped.html">scoped registries</a> in your project. <br>- Show <a href="pack-preview.html">pre-release packages</a> when browsing the Unity Registry.<br>- See which packages are installed as dependencies of another installed package (<span class="tooltip"><a href="upm-dependencies.html">indirect dependencies</a><span class="tooltiptext">An <strong>indirect</strong>, or transitive dependency occurs when your project requests a package which itself “depends on” another package. For example, if your project depends on the <code>alembic@1.0.7</code> package which in turn depends on the <code>timeline@1.0.0</code> package, then your project has an direct dependency on Alembic and an indirect dependency on Timeline. <a href="upm-dependencies.html" href="class-PackageManager.html">Package Manager project settings</a>, where you can:<br><br>- Add, edit and remove <a href="upm-scoped.html">scoped registries</a> in your project. <br>- Show <a href="pack-preview.html">pre-release packages</a> when browsing the Unity Registry.<br>- See which packages are installed as dependencies of another installed package (<span class="tooltip"><a href="upm-dependencies.html">indirect dependencies</a><span class="tooltiptext">An <strong>indirect</strong>, or transitive dependency occurs when your project requests a package which itself “depends on” another package. For example, if your project depends on the <code>alembic@1.0.7</code> package which in turn depends on the <code>timeline@1.0.0</code> package, then your project has an direct dependency on Alembic and an indirect dependency on Timeline. <a href="upm-dependencies.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Indirectdependency" aria-label="Go to glossary anchor for Indirectdependency">Glossary</a></span></span></span>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Reset Packages to defaults</strong></td>
+	<td style="text-align:left;">Select this item to return to Package Manager default settings. <br><br><strong>Warning</strong>: This removes all customization from your project manifest file. Only use this as a last resort when you can’t figure out what is wrong with your project manifest file.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="StatusBar" aria-hidden="true"></a></p>
+
+<h2>Status bar</h2>
+
+<p>The Package Manager displays messages in the status bar at the bottom left of the Package Manager window.</p>
+
+<p>There are typically four status messages that you might see:</p>
+
+<ul>
+<li>
+<p>The first time you open the Package Manager window in a new project, the <strong>Refreshing packages</strong> message appears briefly:</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-loading.png" alt="Loading packages message">
+<figcaption>Loading packages message</figcaption>
+</figure>
+
+<p>This message also appears when you select <strong>Refresh list</strong> from the <strong>reload</strong> <img src="../uploads/Main/iconReload.png" alt=""> drop-down menu.</p>
+</li>
+<li>
+<p>When you are using the <strong>My Assets</strong> context, the load bar appears above the date. It displays the number of packages from the Asset Store. Select <strong>Load</strong> to load more packages.</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-assets-loadbar.png" alt="On the left, the load bar displays the number of My Assets packages loaded and the total number available.">
+<figcaption>On the left, the load bar displays the number of <strong>My Assets</strong> packages loaded and the total number available.</figcaption>
+</figure>
+</li>
+<li>
+<p>Most of the time the status bar displays the date and time of when the Package Manager window last refreshed its information. However, if the Package Manager <a href="https://docs.unity3d.com/Manual/upm-errors.html">detects a problem</a>, such as a missing network connection, the Package Manager displays an error in the status bar:</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-errors.png" alt="Network error message">
+<figcaption>Network error message</figcaption>
+</figure>
+</li>
+<li>
+<p>If your network connection is working, but you are not signed into your <a href="https://id.unity.com/">Unity account</a>, the Package Manager doesn’t display any packages from the Asset Store. When you try to use the <strong>My Assets</strong> context, the Package Manager displays an error in the status bar:</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-unityid.png" alt="Logged out of Unity account">
+<figcaption>Logged out of Unity account</figcaption>
+</figure>
+
+<p>In the list view, click the <strong>Sign in</strong> button to sign into your Unity account through the <a href="https://docs.unity3d.com/hub/manual/index.html">Unity Hub</a>.</p>
+</li>
+</ul>
+
+<p>For information on how to resolve these errors and more, see <a href="upm-errors.html">Error messages</a>.
+<br>
+</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="Packages.html">Unity’s Package Manager</a></li>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li><a href="upm-docs.html">Finding package documentation</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-config-ssh-git-mac.html"></a></span><div class="tip">Loading SSH keys automatically on macOS</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-ui-access.html"></a></span><div class="tip">Access the Package Manager window</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

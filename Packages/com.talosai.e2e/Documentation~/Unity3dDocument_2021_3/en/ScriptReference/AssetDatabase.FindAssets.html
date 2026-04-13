@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: AssetDatabase.FindAssets</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">
+                  <a href="AssetDatabase.html">AssetDatabase</a>.FindAssets</h1>
+                <div class="clear">
+                </div>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public static string[] <span class="sig-kw">FindAssets</span>(string <span class="sig-kw">filter</span>);
+    </div>
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                    <h2>Declaration</h2>public static string[] <span class="sig-kw">FindAssets</span>(string <span class="sig-kw">filter</span>,
+string[] <span class="sig-kw">searchInFolders</span>);
+    </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Parameters</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td class="name lbl">filter</td>
+                    <td class="desc">The filter string can contain search data.  See below for details about this string.</td>
+                  </tr>
+                  <tr>
+                    <td class="name lbl">searchInFolders</td>
+                    <td class="desc">The folders where the search will start.</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="subsection">
+                <h3>Returns</h3>
+                <p>
+                  <strong>string[]</strong>
+        Array of matching asset. Note that GUIDs will be returned. If no matching assets were found, returns empty array.
+      </p>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>Search the asset database using the search filter string.</p>
+              </div>
+              <div class="subsection">
+        <p>FindAssets allows you to search for Assets.  The <code class="mono">string</code> argument can
+        provide names, labels or types (classnames).  The filter string can include:<br />
+<br />
+<strong>Name</strong>: Filter assets by their filename (without extension). Words separated by whitespace
+are treated as a separate name searches. So, for example <code class="mono">"test asset"</code>, is a name of an Asset which will
+be searched for.  Note that name can be used to identify an asset.  Further, the name
+used in the filter <code class="mono">string</code> can be specified as a subsection.  For example the <code class="mono">test asset</code> example
+above can be matched using <code class="mono">test</code>.<br />
+<br />
+<strong>Labels</strong>: Assets can have labels attached to them. Assets with particular labels can be
+found use the keyword 'l:' before each label. This indicates that the string is
+searching for labels.<br />
+<br />
+<strong>Types</strong>: Find assets based on explicitly identified types.  The keyword 't:' is used as a
+way to specify that typed assets are being looked for.  If more than one type is included
+in the filter <code class="mono">string</code> then assets that match one class will be returned.  Types can
+either be builtin types such as <code class="mono">Texture2D</code> or user created script classes.  User created
+classes are assets created from a ScriptableObject class in the project. If all assets are
+wanted use <code class="mono">Object</code> as all assets derive from Object.  Specifying one or more folders
+using the <code class="mono">searchInFolders</code> argument  will limit the searching to these folders and their
+child folders. This is faster than searching all assets in all folders.<br />
+<br />
+<strong>Note:</strong> Searching is case insensitive.<br />
+<br />
+Use <a href="AssetDatabase.GUIDToAssetPath.html">AssetDatabase.GUIDToAssetPath</a> to get asset paths and <a href="AssetDatabase.LoadAssetAtPath.html">AssetDatabase.LoadAssetAtPath</a>
+to load an asset.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">using UnityEngine;
+using <a href="UnityEditor.html">UnityEditor</a>;<br /><br />public class Example
+{
+    [<a href="MenuItem.html">MenuItem</a>("Example/FindAssets Example")]
+    static void ExampleScript()
+    {
+        // Find all assets labelled with 'architecture' :
+        string[] guids1 = <a href="AssetDatabase.FindAssets.html">AssetDatabase.FindAssets</a>("l:architecture", null);<br /><br />        foreach (string guid1 in guids1)
+        {
+            <a href="Debug.Log.html">Debug.Log</a>(<a href="AssetDatabase.GUIDToAssetPath.html">AssetDatabase.GUIDToAssetPath</a>(guid1));
+        }<br /><br />        // Find all Texture2Ds that have 'co' in their filename, that are labelled with 'architecture' and are placed in 'MyAwesomeProps' folder
+        string[] guids2 = <a href="AssetDatabase.FindAssets.html">AssetDatabase.FindAssets</a>("co l:architecture t:texture2D", new[] {"Assets/MyAwesomeProps"});<br /><br />        foreach (string guid2 in guids2)
+        {
+            <a href="Debug.Log.html">Debug.Log</a>(<a href="AssetDatabase.GUIDToAssetPath.html">AssetDatabase.GUIDToAssetPath</a>(guid2));
+        }
+    }
+}</pre>
+      </div>
+              <div class="subsection">
+        <p>The following script example shows how the Names, Labels and Types details added
+          to Assets can be located.  The <a href="AssetDatabase.FindAssets.html">FindAssets</a> function is demonstrated.  The
+          assets created in this example use the <code class="mono">ScriptObj</code> class.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">// This script file has two CS classes.  The first is a simple Unity <a href="ScriptableObject.html">ScriptableObject</a> script.
+// The class it defines is used by the Example class below.
+// (This is a single Unity script file. You could split this file into a ScriptObj.cs and an
+// Example.cs file which is more structured.)<br /><br />using UnityEngine;
+using <a href="UnityEditor.html">UnityEditor</a>;
+using System.IO;<br /><br />public class ScriptObj : <a href="ScriptableObject.html">ScriptableObject</a>
+{
+    public void Awake()
+    {
+        <a href="Debug.Log.html">Debug.Log</a>("ScriptObj created");
+    }
+}<br /><br />// Use ScriptObj to show how AssetDabase.FindAssets can be used<br /><br />public class Example
+{
+    static ScriptObj testI;
+    static ScriptObj testJ;
+    static ScriptObj testK;<br /><br />    [<a href="MenuItem.html">MenuItem</a>("Examples/FindAssets Example two")]
+    static void ExampleScript()
+    {
+        CreateAssets();
+        NamesExample();
+        LabelsExample();
+        TypesExample();
+    }<br /><br />    static void CreateAssets()
+    {
+        if (!<a href="Windows.Directory.Exists.html">Directory.Exists</a>("Assets/AssetFolder"))
+        {
+            <a href="AssetDatabase.CreateFolder.html">AssetDatabase.CreateFolder</a>("Assets", "AssetFolder");
+        }<br /><br />        if (!<a href="Windows.Directory.Exists.html">Directory.Exists</a>("Assets/AssetFolder/SpecialFolder"))
+        {
+            <a href="AssetDatabase.CreateFolder.html">AssetDatabase.CreateFolder</a>("Assets/AssetFolder", "SpecialFolder");
+        }<br /><br />        testI = (ScriptObj)<a href="ScriptableObject.CreateInstance.html">ScriptableObject.CreateInstance</a>(typeof(ScriptObj));
+        <a href="AssetDatabase.CreateAsset.html">AssetDatabase.CreateAsset</a>(testI, "Assets/AssetFolder/testI.asset");<br /><br />        testJ = (ScriptObj)<a href="ScriptableObject.CreateInstance.html">ScriptableObject.CreateInstance</a>(typeof(ScriptObj));
+        <a href="AssetDatabase.CreateAsset.html">AssetDatabase.CreateAsset</a>(testJ, "Assets/AssetFolder/testJ.asset");<br /><br />        // create an asset in a sub-folder and with a name which contains a space
+        testK = (ScriptObj)<a href="ScriptableObject.CreateInstance.html">ScriptableObject.CreateInstance</a>(typeof(ScriptObj));
+        <a href="AssetDatabase.CreateAsset.html">AssetDatabase.CreateAsset</a>(testK, "Assets/AssetFolder/SpecialFolder/testK example.asset");<br /><br />        // an asset with a material will be used later
+        <a href="Material.html">Material</a> material = new <a href="Material.html">Material</a>(<a href="Shader.Find.html">Shader.Find</a>("Standard"));
+        <a href="AssetDatabase.CreateAsset.html">AssetDatabase.CreateAsset</a>(material, "Assets/AssetFolder/SpecialFolder/MyMaterial.mat");
+    }<br /><br />    static void NamesExample()
+    {
+        <a href="Debug.Log.html">Debug.Log</a>("*** FINDING ASSETS BY NAME ***");<br /><br />        string[] results;<br /><br />        results = <a href="AssetDatabase.FindAssets.html">AssetDatabase.FindAssets</a>("testI");
+        foreach (string guid in results)
+        {
+            <a href="Debug.Log.html">Debug.Log</a>("testI: " + <a href="AssetDatabase.GUIDToAssetPath.html">AssetDatabase.GUIDToAssetPath</a>(guid));
+        }<br /><br />        results = <a href="AssetDatabase.FindAssets.html">AssetDatabase.FindAssets</a>("testJ");
+        foreach (string guid in results)
+        {
+            <a href="Debug.Log.html">Debug.Log</a>("testJ: " + <a href="AssetDatabase.GUIDToAssetPath.html">AssetDatabase.GUIDToAssetPath</a>(guid));
+        }<br /><br />        results = <a href="AssetDatabase.FindAssets.html">AssetDatabase.FindAssets</a>("testK example");
+        foreach (string guid in results)
+        {
+            <a href="Debug.Log.html">Debug.Log</a>("testK example: " + <a href="AssetDatabase.GUIDToAssetPath.html">AssetDatabase.GUIDToAssetPath</a>(guid));
+        }<br /><br />        <a href="Debug.Log.html">Debug.Log</a>("*** More complex asset search ***");<br /><br />        // find all assets that contain test (which is all assets)
+        results = <a href="AssetDatabase.FindAssets.html">AssetDatabase.FindAssets</a>("test");
+        foreach (string guid in results)
+        {
+            <a href="Debug.Log.html">Debug.Log</a>("name:test - " + <a href="AssetDatabase.GUIDToAssetPath.html">AssetDatabase.GUIDToAssetPath</a>(guid));
+        }
+    }<br /><br />    static void LabelsExample()
+    {
+        <a href="Debug.Log.html">Debug.Log</a>("*** FINDING ASSETS BY LABELS ***");<br /><br />        string[] setLabels;<br /><br />        setLabels = new string[] { "wrapper" };
+        <a href="AssetDatabase.SetLabels.html">AssetDatabase.SetLabels</a>(testI, setLabels);<br /><br />        setLabels = new string[] { "bottle", "banana", "carrot" };
+        <a href="AssetDatabase.SetLabels.html">AssetDatabase.SetLabels</a>(testJ, setLabels);<br /><br />        setLabels = new string[] { "swappable", "helmet" };
+        <a href="AssetDatabase.SetLabels.html">AssetDatabase.SetLabels</a>(testK, setLabels);<br /><br />        // label searching:
+        //   testI has wrapper, testK has swappable, so both have 'app'
+        //   testJ has bottle, so have a label searched as 'bot'
+        string[] getGuids = <a href="AssetDatabase.FindAssets.html">AssetDatabase.FindAssets</a>("l:app l:bot");
+        foreach (string guid in getGuids)
+        {
+            <a href="Debug.Log.html">Debug.Log</a>("label lookup: " + <a href="AssetDatabase.GUIDToAssetPath.html">AssetDatabase.GUIDToAssetPath</a>(guid));
+        }
+    }<br /><br />    static void TypesExample()
+    {
+        <a href="Debug.Log.html">Debug.Log</a>("*** FINDING ASSETS BY TYPE ***");<br /><br />        string[] guids;<br /><br />        guids = <a href="AssetDatabase.FindAssets.html">AssetDatabase.FindAssets</a>("t:material");
+        foreach (string guid in guids)
+        {
+            <a href="Debug.Log.html">Debug.Log</a>("<a href="Material.html">Material</a>: " + <a href="AssetDatabase.GUIDToAssetPath.html">AssetDatabase.GUIDToAssetPath</a>(guid));
+        }<br /><br />        guids = <a href="AssetDatabase.FindAssets.html">AssetDatabase.FindAssets</a>("t:Object l:helmet");
+        foreach (string guid in guids)
+        {
+            <a href="Debug.Log.html">Debug.Log</a>("ScriptObj+helmet: " + <a href="AssetDatabase.GUIDToAssetPath.html">AssetDatabase.GUIDToAssetPath</a>(guid));
+        }
+    }
+}</pre>
+      </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: ScriptableObject</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">ScriptableObject</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEngine</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Inherits from:<a href="Object.html" class="cl">Object</a></p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Implemented in:<a href="UnityEngine.CoreModule.html" class="cl">UnityEngine.CoreModule</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <a aria-label="go to usermanual page" href='../Manual/class-ScriptableObject.html' title='Go to ScriptableObject Component in the Manual' class='switch-link gray-btn sbtn left show'>Switch to Manual</a>
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>A class you can derive from if you want to create objects that live independently of GameObjects.</p>
+              </div>
+              <div class="subsection">
+        <p>Use ScriptableObjects to centralise data in a way that can be conveniently accessed from scenes and assets within a project.<br /><br />Instantiate ScriptableObject objects with <a href="ScriptableObject.CreateInstance.html">CreateInstance</a>.<br /><br />You can save ScriptableObjects to asset files either from the Editor UI (see <a href="CreateAssetMenuAttribute.html">CreateAssetMenuAttribute</a>), or by calling <a href="AssetDatabase.CreateAsset.html">AssetDatabase.CreateAsset</a> from a script.
+You can also generate ScriptableObjects as an output from a <a href="AssetImporters.ScriptedImporter.html">ScriptedImporter</a>. See <a href="AssetImporters.AssetImportContext.AddObjectToAsset.html">AssetImportContext.AddObjectToAsset</a>.<br /><br />If a <code class="mono">ScriptableObject</code> has not been saved to an asset, and it is referenced from an object in a scene, Unity serializes it directly into the scene file.
+For ScriptableObjects that have only a single persistent instance within a project, use the <a href="ScriptableSingleton_1.html">ScriptableSingleton&lt;T0&gt;</a> base class.<br /><br />Access previously saved objects using <a href="AssetDatabase.html">AssetDatabase</a>, for example <a href="AssetDatabase.LoadAssetAtPath.html">AssetDatabase.LoadAssetAtPath</a>.
+When a ScriptableObject is referenced from a field on a <a href="MonoBehaviour.html">MonoBehaviour</a>, the ScriptableObject is automatically loaded, so a script can simply use the value of the field to reach it.<br /><br />The C# fields of a <code class="mono">ScriptableObject</code> are serialized exactly like fields on a MonoBehaviour, refer to <a href="../Manual/script-Serialization.html">Script Serialization</a> for details. Classes that include big arrays, or other potentially large data, should be declared with the <a href="PreferBinarySerialization.html">PreferBinarySerialization</a> attribute, because YAML is not an efficient representation for that sort of data.<br /><br />Calling <code class="mono">Destroy</code> on a <code class="mono">ScriptableObject</code> releases native resources associated with it but the object stays in memory until garbage collected. Objects in this detached state will appear to be null despite not really being so. However, this class doesn't support the <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/expressions#null-conditional-operator">null-conditional operator </a> (<strong>?.</strong>) and the <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/expressions#the-null-coalescing-operator">null-coalescing operator </a>(<strong>??</strong>).<br /><br />The following example demonstrates a typical use of a ScriptableObject: different types of vehicle parameters are represented in the fields of a VehicleTypeInfo class, derived from ScriptableObject.
+Each type of vehicle would have its own asset file, with the parameter values set appropriately for the type.  Each instance of the vehicle in the game would have a reference to the asset corresponding to its
+type, rather than keeping its own redundant copy of each parameter.  This design makes it convenient to tweak vehicle behaviour in a central location. It is
+also good for performance, especially in cases where the size of the shared data is substantial.<br /><br />The first script of the example implements a class derived from ScriptableObject.
+                </p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using UnityEngine;<br /><br />[CreateAssetMenu]
+public class VehicleTypeInfo : <a href="ScriptableObject.html">ScriptableObject</a>
+{
+    // Class that represents a specific type of vehicle
+    [<a href="SocialPlatforms.Range.html">Range</a>(0.1f, 100f)]
+    public float m_MaxSpeed = 0.1f;<br /><br />    [<a href="SocialPlatforms.Range.html">Range</a>(0.1f, 10f)]
+    public float m_MaxAcceration = 0.1f;<br /><br />    // This class could have many other vehicle parameters, such as Turning Radius, <a href="SocialPlatforms.Range.html">Range</a>, Damage etc
+}
+</pre>
+      </div>
+              <div class="subsection">
+        <p>The second script implements a MonoBehaviour that uses the ScriptableObject.</p>
+      </div>
+              <div class="subsection">
+        <pre class="codeExampleCS">
+using UnityEngine;
+using <a href="UnityEditor.html">UnityEditor</a>;<br /><br />public class VehicleInstance : <a href="MonoBehaviour.html">MonoBehaviour</a>
+{
+    // Snippet of a <a href="MonoBehaviour.html">MonoBehaviour</a> that would control motion of a specific vehicle.
+    // In <a href="PlayMode.html">PlayMode</a> it accelerates up to the maximum speed permitted by its type<br /><br />    [<a href="SocialPlatforms.Range.html">Range</a>(0f, 200f)]
+    public float m_CurrentSpeed;<br /><br />    [<a href="SocialPlatforms.Range.html">Range</a>(0f, 50f)]
+    public float m_Acceleration;<br /><br />    // Reference to the <a href="ScriptableObject.html">ScriptableObject</a> asset
+    public VehicleTypeInfo m_VehicleType;<br /><br />    public void Initialize(VehicleTypeInfo vehicleType)
+    {
+        m_VehicleType = vehicleType;
+        m_CurrentSpeed = 0f;
+        m_Acceleration = <a href="Random.Range.html">Random.Range</a>(0.05f, m_VehicleType.m_MaxAcceration);
+    }<br /><br />    void <a href="PlayerLoop.Update.html">Update</a>()
+    {
+        m_CurrentSpeed += m_Acceleration * <a href="Time-deltaTime.html">Time.deltaTime</a>;<br /><br />        // Use parameter from the <a href="ScriptableObject.html">ScriptableObject</a> to control the behaviour of the Vehicle
+        if (m_VehicleType &amp;&amp; m_VehicleType.m_MaxSpeed &lt; m_CurrentSpeed)
+            m_CurrentSpeed = m_VehicleType.m_MaxSpeed;<br /><br />        gameObject.transform.position += gameObject.transform.forward * <a href="Time-deltaTime.html">Time.deltaTime</a> * m_CurrentSpeed;
+    }
+}<br /><br />public class ScriptableObjectVehicleExample
+{
+    [<a href="MenuItem.html">MenuItem</a>("Example/Setup <a href="ScriptableObject.html">ScriptableObject</a> Vehicle Example")]
+    static void MenuCallback()
+    {
+        // This example programmatically performs steps that would typically be performed from the <a href="Editor.html">Editor</a>'s user interface
+        // to creates a simple demonstration.  When going into Playmode the three objects will move according to the limits
+        // set by their vehicle type.<br /><br />        // Step 1 - Create or reload the assets that store each VehicleTypeInfo object.
+        VehicleTypeInfo wagon = <a href="AssetDatabase.LoadAssetAtPath.html">AssetDatabase.LoadAssetAtPath</a>&lt;VehicleTypeInfo&gt;("Assets/VehicleTypeWagon.asset");
+        if (wagon == null)
+        {
+            // Create and save <a href="ScriptableObject.html">ScriptableObject</a> because it doesn't exist yet
+            wagon = <a href="ScriptableObject.CreateInstance.html">ScriptableObject.CreateInstance</a>&lt;VehicleTypeInfo&gt;();
+            wagon.m_MaxSpeed = 5f;
+            wagon.m_MaxAcceration = 0.5f;
+            <a href="AssetDatabase.CreateAsset.html">AssetDatabase.CreateAsset</a>(wagon, "Assets/VehicleTypeWagon.asset");
+        }<br /><br />        VehicleTypeInfo cruiser = <a href="AssetDatabase.LoadAssetAtPath.html">AssetDatabase.LoadAssetAtPath</a>&lt;VehicleTypeInfo&gt;("Assets/VehicleTypeCruiser.asset");
+        if (cruiser == null)
+        {
+            cruiser = <a href="ScriptableObject.CreateInstance.html">ScriptableObject.CreateInstance</a>&lt;VehicleTypeInfo&gt;();
+            cruiser.m_MaxSpeed = 75f;
+            cruiser.m_MaxAcceration = 2f;
+            <a href="AssetDatabase.CreateAsset.html">AssetDatabase.CreateAsset</a>(cruiser, "Assets/VehicleTypeCruiser.asset");
+        }<br /><br />        // Step 2 - Create some example vehicles in the current scene
+        {
+            var vehicle = <a href="GameObject.CreatePrimitive.html">GameObject.CreatePrimitive</a>(<a href="PrimitiveType.Sphere.html">PrimitiveType.Sphere</a>);
+            vehicle.name = "Wagon1";
+            var vehicleBehaviour = vehicle.AddComponent&lt;VehicleInstance&gt;();
+            vehicleBehaviour.Initialize(wagon);
+        }<br /><br />        {
+            var vehicle = <a href="GameObject.CreatePrimitive.html">GameObject.CreatePrimitive</a>(<a href="PrimitiveType.Sphere.html">PrimitiveType.Sphere</a>);
+            vehicle.name = "Wagon2";
+            var vehicleBehaviour = vehicle.AddComponent&lt;VehicleInstance&gt;();
+            vehicleBehaviour.Initialize(wagon);
+        }<br /><br />        {
+            var vehicle = <a href="GameObject.CreatePrimitive.html">GameObject.CreatePrimitive</a>(<a href="PrimitiveType.Cube.html">PrimitiveType.Cube</a>);
+            vehicle.name = "Cruiser1";
+            var vehicleBehaviour = vehicle.AddComponent&lt;VehicleInstance&gt;();
+            vehicleBehaviour.Initialize(cruiser);
+        }
+    }
+}
+</pre>
+      </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="ScriptableObject.CreateInstance.html">CreateInstance</a></td><td class="desc">Creates an instance of a scriptable object.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Messages</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Message</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="ScriptableObject.Awake.html">Awake</a></td><td class="desc">Called when an instance of ScriptableObject is created.</td></tr>
+      <tr><td class="lbl"><a href="ScriptableObject.OnDestroy.html">OnDestroy</a></td><td class="desc">This function is called when the scriptable object will be destroyed.</td></tr>
+      <tr><td class="lbl"><a href="ScriptableObject.OnDisable.html">OnDisable</a></td><td class="desc">This function is called when the scriptable object goes out of scope.</td></tr>
+      <tr><td class="lbl"><a href="ScriptableObject.OnEnable.html">OnEnable</a></td><td class="desc">This function is called when the object is loaded.</td></tr>
+      <tr><td class="lbl"><a href="ScriptableObject.OnValidate.html">OnValidate</a></td><td class="desc">Editor-only function that Unity calls when the script is loaded or a value changes in the Inspector.</td></tr>
+      <tr><td class="lbl"><a href="ScriptableObject.Reset.html">Reset</a></td><td class="desc">Reset to default values.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Inherited Members</h3>
+      
+      <div class="subsection"><h3>Properties</h3><table class="list"><thead><tr><th>Property</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object-hideFlags.html">hideFlags</a></td><td class="desc">Should the object be hidden, saved with the Scene or modifiable by the user?</td></tr>
+        <tr><td class="lbl"><a href="Object-name.html">name</a></td><td class="desc">The name of the object.</td></tr>
+      </table></div>
+      
+      
+      
+      <div class="subsection"><h3>Public Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object.GetInstanceID.html">GetInstanceID</a></td><td class="desc">Gets  the instance ID of the object.</td></tr>
+        <tr><td class="lbl"><a href="Object.ToString.html">ToString</a></td><td class="desc">Returns the name of the object.</td></tr>
+      </table></div>
+      
+      <div class="subsection"><h3>Static Methods</h3><table class="list"><thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object.Destroy.html">Destroy</a></td><td class="desc">Removes a GameObject, component or asset.</td></tr>
+        <tr><td class="lbl"><a href="Object.DestroyImmediate.html">DestroyImmediate</a></td><td class="desc">Destroys the object obj immediately. You are strongly recommended to use Destroy instead.</td></tr>
+        <tr><td class="lbl"><a href="Object.DontDestroyOnLoad.html">DontDestroyOnLoad</a></td><td class="desc">Do not destroy the target Object when loading a new Scene.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindAnyObjectByType.html">FindAnyObjectByType</a></td><td class="desc">Retrieves any active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindFirstObjectByType.html">FindFirstObjectByType</a></td><td class="desc">Retrieves the first active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectOfType.html">FindObjectOfType</a></td><td class="desc">Returns the first active loaded object of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectsByType.html">FindObjectsByType</a></td><td class="desc">Retrieves a list of all loaded objects of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.FindObjectsOfType.html">FindObjectsOfType</a></td><td class="desc">Gets a list of all loaded objects of Type type.</td></tr>
+        <tr><td class="lbl"><a href="Object.Instantiate.html">Instantiate</a></td><td class="desc">Clones the object original and returns the clone.</td></tr>
+      </table></div>
+      <div class="subsection"><h3>Operators</h3><table class="list"><thead><tr><th>Operator</th><th>Description</th></tr></thead>
+        <tr><td class="lbl"><a href="Object-operator_Object.html">bool</a></td><td class="desc">Does the object exist?</td></tr>
+        <tr><td class="lbl"><a href="Object-operator_ne.html">operator !=</a></td><td class="desc">Compares if two objects refer to a different object.</td></tr>
+        <tr><td class="lbl"><a href="Object-operator_eq.html">operator ==</a></td><td class="desc">Compares two object references to see if they refer to the same object.</td></tr>
+      </table></div>
+      
+      
+      
+    </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

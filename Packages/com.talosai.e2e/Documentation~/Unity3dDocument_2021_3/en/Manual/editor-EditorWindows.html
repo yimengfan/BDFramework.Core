@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create custom Editor Windows with IMGUI</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/editor-EditorWindows.html">English</a></li>
+<li><a href="/cn/current/Manual/editor-EditorWindows.html">中文</a></li>
+<li><a href="/ja/current/Manual/editor-EditorWindows.html">日本語</a></li>
+<li><a href="/kr/current/Manual/editor-EditorWindows.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/editor-EditorWindows.html">English</a></li>
+<li><a href="/cn/current/Manual/editor-EditorWindows.html">中文</a></li>
+<li><a href="/ja/current/Manual/editor-EditorWindows.html">日本語</a></li>
+<li><a href="/kr/current/Manual/editor-EditorWindows.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="GUIScriptingGuide.html">Immediate Mode GUI (IMGUI)</a></li>
+<li><a href="ExtendingTheEditor.html">Extending the Editor with IMGUI</a></li>
+<li>Create custom Editor Windows with IMGUI</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ExtendingTheEditor.html"></a></span><div class="tip">Extending the Editor with IMGUI</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="editor-PropertyDrawers.html"></a></span><div class="tip">Use Property Drawers with IMGUI to customize the Inspector</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create custom Editor Windows with IMGUI</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Note</strong>: It’s strongly recommended to use the <a href="UIElements.html">UI Toolkit</a> to extend the <a href="UIE-support-for-editor-ui.html">Unity Editor</a>, as it provides a more modern, flexible, and scalable solution than IMGUI.</p>
+
+<p>You can create any number of custom windows in your app. These behave just like the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> or any other built-in ones. This is a great way to add a user interface to a sub-system for your game.</p>
+
+<figure>
+<img src="../uploads/Main/CustomEditorWindow.jpg" alt="Custom Editor Interface by Serious Games Interactive used for scripting cutscene actions">
+<figcaption>Custom Editor Interface by Serious Games Interactive used for scripting cutscene actions</figcaption>
+</figure>
+
+<p>Making a custom Editor Window involves the following simple steps:</p>
+
+<ul>
+<li>Create a script that derives from EditorWindow.</li>
+<li>Use code to trigger the window to display itself.</li>
+<li>Implement the GUI code for your tool.</li>
+</ul>
+
+<h3>Derive From EditorWindow</h3>
+
+<p>In order to make your Editor Window, your script must be stored inside a folder called “Editor”. Make a class in this script that derives from EditorWindow. Then write your GUI controls in the inner OnGUI function.</p>
+
+<pre><code>using UnityEngine;
+using UnityEditor;
+using System.Collections;
+
+public class Example : EditorWindow
+
+    {
+        void OnGUI () {
+            // The actual window code goes here
+           }
+    }
+</code></pre>
+
+<p><em>MyWindow.cs - placed in a folder called ‘Editor’ within your project.</em></p>
+
+<h3>Showing the window</h3>
+
+<p>In order to show the window on screen, make a menu item that displays it. This is done by creating a function which is activated by the
+<strong>MenuItem</strong> property. </p>
+
+<p>The default behavior in Unity is to recycle windows, so selecting the menu item again would show existing windows. This is done by using the function <a href="../ScriptReference/EditorWindow.GetWindow.html">EditorWindow.GetWindow</a> Like this:</p>
+
+<pre><code>using UnityEngine;
+using UnityEditor;
+using System.Collections;
+
+class MyWindow : EditorWindow {
+    [MenuItem (&quot;Window/My Window&quot;)]
+
+    public static void  ShowWindow () {
+        EditorWindow.GetWindow(typeof(MyWindow));
+    }
+    
+    void OnGUI () {
+        // The actual window code goes here
+    }
+}
+</code></pre>
+
+<p><em>Showing the MyWindow</em></p>
+
+<p>This will create a standard, dockable editor window that saves its position between invocations, can be used in custom layouts, etc. To have more control over what gets created, you can use <a href="../ScriptReference/EditorWindow.GetWindowWithRect.html">GetWindowWithRect</a>
+</p>
+
+<h3>Implementing Your Window’s GUI</h3>
+
+<p>The actual contents of the window are rendered by implementing the OnGUI function. You can use the same UnityGUI classes you use for your ingame GUI (<strong>GUI</strong> and <strong>GUILayout</strong>). In addition we provide some additional GUI controls, located in the editor-only classes <strong>EditorGUI</strong> and <strong>EditorGUILayout</strong>. These classes add to the controls already available in the normal classes, so you can mix and match at will.</p>
+
+<p>The following C# code shows how you can add GUI elements to your custom EditorWindow:</p>
+
+<pre><code>using UnityEditor;
+using UnityEngine;
+
+public class MyWindow : EditorWindow
+{
+    string myString = &quot;Hello World&quot;;
+    bool groupEnabled;
+    bool myBool = true;
+    float myFloat = 1.23f;
+    
+    // Add menu item named &quot;My Window&quot; to the Window menu
+    [MenuItem(&quot;Window/My Window&quot;)]
+    public static void ShowWindow()
+    {
+        //Show existing window instance. If one doesn't exist, make one.
+        EditorWindow.GetWindow(typeof(MyWindow));
+    }
+    
+    void OnGUI()
+    {
+        GUILayout.Label (&quot;Base Settings&quot;, EditorStyles.boldLabel);
+        myString = EditorGUILayout.TextField (&quot;Text Field&quot;, myString);
+        
+        groupEnabled = EditorGUILayout.BeginToggleGroup (&quot;Optional Settings&quot;, groupEnabled);
+            myBool = EditorGUILayout.Toggle (&quot;Toggle&quot;, myBool);
+            myFloat = EditorGUILayout.Slider (&quot;Slider&quot;, myFloat, -3, 3);
+        EditorGUILayout.EndToggleGroup ();
+    }
+}
+</code></pre>
+
+<p>This example results in a window which looks like this:</p>
+
+<figure>
+<img src="../uploads/Main/ExampleEditorWindow.png" alt="Custom Editor Window created using supplied example.">
+<figcaption>Custom Editor Window created using supplied example.</figcaption>
+</figure>
+
+<p>For more info, take a look at the example and documentation on the <a href="../ScriptReference/EditorWindow.html">EditorWindow page</a>.</p>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ExtendingTheEditor.html"></a></span><div class="tip">Extending the Editor with IMGUI</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="editor-PropertyDrawers.html"></a></span><div class="tip">Use Property Drawers with IMGUI to customize the Inspector</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

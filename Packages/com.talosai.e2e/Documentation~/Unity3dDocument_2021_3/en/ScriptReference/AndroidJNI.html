@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: AndroidJNI</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">AndroidJNI</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          UnityEngine</p>
+                <p class="cl mb0 left mr10">/</p>
+                <p class="cl mb0 left">Implemented in:<a href="UnityEngine.AndroidJNIModule.html" class="cl">UnityEngine.AndroidJNIModule</a></p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>'Raw' JNI interface to Android Java VM from Unity scripting (C#).<br /><br /><strong>Note:</strong> Using <em>raw</em> JNI functions requires advanced knowledge of the Android Java Native Interface (JNI). <em>Please take note.</em></p>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="AndroidJNI.AllocObject.html">AllocObject</a></td><td class="desc">Allocates a new Java object without invoking any of the constructors for the object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.AttachCurrentThread.html">AttachCurrentThread</a></td><td class="desc">Attaches the current thread to a Java (Dalvik) VM.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallBooleanMethod.html">CallBooleanMethod</a></td><td class="desc">Calls a Java instance method defined by methodID, optionally passing an array of arguments (args) to the method.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallCharMethod.html">CallCharMethod</a></td><td class="desc">Calls a Java instance method defined by methodID, optionally passing an array of arguments (args) to the method.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallDoubleMethod.html">CallDoubleMethod</a></td><td class="desc">Calls a Java instance method defined by methodID, optionally passing an array of arguments (args) to the method.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallFloatMethod.html">CallFloatMethod</a></td><td class="desc">Calls a Java instance method defined by methodID, optionally passing an array of arguments (args) to the method.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallIntMethod.html">CallIntMethod</a></td><td class="desc">Calls a Java instance method defined by methodID, optionally passing an array of arguments (args) to the method.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallLongMethod.html">CallLongMethod</a></td><td class="desc">Calls a Java instance method defined by methodID, optionally passing an array of arguments (args) to the method.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallObjectMethod.html">CallObjectMethod</a></td><td class="desc">Calls a Java instance method defined by methodID, optionally passing an array of arguments (args) to the method.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallSByteMethod.html">CallSByteMethod</a></td><td class="desc">Calls a Java instance method defined by methodID, optionally passing an array of arguments (args) to the method.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallShortMethod.html">CallShortMethod</a></td><td class="desc">Calls a Java instance method defined by methodID, optionally passing an array of arguments (args) to the method.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallStaticBooleanMethod.html">CallStaticBooleanMethod</a></td><td class="desc">Invokes the specified methodID static method on a Java object, optionally passing in an array of arguments (args).</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallStaticCharMethod.html">CallStaticCharMethod</a></td><td class="desc">Invokes the specified methodID static method on a Java object, optionally passing in an array of arguments (args).</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallStaticDoubleMethod.html">CallStaticDoubleMethod</a></td><td class="desc">Invokes the specified methodID static method on a Java object, optionally passing in an array of arguments (args).</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallStaticFloatMethod.html">CallStaticFloatMethod</a></td><td class="desc">Invokes the specified methodID static method on a Java object, optionally passing in an array of arguments (args).</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallStaticIntMethod.html">CallStaticIntMethod</a></td><td class="desc">Invokes the specified methodID static method on a Java object, optionally passing in an array of arguments (args).</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallStaticLongMethod.html">CallStaticLongMethod</a></td><td class="desc">Invokes the specified methodID static method on a Java object, optionally passing in an array of arguments (args).</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallStaticObjectMethod.html">CallStaticObjectMethod</a></td><td class="desc">Invokes the specified methodID static method on a Java object, optionally passing in an array of arguments (args).</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallStaticSByteMethod.html">CallStaticSByteMethod</a></td><td class="desc">Invokes the specified methodID static method on a Java object, optionally passing in an array of arguments (args).</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallStaticShortMethod.html">CallStaticShortMethod</a></td><td class="desc">Invokes the specified methodID static method on a Java object, optionally passing in an array of arguments (args).</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallStaticStringMethod.html">CallStaticStringMethod</a></td><td class="desc">Invokes the specified methodID static method on a Java object, optionally passing in an array of arguments (args).</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallStaticVoidMethod.html">CallStaticVoidMethod</a></td><td class="desc">Invokes the specified methodID static method on a Java object, optionally passing in an array of arguments (args).</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallStringMethod.html">CallStringMethod</a></td><td class="desc">Calls a Java instance method defined by methodID, optionally passing an array of arguments (args) to the method.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.CallVoidMethod.html">CallVoidMethod</a></td><td class="desc">Calls a Java instance method defined by methodID, optionally passing an array of arguments (args) to the method.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.DeleteGlobalRef.html">DeleteGlobalRef</a></td><td class="desc">Deletes the global reference pointed to by obj.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.DeleteLocalRef.html">DeleteLocalRef</a></td><td class="desc">Deletes the local reference pointed to by obj.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.DeleteWeakGlobalRef.html">DeleteWeakGlobalRef</a></td><td class="desc">Deletes the global weak reference pointed to by obj.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.DetachCurrentThread.html">DetachCurrentThread</a></td><td class="desc">Detaches the current thread from a Java (Dalvik) VM.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.EnsureLocalCapacity.html">EnsureLocalCapacity</a></td><td class="desc">Ensures that at least a given number of local references can be created in the current thread.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.ExceptionClear.html">ExceptionClear</a></td><td class="desc">Clears any exception that is currently being thrown.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.ExceptionDescribe.html">ExceptionDescribe</a></td><td class="desc">Prints an exception and a backtrace of the stack to the logcat</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.ExceptionOccurred.html">ExceptionOccurred</a></td><td class="desc">Determines if an exception is being thrown.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.FatalError.html">FatalError</a></td><td class="desc">Raises a fatal error and does not expect the VM to recover. This function does not return.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.FindClass.html">FindClass</a></td><td class="desc">This function loads a locally-defined class.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.FromBooleanArray.html">FromBooleanArray</a></td><td class="desc">Converts a Java array of boolean to a managed array of System.Boolean.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.FromCharArray.html">FromCharArray</a></td><td class="desc">Converts a Java array of char to a managed array of System.Char.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.FromDoubleArray.html">FromDoubleArray</a></td><td class="desc">Converts a Java array of double to a managed array of System.Double.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.FromFloatArray.html">FromFloatArray</a></td><td class="desc">Converts a Java array of float to a managed array of System.Single.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.FromIntArray.html">FromIntArray</a></td><td class="desc">Converts a Java array of int to a managed array of System.Int32.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.FromLongArray.html">FromLongArray</a></td><td class="desc">Converts a Java array of long to a managed array of System.Int64.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.FromObjectArray.html">FromObjectArray</a></td><td class="desc">Converts a Java array of java.lang.Object to a managed array of System.IntPtr, representing Java objects.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.FromReflectedField.html">FromReflectedField</a></td><td class="desc">Converts a java.lang.reflect.Field to a field ID.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.FromReflectedMethod.html">FromReflectedMethod</a></td><td class="desc">Converts a java.lang.reflect.Method or java.lang.reflect.Constructor object to a method ID.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.FromSByteArray.html">FromSByteArray</a></td><td class="desc">Converts a Java array of byte to a managed array of System.SByte.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.FromShortArray.html">FromShortArray</a></td><td class="desc">Converts a Java array of short to a managed array of System.Int16.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetArrayLength.html">GetArrayLength</a></td><td class="desc">Returns the number of elements in the array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetBooleanArrayElement.html">GetBooleanArrayElement</a></td><td class="desc">Returns the value of one element of a primitive array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetBooleanField.html">GetBooleanField</a></td><td class="desc">Returns the value of an instance (nonstatic) field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetCharArrayElement.html">GetCharArrayElement</a></td><td class="desc">Returns the value of one element of a primitive array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetCharField.html">GetCharField</a></td><td class="desc">Returns the value of an instance (nonstatic) field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetDoubleArrayElement.html">GetDoubleArrayElement</a></td><td class="desc">Returns the value of one element of a primitive array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetDoubleField.html">GetDoubleField</a></td><td class="desc">Returns the value of an instance (nonstatic) field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetFieldID.html">GetFieldID</a></td><td class="desc">Returns the field ID for an instance (nonstatic) field of a class.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetFloatArrayElement.html">GetFloatArrayElement</a></td><td class="desc">Returns the value of one element of a primitive array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetFloatField.html">GetFloatField</a></td><td class="desc">Returns the value of an instance (nonstatic) field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetIntArrayElement.html">GetIntArrayElement</a></td><td class="desc">Returns the value of one element of a primitive array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetIntField.html">GetIntField</a></td><td class="desc">Returns the value of an instance (nonstatic) field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetLongArrayElement.html">GetLongArrayElement</a></td><td class="desc">Returns the value of one element of a primitive array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetLongField.html">GetLongField</a></td><td class="desc">Returns the value of an instance (nonstatic) field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetMethodID.html">GetMethodID</a></td><td class="desc">Returns the method ID for an instance (nonstatic) method of a class or interface.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetObjectArrayElement.html">GetObjectArrayElement</a></td><td class="desc">Returns an element of an Object array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetObjectClass.html">GetObjectClass</a></td><td class="desc">Returns the class of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetObjectField.html">GetObjectField</a></td><td class="desc">Returns the value of an instance (nonstatic) field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetSByteArrayElement.html">GetSByteArrayElement</a></td><td class="desc">Returns the value of one element of a primitive array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetSByteField.html">GetSByteField</a></td><td class="desc">Returns the value of an instance (nonstatic) field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetShortArrayElement.html">GetShortArrayElement</a></td><td class="desc">Returns the value of one element of a primitive array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetShortField.html">GetShortField</a></td><td class="desc">Returns the value of an instance (nonstatic) field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStaticBooleanField.html">GetStaticBooleanField</a></td><td class="desc">Returns the value of a static field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStaticCharField.html">GetStaticCharField</a></td><td class="desc">Returns the value of a static field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStaticDoubleField.html">GetStaticDoubleField</a></td><td class="desc">Returns the value of a static field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStaticFieldID.html">GetStaticFieldID</a></td><td class="desc">Returns the field ID for a static field of a class.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStaticFloatField.html">GetStaticFloatField</a></td><td class="desc">Returns the value of a static field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStaticIntField.html">GetStaticIntField</a></td><td class="desc">Returns the value of a static field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStaticLongField.html">GetStaticLongField</a></td><td class="desc">Returns the value of a static field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStaticMethodID.html">GetStaticMethodID</a></td><td class="desc">Returns the method ID for a static method of a class.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStaticObjectField.html">GetStaticObjectField</a></td><td class="desc">Returns the value of a static field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStaticSByteField.html">GetStaticSByteField</a></td><td class="desc">Returns the value of a static field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStaticShortField.html">GetStaticShortField</a></td><td class="desc">Returns the value of a static field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStaticStringField.html">GetStaticStringField</a></td><td class="desc">Returns the value of a static field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStringChars.html">GetStringChars</a></td><td class="desc">Returns a pointer to the array of Unicode characters of the string. This pointer is valid until ReleaseStringchars() is called.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStringField.html">GetStringField</a></td><td class="desc">Returns the value of an instance (nonstatic) field of an object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStringLength.html">GetStringLength</a></td><td class="desc">Returns the length (the count of Unicode characters) of a Java string.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStringUTFChars.html">GetStringUTFChars</a></td><td class="desc">Returns a managed string object representing the string in modified UTF-8 encoding.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetStringUTFLength.html">GetStringUTFLength</a></td><td class="desc">Returns the length in bytes of the modified UTF-8 representation of a string.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetSuperclass.html">GetSuperclass</a></td><td class="desc">If clazz represents any class other than the class Object, then this function returns the object that represents the superclass of the class specified by clazz.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.GetVersion.html">GetVersion</a></td><td class="desc">Returns the version of the native method interface.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.IsAssignableFrom.html">IsAssignableFrom</a></td><td class="desc">Determines whether an object of clazz1 can be safely cast to clazz2.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.IsInstanceOf.html">IsInstanceOf</a></td><td class="desc">Tests whether an object is an instance of a class.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.IsSameObject.html">IsSameObject</a></td><td class="desc">Tests whether two references refer to the same Java object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.NewBooleanArray.html">NewBooleanArray</a></td><td class="desc">Constructs a new primitive array object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.NewCharArray.html">NewCharArray</a></td><td class="desc">Constructs a new primitive array object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.NewDoubleArray.html">NewDoubleArray</a></td><td class="desc">Constructs a new primitive array object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.NewFloatArray.html">NewFloatArray</a></td><td class="desc">Constructs a new primitive array object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.NewGlobalRef.html">NewGlobalRef</a></td><td class="desc">Creates a new global reference to the object referred to by the obj argument.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.NewIntArray.html">NewIntArray</a></td><td class="desc">Constructs a new primitive array object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.NewLocalRef.html">NewLocalRef</a></td><td class="desc">Creates a new local reference that refers to the same object as obj.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.NewLongArray.html">NewLongArray</a></td><td class="desc">Constructs a new primitive array object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.NewObject.html">NewObject</a></td><td class="desc">Constructs a new Java object. The method ID indicates which constructor method to invoke. This ID must be obtained by calling GetMethodID() with &lt;init&gt; as the method name and void (V) as the return type.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.NewObjectArray.html">NewObjectArray</a></td><td class="desc">Constructs a new array holding objects in class clazz. All elements are initially set to obj.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.NewSByteArray.html">NewSByteArray</a></td><td class="desc">Constructs a new primitive array object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.NewShortArray.html">NewShortArray</a></td><td class="desc">Constructs a new primitive array object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.NewString.html">NewString</a></td><td class="desc">Constructs a new java.lang.String object from an array of Unicode characters.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.NewStringUTF.html">NewStringUTF</a></td><td class="desc">Constructs a new java.lang.String object from an array of characters in modified UTF-8 encoding.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.NewWeakGlobalRef.html">NewWeakGlobalRef</a></td><td class="desc">Creates a new global weak reference to the object referred to by the obj argument.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.PopLocalFrame.html">PopLocalFrame</a></td><td class="desc">Pops off the current local reference frame, frees all the local references, and returns a local reference in the previous local reference frame for the given result object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.PushLocalFrame.html">PushLocalFrame</a></td><td class="desc">Creates a new local reference frame, in which at least a given number of local references can be created.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetBooleanArrayElement.html">SetBooleanArrayElement</a></td><td class="desc">Sets the boolean value of one element in a primitive array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetBooleanField.html">SetBooleanField</a></td><td class="desc">Sets the value of an instance field of the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetCharArrayElement.html">SetCharArrayElement</a></td><td class="desc">Sets the char value of one element in a primitive array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetCharField.html">SetCharField</a></td><td class="desc">Sets the value of an instance field of the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetDoubleArrayElement.html">SetDoubleArrayElement</a></td><td class="desc">Sets the double value of one element in a primitive array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetDoubleField.html">SetDoubleField</a></td><td class="desc">Sets the value of an instance field of the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetFloatArrayElement.html">SetFloatArrayElement</a></td><td class="desc">Sets the float value of one element in a primitive array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetFloatField.html">SetFloatField</a></td><td class="desc">Sets the value of an instance field of the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetIntArrayElement.html">SetIntArrayElement</a></td><td class="desc">Sets the int value of one element in a primitive array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetIntField.html">SetIntField</a></td><td class="desc">Sets the value of an instance field of the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetLongArrayElement.html">SetLongArrayElement</a></td><td class="desc">Sets the long value of one element in a primitive array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetLongField.html">SetLongField</a></td><td class="desc">Sets the value of an instance field of the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetObjectArrayElement.html">SetObjectArrayElement</a></td><td class="desc">Sets an element of an Object array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetObjectField.html">SetObjectField</a></td><td class="desc">Sets the value of an instance field of the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetSByteArrayElement.html">SetSByteArrayElement</a></td><td class="desc">Sets the sbyte value of one element in a primitive array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetSByteField.html">SetSByteField</a></td><td class="desc">Sets the value of an instance field of the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetShortArrayElement.html">SetShortArrayElement</a></td><td class="desc">Sets the short value of one element in a primitive array.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetShortField.html">SetShortField</a></td><td class="desc">Sets the value of an instance field of the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetStaticBooleanField.html">SetStaticBooleanField</a></td><td class="desc">Sets the value of a static field in the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetStaticCharField.html">SetStaticCharField</a></td><td class="desc">Sets the value of a static field in the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetStaticDoubleField.html">SetStaticDoubleField</a></td><td class="desc">Sets the value of a static field in the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetStaticFloatField.html">SetStaticFloatField</a></td><td class="desc">Sets the value of a static field in the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetStaticIntField.html">SetStaticIntField</a></td><td class="desc">Sets the value of a static field in the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetStaticLongField.html">SetStaticLongField</a></td><td class="desc">Sets the value of a static field in the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetStaticObjectField.html">SetStaticObjectField</a></td><td class="desc">Sets the value of a static field in the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetStaticSByteField.html">SetStaticSByteField</a></td><td class="desc">Sets the value of a static field in the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetStaticShortField.html">SetStaticShortField</a></td><td class="desc">Sets the value of a static field in the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetStaticStringField.html">SetStaticStringField</a></td><td class="desc">Sets the value of a static field in the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.SetStringField.html">SetStringField</a></td><td class="desc">Sets the value of an instance field of the specified object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.Throw.html">Throw</a></td><td class="desc">Causes a java.lang.Throwable object to be thrown.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.ThrowNew.html">ThrowNew</a></td><td class="desc">Constructs an exception object from the specified class with the message specified by message and causes that exception to be thrown.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.ToBooleanArray.html">ToBooleanArray</a></td><td class="desc">Converts a managed array of System.Boolean to a Java array of boolean.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.ToCharArray.html">ToCharArray</a></td><td class="desc">Converts a managed array of System.Char to a Java array of char.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.ToDoubleArray.html">ToDoubleArray</a></td><td class="desc">Converts a managed array of System.Double to a Java array of double.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.ToFloatArray.html">ToFloatArray</a></td><td class="desc">Converts a managed array of System.Single to a Java array of float.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.ToIntArray.html">ToIntArray</a></td><td class="desc">Converts a managed array of System.Int32 to a Java array of int.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.ToLongArray.html">ToLongArray</a></td><td class="desc">Converts a managed array of System.Int64 to a Java array of long.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.ToObjectArray.html">ToObjectArray</a></td><td class="desc">Converts a managed array of System.IntPtr, representing Java objects, to a Java array of java.lang.Object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.ToReflectedField.html">ToReflectedField</a></td><td class="desc">Converts a field ID derived from cls to a java.lang.reflect.Field object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.ToReflectedMethod.html">ToReflectedMethod</a></td><td class="desc">Converts a method ID derived from clazz to a java.lang.reflect.Method or java.lang.reflect.Constructor object.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.ToSByteArray.html">ToSByteArray</a></td><td class="desc">Converts a managed array of System.SByte to a Java array of byte.</td></tr>
+      <tr><td class="lbl"><a href="AndroidJNI.ToShortArray.html">ToShortArray</a></td><td class="desc">Converts a managed array of System.Int16 to a Java array of short.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

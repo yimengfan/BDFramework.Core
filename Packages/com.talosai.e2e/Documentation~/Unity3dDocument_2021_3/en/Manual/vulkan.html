@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Vulkan</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/vulkan.html">English</a></li>
+<li><a href="/cn/current/Manual/vulkan.html">中文</a></li>
+<li><a href="/ja/current/Manual/vulkan.html">日本語</a></li>
+<li><a href="/kr/current/Manual/vulkan.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/vulkan.html">English</a></li>
+<li><a href="/cn/current/Manual/vulkan.html">中文</a></li>
+<li><a href="/ja/current/Manual/vulkan.html">日本語</a></li>
+<li><a href="/kr/current/Manual/vulkan.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="cross-platform-features.html">Cross-platform features and considerations</a></li>
+<li><a href="GraphicsAPIs.html">Graphics API support</a></li>
+<li>Vulkan</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="OpenGLCoreDetails.html"></a></span><div class="tip">OpenGL Core</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnityRemote5.html"></a></span><div class="tip">Unity Remote</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Vulkan</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<a href="https://www.vulkan.org">Vulkan</a> is a modern graphics API that works across multiple platforms including mobile and desktop. Unity supports Vulkan allowing you to target Vulkan-capable devices and providing direct control over the GPU. </p>
+
+<h2>Platform compatibility</h2>
+
+<p>Unity supports the Vulkan API for developing applications on the following platforms:</p>
+
+<ul>
+<li>Android</li>
+<li>Embedded Linux</li>
+<li>Linux</li>
+<li>Windows</li>
+</ul>
+
+<p>For developing <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html">XR</a><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a href="XR.html" href="XR.html">XR</a><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> applications, Unity supports Vulkan on the Windows and Android platform.</p>
+
+<h2>Vulkan on Android</h2>
+
+<p>When you create a new Android project, Vulkan is enabled as the default graphics API. For other platforms where Vulkan is not the default graphics API, you can enable it through Unity Editor’s <span class="tooltip"><strong>Player settings</strong><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html" href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span>. For more information, refer to <a href="configure-graphicsAPIs.html#override-default-gfxapi">Override default graphics APIs</a>.</p>
+
+<p>When developing a Unity Android project with Vulkan, consider the following recommendation:</p>
+
+<h3>Swapchain pre-rotation</h3>
+
+<p>It is recommended to enable framebuffer orientation through the Android Player settings. For more information, refer to the documentation on <a href="vulkan-swapchain-pre-rotation.html">Vulkan swapchain pre-rotation</a>.</p>
+
+<h2>Advantages and limitations</h2>
+
+<p>Consider the following advantages and limitations of using Vulkan as the graphics API in your Unity project.</p>
+
+<ul>
+<li>Vulkan enables <a href="high-definition-render-pipeline.html">High Definition Render Pipeline (HDRP)</a> support on Linux.</li>
+<li>On Linux and Android, Vulkan generally supports more capabilities, such as graphics jobs and direct control over the GPU, which aren’t available in <a href="OpenGLCoreDetails.html">OpenGL Core</a> on Linux or OpenGL ES on Android.</li>
+<li>Unity doesn’t support Vulkan for Windows on Arm devices. If your application targets such devices, consider using alternative graphics APIs supported by Unity.</li>
+<li>On Windows, some features such as async compute and <span class="tooltip"><strong>ray tracing</strong><span class="tooltiptext">The process of generating an image by tracing out rays from the Camera through each pixel and recording the color contribution at the hit point. This is an alternative to rasterization. <span class="search-words">raytracing</span><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Raytracing" aria-label="Go to glossary anchor for Raytracing">Glossary</a></span></span></span> are currently not implemented for Vulkan. For these features, <a href="UsingDX11GL3Features.html">D3D12</a> is recommended in Unity.</li>
+</ul>
+
+<h2>Key features and differences in Vulkan API</h2>
+
+<p>Vulkan supports several features and capabilities that differentiate it from other graphics APIs, such as OpenGL.</p>
+
+<ul>
+<li>
+<a href="class-PlayerSettingsAndroid.html#Rendering">Graphics jobs</a>: Vulkan supports graphics jobs, a feature that allows rendering tasks to run on multiple threads. This might help improve performance of your application. Graphics jobs feature isn’t supported with OpenGL.</li>
+<li><span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DynamicResolution.html">Dynamic Resolution</a><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets, to reduce workload on the GPU. <a href="DynamicResolution.html" href="DynamicResolution.html">Dynamic Resolution</a><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets, to reduce workload on the GPU. <a href="DynamicResolution.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#dynamicresolution" aria-label="Go to glossary anchor for dynamicresolution">Glossary</a></span></span></span>: Vulkan supports dynamic resolution scaling on devices allowing to adjust the resolution of the individual render targets in real time. This feature reduces workload on the GPU thereby improving performance of your application.</li>
+<li>
+<a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/RenderTexture-memorylessMode.html">Memoryless Render Textures</a>: On some Vulkan compatible platforms, memoryless <span class="tooltip"><strong>render textures</strong><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a href="class-RenderTexture.html" href="../ScriptReference/RenderTexture-memorylessMode.html">Memoryless Render Textures</a>: On some Vulkan compatible platforms, memoryless <span class="tooltip"><strong>render textures</strong><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span> temporarily store data in the on-tile memory during rendering. This can help improve performance and reduce memory usage of your application.</li>
+<li>
+<a href="PlayerCommandLineArguments.html">Direct control over GPU</a>: Unity uses Vulkan’s direct GPU control capability to support the <code>-force-device-index</code> option, allowing you to specify which GPU Unity’s Standalone Player should use. This capability of Vulkan allows you to optimize your application for better performance. This feature isn’t supported with OpenGL.</li>
+<li>
+<a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@latest/index.html">XR features</a>: Vulkan is recommended for Android XR and Meta Quest devices because some newer graphics features are only supported with Vulkan. Vulkan API is more stable and provides better performance compared to OpenGL in URP projects targeting XR platforms.</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="https://developer.android.com/ndk/guides/graphics/design-notes?authuser=3">Vulkan design guidelines</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="OpenGLCoreDetails.html"></a></span><div class="tip">OpenGL Core</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnityRemote5.html"></a></span><div class="tip">Unity Remote</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

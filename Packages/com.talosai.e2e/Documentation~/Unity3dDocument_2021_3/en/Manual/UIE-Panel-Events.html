@@ -1,0 +1,293 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Panel events</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Panel-Events.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Panel-Events.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Panel-Events.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Panel-Events.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Panel-Events.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Panel-Events.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Panel-Events.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Panel-Events.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-Events.html">Control behavior with events</a></li>
+<li><a href="UIE-Events-Reference.html">Event reference</a></li>
+<li>Panel events</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Navigation-Events.html"></a></span><div class="tip">Navigation events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Pointer-Events.html"></a></span><div class="tip">Pointer events</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Panel events</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A panel represents a visible instance of a <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> hierarchy. It handles element behavior event dispatching within the hierarchy of the <span class="tooltip"><strong>visual tree</strong><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualtree" aria-label="Go to glossary anchor for Visualtree">Glossary</a></span></span></span>. It holds a reference to the root <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> hierarchy. It handles element behavior event dispatching within the hierarchy of the <span class="tooltip"><strong>visual tree</strong><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualtree" aria-label="Go to glossary anchor for Visualtree">Glossary</a></span></span></span>. It holds a reference to the root <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span> of the hierarchy. For runtime UI, it’s comparable to the Canvas in UGUI.</p>
+
+<p>You must attach an instance of a visual element to a panel for it to render or receive events.</p>
+
+<p>Panel events fire on a visual element when its relationship with a panel changes. For example, when you add the visual element to a panel (<code>AttachToPanelEvent</code>) or remove it from a panel (<code>DetachFromPanelEvent</code>).</p>
+
+<p>Panel events are only sent to visual elements and their descendants within a hierarchy that are directly affected when panel changes occur. Parent elements don’t receive events when descendant visual elements attach or detach from the panel.</p>
+
+<p>For example, in the UXML code below, when you add the <code>parent</code> visual element to a hierarchy that’s already attached to a panel, <code>parent</code>, <code>child</code>, and <code>grandchild</code> all receive the same event. If you remove <code>parent</code> from the same UXML hierarchy, all visual elements would receive <code>DetachFromPanel</code> events.</p>
+
+<pre><code class="lang-xml">
+&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot;&gt;
+   &lt;ui:VisualElement name=&quot;parent&quot;&gt;
+       &lt;ui:VisualElement name=&quot;child&quot;&gt;
+           &lt;ui:VisualElement name=&quot;grandchild&quot; /&gt;
+       &lt;/ui:VisualElement&gt;
+   &lt;/ui:VisualElement&gt;
+&lt;/ui:UXML&gt;
+
+</code></pre>
+
+<p>The base class for all panel events is <a href="../ScriptReference/UIElements.PanelChangedEventBase_1.html">PanelChangedEventBase</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Event</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Trickles down</strong></th>
+	<th style="text-align:left;"><strong>Bubbles up</strong></th>
+	<th style="text-align:left;"><strong>Cancellable</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.AttachToPanelEvent.html">AttachToPanelEvent</a></td>
+	<td style="text-align:left;">Sent right after the element (or one of its parents) is attached to a panel.</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="../ScriptReference/UIElements.DetachFromPanelEvent.html">DetachFromPanelEvent</a></td>
+	<td style="text-align:left;">Sent just before an element (or one of its parents) is detached from a panel.</td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"></td>
+</tr>
+</tbody>
+</table>
+
+<h2>Unique properties</h2>
+
+<p>
+<strong><code>originPanel</code></strong>: The <code>originPanel</code> contains data specific to the <code>DetachFromPanelEvent</code>. It contains the source panel that the visual element detaches from during a panel change.</p>
+
+<p>
+<strong><code>destinationPanel</code></strong>: The <code>destinationPanel</code> contains data specific to the <code>AttachFromPanelEvent</code>. It provides the panel where the visual element is now attached.</p>
+
+<h2>Event list</h2>
+
+<p>The following list provides the name, description, and target of each event in the event family.</p>
+
+<h3>AttachToPanelEvent</h3>
+
+<p>The <a href="../ScriptReference/UIElements.AttachToPanelEvent.html"><code>AttachToPanelEvent</code></a> fires after a visual element attaches to a panel. It also occurs when you add a visual element to a hierarchy that’s attached to a panel.</p>
+
+<p>
+<strong><code>target</code></strong>: The visual element that’s attached to a panel.</p>
+
+<h3>DetachFromPanelEvent</h3>
+
+<p>The <a href="../ScriptReference/UIElements.DetachFromPanelEvent.html"><code>DetachFromPanelEvent</code></a> triggers before you remove a visual element from a panel. It also occurs when you remove a visual element from a hierarchy that’s attached to a panel.</p>
+
+<p>
+<strong><code>target</code></strong>:The visual element that’s detaching from a panel.</p>
+
+<h2>Examples</h2>
+
+<p>The following example creates an Editor window with a button that will add additional labels to the window. Clicking the labels will remove them again.</p>
+
+<p>This example implements a custom label class that prints a message to the console whenever the instance of the VisualElement is attached or detached from a panel. It highlights the behavior of the AttachToPanelEvent and DetachFromPanelEvent events and how to use the originPanel and destinationPanel properties.</p>
+
+<p>To see the example in action, do the following:</p>
+
+<ol>
+<li>Under <strong>Assets &gt; Scripts &gt; Editor</strong>, create a C# script called PanelEventsTestWindow.</li>
+<li>Copy the example code into the C# script.</li>
+<li>From the Editor Toolbar, select <strong>Window &gt; UI Toolkit &gt; Panel Events Test Window</strong>.</li>
+</ol>
+
+<pre><code class="lang-csharp">
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class PanelEventsTestWindow : EditorWindow
+{
+    [MenuItem(&quot;Window/UI Toolkit/Panel Events Test Window&quot;)]
+    public static void ShowExample()
+    {
+        PanelEventsTestWindow wnd = GetWindow&lt;PanelEventsTestWindow&gt;();
+        wnd.titleContent = new GUIContent(&quot;Panel Events Test Window&quot;);
+    }
+
+    public void CreateGUI()
+    {
+        // Set a name for the panel
+        rootVisualElement.panel.visualTree.name = &quot;Our Window Root Visual Element&quot;;
+
+        // Add a button which will add new instances of our custom labels to the window
+        rootVisualElement.Add(new Button(() =&gt; rootVisualElement.Add(new CustomLabel())) { text = &quot;Add New Label&quot; });
+    }
+}
+
+/// &lt;summary&gt;
+/// Custom label class which prints out a console message when it is attached or detached.
+/// &lt;/summary&gt;
+public class CustomLabel : Label
+{
+    private static int m_InstanceCounter = 0;
+    private int m_LabelNumber;
+
+    public CustomLabel() : base()
+    {
+        m_LabelNumber = ++m_InstanceCounter;
+        text = $&quot;Label #{m_LabelNumber} - click me to detach&quot;;
+        RegisterCallback&lt;AttachToPanelEvent&gt;(evt =&gt;
+        {
+            Debug.Log($&quot;I am label {m_LabelNumber} and I &quot; +
+                $&quot;just got attached to panel '{evt.destinationPanel.visualTree.name}'&quot;);
+        });
+        RegisterCallback&lt;DetachFromPanelEvent&gt;(evt =&gt;
+        {
+            Debug.Log($&quot;I am label {m_LabelNumber} and I &quot; +
+                $&quot;just got detached from panel '{evt.originPanel.visualTree.name}'&quot;);
+        });
+        // Register a pointer down callback that removes this element from the hierarchy
+        RegisterCallback&lt;PointerDownEvent&gt;(evt =&gt; this.RemoveFromHierarchy());
+    }
+}
+
+
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Navigation-Events.html"></a></span><div class="tip">Navigation events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-Pointer-Events.html"></a></span><div class="tip">Pointer events</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

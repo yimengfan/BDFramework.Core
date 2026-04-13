@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: UnityEditor</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: 2021.3</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">UnityEditor</h1>
+                <div class="clear">
+                </div>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>The UnityEditor assembly implements the editor-specific APIs in Unity. It cannot be referenced by runtime code compiled into players.</p>
+              </div>
+              <div class="subsection">
+                <h3>Classes</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Class</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="PackageManager.Requests.AddAndRemoveRequest.html">AddAndRemoveRequest</a></td><td class="desc">Represents an asynchronous request to add package dependencies to the project and/or remove package dependencies from the project.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.AddedComponent.html">AddedComponent</a></td><td class="desc">Class with information about a component that has been added to a Prefab instance.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.AddedGameObject.html">AddedGameObject</a></td><td class="desc">Class with information about a GameObject that has been added as a child under a Prefab instance.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.Requests.AddRequest.html">AddRequest</a></td><td class="desc">Represents an asynchronous request to add a package to the project.</td></tr>
+      <tr><td class="lbl"><a href="IMGUI.Controls.AdvancedDropdown.html">AdvancedDropdown</a></td><td class="desc">Inherit from this class to implement your own drop-down control.</td></tr>
+      <tr><td class="lbl"><a href="IMGUI.Controls.AdvancedDropdownItem.html">AdvancedDropdownItem</a></td><td class="desc">Items that build the drop-down list.</td></tr>
+      <tr><td class="lbl"><a href="IMGUI.Controls.AdvancedDropdownState.html">AdvancedDropdownState</a></td><td class="desc">The state of the drop-down. This Object can be serialized.</td></tr>
+      <tr><td class="lbl"><a href="Advertisements.AdvertisementSettings.html">AdvertisementSettings</a></td><td class="desc">Editor API for the Unity Services editor feature. Normally UnityAds is enabled from the Services window, but if writing your own editor extension, this API can be used.</td></tr>
+      <tr><td class="lbl"><a href="Analytics.AnalyticsSettings.html">AnalyticsSettings</a></td><td class="desc">Editor API for the Unity Services editor feature. Normally Analytics is enabled from the Services window, but if writing your own editor extension, this API can be used.</td></tr>
+      <tr><td class="lbl"><a href="AndroidAssetPackImporter.html">AndroidAssetPackImporter</a></td><td class="desc">Represents an Android asset pack directory in a project.</td></tr>
+      <tr><td class="lbl"><a href="AnimationClipCurveData.html">AnimationClipCurveData</a></td><td class="desc">An AnimationClipCurveData object contains all the information needed to identify a specific curve in an AnimationClip. The curve animates a specific property of a component / material attached to a game object / animated bone.</td></tr>
+      <tr><td class="lbl"><a href="AnimationMode.html">AnimationMode</a></td><td class="desc">
+          AnimationMode is used by the AnimationWindow to store properties modified
+      by the AnimationClip playback.</td></tr>
+      <tr><td class="lbl"><a href="AnimationModeDriver.html">AnimationModeDriver</a></td><td class="desc">
+          AnimationMode uses AnimationModeDriver to identify the animation driver.</td></tr>
+      <tr><td class="lbl"><a href="AnimationUtility.html">AnimationUtility</a></td><td class="desc">Editor utility functions for modifying animation clips.</td></tr>
+      <tr><td class="lbl"><a href="AnimationWindow.html">AnimationWindow</a></td><td class="desc">Use the AnimationWindow class to select and edit Animation clips.</td></tr>
+      <tr><td class="lbl"><a href="Animations.AnimatorController.html">AnimatorController</a></td><td class="desc">The Animator Controller controls animation through layers with state machines, controlled by parameters.</td></tr>
+      <tr><td class="lbl"><a href="Animations.AnimatorControllerLayer.html">AnimatorControllerLayer</a></td><td class="desc">The Animation Layer contains a state machine that controls animations of a model or part of it.</td></tr>
+      <tr><td class="lbl"><a href="Animations.AnimatorState.html">AnimatorState</a></td><td class="desc">States are the basic building blocks of a state machine. Each state contains a Motion ( AnimationClip or BlendTree) which will play while the character is in that state. When an event in the game triggers a state transition, the character will be left in a new state whose animation sequence will then take over.</td></tr>
+      <tr><td class="lbl"><a href="Animations.AnimatorStateMachine.html">AnimatorStateMachine</a></td><td class="desc">A graph controlling the interaction of states. Each state references a motion.</td></tr>
+      <tr><td class="lbl"><a href="Animations.AnimatorStateTransition.html">AnimatorStateTransition</a></td><td class="desc">Transitions define when and how the state machine switch from one state to another. AnimatorStateTransition always originate from an Animator State (or AnyState) and have timing parameters.</td></tr>
+      <tr><td class="lbl"><a href="Animations.AnimatorTransition.html">AnimatorTransition</a></td><td class="desc">Transitions define when and how the state machine switch from on state to another. AnimatorTransition always originate from a StateMachine or a StateMachine entry. They do not define timing parameters.</td></tr>
+      <tr><td class="lbl"><a href="Animations.AnimatorTransitionBase.html">AnimatorTransitionBase</a></td><td class="desc">Base class for animator transitions. Transitions define when and how the state machine switches from one state to another.</td></tr>
+      <tr><td class="lbl"><a href="AnimatedValues.AnimBool.html">AnimBool</a></td><td class="desc">Lerp from 0 - 1.</td></tr>
+      <tr><td class="lbl"><a href="AnimatedValues.AnimFloat.html">AnimFloat</a></td><td class="desc">An animated float value.</td></tr>
+      <tr><td class="lbl"><a href="AnimatedValues.AnimQuaternion.html">AnimQuaternion</a></td><td class="desc">An animated Quaternion value.</td></tr>
+      <tr><td class="lbl"><a href="AnimatedValues.AnimVector3.html">AnimVector3</a></td><td class="desc">An animated Vector3 value.</td></tr>
+      <tr><td class="lbl"><a href="ShaderKeywordFilter.ApplyRulesIfGraphicsAPIAttribute.html">ApplyRulesIfGraphicsAPIAttribute</a></td><td class="desc">Enable or disable shader keyword filter attributes based on the graphics API.</td></tr>
+      <tr><td class="lbl"><a href="ShaderKeywordFilter.ApplyRulesIfNotGraphicsAPIAttribute.html">ApplyRulesIfNotGraphicsAPIAttribute</a></td><td class="desc">Enable or disable shader keyword filter attributes based on the graphics API.</td></tr>
+      <tr><td class="lbl"><a href="ShaderKeywordFilter.ApplyRulesIfTagsEqualAttribute.html">ApplyRulesIfTagsEqualAttribute</a></td><td class="desc">Enable or disable shader keyword filter attributes based on shader tags.</td></tr>
+      <tr><td class="lbl"><a href="ShaderKeywordFilter.ApplyRulesIfTagsNotEqualAttribute.html">ApplyRulesIfTagsNotEqualAttribute</a></td><td class="desc">Enable or disable shader keyword filter attributes based on shader tags.</td></tr>
+      <tr><td class="lbl"><a href="IMGUI.Controls.ArcHandle.html">ArcHandle</a></td><td class="desc">A class for a compound handle to edit an angle and a radius in the Scene view.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.ArrayEntries_1.html">ArrayEntries&lt;T0&gt;</a></td><td class="desc">An abstract helper class that provides methods to retrieve arrays of data elements of a generic type.</td></tr>
+      <tr><td class="lbl"><a href="ArrayUtility.html">ArrayUtility</a></td><td class="desc">Helpers for builtin arrays.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.Assembly.html">Assembly</a></td><td class="desc">Class that represents an assembly compiled by Unity.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.AssemblyBuilder.html">AssemblyBuilder</a></td><td class="desc">Compiles scripts outside the Assets folder into a managed assembly that can be used inside the Assets folder.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.AssemblyDefinitionException.html">AssemblyDefinitionException</a></td><td class="desc">An exception throw for Assembly Definition Files errors.</td></tr>
+      <tr><td class="lbl"><a href="AssemblyReloadEvents.html">AssemblyReloadEvents</a></td><td class="desc">This class has event dispatchers for assembly reload events.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Asset.html">Asset</a></td><td class="desc">This class containes information about the version control state of an asset.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.AssetBundleInfo.html">AssetBundleInfo</a></td><td class="desc">Container for holding asset loading information for an AssetBundle to be built.</td></tr>
+      <tr><td class="lbl"><a href="AssetDatabase.html">AssetDatabase</a></td><td class="desc">An Interface for accessing assets and performing operations on assets.</td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.AssetImportContext.html">AssetImportContext</a></td><td class="desc">Defines the import context for scripted importers during an import event.</td></tr>
+      <tr><td class="lbl"><a href="AssetImporter.html">AssetImporter</a></td><td class="desc">Base class from which asset importers for specific asset types derive.</td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.AssetImporterEditor.html">AssetImporterEditor</a></td><td class="desc">Default editor for all asset importer settings.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.AssetList.html">AssetList</a></td><td class="desc">A list of version control information about assets.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.AssetLoadInfo.html">AssetLoadInfo</a></td><td class="desc">Container for holding preload information for a given serialized Asset.</td></tr>
+      <tr><td class="lbl"><a href="AssetModificationProcessor.html">AssetModificationProcessor</a></td><td class="desc">AssetModificationProcessor lets you hook into saving of serialized assets and
+      scenes which are edited inside Unity.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.AssetMonitoringUtilities.html">AssetMonitoringUtilities</a></td><td class="desc">Utility that manages asset monitoring features of UI Toolkit panels.</td></tr>
+      <tr><td class="lbl"><a href="AssetPostprocessor.html">AssetPostprocessor</a></td><td class="desc">AssetPostprocessor lets you hook into the import pipeline and run scripts prior or after importing assets.</td></tr>
+      <tr><td class="lbl"><a href="AssetPreview.html">AssetPreview</a></td><td class="desc">Utility for fetching asset previews by instance ID of assets, See AssetPreview.GetAssetPreview. Since previews are loaded asynchronously methods are provided for requesting if all previews have been fully loaded, see AssetPreview.IsLoadingAssetPreviews. Loaded previews are stored in a cache, the size of the cache can be controlled by calling [AssetPreview.SetPreviewTextureCacheSize].</td></tr>
+      <tr><td class="lbl"><a href="AssetSettingsProvider.html">AssetSettingsProvider</a></td><td class="desc">AssetSettingsProvider is a specialization of the SettingsProvider class that converts legacy settings to Unified Settings. Legacy settings include any settings that used the Inspector to modify themselves, such as the *.asset files under the ProjectSettings folder. Under the hood, AssetSettingsProvider creates an Editor for specific Assets and builds the UI for the Settings window by wrapping the Editor.OnInspectorGUI function.Internally we use this class to wrap our existing settings.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.Attacher.html">Attacher</a></td><td class="desc">Helper object that attaches a visual element next to its target, regarless of their respective location in the visual tree hierarchy.</td></tr>
+      <tr><td class="lbl"><a href="AudioCurveRendering.html">AudioCurveRendering</a></td><td class="desc">Antialiased curve rendering functionality used by audio tools in the editor.</td></tr>
+      <tr><td class="lbl"><a href="AudioImporter.html">AudioImporter</a></td><td class="desc">Audio importer lets you modify AudioClip import settings from editor scripts.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.AuthorInfo.html">AuthorInfo</a></td><td class="desc">Identifies the author of a package.</td></tr>
+      <tr><td class="lbl"><a href="AnimatedValues.BaseAnimValue_1.html">BaseAnimValue&lt;T0&gt;</a></td><td class="desc">Abstract base class for Animated Values.</td></tr>
+      <tr><td class="lbl"><a href="AnimatedValues.BaseAnimValueNonAlloc_1.html">BaseAnimValueNonAlloc&lt;T0&gt;</a></td><td class="desc">Abstract base class that provides an allocation free version of BaseAnimValue.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.BaseCompositeField_3.html">BaseCompositeField&lt;T0,T1,T2&gt;</a></td><td class="desc">
+ This is the base class for the composite fields.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.BaseFieldMouseDragger.html">BaseFieldMouseDragger</a></td><td class="desc">
+ Provides the base class for field mouse draggers.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.BaseMaskField_1.html">BaseMaskField&lt;T0&gt;</a></td><td class="desc">
+ Base class implementing the shared functionality for editing bit mask values. For more information, refer to UXML element MaskField.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.BasePopupField_2.html">BasePopupField&lt;T0,T1&gt;</a></td><td class="desc">
+ This is the base class for all the popup field elements.
+ TValue and TChoice can be different, see MaskField,
+   or the same, see PopupField
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.BindingExtensions.html">BindingExtensions</a></td><td class="desc">
+ Provides VisualElement extension methods that implement data binding between INotifyValueChanged fields and SerializedObjects.
+ </td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.Blackboard.html">Blackboard</a></td><td class="desc">GraphElement that enables user to dynamically define members of a Graph (such as fields/properties) grouped by sections (BlackboardSection).</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.BlackboardField.html">BlackboardField</a></td><td class="desc">GraphElement that represents a field of a Graph.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.BlackboardRow.html">BlackboardRow</a></td><td class="desc">Collapsible GraphElement that represents a row in a BlackboardSection.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.BlackboardSection.html">BlackboardSection</a></td><td class="desc">GraphElement that represents a section of members in a Blackboard.</td></tr>
+      <tr><td class="lbl"><a href="Animations.BlendTree.html">BlendTree</a></td><td class="desc">Blend trees are used to blend continuously animation between their children. They can either be 1D or 2D.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.BoundsField.html">BoundsField</a></td><td class="desc">
+ A Bounds editor field. For more information, refer to UXML element BoundsField.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.BoundsIntField.html">BoundsIntField</a></td><td class="desc">
+ A BoundsInt field. For more information, refer to UXML element BoundsIntField.
+ </td></tr>
+      <tr><td class="lbl"><a href="IMGUI.Controls.BoxBoundsHandle.html">BoxBoundsHandle</a></td><td class="desc">A compound handle to edit a box-shaped bounding volume in the Scene view.</td></tr>
+      <tr><td class="lbl"><a href="Build.BuildFailedException.html">BuildFailedException</a></td><td class="desc">An exception class that represents a failed build.</td></tr>
+      <tr><td class="lbl"><a href="BuildPipeline.html">BuildPipeline</a></td><td class="desc">Lets you programmatically build players or AssetBundles which can be loaded from the web.</td></tr>
+      <tr><td class="lbl"><a href="Build.BuildPlayerContext.html">BuildPlayerContext</a></td><td class="desc">Get a BuildPlayerContext object from a BuildPlayerProcessor.PrepareForBuild callback.</td></tr>
+      <tr><td class="lbl"><a href="Build.BuildPlayerProcessor.html">BuildPlayerProcessor</a></td><td class="desc">Extend BuildPlayerProcessor to receive callbacks during a player build.</td></tr>
+      <tr><td class="lbl"><a href="BuildPlayerWindow.html">BuildPlayerWindow</a></td><td class="desc">The default build settings window.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.BuildReferenceMap.html">BuildReferenceMap</a></td><td class="desc">Container for holding information about where objects will be serialized in a build.</td></tr>
+      <tr><td class="lbl"><a href="Build.Reporting.BuildReport.html">BuildReport</a></td><td class="desc">The BuildReport API gives you information about the Unity build process.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.BuildUsageCache.html">BuildUsageCache</a></td><td class="desc">Caching object for the Scriptable Build Pipeline.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.BuildUsageTagSet.html">BuildUsageTagSet</a></td><td class="desc">Container for holding information about how objects are being used in a build.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.BuildUtilities.html">BuildUtilities</a></td><td class="desc">Utility class that allows packages to register build callbacks with the Unity Package Manager.</td></tr>
+      <tr><td class="lbl"><a href="CallbackOrderAttribute.html">CallbackOrderAttribute</a></td><td class="desc">Base class for Attributes that require a callback index.</td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.CameraDescription.html">CameraDescription</a></td><td class="desc">Represents camera information from an imported file.</td></tr>
+      <tr><td class="lbl"><a href="CameraEditor.html">CameraEditor</a></td><td class="desc">Unity Camera Editor.</td></tr>
+      <tr><td class="lbl"><a href="CameraEditorUtils.html">CameraEditorUtils</a></td><td class="desc">Utilities for cameras.</td></tr>
+      <tr><td class="lbl"><a href="CanEditMultipleObjects.html">CanEditMultipleObjects</a></td><td class="desc">Attribute used to make a custom editor support multi-object editing.</td></tr>
+      <tr><td class="lbl"><a href="IMGUI.Controls.CapsuleBoundsHandle.html">CapsuleBoundsHandle</a></td><td class="desc">A compound handle to edit a capsule-shaped bounding volume in the Scene view.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.ChangeSet.html">ChangeSet</a></td><td class="desc">Wrapper around a changeset description and ID.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.ChangeSets.html">ChangeSets</a></td><td class="desc">A list of the ChangeSet class.</td></tr>
+      <tr><td class="lbl"><a href="MPE.ChannelClient.html">ChannelClient</a></td><td class="desc">ChannelClient is a WebSocket client that connects to Unity's ChannelService, which is a WebSocket server.</td></tr>
+      <tr><td class="lbl"><a href="MPE.ChannelService.html">ChannelService</a></td><td class="desc">The ChannelService encapsulates a WebSocket server running in Unity.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.ClickSelector.html">ClickSelector</a></td><td class="desc">Selects element on single click.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.Client.html">Client</a></td><td class="desc">Use the Unity Package Manager Client class to manage the packages used in a project.</td></tr>
+      <tr><td class="lbl"><a href="CloudProjectSettings.html">CloudProjectSettings</a></td><td class="desc">Use this class to retrieve information about the currently selected project and the current Unity ID that is logged in.</td></tr>
+      <tr><td class="lbl"><a href="ShortcutManagement.ClutchShortcutAttribute.html">ClutchShortcutAttribute</a></td><td class="desc">Attribute used to register a static method as the action for a clutch shortcut.</td></tr>
+      <tr><td class="lbl"><a href="Unity.CodeEditor.CodeEditor.html">CodeEditor</a></td><td class="desc">Handles interaction with the code editor.</td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.CollectImportedDependenciesAttribute.html">CollectImportedDependenciesAttribute</a></td><td class="desc">Use this method attribute to specify which methods declare dependancies on imported assets. The methods are called by AssetDatabase during import.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.ColorField.html">ColorField</a></td><td class="desc">
+ Makes a field for selecting a color. For more information, refer to UXML element ColorField.
+ </td></tr>
+      <tr><td class="lbl"><a href="ColorPickerHDRConfig.html">ColorPickerHDRConfig</a></td><td class="desc">Used as input to ColorField to configure the HDR color ranges in the ColorPicker.</td></tr>
+      <tr><td class="lbl"><a href="Build.Reporting.CommonRoles.html">CommonRoles</a></td><td class="desc">This class provides constant values for some of the common roles used by files in the build. The role of each file in the build is available in BuildFile.role.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.CompilationPipeline.html">CompilationPipeline</a></td><td class="desc">Methods and properties for script compilation pipeline.</td></tr>
+      <tr><td class="lbl"><a href="ComputeShaderImporter.html">ComputeShaderImporter</a></td><td class="desc">Define compute shader import settings in the Unity Editor.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.ConfigField.html">ConfigField</a></td><td class="desc">Describes the configuration fields of the version control that the user has selected in the Unity Editor.</td></tr>
+      <tr><td class="lbl"><a href="Networking.PlayerConnection.ConnectedPlayer.html">ConnectedPlayer</a></td><td class="desc">Information of the connected player.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.ConnectionEntries.html">ConnectionEntries</a></td><td class="desc">A class that houses data entries related to Connection data, returned by PackedMemorySnapshot.connections.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.ContentBuildInterface.html">ContentBuildInterface</a></td><td class="desc">Low level interface for building content for Unity.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.ContentDragger.html">ContentDragger</a></td><td class="desc">Manipulator that allows mouse-dragging of one or more elements.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.ContentZoomer.html">ContentZoomer</a></td><td class="desc">Manipulator that allows zooming in GraphView.</td></tr>
+      <tr><td class="lbl"><a href="CrashReporting.CrashReportingSettings.html">CrashReportingSettings</a></td><td class="desc">Editor API for the Unity Services editor feature. Normally CrashReporting is enabled from the Services window, but if writing your own editor extension, this API can be used.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.CurveField.html">CurveField</a></td><td class="desc">
+ Makes a field for editing an AnimationCurve. For more information, refer to UXML element CurveField.
+ </td></tr>
+      <tr><td class="lbl"><a href="CustomEditor.html">CustomEditor</a></td><td class="desc">Tells an Editor class which run-time type it's an editor for.</td></tr>
+      <tr><td class="lbl"><a href="CustomEditorForRenderPipelineAttribute.html">CustomEditorForRenderPipelineAttribute</a></td><td class="desc">Tells an Editor class which run-time type it's an editor for when the given RenderPipeline is activated.</td></tr>
+      <tr><td class="lbl"><a href="Search.CustomObjectIndexerAttribute.html">CustomObjectIndexerAttribute</a></td><td class="desc">Allows a user to register a custom Indexing function for a specific type.</td></tr>
+      <tr><td class="lbl"><a href="CustomPreviewAttribute.html">CustomPreviewAttribute</a></td><td class="desc">Adds an extra preview in the Inspector for the specified type.</td></tr>
+      <tr><td class="lbl"><a href="CustomPropertyDrawer.html">CustomPropertyDrawer</a></td><td class="desc">Tells a custom PropertyDrawer or DecoratorDrawer which run-time Serializable class or PropertyAttribute it's a drawer for.</td></tr>
+      <tr><td class="lbl"><a href="DecoratorDrawer.html">DecoratorDrawer</a></td><td class="desc">Base class to derive custom decorator drawers from.</td></tr>
+      <tr><td class="lbl"><a href="DefaultAsset.html">DefaultAsset</a></td><td class="desc">DefaultAsset is used for assets that do not have a specific type (yet).</td></tr>
+      <tr><td class="lbl"><a href="DefaultLightingExplorerExtension.html">DefaultLightingExplorerExtension</a></td><td class="desc">Default definition for the Lighting Explorer. Can be overridden completely or partially.</td></tr>
+      <tr><td class="lbl"><a href="Presets.DefaultPresetSelectorReceiver.html">DefaultPresetSelectorReceiver</a></td><td class="desc">Basic implementation of the PresetSelectorReceiver.</td></tr>
+      <tr><td class="lbl"><a href="SceneTemplate.DependencyInfo.html">DependencyInfo</a></td><td class="desc">A descriptor that stores one of a template Scene's dependency Assets, and specifies whether to clone or reference it when the template is instantiated.</td></tr>
+      <tr><td class="lbl"><a href="DeviceSimulation.DeviceSimulator.html">DeviceSimulator</a></td><td class="desc">Class for interacting with a Device Simulator window from a script.</td></tr>
+      <tr><td class="lbl"><a href="DeviceSimulation.DeviceSimulatorPlugin.html">DeviceSimulatorPlugin</a></td><td class="desc">Extend this class to create a Device Simulator plug-in.</td></tr>
+      <tr><td class="lbl"><a href="Callbacks.DidReloadScripts.html">DidReloadScripts</a></td><td class="desc">Add this attribute to a method to get a notification after scripts have been reloaded.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.DoubleField.html">DoubleField</a></td><td class="desc">
+ Makes a text field for entering doubles.
+ </td></tr>
+      <tr><td class="lbl"><a href="DragAndDrop.html">DragAndDrop</a></td><td class="desc">Editor drag &amp; drop operations.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.Dragger.html">Dragger</a></td><td class="desc">Base manipulator for mouse-dragging elements.</td></tr>
+      <tr><td class="lbl"><a href="DrawGizmo.html">DrawGizmo</a></td><td class="desc">The DrawGizmo attribute allows you to supply a gizmo renderer for any Component.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.Edge.html">Edge</a></td><td class="desc">The GraphView edge element.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.EdgeConnector.html">EdgeConnector</a></td><td class="desc">Manipulator for creating new edges.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.EdgeConnector_1.html">EdgeConnector&lt;T0&gt;</a></td><td class="desc">Manipulator for creating new edges.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.EdgeControl.html">EdgeControl</a></td><td class="desc">VisualElement that draws the edge lines and detects if mouse is on top of edge.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.EdgeDragHelper.html">EdgeDragHelper</a></td><td class="desc">EdgeDragHelper's constructor.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.EdgeDragHelper_1.html">EdgeDragHelper&lt;T0&gt;</a></td><td class="desc">Edge drag helper class.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.EdgeManipulator.html">EdgeManipulator</a></td><td class="desc">Edge manipulator used to drag edges off ports and reconnect them elsewhere.</td></tr>
+      <tr><td class="lbl"><a href="Editor.html">Editor</a></td><td class="desc">Derive from this base class to create a custom inspector or editor for your custom object.</td></tr>
+      <tr><td class="lbl"><a href="EditorAnalytics.html">EditorAnalytics</a></td><td class="desc">Editor API for the EditorAnalytics feature.</td></tr>
+      <tr><td class="lbl"><a href="EditorAnalyticsSessionInfo.html">EditorAnalyticsSessionInfo</a></td><td class="desc">Provides access to Editor Analytics session information.</td></tr>
+      <tr><td class="lbl"><a href="EditorApplication.html">EditorApplication</a></td><td class="desc">Main Application class.</td></tr>
+      <tr><td class="lbl"><a href="EditorBuildSettings.html">EditorBuildSettings</a></td><td class="desc">This class allows you to modify the Editor Build Settings via script. See EditorBuildSettings.scenes for an example of how to use this class.Additional resources: EditorBuildSettingsScene, EditorBuildSettings.scenes.</td></tr>
+      <tr><td class="lbl"><a href="EditorBuildSettingsScene.html">EditorBuildSettingsScene</a></td><td class="desc">Represents entries in the Scenes list, as displayed in the Build Settings window. This class contains the Scene path of a Scene and an enabled flag that indicates whether the Scene is enabled in the Build Settings window or not.You can use this class in combination with EditorBuildSettings.scenes to populate the list of Scenes included in the build via script. This is useful when you create custom editor scripts to automate your build pipeline.See EditorBuildSettings.scenes for an example script.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.EditorCameraUtils.html">EditorCameraUtils</a></td><td class="desc">Utilities for Camera rendering in the Editor.</td></tr>
+      <tr><td class="lbl"><a href="Networking.PlayerConnection.EditorConnection.html">EditorConnection</a></td><td class="desc">Handles the connection from the Editor to the Player.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.EditorGraphicsSettings.html">EditorGraphicsSettings</a></td><td class="desc">Editor-specific script interface for Graphics Settings.</td></tr>
+      <tr><td class="lbl"><a href="EditorGUI.html">EditorGUI</a></td><td class="desc">These work pretty much like the normal GUI functions - and also have matching implementations in EditorGUILayout.</td></tr>
+      <tr><td class="lbl"><a href="EditorGUILayout.html">EditorGUILayout</a></td><td class="desc">Auto laid out version of EditorGUI.</td></tr>
+      <tr><td class="lbl"><a href="EditorGUIUtility.html">EditorGUIUtility</a></td><td class="desc">Miscellaneous helper stuff for EditorGUI.</td></tr>
+      <tr><td class="lbl"><a href="EditorJsonUtility.html">EditorJsonUtility</a></td><td class="desc">Utility functions for working with JSON data and engine objects.</td></tr>
+      <tr><td class="lbl"><a href="EditorPrefs.html">EditorPrefs</a></td><td class="desc">Stores and accesses Unity Editor preferences.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.EditorSceneManager.html">EditorSceneManager</a></td><td class="desc">Scene management in the Editor.</td></tr>
+      <tr><td class="lbl"><a href="EditorSettings.html">EditorSettings</a></td><td class="desc">User settings for Unity Editor.</td></tr>
+      <tr><td class="lbl"><a href="EditorSnapSettings.html">EditorSnapSettings</a></td><td class="desc">Control the behavior of handle snapping in the editor.</td></tr>
+      <tr><td class="lbl"><a href="EditorStyles.html">EditorStyles</a></td><td class="desc">Common GUIStyles used for EditorGUI controls.</td></tr>
+      <tr><td class="lbl"><a href="EditorTools.EditorTool.html">EditorTool</a></td><td class="desc">Use this class to implement editor tools. This is the base class from which all editor tools are inherited.</td></tr>
+      <tr><td class="lbl"><a href="EditorTools.EditorToolAttribute.html">EditorToolAttribute</a></td><td class="desc">Registers an EditorTool as either a Global tool or a Component tool for a specific target type.</td></tr>
+      <tr><td class="lbl"><a href="Toolbars.EditorToolbarButton.html">EditorToolbarButton</a></td><td class="desc">A clickable button used with EditorToolbarElementAttribute.</td></tr>
+      <tr><td class="lbl"><a href="Toolbars.EditorToolbarDropdown.html">EditorToolbarDropdown</a></td><td class="desc">A clickable dropdown used with EditorToolbarElementAttribute.</td></tr>
+      <tr><td class="lbl"><a href="Overlays.EditorToolbarDropdownToggle.html">EditorToolbarDropdownToggle</a></td><td class="desc">A control that is both a toggle and a dropdown used with EditorToolbarElementAttribute.</td></tr>
+      <tr><td class="lbl"><a href="Toolbars.EditorToolbarElementAttribute.html">EditorToolbarElementAttribute</a></td><td class="desc">The EditorToolbarElement attribute allows you to make available a specific VisualElement for use in an Editor Toolbar.</td></tr>
+      <tr><td class="lbl"><a href="Toolbars.EditorToolbarToggle.html">EditorToolbarToggle</a></td><td class="desc">A toggle used with EditorToolbarElementAttribute.</td></tr>
+      <tr><td class="lbl"><a href="Toolbars.EditorToolbarUtility.html">EditorToolbarUtility</a></td><td class="desc">Editor utility functions when working with EditorToolbar.</td></tr>
+      <tr><td class="lbl"><a href="EditorTools.EditorToolContext.html">EditorToolContext</a></td><td class="desc">Use this class to implement specialized versions of the built-in transform tools. Built-in transform tools include Move, Rotate, Scale, Rect, and Transform.</td></tr>
+      <tr><td class="lbl"><a href="EditorTools.EditorToolContextAttribute.html">EditorToolContextAttribute</a></td><td class="desc">Registers an EditorToolContext as either a global context or a Component context  for a specific target type.</td></tr>
+      <tr><td class="lbl"><a href="EditorUserBuildSettings.html">EditorUserBuildSettings</a></td><td class="desc">User build settings for the Editor</td></tr>
+      <tr><td class="lbl"><a href="EditorUtility.html">EditorUtility</a></td><td class="desc">Editor utility functions.</td></tr>
+      <tr><td class="lbl"><a href="EditorWindow.html">EditorWindow</a></td><td class="desc">Derive from this class to create a custom Editor window.</td></tr>
+      <tr><td class="lbl"><a href="EditorWindowTitleAttribute.html">EditorWindowTitleAttribute</a></td><td class="desc">Use this class to set title text and icon for an Editor window.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.Requests.EmbedRequest.html">EmbedRequest</a></td><td class="desc">Represents an asynchronous request to embed a package inside a project.</td></tr>
+      <tr><td class="lbl"><a href="ProjectWindowCallback.EndNameEditAction.html">EndNameEditAction</a></td><td class="desc">Base class to implement callbacks to be used when creating assets via the project window. You can extend the EndNameEditAction and write your own callback.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Licensing.EntitlementGroupInfo.html">EntitlementGroupInfo</a></td><td class="desc">Data structure for entitlement group information (often synonymous with a license file), accessed through EntitlementInfo.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Licensing.EntitlementInfo.html">EntitlementInfo</a></td><td class="desc">Data structure for an individual entitlement, the results of a call to LicensingUtility.HasEntitlementsExtended.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.EnumField.html">EnumField</a></td><td class="desc">
+ Makes a dropdown for switching between enum values. For more information, refer to UIE-uxml-element EnumField.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.EnumFlagsField.html">EnumFlagsField</a></td><td class="desc">
+ Makes a dropdown for switching between enum flag values that are marked with the Flags attribute.
+ </td></tr>
+      <tr><td class="lbl"><a href="PackageManager.Error.html">Error</a></td><td class="desc">Structure describing the error of a package operation.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.Events.html">Events</a></td><td class="desc">An Interface for accessing the package manager events.</td></tr>
+      <tr><td class="lbl"><a href="MPE.EventService.html">EventService</a></td><td class="desc">The EventService is a singleton implementation of a ChannelClient that runs on all instances of Unity. It is connected to the "events" channel and allows a Unity instance to send JSON messages to other EventServices in external process, or other instances of Unity.</td></tr>
+      <tr><td class="lbl"><a href="ExpressionEvaluator.html">ExpressionEvaluator</a></td><td class="desc">Evaluates simple math expressions; supports int / float and operators: + - * / % ^ ( ).</td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.FBXMaterialDescriptionPreprocessor.html">FBXMaterialDescriptionPreprocessor</a></td><td class="desc">This is a default implementation for AssetPostProcessor.OnPreprocessMaterialDescription, this implementation converts material descriptions imported from FBX assets into materials for the internal rendering pipeline.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.FieldDescriptionEntries.html">FieldDescriptionEntries</a></td><td class="desc">A class that houses Field Description entry data, returned by PackedMemorySnapshot.fieldDescriptions.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.FieldMouseDragger_1.html">FieldMouseDragger&lt;T0&gt;</a></td><td class="desc">
+ Provides dragging on a visual element to change a value field.
+ </td></tr>
+      <tr><td class="lbl"><a href="FilePathAttribute.html">FilePathAttribute</a></td><td class="desc">An attribute that specifies a file location relative to the Project folder or Unity's preferences folder. Additional resources: Location.</td></tr>
+      <tr><td class="lbl"><a href="FileUtil.html">FileUtil</a></td><td class="desc">Lets you do move, copy, delete operations over files or directories.</td></tr>
+      <tr><td class="lbl"><a href="ShaderKeywordFilter.FilterAttribute.html">FilterAttribute</a></td><td class="desc">Tell the shader system which shader keywords to include or remove from the build, based on the data field underneath.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.FloatField.html">FloatField</a></td><td class="desc">
+ Makes a text field for entering a float. For more information, refer to UXML element FloatField.
+ </td></tr>
+      <tr><td class="lbl"><a href="Profiling.FrameDataView.html">FrameDataView</a></td><td class="desc">Base funtionality for accessing the Profiler data.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.FreehandSelector.html">FreehandSelector</a></td><td class="desc">Freehand selection tool.</td></tr>
+      <tr><td class="lbl"><a href="Search.FuzzySearch.html">FuzzySearch</a></td><td class="desc">Provides a method to match query text using a fuzzy search algorithm.</td></tr>
+      <tr><td class="lbl"><a href="Animations.GameObjectRecorder.html">GameObjectRecorder</a></td><td class="desc">Records the changing properties of a GameObject as the Scene runs and saves the information into an AnimationClip.</td></tr>
+      <tr><td class="lbl"><a href="EditorTools.GameObjectToolContext.html">GameObjectToolContext</a></td><td class="desc">This class represents the default context for manipulation tools. When GameObjectToolContext is active, manipulation tools affect the transform property of GameObjects in the SceneView Selection.</td></tr>
+      <tr><td class="lbl"><a href="GameObjectUtility.html">GameObjectUtility</a></td><td class="desc">GameObject utility functions.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.GCHandleEntries.html">GCHandleEntries</a></td><td class="desc">A class that houses GCHandle data. Returned by PackedMemorySnapshot.gcHandles.</td></tr>
+      <tr><td class="lbl"><a href="GenericMenu.html">GenericMenu</a></td><td class="desc">GenericMenu lets you create custom context menus and dropdown menus.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.GitInfo.html">GitInfo</a></td><td class="desc">Identifies a specific revision for a Git package using a Git commit hash.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.GradientField.html">GradientField</a></td><td class="desc">
+ Makes a field for editing an Gradient. For more information, refer to UXML element GradientField.
+ </td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.GraphElement.html">GraphElement</a></td><td class="desc">Base class for main GraphView VisualElements.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.GraphElementScopeExtensions.html">GraphElementScopeExtensions</a></td><td class="desc">Set of extension methods useful for Scope.</td></tr>
+      <tr><td class="lbl"><a href="ShaderKeywordFilter.GraphicsAPIConstraintAttribute.html">GraphicsAPIConstraintAttribute</a></td><td class="desc">Enable or disable shader keyword filter attributes based on the graphics API.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.GraphView.html">GraphView</a></td><td class="desc">Main GraphView class.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.GraphViewBlackboardWindow.html">GraphViewBlackboardWindow</a></td><td class="desc">The base class for a floating window that contains a Blackboard.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.GraphViewEditorWindow.html">GraphViewEditorWindow</a></td><td class="desc">Abstract base class for an editor window that contains a GraphView.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.GraphViewMinimapWindow.html">GraphViewMinimapWindow</a></td><td class="desc">A floating window containing a MiniMap.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.GraphViewToolWindow.html">GraphViewToolWindow</a></td><td class="desc">Abstract base class for a GraphView tool window.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.GridBackground.html">GridBackground</a></td><td class="desc">Default GraphView background.</td></tr>
+      <tr><td class="lbl"><a href="GridPalette.html">GridPalette</a></td><td class="desc">GridPalette stores settings for Palette assets when shown in the Palette window.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.Group.html">Group</a></td><td class="desc">Allows interactive insertion of elements in a named scope.</td></tr>
+      <tr><td class="lbl"><a href="GUIDrawer.html">GUIDrawer</a></td><td class="desc">Base class for PropertyDrawer and DecoratorDrawer.</td></tr>
+      <tr><td class="lbl"><a href="Handles.html">Handles</a></td><td class="desc">Custom 3D GUI controls and drawing in the Scene view.</td></tr>
+      <tr><td class="lbl"><a href="HandleUtility.html">HandleUtility</a></td><td class="desc">Helper functions for Scene View style 3D GUI.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.Hash128Field.html">Hash128Field</a></td><td class="desc">
+ Makes a field for editing an Hash128. For more information, refer to UXML element Hash128Field.
+ </td></tr>
+      <tr><td class="lbl"><a href="Help.html">Help</a></td><td class="desc">Helper class to access Unity documentation.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.HierarchyFrameDataView.html">HierarchyFrameDataView</a></td><td class="desc">Provides access to the Profiler data for a specific frame and thread.</td></tr>
+      <tr><td class="lbl"><a href="Highlighter.html">Highlighter</a></td><td class="desc">Use this class to highlight elements in the editor for use in in-editor tutorials and similar.</td></tr>
+      <tr><td class="lbl"><a href="HyperLinkClickedEventArgs.html">HyperLinkClickedEventArgs</a></td><td class="desc">Arguments for the event EditorGUI.hyperLinkClicked.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.IconBadge.html">IconBadge</a></td><td class="desc">A rectangular badge, usually attached to another visual element.</td></tr>
+      <tr><td class="lbl"><a href="IHVImageFormatImporter.html">IHVImageFormatImporter</a></td><td class="desc">Use IHVImageFormatImporter to modify Texture2D import settings for Textures in IHV (Independent Hardware Vendor) formats such as .DDS and .PVR from Editor scripts.</td></tr>
+      <tr><td class="lbl"><a href="Il2Cpp.Il2CppBuildPipelineData.html">Il2CppBuildPipelineData</a></td><td class="desc">Contains information for various IIl2CppProcessor callbacks.</td></tr>
+      <tr><td class="lbl"><a href="Overlays.IMGUIOverlay.html">IMGUIOverlay</a></td><td class="desc">IMGUIOverlay is an implementation of Overlay that provides a IMGUIContainer.</td></tr>
+      <tr><td class="lbl"><a href="InitializeOnEnterPlayModeAttribute.html">InitializeOnEnterPlayModeAttribute</a></td><td class="desc">Allow an editor class method to be initialized when Unity enters Play Mode.</td></tr>
+      <tr><td class="lbl"><a href="InitializeOnLoadAttribute.html">InitializeOnLoadAttribute</a></td><td class="desc">Allows you to initialize an Editor class when Unity loads, and when your scripts are recompiled.</td></tr>
+      <tr><td class="lbl"><a href="InitializeOnLoadMethodAttribute.html">InitializeOnLoadMethodAttribute</a></td><td class="desc">Allow an editor class method to be initialized when Unity loads without action from the user.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.InspectorElement.html">InspectorElement</a></td><td class="desc">
+ Create a VisualElement inspector from a SerializedObject.
+ </td></tr>
+      <tr><td class="lbl"><a href="SceneTemplate.InstantiationResult.html">InstantiationResult</a></td><td class="desc">A class that holds the data created when a SceneTemplateAsset is instantiated.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.IntegerField.html">IntegerField</a></td><td class="desc">
+ Makes a text field for entering an integer. For more information, refer to UXML element LongField.
+ </td></tr>
+      <tr><td class="lbl"><a href="iOSDeviceRequirement.html">iOSDeviceRequirement</a></td><td class="desc">A device requirement description used for configuration of App Slicing.</td></tr>
+      <tr><td class="lbl"><a href="IMGUI.Controls.JointAngularLimitHandle.html">JointAngularLimitHandle</a></td><td class="desc">A class for a compound handle to edit multiaxial angular motion limits in the Scene view.</td></tr>
+      <tr><td class="lbl"><a href="L10n.html">L10n</a></td><td class="desc">Class for text localization.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.LayerField.html">LayerField</a></td><td class="desc">
+ A LayerField editor. For more information, refer to UXML element LayerField.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.LayerMaskField.html">LayerMaskField</a></td><td class="desc">
+ A LayerMaskField editor. For more information, refer to UXML element LayerMaskField.
+ </td></tr>
+      <tr><td class="lbl"><a href="Experimental.Licensing.LicensingUtility.html">LicensingUtility</a></td><td class="desc">Use the Licensing Utility class to request user permissions. User permissions are referred to as entitlements, which are simple strings, ie. "com.unity.editor.ui".</td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.LightDescription.html">LightDescription</a></td><td class="desc">Represents light information from an imported file.</td></tr>
+      <tr><td class="lbl"><a href="LightEditor.html">LightEditor</a></td><td class="desc">The class used to render the Light Editor when a Light is selected in the Unity Editor.</td></tr>
+      <tr><td class="lbl"><a href="LightingDataAsset.html">LightingDataAsset</a></td><td class="desc">The lighting data asset used by the active Scene.</td></tr>
+      <tr><td class="lbl"><a href="LightingExplorerExtensionAttribute.html">LightingExplorerExtensionAttribute</a></td><td class="desc">An attribute to mark an extension class for the Lighting Explorer. Supports one extension per render pipeline.</td></tr>
+      <tr><td class="lbl"><a href="LightingExplorerTab.html">LightingExplorerTab</a></td><td class="desc">Create custom tabs for the Lighting Explorer.</td></tr>
+      <tr><td class="lbl"><a href="LightingExplorerTableColumn.html">LightingExplorerTableColumn</a></td><td class="desc">This is used when defining how a column should look and behave in the Lighting Explorer.</td></tr>
+      <tr><td class="lbl"><a href="LightingWindowEnvironmentSection.html">LightingWindowEnvironmentSection</a></td><td class="desc">Base class for the Inspector that overrides the Environment section of the Lighting window.</td></tr>
+      <tr><td class="lbl"><a href="LightmapEditorSettings.html">LightmapEditorSettings</a></td><td class="desc">This class is now obsolete. Use LightingSettings.</td></tr>
+      <tr><td class="lbl"><a href="LightmapParameters.html">LightmapParameters</a></td><td class="desc">Configures how Unity bakes lighting and can be assigned to a LightingSettings instance or asset.</td></tr>
+      <tr><td class="lbl"><a href="Lightmapping.html">Lightmapping</a></td><td class="desc">Allows to control the lightmapping job.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Lightmapping.html">Lightmapping</a></td><td class="desc">Experimental lightmapping features.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.Requests.ListRequest.html">ListRequest</a></td><td class="desc">Represents an asynchronous request to list the packages in the project.</td></tr>
+      <tr><td class="lbl"><a href="LocalizationAttribute.html">LocalizationAttribute</a></td><td class="desc">An attribute to the assembly for Localization.</td></tr>
+      <tr><td class="lbl"><a href="LocalizationGroup.html">LocalizationGroup</a></td><td class="desc">This provides an auto dispose Localization system. This can be called recursively.</td></tr>
+      <tr><td class="lbl"><a href="LODUtility.html">LODUtility</a></td><td class="desc">LOD Utility Helpers.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.LongField.html">LongField</a></td><td class="desc">
+ Makes a text field for entering long integers. For more information, refer to UXML element LongField.
+ </td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.MainStage.html">MainStage</a></td><td class="desc">The Main Stage contains all the currently open regular Scenes and is always available.</td></tr>
+      <tr><td class="lbl"><a href="Scripting.ManagedDebugger.html">ManagedDebugger</a></td><td class="desc">Representation of managed debugger in UnityEditor.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.ManagedMemorySectionEntries.html">ManagedMemorySectionEntries</a></td><td class="desc">A class that houses MemorySection data, returned by PackedMemorySnapshot.managedHeapSections and PackedMemorySnapshot.managedStacks.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.MaskField.html">MaskField</a></td><td class="desc">
+ Make a field for masks.
+ </td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.MaterialDescription.html">MaterialDescription</a></td><td class="desc">Contains a set of typed properties for describing a texture input of a MaterialDescription.</td></tr>
+      <tr><td class="lbl"><a href="MaterialEditor.html">MaterialEditor</a></td><td class="desc">The Unity Material Editor.</td></tr>
+      <tr><td class="lbl"><a href="MaterialEditorExtensions.html">MaterialEditorExtensions</a></td><td class="desc">Extension methods for the Material asset type in the editor.</td></tr>
+      <tr><td class="lbl"><a href="MaterialProperty.html">MaterialProperty</a></td><td class="desc">Describes information and value of a single shader property.</td></tr>
+      <tr><td class="lbl"><a href="MaterialPropertyDrawer.html">MaterialPropertyDrawer</a></td><td class="desc">Base class to derive custom material property drawers from.</td></tr>
+      <tr><td class="lbl"><a href="Media.MediaEncoder.html">MediaEncoder</a></td><td class="desc">Encodes images and audio samples into an audio or movie file.</td></tr>
+      <tr><td class="lbl"><a href="MemoryProfiler.MemorySnapshot.html">MemorySnapshot</a></td><td class="desc">MemorySnapshot is a profiling tool to help diagnose memory usage.</td></tr>
+      <tr><td class="lbl"><a href="Menu.html">Menu</a></td><td class="desc">Menu class to manipulate the menu item.</td></tr>
+      <tr><td class="lbl"><a href="MenuCommand.html">MenuCommand</a></td><td class="desc">Used to extract the context for a MenuItem.</td></tr>
+      <tr><td class="lbl"><a href="MenuItem.html">MenuItem</a></td><td class="desc">The MenuItem attribute allows you to add menu items to the main menu and Inspector window context menus.</td></tr>
+      <tr><td class="lbl"><a href="MeshPreview.html">MeshPreview</a></td><td class="desc">Use this class to render an interactive preview of a mesh.</td></tr>
+      <tr><td class="lbl"><a href="MeshUtility.html">MeshUtility</a></td><td class="desc">Various utilities for mesh manipulation.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Message.html">Message</a></td><td class="desc">Messages from the version control system.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.MiniMap.html">MiniMap</a></td><td class="desc">MiniMap.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporter.html">ModelImporter</a></td><td class="desc">Model importer lets you modify model import settings from editor scripts.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterClipAnimation.html">ModelImporterClipAnimation</a></td><td class="desc">Animation clips to split animation into.</td></tr>
+      <tr><td class="lbl"><a href="MonoImporter.html">MonoImporter</a></td><td class="desc">Represents a C# script in the project.</td></tr>
+      <tr><td class="lbl"><a href="MonoScript.html">MonoScript</a></td><td class="desc">Representation of Script assets.</td></tr>
+      <tr><td class="lbl"><a href="IMGUI.Controls.MultiColumnHeader.html">MultiColumnHeader</a></td><td class="desc">The MultiColumnHeader is a general purpose class that e.g can be used with the TreeView to create multi-column tree views and list views.</td></tr>
+      <tr><td class="lbl"><a href="IMGUI.Controls.MultiColumnHeaderState.html">MultiColumnHeaderState</a></td><td class="desc">State used by the MultiColumnHeader.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.NativeAllocationEntries.html">NativeAllocationEntries</a></td><td class="desc">A class that houses native allocation entry data, returned by PackedMemorySnapshot.nativeAllocations.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.NativeAllocationSiteEntries.html">NativeAllocationSiteEntries</a></td><td class="desc">A class that houses native allocation site entries, returned by PackedMemorySnapshot.nativeAllocationSites.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.NativeCallstackSymbolEntries.html">NativeCallstackSymbolEntries</a></td><td class="desc">A class housing native callstack symbol data, returned by PackedMemorySnapshot.nativeCallstackSymbols.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.NativeMemoryLabelEntries.html">NativeMemoryLabelEntries</a></td><td class="desc">A class that houses native memory label data, returned by PackedMemorySnapshot.nativeMemoryLabels.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.NativeMemoryRegionEntries.html">NativeMemoryRegionEntries</a></td><td class="desc">A class housing native memory region data, returned by PackedMemorySnapshot.nativeMemoryRegions.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.NativeObjectEntries.html">NativeObjectEntries</a></td><td class="desc">A class that houses native object data, returned by PackedMemorySnapshot.nativeObjects.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.NativeRootReferenceEntries.html">NativeRootReferenceEntries</a></td><td class="desc">A class that houses native root reference data, returned by PackedMemorySnapshot.rootReferences.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.NativeTypeEntries.html">NativeTypeEntries</a></td><td class="desc">A class that houses native type entries, returned by PackedMemorySnapshot.nativeTypes.</td></tr>
+      <tr><td class="lbl"><a href="AI.NavMeshBuilder.html">NavMeshBuilder</a></td><td class="desc">Navigation mesh builder interface.</td></tr>
+      <tr><td class="lbl"><a href="AI.NavMeshEditorHelpers.html">NavMeshEditorHelpers</a></td><td class="desc">NavMesh utility functionality effective only in the Editor.</td></tr>
+      <tr><td class="lbl"><a href="AI.NavMeshVisualizationSettings.html">NavMeshVisualizationSettings</a></td><td class="desc">Represents the visualization state of the navigation debug graphics.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.Node.html">Node</a></td><td class="desc">Main GraphView node class.</td></tr>
+      <tr><td class="lbl"><a href="ObjectChangeEvents.html">ObjectChangeEvents</a></td><td class="desc">Exposes events that allow you to track undoable changes to objects in the editor.</td></tr>
+      <tr><td class="lbl"><a href="ObjectFactory.html">ObjectFactory</a></td><td class="desc">Use the DefaultObject to create a new UnityEngine.Object in the editor.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.ObjectField.html">ObjectField</a></td><td class="desc">
+ Makes a field to receive any object type. For more information, refer to UXML element ObjectField.
+ </td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.ObjectFlagsExtensions.html">ObjectFlagsExtensions</a></td><td class="desc">An extension class that contains member functions to ObjectFlags.</td></tr>
+      <tr><td class="lbl"><a href="Search.ObjectIndexer.html">ObjectIndexer</a></td><td class="desc">A specialized SearchIndexer which provides methods to index a Unity Object from custom indexers.</td></tr>
+      <tr><td class="lbl"><a href="ObjectNames.html">ObjectNames</a></td><td class="desc">Helper class for constructing displayable names for objects.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.ObjectOverride.html">ObjectOverride</a></td><td class="desc">Class with information about an object on a Prefab instance with overridden properties.</td></tr>
+      <tr><td class="lbl"><a href="ObjectPreview.html">ObjectPreview</a></td><td class="desc">Base Class to derive from when creating Custom Previews.</td></tr>
+      <tr><td class="lbl"><a href="SearchService.ObjectSelectorEngineAttribute.html">ObjectSelectorEngineAttribute</a></td><td class="desc">Use this class attribute to register ObjectSelector search engines automatically. Search engines with this attribute must implement the IObjectSelectorEngine interface.</td></tr>
+      <tr><td class="lbl"><a href="SearchService.ObjectSelectorSearch.html">ObjectSelectorSearch</a></td><td class="desc">Use this API to select objects. Engines for this type of search implement the IObjectSelectorEngine interface.</td></tr>
+      <tr><td class="lbl"><a href="SearchService.ObjectSelectorSearchContext.html">ObjectSelectorSearchContext</a></td><td class="desc">A search context implementation for ObjectSelector search engines. All methods that are called on an ObjectSelector search engine, and expect a ISearchContext, receive an object of this type.</td></tr>
+      <tr><td class="lbl"><a href="Overlays.Overlay.html">Overlay</a></td><td class="desc">Overlays are persistent and customizable panels and toolbars that are available within Editor Windows. Use Overlays to expose actions and tool options in a convenient and user-controllable way.</td></tr>
+      <tr><td class="lbl"><a href="Overlays.OverlayAttribute.html">OverlayAttribute</a></td><td class="desc">Attribute used to register a class as an overlay.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.PackageCollection.html">PackageCollection</a></td><td class="desc">A collection of PackageInfo objects.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.PackageInfo.html">PackageInfo</a></td><td class="desc">Structure describing a Unity Package.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.UI.PackageManagerExtensions.html">PackageManagerExtensions</a></td><td class="desc">Package Manager UI Extensions.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.PackageRegistrationEventArgs.html">PackageRegistrationEventArgs</a></td><td class="desc">Structure describing the PackageInfo entries to register or unregister during the Package Manager registration process.</td></tr>
+      <tr><td class="lbl"><a href="Build.Reporting.PackedAssets.html">PackedAssets</a></td><td class="desc">An extension to the BuildReport class that tracks how Assets contribute to the size of the build.</td></tr>
+      <tr><td class="lbl"><a href="MemoryProfiler.PackedMemorySnapshot.html">PackedMemorySnapshot</a></td><td class="desc">PackedMemorySnapshot is a compact representation of a memory snapshot.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.PackedMemorySnapshot.html">PackedMemorySnapshot</a></td><td class="desc">PackedMemorySnapshot is a compact representation of a memory snapshot that a player has sent through the profiler connection.</td></tr>
+      <tr><td class="lbl"><a href="Sprites.Packer.html">Packer</a></td><td class="desc">Sprite Packer helpers.</td></tr>
+      <tr><td class="lbl"><a href="Sprites.PackerJob.html">PackerJob</a></td><td class="desc">Current Sprite Packer job definition.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.PackOperationResult.html">PackOperationResult</a></td><td class="desc">Structure describing the result of a Client.Pack operation.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.Requests.PackRequest.html">PackRequest</a></td><td class="desc">Represents an asynchronous request to pack a package folder.</td></tr>
+      <tr><td class="lbl"><a href="Analytics.PerformanceReportingSettings.html">PerformanceReportingSettings</a></td><td class="desc">Normally performance reporting is enabled from the Services window, but if writing your own editor extension, this API can be used.</td></tr>
+      <tr><td class="lbl"><a href="PhysicsDebugWindow.html">PhysicsDebugWindow</a></td><td class="desc">Displays the Physics Debug Visualization options.The Physics Debug Visualization is only displayed if this window is visible.Additional resources: PhysicsVisualizationSettings.</td></tr>
+      <tr><td class="lbl"><a href="PhysicsVisualizationSettings.html">PhysicsVisualizationSettings</a></td><td class="desc">This class contains the settings controlling the Physics Debug Visualization.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.Pill.html">Pill</a></td><td class="desc">The Pill class includes methods for creating and managing a VisualElement that resembles a capsule. The Pill class includes text, an icon, and two optional child VisualElements: one to the left of the pill, and one to the right of the pill.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.Placemat.html">Placemat</a></td><td class="desc">Allows interactive manipulation of elements (drag, hide) over a virtual placemat.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.PlacematContainer.html">PlacematContainer</a></td><td class="desc">The GraphView layer for placemats.</td></tr>
+      <tr><td class="lbl"><a href="PlatformIcon.html">PlatformIcon</a></td><td class="desc">Icon slot container.</td></tr>
+      <tr><td class="lbl"><a href="PlatformIconKind.html">PlatformIconKind</a></td><td class="desc">Icon kind wrapper.</td></tr>
+      <tr><td class="lbl"><a href="Playables.PlayableOutputEditorExtensions.html">PlayableOutputEditorExtensions</a></td><td class="desc">Editor extensions for all types that implement IPlayableOutput.</td></tr>
+      <tr><td class="lbl"><a href="Build.Player.PlayerBuildInterface.html">PlayerBuildInterface</a></td><td class="desc">Low level interface for building scripts for Unity.</td></tr>
+      <tr><td class="lbl"><a href="Networking.PlayerConnection.PlayerConnectionGUI.html">PlayerConnectionGUI</a></td><td class="desc">This class contains methods to draw IMGUI Editor UI that relates to the Player Connection.</td></tr>
+      <tr><td class="lbl"><a href="Networking.PlayerConnection.PlayerConnectionGUILayout.html">PlayerConnectionGUILayout</a></td><td class="desc">This class contains methods to draw and automatically layout IMGUI Editor UI that relates to the Player Connection.</td></tr>
+      <tr><td class="lbl"><a href="Networking.PlayerConnection.PlayerConnectionGUIUtility.html">PlayerConnectionGUIUtility</a></td><td class="desc">Miscellaneous helper methods for PlayerConnectionGUI.</td></tr>
+      <tr><td class="lbl"><a href="PlayerSettings.html">PlayerSettings</a></td><td class="desc">Use Player settings to define how Unity builds and displays your final application.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Plugin.html">Plugin</a></td><td class="desc">The plug-in class describes the currently active version control plug-in and its configuration options.</td></tr>
+      <tr><td class="lbl"><a href="PluginImporter.html">PluginImporter</a></td><td class="desc">Represents a plugin importer.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.PopupField_1.html">PopupField&lt;T0&gt;</a></td><td class="desc">
+ Generic popup selection field.
+ </td></tr>
+      <tr><td class="lbl"><a href="PopupWindow.html">PopupWindow</a></td><td class="desc">Class used to display popup windows that inherit from PopupWindowContent.</td></tr>
+      <tr><td class="lbl"><a href="PopupWindowContent.html">PopupWindowContent</a></td><td class="desc">Class used to implement content for a popup window.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.Port.html">Port</a></td><td class="desc">GraphView Port class.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.PortSource_1.html">PortSource&lt;T0&gt;</a></td><td class="desc">Port source.</td></tr>
+      <tr><td class="lbl"><a href="Callbacks.PostProcessBuildAttribute.html">PostProcessBuildAttribute</a></td><td class="desc">Add this attribute to a method to get a notification just after building the player.</td></tr>
+      <tr><td class="lbl"><a href="Callbacks.PostProcessSceneAttribute.html">PostProcessSceneAttribute</a></td><td class="desc">Add this attribute to a method to get a notification just after building the Scene.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.PrecompiledAssemblyException.html">PrecompiledAssemblyException</a></td><td class="desc">An exception throw for Precompiled Assembly errors.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.PrefabOverride.html">PrefabOverride</a></td><td class="desc">Class with information about a given override on a Prefab instance.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.PrefabStage.html">PrefabStage</a></td><td class="desc">The PrefabStage class represents an editing context for Prefab Assets.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.PrefabStageUtility.html">PrefabStageUtility</a></td><td class="desc">Utility methods related to Prefab stages.</td></tr>
+      <tr><td class="lbl"><a href="PrefabUtility.html">PrefabUtility</a></td><td class="desc">Utility class for any Prefab related operations.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.PreloadInfo.html">PreloadInfo</a></td><td class="desc">Container for holding a list of preload objects for a Scene to be built.</td></tr>
+      <tr><td class="lbl"><a href="Presets.Preset.html">Preset</a></td><td class="desc">A Preset contains default values for an Object.</td></tr>
+      <tr><td class="lbl"><a href="Presets.PresetSelector.html">PresetSelector</a></td><td class="desc">This class implements a modal window that selects a Preset asset from the Project.</td></tr>
+      <tr><td class="lbl"><a href="Presets.PresetSelectorReceiver.html">PresetSelectorReceiver</a></td><td class="desc">Implement this class to control the selection change when selecting a Preset in the PresetSelector.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.PreviewSceneStage.html">PreviewSceneStage</a></td><td class="desc">The PreviewSceneStage class represents an editing context based on a single preview Scene.</td></tr>
+      <tr><td class="lbl"><a href="IMGUI.Controls.PrimitiveBoundsHandle.html">PrimitiveBoundsHandle</a></td><td class="desc">Base class for a compound handle to edit a bounding volume in the Scene view.</td></tr>
+      <tr><td class="lbl"><a href="MPE.ProcessService.html">ProcessService</a></td><td class="desc">*This is an experimental feature.* The ProcessService allows you to start slave instance of UnityEditor, opened to the same Project as the master instance, with a specific RoleProviderAttribute.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.ProfilerEditorUtility.html">ProfilerEditorUtility</a></td><td class="desc">A Utility class for Profiler tooling in the Unity Editor.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.Editor.ProfilerModule.html">ProfilerModule</a></td><td class="desc">Represents a Profiler module in the Profiler window.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.Editor.ProfilerModuleMetadataAttribute.html">ProfilerModuleMetadataAttribute</a></td><td class="desc">Provides metadata related to a ProfilerModule, such as its name and icon path.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.Editor.ProfilerModuleViewController.html">ProfilerModuleViewController</a></td><td class="desc">Provides a single view of content for a ProfilerModule displayed in the Profiler window.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.ProfilerTimeSampleSelection.html">ProfilerTimeSampleSelection</a></td><td class="desc">An object describing a selection made in a frame time sample based Profiler module.</td></tr>
+      <tr><td class="lbl"><a href="ProfilerWindow.html">ProfilerWindow</a></td><td class="desc">Use the ProfilerWindow class for interactions with the Profiler Window such as checking which frame it currently shows and controlling the selected Profiler sample in the CPU or GPU Usage Modules.</td></tr>
+      <tr><td class="lbl"><a href="Progress.html">Progress</a></td><td class="desc">The Progress utility class reports the progress of asynchronous tasks to Unity.</td></tr>
+      <tr><td class="lbl"><a href="SearchService.ProjectSearch.html">ProjectSearch</a></td><td class="desc">Use this API to perform searches in the Project. Engines for this type of search implement the IProjectSearchEngine interface.</td></tr>
+      <tr><td class="lbl"><a href="SearchService.ProjectSearchContext.html">ProjectSearchContext</a></td><td class="desc">A search context implementation for Project search engines. All methods that are called on a Project search engine, and expect a ISearchContext, receive an object of this type.</td></tr>
+      <tr><td class="lbl"><a href="SearchService.ProjectSearchEngineAttribute.html">ProjectSearchEngineAttribute</a></td><td class="desc">A class attribute that registers Project search engines automatically. Search engines with this attribute must implement the IProjectSearchEngine interface.</td></tr>
+      <tr><td class="lbl"><a href="PropertyDrawer.html">PropertyDrawer</a></td><td class="desc">Base class to derive custom property drawers from. Use this to create custom drawers for your own Serializable classes or for script variables with custom PropertyAttributes.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.PropertyField.html">PropertyField</a></td><td class="desc">
+ A SerializedProperty wrapper VisualElement that, on Bind(), will generate the correct field elements with the correct binding paths. For more information, refer to UXML element PropertyField.
+ </td></tr>
+      <tr><td class="lbl"><a href="PropertyModification.html">PropertyModification</a></td><td class="desc">Defines a single modified property.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Provider.html">Provider</a></td><td class="desc">This class provides access to the version control API.</td></tr>
+      <tr><td class="lbl"><a href="Purchasing.PurchasingSettings.html">PurchasingSettings</a></td><td class="desc">Editor API for the Unity Services editor feature. Normally Purchasing is enabled from the Services window, but if writing your own editor extension, this API can be used.</td></tr>
+      <tr><td class="lbl"><a href="Search.Query_2.html">Query&lt;T0,T1&gt;</a></td><td class="desc">Provides methods to define an operation that can be used to filter a data set.</td></tr>
+      <tr><td class="lbl"><a href="Search.Query_1.html">Query&lt;T0&gt;</a></td><td class="desc">Provides methods to define an operation that can be used to filter a data set.</td></tr>
+      <tr><td class="lbl"><a href="Search.QueryEngine.html">QueryEngine</a></td><td class="desc">A QueryEngine defines how to build a query from an input string.
+It can be customized to support custom filters and operators.
+Default query engine of type object.</td></tr>
+      <tr><td class="lbl"><a href="Search.QueryEngine_1.html">QueryEngine&lt;T0&gt;</a></td><td class="desc">A QueryEngine defines how to build a query from an input string.
+It can be customized to support custom filters and operators.</td></tr>
+      <tr><td class="lbl"><a href="Search.QueryEngineFilterAttribute.html">QueryEngineFilterAttribute</a></td><td class="desc">Base attribute class used to define a custom filter on a QueryEngine.
+All filter types supported by QueryEngine.AddFilter are supported by this attribute.</td></tr>
+      <tr><td class="lbl"><a href="Search.QueryEngineParameterTransformerAttribute.html">QueryEngineParameterTransformerAttribute</a></td><td class="desc">Base attribute class that defines a custom parameter transformer function.</td></tr>
+      <tr><td class="lbl"><a href="Search.QueryError.html">QueryError</a></td><td class="desc">A QueryError holds the definition of a query parsing error.</td></tr>
+      <tr><td class="lbl"><a href="Search.QueryGraph.html">QueryGraph</a></td><td class="desc">Class that represents a query graph.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.RawFrameDataView.html">RawFrameDataView</a></td><td class="desc">Provides access to the Profiler data for a specific frame and thread.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.RectangleSelector.html">RectangleSelector</a></td><td class="desc">Rectangle selection box manipulator.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.RectField.html">RectField</a></td><td class="desc">
+ A Rect field. For more information, refer to UXML element RectField.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.RectIntField.html">RectIntField</a></td><td class="desc">
+ A RectInt field. For more information, refer to UXML element RectIntField.
+ </td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.RectUtils.html">RectUtils</a></td><td class="desc">Utilities for rectangle selections.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.RegistryInfo.html">RegistryInfo</a></td><td class="desc">Provides information about a package registry.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.RemovedComponent.html">RemovedComponent</a></td><td class="desc">Class with information about a component that has been removed from a Prefab instance.</td></tr>
+      <tr><td class="lbl"><a href="ShaderKeywordFilter.RemoveIfAttribute.html">RemoveIfAttribute</a></td><td class="desc">Remove the specified shader keywords from the build if the data field matches the condition.</td></tr>
+      <tr><td class="lbl"><a href="ShaderKeywordFilter.RemoveIfNotAttribute.html">RemoveIfNotAttribute</a></td><td class="desc">Remove the specified shader keywords from the build if the data field doesn't match the condition.</td></tr>
+      <tr><td class="lbl"><a href="ShaderKeywordFilter.RemoveOrSelectAttribute.html">RemoveOrSelectAttribute</a></td><td class="desc">Either remove or include the specified shader keywords in the build, depending on the data field underneath.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.Requests.RemoveRequest.html">RemoveRequest</a></td><td class="desc">Represents an asynchronous request to remove a package from the project.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.RenderPipelineEditorUtility.html">RenderPipelineEditorUtility</a></td><td class="desc">Helper class that contains a utility function on ScriptableRenderPipeline for Editor.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.RepositoryInfo.html">RepositoryInfo</a></td><td class="desc">Includes information about the repository that hosts the package.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.Requests.Request.html">Request</a></td><td class="desc">Tracks the state of an asynchronous Unity Package Manager (Upm) server operation.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.Requests.Request_1.html">Request&lt;T0&gt;</a></td><td class="desc">Tracks the state of an asynchronous Unity Package Manager (Upm) server operation that returns a non-empty response.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.Requests.ResetToEditorDefaultsRequest.html">ResetToEditorDefaultsRequest</a></td><td class="desc">Represents an asynchronous request to reset the project packages to the current Editor default configuration.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.ResizableElement.html">ResizableElement</a></td><td class="desc">Instantiates a [ResizableElement] that you add as a child of the [VisualElement] that you want to resize.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.Resizer.html">Resizer</a></td><td class="desc">Resizer manipulator element.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.ResponseFileData.html">ResponseFileData</a></td><td class="desc">Data class used for storing parsed response file data.</td></tr>
+      <tr><td class="lbl"><a href="MPE.RoleProviderAttribute.html">RoleProviderAttribute</a></td><td class="desc">An attribute used to decorate function that defines how a slave process can interact with a main instance of Unity.</td></tr>
+      <tr><td class="lbl"><a href="Callbacks.RunAfterAssemblyAttribute.html">RunAfterAssemblyAttribute</a></td><td class="desc">Add this attribute to a callback method to mark that this callback must be run after any callbacks that are part of the specified assembly.</td></tr>
+      <tr><td class="lbl"><a href="Callbacks.RunAfterClassAttribute.html">RunAfterClassAttribute</a></td><td class="desc">Add this attribute to a callback method to mark that this callback must be run after any callbacks that are part of the specified class.</td></tr>
+      <tr><td class="lbl"><a href="Callbacks.RunAfterPackageAttribute.html">RunAfterPackageAttribute</a></td><td class="desc">Add this attribute to a callback method to mark that this callback must be run after any callbacks that are part of the specified package.</td></tr>
+      <tr><td class="lbl"><a href="Callbacks.RunBeforeAssemblyAttribute.html">RunBeforeAssemblyAttribute</a></td><td class="desc">Add this attribute to a callback method to indicate that this callback must be run before any callbacks that are part of the specified assembly.</td></tr>
+      <tr><td class="lbl"><a href="Callbacks.RunBeforeClassAttribute.html">RunBeforeClassAttribute</a></td><td class="desc">Add this attribute to a callback method to mark that this callback must be run before any callbacks that are part of the specified class.</td></tr>
+      <tr><td class="lbl"><a href="Callbacks.RunBeforePackageAttribute.html">RunBeforePackageAttribute</a></td><td class="desc">Add this attribute to a callback method to mark that this callback must be run before any callbacks that are part of the specified package.</td></tr>
+      <tr><td class="lbl"><a href="SceneAsset.html">SceneAsset</a></td><td class="desc">SceneAsset is used to reference Scene objects in the Editor.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.SceneBundleInfo.html">SceneBundleInfo</a></td><td class="desc">Container for holding asset loading information for a streamed Scene AssetBundle to be built.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.SceneCullingMasks.html">SceneCullingMasks</a></td><td class="desc">Masks that control what kind of Scene views and Game views Unity should render a GameObject in.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.SceneLoadInfo.html">SceneLoadInfo</a></td><td class="desc">Container for holding preload information for a given serialized Scene in an AssetBundle.</td></tr>
+      <tr><td class="lbl"><a href="Search.Providers.SceneQueryEngineFilterAttribute.html">SceneQueryEngineFilterAttribute</a></td><td class="desc">Custom attribute is used to customize the search engine used by the scene search provider.</td></tr>
+      <tr><td class="lbl"><a href="Search.Providers.SceneQueryEngineParameterTransformerAttribute.html">SceneQueryEngineParameterTransformerAttribute</a></td><td class="desc">Attribute class that defines a custom parameter transformer function applied for a query running in a scene provider defined by a scene custom filter using SceneQueryEngineFilterAttribute.</td></tr>
+      <tr><td class="lbl"><a href="SearchService.SceneSearch.html">SceneSearch</a></td><td class="desc">Use this API to perform searches in the Scene. Engines for this type of search implement the ISceneSearchEngine interface.</td></tr>
+      <tr><td class="lbl"><a href="SearchService.SceneSearchContext.html">SceneSearchContext</a></td><td class="desc">A search context implementation for Scene search engines. All methods that are called on a Scene search engine, and expect a ISearchContext, receive an object of this type.</td></tr>
+      <tr><td class="lbl"><a href="SearchService.SceneSearchEngineAttribute.html">SceneSearchEngineAttribute</a></td><td class="desc">A class attribute that registers Scene search engines automatically. Search engines with this attribute must implement the ISceneSearchEngine interface.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.SceneSetup.html">SceneSetup</a></td><td class="desc">The setup information for a Scene in the SceneManager. This cannot be used in Play Mode. </td></tr>
+      <tr><td class="lbl"><a href="Build.Reporting.ScenesUsingAssets.html">ScenesUsingAssets</a></td><td class="desc">An extension to the BuildReport class that tracks which scenes in the build have references to a specific asset in the build.</td></tr>
+      <tr><td class="lbl"><a href="SceneTemplate.SceneTemplateAsset.html">SceneTemplateAsset</a></td><td class="desc">An Asset that stores everything required to instantiate a new Scene from a templated Scene.</td></tr>
+      <tr><td class="lbl"><a href="SceneTemplate.SceneTemplatePipelineAdapter.html">SceneTemplatePipelineAdapter</a></td><td class="desc">An adapter that implements all the functions of ISceneTemplatePipeline for easier usage. Use it to partially override a ISceneTemplatePipeline.</td></tr>
+      <tr><td class="lbl"><a href="SceneTemplate.SceneTemplateService.html">SceneTemplateService</a></td><td class="desc">A utility class that manages SceneTemplateAsset instantiation.</td></tr>
+      <tr><td class="lbl"><a href="SceneView.html">SceneView</a></td><td class="desc">Use this class to manage SceneView settings, change the SceneView camera properties, subscribe to events, call SceneView methods, and render open scenes.</td></tr>
+      <tr><td class="lbl"><a href="SceneViewCameraWindow.html">SceneViewCameraWindow</a></td><td class="desc">Use this class to instantiate a SceneViewCameraWindow window.</td></tr>
+      <tr><td class="lbl"><a href="SceneVisibilityManager.html">SceneVisibilityManager</a></td><td class="desc">Manages Scene Visibility in the editor.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.Scope.html">Scope</a></td><td class="desc">This class allows for nodes to be grouped into a common area, or Scope. This class includes methods that automatically resize and position the Scope to encompass the group of nodes.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Rendering.ScriptableBakedReflectionSystem.html">ScriptableBakedReflectionSystem</a></td><td class="desc">Empty implementation of IScriptableBakedReflectionSystem.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Rendering.ScriptableBakedReflectionSystemSettings.html">ScriptableBakedReflectionSystemSettings</a></td><td class="desc">Global settings for the scriptable baked reflection system.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ScriptableRenderPipelineExtensionAttribute.html">ScriptableRenderPipelineExtensionAttribute</a></td><td class="desc">Use this attribute to apply a condition to a filter that finds the class based on which ScriptableRenderPipeline you are currently using.</td></tr>
+      <tr><td class="lbl"><a href="ScriptableSingleton_1.html">ScriptableSingleton&lt;T0&gt;</a></td><td class="desc">Generic class for storing Editor state.</td></tr>
+      <tr><td class="lbl"><a href="ScriptableWizard.html">ScriptableWizard</a></td><td class="desc">Derive from this class to create an editor wizard.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.ScriptCompilerOptions.html">ScriptCompilerOptions</a></td><td class="desc">Compiler options passed to the script compiler.</td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.ScriptedImporter.html">ScriptedImporter</a></td><td class="desc">Abstract base class for custom Asset importers.</td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.ScriptedImporterAttribute.html">ScriptedImporterAttribute</a></td><td class="desc">Class attribute used to register a custom asset importer derived from ScriptedImporter with Unity's Asset import pipeline.</td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.ScriptedImporterEditor.html">ScriptedImporterEditor</a></td><td class="desc">Default editor for source assets handled by Scripted Importers.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchAction.html">SearchAction</a></td><td class="desc">Defines an action that can be applied on a SearchItem of a specific search provider type.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchActionsProviderAttribute.html">SearchActionsProviderAttribute</a></td><td class="desc">Attribute used to declare a static method that defines new actions for specific search providers.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchColumn.html">SearchColumn</a></td><td class="desc">Search columns are used to display additional information in the Search Table view.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchColumnProviderAttribute.html">SearchColumnProviderAttribute</a></td><td class="desc">The search column provider attribute is used to define new formats for a given column.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchContext.html">SearchContext</a></td><td class="desc">The search context includes all the data necessary to perform a query. It allows the full customization of how a query may be performed.</td></tr>
+      <tr><td class="lbl"><a href="IMGUI.Controls.SearchField.html">SearchField</a></td><td class="desc">The SearchField control creates a text field for a user to input text that can be used for searching.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.SearchFieldBase_2.html">SearchFieldBase&lt;T0,T1&gt;</a></td><td class="desc">
+ The base class for a search field.
+ </td></tr>
+      <tr><td class="lbl"><a href="Search.SearchIndexer.html">SearchIndexer</a></td><td class="desc">Base class for a document Indexer which provides methods for retrieving a document given a specific pattern in roughly log(n). This allows you to search a large index more quickly.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchItem.html">SearchItem</a></td><td class="desc">Search items are returned by the search provider to show to the user after a search is performed. The search item holds all the data that is used to sort and present the search results. Some members of a SearchItem can be specified in an asynchronous callback (see SearchItem.fetchThumbnail, SearchItem.fetchDescription, etc).</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchItemProviderAttribute.html">SearchItemProviderAttribute</a></td><td class="desc">Attribute used to declare a static method that will create a new search provider at load time.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchProvider.html">SearchProvider</a></td><td class="desc">SearchProvider manages search for specific types of items and manages all fields of a SearchItem such as thumbnails, descriptions, subfilters.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchQueryError.html">SearchQueryError</a></td><td class="desc">Represents a query parsing error.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.Requests.SearchRequest.html">SearchRequest</a></td><td class="desc">Represents an asynchronous request to find a package.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchSelection.html">SearchSelection</a></td><td class="desc">Provides methods to give readonly access to the current list of selected items in Search.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchSelectorAttribute.html">SearchSelectorAttribute</a></td><td class="desc">Search selector attribute used to define how a custom value can be selected from a search item.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchService.html">SearchService</a></td><td class="desc">Principal Search API to initiate searches and fetch results.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.SearchTreeEntry.html">SearchTreeEntry</a></td><td class="desc">This class describes a search tree entry. The search window displays search tree entries in the GraphView.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.SearchTreeGroupEntry.html">SearchTreeGroupEntry</a></td><td class="desc">This class describes group entries in the search tree. The search tree is displayed in the search window.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchUtils.html">SearchUtils</a></td><td class="desc">Provides various utility functions that are used by SearchProvider.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchViewState.html">SearchViewState</a></td><td class="desc">Search view state is used to create new Search windows. See SearchService.ShowWindow.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.SearchWindow.html">SearchWindow</a></td><td class="desc">This subclass displays a searchable menu of available graph nodes.</td></tr>
+      <tr><td class="lbl"><a href="ShaderKeywordFilter.SelectIfAttribute.html">SelectIfAttribute</a></td><td class="desc">Include only the specified shader keywords in the build if the data field matches the condition.</td></tr>
+      <tr><td class="lbl"><a href="ShaderKeywordFilter.SelectIfNotAttribute.html">SelectIfNotAttribute</a></td><td class="desc">Include only the specified shader keywords in the build if the data field doesn't match the condition.</td></tr>
+      <tr><td class="lbl"><a href="Selection.html">Selection</a></td><td class="desc">Access to the selection in the editor.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.SelectionDragger.html">SelectionDragger</a></td><td class="desc">Selection dragger manipulator.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.SelectionDropper.html">SelectionDropper</a></td><td class="desc">Selection drag&amp;drop manipulator.</td></tr>
+      <tr><td class="lbl"><a href="ShaderKeywordFilter.SelectOrRemoveAttribute.html">SelectOrRemoveAttribute</a></td><td class="desc">Either include or remove the specified shader keywords in the build, depending on the data field underneath.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.SerializationInfo.html">SerializationInfo</a></td><td class="desc">Container for holding object serialization order information for a build.</td></tr>
+      <tr><td class="lbl"><a href="SerializationUtility.html">SerializationUtility</a></td><td class="desc">Utility functions related to Serialization.</td></tr>
+      <tr><td class="lbl"><a href="SerializedObject.html">SerializedObject</a></td><td class="desc">SerializedObject and SerializedProperty are classes for editing serialized fields on Unity objects in a completely generic way. These classes automatically handle dirtying individual serialized fields so they will be processed by the Undo system and styled correctly for Prefab overrides when drawn in the Inspector.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.SerializedObjectChangeEvent.html">SerializedObjectChangeEvent</a></td><td class="desc">
+ An event sent when any value in a SerializedObject changes
+ </td></tr>
+      <tr><td class="lbl"><a href="SerializedProperty.html">SerializedProperty</a></td><td class="desc">SerializedProperty and SerializedObject are classes for editing properties on objects in a completely generic way that automatically handles undo, multi-object editing and Prefab overrides.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.SerializedPropertyChangeEvent.html">SerializedPropertyChangeEvent</a></td><td class="desc">
+ An event sent when a value in a PropertyField changes.
+ </td></tr>
+      <tr><td class="lbl"><a href="SessionState.html">SessionState</a></td><td class="desc">SessionState is a Key-Value Store intended for storing and retrieving Editor session state that should survive assembly reloading.</td></tr>
+      <tr><td class="lbl"><a href="SettingsProvider.html">SettingsProvider</a></td><td class="desc">SettingsProvider is the configuration class that specifies how a Project setting or a preference should appear in the Settings or Preferences window.</td></tr>
+      <tr><td class="lbl"><a href="SettingsProviderAttribute.html">SettingsProviderAttribute</a></td><td class="desc">Attribute used to register a new SettingsProvider. Use this attribute to decorate a function that returns an instance of a SettingsProvider. If the function returns null, no SettingsProvider appears in the Settings window.</td></tr>
+      <tr><td class="lbl"><a href="SettingsProviderGroupAttribute.html">SettingsProviderGroupAttribute</a></td><td class="desc">Attribute used to register multiple SettingsProvider items. Use this attribute to decorate a function that returns an array of SettingsProvider instances. If the function returns null, no SettingsProvider appears in the Settings window.</td></tr>
+      <tr><td class="lbl"><a href="SettingsService.html">SettingsService</a></td><td class="desc">This class provides global APIs to interact with the Settings window.</td></tr>
+      <tr><td class="lbl"><a href="ShaderData.html">ShaderData</a></td><td class="desc">This class describes a shader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderGUI.html">ShaderGUI</a></td><td class="desc">Abstract class to derive from for defining custom GUI for shader properties and for extending the material preview.</td></tr>
+      <tr><td class="lbl"><a href="ShaderImporter.html">ShaderImporter</a></td><td class="desc">Shader importer lets you modify shader import settings from Editor scripts.</td></tr>
+      <tr><td class="lbl"><a href="ShaderInclude.html">ShaderInclude</a></td><td class="desc">Shader include file asset.</td></tr>
+      <tr><td class="lbl"><a href="ShaderUtil.html">ShaderUtil</a></td><td class="desc">Utility functions to assist with working with shaders from the editor.</td></tr>
+      <tr><td class="lbl"><a href="ShortcutManagement.ShortcutAttribute.html">ShortcutAttribute</a></td><td class="desc">Attribute used to register a static method as the action for an action shortcut.</td></tr>
+      <tr><td class="lbl"><a href="ShortcutManagement.ShortcutBaseAttribute.html">ShortcutBaseAttribute</a></td><td class="desc">Abstract base class for ShortcutAttribute and ClutchShortcutAttribute.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.ShortcutHandler.html">ShortcutHandler</a></td><td class="desc">Shortcut handler.</td></tr>
+      <tr><td class="lbl"><a href="ShortcutManagement.ShortcutManager.html">ShortcutManager</a></td><td class="desc">Provides access to an instance of IShortcutManager for managing shortcuts.</td></tr>
+      <tr><td class="lbl"><a href="SketchUpImporter.html">SketchUpImporter</a></td><td class="desc">Derives from AssetImporter to handle importing of SketchUp files.</td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.SketchupMaterialDescriptionPreprocessor.html">SketchupMaterialDescriptionPreprocessor</a></td><td class="desc">This is a default implementation for AssetPostProcessor.OnPreprocessMaterialDescription, this implementation converts material descriptions imported from Sketchup assets into materials for the internal rendering pipeline.</td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.SourceTextureInformation.html">SourceTextureInformation</a></td><td class="desc">Original texture data information.</td></tr>
+      <tr><td class="lbl"><a href="SpeedTreeImporter.html">SpeedTreeImporter</a></td><td class="desc">AssetImportor for importing SpeedTree model assets.</td></tr>
+      <tr><td class="lbl"><a href="IMGUI.Controls.SphereBoundsHandle.html">SphereBoundsHandle</a></td><td class="desc">A compound handle to edit a sphere-shaped bounding volume in the Scene view.</td></tr>
+      <tr><td class="lbl"><a href="U2D.SpriteAtlasAsset.html">SpriteAtlasAsset</a></td><td class="desc">SpriteAtlasAsset stores inputs for generating SpriteAtlas and generates atlas textures on Import.</td></tr>
+      <tr><td class="lbl"><a href="U2D.SpriteAtlasExtensions.html">SpriteAtlasExtensions</a></td><td class="desc">Method extensions for SpriteAtlas in Editor.</td></tr>
+      <tr><td class="lbl"><a href="U2D.SpriteAtlasImporter.html">SpriteAtlasImporter</a></td><td class="desc">SpriteAtlasImporter imports SpriteAtlasAsset and generates SpriteAtlas.</td></tr>
+      <tr><td class="lbl"><a href="U2D.SpriteAtlasUtility.html">SpriteAtlasUtility</a></td><td class="desc">Utility methods to pack atlases in the Project.</td></tr>
+      <tr><td class="lbl"><a href="U2D.SpriteEditorExtension.html">SpriteEditorExtension</a></td><td class="desc">
+          Sprite extension methods that are accessible in Editor only.</td></tr>
+      <tr><td class="lbl"><a href="Sprites.SpriteUtility.html">SpriteUtility</a></td><td class="desc">Helper utilities for accessing Sprite data.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.StackNode.html">StackNode</a></td><td class="desc">Use this class to customize StackNodes and to manage dragging GraphElements over StackNodes.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.Stage.html">Stage</a></td><td class="desc">The Stage class represents an editing context which includes a collection of Scenes.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.StageUtility.html">StageUtility</a></td><td class="desc">Utility methods related to stages.</td></tr>
+      <tr><td class="lbl"><a href="Animations.StateMachineBehaviourContext.html">StateMachineBehaviourContext</a></td><td class="desc">This class contains all the owner's information for this State Machine Behaviour.</td></tr>
+      <tr><td class="lbl"><a href="StaticOcclusionCulling.html">StaticOcclusionCulling</a></td><td class="desc">StaticOcclusionCulling lets you perform static occlusion culling operations.</td></tr>
+      <tr><td class="lbl"><a href="StaticOcclusionCullingVisualization.html">StaticOcclusionCullingVisualization</a></td><td class="desc">Used to visualize static occlusion culling at development time in Scene view.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.StickyNote.html">StickyNote</a></td><td class="desc">Instantiates a [GraphElement] used for comment text.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.StickyNoteChangeEvent.html">StickyNoteChangeEvent</a></td><td class="desc">The event sent when a [StickyNote] was changed.</td></tr>
+      <tr><td class="lbl"><a href="Build.Reporting.StrippingInfo.html">StrippingInfo</a></td><td class="desc">The StrippingInfo object contains information about which native code modules in the engine are still present in the build, and the reasons why they are still present.</td></tr>
+      <tr><td class="lbl"><a href="Sysroot.html">Sysroot</a></td><td class="desc">Base class for implementing sysroots and toolchains for IL2CPP</td></tr>
+      <tr><td class="lbl"><a href="ShaderKeywordFilter.TagConstraintAttribute.html">TagConstraintAttribute</a></td><td class="desc">Enable or disable shader keyword filter attributes based on shader tags.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.TagField.html">TagField</a></td><td class="desc">
+ A TagField editor. For more information, refer to UXML element TagField.
+ </td></tr>
+      <tr><td class="lbl"><a href="VersionControl.Task.html">Task</a></td><td class="desc">A Task describes an instance of a version control operation.</td></tr>
+      <tr><td class="lbl"><a href="TerrainTools.TerrainInspectorUtility.html">TerrainInspectorUtility</a></td><td class="desc">Utility class for Terrain Inspector GUI.</td></tr>
+      <tr><td class="lbl"><a href="TerrainLayerInspector.html">TerrainLayerInspector</a></td><td class="desc">The default Inspector class for Terrain Layer.</td></tr>
+      <tr><td class="lbl"><a href="TerrainLayerUtility.html">TerrainLayerUtility</a></td><td class="desc">A set of helper functions for using terrain layers.</td></tr>
+      <tr><td class="lbl"><a href="TerrainTools.TerrainPaintTool_1.html">TerrainPaintTool&lt;T0&gt;</a></td><td class="desc">Base class for terrain painting tools.</td></tr>
+      <tr><td class="lbl"><a href="TerrainTools.TerrainPaintUtilityEditor.html">TerrainPaintUtilityEditor</a></td><td class="desc">Terrain paint utility editor helper functions.</td></tr>
+      <tr><td class="lbl"><a href="TerrainTools.TerrainToolShortcutContext.html">TerrainToolShortcutContext</a></td><td class="desc">The shortcut context that is active while editing Terrain.</td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.TextureGenerator.html">TextureGenerator</a></td><td class="desc">Experimental utilities for generating Texture2D.</td></tr>
+      <tr><td class="lbl"><a href="TextureImporter.html">TextureImporter</a></td><td class="desc">Texture importer lets you modify Texture2D import settings from editor scripts.</td></tr>
+      <tr><td class="lbl"><a href="TextureImporterPlatformSettings.html">TextureImporterPlatformSettings</a></td><td class="desc">Stores platform specifics settings of a TextureImporter.</td></tr>
+      <tr><td class="lbl"><a href="TextureImporterSettings.html">TextureImporterSettings</a></td><td class="desc">Stores settings of a TextureImporter.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.TextValueField_1.html">TextValueField&lt;T0&gt;</a></td><td class="desc">
+ Base class for text fields.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.TextValueFieldTraits_2.html">TextValueFieldTraits&lt;T0,T1&gt;</a></td><td class="desc">
+ Specifies the TextValueField's UxmlTraits.
+ </td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.ThreeDSMaterialDescriptionPreprocessor.html">ThreeDSMaterialDescriptionPreprocessor</a></td><td class="desc">This is a default implementation for AssetPostProcessor.OnPreprocessMaterialDescription, this implementation converts material descriptions imported from .3DS assets into materials for the internal rendering pipeline.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.TokenNode.html">TokenNode</a></td><td class="desc">The TokenNode class includes methods for creating and managing a Node that resembles a capsule. The TokenNode class includes a title, an icon, one input Port, and one output Port.</td></tr>
+      <tr><td class="lbl"><a href="EditorTools.ToolAttribute.html">ToolAttribute</a></td><td class="desc">Base class from which EditorToolAttribute and EditorToolContextAttribute inherit.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.Toolbar.html">Toolbar</a></td><td class="desc">
+ A toolbar for tool windows. For more information, refer to UXML element Toolbar.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.ToolbarBreadcrumbs.html">ToolbarBreadcrumbs</a></td><td class="desc">
+ Creates a breadcrumb UI element for the toolbar to help users navigate a hierarchy. For example, the visual scripting breadcrumb toolbar makes it easier to explore scripts because users can jump to any level of the script by clicking a breadcrumb item. For more information, refer to UXML element ToolbarBreadcrumbs.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.ToolbarButton.html">ToolbarButton</a></td><td class="desc">
+ A button for the toolbar. For more information, refer to UXML element ToolbarButton.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.ToolbarMenu.html">ToolbarMenu</a></td><td class="desc">
+ A drop-down menu for the toolbar. For more information, refer to UXML element ToolbarMenu.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.ToolbarMenuElementExtensions.html">ToolbarMenuElementExtensions</a></td><td class="desc">
+ An extension class that handles menu management for elements that are implemented with the IToolbarMenuElement interface, but are identical to DropdownMenu.
+ </td></tr>
+      <tr><td class="lbl"><a href="Overlays.ToolbarOverlay.html">ToolbarOverlay</a></td><td class="desc">
+          ToolbarOverlay is an implementation of Overlay that provides a base for Overlays that can be placed in horizontal or vertical toolbars.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.ToolbarPopupSearchField.html">ToolbarPopupSearchField</a></td><td class="desc">
+ The pop-up search field for the toolbar. The search field includes a menu button. For more information, refer to UXML element ToolbarPopupSearchField.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.ToolbarSearchField.html">ToolbarSearchField</a></td><td class="desc">
+ A search field for the toolbar. For more information, refer to UXML element ToolbarSearchField.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.ToolbarSpacer.html">ToolbarSpacer</a></td><td class="desc">
+ A toolbar spacer of static size. For more information, refer to UXML element ToolbarSpacer.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.ToolbarToggle.html">ToolbarToggle</a></td><td class="desc">
+ A toggle for the toolbar. For more information, refer to UXML element ToolbarToggle.
+ </td></tr>
+      <tr><td class="lbl"><a href="EditorTools.ToolManager.html">ToolManager</a></td><td class="desc">This class manipulates editor tools in the Scene view.</td></tr>
+      <tr><td class="lbl"><a href="Tools.html">Tools</a></td><td class="desc">Class used to manipulate the tools used in Unity's Scene View.</td></tr>
+      <tr><td class="lbl"><a href="TransformUtils.html">TransformUtils</a></td><td class="desc">Editor Transform Utility Class.</td></tr>
+      <tr><td class="lbl"><a href="IMGUI.Controls.TreeView.html">TreeView</a></td><td class="desc">The TreeView is an IMGUI control that lets you create tree views, list views and multi-column tables for Editor tools.</td></tr>
+      <tr><td class="lbl"><a href="IMGUI.Controls.TreeViewItem.html">TreeViewItem</a></td><td class="desc">The TreeViewItem is used to build the tree representation of a tree data structure.</td></tr>
+      <tr><td class="lbl"><a href="IMGUI.Controls.TreeViewState.html">TreeViewState</a></td><td class="desc">The TreeViewState contains serializable state information for the TreeView.</td></tr>
+      <tr><td class="lbl"><a href="TrueTypeFontImporter.html">TrueTypeFontImporter</a></td><td class="desc">AssetImporter for importing Fonts.</td></tr>
+      <tr><td class="lbl"><a href="TypeCache.html">TypeCache</a></td><td class="desc">Provides methods for fast type extraction from assemblies loaded into the Unity Domain.</td></tr>
+      <tr><td class="lbl"><a href="Build.Player.TypeDB.html">TypeDB</a></td><td class="desc">Container for holding information about script type and property data.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.TypeDescriptionEntries.html">TypeDescriptionEntries</a></td><td class="desc">A class that houses type description entries, returned from PackedMemorySnapshot.typeDescriptions.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.TypeFlagsExtensions.html">TypeFlagsExtensions</a></td><td class="desc">An extension class that contains member functions to TypeFlags.</td></tr>
+      <tr><td class="lbl"><a href="Undo.html">Undo</a></td><td class="desc">Lets you register undo operations on specific objects you are about to perform changes on.</td></tr>
+      <tr><td class="lbl"><a href="Events.UnityEventTools.html">UnityEventTools</a></td><td class="desc">Editor tools for working with persistent UnityEvents.</td></tr>
+      <tr><td class="lbl"><a href="UnityLinker.UnityLinkerBuildPipelineData.html">UnityLinkerBuildPipelineData</a></td><td class="desc">Contains information for various IUnityLinkerProcessor callbacks.</td></tr>
+      <tr><td class="lbl"><a href="Unwrapping.html">Unwrapping</a></td><td class="desc">This class holds everything you may need in regard to uv-unwrapping.</td></tr>
+      <tr><td class="lbl"><a href="Playables.Utility.html">Utility</a></td><td class="desc">Editor utility functions for the Playable graph and its nodes.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.UxmlNamespacePrefixAttribute.html">UxmlNamespacePrefixAttribute</a></td><td class="desc">
+ Attribute that can be used on an assembly to define an XML namespace prefix for a namespace.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.Vector2Field.html">Vector2Field</a></td><td class="desc">
+ A Vector2 field. For more information, refer to UXML element Vector2Field.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.Vector2IntField.html">Vector2IntField</a></td><td class="desc">
+ A Vector2Int field. For more information, refer to UXML element Vector2IntField.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.Vector3Field.html">Vector3Field</a></td><td class="desc">
+ A Vector3 field. For more information, refer to UXML element Vector3Field.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.Vector3IntField.html">Vector3IntField</a></td><td class="desc">
+ A Vector3Int field. For more information, refer to UXML element Vector3IntField.
+ </td></tr>
+      <tr><td class="lbl"><a href="UIElements.Vector4Field.html">Vector4Field</a></td><td class="desc">
+ A Vector4 field. For more information, refer to UXML element Vector4Field.
+ </td></tr>
+      <tr><td class="lbl"><a href="VersionControl.VersionControlAttribute.html">VersionControlAttribute</a></td><td class="desc">Allows you to mark a class as a version control system object.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.VersionControlDescriptor.html">VersionControlDescriptor</a></td><td class="desc">Contains unique version control system name.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.VersionControlManager.html">VersionControlManager</a></td><td class="desc">Manages version control systems.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.VersionControlObject.html">VersionControlObject</a></td><td class="desc">The abstract base class for representing a version control system.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.VersionControlUtils.html">VersionControlUtils</a></td><td class="desc">Contains version control system specific utility methods.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.VersionsInfo.html">VersionsInfo</a></td><td class="desc">Identifies the available versions of a package and which are the compatible, latest, and recommended versions.</td></tr>
+      <tr><td class="lbl"><a href="VideoClipImporter.html">VideoClipImporter</a></td><td class="desc">VideoClipImporter lets you modify VideoClip import settings from Editor scripts.</td></tr>
+      <tr><td class="lbl"><a href="VideoImporterTargetSettings.html">VideoImporterTargetSettings</a></td><td class="desc">Importer settings that can have platform-specific values.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.WriteCommand.html">WriteCommand</a></td><td class="desc">Container for holding information about a serialized file to be written.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Structs</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Struct</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="ShortcutManagement.ActiveProfileChangedEventArgs.html">ActiveProfileChangedEventArgs</a></td><td class="desc">Provides data for the IShortcutManager.activeProfileChanged event.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.AlbedoSwatchInfo.html">AlbedoSwatchInfo</a></td><td class="desc">Contains the custom albedo swatch data.</td></tr>
+      <tr><td class="lbl"><a href="Animations.AnimatorCondition.html">AnimatorCondition</a></td><td class="desc">Condition that is used to determine if a transition must be taken.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.ArtifactID.html">ArtifactID</a></td><td class="desc">Uniquely identifies a produced artifact such as an imported asset (e.g. result of importing a texture).</td></tr>
+      <tr><td class="lbl"><a href="Experimental.ArtifactKey.html">ArtifactKey</a></td><td class="desc">An ArtifactKey is used for specifying an artifact to lookup or produce.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.AssemblyDefinitionPlatform.html">AssemblyDefinitionPlatform</a></td><td class="desc">Contains information about a platform supported by the assembly definition files.</td></tr>
+      <tr><td class="lbl"><a href="AssetBundleBuild.html">AssetBundleBuild</a></td><td class="desc">AssetBundle building map entry.</td></tr>
+      <tr><td class="lbl"><a href="Sprites.AtlasSettings.html">AtlasSettings</a></td><td class="desc">Describes the final atlas texture.</td></tr>
+      <tr><td class="lbl"><a href="AudioImporterSampleSettings.html">AudioImporterSampleSettings</a></td><td class="desc">This structure contains a collection of settings used to define how an AudioClip should be imported.This  structure is used with the AudioImporter to define how the AudioClip should be imported and treated during loading within the Scene.</td></tr>
+      <tr><td class="lbl"><a href="Media.AudioTrackAttributes.html">AudioTrackAttributes</a></td><td class="desc">Descriptor for audio track format.</td></tr>
+      <tr><td class="lbl"><a href="Build.Reporting.BuildFile.html">BuildFile</a></td><td class="desc">Contains information about a single file produced by the build process.</td></tr>
+      <tr><td class="lbl"><a href="BuildPlayerOptions.html">BuildPlayerOptions</a></td><td class="desc">Provide various options to control the behavior of BuildPipeline.BuildPlayer.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.BuildSettings.html">BuildSettings</a></td><td class="desc">Struct containing information on how to build content.</td></tr>
+      <tr><td class="lbl"><a href="Build.Reporting.BuildStep.html">BuildStep</a></td><td class="desc">Contains information about a single step in the build process.</td></tr>
+      <tr><td class="lbl"><a href="Build.Reporting.BuildStepMessage.html">BuildStepMessage</a></td><td class="desc">Contains information about a single log message recorded during the build process.</td></tr>
+      <tr><td class="lbl"><a href="Build.Reporting.BuildSummary.html">BuildSummary</a></td><td class="desc">Contains overall summary information about a build.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.BuildUsageTagGlobal.html">BuildUsageTagGlobal</a></td><td class="desc">Container for holding information about lighting information being used in a build.</td></tr>
+      <tr><td class="lbl"><a href="CacheServerConnectionChangedParameters.html">CacheServerConnectionChangedParameters</a></td><td class="desc">Struct used for AssetDatabase.cacheServerConnectionChanged.</td></tr>
+      <tr><td class="lbl"><a href="CameraProjectionCache.html">CameraProjectionCache</a></td><td class="desc">Project points from world to screen space.</td></tr>
+      <tr><td class="lbl"><a href="ChangeAssetObjectPropertiesEventArgs.html">ChangeAssetObjectPropertiesEventArgs</a></td><td class="desc">A change of this type indicates that a property of an asset object in memory has changed. This happens for example when Undo.RecordObject is used with an instance of an asset (e.g. Texture).</td></tr>
+      <tr><td class="lbl"><a href="ChangeGameObjectOrComponentPropertiesEventArgs.html">ChangeGameObjectOrComponentPropertiesEventArgs</a></td><td class="desc">A change of this type indicates that a property of a GameObject or Component has changed. This happens for example when Undo.RecordObject is used with an instance of a Component.</td></tr>
+      <tr><td class="lbl"><a href="ChangeGameObjectParentEventArgs.html">ChangeGameObjectParentEventArgs</a></td><td class="desc">A change of this type indicates that the parent of a GameObject has changed. This happens when Undo.SetTransformParent or SceneManager.MoveGameObjectToScene is used.</td></tr>
+      <tr><td class="lbl"><a href="ChangeGameObjectStructureEventArgs.html">ChangeGameObjectStructureEventArgs</a></td><td class="desc">A change of this type indicates that the structure of a GameObject has changed. This happens when a component is added to or removed from the GameObject using Undo.AddComponent or Undo.DestroyObjectImmediate.</td></tr>
+      <tr><td class="lbl"><a href="ChangeGameObjectStructureHierarchyEventArgs.html">ChangeGameObjectStructureHierarchyEventArgs</a></td><td class="desc">A change of this type indicates that the structure of a GameObject has changed and any GameObject in the hierarchy below it might have changed. This happens for example when Undo.RegisterFullObjectHierarchyUndo is used.</td></tr>
+      <tr><td class="lbl"><a href="ChangeSceneEventArgs.html">ChangeSceneEventArgs</a></td><td class="desc">A change of this type indicates that an open scene has been changed ("dirtied") without any more specific information available. This happens for example when EditorSceneManager.MarkSceneDirty is used.</td></tr>
+      <tr><td class="lbl"><a href="MPE.ChannelClientInfo.html">ChannelClientInfo</a></td><td class="desc">A structure that contains all of a ChannelClient's connection data.</td></tr>
+      <tr><td class="lbl"><a href="MPE.ChannelClientScope.html">ChannelClientScope</a></td><td class="desc">Scope that can be use to open a channel client on a specific channel and close the channel when the scope ends.</td></tr>
+      <tr><td class="lbl"><a href="MPE.ChannelInfo.html">ChannelInfo</a></td><td class="desc">A structure that contains the connection information of a Channel in ChannelService.</td></tr>
+      <tr><td class="lbl"><a href="MPE.ChannelScope.html">ChannelScope</a></td><td class="desc">Scope that cna be use to open a channel and that will close the channel when the scope ends.</td></tr>
+      <tr><td class="lbl"><a href="Animations.ChildAnimatorState.html">ChildAnimatorState</a></td><td class="desc">Structure that represents a state in the context of its parent state machine.</td></tr>
+      <tr><td class="lbl"><a href="Animations.ChildAnimatorStateMachine.html">ChildAnimatorStateMachine</a></td><td class="desc">Structure that represents a state machine in the context of its parent state machine.</td></tr>
+      <tr><td class="lbl"><a href="Animations.ChildMotion.html">ChildMotion</a></td><td class="desc">Structure that represents a motion in the context of its parent blend tree.</td></tr>
+      <tr><td class="lbl"><a href="ClipAnimationInfoCurve.html">ClipAnimationInfoCurve</a></td><td class="desc">Stores a curve and its name that will be used to create additional curves during the import process.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.CompilerMessage.html">CompilerMessage</a></td><td class="desc">Compiler Message.</td></tr>
+      <tr><td class="lbl"><a href="MemoryProfiler.Connection.html">Connection</a></td><td class="desc">A pair of from and to indices describing what thing keeps what other thing alive.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.ContentBuildProfileEvent.html">ContentBuildProfileEvent</a></td><td class="desc">Details about a profile event captured using the ContentBuildInterface.BeginProfileCapture and ContentBuildInterface.EndProfileCapture APIs.</td></tr>
+      <tr><td class="lbl"><a href="CreateAssetObjectEventArgs.html">CreateAssetObjectEventArgs</a></td><td class="desc">A change of this type indicates that an asset object has been created. This happens for example when Undo.RegisterCreatedObjectUndo is used with an instance of an asset (e.g. Texture).</td></tr>
+      <tr><td class="lbl"><a href="CreateGameObjectHierarchyEventArgs.html">CreateGameObjectHierarchyEventArgs</a></td><td class="desc">A change of this type indicates that a GameObject has been created, possibly with additional objects below it in the hierarchy. This happens for example when Undo.RegisterCreatedObjectUndo is used with a GameObject.</td></tr>
+      <tr><td class="lbl"><a href="Animations.CurveFilterOptions.html">CurveFilterOptions</a></td><td class="desc">The keyframe reduction settings for compressing animation curves.</td></tr>
+      <tr><td class="lbl"><a href="Search.CustomObjectIndexerTarget.html">CustomObjectIndexerTarget</a></td><td class="desc">Represents a descriptor for the object that is about to be indexed. It stores a reference to the object itself as well as an already set up SerializedObject.</td></tr>
+      <tr><td class="lbl"><a href="Presets.DefaultPreset.html">DefaultPreset</a></td><td class="desc">This structure defines a default Preset.
+See Preset.GetDefaultListForType and Preset.SetDefaultListForType for usage.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.DependencyInfo.html">DependencyInfo</a></td><td class="desc">Structure describing dependencies to other packages in PackageInfo.</td></tr>
+      <tr><td class="lbl"><a href="DestroyAssetObjectEventArgs.html">DestroyAssetObjectEventArgs</a></td><td class="desc">A change of this type indicates that an asset object has been destroyed. This happens for example when Undo.DestroyObjectImmediate is used with an instance of an asset (e.g. Texture).</td></tr>
+      <tr><td class="lbl"><a href="DestroyGameObjectHierarchyEventArgs.html">DestroyGameObjectHierarchyEventArgs</a></td><td class="desc">A change of this type indicates that a GameObject and the entire hierarchy below it has been destroyed. This happens for example when Undo.DestroyObjectImmediate is used with an GameObject.</td></tr>
+      <tr><td class="lbl"><a href="DragAndDropWindowTarget.html">DragAndDropWindowTarget</a></td><td class="desc">IDs for core windows. These are used by the DragAndDrop.RemoveHandler API.</td></tr>
+      <tr><td class="lbl"><a href="EditorCurveBinding.html">EditorCurveBinding</a></td><td class="desc">Defines how a curve is attached to an object that it controls.</td></tr>
+      <tr><td class="lbl"><a href="MemoryProfiler.FieldDescription.html">FieldDescription</a></td><td class="desc">Description of a field of a managed type.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.GameManagerDependencyInfo.html">GameManagerDependencyInfo</a></td><td class="desc">Contains dependency information for internal Unity game manager classes. Call ContentBuildInterface.WriteGameManagersSerializedFile or ContentBuildInterface.CalculatePlayerDependenciesForGameManagers to get an instance of this class.</td></tr>
+      <tr><td class="lbl"><a href="GlobalObjectId.html">GlobalObjectId</a></td><td class="desc">Struct providing an API for stable, project-global object identifiers.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.GraphViewChange.html">GraphViewChange</a></td><td class="desc">Set of changes in the graph that can be intercepted.</td></tr>
+      <tr><td class="lbl"><a href="Media.H264EncoderAttributes.html">H264EncoderAttributes</a></td><td class="desc">Descriptor for H.264 encoder attributes.</td></tr>
+      <tr><td class="lbl"><a href="ShortcutManagement.KeyCombination.html">KeyCombination</a></td><td class="desc">Represents a combination of a non-modifier key and zero or more modifier keys.</td></tr>
+      <tr><td class="lbl"><a href="ManagedReferenceMissingType.html">ManagedReferenceMissingType</a></td><td class="desc">Represents a managed reference object that has a missing type.</td></tr>
+      <tr><td class="lbl"><a href="Media.MediaRational.html">MediaRational</a></td><td class="desc">Rational number useful for expressing fractions precisely.</td></tr>
+      <tr><td class="lbl"><a href="Media.MediaTime.html">MediaTime</a></td><td class="desc">Time representation for use with media containers.</td></tr>
+      <tr><td class="lbl"><a href="MemoryProfiler.MemorySection.html">MemorySection</a></td><td class="desc">A dump of a piece of memory from the player that's being profiled.</td></tr>
+      <tr><td class="lbl"><a href="Build.NamedBuildTarget.html">NamedBuildTarget</a></td><td class="desc">Build Target by name.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.NodeCreationContext.html">NodeCreationContext</a></td><td class="desc">This struct represents the context when the user initiates creating a graph node.</td></tr>
+      <tr><td class="lbl"><a href="ObjectChangeEventStream.html">ObjectChangeEventStream</a></td><td class="desc">Represents a stream of events that describes the changes applied to objects in memory over the course of a frame.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.ObjectIdentifier.html">ObjectIdentifier</a></td><td class="desc">Struct that identifies a specific object project wide.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.ObjectSerializedInfo.html">ObjectSerializedInfo</a></td><td class="desc">Struct containing details about how an object was serialized.</td></tr>
+      <tr><td class="lbl"><a href="Build.Reporting.PackedAssetInfo.html">PackedAssetInfo</a></td><td class="desc">Contains information about a single packed Asset.</td></tr>
+      <tr><td class="lbl"><a href="MemoryProfiler.PackedGCHandle.html">PackedGCHandle</a></td><td class="desc">A description of a GC handle used by the virtual machine.</td></tr>
+      <tr><td class="lbl"><a href="MemoryProfiler.PackedNativeType.html">PackedNativeType</a></td><td class="desc">A description of a C++ unity type.</td></tr>
+      <tr><td class="lbl"><a href="MemoryProfiler.PackedNativeUnityEngineObject.html">PackedNativeUnityEngineObject</a></td><td class="desc">Description of a C++ unity object in memory.</td></tr>
+      <tr><td class="lbl"><a href="Search.ParseResult_1.html">ParseResult&lt;T0&gt;</a></td><td class="desc">A ParseResult represents the result of a parsing operation.</td></tr>
+      <tr><td class="lbl"><a href="Presets.PresetType.html">PresetType</a></td><td class="desc">Stores a type to which a Preset can be applied.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.ProfilerCategoryInfo.html">ProfilerCategoryInfo</a></td><td class="desc">Category information descriptor structure.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.Editor.ProfilerCounterDescriptor.html">ProfilerCounterDescriptor</a></td><td class="desc">Provides a descriptor for a Profiler counter.</td></tr>
+      <tr><td class="lbl"><a href="Search.QueryFilterOperator.html">QueryFilterOperator</a></td><td class="desc">A QueryFilterOperator defines a boolean operator between a value returned by a filter and an operand inputted in the search query.</td></tr>
+      <tr><td class="lbl"><a href="Search.QueryGraphOptimizationOptions.html">QueryGraphOptimizationOptions</a></td><td class="desc">Structure containing the different options used to optimize a query graph.</td></tr>
+      <tr><td class="lbl"><a href="Search.QueryToken.html">QueryToken</a></td><td class="desc">Represents a token of a query string.</td></tr>
+      <tr><td class="lbl"><a href="Search.QueryValidationOptions.html">QueryValidationOptions</a></td><td class="desc">Struct containing the available query validation options.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.ResourceFile.html">ResourceFile</a></td><td class="desc">Details about a specific file written by the ContentBuildInterface.WriteSerializedFile or ContentBuildInterface.WriteSceneSerializedFile APIs.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.UI.Sample.html">Sample</a></td><td class="desc">Struct for Package Sample.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.SceneDependencyInfo.html">SceneDependencyInfo</a></td><td class="desc">Scene dependency information generated from the ContentBuildInterface.PrepareScene API.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.Rendering.SceneStateHash.html">SceneStateHash</a></td><td class="desc">This class contains hashes that represents the Scene state.</td></tr>
+      <tr><td class="lbl"><a href="Build.Reporting.ScenesUsingAsset.html">ScenesUsingAsset</a></td><td class="desc">Contains information about which scenes in a build have references to an Asset in the build.</td></tr>
+      <tr><td class="lbl"><a href="Build.Player.ScriptCompilationResult.html">ScriptCompilationResult</a></td><td class="desc">Struct with result information returned from the PlayerBuildInterface.CompilePlayerScripts API.</td></tr>
+      <tr><td class="lbl"><a href="Build.Player.ScriptCompilationSettings.html">ScriptCompilationSettings</a></td><td class="desc">Struct containing information on how to build scripts.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchColumnCompareArgs.html">SearchColumnCompareArgs</a></td><td class="desc">Search column compare arguments are used by SearchColumn.comparer to sort search results.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchColumnEventArgs.html">SearchColumnEventArgs</a></td><td class="desc">Search column event arguments are used by SearchColumn.getter, SearchColumn.drawer and SearchColumn.setter delegates.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchDocument.html">SearchDocument</a></td><td class="desc">Represents a searchable document that has been indexed.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchProposition.html">SearchProposition</a></td><td class="desc">Search propositions are used to display choices to the user to add new filters to a search query.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchResult.html">SearchResult</a></td><td class="desc">Contains a SearchItem that was retrieved from a query.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchSelectorArgs.html">SearchSelectorArgs</a></td><td class="desc">Search selector arguments used when the search selector callback is invoked.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchValue.html">SearchValue</a></td><td class="desc">Search value is used to extend a query engine with custom type parsers and filters to search results by value.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.SearchWindowContext.html">SearchWindowContext</a></td><td class="desc">This structure includes parameters for configuring the search window.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.SerializedLocation.html">SerializedLocation</a></td><td class="desc">Struct containing information about where an object was serialized.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShaderCompilerData.html">ShaderCompilerData</a></td><td class="desc">Collection of data used for shader variants generation, including targeted platform data and the keyword set representing a specific shader variant.</td></tr>
+      <tr><td class="lbl"><a href="ShaderInfo.html">ShaderInfo</a></td><td class="desc">Contains the following information about a shader:
+-If the shader has compilation errors or warnings.
+-If the shader is supported on the currently selected platform.
+-The name of the shader.</td></tr>
+      <tr><td class="lbl"><a href="ShaderMessage.html">ShaderMessage</a></td><td class="desc">Contains information about messages generated by Unity's Shader Compiler.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShaderSnippetData.html">ShaderSnippetData</a></td><td class="desc">Collection of properties about the specific shader code being compiled.</td></tr>
+      <tr><td class="lbl"><a href="ShortcutManagement.ShortcutArguments.html">ShortcutArguments</a></td><td class="desc">Provides data for shortcut action methods invoked by the shortcut system.</td></tr>
+      <tr><td class="lbl"><a href="ShortcutManagement.ShortcutBinding.html">ShortcutBinding</a></td><td class="desc">Represents a key binding used to trigger a shortcut.</td></tr>
+      <tr><td class="lbl"><a href="ShortcutManagement.ShortcutBindingChangedEventArgs.html">ShortcutBindingChangedEventArgs</a></td><td class="desc">Provides data for the IShortcutManager.shortcutBindingChanged event.</td></tr>
+      <tr><td class="lbl"><a href="SketchUpImportCamera.html">SketchUpImportCamera</a></td><td class="desc">Structure to hold camera data extracted from a SketchUp file.</td></tr>
+      <tr><td class="lbl"><a href="SketchUpImportScene.html">SketchUpImportScene</a></td><td class="desc">Structure to hold scene data extracted from a SketchUp file.</td></tr>
+      <tr><td class="lbl"><a href="U2D.SpriteAtlasPackingSettings.html">SpriteAtlasPackingSettings</a></td><td class="desc">Settings to use during the packing process for this SpriteAtlas.</td></tr>
+      <tr><td class="lbl"><a href="U2D.SpriteAtlasTextureSettings.html">SpriteAtlasTextureSettings</a></td><td class="desc">Texture settings for the packed texture generated by SpriteAtlas.</td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.SpriteImportData.html">SpriteImportData</a></td><td class="desc">Struct that represents how Sprite asset should be generated when calling TextureGenerator.GenerateTexture.</td></tr>
+      <tr><td class="lbl"><a href="SpriteMetaData.html">SpriteMetaData</a></td><td class="desc">Editor data used in producing a Sprite.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.StageHandle.html">StageHandle</a></td><td class="desc">Struct that represents a stage handle.</td></tr>
+      <tr><td class="lbl"><a href="TakeInfo.html">TakeInfo</a></td><td class="desc">A Takeinfo object contains all the information needed to describe a take.</td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.TextureGenerationOutput.html">TextureGenerationOutput</a></td><td class="desc">Structure that represents the result from calling TextureGenerator.GenerateTexture.</td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.TextureGenerationSettings.html">TextureGenerationSettings</a></td><td class="desc">Represents how a texture should be generated from calling TextureGenerator.GenerateTexture.</td></tr>
+      <tr><td class="lbl"><a href="AssetImporters.TexturePropertyDescription.html">TexturePropertyDescription</a></td><td class="desc">Contains a set of typed properties for describing a texture input of a MaterialDescription.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.TierSettings.html">TierSettings</a></td><td class="desc">A struct that represents graphics settings for a given build target and graphics tier.</td></tr>
+      <tr><td class="lbl"><a href="DeviceSimulation.TouchEvent.html">TouchEvent</a></td><td class="desc">Representation of a single touch event coming from a Device Simulator. Subscribe to DeviceSimulator.touchScreenInput to receive these events.</td></tr>
+      <tr><td class="lbl"><a href="MemoryProfiler.TypeDescription.html">TypeDescription</a></td><td class="desc">Description of a managed type.</td></tr>
+      <tr><td class="lbl"><a href="UndoPropertyModification.html">UndoPropertyModification</a></td><td class="desc">Additional resources: Undo.postprocessModifications.</td></tr>
+      <tr><td class="lbl"><a href="UnwrapParam.html">UnwrapParam</a></td><td class="desc">Unwrapping settings.</td></tr>
+      <tr><td class="lbl"><a href="UpdatePrefabInstancesEventArgs.html">UpdatePrefabInstancesEventArgs</a></td><td class="desc">A change of this type indicates that prefab instances in an open scene have been updated due to a change to the source prefab.</td></tr>
+      <tr><td class="lbl"><a href="Media.VideoTrackAttributes.html">VideoTrackAttributes</a></td><td class="desc">Descriptor for audio track format.</td></tr>
+      <tr><td class="lbl"><a href="Media.VideoTrackEncoderAttributes.html">VideoTrackEncoderAttributes</a></td><td class="desc">Descriptor for video track format.</td></tr>
+      <tr><td class="lbl"><a href="MemoryProfiler.VirtualMachineInformation.html">VirtualMachineInformation</a></td><td class="desc">Information about the virtual machine running executing the managed code inside the player.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.VirtualMachineInformation.html">VirtualMachineInformation</a></td><td class="desc">Information about a virtual machine that provided a memory snapshot.</td></tr>
+      <tr><td class="lbl"><a href="Media.VP8EncoderAttributes.html">VP8EncoderAttributes</a></td><td class="desc">Descriptor for VP8 encoder attributes.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.WriteManagerParameters.html">WriteManagerParameters</a></td><td class="desc">Defines the write parameters for the ContentBuildInterface.WriteGameManagersSerializedFile function.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.WriteParameters.html">WriteParameters</a></td><td class="desc">This struct collects all the WriteSerializedFile parameters in to a single place.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.WriteResult.html">WriteResult</a></td><td class="desc">Struct containing the results from the ContentBuildPipeline.WriteSerialziedFile and ContentBuildPipeline.WriteSceneSerialziedFile APIs.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.WriteSceneParameters.html">WriteSceneParameters</a></td><td class="desc">This struct collects all the WriteSceneSerializedFile parameters in to a single place.</td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Enumerations</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Enumeration</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="ActionOnDotNetUnhandledException.html">ActionOnDotNetUnhandledException</a></td><td class="desc">The behavior in case of unhandled .NET exception.</td></tr>
+      <tr><td class="lbl"><a href="AndroidArchitecture.html">AndroidArchitecture</a></td><td class="desc">Android CPU architecture.</td></tr>
+      <tr><td class="lbl"><a href="AndroidAutoRotationBehavior.html">AndroidAutoRotationBehavior</a></td><td class="desc">Options to control the application window orientation when Default orientation is set to Auto rotation.</td></tr>
+      <tr><td class="lbl"><a href="AndroidBlitType.html">AndroidBlitType</a></td><td class="desc">Describes the method for how content is displayed on the screen.</td></tr>
+      <tr><td class="lbl"><a href="AndroidBuildSystem.html">AndroidBuildSystem</a></td><td class="desc">Type of Android build system.</td></tr>
+      <tr><td class="lbl"><a href="AndroidBuildType.html">AndroidBuildType</a></td><td class="desc">Build configurations for the generated project.</td></tr>
+      <tr><td class="lbl"><a href="AndroidCreateSymbols.html">AndroidCreateSymbols</a></td><td class="desc">Defines the options available for choosing the type of symbol file to create in an Android build.</td></tr>
+      <tr><td class="lbl"><a href="AndroidETC2Fallback.html">AndroidETC2Fallback</a></td><td class="desc">This enumeration has values for different qualities to decompress ETC2 textures on Android devices that don't support the ETC2 texture format.</td></tr>
+      <tr><td class="lbl"><a href="AndroidETC2FallbackOverride.html">AndroidETC2FallbackOverride</a></td><td class="desc">This enumeration has values for different qualities to decompress an ETC2 texture on Android devices that don't support the ETC2 texture format.</td></tr>
+      <tr><td class="lbl"><a href="AndroidGamepadSupportLevel.html">AndroidGamepadSupportLevel</a></td><td class="desc">Gamepad support level for Android TV.</td></tr>
+      <tr><td class="lbl"><a href="AndroidPreferredInstallLocation.html">AndroidPreferredInstallLocation</a></td><td class="desc">Preferred application install location.</td></tr>
+      <tr><td class="lbl"><a href="AndroidSdkVersions.html">AndroidSdkVersions</a></td><td class="desc">The Android API levels to specify in scripts. </td></tr>
+      <tr><td class="lbl"><a href="AndroidShowActivityIndicatorOnLoading.html">AndroidShowActivityIndicatorOnLoading</a></td><td class="desc">Application should show ActivityIndicator when loading.</td></tr>
+      <tr><td class="lbl"><a href="AndroidSplashScreenScale.html">AndroidSplashScreenScale</a></td><td class="desc">Android splash screen scale modes.</td></tr>
+      <tr><td class="lbl"><a href="AndroidTargetDevices.html">AndroidTargetDevices</a></td><td class="desc">Defines the types of devices on which an Android application is allowed to run. Used for the PlayerSettings.Android.androidTargetDevices property.</td></tr>
+      <tr><td class="lbl"><a href="Animations.AnimatorConditionMode.html">AnimatorConditionMode</a></td><td class="desc">The mode of the condition.</td></tr>
+      <tr><td class="lbl"><a href="Animations.AnimatorLayerBlendingMode.html">AnimatorLayerBlendingMode</a></td><td class="desc">Specifies how the layer is blended with the previous layers.</td></tr>
+      <tr><td class="lbl"><a href="ApiCompatibilityLevel.html">ApiCompatibilityLevel</a></td><td class="desc">.NET API compatibility level.</td></tr>
+      <tr><td class="lbl"><a href="AppleMobileArchitecture.html">AppleMobileArchitecture</a></td><td class="desc">Apple Mobile CPU architecture.</td></tr>
+      <tr><td class="lbl"><a href="AscentCalculationMode.html">AscentCalculationMode</a></td><td class="desc">Method used for calculating a font's ascent.</td></tr>
+      <tr><td class="lbl"><a href="AspectRatio.html">AspectRatio</a></td><td class="desc">Aspect ratio.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.AssembliesType.html">AssembliesType</a></td><td class="desc">Flags for Assembly.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.AssemblyBuilderFlags.html">AssemblyBuilderFlags</a></td><td class="desc">Flags used by  AssemblyBuilder to control assembly build.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.AssemblyBuilderStatus.html">AssemblyBuilderStatus</a></td><td class="desc">Status of the AssemblyBuilder build.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.AssemblyDefinitionReferenceType.html">AssemblyDefinitionReferenceType</a></td><td class="desc">Assembly definition file reference type.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.AssemblyFlags.html">AssemblyFlags</a></td><td class="desc">Flags for Assembly.</td></tr>
+      <tr><td class="lbl"><a href="AssetDeleteResult.html">AssetDeleteResult</a></td><td class="desc">Result of Asset delete operation</td></tr>
+      <tr><td class="lbl"><a href="AssetMoveResult.html">AssetMoveResult</a></td><td class="desc">Result of Asset move</td></tr>
+      <tr><td class="lbl"><a href="AssetPathToGUIDOptions.html">AssetPathToGUIDOptions</a></td><td class="desc">Asset path to GUID options.</td></tr>
+      <tr><td class="lbl"><a href="AssetPipelineMode.html">AssetPipelineMode</a></td><td class="desc">Selects the Assetpipeline mode to use.</td></tr>
+      <tr><td class="lbl"><a href="AudioSampleRateSetting.html">AudioSampleRateSetting</a></td><td class="desc">The sample rate setting used within the AudioImporter. This defines the sample rate conversion of audio on import.</td></tr>
+      <tr><td class="lbl"><a href="Animations.BlendTreeType.html">BlendTreeType</a></td><td class="desc">The type of blending algorithm that the blend tree uses.</td></tr>
+      <tr><td class="lbl"><a href="TerrainTools.BrushGUIEditFlags.html">BrushGUIEditFlags</a></td><td class="desc">Flags that specify which brush controls the [IOnInspectorGUI.ShowBrushesGUI] method displays.</td></tr>
+      <tr><td class="lbl"><a href="BuildAssetBundleOptions.html">BuildAssetBundleOptions</a></td><td class="desc">Asset Bundle building options.</td></tr>
+      <tr><td class="lbl"><a href="BuildOptions.html">BuildOptions</a></td><td class="desc">Building options. Multiple options can be combined together.</td></tr>
+      <tr><td class="lbl"><a href="Build.Reporting.BuildResult.html">BuildResult</a></td><td class="desc">Describes the outcome of the build process.</td></tr>
+      <tr><td class="lbl"><a href="BuildTarget.html">BuildTarget</a></td><td class="desc">Target build platform.</td></tr>
+      <tr><td class="lbl"><a href="BuildTargetGroup.html">BuildTargetGroup</a></td><td class="desc">Build target group.</td></tr>
+      <tr><td class="lbl"><a href="CacheServerMode.html">CacheServerMode</a></td><td class="desc">Selects the cache server configuration mode.</td></tr>
+      <tr><td class="lbl"><a href="CacheServerValidationMode.html">CacheServerValidationMode</a></td><td class="desc">Options for the accelerate server validation mode.</td></tr>
+      <tr><td class="lbl"><a href="CanAppendBuild.html">CanAppendBuild</a></td><td class="desc">Whether you can append an existing build using BuildOptions.AcceptExternalModificationsToPlayer.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.Capabilities.html">Capabilities</a></td><td class="desc">Capabilities used by Manipulators to easily determine valid actions on a GraphElement.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.CheckoutMode.html">CheckoutMode</a></td><td class="desc">What to checkout when starting the Checkout task through the version control Provider.</td></tr>
+      <tr><td class="lbl"><a href="ClipAnimationMaskType.html">ClipAnimationMaskType</a></td><td class="desc">AnimationClip mask options for ModelImporterClipAnimation.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.CodeOptimization.html">CodeOptimization</a></td><td class="desc">Code optimization mode defines whether UnityEditor compiles scripts in Debug or Release mode.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.CompilerMessageType.html">CompilerMessageType</a></td><td class="desc">Compiler message type.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.CompletionAction.html">CompletionAction</a></td><td class="desc">Different actions a version control task can do upon completion.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.ContentBuildFlags.html">ContentBuildFlags</a></td><td class="desc">Build options for content.</td></tr>
+      <tr><td class="lbl"><a href="D3D11FullscreenMode.html">D3D11FullscreenMode</a></td><td class="desc">Direct3D 11 fullscreen mode.</td></tr>
+      <tr><td class="lbl"><a href="UIElements.DeltaSpeed.html">DeltaSpeed</a></td><td class="desc">
+ Speed at which the value changes for a given input device delta.
+ </td></tr>
+      <tr><td class="lbl"><a href="Build.Content.DependencyType.html">DependencyType</a></td><td class="desc">Dependency calculation flags to control what is returned, and how it operates.</td></tr>
+      <tr><td class="lbl"><a href="DialogOptOutDecisionType.html">DialogOptOutDecisionType</a></td><td class="desc">The type of opt-out decision a user can make.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.Direction.html">Direction</a></td><td class="desc">Port direction (in or out).</td></tr>
+      <tr><td class="lbl"><a href="Search.DisplayMode.html">DisplayMode</a></td><td class="desc">Options for setting the display mode to use for a search view.</td></tr>
+      <tr><td class="lbl"><a href="DragAndDropVisualMode.html">DragAndDropVisualMode</a></td><td class="desc">Visual indication mode for Drag &amp; Drop operation.</td></tr>
+      <tr><td class="lbl"><a href="DrawCameraMode.html">DrawCameraMode</a></td><td class="desc">Drawing modes for Handles.DrawCamera.</td></tr>
+      <tr><td class="lbl"><a href="EditorSelectedRenderState.html">EditorSelectedRenderState</a></td><td class="desc">The editor selected render mode for Scene View selection.</td></tr>
+      <tr><td class="lbl"><a href="EditorSkin.html">EditorSkin</a></td><td class="desc">Enum that selects which skin to return from EditorGUIUtility.GetBuiltinSkin.</td></tr>
+      <tr><td class="lbl"><a href="EnterPlayModeOptions.html">EnterPlayModeOptions</a></td><td class="desc">Determines the flags for the Enter Play Mode Options in the Unity Editor.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.ErrorCode.html">ErrorCode</a></td><td class="desc">Package operation Error.</td></tr>
+      <tr><td class="lbl"><a href="MPE.EventDataSerialization.html">EventDataSerialization</a></td><td class="desc">The Serialization type for sending a message, with arguments, using the EventService. For more information about argument serialization, see ChannelService.Broadcast and ChannelService.Emit.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.EventPropagation.html">EventPropagation</a></td><td class="desc">Value that determines if a event handler stops propagation of events or allows it to continue.</td></tr>
+      <tr><td class="lbl"><a href="ExportPackageOptions.html">ExportPackageOptions</a></td><td class="desc">Export package option. Multiple options can be combined together using the | operator.</td></tr>
+      <tr><td class="lbl"><a href="Search.FetchPreviewOptions.html">FetchPreviewOptions</a></td><td class="desc">Options for the search provider on how the preview should be fetched.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.FileMode.html">FileMode</a></td><td class="desc">Mode of the file.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.FileType.html">FileType</a></td><td class="desc">Enum description of the type of file an object comes from.</td></tr>
+      <tr><td class="lbl"><a href="ShaderKeywordFilter.FilterAction.html">FilterAction</a></td><td class="desc">Whether shader keyword filter attributes include the keywords, remove the keywords or do nothing, based on the attribute condition evaluation.</td></tr>
+      <tr><td class="lbl"><a href="FontRenderingMode.html">FontRenderingMode</a></td><td class="desc">Font rendering mode constants for TrueTypeFontImporter.</td></tr>
+      <tr><td class="lbl"><a href="FontTextureCase.html">FontTextureCase</a></td><td class="desc">Texture case constants for TrueTypeFontImporter.</td></tr>
+      <tr><td class="lbl"><a href="ForceReserializeAssetsOptions.html">ForceReserializeAssetsOptions</a></td><td class="desc">Options for AssetDatabase.ForceReserializeAssets.</td></tr>
+      <tr><td class="lbl"><a href="GizmoType.html">GizmoType</a></td><td class="desc">Determines how a gizmo is drawn or picked in the Unity editor.</td></tr>
+      <tr><td class="lbl"><a href="GraphicsJobMode.html">GraphicsJobMode</a></td><td class="desc">Enum used to specify the graphics jobs mode to use.</td></tr>
+      <tr><td class="lbl"><a href="HierarchyDropFlags.html">HierarchyDropFlags</a></td><td class="desc">Define how dragged objects should be dropped relative to already existing Hierarchy items.</td></tr>
+      <tr><td class="lbl"><a href="HighlightSearchMode.html">HighlightSearchMode</a></td><td class="desc">Used to specify how to find a given element in the editor to highlight.</td></tr>
+      <tr><td class="lbl"><a href="IconKind.html">IconKind</a></td><td class="desc">Icon kind.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.IconOverlayType.html">IconOverlayType</a></td><td class="desc">Type of icon overlay.</td></tr>
+      <tr><td class="lbl"><a href="Build.Il2CppCodeGeneration.html">Il2CppCodeGeneration</a></td><td class="desc">Options to control code generation for IL2CPP compiler.</td></tr>
+      <tr><td class="lbl"><a href="Il2CppCompilerConfiguration.html">Il2CppCompilerConfiguration</a></td><td class="desc">C++ compiler configuration used when compiling IL2CPP generated code.</td></tr>
+      <tr><td class="lbl"><a href="ImportAssetOptions.html">ImportAssetOptions</a></td><td class="desc">Asset importing options.</td></tr>
+      <tr><td class="lbl"><a href="Search.IndexingOptions.html">IndexingOptions</a></td><td class="desc">Use Indexing options to specify the contents of your search index.</td></tr>
+      <tr><td class="lbl"><a href="InteractionMode.html">InteractionMode</a></td><td class="desc">The mode of interaction, user or automated, that an API method is called with.</td></tr>
+      <tr><td class="lbl"><a href="iOSAppInBackgroundBehavior.html">iOSAppInBackgroundBehavior</a></td><td class="desc">Application behavior when entering background.</td></tr>
+      <tr><td class="lbl"><a href="iOSBackgroundMode.html">iOSBackgroundMode</a></td><td class="desc">Background modes supported by the application corresponding to project settings in Xcode.</td></tr>
+      <tr><td class="lbl"><a href="iOSLaunchScreenImageType.html">iOSLaunchScreenImageType</a></td><td class="desc">iOS launch screen settings.</td></tr>
+      <tr><td class="lbl"><a href="iOSLaunchScreenType.html">iOSLaunchScreenType</a></td><td class="desc">iOS launch screen settings.</td></tr>
+      <tr><td class="lbl"><a href="iOSSdkVersion.html">iOSSdkVersion</a></td><td class="desc">Supported iOS SDK versions.</td></tr>
+      <tr><td class="lbl"><a href="iOSShowActivityIndicatorOnLoading.html">iOSShowActivityIndicatorOnLoading</a></td><td class="desc">Activity Indicator on loading.</td></tr>
+      <tr><td class="lbl"><a href="iOSStatusBarStyle.html">iOSStatusBarStyle</a></td><td class="desc">iOS status bar style.</td></tr>
+      <tr><td class="lbl"><a href="iOSTargetDevice.html">iOSTargetDevice</a></td><td class="desc">Target iOS device.</td></tr>
+      <tr><td class="lbl"><a href="Overlays.Layout.html">Layout</a></td><td class="desc">Possible layouts for an overlay.</td></tr>
+      <tr><td class="lbl"><a href="LineEndingsMode.html">LineEndingsMode</a></td><td class="desc">Defines the type of line endings used when creating new C# files from within the editor.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.LogLevel.html">LogLevel</a></td><td class="desc">Describes different levels of log information the Package Manager supports.</td></tr>
+      <tr><td class="lbl"><a href="MacFullscreenMode.html">MacFullscreenMode</a></td><td class="desc">Mac fullscreen mode.</td></tr>
+      <tr><td class="lbl"><a href="ManagedStrippingLevel.html">ManagedStrippingLevel</a></td><td class="desc">Defines how aggressively Unity strips unused managed (C#) code.</td></tr>
+      <tr><td class="lbl"><a href="MeshOptimizationFlags.html">MeshOptimizationFlags</a></td><td class="desc">Options to control the optimization of mesh data during asset import.</td></tr>
+      <tr><td class="lbl"><a href="MessageType.html">MessageType</a></td><td class="desc">User message types.</td></tr>
+      <tr><td class="lbl"><a href="MobileTextureSubtarget.html">MobileTextureSubtarget</a></td><td class="desc">Compressed texture format for target build platform.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterAnimationCompression.html">ModelImporterAnimationCompression</a></td><td class="desc">Animation compression options for ModelImporter.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterAnimationType.html">ModelImporterAnimationType</a></td><td class="desc">Animation mode for ModelImporter.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterAvatarSetup.html">ModelImporterAvatarSetup</a></td><td class="desc">Set the Avatar generation mode for ModelImporter.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterGenerateAnimations.html">ModelImporterGenerateAnimations</a></td><td class="desc">Animation generation options for ModelImporter. These options relate to the legacy Animation system, they should only be used when ModelImporter.animationType==ModelImporterAnimationType.Legacy.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterHumanoidOversampling.html">ModelImporterHumanoidOversampling</a></td><td class="desc">Humanoid Oversampling available multipliers.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterIndexFormat.html">ModelImporterIndexFormat</a></td><td class="desc">Format of the imported mesh index buffer data.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterMaterialImportMode.html">ModelImporterMaterialImportMode</a></td><td class="desc">Material import options for ModelImporter.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterMaterialLocation.html">ModelImporterMaterialLocation</a></td><td class="desc">Material import options for ModelImporter.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterMaterialName.html">ModelImporterMaterialName</a></td><td class="desc">Material naming options for ModelImporter.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterMaterialSearch.html">ModelImporterMaterialSearch</a></td><td class="desc">Material search options for ModelImporter.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterMeshCompression.html">ModelImporterMeshCompression</a></td><td class="desc">Mesh compression options for ModelImporter.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterNormalCalculationMode.html">ModelImporterNormalCalculationMode</a></td><td class="desc">Normal generation options for ModelImporter.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterNormals.html">ModelImporterNormals</a></td><td class="desc">Normal generation options for ModelImporter.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterNormalSmoothingSource.html">ModelImporterNormalSmoothingSource</a></td><td class="desc">Source of smoothing information for calculation of normals in ModelImporter.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterSecondaryUVMarginMethod.html">ModelImporterSecondaryUVMarginMethod</a></td><td class="desc">Methods for handling margins during lightmap UV generation in ModelImporter.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterSkinWeights.html">ModelImporterSkinWeights</a></td><td class="desc">Skin weights options for ModelImporter.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterTangents.html">ModelImporterTangents</a></td><td class="desc">Vertex tangent generation options for ModelImporter.</td></tr>
+      <tr><td class="lbl"><a href="ModelImporterTangentSpaceMode.html">ModelImporterTangentSpaceMode</a></td><td class="desc">Tangent space generation options for ModelImporter.</td></tr>
+      <tr><td class="lbl"><a href="MouseCursor.html">MouseCursor</a></td><td class="desc">Custom mouse cursor shapes used with EditorGUIUtility.AddCursorRect.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.NewSceneMode.html">NewSceneMode</a></td><td class="desc">Used when creating a new Scene in the Editor.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.NewSceneSetup.html">NewSceneSetup</a></td><td class="desc">Used when creating a new Scene in the Editor.</td></tr>
+      <tr><td class="lbl"><a href="NormalMapEncoding.html">NormalMapEncoding</a></td><td class="desc">Describes the encoding of normal maps.</td></tr>
+      <tr><td class="lbl"><a href="ObjectChangeKind.html">ObjectChangeKind</a></td><td class="desc">This enumeration describes the different kind of changes that can be tracked in an ObjectChangeEventStream. Each event has a corresponding type in ObjectChangeEvents.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.ObjectFlags.html">ObjectFlags</a></td><td class="desc">Flags that can be set on a Native Object.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.OnlineState.html">OnlineState</a></td><td class="desc">Represent the connection state of the version control provider.</td></tr>
+      <tr><td class="lbl"><a href="Callbacks.OnOpenAssetAttributeMode.html">OnOpenAssetAttributeMode</a></td><td class="desc">Indicates whether OnOpenAssetAttribute decorated method is a validation function that checks if asset opening is handled by Unity or a custom script.</td></tr>
+      <tr><td class="lbl"><a href="SceneManagement.OpenSceneMode.html">OpenSceneMode</a></td><td class="desc">Used when opening a Scene in the Editor to specify how a Scene should be opened.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.Orientation.html">Orientation</a></td><td class="desc">Graph element orientation.</td></tr>
+      <tr><td class="lbl"><a href="Build.OverrideTextureCompression.html">OverrideTextureCompression</a></td><td class="desc">Sets which texture compression override to use when importing assets.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.PackageSource.html">PackageSource</a></td><td class="desc">Source of packages.</td></tr>
+      <tr><td class="lbl"><a href="PauseState.html">PauseState</a></td><td class="desc">Enumeration specifying the current pause state of the Editor.Additional resources: PlayModeStateChange, EditorApplication.pauseStateChanged, EditorApplication.isPaused.</td></tr>
+      <tr><td class="lbl"><a href="PivotMode.html">PivotMode</a></td><td class="desc">Where is the tool handle placed.</td></tr>
+      <tr><td class="lbl"><a href="PivotRotation.html">PivotRotation</a></td><td class="desc">How is the tool handle oriented.</td></tr>
+      <tr><td class="lbl"><a href="PlayerConnectionInitiateMode.html">PlayerConnectionInitiateMode</a></td><td class="desc">Describes how the player connects to the Editor.</td></tr>
+      <tr><td class="lbl"><a href="PlayModeStateChange.html">PlayModeStateChange</a></td><td class="desc">Enumeration specifying a change in the Editor's play mode state.Additional resources: PauseState, EditorApplication.playModeStateChanged, EditorApplication.isPlaying.</td></tr>
+      <tr><td class="lbl"><a href="PrefabAssetType.html">PrefabAssetType</a></td><td class="desc">Enum indicating the type of Prefab Asset, such as Regular, Model and Variant.</td></tr>
+      <tr><td class="lbl"><a href="PrefabInstanceStatus.html">PrefabInstanceStatus</a></td><td class="desc">Enum with status about whether a Prefab instance is properly connected to its asset.</td></tr>
+      <tr><td class="lbl"><a href="PrefabUnpackMode.html">PrefabUnpackMode</a></td><td class="desc">Enum used to determine how a Prefab should be unpacked.</td></tr>
+      <tr><td class="lbl"><a href="PreprocessorOverride.html">PreprocessorOverride</a></td><td class="desc">Sets the preprocessor that Unity uses to compile this shader.</td></tr>
+      <tr><td class="lbl"><a href="MPE.ProcessEvent.html">ProcessEvent</a></td><td class="desc">Enum that represents the events a RoleProvider can receive.</td></tr>
+      <tr><td class="lbl"><a href="MPE.ProcessLevel.html">ProcessLevel</a></td><td class="desc">The type of the current process. It can be a Unity master instance, or a secondary instance connected to the master.</td></tr>
+      <tr><td class="lbl"><a href="MPE.ProcessState.html">ProcessState</a></td><td class="desc">Describes the state of a specifc UnityEditor process.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.ProfileCaptureOptions.html">ProfileCaptureOptions</a></td><td class="desc">Options for filtering captured profile events using the ContentBuildInterface.BeginProfileCapture and ContentBuildInterface.EndProfileCapture APIs.</td></tr>
+      <tr><td class="lbl"><a href="Build.Content.ProfileEventType.html">ProfileEventType</a></td><td class="desc">Options for labelling captured profile events using the ContentBuildInterface.BeginProfileCapture and ContentBuildInterface.EndProfileCapture APIs.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Profiling.Editor.ProfilerModuleChartType.html">ProfilerModuleChartType</a></td><td class="desc">Options for a Profiler module’s chart type.</td></tr>
+      <tr><td class="lbl"><a href="ProvisioningProfileType.html">ProvisioningProfileType</a></td><td class="desc">The type of the iOS provisioning profile if manual signing is used.</td></tr>
+      <tr><td class="lbl"><a href="PS4BuildSubtarget.html">PS4BuildSubtarget</a></td><td class="desc">Type of build to generate.</td></tr>
+      <tr><td class="lbl"><a href="Search.QueryNodeType.html">QueryNodeType</a></td><td class="desc">Options for representing the query node types.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.ReferencesOptions.html">ReferencesOptions</a></td><td class="desc">Options to control the Unity References to other assembly definition files that Unity uses during compilation.</td></tr>
+      <tr><td class="lbl"><a href="Search.RefreshFlags.html">RefreshFlags</a></td><td class="desc">Refresh flags are used to indicate why search view needs to be refreshed or updated.</td></tr>
+      <tr><td class="lbl"><a href="RemoveAssetOptions.html">RemoveAssetOptions</a></td><td class="desc">Options for removing assets</td></tr>
+      <tr><td class="lbl"><a href="TerrainTools.RepaintFlags.html">RepaintFlags</a></td><td class="desc">Flags that indicate what to repaint on the Terrain tools.</td></tr>
+      <tr><td class="lbl"><a href="Compilation.RequestScriptCompilationOptions.html">RequestScriptCompilationOptions</a></td><td class="desc">Options for specifying the behavior of CompilationPipeline.RequestScriptCompilation.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.ResizerDirection.html">ResizerDirection</a></td><td class="desc">Enum that specifies in which direction to resize the element.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.ResolveMethod.html">ResolveMethod</a></td><td class="desc">How assets should be resolved.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.RevertMode.html">RevertMode</a></td><td class="desc">Defines the behaviour of the version control revert methods.</td></tr>
+      <tr><td class="lbl"><a href="ScriptCallOptimizationLevel.html">ScriptCallOptimizationLevel</a></td><td class="desc">Script call optimization level.</td></tr>
+      <tr><td class="lbl"><a href="Build.Player.ScriptCompilationOptions.html">ScriptCompilationOptions</a></td><td class="desc">Script compilation options.</td></tr>
+      <tr><td class="lbl"><a href="ScriptingImplementation.html">ScriptingImplementation</a></td><td class="desc">Scripting implementation (backend).</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchColumnFlags.html">SearchColumnFlags</a></td><td class="desc">Search column flags are used to set multiple states.</td></tr>
+      <tr><td class="lbl"><a href="SearchService.SearchEngineScope.html">SearchEngineScope</a></td><td class="desc">An enumeration that contains the available search engine scopes.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchFlags.html">SearchFlags</a></td><td class="desc">Search options used to fetch items. Mostly with SearchContext to specify how a search should be handled.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchItemOptions.html">SearchItemOptions</a></td><td class="desc">Indicates how the search item description needs to be formatted when presented to the user.</td></tr>
+      <tr><td class="lbl"><a href="Search.SearchQueryErrorType.html">SearchQueryErrorType</a></td><td class="desc">Enum representing the possible types of query errors.</td></tr>
+      <tr><td class="lbl"><a href="SelectionMode.html">SelectionMode</a></td><td class="desc">SelectionMode can be used to tweak the selection returned by Selection.GetTransforms.</td></tr>
+      <tr><td class="lbl"><a href="SemanticMergeMode.html">SemanticMergeMode</a></td><td class="desc">Behavior of semantic merge.</td></tr>
+      <tr><td class="lbl"><a href="SerializedPropertyType.html">SerializedPropertyType</a></td><td class="desc">Type of a SerializedProperty.</td></tr>
+      <tr><td class="lbl"><a href="SettingsScope.html">SettingsScope</a></td><td class="desc">Sets the scope of a SettingsProvider. The Scope determines where it appears in the UI. For example, whether it appears with the Project settings in the Settings window, or in the Preferences window, or in both windows.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShaderCompilerMessageSeverity.html">ShaderCompilerMessageSeverity</a></td><td class="desc">Indicates the severity of a message returned by the Unity Shader Compiler.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShaderCompilerPlatform.html">ShaderCompilerPlatform</a></td><td class="desc">Shader compiler used to generate player data shader variants.</td></tr>
+      <tr><td class="lbl"><a href="ShaderPrecisionModel.html">ShaderPrecisionModel</a></td><td class="desc">Options for the shader precision model.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShaderQuality.html">ShaderQuality</a></td><td class="desc">Shader quality preset.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShaderRequirements.html">ShaderRequirements</a></td><td class="desc">Shader features required by a specific shader. Features are bit flags.</td></tr>
+      <tr><td class="lbl"><a href="Rendering.ShaderType.html">ShaderType</a></td><td class="desc">Identifies the stage in the rendering pipeline.</td></tr>
+      <tr><td class="lbl"><a href="ShortcutManagement.ShortcutModifiers.html">ShortcutModifiers</a></td><td class="desc">Represents modifier keys for use in a shortcut binding.</td></tr>
+      <tr><td class="lbl"><a href="ShortcutManagement.ShortcutStage.html">ShortcutStage</a></td><td class="desc">Represents the stage at which a shortcut action was invoked.</td></tr>
+      <tr><td class="lbl"><a href="Search.ShowDetailsOptions.html">ShowDetailsOptions</a></td><td class="desc">Defines what details are shown in the preview inspector panel for the search view.</td></tr>
+      <tr><td class="lbl"><a href="SpriteImportMode.html">SpriteImportMode</a></td><td class="desc">Texture importer modes for Sprite import.</td></tr>
+      <tr><td class="lbl"><a href="SpritePackerMode.html">SpritePackerMode</a></td><td class="desc">Sprite Packer mode for the current project.</td></tr>
+      <tr><td class="lbl"><a href="StandaloneBuildSubtarget.html">StandaloneBuildSubtarget</a></td><td class="desc">Desktop platform subtarget type.</td></tr>
+      <tr><td class="lbl"><a href="StaticEditorFlags.html">StaticEditorFlags</a></td><td class="desc">Describes which Unity systems consider the GameObject as static, and include the GameObject in their precomputations in the Unity Editor.</td></tr>
+      <tr><td class="lbl"><a href="PackageManager.StatusCode.html">StatusCode</a></td><td class="desc">Unity Package Manager operation status.</td></tr>
+      <tr><td class="lbl"><a href="StatusQueryOptions.html">StatusQueryOptions</a></td><td class="desc">Options for querying the version control system status of a file.</td></tr>
+      <tr><td class="lbl"><a href="StereoRenderingPath.html">StereoRenderingPath</a></td><td class="desc">Enum used to specify what stereo rendering path to use.</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.StickyNoteChange.html">StickyNoteChange</a></td><td class="desc">Enum that specifies the type of change to the [StickyNote].</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.StickyNoteFontSize.html">StickyNoteFontSize</a></td><td class="desc">Enum used to describe the font size used by the [StickyNote].</td></tr>
+      <tr><td class="lbl"><a href="Experimental.GraphView.StickyNoteTheme.html">StickyNoteTheme</a></td><td class="desc">Enum used to describe the visual theme used by the [StickyNote].</td></tr>
+      <tr><td class="lbl"><a href="StrippingLevel.html">StrippingLevel</a></td><td class="desc">Managed code stripping level.</td></tr>
+      <tr><td class="lbl"><a href="VersionControl.SubmitResult.html">SubmitResult</a></td><td class="desc">The status of an operation returned by the VCS.</td></tr>
+      <tr><td class="lbl"><a href="SceneTemplate.TemplateInstantiationMode.html">TemplateInstantiationMode</a></td><td class="desc">An enumeration of options for handling a Scene dependency Asset when you instantiate a SceneTemplateAsset.</td></tr>
+      <tr><td class="lbl"><a href="TerrainTools.TerrainBrushPreviewMode.html">TerrainBrushPreviewMode</a></td><td class="desc">Enum to specify whether DrawBrushPreview previews the source render texture or the destination render texture of a PaintContext.</td></tr>
+      <tr><td class="lbl"><a href="Search.TextCursorPlacement.html">TextCursorPlacement</a></td><td class="desc">Where to place the cursor in the text. (see ISearchView.SetSearchText).</td></tr>
+      <tr><td class="lbl"><a href="TextureCompressionQuality.html">TextureCompressionQuality</a></td><td class="desc">Compression Quality.</td></tr>
+      <tr><td class="lbl"><a href="TextureImporterAlphaSource.html">TextureImporterAlphaSource</a></td><td class="desc">Select how the alpha of the imported texture is generated.</td></tr>
+      <tr><td class="lbl"><a href="TextureImporterCompression.html">TextureImporterCompression</a></td><td class="desc">Select the kind of compression you want for your texture.</td></tr>
+      <tr><td class="lbl"><a href="TextureImporterCubemapConvolution.html">TextureImporterCubemapConvolution</a></td><td class="desc">Defines Cubemap convolution mode.</td></tr>
+      <tr><td class="lbl"><a href="TextureImporterFormat.html">TextureImporterFormat</a></td><td class="desc">Imported texture format for TextureImporter.</td></tr>
+      <tr><td class="lbl"><a href="TextureImporterGenerateCubemap.html">TextureImporterGenerateCubemap</a></td><td class="desc">Cubemap generation mode for TextureImporter.</td></tr>
+      <tr><td class="lbl"><a href="TextureImporterMipFilter.html">TextureImporterMipFilter</a></td><td class="desc">Mip map filter for TextureImporter.</td></tr>
+      <tr><td class="lbl"><a href="TextureImporterNormalFilter.html">TextureImporterNormalFilter</a></td><td class="desc">Normal map filtering mode for TextureImporter.</td></tr>
+      <tr><td class="lbl"><a href="TextureImporterNPOTScale.html">TextureImporterNPOTScale</a></td><td class="desc">Scaling mode for non power of two textures in TextureImporter.</td></tr>
+      <tr><td class="lbl"><a href="TextureImporterRGBMMode.html">TextureImporterRGBMMode</a></td><td class="desc">RGBM encoding mode for HDR textures in TextureImporter.</td></tr>
+      <tr><td class="lbl"><a href="TextureImporterShape.html">TextureImporterShape</a></td><td class="desc">The shape of the imported texture.</td></tr>
+      <tr><td class="lbl"><a href="TextureImporterSingleChannelComponent.html">TextureImporterSingleChannelComponent</a></td><td class="desc">Selects which Color/Alpha channel Single Channel Textures uses.</td></tr>
+      <tr><td class="lbl"><a href="TextureImporterType.html">TextureImporterType</a></td><td class="desc">Select this to set basic parameters depending on the purpose of your texture.</td></tr>
+      <tr><td class="lbl"><a href="TextureResizeAlgorithm.html">TextureResizeAlgorithm</a></td><td class="desc">For Texture to be scaled down choose resize algorithm. ( Applyed only when Texture dimension is bigger than Max Size ).</td></tr>
+      <tr><td class="lbl"><a href="Tool.html">Tool</a></td><td class="desc">Which tool is active in the editor.</td></tr>
+      <tr><td class="lbl"><a href="DeviceSimulation.TouchPhase.html">TouchPhase</a></td><td class="desc">Indicates where in its lifecycle a given touch is.</td></tr>
+      <tr><td class="lbl"><a href="Animations.TransitionInterruptionSource.html">TransitionInterruptionSource</a></td><td class="desc">Which AnimatorState transitions can interrupt the Transition.</td></tr>
+      <tr><td class="lbl"><a href="IMGUI.Controls.TreeViewSelectionOptions.html">TreeViewSelectionOptions</a></td><td class="desc">Enum used by the TreeView.SetSelection method.</td></tr>
+      <tr><td class="lbl"><a href="tvOSSdkVersion.html">tvOSSdkVersion</a></td><td class="desc">Supported tvOS SDK versions.</td></tr>
+      <tr><td class="lbl"><a href="Profiling.Memory.Experimental.TypeFlags.html">TypeFlags</a></td><td class="desc">An enum encoding information for a type description about whether it is a value type or an array type, and the rank of the array if the type is an array. Returned by TypeDescriptionEntries.flags.</td></tr>
+      <tr><td class="lbl"><a href="UIOrientation.html">UIOrientation</a></td><td class="desc">Default mobile device orientation.</td></tr>
+      <tr><td class="lbl"><a href="VertexChannelCompressionFlags.html">VertexChannelCompressionFlags</a></td><td class="desc">Use these enum flags to specify which elements of a vertex to compress.</td></tr>
+      <tr><td class="lbl"><a href="VideoBitrateMode.html">VideoBitrateMode</a></td><td class="desc">Bit rate after the clip is transcoded.</td></tr>
+      <tr><td class="lbl"><a href="VideoCodec.html">VideoCodec</a></td><td class="desc">Choose the video codec to use to import video clips.</td></tr>
+      <tr><td class="lbl"><a href="VideoDeinterlaceMode.html">VideoDeinterlaceMode</a></td><td class="desc">Describes how the fields in the image, if any, should be interpreted.</td></tr>
+      <tr><td class="lbl"><a href="VideoEncodeAspectRatio.html">VideoEncodeAspectRatio</a></td><td class="desc">Methods to compensate for aspect ratio discrepancies between the source resolution and the wanted encoding size.</td></tr>
+      <tr><td class="lbl"><a href="VideoEncodingProfile.html">VideoEncodingProfile</a></td><td class="desc">Use the options in this enumeration to change the encoder profile.</td></tr>
+      <tr><td class="lbl"><a href="VideoResizeMode.html">VideoResizeMode</a></td><td class="desc">How the video clip's images will be resized during transcoding.</td></tr>
+      <tr><td class="lbl"><a href="VideoSpatialQuality.html">VideoSpatialQuality</a></td><td class="desc">Controls the imported clip's internal resize to save space at the cost of blurrier images.</td></tr>
+      <tr><td class="lbl"><a href="ViewTool.html">ViewTool</a></td><td class="desc">Enum for Tools.viewTool.</td></tr>
+      <tr><td class="lbl"><a href="SearchService.VisibleObjects.html">VisibleObjects</a></td><td class="desc">A bit field that contains the different categories of object that the object selector window can display.</td></tr>
+      <tr><td class="lbl"><a href="WebGLCompressionFormat.html">WebGLCompressionFormat</a></td><td class="desc">An enum containing different compression types.</td></tr>
+      <tr><td class="lbl"><a href="WebGLDebugSymbolMode.html">WebGLDebugSymbolMode</a></td><td class="desc">An enum containing different modes for debug symbols.</td></tr>
+      <tr><td class="lbl"><a href="WebGLExceptionSupport.html">WebGLExceptionSupport</a></td><td class="desc">Options for Exception support in WebGL.</td></tr>
+      <tr><td class="lbl"><a href="WebGLLinkerTarget.html">WebGLLinkerTarget</a></td><td class="desc">The build format options available when building to WebGL.</td></tr>
+      <tr><td class="lbl"><a href="WebGLPowerPreference.html">WebGLPowerPreference</a></td><td class="desc">An enum containing different power preference hints for the WebGL context.</td></tr>
+      <tr><td class="lbl"><a href="WebGLTextureSubtarget.html">WebGLTextureSubtarget</a></td><td class="desc">Compressed texture format for target build platform.</td></tr>
+      <tr><td class="lbl"><a href="WebGLWasmArithmeticExceptions.html">WebGLWasmArithmeticExceptions</a></td><td class="desc">An enum containing different trapping modes for WebAssembly code.</td></tr>
+      <tr><td class="lbl"><a href="WindowsGamepadBackendHint.html">WindowsGamepadBackendHint</a></td><td class="desc">Specifies the desired Windows API to be used for input.</td></tr>
+      <tr><td class="lbl"><a href="WSABuildAndRunDeployTarget.html">WSABuildAndRunDeployTarget</a></td><td class="desc">Specifies the Windows device to deploy and launch the UWP app on when using Build and Run from the Editor.</td></tr>
+      <tr><td class="lbl"><a href="WSABuildType.html">WSABuildType</a></td><td class="desc">Build configurations for Windows Store Visual Studio solutions.</td></tr>
+      <tr><td class="lbl"><a href="WSAUWPBuildType.html">WSAUWPBuildType</a></td><td class="desc">Determines the output build type when building to Universal Windows Platform.</td></tr>
+      <tr><td class="lbl"><a href="XboxBuildSubtarget.html">XboxBuildSubtarget</a></td><td class="desc">Target Xbox build type.</td></tr>
+      <tr><td class="lbl"><a href="XcodeBuildConfig.html">XcodeBuildConfig</a></td><td class="desc">Build configurations for the Xcode project Unity generates.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2025 Unity Technologies. Publication Date: 2025-10-07.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

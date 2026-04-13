@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: JSON Serialization</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="core" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/JSONSerialization.html">English</a></li>
+<li><a href="/cn/current/Manual/JSONSerialization.html">中文</a></li>
+<li><a href="/ja/current/Manual/JSONSerialization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/JSONSerialization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/JSONSerialization.html">English</a></li>
+<li><a href="/cn/current/Manual/JSONSerialization.html">中文</a></li>
+<li><a href="/ja/current/Manual/JSONSerialization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/JSONSerialization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="ScriptingSection.html">Scripting</a></li>
+<li><a href="unity-architecture.html">Unity architecture</a></li>
+<li><a href="script-Serialization.html">Script serialization</a></li>
+<li>JSON Serialization</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="script-Serialization-Errors.html"></a></span><div class="tip">Script serialization errors</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="script-compilation.html"></a></span><div class="tip">Script compilation</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>JSON Serialization</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use the <a href="../ScriptReference/JsonUtility.html">JsonUtility</a> class to convert Unity objects to and from the <a href="http://www.json.org">JSON</a> format. For example, you can use JSON Serialization to interact with web services, or to easily pack and unpack data to a text-based format.</p>
+
+<p>JSON Serialization uses a notion of “structured” JSON: you create a class or structure to describe what variables you want to store in your JSON data. For example:</p>
+
+<pre><code>[Serializable]
+public class MyClass
+{
+    public int level;
+    public float timeElapsed;
+    public string playerName;
+}
+</code></pre>
+
+<p>This defines a plain C# class containing three variables (<strong>level</strong>, <strong>timeElapsed</strong>, and <strong>playerName</strong>) and marks it with the <code>Serializable</code> attribute, in order to work with the JSON serializer. To create an instance of your class, you can use something like this:</p>
+
+<pre><code>MyClass myObject = new MyClass();
+myObject.level = 1;
+myObject.timeElapsed = 47.5f;
+myObject.playerName = &quot;Dr Charles Francis&quot;;
+</code></pre>
+
+<p>Then use the <a href="../ScriptReference/JsonUtility.ToJson.html">JsonUtility.ToJson</a> method to serialize it (convert it) to the JSON format:</p>
+
+<pre><code class="c#">string json = JsonUtility.ToJson(myObject);
+// json now contains: '{&quot;level&quot;:1,&quot;timeElapsed&quot;:47.5,&quot;playerName&quot;:&quot;Dr Charles Francis&quot;}'
+</code></pre>
+
+<p>To convert the JSON back into an object, use <a href="../ScriptReference/JsonUtility.FromJson.html">JsonUtility.FromJson</a>:</p>
+
+<pre><code>myObject = JsonUtility.FromJson&lt;MyClass&gt;(json);
+</code></pre>
+
+<p>This creates a new instance of <code>MyClass</code> and sets the values on it using the JSON data. If the JSON data contains values that do not map to fields in <code>MyClass</code>, then the serializer ignores those values. If the JSON data is missing values for fields in <code>MyClass</code>, then the serializer leaves the constructed values for those fields in the returned object.</p>
+
+<h2>Overwriting objects with JSON</h2>
+
+<p>You can also deserialize JSON data over an existing object, which overwrites any existing data:</p>
+
+<pre><code>JsonUtility.FromJsonOverwrite(json, myObject);
+</code></pre>
+
+<p>If the JSON data does not contain a value for a field, the serializer does not change that field’s value. This method allows you to keep allocations to a minimum by reusing objects that you created previously. It also allows you to “patch” objects by deliberately overwriting them with JSON that only contains a small subset of fields.</p>
+
+<p>
+<strong>Warning:</strong> The JSON Serializer API supports <a href="../ScriptReference/MonoBehaviour.html">MonoBehaviour</a> and <a href="../ScriptReference/ScriptableObject.html">ScriptableObject</a> subclasses as well as plain structs and classes. However, when deserializing JSON into subclasses of <code>MonoBehaviour</code> or <code>ScriptableObject</code>, you must use the <a href="../ScriptReference/JsonUtility.FromJsonOverwrite.html">FromJsonOverwrite</a> method. If you try to use <a href="../ScriptReference/JsonUtility.FromJson.html">FromJson</a>, Unity throws an exception because this behavior is not supported.</p>
+
+<h2>Supported types</h2>
+
+<p>The JSON Serializer API supports any <code>MonoBehaviour</code> subclass, <code>ScriptableObject</code> subclass, or plain class or struct with the <code>[Serializable]</code> attribute. When you pass in an object to the standard Unity serializer for processing, the same rules and limitations apply as they do in the Inspector: Unity serializes fields only; and types like <code>Dictionary&lt;&gt;</code> are not supported.</p>
+
+<p>Unity does not support passing other types directly to the API, such as primitive types or arrays. If you need to convert those, wrap them in a <code>class</code> or <code>struct</code> of some sort.</p>
+
+<p>In the Editor only, there is a parallel API, <a href="../ScriptReference/EditorJsonUtility.html">EditorJsonUtility</a>, which allows you to serialize any object derived from <a href="../ScriptReference/Object.html">UnityEngine.Object</a> both to and from JSON. This produces JSON that contains the same data as the YAML representation of the object.</p>
+
+<p>
+<a href="../ScriptReference/JsonUtility.html">JsonUtility</a> and <a href="../ScriptReference/EditorJsonUtility.html">EditorJsonUtility</a> are utility classes for serializing Objects to and from JSON’s string format using <a href="script-Serialization.html#SerializationRules">Unity serialization rules</a>. In cases where it’s necessary to manipulate JSON data through code, or to serialize data structures that Unity’s serialization doesn’t support, you can use a general purpose .NET JSON library as a companion to the JsonUtility API.</p>
+
+<h2>Performance</h2>
+
+<p>Benchmark tests indicate that <a href="../ScriptReference/JsonUtility.html">JsonUtility</a> is significantly faster than popular .NET JSON solutions, even though this class provides fewer features in some cases.</p>
+
+<p>Memory usage for garbage collection (GC) is at a minimum:</p>
+
+<ul>
+<li>
+<a href="../ScriptReference/JsonUtility.ToJson.html">ToJson</a> allocates GC memory only for the returned string.</li>
+<li>
+<a href="../ScriptReference/JsonUtility.FromJson.html">FromJson</a> allocates GC memory only for the returned object, as well as any subobjects needed (for example, if you deserialize an object that contains an array, then Unity allocates GC memory for the array).</li>
+<li>
+<a href="../ScriptReference/JsonUtility.FromJsonOverwrite.html">FromJsonOverwrite</a> allocates GC memory only as necessary for written fields (for example, strings and arrays). This means that Unity does not allocate any GC memory at all if all the fields being overwritten by the JSON are value-typed.</li>
+</ul>
+
+<p>You can use the JsonUtility API from a background thread. However, as with any multithreaded code, be careful not to access or alter an object on one thread while another thread is serializing or deserializing it.</p>
+
+<h2>Controlling the output of ToJson()</h2>
+
+<p>The <a href="../ScriptReference/JsonUtility.ToJson.html">ToJson</a> method supports pretty-printing the JSON output. It is off by default but you can turn it on by passing <code>true</code> as the second parameter.</p>
+
+<p>You can omit fields from the output by using the <code>[NonSerialized]</code> attribute.</p>
+
+<h2>Using FromJson() with unknown types</h2>
+
+<p>If you don’t know the type of an object ahead of time, deserialize the JSON into a class or struct that contains “common” fields, and then use the values of those fields to work out what actual type you want. Then deserialize a second time into that type.</p>
+<!-- area:core -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="script-Serialization-Errors.html"></a></span><div class="tip">Script serialization errors</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="script-compilation.html"></a></span><div class="tip">Script compilation</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

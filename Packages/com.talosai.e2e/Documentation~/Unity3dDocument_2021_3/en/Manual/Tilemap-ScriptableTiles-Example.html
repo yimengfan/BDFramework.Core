@@ -1,0 +1,387 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create a scriptable tile with a provided example</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Tilemap-ScriptableTiles-Example.html">English</a></li>
+<li><a href="/cn/current/Manual/Tilemap-ScriptableTiles-Example.html">中文</a></li>
+<li><a href="/ja/current/Manual/Tilemap-ScriptableTiles-Example.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Tilemap-ScriptableTiles-Example.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/Tilemap-ScriptableTiles-Example.html">English</a></li>
+<li><a href="/cn/current/Manual/Tilemap-ScriptableTiles-Example.html">中文</a></li>
+<li><a href="/ja/current/Manual/Tilemap-ScriptableTiles-Example.html">日本語</a></li>
+<li><a href="/kr/current/Manual/Tilemap-ScriptableTiles-Example.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Unity2D.html">2D game development</a></li>
+<li><a href="Tilemap.html">Tilemaps</a></li>
+<li><a href="Tilemap-ScriptableTiles.html">Scriptable Tiles</a></li>
+<li>Create a scriptable tile with a provided example</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Tilemap-ScriptableTiles-OtherClasses.html"></a></span><div class="tip">Other useful classes</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Tilemap-ScriptableBrushes.html"></a></span><div class="tip">Scriptable Brushes</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create a scriptable tile with a provided example</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Scriptable tiles are tiles that you can assign behavior <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> to and you can paint with the scriptable tiles on a Tilemap component.</p>
+
+<p>The code example on this page demonstrates how to create your own scriptable tile, and how to use it in your project. The <code>PipelineExampleTile</code> scriptable tile is an example of a tile that can be used to layout linear segments onto the tilemap that automatically join up as you paint. This is very useful for designing tiles that are meant to be roads or pipes.</p>
+
+<p>To create a scriptable tile for your project:<br>
+1. <a href="#script-tile">Use a script to create the scriptable tile and its behavior</a><br>
+2. <a href="#paint-script">Paint with the scriptable tile</a>
+</p>
+
+<figure>
+<img src="../uploads/Main/scriptable-tilemap-example-6000-1.png" alt="">
+</figure>
+
+<h2>Prerequisite</h2>
+
+<p>You must have the <a href="com.unity.2d.tilemap.html">2D Tilemap Editor</a> package installed before proceeding with the task. This package is part of the <a href="2DFeature.html">2D feature set</a> and is automatically installed if you select one of the <a href="https://docs.unity3d.com/hub/manual/Templates.html">2D templates</a> when creating a new project. You can also manually install this package via <a href="Packages.html">Unity’s Package Manager</a>. </p>
+
+<h3>Use a script to create the scriptable tile and its behavior <a name="script-tile" aria-hidden="true"></a>
+</h3>
+
+<p>To create the <code>PipelineExampleTile</code> scriptable tile and have it as an available option in the UnityEditor’s <strong>Asset</strong> menu:</p>
+
+<ol>
+<li>Create a blank MonoBehaviour script by going to <strong>Assets &gt; Create &gt; MonoBehaviour Script</strong>.</li>
+<li>Rename the file to <code>PipelineExampleTile.cs</code>.</li>
+<li>Open the file in a text editor.</li>
+<li>Replace the existing code with the following, and then save the file:</li>
+</ol>
+
+<pre><code>using System;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+
+namespace UnityEngine.Tilemaps
+{
+   /// &lt;summary&gt;
+   /// Pipeline Tiles are tiles which take into consideration its orthogonal neighboring tiles and displays a sprite depending on whether the neighboring tile is the same tile.
+   /// &lt;/summary&gt;
+   [Serializable]
+   public class PipelineExampleTile : TileBase
+   {
+       /// &lt;summary&gt;
+       /// The Sprites used for defining the Pipeline.
+       /// &lt;/summary&gt;
+       [SerializeField]
+       public Sprite[] m_Sprites;
+
+
+       /// &lt;summary&gt;
+       /// This method is called when the tile is refreshed. The PipelineExampleTile will refresh all neighboring tiles to update their rendering data if they are the same tile.
+       /// &lt;/summary&gt;
+       /// &lt;param name=&quot;position&quot;&gt;Position of the tile on the Tilemap.&lt;/param&gt;
+       /// &lt;param name=&quot;tilemap&quot;&gt;The Tilemap the tile is present on.&lt;/param&gt;
+       public override void RefreshTile(Vector3Int position, ITilemap tilemap)
+       {
+           for (int yd = -1; yd &lt;= 1; yd++)
+               for (int xd = -1; xd &lt;= 1; xd++)
+               {
+                   Vector3Int pos = new Vector3Int(position.x + xd, position.y + yd, position.z);
+                   if (TileValue(tilemap, pos))
+                       tilemap.RefreshTile(pos);
+               }
+       }
+
+
+       /// &lt;summary&gt;
+       /// Retrieves any tile rendering data from the scripted tile.
+       /// &lt;/summary&gt;
+       /// &lt;param name=&quot;position&quot;&gt;Position of the tile on the Tilemap.&lt;/param&gt;
+       /// &lt;param name=&quot;tilemap&quot;&gt;The Tilemap the tile is present on.&lt;/param&gt;
+       /// &lt;param name=&quot;tileData&quot;&gt;Data to render the tile.&lt;/param&gt;
+       public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData)
+       {
+           UpdateTile(position, tilemap, ref tileData);
+       }
+
+
+     /// &lt;summary&gt;
+       /// Checks the orthogonal neighbouring positions of the tile and generates a mask based on whether the neighboring tiles are the same. The mask will determine the according Sprite and transform to be rendered at the given position. The Sprite and Transform is then filled into TileData for the Tilemap to use. The Flags lock the color and transform to the data provided by the tile. The ColliderType is set to the shape of the Sprite used.
+       /// &lt;/summary&gt;   
+       private void UpdateTile(Vector3Int position, ITilemap tilemap, ref TileData tileData)
+       {
+           tileData.transform = Matrix4x4.identity;
+           tileData.color = Color.white;
+
+
+           int mask = TileValue(tilemap, position + new Vector3Int(0, 1, 0)) ? 1 : 0;
+           mask += TileValue(tilemap, position + new Vector3Int(1, 0, 0)) ? 2 : 0;
+           mask += TileValue(tilemap, position + new Vector3Int(0, -1, 0)) ? 4 : 0;
+           mask += TileValue(tilemap, position + new Vector3Int(-1, 0, 0)) ? 8 : 0;
+
+
+           int index = GetIndex((byte)mask);
+           if (index &gt;= 0 &amp;&amp; index &lt; m_Sprites.Length &amp;&amp; TileValue(tilemap, position))
+           {
+               tileData.sprite = m_Sprites[index];
+               tileData.transform = GetTransform((byte)mask);
+               tileData.flags = TileFlags.LockTransform | TileFlags.LockColor;
+               tileData.colliderType = Tile.ColliderType.Sprite;
+           }
+       }
+
+
+       /// &lt;summary&gt;
+       /// Determines if the tile at the given position is the same tile as this.
+       /// &lt;/summary&gt;
+       private bool TileValue(ITilemap tileMap, Vector3Int position)
+       {
+           TileBase tile = tileMap.GetTile(position);
+           return (tile != null &amp;&amp; tile == this);
+       }
+
+
+       /// &lt;summary&gt;
+       /// Determines the index of the Sprite to be used based on the neighbour mask.
+       /// &lt;/summary&gt;
+       private int GetIndex(byte mask)
+       {
+           switch (mask)
+           {
+               case 0: return 0;
+               case 3:
+               case 6:
+               case 9:
+               case 12: return 1;
+               case 1:
+               case 2:
+               case 4:
+               case 5:
+               case 10:
+               case 8: return 2;
+               case 7:
+               case 11:
+               case 13:
+               case 14: return 3;
+               case 15: return 4;
+           }
+           return -1;
+       }
+
+
+       /// &lt;summary&gt;
+       /// Determines the Transform to be used based on the neighbour mask.
+       /// &lt;/summary&gt;
+       private Matrix4x4 GetTransform(byte mask)
+       {
+           switch (mask)
+           {
+               case 9:
+               case 10:
+               case 7:
+               case 2:
+               case 8:
+                   return Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, -90f), Vector3.one);
+               case 3:
+               case 14:
+                   return Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, -180f), Vector3.one);
+               case 6:
+               case 13:
+                   return Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, -270f), Vector3.one);
+           }
+           return Matrix4x4.identity;
+       }
+   }
+  
+#if UNITY_EDITOR
+   /// &lt;summary&gt;
+   /// Custom Editor for a PipelineExampleTile. This is shown in the Inspector window when a PipelineExampleTile asset is selected.
+   /// &lt;/summary&gt;
+   [CustomEditor(typeof(PipelineExampleTile))]
+   public class PipelineExampleTileEditor : Editor
+   {
+       private PipelineExampleTile tile { get { return (target as PipelineExampleTile); } }
+
+
+       public void OnEnable()
+       {
+           if (tile.m_Sprites == null || tile.m_Sprites.Length != 5)
+               tile.m_Sprites = new Sprite[5];
+       }
+
+
+       /// &lt;summary&gt;
+       /// Draws an Inspector for the PipelineExampleTile.
+       /// &lt;/summary&gt;
+       public override void OnInspectorGUI()
+       {
+           EditorGUILayout.LabelField(&quot;Place sprites shown based on the number of tiles bordering it.&quot;);
+           EditorGUILayout.Space();
+          
+           EditorGUI.BeginChangeCheck();
+           tile.m_Sprites[0] = (Sprite) EditorGUILayout.ObjectField(&quot;None&quot;, tile.m_Sprites[0], typeof(Sprite), false, null);
+           tile.m_Sprites[2] = (Sprite) EditorGUILayout.ObjectField(&quot;One&quot;, tile.m_Sprites[2], typeof(Sprite), false, null);
+           tile.m_Sprites[1] = (Sprite) EditorGUILayout.ObjectField(&quot;Two&quot;, tile.m_Sprites[1], typeof(Sprite), false, null);
+           tile.m_Sprites[3] = (Sprite) EditorGUILayout.ObjectField(&quot;Three&quot;, tile.m_Sprites[3], typeof(Sprite), false, null);
+           tile.m_Sprites[4] = (Sprite) EditorGUILayout.ObjectField(&quot;Four&quot;, tile.m_Sprites[4], typeof(Sprite), false, null);
+           if (EditorGUI.EndChangeCheck())
+               EditorUtility.SetDirty(tile);
+       }
+
+
+       /// &lt;summary&gt;
+     /// The following is a helper that adds a menu item to create a PipelineExampleTile Asset in the project.
+       /// &lt;/summary&gt;
+       [MenuItem(&quot;Assets/Create/PipelineExampleTile&quot;)]
+       public static void CreatePipelineExampleTile()
+       {
+           string path = EditorUtility.SaveFilePanelInProject(&quot;Save Pipeline Example Tile&quot;, &quot;New Pipeline Example Tile&quot;, &quot;Asset&quot;, &quot;Save Pipeline Example Tile&quot;, &quot;Assets&quot;);
+           if (path == &quot;&quot;)
+               return;                           
+           AssetDatabase.CreateAsset(ScriptableObject.CreateInstance&lt;PipelineExampleTile&gt;(), path);
+        }
+   }
+#endif
+}
+
+</code></pre>
+
+<p>
+<strong>Note:</strong> The Unity Editor automatically recompiles after you save the file.</p>
+
+<h3>Paint with the scriptable tile <a name="paint-script" aria-hidden="true"></a>
+</h3>
+
+<p>After <a href="#script-tile">importing or saving</a> the <code>PipelineExampleTile.cs</code> script into your project, you will be able to create the <strong>PipelineExampleTile</strong> tile asset. </p>
+
+<p>To paint with the <strong>PipelineExampleTile</strong> tile:</p>
+
+<ol>
+<li>Create a <strong>PipelineExampleTile</strong> tile asset (menu: <strong>Assets &gt; Create &gt; PipelineExampleTile</strong>).</li>
+<li>Select the created tile asset and go to its <strong><span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> window.</li>
+<li>Fill in the <code>PipelineExampleTile</code> with sprites according to the number of tiles bordering it. For example, the <span class="tooltip"><strong>sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> for <strong>One</strong> has a single opening while the sprite for <strong>Three</strong> has three openings along the edges of the sprite. <strong>Note:</strong> When using your own sprites, it’s recommended to match the position and orientation shown in the following example:
+<img src="../uploads/Main/scriptable-tilemap-example-6000-2.png" alt="">
+</li>
+<li>Save your project to save the changes made to the tile.</li>
+<li>Add the tile to a <a href="Tilemap-Palette.html">Tile Palette</a> by dragging the tile asset from the <strong>Project</strong> window onto the Tile Palette in the <a href="tile-palette-ui-ref">Tile Palette editor window</a>.</li>
+<li>Use the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about tile-palette-paint-tool"><strong>Paint</strong> tool</a> with the scriptable tile to paint onto your <span class="tooltip"><a href="Tilemap-CreatingTilemaps.html">tilemap</a><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a href="class-Tilemap.html" href="tile-palette-paint-tool"><strong>Paint</strong> tool</a> with the scriptable tile to paint onto your <span class="tooltip"><a href="Tilemap-CreatingTilemaps.html">tilemap</a><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a href="class-Tilemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Tilemap" aria-label="Go to glossary anchor for Tilemap">Glossary</a></span></span></span>.</li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="Tilemap-workflow.html">Essential tilemap steps and tools</a></li>
+<li><a href="tile-palette-tools-landing">Tile Palette editor tools</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Tilemap-ScriptableTiles-OtherClasses.html"></a></span><div class="tip">Other useful classes</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Tilemap-ScriptableBrushes.html"></a></span><div class="tip">Scriptable Brushes</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

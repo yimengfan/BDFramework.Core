@@ -1,0 +1,372 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Handle events</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Events-Handling.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Events-Handling.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Events-Handling.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Events-Handling.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Events-Handling.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Events-Handling.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Events-Handling.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Events-Handling.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-Events.html">Control behavior with events</a></li>
+<li>Handle events</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Events-Dispatching.html"></a></span><div class="tip">Dispatch events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-manipulators.html"></a></span><div class="tip">Manipulators</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Handle events</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Events in <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit are similar to <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events">HTML events</a>. When an event occurs, it’s sent to the target <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html" href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> Toolkit are similar to <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events">HTML events</a>. When an event occurs, it’s sent to the target <span class="tooltip"><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Visualelement" aria-label="Go to glossary anchor for Visualelement">Glossary</a></span></span></span> and to all elements within the propagation path in the visual element tree.</p>
+
+<p>The event handling sequence is as follows:</p>
+
+<ol>
+<li>Execute event callbacks on elements from the root element down to the parent of the event target. This is the <strong>trickle-down phase</strong> of the dispatch process.</li>
+<li>Execute event callbacks on the event target. This is the <strong>target phase</strong> of the dispatch process.</li>
+<li>Call <code>ExecuteDefaultActionAtTarget()</code> on the event target.</li>
+<li>Execute event callbacks on elements from the event target parent up to the root. This is the <strong>bubble-up phase</strong> of the dispatch process.</li>
+<li>Call <code>ExecuteDefaultAction()</code> on the event target.</li>
+</ol>
+
+<p>As an event moves along the propagation path, the <code>Event.currentTarget</code> property updates to the element currently handling the event. Within an event callback function:</p>
+
+<ul>
+<li>
+<code>Event.currentTarget</code> is the visual element that the callback registers on.</li>
+<li>
+<code>Event.target</code> is the visual element where the original event occurs.</li>
+</ul>
+
+<p>For more information, see <a href="UIE-Events-Dispatching.html">Dispatching events</a>.</p>
+
+<h2>Register an event callback</h2>
+
+<p>You can register an event callback to customize the behavior of an individual instance of an existing class, such as reacting to a mouse click on a text label.</p>
+
+<p>Each element along the propagation path (except the target) can receive an event twice:</p>
+
+<ul>
+<li>Once during the trickle-down phase.</li>
+<li>Once during the bubble-up phase.</li>
+</ul>
+
+<p>By default, a registered callback executes during the target phase and the bubble-up phase. This default behavior ensures that a parent element reacts after its child element. </p>
+
+<p>On the other hand, if you want a parent element to react before its child, register your callback with the <code>TrickleDown.TrickleDown</code> option:</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+using UnityEngine.UIElements;
+
+...
+VisualElement myElement = new VisualElement();
+
+// Register a callback for the trickle-down phase.
+myElement.RegisterCallback&lt;MouseDownEvent&gt;(MyCallback, TrickleDown.TrickleDown);
+...
+</code></pre>
+
+<p>This informs the dispatcher to execute the callback at the target phase and the trickle-down phase.</p>
+
+<p>To add a custom behavior to a specific visual element, register an event callback on that element. </p>
+
+<p>The following example registers a callback for the <code>MouseDownEvent</code>:</p>
+
+<pre><code class="lang-csharp">// Register a callback on a mouse down event
+myElement.RegisterCallback&lt;MouseDownEvent&gt;(MyCallback);
+</code></pre>
+
+<p>The signature for the callback function looks like this:</p>
+
+<pre><code class="lang-csharp">void MyCallback(MouseDownEvent evt) { /* ... */ }
+</code></pre>
+
+<p>You can register multiple callbacks for an event. However, you can only register the same callback function on the same event and propagation phase once. </p>
+
+<p>To remove a callback from a <code>VisualElement</code>, call the <code>myElement.UnregisterCallback()</code> method.</p>
+
+<h2>Send custom data to an event callback</h2>
+
+<p>You can send custom data along with the callback to an event. To attach custom data, you must extend the call to register the callback.</p>
+
+<p>The following example registers a callback for the <code>MouseDownEvent</code> and sends custom data to the callback function:</p>
+
+<pre><code class="lang-csharp">// Send user data along to the callback
+myElement.RegisterCallback&lt;MouseDownEvent, MyType&gt;(MyCallbackWithData, myData);
+</code></pre>
+
+<p>The signature for the callback function looks like this:</p>
+
+<pre><code class="lang-csharp">void MyCallbackWithData(MouseDownEvent evt, MyType data) { /* ... */ }
+</code></pre>
+
+<h2>Listen to value changes</h2>
+
+<p>UI controls can use the <code>value</code> property to hold data for their internal state. For example:</p>
+
+<ul>
+<li>A <code>Toggle</code> holds a Boolean value that changes when the <code>Toggle</code> is turned on or off.</li>
+<li>An <code>IntegerField</code> holds an integer that holds the field’s value.</li>
+</ul>
+
+<p>You can get the value of the control by the following:</p>
+
+<ul>
+<li><p>Get the value from the control directly: <code>int val = myIntegerField.value;</code>.</p></li>
+<li>
+<p>Listen to a <code>ChangeEvent</code> sent by the control and process the change when it happens. You must register your callback to the event like this:</p>
+
+<pre><code class="lang-csharp">//RegisterValueChangedCallback is a shortcut for RegisterCallback&lt;ChangeEvent&gt;. 
+//It constrains the right type of T for any VisualElement that implements an 
+//INotifyValueChange interface.
+myIntegerField.RegisterValueChangedCallback(OnIntegerFieldChange); 
+</code></pre>
+
+<p>The signature for the callback function looks like this:</p>
+
+<pre><code class="lang-csharp">void OnIntegerFieldChange(ChangeEvent&lt;int&gt; evt) { /* ... */ }
+</code></pre>
+</li>
+</ul>
+
+<p>You can change the value of a control by the following:</p>
+
+<ul>
+<li>Directly change the <code>value</code> variable: <code>myControl.value = myNewValue;</code>. This will trigger a new <code>ChangeEvent</code>.</li>
+<li>Use <code>myControl.SetValueWithoutNotify(myNewValue);</code>. This won’t trigger a new <code>ChangeEvent</code>.</li>
+</ul>
+
+<p>For more information, see <a href="UIE-Change-Events.html">Change events</a>
+</p>
+
+<h2>Capture the pointer</h2>
+
+<p>When you handle pointer input, you might want the control to capture a pointer. When a visual element captures a pointer, Unity sends all the events associated with the pointer to the visual element regardless of whether the pointer hovers over the visual element. For example, if you create a control that receives drag events and captures the pointer, the control still receives drag events regardless of the pointer location.</p>
+
+<p>To capture a pointer, use <a href="UIE-Capture-Events.html">capture events</a>. See <a href="UIE-create-drag-and-drop-ui.html">Create a drag-and-drop UI inside a custom Editor window</a> for an example.</p>
+
+<h2>Respond to events with custom controls</h2>
+
+<p>If you’re implementing custom controls, you can respond to UI Toolkit events in two ways:</p>
+
+<ul>
+<li>Registering an event callback.</li>
+<li>Implementing a default action.</li>
+</ul>
+
+<p>How you choose to respond to events depends on the situation.</p>
+
+<p>The differences between callbacks and default actions are:</p>
+
+<ul>
+<li>Callbacks must register on instances of the class. Default actions run as virtual functions on the class.</li>
+<li>Callbacks execute for all visual elements in the propagation path. Default actions run only for the event target.</li>
+<li>Callbacks might perform additional checks to determine whether they should react to an event. For example, a callback handling a mouse click might check if the element is the target of the event. Default actions can skip this step.</li>
+<li>Default actions have a slight performance advantage because they don’t require a lookup in the callback registry during the propagation phase.</li>
+</ul>
+
+<h3>Implement a default action</h3>
+
+<p>A default action applies to all instances of the class. A class that implements default actions can also have callbacks registered on its instances.</p>
+
+<p>When a class implements a default action, it must derive a new subclass of <code>VisualElement</code> and implement either the <code>ExecuteDefaultActionAtTarget()</code> method, the <code>ExecuteDefaultAction()</code> method, or both.</p>
+
+<p>Default actions execute on each instance of a visual element sub-class when that instance receives an event. To customize default actions, you can override <code>ExecuteDefaultActionAtTarget()</code> and <code>ExecuteDefaultAction()</code>, as shown in the example below:</p>
+
+<pre><code class="lang-csharp">override void ExecuteDefaultActionAtTarget(EventBase evt)
+{
+    // Call the base function.
+    base.ExecuteDefaultActionAtTarget(evt);
+
+    if (evt.eventTypeId == MouseDownEvent.TypeId())
+    {
+        // ...
+    }
+    else if (evt.eventTypeId == MouseUpEvent.TypeId())
+    {
+        // ...
+    }
+    // More event types
+}
+</code></pre>
+
+<p>Implementing your default actions in <code>ExecuteDefaultAction()</code> allows you to stop or prevent the execution of a default action.</p>
+
+<p>If you want the target default action to execute before its parent callback, implement the default actions in <code>ExecuteDefaultActionAtTarget()</code>.</p>
+
+<p>You should view default actions as the behaviors that an element type should have when it receives an event. For example, a checkbox should toggle its state in response to a click event. To execute this, you can override a default action virtual function, instead of registering callbacks on all checkboxes.</p>
+
+<h2>Best practices for custom controls</h2>
+
+<p>The following are best practices for custom controls.</p>
+
+<h3>Implement behaviors</h3>
+
+<p>You should implement behaviors from your element with default actions. You can call <code>PreventDefault()</code> in a callback attached to an instance to cancel default element behaviors.</p>
+
+<p>Additional benefits of implementing behaviors as default actions are:</p>
+
+<ul>
+<li>Default actions don’t require a lookup in the callback registry.</li>
+<li>Instances without callbacks don’t enter the propagation process.</li>
+</ul>
+
+<p>For greater flexibility, you can execute default actions of the event target at two moments during the event dispatch process:</p>
+
+<ul>
+<li>Between the trickle-down and the bubble-up propagation phase, immediately after execution of the target callbacks, override <code>ExecuteDefaultActionsAtTarget()</code>.</li>
+<li>At the end of the event dispatch process, override <code>ExecuteDefaultActions()</code>.</li>
+</ul>
+
+<h3>Default actions on a class</h3>
+
+<p>Implement your class default actions in <code>ExecuteDefaultActions()</code>, if possible. This allows more options to override the class. You can call <code>PreventDefault()</code> to override the class during the trickle-down phase or the bubble-up phase of the event propagation process.</p>
+
+<p>You must stop propagation of an event during a default action if the event shouldn’t propagate to the parent element. For example, a text field receives a <code>KeyDownEvent</code> that modifies its value, such as the <code>Delete</code> key to delete content. This event must not propagate to the parent visual element. Use <code>ExecuteDefaultActionsAtTarget()</code> to implement a default action, and call <code>StopPropagation()</code> to make sure the event isn’t processed during the bubble-up phase.</p>
+
+<p>Default actions only execute for an event target. For a class to react to events that target their child or parent elements, you must register a callback to receive the event either during the trickle-down or the bubble-up propagation phase. Avoid registering callbacks in your class to improve performance.</p>
+
+<h3>Stop event propagation and cancel default actions</h3>
+
+<p>When handling an event inside a callback or a default action, you can stop further event propagation and the execution of default actions. For example, a parent panel could stop propagation during the trickle-down phase to prevent its children from receiving events.</p>
+
+<p>You can’t prevent the execution of the <code>EventBase.PreDispatch()</code> and <code>EventBase.PostDispatch()</code> methods inside the event class itself.</p>
+
+<p>The following methods affect event propagation and default actions:</p>
+
+<ul>
+<li>
+<code>StopImmediatePropagation()</code>: Stops the event propagation process immediately, so no other callbacks execute for the event. However, the <code>ExecuteDefaultActionAtTarget()</code> and <code>ExecuteDefaultAction()</code> default actions still execute.</li>
+<li>
+<code>StopPropagation()</code>: Stops the event propagation process after the last callback on the current element. This ensures that all callbacks execute on the current element, but no further elements react to the event. The <code>ExecuteDefaultActionAtTarget()</code> and <code>ExecuteDefaultAction()</code> default actions still execute.</li>
+<li>
+<code>PreventDefault()</code>: Prevents the event propagation process from calling the <code>ExecuteDefaultActionAtTarget()</code> and <code>ExecuteDefaultAction()</code> default actions. <code>PreventDefault()</code> doesn’t prevent the execution of other callbacks and doesn’t affect the <code>ExecuteDefaultActionAtTarget()</code> action during the bubble-up phase.</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-Events-Synthesizing.html">Synthesize and send events</a></li>
+<li><a href="UIE-Events-Reference.html">Events reference</a></li>
+<li><a href="UIE-manipulators.html">Manipulators</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Events-Dispatching.html"></a></span><div class="tip">Dispatch events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-manipulators.html"></a></span><div class="tip">Manipulators</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

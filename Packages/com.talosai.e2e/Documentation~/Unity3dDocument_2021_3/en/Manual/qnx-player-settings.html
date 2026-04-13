@@ -1,0 +1,630 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: QNX Player settings reference</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/qnx-player-settings.html">English</a></li>
+<li><a href="/cn/current/Manual/qnx-player-settings.html">中文</a></li>
+<li><a href="/ja/current/Manual/qnx-player-settings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/qnx-player-settings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/qnx-player-settings.html">English</a></li>
+<li><a href="/cn/current/Manual/qnx-player-settings.html">中文</a></li>
+<li><a href="/ja/current/Manual/qnx-player-settings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/qnx-player-settings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="embedded-systems.html">Embedded systems</a></li>
+<li><a href="qnx.html">QNX</a></li>
+<li><a href="qnx-get-started.html">Get started with QNX</a></li>
+<li>QNX Player settings reference</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="qnx-environment-setup.html"></a></span><div class="tip">Set up your environment for QNX</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="qnx-develop.html"></a></span><div class="tip">Develop for QNX</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>QNX Player settings reference</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>QNX Player settings lets you customize how Unity builds and displays your final application. To access the Player settings window for QNX, go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong> and select the <strong>QNX</strong> tab. You can use the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ../ScriptReference/PlayerSettings.html">PlayerSettings API</a> to control most of the settings available in this window. For a description of the general Player settings, refer to <span class="tooltip"><a href="class-PlayerSettings.html">Player Settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html" href="../ScriptReference/PlayerSettings.html">PlayerSettings API</a> to control most of the settings available in this window. For a description of the general Player settings, refer to <span class="tooltip"><a href="class-PlayerSettings.html">Player Settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span>.</p>
+
+<h2>General settings</h2>
+
+<p>The Player settings differ between the platform modules that you have installed. Each platform has its own Player settings which you must set for each version of your application you want to build. To navigate between them, click the tabs with the appropriate platform operating system icon.</p>
+
+<figure>
+<img src="../uploads/Main/qnx-player-settings.png" alt="The main Player settings window">
+<figcaption>The main Player settings window</figcaption>
+</figure>
+
+<p>You can find documentation for the properties in the following sections:</p>
+
+<ul>
+<li><a href="#Icon">Icon</a></li>
+<li><a href="#resolution">Resolution and Presentation</a></li>
+<li><a href="#Splash">Splash Image</a></li>
+<li><a href="#Other">Other Settings</a></li>
+</ul>
+
+<h2>Icon</h2>
+
+<p>Enable the <strong>Override for QNX</strong> setting to assign a custom icon for your QNX game.</p>
+
+<h2>
+<a name="resolution" aria-hidden="true"></a>Resolution and presentation</h2>
+
+<p>Use the Resolution and Presentation section to customize aspects of the screen’s appearance in the Resolution and Standalone Player Options sections.</p>
+
+<h3>Resolution section</h3>
+
+<p>This section lets you customize the screen mode and default size.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Use 32-bit Display Buffer</strong></td>
+	<td style="text-align:left;">QNX only supports 32-bit color buffers.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Disable Depth and Stencil</strong></td>
+	<td style="text-align:left;">This isn’t supported on the QNX platform.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Render Over Native <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">This isn’t supported on the QNX platform.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a name="Splash" aria-hidden="true"></a>Splash Image</h2>
+
+<p>The <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Documentation/Manual/class-PlayerSettingsSplashScreen.html">Virtual Reality Splash Image</a> setting is used for selecting a custom splash image for <span class="tooltip"><strong>Virtual Reality</strong><span class="tooltiptext">Virtual Reality (VR) immerses users in an artificial 3D world of realistic images and sounds, using a headset and motion tracking. <a href="VROverview.html" href="https://docs.unity3d.com/Documentation/Manual/class-PlayerSettingsSplashScreen.html">Virtual Reality Splash Image</a> setting is used for selecting a custom splash image for <span class="tooltip"><strong>Virtual Reality</strong><span class="tooltiptext">Virtual Reality (VR) immerses users in an artificial 3D world of realistic images and sounds, using a headset and motion tracking. <a href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VirtualReality" aria-label="Go to glossary anchor for VirtualReality">Glossary</a></span></span></span> (VR) displays. However, it doesn’t apply to QNX platform.</p>
+
+<h2>
+<a name="Other" aria-hidden="true"></a>Other Settings</h2>
+
+<p>This section allows you to customize a range of options organized into the following groups:</p>
+
+<ul>
+<li><a href="#Renderin">Rendering</a></li>
+<li><a href="#Configur">Configuration</a></li>
+</ul>
+
+<h3>
+<a name="Renderin" aria-hidden="true"></a>Rendering</h3>
+
+<p>Use these settings to customize how Unity renders your game for the QNX platform.</p>
+
+<figure>
+<img src="../uploads/Main/qnx-other-rendering.png" alt="Rendering settings for QNX">
+<figcaption>Rendering settings for QNX</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;" colspan="2"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Color Space</strong></td>
+	<td style="text-align:left;" colspan="2">Choose which color space Unity uses for rendering: Gamma or Linear. Refer to the <a href="LinearLighting.html">Linear rendering overview</a> for an explanation of the difference between the two.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Gamma</strong></td>
+	<td style="text-align:left;">Gamma color space is typically used for calculating lighting on older hardware restricted to 8 bits per channel for the framebuffer format. Even though monitors today are digital, they might still take a gamma-encoded signal as input.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Linear</strong></td>
+	<td style="text-align:left;">Linear color space rendering gives more precise results. When you select to work in linear color space, the Editor defaults to using sRGB sampling. If your Textures are in linear color space, you need to work in linear color space and disable sRGB sampling for each Texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Force SRGB <span class="tooltip"><strong>blit</strong><span class="tooltiptext">A shorthand term for “bit block transfer”. A blit operation is the process of transferring blocks of data from one place in memory to another.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#blit" aria-label="Go to glossary anchor for blit">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;" colspan="2">Enable this to use Force SRGB blit for Linear color space. If your graphics drivers don’t support the linear color space, selecting this option will convert Linear color space to Gamma (SRGB) color space.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Multithreaded Rendering</strong></td>
+	<td style="text-align:left;" colspan="2">Enable this option to use multithreaded rendering. This is only supported on Metal.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Static Batching</strong><span class="tooltiptext">A technique Unity uses to draw GameObjects on the screen that combines static (non-moving) GameObjects into big Meshes, and renders them in a faster way. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DrawCallBatching.html" href="DrawCallBatching.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#StaticBatching" aria-label="Go to glossary anchor for StaticBatching">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;" colspan="2">Enable this option to use Static batching.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Dynamic Batching</strong></td>
+	<td style="text-align:left;" colspan="2">Enable this option to use <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about dynamic-batching.html">Dynamic Batching</a><span class="tooltiptext">An automatic Unity process which attempts to render multiple meshes as if they were a single mesh for optimized graphics performance. The technique transforms all of the GameObject vertices on the CPU and groups many similar vertices together. <a href="DrawCallBatching.html" href="dynamic-batching.html">Dynamic Batching</a><span class="tooltiptext">An automatic Unity process which attempts to render multiple meshes as if they were a single mesh for optimized graphics performance. The technique transforms all of the GameObject vertices on the CPU and groups many similar vertices together. <a href="DrawCallBatching.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#DynamicBatching" aria-label="Go to glossary anchor for DynamicBatching">Glossary</a></span></span></span> on your build (enabled by default). <strong>Note:</strong> Dynamic batching has no effect when a <a href="ScriptableRenderPipeline.html">Scriptable Render Pipeline</a> is active, so this setting is only visible when nothing is set in the Scriptable <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html" href="Glossary.html#DynamicBatching" aria-label="Go to glossary anchor for DynamicBatching">Glossary</a></span></span></span> on your build (enabled by default). <strong>Note:</strong> Dynamic batching has no effect when a <a href="ScriptableRenderPipeline.html">Scriptable Render Pipeline</a> is active, so this setting is only visible when nothing is set in the Scriptable <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span> Asset Graphics setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Static Batching Threshold</strong></td>
+	<td style="text-align:left;" colspan="2">Controls the maximum vertex threshold used when batching. For more information, refer to <a href="../ScriptReference/PlayerSettings-spriteBatchVertexThreshold.html">Sprite Batch Vertex Threshold.</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GPU Compute <span class="tooltip"><strong>Skinning</strong><span class="tooltiptext">The process of binding bone joints to the vertices of a character’s mesh or ‘skin’. Performed with an external tool, such as Blender or Autodesk Maya. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingHumanoidChars.html" href="UsingHumanoidChars.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skinning" aria-label="Go to glossary anchor for Skinning">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;" colspan="2">Enable this option to enable DX11/ES3 GPU compute skinning, freeing up CPU resources.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Graphics Jobs</strong></td>
+	<td style="text-align:left;" colspan="2">Enable this option to instruct Unity to offload graphics tasks (render loops) to worker threads running on other CPU cores. This is intended to reduce the time spent in <code>Camera.Render</code> on the main thread, which is often a bottleneck.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Texture <span class="tooltip"><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="class-TextureImporterOverride.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> format</strong></td>
+	<td style="text-align:left;" colspan="2">Choose the <span class="tooltip"><strong>texture compression</strong><span class="tooltiptext">3D Graphics hardware requires Textures to be compressed in specialized formats which are optimized for fast Texture sampling. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporterOverride.html" href="class-TextureImporterOverride.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TextureCompression" aria-label="Go to glossary anchor for TextureCompression">Glossary</a></span></span></span> format to use for textures in your Project. The options are ETC, ETC2, ASTC, DXT, and PVRTC. For more information on each of these compression formats, refer to <a href="class-TextureImporterOverride.html">TextureImporterOverride</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Normal Map</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normalmap" aria-label="Go to glossary anchor for Normalmap">Glossary</a></span></span></span> Encoding</strong></td>
+	<td style="text-align:left;" colspan="2">Choose Normal Quality or High Quality to set the <span class="tooltip"><strong>lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> encoding. This setting affects the encoding scheme and compression format of the lightmaps.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Lightmap Streaming</strong></td>
+	<td style="text-align:left;" colspan="2">Enable this option to load only the lightmap mipmaps as needed to render the current game <span class="tooltip"><strong>Cameras</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>. This value applies to the lightmap textures as they are generated. Note: To use this setting, you must enable the Texture Streaming Quality setting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Streaming Priority</strong></td>
+	<td style="text-align:left;">Set the lightmap mip map streaming priority to resolve resource conflicts. These values are applied to the light map textures as they’re generated. Positive numbers give higher priority. Valid values range from –128 to 127.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Frame Timing Stats</strong></td>
+	<td style="text-align:left;" colspan="2">Enable this option to gather CPU/GPU frame timing statistics.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>OpenGL: <span class="tooltip"><strong>Profiler</strong><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> GPU Recorders</strong></td>
+	<td style="text-align:left;" colspan="2">Enable profiler recorders when rendering with OpenGL.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Virtual Texturing (Experimental)</strong></td>
+	<td style="text-align:left;" colspan="2">Indicates whether to enable <a href="svt-streaming-virtual-texturing.html">Virtual Texturing</a>. <strong>Note:</strong> The Unity Editor requires a restart for this setting to take effect.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Load/Store Action Debug Mode</strong></td>
+	<td style="text-align:left;" colspan="2">Highlights undefined <span class="tooltip"><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> that might cause rendering problems on mobile platforms. This affects the Unity Editor Game view, and your built application if you select <span class="tooltip"><strong>Development Build</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a href="https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview" href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> that might cause rendering problems on mobile platforms. This affects the Unity Editor Game view, and your built application if you select <span class="tooltip"><strong>Development Build</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a href="https://docs.unity.com/devops/en/manual/build-target-configurations#Build_target_advanced_settings_overview">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DevelopmentBuild" aria-label="Go to glossary anchor for DevelopmentBuild">Glossary</a></span></span></span> in Build Settings. Refer to <a href="../ScriptReference/Rendering.LoadStoreActionDebugModeSettings.html">LoadStoreActionDebugModeSettings</a> for more information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>360 Stereo Capture</strong></td>
+	<td style="text-align:left;" colspan="2">Indicates whether Unity can capture stereoscopic 360 images and videos. When enabled, Unity compiles additional <span class="tooltip"><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> variants to support 360 capture (currently only on Windows/macOS). When enabled, enable_360_capture keyword is added during the Stereo RenderCubemap call. Note that this keyword isn’t triggered outside the Stereo RenderCubemap function. For more information, refer to <a href="https://blog.unity.com/technology/stereo-360-image-and-video-capture?_ga=2.228952412.1984266774.1645442174-1855761588.1624871061">Stereo 360 Image and Video Capture</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a name="Configur" aria-hidden="true"></a>Configuration</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;" colspan="2"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Scripting Backend</strong><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about scripting-backends.html" href="scripting-backends.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScriptingBackend" aria-label="Go to glossary anchor for ScriptingBackend">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;" colspan="2">You cannot change the scripting backend for QNX.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>API Compatibility Level</strong></td>
+	<td style="text-align:left;" colspan="2">Choose which .NET APIs you can use in your project. This setting can affect compatibility with 3rd-party libraries.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>.Net Standard 2.0</strong></td>
+	<td style="text-align:left;">Compatible with <a href="https://docs.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-2-0">.NET Standard 2.0</a>. Produces smaller builds and has full cross-platform support.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>.Net Framework 4.x</strong></td>
+	<td style="text-align:left;">Compatible with the .NET Framework 4 (which includes everything in the .NET Standard 2.0 profile as well as additional APIs). Choose this option when usng libraries that access APIs not included in .NET Standard 2.0. Produces larger builds and any additional APIs available are not necessarily supported on all platforms. For more information, refer to <a href="dotnetProfileAssemblies.html">Referencing additional class library assemblies</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>IL2CPP</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about IL2CPP.html" href="IL2CPP.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> Code Generation</strong></td>
+	<td style="text-align:left;" colspan="2">Defines how Unity manages IL2CPP code generation. Note: To use this, set Scripting Backend to IL2CPP.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>C++ Compiler Configuration</strong></td>
+	<td style="text-align:left;" colspan="2">Choose the C++ compiler configuration used when compiling IL2CPP generated code. <strong>Note:</strong> This property is disabled unless <strong>Scripting Backend</strong> is set to IL2CPP.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Use incremental GC</strong></td>
+	<td style="text-align:left;" colspan="2">Enable this to use the incremental garbage collector, which spreads garbage collection over several frames to reduce gc-related spikes in frame duration.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Allow downloads over HTTP</strong></td>
+	<td style="text-align:left;" colspan="2">Indicates downloading content over HTTP is allowed or not.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Not Allowed</strong></td>
+	<td style="text-align:left;">Never allow downloads over HTTP. This is the default option due to the recommended protocol being HTTPS, which is more secure.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Allowed in Development Builds</strong></td>
+	<td style="text-align:left;">Allow downloads over HTTP, but only in development builds.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Always Allowed</strong></td>
+	<td style="text-align:left;">Allow downloads over HTTP and release builds.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Player Data path</strong></td>
+	<td style="text-align:left;" colspan="2">Enter the directory path on the system where you want to save the .<code>config</code> and log files. You can also change this from the command line of the player by adding the following arguments:<code>-platform-hmi-player-data-path &lt;pathname&gt;</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Log startup Timings</strong></td>
+	<td style="text-align:left;" colspan="2">Enable this option to log the startup of the player.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CPU Configuration</strong></td>
+	<td style="text-align:left;" colspan="2">Set the target CPU configuration for the player runtime. The default number of cores is 0, but you can increase it by entering a number. The options for each CPU are: <strong>Disabled</strong>, <strong>High Performance</strong>, and <strong>Low Performance</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Loading image</strong></td>
+	<td style="text-align:left;" colspan="2">Use this setting to select a custom splash image for the loading screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Screen graphics config path</strong></td>
+	<td style="text-align:left;" colspan="2">Enter the directory path on the system where you want to save the .<code>config</code> and log files.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Active Input Handling</strong></td>
+	<td style="text-align:left;" colspan="2">Choose how you want to handle input from users.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Input Manager</strong><span class="tooltiptext">Settings where you can define all the different input axes, buttons and controls for your project. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-InputManager.html" href="class-InputManager.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#InputManager" aria-label="Go to glossary anchor for InputManager">Glossary</a></span></span></span> (old)</strong></td>
+	<td style="text-align:left;">Use the default Input window.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Input System (Preview)</strong></td>
+	<td style="text-align:left;">Use the newer Input system. The Input System is provided as a <span class="tooltip"><strong>preview package</strong><span class="tooltiptext">A <em>preview</em> package is in development and not yet ready for production. A package in preview might be at any stage of development, from the initial stages to near completion.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Previewpackage" aria-label="Go to glossary anchor for Previewpackage">Glossary</a></span></span></span> for this release. To try a preview of the Input System, install the InputSystem package.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Both</strong></td>
+	<td style="text-align:left;">Use both systems side-by-side.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a name="shader" aria-hidden="true"></a> Shader Settings and Shader Variant Loading Settings</h3>
+
+<p>Use these settings to control how much memory shaders use at runtime.</p>
+
+<p><img src="../uploads/Main/qnx-shader-settings.png" alt="Shader settings for QNX"></p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Shader precision model</strong></td>
+	<td style="text-align:left;">Select the default precision of samplers used in shaders. For more information, refer to <a href="SL-DataTypesAndPrecision.html">HLSL data types</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Strict shader variant matching</strong></td>
+	<td style="text-align:left;">Use the error shader if a shader variant is missing and display an error in the console.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Keep Loaded Shaders Alive</strong></td>
+	<td style="text-align:left;">When enabled, you can’t unload a shader. For more information, refer to <a href="shader-loading.html">Shader loading</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Default chunk size (MB)</strong></td>
+	<td style="text-align:left;">Sets the maximum size of compressed shader variant data chunks Unity stores in your built application for all platforms. The default is 16. For more information, refer to <a href="shader-loading.html">Shader loading</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Default chunk count</strong></td>
+	<td style="text-align:left;">Sets the default limit on how many decompressed chunks Unity keeps in memory on all platforms. The default is 0, which means there’s no limit.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Override</strong></td>
+	<td style="text-align:left;">Enable this to override Default chunk size and Default chunk count for this build target.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a name="Configur" aria-hidden="true"></a>Script Compilation</h3>
+
+<figure>
+<img src="../uploads/Main/qnx-script-compilation.png" alt="Script Compilation settings for QNX">
+<figcaption>Script Compilation settings for QNX</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Scripting Define Symbols</strong></td>
+	<td style="text-align:left;">Sets custom compilation flags. <br><br> For more details, see <a href="PlatformDependentCompilation.html">Platform dependent compilation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Additional Compiler Arguments</strong></td>
+	<td style="text-align:left;">Adds entries to this list to pass additional arguments to the Roslyn compiler. Use one new entry for each additional argument.<br>To create a new entry, click <strong>Add</strong> (<strong>+</strong>). To remove an entry, click <strong>Remove</strong> (<strong>-</strong>).<br><br>When you have added all desired arguments, click <strong>Apply</strong> to include your additional arguments in future compilations. Click <strong>Revert</strong> to reset this list to the most recent applied state.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Suppress Common Warnings</strong></td>
+	<td style="text-align:left;">Indicates whether to display the C# warnings <a href="https://docs.microsoft.com/en-us/dotnet/csharp/misc/cs0169">CS0169</a> and <a href="https://docs.microsoft.com/en-us/dotnet/csharp/misc/CS0649">CS0649</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Allow ‘unsafe’ Code</strong></td>
+	<td style="text-align:left;">Enables support for compiling <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/unsafe">‘unsafe’ C# code</a> in a pre-defined assembly (for example, <code>Assembly-CSharp.dll</code>). <br>For Assembly Definition Files (<code>.asmdef</code>), click on one of your <code>.asmdef</code> files and enable the option in the Inspector window that appears.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Use Deterministic Compilation</strong></td>
+	<td style="text-align:left;">Indicates whether to prevent compilation with the -deterministic C# flag. With this setting enabled, compiled assemblies are byte-for-byte identical each time they are compiled.<br><br>For more information, see Microsoft’s <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/deterministic-compiler-option">deterministic compiler option</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Enable Roslyn Analyzers</strong></td>
+	<td style="text-align:left;">Indicates whether to compile user-written <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> without Roslyn analyzer DLLs that might be present in your project.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Optimization</h3>
+<table>
+ <thead>
+ <tr>
+ <th style="text-align:left;"><strong>Property</strong></th>
+ <th style="text-align:left;" colspan="2"><strong>Description</strong></th>
+ </tr>
+ </thead>
+ <tbody>
+<tr>
+ <td><strong>Prebake Collision Meshes</strong></td>
+ <td colspan="2">Adds collision data to <a href="class-Mesh.html">Meshes</a> at build time.</td>
+</tr>
+<tr>
+ <td><strong>Preloaded Assets</strong></td>
+ <td colspan="2">Sets an array of Assets for the player to load on startup. <br>To add new Assets, increase the value of the <strong>Size</strong> property and then set a reference to the Asset to load in the new <strong>Element</strong> box that appears.</td>
+</tr>
+<tr>
+ <td rowspan="5"><strong>Managed Stripping Level</strong></td>
+ <td colspan="2">Chooses how aggressively Unity strips unused managed (C#) code. When Unity builds your app, the Unity Linker process can strip unused code from the managed DLLs your Project uses. Stripping code can make the resulting executable smaller, but can sometimes remove code that’s in use. <br><br>For more information about these options and bytecode stripping with IL2CPP, refer to <a href="../ScriptReference/ManagedStrippingLevel.html">ManagedStrippingLevel</a>.</td>
+</tr>
+<tr>
+ <td><strong>Minimal</strong></td>
+ <td>Use this to strip class libraries, UnityEngine, Windows Runtime assemblies, and copy all other assemblies.</td>
+</tr>
+<tr>
+ <td><strong>Low</strong></td>
+ <td>Remove unreachable managed code to reduce build size and Mono/IL2CPP build times.</td>
+</tr>
+<tr>
+ <td><strong>Medium</strong></td>
+ <td>Run UnityLinker to reduce code size beyond what <strong>Low</strong> can achieve. You might need to support a custom link.xml file, and some reflection code paths might not behave the same.</td>
+</tr>
+<tr>
+ <td><strong>High</strong></td>
+ <td>UnityLinker will strip as much code as possible. This will further reduce code size beyond what Medium can achieve but managed code debugging of some methods might no longer work. You might need to support a custom link.xml file, and some reflection code paths might not behave the same.</td>
+</tr>
+<tr>
+ <td><strong>Vertex Compression</strong></td>
+ <td colspan="2">Sets vertex compression per channel. This affects all the meshes in your project. <br>Typically, Vertex Compression is used to reduce the size of mesh data in memory, reduce file size, and improve GPU performance. <br><br>For more information on how to configure vertex compression and limitations of this setting, refer to <a href="mesh-compression.html">Compressing mesh data</a>.</td>
+</tr>
+<tr>
+ <td><strong>Optimize Mesh Data</strong></td>
+ <td colspan="2">Enable this option to strip unused vertex attributes from the mesh used in a build. This option reduces the amount of data in the mesh, which can help reduce build size, loading times, and runtime memory usage. <br><br> <strong>Warning:</strong> If you have this setting enabled, don’t change material or shader settings at runtime. <br><br> For more information, refer to <a href="../ScriptReference/PlayerSettings-stripUnusedMeshComponents.html">PlayerSettings.stripUnusedMeshComponents</a>.</td>
+</tr>
+<tr>
+ <td><strong>Texture MipMap Stripping</strong></td>
+ <td colspan="2">Enables mipmap stripping for all platforms. It strips unused mipmaps from Textures at build time. <br>Unity determines unused mipmaps by comparing the value of the mipmap against the quality settings for the current platform. If a mipmap value is excluded from every quality setting for the current platform, then Unity strips those mipmaps from the build at build time. If <code>QualitySettings.masterTextureLimit</code> is set to a mipmap value that has been stripped, Unity will set the value to the closest mipmap value that hasn’t been stripped.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Logging</h3>
+
+<p>Select what type of logging you want to allow in specific contexts within the QNX builds.</p>
+
+<ul>
+<li><p>Select your preferred logging method from the available options.</p></li>
+<li>
+<p>Check a box that corresponds to each Log Type (Error, Assert, Warning, Log, and Exception) based on the type of logging you require. For example:</p>
+
+<ul>
+<li>
+<strong>ScriptOnly</strong>: Logs only when running scripts.</li>
+<li>
+<strong>Full</strong>: Logs all the time.</li>
+<li>
+<strong>None</strong>: No logs are ever recorded.</li>
+</ul>
+</li>
+</ul>
+
+<h3>Legacy</h3>
+
+<p>This section covers the legacy player settings.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Clamp BlendShapes (Deprecated)</strong></td>
+	<td style="text-align:left;">Enable the option to clamp the range of blend shape weights in <a href="class-SkinnedMeshRenderer.html">SkinnedMeshRenderers</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Upload Cleared Texture Data</strong></td>
+	<td style="text-align:left;">This is a legacy feature and currently not needed because it uses up the bandwidth. By default, this is enabled for debugging purposes. Enabling this setting clears the initial data and automatically uploads the texture from script to the video memory.</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="qnx-environment-setup.html"></a></span><div class="tip">Set up your environment for QNX</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="qnx-develop.html"></a></span><div class="tip">Develop for QNX</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

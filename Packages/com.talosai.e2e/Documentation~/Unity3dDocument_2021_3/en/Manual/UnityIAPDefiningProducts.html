@@ -1,0 +1,396 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Defining products</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="monetization" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UnityIAPDefiningProducts.html">English</a></li>
+<li><a href="/cn/current/Manual/UnityIAPDefiningProducts.html">中文</a></li>
+<li><a href="/ja/current/Manual/UnityIAPDefiningProducts.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UnityIAPDefiningProducts.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UnityIAPDefiningProducts.html">English</a></li>
+<li><a href="/cn/current/Manual/UnityIAPDefiningProducts.html">中文</a></li>
+<li><a href="/ja/current/Manual/UnityIAPDefiningProducts.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UnityIAPDefiningProducts.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UnityServices.html">Unity Services</a></li>
+<li><a href="UnityIAP.html">﻿Unity IAP</a></li>
+<li>Cross Platform Guide</li>
+<li>Defining products</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UnityIAPCodelessIAP.html"></a></span><div class="tip">Codeless IAP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnityIAPSubscriptionProducts.html"></a></span><div class="tip">Subscription Product support</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Defining products</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>In order to use in-app purchases, your app must provide a list of Products for sale. You can do this through scripting, or using the <a href="UnityIAPCodelessIAP.html"><strong>Codeless IAP Catalog</strong></a> (<strong>Window</strong> &gt; <span class="tooltip"><strong>Unity IAP</strong><span class="tooltiptext">Abbreviation of Unity <strong>In App Purchase</strong><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UnityIAP" aria-label="Go to glossary anchor for UnityIAP">Glossary</a></span></span></span> &gt; <strong>IAP Catalog</strong>). Whichever implementation you use, you must define the appropriate attributes for each Product. This page covers these attributes in detail.</p>
+
+<figure>
+<img src="../uploads/Main/IAPCatalogGUI.png" alt="The IAP Catalog GUI in the Unity Editor">
+<figcaption>The <strong>IAP Catalog</strong> GUI in the Unity Editor</figcaption>
+</figure>
+
+<h2>Product ID</h2>
+
+<p>Enter a cross-platform unique identifier to serve as the Product’s default ID when communicating with an app store. </p>
+
+<p>
+<strong>Important</strong>: The ID may only contain lowercase letters, numbers, underscores, or periods.</p>
+
+<h2>Product Type</h2>
+
+<p>Each Product must be of one of the following Types:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Type</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Examples</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Consumable</strong></td>
+	<td style="text-align:left;">Users can purchase the Product repeatedly. Consumable Products cannot be restored.</td>
+	<td style="text-align:left;">* Virtual currencies <br> * Health potions <br> * Temporary power-ups.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Non-Consumable</strong></td>
+	<td style="text-align:left;">Users can only purchased the Product once. Non-Consumable Products can be restored.</td>
+	<td style="text-align:left;">* Weapons or armor <br> * Access to extra content</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Subscription</strong></td>
+	<td style="text-align:left;">Users can access the Product for a finite period of time. Subscription Products can be restored.</td>
+	<td style="text-align:left;">* Monthly access to an online game <br> * VIP status granting daily bonuses <br> * A free trial</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note</strong>: For more information on Subscription type support, see the section on <a href="UnityIAPSubscriptionProducts.html"><strong>Subscription Product support</strong></a>.</p>
+
+<h2>Advanced</h2>
+
+<p>This section defines the metadata associated with your Product for use in an in-game store.</p>
+
+<h3>Descriptions</h3>
+
+<p>Use the following fields to add descriptive text for your Product:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Field</strong></th>
+	<th style="text-align:left;"><strong>Data type</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Example</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Product Locale</strong></td>
+	<td style="text-align:left;">Enum</td>
+	<td style="text-align:left;">Determines the app stores available in your region.</td>
+	<td style="text-align:left;">
+<strong>English (U.S.)</strong> (Google Play, Apple)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Product Title</strong></td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">The name of your Product as it appears in an app store.</td>
+	<td style="text-align:left;">“Health Potion”</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Product Description</strong></td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">The descriptive text for your Product as it appears in an app store, usually an explanation of what the Product is.</td>
+	<td style="text-align:left;">“Restores 50 HP.”</td>
+</tr>
+</tbody>
+</table>
+
+<p>Add <strong>Translations</strong> for the <strong>Title</strong> and <strong>Description</strong> fields by clicking the plus (<strong>+</strong>) icon and selecting an additional locale. You can add as many translations as you like.</p>
+
+<figure>
+<img src="../uploads/Main/ProductDescription.png" alt="Populating Descriptions fields for Products in the IAP Catalog GUI">
+<figcaption>Populating <strong>Descriptions</strong> fields for Products in the <strong>IAP Catalog</strong> GUI</figcaption>
+</figure>
+
+<h3>Payouts</h3>
+
+<p>Use this section to add local, fixed definitions for the content you pay out to the purchaser. Payouts make it easier to manage in-game wallets or inventories. By labeling a Product with a name and quantity, developers can quickly adjust in-game counts of certain item types upon purchase (for example, coins or gems).</p>
+
+<p>
+<strong>Note</strong>: This functionality is only available in Unity 2017.2 or higher. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Field</strong></th>
+	<th style="text-align:left;"><strong>Data type</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>Example</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Payout Type</strong></td>
+	<td style="text-align:left;">Enum</td>
+	<td style="text-align:left;">Defines the category of content the purchaser receives. There are four possible Types.</td>
+	<td style="text-align:left;">* Currency <br> * Item<br> * Resource <br> * Other</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Payout Subtype</strong></td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">Provides a level of granularity to the content category.</td>
+	<td style="text-align:left;">* “Gold” and “Silver” subtypes of a <strong>Currency</strong> type <br> * “Potion” and “Boost” subtypes of an <strong>Item</strong> type</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Quantity</strong></td>
+	<td style="text-align:left;">Int</td>
+	<td style="text-align:left;">Specifies the number of items, currency, and so on, that the purchaser receives in the payout.</td>
+	<td style="text-align:left;">* 1 <br> * &gt;25<br>* 100</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Data</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Use this field any way you like as a property to reference in code.</td>
+	<td style="text-align:left;">* Flag for a UI element<br> * Item rarity</td>
+</tr>
+</tbody>
+</table>
+
+<figure>
+<img src="../uploads/Main/Payouts.png" alt="Populating Payouts fields for Products in the IAP Catalog GUI">
+<figcaption>Populating <strong>Payouts</strong> fields for Products in the <strong>IAP Catalog</strong> GUI</figcaption>
+</figure>
+
+<p>
+<strong>Note</strong>: You can add multiple Payouts to a single Product. </p>
+
+<p>For more information on the PayoutDefinition class, see the <a href="../ScriptReference/Purchasing.PayoutDefinition.html">Scripting Reference</a>. You can always add Payout information to a Product in a script using this class. For example:</p>
+
+<pre><code>using UnityEngine.Purchasing;
+
+new PayoutDefinition (PayoutType.Currency, &quot;Gold&quot;, 100)
+</code></pre>
+
+<p>Note that the IAP Catalog acts as a Product catalog dictionary, not as an inventory manager. You must still implement the code that handles conveyance of the purchased content. </p>
+
+<h3>Store ID Overrides</h3>
+
+<p>By default, Unity IAP assumes that your Product has the same identifier (specified in the <strong>ID</strong> field, above) across all app stores. Unity recommends doing this where possible. However, there are occasions when this is not possible, such as when publishing to both <span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span> and Mac stores, which prohibit developers from using the same product ID across both.</p>
+
+<p>In these cases, use the override fields to specify the Product’s correct identifier where it differs from the cross-platform ID.</p>
+
+<p>You can also do this programmatically, as follows:</p>
+
+<pre><code>using UnityEngine;
+using UnityEngine.Purchasing;
+
+public class MyIAPManager {
+    public MyIAPManager () {
+        var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+        builder.AddProduct(&quot;100_gold_coins&quot;, ProductType.Consumable, new IDs
+        {
+            {&quot;100_gold_coins_google&quot;, GooglePlay.Name},
+            {&quot;100_gold_coins_mac&quot;, MacAppStore.Name}
+        });
+        // Initialize Unity IAP...
+    }
+}
+</code></pre>
+
+<p>In this example, the Product identifies as “100_gold_coins_google” to Google Play and “100_gold_coins_mac” to the Apple App Store.</p>
+
+<p>
+<strong>Note</strong>: Overrides only change the identifier Unity IAP uses when communicating with app stores. You should still use the Product’s cross-platform identifier when making API calls.</p>
+
+<p>
+<strong>Important</strong>: The ID may only contain lowercase letters, numbers, underscores, or periods. </p>
+
+<h3>Google Configuration (required for Google Play export)</h3>
+
+<p>Provide either a Product price, or an ID for a <a href="https://support.google.com/googleplay/android-developer/answer/6334373">Pricing Template</a> created in Google Play.</p>
+
+<figure>
+<img src="../uploads/Main/GoogleConfig.png" alt="Populating Google Configuration fields for Products in the IAP Catalog GUI.">
+<figcaption>Populating <strong>Google Configuration</strong> fields for Products in the <strong>IAP Catalog</strong> GUI.</figcaption>
+</figure>
+
+<h3>Apple Configuration (required for Apple export)</h3>
+
+<p>Select a <strong>Pricing Tier</strong> from the dropdown menu. Unity supports predefined Apple price points, but not arbitrary values.</p>
+
+<p>
+<strong>Select a screenshot</strong> to upload. </p>
+
+<p>For information on screenshot specs, see Apple’s publisher support documentation.</p>
+
+<figure>
+<img src="../uploads/Main/AppleConfig.png" alt="Populating Apple Configuration fields for Products in the IAP Catalog GUI.">
+<figcaption>Populating <strong>Apple Configuration</strong> fields for Products in the <strong>IAP Catalog</strong> GUI.</figcaption>
+</figure>
+
+<h2>Defining Products in scripts</h2>
+
+<p>You can also declare your Product list programmatically using the <a href="../ScriptReference/Purchasing.ConfigurationBuilder.html">Purchasing Configuration Builder</a>. You must provide a unique cross-store <strong>Product ID</strong> and <strong>Product Type</strong> for each Product:</p>
+
+<pre><code>using UnityEngine;
+using UnityEngine.Purchasing;
+
+public class MyIAPManager {
+    public MyIAPManager () {
+        var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+        builder.AddProduct(&quot;100_gold_coins&quot;, ProductType.Consumable);
+        // Initialize Unity IAP...
+    }
+}
+</code></pre>
+
+<hr>
+
+<ul>
+<li><span class="page-edit">2018–05–30 Page amended
+</span></li>
+</ul>
+<!-- area:monetization -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UnityIAPCodelessIAP.html"></a></span><div class="tip">Codeless IAP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnityIAPSubscriptionProducts.html"></a></span><div class="tip">Subscription Product support</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

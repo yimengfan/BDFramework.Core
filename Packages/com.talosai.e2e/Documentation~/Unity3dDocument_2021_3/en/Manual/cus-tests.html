@@ -1,0 +1,285 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Adding tests to a package</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/cus-tests.html">English</a></li>
+<li><a href="/cn/current/Manual/cus-tests.html">中文</a></li>
+<li><a href="/ja/current/Manual/cus-tests.html">日本語</a></li>
+<li><a href="/kr/current/Manual/cus-tests.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/cus-tests.html">English</a></li>
+<li><a href="/cn/current/Manual/cus-tests.html">中文</a></li>
+<li><a href="/ja/current/Manual/cus-tests.html">日本語</a></li>
+<li><a href="/kr/current/Manual/cus-tests.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li><a href="CustomPackages.html">Creating custom packages</a></li>
+<li>Adding tests to a package</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="cus-layout.html"></a></span><div class="tip">Package layout</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="cus-samples.html"></a></span><div class="tip">Creating samples for packages</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Adding tests to a package</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>As with any kind of development, it’s good practice to add tests to your package. There are three things you must do to set up tests on your package:</p>
+
+<ol>
+<li>Create the C# test files and <a href="#location">put them under the Tests folder</a>.</li>
+<li>Create <a href="#files">asmdef files for your tests</a>.</li>
+<li>
+<a href="#tests">Enable tests</a> for your package.</li>
+</ol>
+
+<p><a name="location" aria-hidden="true"></a></p>
+
+<h2>Location of test files</h2>
+
+<p>You can add your test files to the Tests folder of your package in the <code>Editor</code> and <code>Runtime</code> subfolders. For example, a simple package with tests might look something like this:</p>
+
+<pre><code>&lt;package-root&gt;
+  ├── package.json
+  ├── Editor
+  │     ├── &lt;company-name&gt;.&lt;package-name&gt;.Editor.asmdef
+  │     └── EditorExample.cs
+  ├── Runtime
+  │     ├── &lt;company-name&gt;.&lt;package-name&gt;.asmdef
+  │     └── RuntimeExample.cs
+  └── Tests
+        ├── Editor
+        │    ├── &lt;company-name&gt;.&lt;package-name&gt;.Editor.Tests.asmdef
+        │    └── EditorExampleTest.cs
+        └── Runtime
+             ├── &lt;company-name&gt;.&lt;package-name&gt;.Tests.asmdef
+             └── RuntimeExampleTest.cs
+
+</code></pre>
+
+<p>Each of those subfolders must contain an <code>.asmdef</code> file, which provides references to the Editor and Runtime assemblies. The assembly definition files also provide a reference to the test assembly files. For more information, refer to <a href="#files">Assembly definition files for tests</a>.</p>
+
+<p><a name="files" aria-hidden="true"></a></p>
+
+<h2>Assembly definition files for tests</h2>
+
+<p>Use the <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.test-framework@latest/">Test Framework</a><span class="tooltiptext">The Test Framework package (formerly called the Test Runner) is a Unity tool that tests your code in both Edit mode and Play mode, and also on target platforms such as Standalone, Android, or iOS. <a href="https://docs.unity3d.com/Packages/com.unity.test-framework@latest" href="https://docs.unity3d.com/Packages/com.unity.test-framework@latest/">Test Framework</a><span class="tooltiptext">The Test Framework package (formerly called the Test Runner) is a Unity tool that tests your code in both Edit mode and Play mode, and also on target platforms such as Standalone, Android, or iOS. <a href="https://docs.unity3d.com/Packages/com.unity.test-framework@latest">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TestFramework" aria-label="Go to glossary anchor for TestFramework">Glossary</a></span></span></span> package to create or edit your assembly definition files. For more information, refer to <a href="https://docs.unity3d.com/Packages/com.unity.test-framework@latest/index.html?subfolder=/manual/workflow-create-test-assembly.html">Creating test assemblies</a>.</p>
+
+<p>Although you can choose to edit assembly definition files directly, you need to make sure to add the following references:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Attribute</strong></th>
+	<th style="text-align:left;"><strong>Type</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>name</strong></td>
+	<td style="text-align:left;">String</td>
+	<td style="text-align:left;">The name of the assembly without the file extension.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>references</strong></td>
+	<td style="text-align:left;">Array of Strings</td>
+	<td style="text-align:left;">References to the Editor and Runtime assemblies. Assembly definition files require different references, depending on the test type: <br>- For Editor tests, add a reference to the package’s Editor and Runtime assemblies. <br>- For Runtime tests, add a reference to the package’s Runtime assembly only.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>optionalUnityReferences</strong></td>
+	<td style="text-align:left;">Array of Strings</td>
+	<td style="text-align:left;">This list of Unity references must include <code>&quot;TestAssemblies&quot;</code> to mark the assembly as a test assembly. This adds references to the <code>nunit.framework.dll</code> and <code>UnityEngine.TestRunner.dll</code> libraries to the Assembly Definition.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>includePlatforms</strong></td>
+	<td style="text-align:left;">Array of Strings</td>
+	<td style="text-align:left;">For the Editor test, this list of platforms must include the <code>&quot;Editor&quot;</code> platform.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Tip</strong>: You can also edit the assembly definition files in the <span class="tooltip"><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>. Refer to <a href="ScriptCompilationAssemblyDefinitionFiles.html">Assembly Definitions</a> for more information.</p>
+
+<h3>Editor file example</h3>
+
+<p>The editor test <code>.asmdef</code> file looks like this:</p>
+
+<pre><code class="lang-json">{
+  &quot;name&quot;: &quot;MyCompany.MyPackage.Editor.Tests&quot;,
+  &quot;references&quot;: [
+    &quot;MyPackage.Editor&quot;,
+    &quot;MyPackage&quot;
+  ],
+  &quot;optionalUnityReferences&quot;: [
+    &quot;TestAssemblies&quot;
+  ],
+  &quot;includePlatforms&quot;: [
+    &quot;Editor&quot;
+  ],
+  &quot;excludePlatforms&quot;: []
+}
+
+</code></pre>
+
+<h3>Runtime file example</h3>
+
+<p>The runtime test <code>.asmdef</code> file looks like this:</p>
+
+<pre><code class="lang-json">{
+  &quot;name&quot;: &quot;MyCompany.MyPackage.Tests&quot;,
+  &quot;references&quot;: [
+    &quot;MyPackage&quot;
+  ],
+  &quot;optionalUnityReferences&quot;: [
+    &quot;TestAssemblies&quot;
+  ],
+  &quot;includePlatforms&quot;: [],
+  &quot;excludePlatforms&quot;: []
+}
+
+</code></pre>
+
+<p><a name="tests" aria-hidden="true"></a></p>
+
+<h2>Enabling tests for a package</h2>
+
+<p>For <span class="tooltip"><strong>embedded packages</strong><span class="tooltiptext"><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Embeddedpackage" aria-label="Go to glossary anchor for Embeddedpackage">Glossary</a></span></span></span>, you don’t need to explicitly enable tests because embedded packages are in development.</p>
+
+<p>However, for other types of dependencies, you need to add the <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-manifestPrj.html#testables">testables</a> attribute to the <span class="tooltip"><strong>Project manifest</strong><span class="tooltiptext">Each Unity project has a <em>project manifest</em>, which acts as an entry point for the Package Manager. This file must be available in the <code>&lt;project&gt;/Packages</code> directory. The Package Manager uses it to configure many things, including a list of dependencies for that project, as well as any package repository to query for packages. <a href="upm-manifestPrj.html" href="upm-manifestPrj.html#testables">testables</a> attribute to the <span class="tooltip"><strong>Project manifest</strong><span class="tooltiptext">Each Unity project has a <em>project manifest</em>, which acts as an entry point for the Package Manager. This file must be available in the <code>&lt;project&gt;/Packages</code> directory. The Package Manager uses it to configure many things, including a list of dependencies for that project, as well as any package repository to query for packages. <a href="upm-manifestPrj.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Projectmanifest" aria-label="Go to glossary anchor for Projectmanifest">Glossary</a></span></span></span> and add the names of packages that have tests you want to run. That includes direct and <span class="tooltip"><strong>indirect dependencies</strong><span class="tooltiptext">An <strong>indirect</strong>, or transitive dependency occurs when your project requests a package which itself “depends on” another package. For example, if your project depends on the <code>alembic@1.0.7</code> package which in turn depends on the <code>timeline@1.0.0</code> package, then your project has an direct dependency on Alembic and an indirect dependency on Timeline. <a href="upm-dependencies.html" href="Glossary.html#Projectmanifest" aria-label="Go to glossary anchor for Projectmanifest">Glossary</a></span></span></span> and add the names of packages that have tests you want to run. That includes direct and <span class="tooltip"><strong>indirect dependencies</strong><span class="tooltiptext">An <strong>indirect</strong>, or transitive dependency occurs when your project requests a package which itself “depends on” another package. For example, if your project depends on the <code>alembic@1.0.7</code> package which in turn depends on the <code>timeline@1.0.0</code> package, then your project has an direct dependency on Alembic and an indirect dependency on Timeline. <a href="upm-dependencies.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Indirectdependency" aria-label="Go to glossary anchor for Indirectdependency">Glossary</a></span></span></span> of the Project. For example:</p>
+
+<pre><code class="lang-json">{
+  &quot;dependencies&quot;: {
+    &quot;com.unity.some-package&quot;: &quot;1.0.0&quot;,
+    &quot;com.unity.other-package&quot;: &quot;2.0.0&quot;,
+    &quot;com.unity.yet-another-package&quot;: &quot;3.0.0&quot;
+  },
+  &quot;testables&quot;: [&quot;com.unity.some-package&quot;, &quot;com.unity.other-package&quot;]
+}
+
+</code></pre>
+
+<p>This example adds tests for the <strong>com.unity.<em>some-package</em></strong> and <strong>com.unity.<em>other-package</em></strong> packages in Unity’s <a href="https://docs.unity3d.com/Packages/com.unity.test-framework@latest">Test Framework</a> package.</p>
+
+<p>
+<strong>Note</strong>: You might need to import the package again, because the test framework doesn’t always immediately pick up changes to the <code>testables</code> attribute.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="cus-layout.html"></a></span><div class="tip">Package layout</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="cus-samples.html"></a></span><div class="tip">Creating samples for packages</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

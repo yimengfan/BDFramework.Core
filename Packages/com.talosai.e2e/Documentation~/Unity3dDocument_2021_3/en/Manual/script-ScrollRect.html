@@ -1,0 +1,299 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Scroll Rect</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/script-ScrollRect.html">English</a></li>
+<li><a href="/cn/current/Manual/script-ScrollRect.html">中文</a></li>
+<li><a href="/ja/current/Manual/script-ScrollRect.html">日本語</a></li>
+<li><a href="/kr/current/Manual/script-ScrollRect.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/script-ScrollRect.html">English</a></li>
+<li><a href="/cn/current/Manual/script-ScrollRect.html">中文</a></li>
+<li><a href="/ja/current/Manual/script-ScrollRect.html">日本語</a></li>
+<li><a href="/kr/current/Manual/script-ScrollRect.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="com.unity.ugui.html">Unity UI </a></li>
+<li><a href="UIReference.html">UI Reference</a></li>
+<li><a href="comp-UIInteraction.html">Interaction Components</a></li>
+<li>Scroll Rect</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="script-InputField.html"></a></span><div class="tip">Input Field</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="comp-UIAutoLayout.html"></a></span><div class="tip">Auto Layout</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Scroll Rect</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A Scroll Rect can be used when content that takes up a lot of space needs to be displayed in a small area. The Scroll Rect provides functionality to scroll over this content.</p>
+
+<p>Usually a Scroll Rect is combined with a <span class="tooltip"><a class="tooltipMoreInfoLink" aria-label="Navigate to more info about script-Mask.html">Mask</a><span class="tooltiptext">Can refer to a Sprite Mask, a UI Mask, or a Layer Mask <a href="script-Mask.html" href="script-Mask.html">Mask</a><span class="tooltiptext">Can refer to a Sprite Mask, a UI Mask, or a Layer Mask <a href="script-Mask.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mask" aria-label="Go to glossary anchor for Mask">Glossary</a></span></span></span> in order to create a scroll view, where only the scrollable content inside the Scroll Rect is visible. It can also additionally be combined with one or two <a href="script-Scrollbar.html">Scrollbars</a> that can be dragged to scroll horizontally or vertically.</p>
+
+<figure>
+<img src="../uploads/Main/UI_ScrollRectExample.png" alt="A Scroll Rect.">
+<figcaption>A Scroll Rect.</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/UI_ScrollRectInspector.png" alt="">
+</figure>
+
+<h2>Properties</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property:</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function:</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Content</strong></td>
+	<td style="text-align:left;">This is a reference to the Rect Transform of the <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> element to be scrolled, for example a large image.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Horizontal</strong></td>
+	<td style="text-align:left;">Enables horizontal scrolling</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Vertical</strong></td>
+	<td style="text-align:left;">Enables vertical scrolling</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Movement Type</strong></td>
+	<td style="text-align:left;">Unrestricted, Elastic or Clamped. Use Elastic or Clamped to force the content to remain within the bounds of the Scroll Rect. Elastic mode bounces the content when it reaches the edge of the Scroll Rect</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Elasticity</strong>
+</td>
+	<td style="text-align:left;">This is the amount of bounce used in the elasticity mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Inertia</strong></td>
+	<td style="text-align:left;">When Inertia is set the content will continue to move when the pointer is released after a drag. When Inertia is not set the content will only move when dragged.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Deceleration Rate</strong>
+</td>
+	<td style="text-align:left;">When Inertia is set the deceleration rate determines how quickly the contents stop moving. A rate of 0 will stop the movement immediately. A value of 1 means the movement will never slow down.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scroll Sensitivity</strong></td>
+	<td style="text-align:left;">The sensitivity to scroll wheel and track pad scroll events.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Viewport</strong><span class="tooltiptext">The user’s visible area of an app on their screen.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Viewport" aria-label="Go to glossary anchor for Viewport">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Reference to the viewport Rect Transform that is the parent of the content Rect Transform.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Horizontal Scrollbar</strong></td>
+	<td style="text-align:left;">Optional reference to a horizontal scrollbar element.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Visibility</strong>
+</td>
+	<td style="text-align:left;">Whether the scrollbar should automatically be hidden when it isn’t needed, and optionally expand the viewport as well.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Spacing</strong>
+</td>
+	<td style="text-align:left;">The space between the scrollbar and the viewport.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Vertical Scrollbar</strong></td>
+	<td style="text-align:left;">Optional reference to a vertical scrollbar element.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Visibility</strong>
+</td>
+	<td style="text-align:left;">Whether the scrollbar should automatically be hidden when it isn’t needed, and optionally expand the viewport as well.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">        <strong>Spacing</strong>
+</td>
+	<td style="text-align:left;">The space between the scrollbar and the viewport.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Events</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong><em>Property:</em></strong></th>
+	<th style="text-align:left;"><strong><em>Function:</em></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>On Value Changed</strong></td>
+	<td style="text-align:left;">A <a href="UnityEvents.html">UnityEvent</a> that is invoked when the scroll position of the Scroll Rect changes. The event can send the current scroll position as a <code>Vector2</code> type dynamic argument.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Details</h2>
+
+<p>The important elements in a scroll view are the <strong>viewport</strong>, the scrolling <strong>content</strong>, and optionally one or two <strong>scrollbars</strong>.</p>
+
+<ul>
+<li>The root <span class="tooltip"><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> has the Scroll Rect component.</li>
+<li>The viewport has a <a href="script-Mask.html">Mask</a> component. The viewport can either be the root GameObject, or a separate GameObject that’s a child to the root. If auto-hiding scrollbars are used, it must be a child. The viewport Rect Transform needs to be referenced in the <strong>Viewport</strong> property of the Scroll Rect.</li>
+<li>All the scrolling content must be children of a single content GameObject that is a child to the viewport. The content Rect Transform needs to be referenced in the <strong>Content</strong> property of the Scroll Rect.</li>
+<li>The scrollbars - if used - are children to the root GameObject. See the <a href="script-Scrollbar.html">Scrollbar</a> page for more details on the setup of a scrollbar and see the section <strong>Scrollbar setup</strong> below for information about setup of scrollbars with a scroll view.</li>
+</ul>
+
+<p>This image shows a setup where the viewport is a child to the scroll view root. This is the default used when using the GameObject &gt; UI &gt; Scroll View menu option.</p>
+
+<figure>
+<img src="../uploads/Main/UI_ScrollRectHierarchy.png" alt="">
+</figure>
+
+<p>To scroll content, the input must be received from inside the bounds of the ScrollRect, not on the content itself.</p>
+
+<p>Take care when using Unrestricted scrolling movement as it is possible to lose control of the content in an irretrievable way. When using Elastic or Constrained movement it is best to position the content so that it starts within the bounds of the ScrollRect, or undesirable behaviour may occur as the RectTransform tries to bring the content back within its bounds.</p>
+
+<h3>Scrollbar setup</h3>
+
+<p>Optionally, the Scroll Rect can be linked to a horizontal and/or a vertical <strong>Scrollbar</strong>. These are typically placed in the hierarchy as siblings to the viewport, and when present, should be dragged into the <strong>Horizontal Scrollbar</strong> and <strong>Vertical Scrollbar</strong> properties of the Scroll Rect, respectively. Note that the <strong>Direction</strong> property on such a horizontal Scrollbar should be set to <strong>Left To Right</strong>, and on the vertical Scrollbar to <strong>Bottom To Top</strong>.</p>
+
+<p>The scrollbars can optionally have auto-hiding behaviour that hides the scrollbars if the content doesn’t need to scroll because it isn’t larger than the viewport. Note that the auto-hiding only ever happens in Play Mode. In Edit Mode the scrollbars are always shown. This prevents marking the <span class="tooltip"><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> as dirty when it shouldn’t be, and also help authoring content with proportions that there’s room for even when the scrollbars are shown.</p>
+
+<p>If one or both scrollbars have their visibility behaviour set to <strong>Auto Hide And Expand View</strong>, the viewport is automatically expanded when the scrollbars are hidden in order to take up the extra room where the scrollbars would otherwise have been. With this setup, the position and size of the <strong>view</strong> is driven by the Scroll Rect, and the width of the <strong>horizontal scrollbar</strong> as well as the height of the <strong>vertical scrollbar</strong> is driven as well. With this setup the viewport as well as the scrollbars must be children to the Scroll Rect root GameObject.</p>
+
+<h2>Hints</h2>
+
+<ul>
+<li>The pivot and anchors of the content RectTransform can be used to determine how the content is aligned inside the scroll view if the content grows or shrinks. If the content should stay aligned with the top, set the anchors to the top of the parent, and set the pivot to the top position.</li>
+<li>See the page <a href="HOWTO-UIFitContentSize.html">Making UI elements fit the size of their content</a> for information about how to make the content Rect Transform automatically resize to fit the content.</li>
+</ul>
+<!-- area:authoring -->
+
+<p><span class="search-words">ScrollRect</span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="script-InputField.html"></a></span><div class="tip">Input Field</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="comp-UIAutoLayout.html"></a></span><div class="tip">Auto Layout</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

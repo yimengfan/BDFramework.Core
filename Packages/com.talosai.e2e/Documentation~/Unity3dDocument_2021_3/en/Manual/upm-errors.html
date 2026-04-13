@@ -1,0 +1,621 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Troubleshooting</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-errors.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-errors.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-errors.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-errors.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-errors.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-errors.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-errors.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-errors.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and feature sets</a></li>
+<li><a href="Packages.html">Unity's Package Manager</a></li>
+<li>Troubleshooting</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-localpath.html"></a></span><div class="tip">Local folder or tarball paths</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-network.html"></a></span><div class="tip">Diagnose network issues</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Troubleshooting</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This section provides information on the following issues:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Type of error:</strong></th>
+	<th style="text-align:left;"><strong>Error message:</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">General startup issues</td>
+	<td style="text-align:left;">- <a href="#Errors">Error messages in the Package Manager window</a><br>- <a href="#Missing">Package Manager missing or window doesn’t open</a><br>- <a href="#Upgrade">Problems after upgrading Unity to new version</a><br>- <a href="#Reset">Resetting your project’s package configuration</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Package installation issues</td>
+	<td style="text-align:left;">- <a href="#Failed">Package installation fails</a><br>- <a href="#git-url-pkg">Unable to add package from Git URL</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Problems installing git dependencies</td>
+	<td style="text-align:left;">- <a href="#git-not-found">No ‘git’ executable was found</a><br>- <a href="#git-lfs">git-lfs: command not found</a><br>- <a href="#bad-url">Repository not found</a><br>- <a href="#prompts-disabled">Could not read Username: terminal prompts disabled</a><br>- <a href="#locked-git">Can’t update Git version</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip"><strong>Asset packages</strong><span class="tooltiptext">A collection of files and data from Unity projects, or elements of projects, which are compressed and stored in one file, similar to Zip files, with the <code>.unitypackage</code> extension. Asset packages are a handy way of sharing and re-using Unity projects and collections of assets. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetPackages.html" href="AssetPackages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Assetpackage" aria-label="Go to glossary anchor for Assetpackage">Glossary</a></span></span></span> from <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a href="AssetStore.html" href="Glossary.html#Assetpackage" aria-label="Go to glossary anchor for Assetpackage">Glossary</a></span></span></span> from <span class="tooltip"><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span> (My Assets)</td>
+	<td style="text-align:left;">- <a href="#failed-http-response">‘Failed to parse Http response’ in My Assets context</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Scoped registries</td>
+	<td style="text-align:left;">- <a href="#scoped-missing">Missing ‘My Registries’ in the Package Manager window</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Issues when building packages</td>
+	<td style="text-align:left;">- <a href="#Linker">Missing MonoBehaviour errors</a><br>- <a href="#HostFXR">Loading error for hostfxr.dll on Windows</a>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p>You can also run the Unity Package Manager <strong>Diagnostics</strong> tool if you are experiencing problems that might be network-related. For more information, see <a href="upm-network.html">Diagnose network issues</a>.</p>
+
+<p><br></p>
+
+<p><a name="Errors" aria-hidden="true"></a></p>
+
+<h2>Error messages in the Package Manager window</h2>
+
+<p>The Package Manager displays error indicators in the <a href="upm-ui.html">Package Manager window</a> when it encounters problems.</p>
+
+<h3>System-wide issues</h3>
+
+<ul>
+<li>
+<p><strong>Network connection issues</strong></p>
+
+<p>Error messages appear in the <a href="upm-ui.html#StatusBar">status bar</a> when the Package Manager has detected an issue that isn’t related to a specific package. For example, if the Package Manager can’t access the <a href="upm-concepts.html#Registry">package registry server</a>, it displays this message in the status bar:</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-errors.png" alt="Network error message">
+<figcaption>Network error message</figcaption>
+</figure>
+</li>
+<li>
+<p><strong>Error refreshing assets (or Error refreshing packages)</strong></p>
+
+<p>If your network can’t reach the package registry server, it’s probably because there is a connection problem with the network. When you or your system administrator <a href="upm-network.html">diagnose and fix the network error</a>, the status bar clears.</p>
+
+<p>If your network connection is working, but you aren’t signed into your <a href="https://id.unity.com/">Unity account</a>, the Package Manager doesn’t display any Asset Store packages. When you try to use the <strong>My Assets</strong> context, the Package Manager displays an error in the status bar:</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-unityid.png" alt="Logged out of Unity account">
+<figcaption>Logged out of Unity account</figcaption>
+</figure>
+
+<p>Click the <strong>Sign in</strong> button inside the <a href="upm-ui-list.html">list view</a> to sign into your Unity account through the <a href="https://docs.unity3d.com/hub/manual/index.html">Unity Hub</a>.</p>
+</li>
+</ul>
+
+<h3>Package-specific issues</h3>
+
+<ul>
+<li>
+<p>If a specific package has a problem when loading or installing (for example, when determining which package versions to load), the error icon (<img src="../uploads/Main/iconError.png" alt="">) appears in the <a href="upm-ui-list.html">package list</a> next to the compromised package <strong>(A)</strong>. To find out what the problem is, check the compromised package’s <a href="upm-ui-details.html">details view</a> to see the detailed error message <strong>(B)</strong>:</p>
+
+<figure>
+<img src="../uploads/Main/upm-ui-errormsg.png" alt="Dependency error message">
+<figcaption>Dependency error message</figcaption>
+</figure>
+</li>
+</ul>
+
+<p><br></p>
+
+<p><a name="Missing" aria-hidden="true"></a></p>
+
+<h2>Package Manager missing or window doesn’t open</h2>
+
+<p>The Package Manager window might get moved offscreen or hidden by another window. When this happens, it looks like the Package Manager window failed to open. In this case, you can try to reset the window layout (<strong>Window</strong> &gt; <strong>Layouts</strong> &gt; <strong>Default</strong>) and reopen the Package Manager window again.</p>
+
+<p>If the Package Manager window still doesn’t appear, check your Unity <span class="tooltip"><strong>Console window</strong><span class="tooltiptext">A Unity Editor window that shows errors, warnings and other messages generated by Unity, or your own scripts. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Console.html" href="Console.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Consolewindow" aria-label="Go to glossary anchor for Consolewindow">Glossary</a></span></span></span>:</p>
+
+<pre><code>Failed to resolve packages: The file [&lt;project-path&gt;/Packages/manifest.json] is not valid JSON:
+  Unexpected token '}' at 44:1
+  }
+</code></pre>
+
+<p>This error message indicates that your <code>manifest.json</code> file is malformed. It also tells you the line number where the Package Manager failed to parse the file, so you can fix the JSON. There are a number of online validators that you can use to try to correct the problem. Once you save the corrected file, Unity reloads the Package Manager window.</p>
+
+<p>If you upgraded from an early version of the Unity Editor, there may be other problems with your <span class="tooltip"><strong>package manifest</strong><span class="tooltiptext">Each package has a <em>manifest</em>, which provides information about the package to the Package Manager. The manifest contains information such as the name of the package, its version, a description for users, dependencies on other packages (if any), and other details. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-manifestPkg.html" href="upm-manifestPkg.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Packagemanifest" aria-label="Go to glossary anchor for Packagemanifest">Glossary</a></span></span></span> file:</p>
+
+<ul>
+<li>
+<p>As of 2019.3, your <code>manifest.json</code> file should not contain any references to the <strong>com.unity.package-manager-ui</strong> package. You can either <a href="#Reset">reset your project’s package configuration</a> or remove the following line from the manifest’s dependencies list:</p>
+
+<pre><code class="lang-json">    &quot;com.unity.package-manager-ui&quot;: &quot;2.1.1&quot;,
+</code></pre>
+</li>
+<li><p>Check to see if your <span class="tooltip"><strong>project manifest</strong><span class="tooltiptext">Each Unity project has a <em>project manifest</em>, which acts as an entry point for the Package Manager. This file must be available in the <code>&lt;project&gt;/Packages</code> directory. The Package Manager uses it to configure many things, including a list of dependencies for that project, as well as any package repository to query for packages. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-manifestPrj.html" href="upm-manifestPrj.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectmanifest" aria-label="Go to glossary anchor for Projectmanifest">Glossary</a></span></span></span> uses <strong>“exclude”</strong> as a package version. This is an obsolete value for the <a href="upm-manifestPrj.html#dependencies">dependencies</a> property. If you find any lines like these, remove the entire line. Package Manager only installs packages that are explicitly included as a dependency in your project, so once you remove that entry, Package Manager ignores the package and doesn’t install it.</p></li>
+</ul>
+
+<p>If the Package Manager still fails to load, follow the procedure under <a href="#Reset">Resetting your project’s package configuration</a>.</p>
+
+<p><br></p>
+
+<p><a name="Upgrade" aria-hidden="true"></a></p>
+
+<h2>Problems after upgrading Unity to new version</h2>
+
+<p>When you upgrade a project to a newer Unity version, the Package Manager automatically updates incompatible packages to newer compatible versions. However, if your package doesn’t compile, the Package Manager displays error messages in the Console.</p>
+
+<p>To correct these messages, read the error messages and fix any problems you can. For example, a package might be missing a dependency on another package or version. In that case, you can try and install the package yourself.</p>
+
+<p>You can also try the following sequence of solutions until you find something that works:</p>
+
+<ul>
+<li>Back up and then delete the <code>Packages</code> folder under your project.</li>
+<li>Back up and then delete the package sources in your project’s <code>Packages</code> folder, leaving only the <code>manifest.json</code> file. Then try to reload the project.</li>
+<li>As a last resort, you can <a href="#Reset">reset your project</a> to the <span class="tooltip"><strong>default package</strong><span class="tooltiptext">Unity automatically pre-installs a select number of <em>default</em> packages (for example, the Analytics Library, Unity Timeline, etc.) when you create a new project. This differs from a <strong>bundled package</strong> because you don’t need to install it and it differs from a <strong>built-in package</strong> because it extends Unity’s features rather than being able to enable or disable them.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Defaultpackage" aria-label="Go to glossary anchor for Defaultpackage">Glossary</a></span></span></span> configuration and add back packages one at a time until it works.</li>
+</ul>
+
+<p><br></p>
+
+<p><a name="Reset" aria-hidden="true"></a></p>
+
+<h2>Resetting your project’s package configuration</h2>
+
+<p>If a project has too many package issues, you can reset your project back to the <strong>default package configuration</strong> for the Editor’s version of Unity. This operation resets all packages in your project. This might not fix the source of the problem, but it can help you figure out what the problem is.</p>
+
+<p>
+<strong>Note:</strong> You can’t undo resetting your package configuration, so make sure you back up the <code>manifest.json</code> file first or make sure your project is under source control. You can also take extra precautions by <a href="#Cloning">cloning your project</a> and testing out the operation on the clone before proceeding.</p>
+
+<p>To return to the default package configuration, select <strong>Reset Packages to defaults</strong> from the <strong>Help</strong> menu.</p>
+
+<figure>
+<img src="../uploads/Main/upm-errors-reset.png" alt="Help &gt; Reset Packages to defaults">
+<figcaption>Help &gt; Reset Packages to defaults</figcaption>
+</figure>
+
+<p><a name="Cloning" aria-hidden="true"></a></p>
+
+<h3>Resetting a clone of your project</h3>
+
+<p>You can also test the return to the default packages before you perform the final change:</p>
+
+<ol>
+<li><p>Clone your project by copy-pasting your project folder and renaming it so that it is easy to find (for example, if your project is called <code>MyProject</code> then you could use something like <code>clone_MyProject</code>).</p></li>
+<li><p>Load your newly cloned project.</p></li>
+<li>
+<p>From the Help menu, select <strong>Reset Packages to defaults</strong>.</p>
+
+<p>Depending on the size of your project, this might take a few minutes.</p>
+</li>
+<li><p>Check that it successfully reset the packages. If so, you can perform the operation safely on the original project.</p></li>
+</ol>
+
+<p><br></p>
+
+<p><a name="Failed" aria-hidden="true"></a></p>
+
+<h2>Package installation fails</h2>
+
+<p>If you are trying to install a new package from the registry and it is not working, it might be due to permission problems.</p>
+
+<p>You must have full permissions on the <a href="upm-cache.html">cache folder</a>:</p>
+
+<ul>
+<li>Windows: <code>C:\Users\yourname\AppData\Local\Unity\cache</code>
+</li>
+<li>macOS: <code>~/Library/Unity/cache</code>
+</li>
+<li>Linux: <code>~/.config/unity3d/cache</code>
+</li>
+</ul>
+
+<p>It might be a problem with the network. Check your <a href="upm-config-network.html#Firewall">firewall</a> and <a href="upm-config-network.html#Proxy">proxy</a> settings.</p>
+
+<p>Sometimes institutional environments, such as schools, government offices, or network-protected workplaces set up proxy servers to control traffic between the network and the Internet, and use their own server certificates which are not recognized by Unity or the Package Manager. Talk to your network administrator.</p>
+
+<p><br></p>
+
+<p><a name="git-url-pkg" aria-hidden="true"></a></p>
+
+<h2>Unable to add package from Git URL</h2>
+
+<p>See <a href="#bad-url">Repository not found</a>. </p>
+
+<p><br></p>
+
+<p><a name="git-not-found" aria-hidden="true"></a></p>
+
+<h2>No ‘git’ executable was found</h2>
+
+<p>If you try to install a package from a git URL, a message similar to this appears:</p>
+
+<pre><code class="lang-shell">Cannot perform upm operation: Unable to add package
+[https://github.example.com/myuser/myrepository.git]:
+No 'git' executable was found. Please install Git on your system and restart Unity [NotFound]
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions()
+</code></pre>
+
+<p><br></p>
+
+<p><a name="git-lfs" aria-hidden="true"></a></p>
+
+<h2>git-lfs: command not found</h2>
+
+<p>If you are trying to download a package that uses Git LFS (Large File Storage), you might see this error message:</p>
+
+<pre><code class="lang-shell">Error when executing git command. git-lfs filter-process: command not found.
+</code></pre>
+
+<p>This indicates that Git LFS is probably not installed on your computer. To make sure, you could test it on the command line:</p>
+
+<pre><code class="lang-shell">git lfs --version
+</code></pre>
+
+<p>If you see something like this, Git LFS is installed:</p>
+
+<pre><code class="lang-shell">git-lfs/2.8.0 (GitHub; darwin amd64; go 1.12.7)
+</code></pre>
+
+<p>Otherwise, you can install it by following the <a href="https://www.atlassian.com/git/tutorials/git-lfs">Bitbucket</a> <a href="https://git-lfs.github.com/">GitHub</a> instructions.</p>
+
+<p><br></p>
+
+<p><a name="bad-url" aria-hidden="true"></a></p>
+
+<h2>Repository not found</h2>
+
+<p>If the Package Manager can’t locate the repository you specified, the <a href="Console.html">Unity Console</a> displays an error message:</p>
+
+<pre><code>Cannot perform upm operation: Unable to add package [https://mycompany.github.com/gitproject/com.mycompany.mypackage.git]:
+  Error when executing git command. fatal: repository 'https://mycompany.github.com/gitproject/com.mycompany.mypackage.git/' not found
+ [NotFound]
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions() (at /Users/builduser/buildslave/unity/build/Editor/Mono/EditorApplication.cs:310)
+</code></pre>
+
+<p>Check your spelling. To make sure you are using the correct URL, go to the repository’s page and copy the URL from the Clone button:</p>
+
+<figure>
+<img src="../uploads/Main/upm-giturl-locate.png" alt="Where to copy the URL on GitHub (A) and GitLab (B)">
+<figcaption>Where to copy the URL on GitHub (A) and GitLab (B)</figcaption>
+</figure>
+
+<p>Click the button to the right of the URL on GitHub <strong>(A)</strong> or GitLab <strong>(B)</strong> to copy the URL to your clipboard.</p>
+
+<p>If the location of the repository is correct, there might be another problem with the URL:</p>
+
+<ul>
+<li>If you are targeting a specific revision, make sure your revision comes last. For example: <br>
+<code>https://github.example.com/myuser/myrepository1.git#revision</code>
+</li>
+<li>If you are targeting a revision and the package is not at the root, make sure the <code>path</code> query parameter precedes the revision anchor. For example:<br><code>https://github.example.com/myuser/myrepository.git?path=/example/folder#v1.2.3</code>
+</li>
+</ul>
+
+<p>If the location of the repository and URL are correct, check your <code>PATH</code> system environment variable. Make sure the <code>PATH</code> variable includes entries for the Git <code>cmd</code> directory (Windows) and the Git <code>bin</code> directory (Windows, macOS). Package Manager processes require these entries in the <code>PATH</code> variable.</p>
+
+<p><br></p>
+
+<p><a name="prompts-disabled" aria-hidden="true"></a></p>
+
+<h2>Could not read Username: terminal prompts disabled</h2>
+
+<p>If you are trying to install a package from a private repository that requires authentication, a message similar to this one appears in the Unity Console:</p>
+
+<pre><code>Cannot perform upm operation: Unable to add package [https://mycompany.github.com/gitproject/com.mycompany.mypackage.git]:
+  Error when executing git command. fatal: could not read Username for 'https://mycompany.github.com': terminal prompts disabled
+ [NotFound]
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions() (at /Users/builduser/buildslave/unity/build/Editor/Mono/EditorApplication.cs:310)
+</code></pre>
+
+<p>This message is likely due to the fact that Package Manager does not provide an interactive terminal or dialog where you can enter your username and password for HTTP, or your passphrase to unlock your SSH key: </p>
+
+<ul>
+<li>
+<p>With <strong>HTTP(S)</strong>, every time you log onto BitBucket, GitHub, or GitLab you need to enter your username and password in a terminal or a dialog box. However, the Package Manager does not provide an interactive terminal or dialog where you can enter your username and password for HTTP(S).</p>
+
+<p>To bypass this, use one of the workarounds suggested in <a href="#https-auth">Solutions for HTTPS</a>.</p>
+</li>
+<li>
+<p>
+<strong>SSH</strong> uses a pair of public and private SSH keys. You can add your public SSH key to <a href="https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/">Bitbucket</a>, <a href="https://help.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh">GitHub</a>, or <a href="https://gitlab.com/help/ssh/README.md">GitLab</a> and then access repositories without having to enter a username and password.</p>
+
+<p>However, if you have set up a passphrase to keep your SSH key safe, you still have to enter that passphrase in a terminal or a dialog box in order to authorize your key. In that case, you can <a href="#ssh-add">use an SSH agent</a> that can unlock your SSH key to authenticate with the Package Manager on your behalf.</p>
+</li>
+</ul>
+
+<p><a name="https-auth" aria-hidden="true"></a></p>
+
+<h3>Solutions for HTTPS</h3>
+
+<p>The Package Manager does not provide an interactive terminal or dialog where you can enter your HTTP(S) username and password. To bypass this, use one of these workarounds:</p>
+
+<ul>
+<li>Use a credential manager (<a href="https://github.com/Microsoft/Git-Credential-Manager-for-Windows">Git Credential Manager for Windows</a> or <a href="https://support.apple.com/en-ca/guide/keychain-access/welcome/mac">OSXKeyChain</a>). Credential managers handle sending the password without having to use a terminal or a command prompt.</li>
+<li>Use <a href="https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage">git-credentials</a> from a terminal or command prompt. Then launch the Hub from the same terminal so that Unity has access to the cached or stored credentials.</li>
+<li>Use SSH to authenticate instead. If you set up your SSH key without a passphrase, the Package Manager doesn’t have to decrypt it in order to authenticate with the Git server. If you decide to use a passphrase for added security, you can still get around the authentication problem by using the <strong>ssh-agent</strong> on either <a href="#ssh-agent-macos">macOS</a> or <a href="#openssh-win">Windows</a>.</li>
+</ul>
+
+<p><a name="ssh-add" aria-hidden="true"></a></p>
+
+<h3>Solutions for SSH</h3>
+
+<p>If you are using the SSH protocol to <a href="upm-git.html#Git-SSH">install a package by Git URL</a>, you might get an authentication error from Git. This typically happens when you set up a private SSH key on your local computer that is protected by a passphrase.</p>
+
+<p>The solution to this problem is to set up an SSH agent that can unlock your SSH key to authenticate with the Package Manager on your behalf. Follow the instructions in the section that corresponds to your operating system:</p>
+
+<ul>
+<li><a href="#openssh-win">Setting up OpenSSH for Windows</a></li>
+<li><a href="#ssh-agent-macos">Adding SSH keys to your SSH Agent for macOS</a></li>
+</ul>
+
+<p><a name="openssh-win" aria-hidden="true"></a></p>
+
+<h4>Setting up OpenSSH for Windows</h4>
+
+<p>The native Windows OpenSSH version of the <strong>ssh-agent</strong> works better than the version available by default with Git for Windows. This procedure explains how to set up the OpenSSH client and add your key to its ssh-agent. If you are using Git for Windows, you can also prioritize the native Windows OpenSSH over the Git for Windows SSH agent:</p>
+
+<ol>
+<li><p>Make sure the OpenSSH Client is installed by searching for it in the Windows Settings <strong>Optional features</strong> window (<strong>Start</strong> &gt; <strong>Settings</strong>, then search for “Optional features”). This applies to Windows 10+.</p></li>
+<li>
+<p>Check your <code>%PATH%</code> environment variable to make sure the native Windows OpenSSH location appears (for example, <code>C:\WINDOWS\System32\OpenSSH\</code>).</p>
+
+<p>
+<strong>Note</strong>: If you’re already using Git for Windows, make sure the native Windows OpenSSH location appears before the Git for Windows SSH location in your <code>%PATH%</code> variable. This ensures that Windows uses the native Windows OpenSSH agent over the Git for Windows SSH agent.</p>
+</li>
+<li>
+<p>In a PowerShell terminal, start the <code>ssh-agent</code> process and make sure it starts automatically:</p>
+
+<pre><code class="lang-powershell"># Set the ssh-agent service to start automatically and manually start it now
+Get-Service ssh-agent | Set-Service -StartupType Automatic
+# Run the ssh-agent process to start the ssh-agent service
+ssh-agent
+</code></pre>
+</li>
+<li>
+<p>Import your key into the ssh-agent by running <code>ssh-add</code> on the command line and then following the instructions. By default, the agent adds the <code>%USERPROFILE%\.ssh\id_rsa</code> key and prompts you for the password.</p>
+
+<pre><code class="lang-powershell"># Import the key
+ssh-add
+</code></pre>
+
+<p>To use a different key, you can specify it as an argument:</p>
+
+<pre><code class="lang-powershell"># Set the ssh-agent service to start automatically and manually start it now
+ssh-add &lt;your-secure-ssh-key-name&gt;
+</code></pre>
+
+<p>If you can’t remember the name of your key, use the following command to list your keys:</p>
+
+<pre><code class="lang-powershell">ssh-add -l
+</code></pre>
+</li>
+<li>
+<p>If you installed Git for Windows, reset the <code>%GIT-SSH%</code> environment variable to make sure that Git always uses the native Windows OpenSSH version of the ssh-agent:</p>
+
+<pre><code class="lang-powershell">[Environment]::SetEnvironmentVariable(&quot;GIT_SSH&quot;, &quot;$((Get-Command ssh).Source)&quot;, [System.EnvironmentVariableTarget]::User)
+</code></pre>
+</li>
+</ol>
+
+<p><a name="ssh-agent-macos" aria-hidden="true"></a></p>
+
+<h4>Adding SSH keys to your SSH Agent for macOS</h4>
+
+<p>Use the <code>ssh-add</code> command to add your SSH keys to the <a href="https://www.ssh.com/ssh/agent">ssh-agent</a> running on your macOS system. The command parameter you use depends on your version of macOS:</p>
+
+<ul>
+<li>
+<p>Prior to macOS 12, use:</p>
+
+<pre><code class="lang-bash">ssh-add -K ~/.ssh/&lt;your-secure-ssh-key-name&gt;
+</code></pre>
+</li>
+<li>
+<p>Starting with macOS 12, use:</p>
+
+<pre><code class="lang-bash">ssh-add --apple-use-keychain ~/.ssh/&lt;your-secure-ssh-key-name&gt;
+</code></pre>
+</li>
+</ul>
+
+<p>After you run this command, the terminal asks for the password to unlock your SSH key and then adds it to the macOS keychain. However, once you restart your system, every key stored in the ssh-agent is reset.</p>
+
+<p>To prevent re-entering your password after restarting your system, open the <code>~/.ssh/config</code> file (or create one if you don’t find it), and add the following:</p>
+
+<pre><code class="lang-bash">Host *
+    UseKeychain yes
+    AddKeysToAgent yes
+    IdentityFile ~/.ssh/&lt;your-secure-ssh-key-name&gt;
+</code></pre>
+
+<p>Restart your computer to apply these changes.</p>
+
+<p><br></p>
+
+<p><a name="locked-git" aria-hidden="true"></a></p>
+
+<h2>Can’t update Git version</h2>
+
+<p>If you are trying to update your <span class="tooltip"><strong>Git dependency</strong><span class="tooltiptext">The Package Manager retrieves Git dependencies from a Git repository directly rather than from a package registry. Git dependencies use a Git URL reference instead of a version, and there’s no guarantee about the package quality, stability, validity, or even whether the version stated in its <code>package.json</code> file respects Semantic Versioning rules with regards to officially published releases of this package. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-concepts.html#Git" href="upm-concepts.html#Git">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Gitdependency" aria-label="Go to glossary anchor for Gitdependency">Glossary</a></span></span></span> to a newer version from the repository, but it’s not working, it’s probably because your Git dependency is <a href="upm-conflicts-auto.html">locked</a>. If you want to update your Git dependency to a newer version from the repository, use the <a href="upm-ui-giturl.html">Add package from git URL</a> button and enter a Git URL. For more information, see <a href="upm-git.html#git-locks">Locked Git dependencies</a>.</p>
+
+<p><br></p>
+
+<p><a name="failed-http-response" aria-hidden="true"></a></p>
+
+<h2>‘Failed to parse http response’ in My Assets context</h2>
+
+<p>If you get the following message in the <strong>Console</strong> window when you try to download an asset package from the Asset Store, there might be a problem with your asset package cache:</p>
+
+<p><code>[PackageManager] Error Failed to parse response. UnityEditor.AsyncHTTPClient![:D](https://forum.unity.com/styles/default/xenforo/clear.png)one(State, Int32)</code></p>
+
+<p>To solve this problem, delete all downloaded assets from the <a href="AssetStorePackages.html#asset-location">Location of downloaded asset package files</a> and then try to download the assets again.</p>
+
+<p>
+<strong>Warning</strong>: If your project contains a lot of asset data, this might take a lot of time and bandwidth to re-download everything.</p>
+
+<p><br></p>
+
+<p><a name="scoped-missing" aria-hidden="true"></a></p>
+
+<h2>Missing ‘My Registries’ in the Package Manager window</h2>
+
+<p>Not all registry providers are compatible with Unity’s Package Manager. If the package registry server you added does not implement the <code>/-/v1/search</code> or <code>/-/all</code> endpoints, your <a href="upm-scoped.html">scoped registry</a> is not compatible with Unity’s Package Manager, and doesn’t appear in the <a href="">My Registries</a> context in the Package Manager window.</p>
+
+<p><br></p>
+
+<p><a name="Linker" aria-hidden="true"></a></p>
+
+<h2>Missing MonoBehaviour errors</h2>
+
+<p>While building, if there are a lot of errors about Missing Behavior, the UnityLinker might be mistakenly stripping out a component that it thinks is unreferenced. It often does this because the stripping level is too aggressive. For example, if you have a <span class="tooltip"><strong>prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> in an AssetBundle that references the SpriteShape component in the 2D SpriteShape package, the object might be missing and might generate compiler warnings.</p>
+
+<p>To fix this, you can either lower the stripping level for the UnityLinker or declare the package’s assemblies inside the <code>link.xml</code> file in order to preserve them from being stripped:</p>
+
+<pre><code class="lang-xml">&lt;linker&gt;
+    &lt;assembly fullname=&quot;Unity.2D.SpriteShape.Runtime&quot; preserve=&quot;all&quot;/&gt;
+    &lt;assembly fullname=&quot;Unity.2D.Common.Runtime&quot; preserve=&quot;all&quot;/&gt;
+ &lt;/linker&gt;
+</code></pre>
+
+<p>For more information on stripping levels and the UnityLinker, see <a href="ManagedCodeStripping.html">Managed code stripping</a>.</p>
+
+<p><br></p>
+
+<p><a name="HostFXR" aria-hidden="true"></a></p>
+
+<h2>Loading error for hostfxr.dll on Windows</h2>
+
+<p>If the Console reports that the <code>hostfxr.dll</code> library was found, but Unity failed to load it from <code>C:\&lt;path_to_app&gt;\hostfxr.dll</code>, you can fix this error on Windows 7 or Windows Server 2008 R2 by installing both <a href="https://support.microsoft.com/en-ca/help/2999226/update-for-universal-c-runtime-in-windows">KB2999226</a> and <a href="https://support.microsoft.com/en-us/help/2533623/microsoft-security-advisory-insecure-library-loading-could-allow-remot">KB2533623</a> patches.</p>
+
+<p><br></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="upm-localpath.html"></a></span><div class="tip">Local folder or tarball paths</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="upm-network.html"></a></span><div class="tip">Diagnose network issues</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

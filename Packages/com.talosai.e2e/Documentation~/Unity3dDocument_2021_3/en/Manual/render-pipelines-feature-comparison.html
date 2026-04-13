@@ -1,0 +1,2949 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual:   # Render pipeline feature comparison</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/render-pipelines-feature-comparison.html">English</a></li>
+<li><a href="/cn/current/Manual/render-pipelines-feature-comparison.html">中文</a></li>
+<li><a href="/ja/current/Manual/render-pipelines-feature-comparison.html">日本語</a></li>
+<li><a href="/kr/current/Manual/render-pipelines-feature-comparison.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/render-pipelines-feature-comparison.html">English</a></li>
+<li><a href="/cn/current/Manual/render-pipelines-feature-comparison.html">中文</a></li>
+<li><a href="/ja/current/Manual/render-pipelines-feature-comparison.html">日本語</a></li>
+<li><a href="/kr/current/Manual/render-pipelines-feature-comparison.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="render-pipelines.html">Render pipelines</a></li>
+<li>  # Render pipeline feature comparison</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="render-pipelines-overview.html"></a></span><div class="tip">Render pipelines introduction</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="srp-setting-render-pipeline-asset.html"></a></span><div class="tip">How to get, set, and configure the active render pipeline</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Render pipeline feature comparison</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page contains information on feature support in the Built-in <span class="tooltip"><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>, the Universal Render Pipeline (URP), and the High Definition Render Pipeline (HDRP). It also contains suggested alternatives for certain features.</p>
+
+<p>For ease of reference, features are broken down into the following categories:</p>
+
+<ul>
+<li><a href="#platform-support">Platform Support</a></li>
+<li><a href="#lighting">Lighting</a></li>
+<li><a href="#color">Color</a></li>
+<li><a href="#camera">Camera</a></li>
+<li><a href="#shaders">Shaders</a></li>
+<li><a href="#world-building">World building</a></li>
+<li><a href="#visual-effects">Visual effects</a></li>
+<li><a href="#2d-and-ui">2D and UI</a></li>
+<li><a href="#xr">XR</a></li>
+<li><a href="#scripting">Scripting</a></li>
+<li><a href="#optimizations">Optimizations</a></li>
+<li><a href="#debug">Debug</a></li>
+</ul>
+
+<p><a name="platform-support" aria-hidden="true"></a></p>
+
+<h2>Platform Support</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Windows</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MacOS</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Linux</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>XBox One</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>XBox Series</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PlayStation 4</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PlayStation 5</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Stadia</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Nintendo Switch</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>iOS</strong><span class="tooltiptext">Apple’s mobile operating system. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone.html" href="iphone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#iOS" aria-label="Go to glossary anchor for iOS">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Android</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Desktop <span class="tooltip"><strong>VR</strong><span class="tooltiptext">Virtual Reality <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VROverview.html" href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VR" aria-label="Go to glossary anchor for VR">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Mobile VR</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Hololens</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity WebGL build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl-gettingstarted.html" href="webgl-gettingstarted.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="lighting" aria-hidden="true"></a></p>
+
+<h2>Lighting</h2>
+
+<h3>Lights</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Directional</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spot</strong></td>
+	<td style="text-align:left;">Yes<br><br>Supported shapes: Cone</td>
+	<td style="text-align:left;">Yes<br><br>Supported shapes: Cone</td>
+	<td style="text-align:left;">Yes<br><br>Supported shapes: Cone, Pyramid, Box</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Point</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Area</strong></td>
+	<td style="text-align:left;">Yes<br><br>Supported shapes: Rectangle (only with Enlighten Realtime Global Illumination), Disc (baked only)</td>
+	<td style="text-align:left;">Yes<br><br>Supported shapes: Rectangle (baked only), Disc (baked only)</td>
+	<td style="text-align:left;">Yes<br><br>Supported shapes: Rectangle (real-time and baked), Tube (real-time only), Disc (baked only)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Inner Spot angle</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Shading technique</strong></td>
+	<td style="text-align:left;">Yes<br><br>Multiple passes</td>
+	<td style="text-align:left;">Yes<br><br>Single pass only</td>
+	<td style="text-align:left;">Yes<br><br>Hybrid tile and cluster</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Culling Per Object</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Culling Per Tile</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Culling Per Layer</strong></td>
+	<td style="text-align:left;">Yes<br><br>Based on GameObject layers</td>
+	<td style="text-align:left;">Yes<br><br>Based on dedicated Light layers</td>
+	<td style="text-align:left;">Yes<br><br>Based on dedicated Light layers</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Multiple directional lights</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Supports shadowing for one directional light at a time.</td>
+	<td style="text-align:left;">Yes<br><br>Supports shadowing for one directional light at a time. To simulate more, use Spot light with a Box shape.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Number of real-time lights per object</strong></td>
+	<td style="text-align:left;">Unlimited</td>
+	<td style="text-align:left;">In Deferred: unlimited.<br><br>In Forward: 4 for GLES2, 8 for all other graphics APIs.</td>
+	<td style="text-align:left;">Unlimited</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Number of real-time lights per Camera</strong></td>
+	<td style="text-align:left;">Unlimited</td>
+	<td style="text-align:left;">On mobile platforms: 32.<br><br>On other platforms: 256.</td>
+	<td style="text-align:left;">In Deferred: 63 per 8x8 pixel tile.<br><br>In Forward: 63 per 16x16 pixel cluster.<br><br>You can disable the cap for the deferred rendering path in Frame Settings &gt; Light Loop Debug &gt; Deferred Tile. This will affect performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Light attenuation type</strong></td>
+	<td style="text-align:left;">Yes<br><br>Legacy</td>
+	<td style="text-align:left;">Yes<br><br>InverseSquared</td>
+	<td style="text-align:left;">Yes<br><br>InverseSquared</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Vertex Lights</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>SH Lights</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Light Cookies</strong></td>
+	<td style="text-align:left;">Yes<br><br>Only shape, no color (Alpha channel).</td>
+	<td style="text-align:left;">Yes<br><br>Colored cookie (RGB)</td>
+	<td style="text-align:left;">Yes<br><br>Colored cookie (RGB)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>IES Lights</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Light Distance Fade</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Physical light units</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Light anchor tool</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Shadows</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Directional Light Shadows</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Multiple Directional Light Shadows</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Directional Light Cascade Shadows</strong></td>
+	<td style="text-align:left;">Yes<br><br>1, 2, or 4 cascades, control by percentage only.</td>
+	<td style="text-align:left;">Yes<br><br>1, 2, or 4 cascades. Control by percentage, or switch to meters.<br><br>Settings are in URP asset.</td>
+	<td style="text-align:left;">Yes<br><br>1 to 4 cascades. Control by percentage or distance. <br><br>Settings are in Volumes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Shadow Cascade Blending</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spot Light Shadows</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Point Light Shadows</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Area Light Shadows</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Only for rectangle shape</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Stable Fit Shadow Projection</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Close Fit Shadow Projection</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No<br><br>No support for orthographic projection. Use narrow field of view to emulate.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Shadow Lighting Pass</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Shadow Screen Space Pass</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Shadow bias</strong></td>
+	<td style="text-align:left;">Yes<br><br>Supported types: Constant clip space offset. Normal bias</td>
+	<td style="text-align:left;">Yes<br><br>Supported types: Offsets shadowmap texels in the light direction, Normal bias</td>
+	<td style="text-align:left;">Yes<br><br>Supported types: Slope bias, Normal bias</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PCF filtering (Percentage Closer Filtering)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>PCF Tent 5x5</td>
+	<td style="text-align:left;">Yes<br><br>For Point and Spot lights in “Low” (PCF 3x3 4 taps) and “Medium” (PCF 5x5 9 taps) quality settings, and for Directional lights in “Low” (PCF 5x5 9 taps) and “Medium” (PCF Tent 5x5 9 taps) quality settings.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PCSS filtering (Percentage Closer Soft Shadows)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>For Point and Spot lights in “High” quality settings, and for Directional lights in “High” quality settings.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>EVSM filtering (Exponential Variance Shadow Mapping)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>For area lights only in all quality settings.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Shadow update modes</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Every frame, On Enable, On Demand. Each cascade can be updated independently using the API (RequestSubShadowMapRendering)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Resolution settings</strong></td>
+	<td style="text-align:left;">Yes<br><br>Configured in Quality Settings.</td>
+	<td style="text-align:left;">Yes<br><br>Configured in URP Lighting Settings.</td>
+	<td style="text-align:left;">Yes<br><br>Configure shadowmap resolution or budget per Light, and configure shadow atlas size in HDRP Asset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Dynamic rescale</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Directional light shadow caching</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Punctual and Area lights shadow caching</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Dynamic Shadow Casters</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Static Shadow Casters</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Contact Shadows</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Micro Shadows</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Shadow Cascade Volume Controller</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Shadow Distance Fade</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Configure in Shadows Volume.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Shadow Mask</strong></td>
+	<td style="text-align:left;">Yes<br><br>Configure per scene.</td>
+	<td style="text-align:left;">Yes<br><br>Configure per scene.</td>
+	<td style="text-align:left;">Yes<br><br>Configure per Light.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Distance Shadow Mask</strong></td>
+	<td style="text-align:left;">Yes<br><br>Configure per scene.</td>
+	<td style="text-align:left;">Yes<br><br>Forward Rendering Path only.</td>
+	<td style="text-align:left;">Yes<br><br>Configure per Light.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Transparent objects casting shadows</strong></td>
+	<td style="text-align:left;">Yes<br><br>Use the Transparent Cutout shaders for objects with “gaps” such as fences, vegetation, etc. or custom pixel-lit shaders using the Geometry render queue. Opacity can affect shadow intensity using dithering.</td>
+	<td style="text-align:left;">No<br><br>Alpha clipping only.</td>
+	<td style="text-align:left;">Yes<br><br>Raytracing only (incl support of colored shadows). For raster, alpha clipping only (use Alpha clipping &gt; Shadow threshold option).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Transparent objects receiving shadows</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Shadow tint</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Shadow tint or penumbra tint options</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Shadow matte</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Shadow Layers</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Global Illumination</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Baked <span class="tooltip"><strong>Global Illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span>: Progressive CPU <span class="tooltip"><strong>Lightmapper</strong><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a href="Lightmapping.html" href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span>: Progressive CPU <span class="tooltip"><strong>Lightmapper</strong><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmapper" aria-label="Go to glossary anchor for Lightmapper">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Baked Global Illumination: Progressive GPU Lightmapper</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Baked Global Illumination: Enlighten Lightmapper</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Deprecated</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Baked Global Illumination: Mixed Lighting modes</strong></td>
+	<td style="text-align:left;">Yes<br><br>Subtractive, Baked indirect, Shadow Mask, Distance Shadow mask</td>
+	<td style="text-align:left;">Yes<br><br>Subtractive, Baked indirect, Shadow mask</td>
+	<td style="text-align:left;">Yes<br><br>Baked indirect, Shadow Mask (per light setting), Distance Shadow mask (per light setting)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Baked Global Illumination: Double Sided GI</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Realtime Global Illumination: Pre-computed (Enlighten)</strong></td>
+	<td style="text-align:left;">Yes<br><br>Support ends after Unity 2024 LTS</td>
+	<td style="text-align:left;">Yes<br><br>Support ends after Unity 2024 LTS</td>
+	<td style="text-align:left;">Yes<br><br>Support ends after Unity 2024 LTS</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Realtime Global Illumination: Screen space GI</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Screen Space Reflections</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Planar Reflections</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Raytraced Reflections</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Screen Space Refractions</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Non directional <span class="tooltip"><strong>lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Directional lightmap</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Light Probes</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Light Probes</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html" href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span>: Blending</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Light Probes: Custom provided</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Light Probes: Occlusion Probes</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Light Probes: Proxy volumes (LLPV)</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>Deprecated</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Light Probes: Probe Volumes</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Experimental</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Reflection Probes</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Reflection Probes</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ReflectionProbe.html" href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span>: Baked</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Reflection Probes: Real-time</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Reflection Probes: Real-time time sliced all faces at once</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Reflection Probes: Real-time time sliced individual faces</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Reflection Probes: On-demand API</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Reflection Probes: Proxy volumes</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Reflection Probes: Simple sampling</strong></td>
+	<td style="text-align:left;">Yes<br><br>Choose per-object how to sample reflection probes.</td>
+	<td style="text-align:left;">Yes<br><br>Choose in the URP asset whether URP always performs simple sampling from reflection probes, or if it blends.</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Reflection Probes: Blend probes sampling</strong></td>
+	<td style="text-align:left;">Yes<br><br>Choose per-object how to sample reflection probes.<br><br>Blend up to 2 reflection probes.</td>
+	<td style="text-align:left;">Yes<br><br>Choose in the URP asset whether URP always performs simple sampling from reflection probes, or if it blends.<br><br>If blending is enabled, URP always blends sky + 1 local probe, or 2 probes if there is no sky.</td>
+	<td style="text-align:left;">Yes<br><br>No blending limit. All reflections including planar blend between each other.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Reflection Probes: Blend probes and <span class="tooltip"><strong>skybox</strong><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Skybox.html" href="class-Skybox.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skybox" aria-label="Go to glossary anchor for Skybox">Glossary</a></span></span></span> sampling</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Reflection Probes: Box Projection</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Reflection Probes: Oriented Box Projection</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Reflection Probes: Sphere Projection</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Raytracing</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Ray-traced <span class="tooltip"><strong>Ambient Occlusion</strong><span class="tooltiptext">A method to approximate how much ambient light (light not coming from a specific direction) can hit a point on a surface.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Ambientocclusion" aria-label="Go to glossary anchor for Ambientocclusion">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Ray-traced Contact Shadows</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Ray-traced Global Illumination</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Ray-traced Reflections</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Ray-traced Shadows</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Ray-traced Recursive Rendering</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AxF (automotive material)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VFX Graph particles</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Windows</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Preview. Requires DX12, and platforms with hardware supporting RTX.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Linux</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PS5</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Preview</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>XBox Series</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Pathtracing</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Lit (Pathtracing support)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Hair (Pathtracing support)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Eye (Pathtracing support)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Fabric (Pathtracing support)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AxF (Pathtracing support)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Decals (Pathtracing support)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Depth of field (Pathtracing support)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Preview</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Exponential Fog (Pathtracing support)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Preview</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Anisotropic fog (Pathtracing support)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Preview</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Local Volumetric fog (Pathtracing support)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Recorder integration</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Preview</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Environment lighting</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Skybox</strong></td>
+	<td style="text-align:left;">Yes<br><br>Per project. Set in the Lighting window.</td>
+	<td style="text-align:left;">Yes<br><br>Per project. Set in the Lighting window.</td>
+	<td style="text-align:left;">Yes<br><br>Configure in Visual Environment Volume. Choose from HDRI sky, physical sky or custom sky.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Gradient</strong></td>
+	<td style="text-align:left;">Yes<br><br>Per project. Set in the Lighting window.</td>
+	<td style="text-align:left;">Yes<br><br>Per project. Set in the Lighting window.</td>
+	<td style="text-align:left;">Yes<br><br>Configure in Visual Environment Volume.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color</strong></td>
+	<td style="text-align:left;">Yes<br><br>Per project. Set in the Lighting window.</td>
+	<td style="text-align:left;">Yes<br><br>Per project. Set in the Lighting window.</td>
+	<td style="text-align:left;">No<br><br>Alternative: use Gradient sky.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Real-time Ambient Mode</strong></td>
+	<td style="text-align:left;">Yes<br><br>By script.</td>
+	<td style="text-align:left;">Yes<br><br>By script.</td>
+	<td style="text-align:left;">Yes<br><br>Configure in Visual Environment Volume.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Baked Ambient Mode</strong></td>
+	<td style="text-align:left;">Yes<br><br>By default</td>
+	<td style="text-align:left;">Yes<br><br>By default</td>
+	<td style="text-align:left;">Yes<br><br>Configure in Visual Environment Volume.<br><br>Uses the environment stored in Lighting &gt; Environment settings.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Indirect Lighting Controller</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="color" aria-hidden="true"></a></p>
+
+<h2>Color</h2>
+
+<h3>HDR</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>HDR</strong><span class="tooltiptext">high dynamic range<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#HDR" aria-label="Go to glossary anchor for HDR">Glossary</a></span></span></span> rendering</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>HDR output</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Color space</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Linear</strong></td>
+	<td style="text-align:left;">Yes<br><br>Requires OpenGLES3.0</td>
+	<td style="text-align:left;">Yes<br><br>Requires OpenGLES3.0</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Gamma</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="camera" aria-hidden="true"></a></p>
+
+<h2>Camera</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Multi display</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Hardware Dynamic resolution</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Limited platform support.</td>
+	<td style="text-align:left;">Yes<br><br>Limited platform support.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Software <span class="tooltip"><strong>Dynamic resolution</strong><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets, to reduce workload on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DynamicResolution.html" href="DynamicResolution.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#dynamicresolution" aria-label="Go to glossary anchor for dynamicresolution">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Nvidia Deep learning super sampling (DLSS)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AMD FidelityFX™ Super Resolution 1.0</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TAA upsampler</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Mip bias</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Compositing multiple cameras</strong></td>
+	<td style="text-align:left;">Yes<br><br>Use multiple cameras</td>
+	<td style="text-align:left;">Yes<br><br>Use Camera stacking</td>
+	<td style="text-align:left;">Yes<br><br>Use HDRP Compositor</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Physical camera</strong></td>
+	<td style="text-align:left;">Yes<br><br>Affects field of view only</td>
+	<td style="text-align:left;">Yes<br><br>Affects field of view only</td>
+	<td style="text-align:left;">Yes<br><br>Affects field of view, exposure, bloom, and depth of field</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Multi-sample anti-aliasing (MSAA)</strong></td>
+	<td style="text-align:left;">Yes<br><br>Forward rendering path only</td>
+	<td style="text-align:left;">Yes<br><br>Forward rendering path only</td>
+	<td style="text-align:left;">Yes<br><br>Forward rendering path only</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Fast approximate anti-aliasing (FXAA)</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Subpixel morphological anti-aliasing (SMAA)</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Temporal anti-aliasing (TAA)</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Depth Texture</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Depth + Normal Texture</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Only active when using SSAO</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Depth + Normal Texture (affected by decals)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Except if MSAA is enabled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color Texture</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Motion Vectors</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="shaders" aria-hidden="true"></a></p>
+
+<h2>Shaders</h2>
+
+<h3>Authoring worklfows</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Material Variants</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shader" aria-label="Go to glossary anchor for Shader">Glossary</a></span></span></span> Graph</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ShaderLab</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Hand-coded shaders are supported, but not recommended. Shader Graph is recommended.</td>
+	<td style="text-align:left;">Yes<br><br>Hand-coded shaders are supported, but not recommended. Shader Graph is recommended.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>ShaderLab</strong><span class="tooltiptext">Unity’s language for defining the structure of Shader objects. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-Shader.html" href="SL-Shader.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span> Command: UsePass</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ShaderLab Command: GrabPass</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>Alternative: Create a Render Feature</td>
+	<td style="text-align:left;">No<br><br>Alternative: Create a Custom Pass</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Surface Shaders</strong><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-SurfaceShaders.html" href="SL-SurfaceShaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SurfaceShader" aria-label="Go to glossary anchor for SurfaceShader">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Diffusion Profiles</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Prebuilt shaders</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Camera-relative rendering</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Material type: Metallic / Standard</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Material type: Specular</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Type and Blend Mode: Opaque</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Type and Blend Mode: Faded (Alpha Blend)</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Also supports premultiplied alpha.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Type and Blend Mode: Transparent</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Type and Blend Mode: Cutout</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Type and Blend Mode: Additive</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Type and Blend Mode: Multiply</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>Not compatible with half res transparent optimization and offscreen UI blending.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Type and Blend Mode: Translucence</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Translucent Material Type in the Lit shaders</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Inputs: Albedo (Base Map)</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Inputs: Specular</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Base map when using Material Type Specular</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Inputs: Metallic</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Stored in the R channel of the Mask Map.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Inputs: Ambient Occlusion</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Stored in the G channel of the Mask Map.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Inputs: Smoothness</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Stored in the A channel of the Mask Map.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Inputs: <span class="tooltip"><strong>Normal Map</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Normalmap" aria-label="Go to glossary anchor for Normalmap">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Inputs: Bent Normal Map</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Inputs: Detail Map</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Albedo stored in the R channel of the Detail Map. Smoothness stored in the B channel.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Inputs: Detail Normal Map</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Y axis stored in the G channel of the Detail Map. X axis stored in the A channel.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Inputs: Heightmap</strong></td>
+	<td style="text-align:left;">Yes<br><br>Pixel displacement only.</td>
+	<td style="text-align:left;">Yes<br><br>Pixel displacement only.</td>
+	<td style="text-align:left;">Yes<br><br>Pixel or vertex displacement.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Inputs: Detail Mask</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Stored in the B channel of the Mask Map.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Inputs: Emissive Map</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Inputs: Specular Occlusion</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Included Lighting models: ClearCoat</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Included Lighting models: SubSurface Scattering</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Included Lighting models: Anisotropy</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Included Lighting models: Irridescence</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Included Lighting models: Fabric</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Included Lighting models: Eye</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Included Lighting models: Hair (Approximate)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Based on Kajiya Kay parametrization</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Included Lighting models: Hair (Physical)</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Based on Marshner-Disney parametrization.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Add custom Lighting model as a plugin</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Pluggable Master Node (experimental, undocumented)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Features: Light Cookies</strong></td>
+	<td style="text-align:left;">Yes<br><br>Supports grayscale textures</td>
+	<td style="text-align:left;">Yes<br><br>Supports RGB textures</td>
+	<td style="text-align:left;">Yes<br><br>Supports RGB textures</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Features: Parallax Mapping</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Features: Light Distance Fade</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Features: Shadow Distance Fade</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Configure in Shadows Volume.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Features: Shadow Cascade Blending</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Features: GPU Instancing</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Features: Double Sided GI</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Features: Two Sided</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Configure with the RenderFace property.</td>
+	<td style="text-align:left;">Yes<br><br>Configure with the Double Side toggle.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Features: Material sorting priority</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Features: Renderer sorting priority</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No<br><br>Not exposed (use debug mode of the inspector).</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Features: GPU Tesselation</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Use the LitTesselation Shader.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Features: Specular Occlusion</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Use only the ambient occlusion map, or both bent and ambient occlusion maps.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Features: Geometric Specular Anti-Aliasing</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Features: Add precomputed velocity</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Requires per vertex velocity information (eg: Alembic, or using ShaderGraph custom velocity option)</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Shader Graph</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Full screen master node</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Custom <span class="tooltip"><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Custom <span class="tooltip"><strong>render texture</strong><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Text <span class="tooltip"><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-MeshGroup.html" href="comp-MeshGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> Pro</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Decals</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Terrain</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="world-building" aria-hidden="true"></a></p>
+
+<h2>World building</h2>
+
+<h3>Environment</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Terrain system: Physically Based Shader</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Terrain system: Simple Lit (Blinn-Phong) Shader</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Terrain system: Speed Tree Shader</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Terrain system: Paint Trees</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Terrain system: Vegetation</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Terrain system: Terrain Details</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Terrain system: number of Terrain Layers</strong></td>
+	<td style="text-align:left;">Yes<br><br>Unlimited</td>
+	<td style="text-align:left;">Yes<br><br>With height-based blending: 4<br>With alpha blending: unlimited</td>
+	<td style="text-align:left;">Yes<br><br>8</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Terrain system: GPU Instanced Rendering</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Terrain system: Terrain Holes</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Speedtree 8</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Both Shader Graph and ShaderLab shaders available</td>
+	<td style="text-align:left;">Yes<br><br>Shader Graph shader only</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Wind Zone</strong><span class="tooltiptext">A GameObject that adds the effect of wind to your terrain. For instance, Trees within a wind zone will bend in a realistic animated fashion and the wind itself will move in pulses to create natural patterns of movement among the tree. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-WindZone.html" href="class-WindZone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#windzone" aria-label="Go to glossary anchor for windzone">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Sky</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Procedural Skybox</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>This sky type is deprecated, but you can still use if if you install the Procedural Sky Sample.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>6 sided Skybox</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>HDRI Sky supports cubemaps. Unity can build cubemaps from this type on import.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Cubemap</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>HDRI Sky supports cubemaps.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Panoramic</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>HDRI Sky supports cubemaps. Unity can build cubemaps from this type on import.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Physical Sky</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Gradient Sky</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Sky distortion</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Procedural or Flowmap</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Cloud layers</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Volumetrics</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Volumetric Clouds</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Linear Fog</strong></td>
+	<td style="text-align:left;">Yes<br><br>Configure in Graphics Settings.</td>
+	<td style="text-align:left;">Yes<br><br>Configure in Graphics Settings.</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Exponential Fog</strong></td>
+	<td style="text-align:left;">Yes<br><br>Configure in Graphics Settings.</td>
+	<td style="text-align:left;">Yes<br><br>Configure in Graphics Settings.</td>
+	<td style="text-align:left;">Yes<br><br>Configure with the Fog Override.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Exponential Squared</strong></td>
+	<td style="text-align:left;">Yes<br><br>Configure in Graphics Settings.</td>
+	<td style="text-align:left;">Yes<br><br>Configure in Graphics Settings.</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Local Volumetrics</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>3D Render texture in density volume</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Fog Scattering &amp; Atmospheric scattering</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="visual-effects" aria-hidden="true"></a></p>
+
+<h2>Visual effects</h2>
+
+<h3>Post-processing</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Feature support</strong></td>
+	<td style="text-align:left;">Yes<br><br>Uses separate package: Post-Processing V2</td>
+	<td style="text-align:left;">Yes<br><br>Uses integrated post-processing solution</td>
+	<td style="text-align:left;">Yes<br><br>Uses integrated post-processing solution</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Per-project default effects</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>A default volume can be applied to the project using HDRP default settings.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Ambient Occlusion</strong></td>
+	<td style="text-align:left;">Yes<br><br>Supported types: Multi-scale ambient occlusion</td>
+	<td style="text-align:left;">Yes<br><br>Supported types: Screen Space Ambient Occlusion (Depth or normal)</td>
+	<td style="text-align:left;">Yes<br><br>Supported types: Screen Space Ground Truth Ambient Occlusion (Normal + temporal, tinted multi bounced, specular occlusion), Ray-traced ambient occlusion</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Exposure</strong></td>
+	<td style="text-align:left;">Yes<br><br>Supported types: Fixed, Automatic</td>
+	<td style="text-align:left;">Yes<br><br>Supported types: Fixed</td>
+	<td style="text-align:left;">Yes<br><br>Supported types: Fixed, Automatic (Eye adaptation), Curve Mapping, Physical Camera settings and Histogram.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bloom</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Chromatic Aberration</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Tonemapping</strong><span class="tooltiptext">The process of remapping HDR values of an image into a range suitable to be displayed on screen. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="PostProcessingOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Tonemapping" aria-label="Go to glossary anchor for Tonemapping">Glossary</a></span></span></span> (Neutral, ACES, Custom)</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>White balance</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color Channel Mixer</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color Adjustments</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color Curves</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Lift, Gamma, Gain</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Shadows, Midtones, Highlights</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Split Toning</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Depth of Field</strong></td>
+	<td style="text-align:left;">Yes<br><br>Supported types: Bokeh</td>
+	<td style="text-align:left;">Yes<br><br>Supported types: Bokeh and Gaussian</td>
+	<td style="text-align:left;">Yes<br><br>Supported types: Bokeh</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Physical <span class="tooltip"><strong>Depth of Field</strong><span class="tooltiptext">A post-processing effect that simulates the focus properties of a camera lens. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="PostProcessingOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DepthofField" aria-label="Go to glossary anchor for DepthofField">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Film Grain</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Lens Distortion</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> Motion Blur</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Object Motion Blur</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Screen Space Reflections</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Screen Space Refractions</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Vignette</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Panini Projection</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Custom post-processing</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>Suggested alternative approach: Renderer Features</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h3>CPU Particles (Shuriken)</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Feature support</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>GPU instancing is not supported. Distortion and flipbook blending can be done with Shader Graph. No standard particle shader available, but example particles ShaderGraph shaders can be found in the HDRP package samples.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Lit Particles</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Simple lit particles</strong></td>
+	<td style="text-align:left;">Yes<br><br>Uses Blinn Phong.</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Unlit particles</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Soft Particles</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Available via Shader Graph. For examples, see the particles system shader samples in the HDRP package sample.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Distortion</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Available via Shader Graph. For examples, see the particles system shader samples in the HDRP package sample.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Flipbook blending</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Available via Shader Graph. For examples, see the particles system shader samples in the HDRP package sample.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Trail</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GPU Instancing</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<h3>GPU Particles (VFX Graph)</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Feature support</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Compute capable hardware only. OpenGL ES not supported.</td>
+	<td style="text-align:left;">Yes<br><br>Compute capable hardware only.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Supported Shader graph shaders</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>VFX Shader Graph, Lit, Unlit</td>
+	<td style="text-align:left;">Yes<br><br>VFX Shader Graph, Lit, Unlit, Hair, Fabric (no support for tessellation, nor decal)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Renders with 2D</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>3D particles and support for sorting layers. No support for 2D Physics, 2D sprites emitters, 2D sprite masks, nor 2D Lights</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Lit Particles</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Simple lit particles</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Unlit particles</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Soft Particles</strong><span class="tooltiptext">Particles that create semi-transparent effects like smoke, fog or fire. Soft particles fade out as they approach an opaque object, to prevent intersections with the geometry. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about shader-StandardParticleShaders.html" href="shader-StandardParticleShaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SoftParticles" aria-label="Go to glossary anchor for SoftParticles">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Distortion</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Flipbook blending</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Linear interpolation or flipbook motion vectors</td>
+	<td style="text-align:left;">Yes<br><br>Linear interpolation or flipbook motion vectors</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Trail</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Experimental</td>
+	<td style="text-align:left;">Yes<br><br>Experimental</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Half-resolution</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Decals</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>VFX Graph Forward decals (limited), no support for URP decals nor Shader Graph decals</td>
+	<td style="text-align:left;">Yes<br><br>VFX Forward decals (limited), HDRP Decals (no support for Shader Graph decals)</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Camera Buffer</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Depth collision, Color buffer</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Instancing</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Decals</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Decals</strong></td>
+	<td style="text-align:left;">No<br><br>Suggested alternative: Projector component.</td>
+	<td style="text-align:left;">Yes<br><br>Projector decals (Forward + DBuffer) or Screen Space Decals (Deferred), no decal layers, no emissive decals</td>
+	<td style="text-align:left;">Yes<br><br>Projector decals (Forward &amp; Deferred + DBuffer) or Mesh decals, support on transparents (Cluster decals), support decal layers, surface gradients, emissive decals</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Decal layers</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Other visual effects</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Projector component</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>Use the Decal Renderer Feature instead.</td>
+	<td style="text-align:left;">No<br><br>Use the Decal Projector instead.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Line Renderer</strong><span class="tooltiptext">A component that takes an array of two or more points in 3D space and draws a straight line between each one. You can use a single Line Renderer component to draw anything from a simple straight line to a complex spiral. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LineRenderer.html" href="class-LineRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LineRenderer" aria-label="Go to glossary anchor for LineRenderer">Glossary</a></span></span></span> component</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Trail Renderer component</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>You can also use VFX Graph to create a custom trail effect.</td>
+	<td style="text-align:left;">Yes<br><br>You can also use VFX Graph to create a custom trail effect.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Billboard Renderer component</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>Suggested alternative: Use VFX Graph.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Halo component</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>Suggested alternative: Use a Lens Flare (SRP) Data asset and a Lens Flare (SRP) component.</td>
+	<td style="text-align:left;">No<br><br>Suggested alternative: Use a Lens Flare (SRP) Data asset and a Lens Flare (SRP) component, or use a celestial body in a directional light.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Lens flares</strong></td>
+	<td style="text-align:left;">Yes<br><br>Use a Flare asset and either a Light component or a Lens Flare component.</td>
+	<td style="text-align:left;">Yes<br><br>Use a Lens Flare (SRP) Data asset and a Lens Flare (SRP) component.</td>
+	<td style="text-align:left;">Yes<br><br>Use a Lens Flare (SRP) Data asset and a Lens Flare (SRP) component.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="2d-and-ui" aria-hidden="true"></a></p>
+
+<h2>2D and UI</h2>
+
+<h3>2D</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Sprites.html" href="Sprites.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Tilemap</strong><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Tilemap.html" href="class-Tilemap.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Tilemap" aria-label="Go to glossary anchor for Tilemap">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Sprite Shape</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Pixel-Perfect</strong></td>
+	<td style="text-align:left;">Yes<br><br>Using the “2D Pixel Perfect” package.</td>
+	<td style="text-align:left;">Yes<br><br>Using the “2D Pixel Perfect” package.</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>2D Lights</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>2D Shadows</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>VFX Graph</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Supports 3D particles and sorting layers.<br><br>Does not support 2D Physics, 2D sprites emitters, or 2D Lights.</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<h3>UI</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Screen Space - Overlay</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Screen Space - Camera</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>World Space</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Text Mesh</strong><span class="tooltiptext">A Mesh component that displays a Text string <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextMesh.html" href="class-TextMesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TextMesh" aria-label="Go to glossary anchor for TextMesh">Glossary</a></span></span></span> Pro</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="xr" aria-hidden="true"></a></p>
+
+<h2>XR</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Multipass</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Single Pass (double-wide)</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>Deprecated</td>
+	<td style="text-align:left;">No<br><br>Deprecated</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Single Pass Instanced</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Windows and PSVR only</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Multiview</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>AR</strong><span class="tooltiptext">Augmented Reality <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AROverview.html" href="AROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AR" aria-label="Go to glossary anchor for AR">Glossary</a></span></span></span> Foundation</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="scripting" aria-hidden="true"></a></p>
+
+<h2>Scripting</h2>
+
+<h3>Render Pipeline Hooks</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Camera.RenderWithShader</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>Suggested alternative: ScriptableRenderPass</td>
+	<td style="text-align:left;">No<br><br>Suggested alternative: CustomPass with material override</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Camera.AddCommandBuffer (Camera.Remove[All]CommandBuffer)</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No<br><br>Alternative: Custom Passes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Camera.Render</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Light.AddCommandBuffer (LightRemove[All]CommandBuffer)</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>OnPreCull</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>Suggested alternative: RenderPipelineManager.beginCameraRendering or ScriptableRenderPass</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>OnPreRender</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>Suggested alternative: RenderPipelineManager.beginCameraRendering or ScriptableRenderPass</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>OnPostRender</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>OnRenderImage</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>Suggested alternative: ScriptableRenderPass</td>
+	<td style="text-align:left;">No<br><br>Suggested alternative: Fullscreen CustomPass</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>OnRenderObject</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>RenderPipelineManager.endCameraRendering or<br>ScriptableRenderPass API</td>
+	<td style="text-align:left;">No<br><br>RenderPipelineManager.endCameraRendering or<br>Custom Pass</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>OnWillRenderObject</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>OnBecameVisible</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>OnBecameInvisible</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Camera Replacement Material</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No<br><br>Suggested alternative: use Render Feature to replace materials per-Pass.</td>
+	<td style="text-align:left;">No<br><br>Suggested alternative: Custom Pass with material override</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RenderPipeline.BeginFrameRendering</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RenderPipeline.EndFrameRendering</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RenderPipeline.BeginCameraRendering</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RenderPIpeline.EndCameraRendering</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UniversalRenderPipeline.RenderSingleCamera</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ScriptableRenderPass</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>This is similar to the CustomPass feature in HDRP.</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Custom Renderers</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CustomPass</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>This is similar to the ScriptableRenderPass feature in URP.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Custom Post Process Pass</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Arbitrary Output Variables (AOV) API</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Recording API</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="optimizations" aria-hidden="true"></a></p>
+
+<h2>Optimizations</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Batching By Shader</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Batching By Material</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Batching by Material Property Blocks</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Batched separately from the SRP Batcher</td>
+	<td style="text-align:left;">Yes<br><br>Batched separately from the SRP Batcher</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip"><strong>Dynamic batching</strong><span class="tooltiptext">An automatic Unity process which attempts to render multiple meshes as if they were a single mesh for optimized graphics performance. The technique transforms all of the GameObject vertices on the CPU and groups many similar vertices together. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DrawCallBatching.html" href="DrawCallBatching.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DynamicBatching" aria-label="Go to glossary anchor for DynamicBatching">Glossary</a></span></span></span> (without SRP Batcher)</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Real-time batching with SRP Batcher</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Requires OpenGLES 3.1. On unsupported graphics APIs, falls back to Dynamic Batching.</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Dynamic Shadows Batching</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No<br><br>Deprecated.</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GPU Instancing</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Disabled by default when SRP Batcher is enabled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Render Graph</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Dynamic Render Pass Culling</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes<br><br>Disabled by default.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="debug" aria-hidden="true"></a></p>
+
+<h2>Debug</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Built-in Render Pipeline</strong></th>
+	<th style="text-align:left;"><strong>URP</strong></th>
+	<th style="text-align:left;"><strong>HDRP</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Scene View Modes</strong></td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes<br><br>Except mipmap view</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Volume Explorer</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rendering debugger</strong></td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="render-pipelines-overview.html"></a></span><div class="tip">Render pipelines introduction</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="srp-setting-render-pipeline-asset.html"></a></span><div class="tip">How to get, set, and configure the active render pipeline</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,493 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Additional Search filters</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/search-additional-searchfilters.html">English</a></li>
+<li><a href="/cn/current/Manual/search-additional-searchfilters.html">中文</a></li>
+<li><a href="/ja/current/Manual/search-additional-searchfilters.html">日本語</a></li>
+<li><a href="/kr/current/Manual/search-additional-searchfilters.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/search-additional-searchfilters.html">English</a></li>
+<li><a href="/cn/current/Manual/search-additional-searchfilters.html">中文</a></li>
+<li><a href="/ja/current/Manual/search-additional-searchfilters.html">日本語</a></li>
+<li><a href="/kr/current/Manual/search-additional-searchfilters.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="search-overview.html">Unity Search</a></li>
+<li><a href="search-providers.html">Search Providers</a></li>
+<li>Additional Search filters</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="search-saved-queries.html"></a></span><div class="tip">Search saved queries</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="search-expressions.html"></a></span><div class="tip">Search expressions</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Additional Search filters</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p><a name="prefabs" aria-hidden="true"></a></p>
+
+<h2>Prefab Filters</h2>
+
+<p>Prefab filters can be used with <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> and Object Search Providers.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Filter</th>
+	<th style="text-align:left;">Search token</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Root prefab</strong></td>
+	<td style="text-align:left;"><code>prefab:root</code></td>
+	<td style="text-align:left;">
+<code>prefab:root</code><br><br> Searches all GameObjects that are a Prefab root.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Top prefab</strong></td>
+	<td style="text-align:left;"><code>prefab:top</code></td>
+	<td style="text-align:left;">
+<code>prefab:top</code> <br><br>Searches all GameObjects that are part of a Prefab instance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Non asset prefab</strong></td>
+	<td style="text-align:left;"><code>prefab:nonasset</code></td>
+	<td style="text-align:left;">
+<code>prefab:nonasset</code> <br><br>Searches all GameObjects that are part of a Prefab that is not inside a Prefab asset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Asset prefab</strong></td>
+	<td style="text-align:left;"><code>prefab:asset</code></td>
+	<td style="text-align:left;">
+<code>prefab:asset</code> <br><br>Searches all GameObjects that are part of a Prefab asset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Any prefab</strong></td>
+	<td style="text-align:left;"><code>prefab:any</code></td>
+	<td style="text-align:left;">
+<code>prefab:any</code> <br><br>Searches all GameObjects that are part of a Prefab.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Model prefab</strong></td>
+	<td style="text-align:left;"><code>prefab:model</code></td>
+	<td style="text-align:left;">
+<code>prefab:model</code> <br><br>Searches all GameObjects that are part of a model Prefab.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Regular prefab</strong></td>
+	<td style="text-align:left;"><code>prefab:regular</code></td>
+	<td style="text-align:left;">
+<code>prefab:regular</code> <br><br>Searches all GameObjects that are part of a regular Prefab instance or Asset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Variant prefab</strong></td>
+	<td style="text-align:left;"><code>prefab:variant</code></td>
+	<td style="text-align:left;">
+<code>prefab:variant</code> <br><br>Searches all GameObjects that are part of a Prefab variant.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Modified prefab</strong></td>
+	<td style="text-align:left;"><code>prefab:modified</code></td>
+	<td style="text-align:left;">
+<code>prefab:modified</code> <br><br>Searches all GameObjects that are a Prefab instance with overrides.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Altered prefab</strong></td>
+	<td style="text-align:left;"><code>prefab:altered</code></td>
+	<td style="text-align:left;">
+<code>prefab:altered</code> <br><br>Searches all GameObjects that are a Prefab instance with overrides even on default overrides.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>File Filters</h2>
+
+<p>File filters can be used with Asset and Object Search Providers.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Filter</th>
+	<th style="text-align:left;">Search token</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Default Search</strong></td>
+	<td style="text-align:left;"><code>&lt;search term&gt;</code></td>
+	<td style="text-align:left;">Searches <code>term</code> attempting to match the asset name, type, or path.<br><br><code>texture</code><br><br>Searches all Assets that have the word texture in their name, path, or type.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;"><code>name:</code></td>
+	<td style="text-align:left;">
+<code>name:laser</code><br><br>Searches all Assets that contain the word laser.<br><br><code>name=laserbeam</code><br><br>Searches all Assets where the name is exactly laserbeam.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Directory</strong></td>
+	<td style="text-align:left;"><code>dir:&lt;directory exact name&gt;</code></td>
+	<td style="text-align:left;">
+<code>dir:Scripts</code><br><br>Searches all Assets contained in a directory with the exact name <code>Scripts</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Packages</strong></td>
+	<td style="text-align:left;"><code>a:packages</code></td>
+	<td style="text-align:left;">
+<code>a:packages texture</code><br><br>Searches all textures in any package.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Project</strong></td>
+	<td style="text-align:left;"><code>a:assets</code></td>
+	<td style="text-align:left;">
+<code>a:assets texture</code><br><br>Searches all textures in the current project’s Assets folder.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Index file</strong></td>
+	<td style="text-align:left;"><code>a:&lt;index name&gt;</code></td>
+	<td style="text-align:left;">
+<code>a:psd_textures texture</code><br><br>Assuming there is an index file named <code>psd_textures.index</code> in the project, searches all textures in that index.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Size</strong></td>
+	<td style="text-align:left;"><code>size:&lt;number of bytes&gt;</code></td>
+	<td style="text-align:left;">
+<code>size:4000 texture</code><br><br>Searches all textures over 4000 bytes (4KB).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Extension</strong></td>
+	<td style="text-align:left;"><code>ext:&lt;file extension without period&gt;</code></td>
+	<td style="text-align:left;">
+<code>ext:png texture</code><br><br>Searches all textures with the png extension.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Age</strong></td>
+	<td style="text-align:left;"><code>age:&lt;number of days since last modification&gt;</code></td>
+	<td style="text-align:left;">
+<code>age&lt;3 texture</code><br><br>Searches all textures that were modified in the last 3 days.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="type-filters" aria-hidden="true"></a></p>
+
+<h2>Type Filters</h2>
+
+<p>These filters are available if the index uses the Types Indexing option (See <a href="search-index-manager.html">Index Manager</a>).</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Filter</th>
+	<th style="text-align:left;">Search token</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Type</strong></td>
+	<td style="text-align:left;"><code>t:&lt;Asset Type&gt;</code></td>
+	<td style="text-align:left;">
+<code>t:texture</code><br><br>Searches all Assets containing texture in their type name (ex: Texture2D, Texture).<br><br><code>t:prefab</code><br><br>Searches all prefab assets.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Type</strong></td>
+	<td style="text-align:left;"><code>&lt;Asset Type&gt;</code></td>
+	<td style="text-align:left;">You can search Assets by type without using the t: filter above.<br><br><code>texture</code><br><br>Searches all Assets containing texture in their type name (ex: Texture2D, Texture) or in their name (ex: myTexture.png).<br><br><code>prefab</code><br><br>Searches all Prefab Assets or Assets with “prefab” in their name.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>File</strong></td>
+	<td style="text-align:left;"><code>t:file</code></td>
+	<td style="text-align:left;">
+<code>t:file level1</code><br><br>Searches all file Assets containing the word level1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Folder</strong></td>
+	<td style="text-align:left;"><code>t:folder</code></td>
+	<td style="text-align:left;">
+<code>t:folder</code><br><br>Searches all folder Assets.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="properties" aria-hidden="true"></a></p>
+
+<h2>Indexed Property Search</h2>
+
+<p>Searching properties is available if the index has been specified with the Properties Indexing option (see <a href="search-index-manager.html">Index Manager</a>). To view the list of all indexed properties check the Index Manager Keywords tab.
+All property values are converted to a string or number.
+The name of the property has to be complete and not partial (case does not matter though).
+Unity indexes properties at the top level object of a <span class="tooltip"><strong>Prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab" aria-label="Go to glossary anchor for Prefab">Glossary</a></span></span></span> Asset. If you want all Prefab hierarchies to be indexed, create a Prefab Index (see <a href="search-index-manager.html">Index Manager</a>).
+For .unity files Unity indexes the properties of the SceneAsset and not the Scene content. If you want all Scene contents to be indexed, create a Scene Index (see <a href="search-index-manager.html">Index Manager</a>).</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Filter</th>
+	<th style="text-align:left;">Search token</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Type</strong></td>
+	<td style="text-align:left;"><code>t:&lt;type&gt;</code></td>
+	<td style="text-align:left;">When using the indexed Property, you can use <code>t:</code> to search for a component type for an Asset type.<br><br><code>t:collider</code><br><br>Searches all Prefabs containing a component with the word <code>collider</code>.<br><br><code>t:texture</code><br><br>Searches all Assets with a type containing the word <code>texture</code> (ex: Texture or Texture2D).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Has Component</strong></td>
+	<td style="text-align:left;"><code>t:&lt;component type&gt;</code></td>
+	<td style="text-align:left;">
+<code>t:collider</code><br><br>Searches all Prefabs containing a component with the word collider.<br><br><code>t=BoxCollider</code><br><br>Searches all Prefabs containing a component called BoxCollider.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Label</strong></td>
+	<td style="text-align:left;"><code>l:&lt;label name&gt;</code></td>
+	<td style="text-align:left;">
+<code>l:archi</code><br><br>Searches all Assets with a label containing the word <code>archi</code> (e.g.: Architecture).<br><br><code>l=Wall</code><br><br>Searches all Assets with a label that is exactly <code>Wall</code>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>All properties of an Asset (Prefab or other types) are indexed and searchable. Here are a few examples of Property query:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Filter</th>
+	<th style="text-align:left;">Search token</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Number</strong></td>
+	<td style="text-align:left;"><code>property:value</code></td>
+	<td style="text-align:left;">
+<code>bounciness&gt;0.1</code><br><br>Searches all assets with a property named <code>bounciness</code> (e.g.: a PhysicsMaterial2D) higher than 0.1.<br><br><code>health=2</code><br><br>Searches all Assets with a property named <code>health</code> (e.g.: HealthSystem Component of a Prefab) with of a value of exactly 2.<br><br><code>t:texture filtermode!=0</code><br><br>Searches all textures with a <code>filtermode</code> property different than 0 (i.e different than Point).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Boolean</strong></td>
+	<td style="text-align:left;"><code>property:value</code></td>
+	<td style="text-align:left;">
+<code>t:Dungeon generatePath=true</code><br><br>Searches all Dungeon ScriptableObjects where the property <code>generatePath</code> is true.<br><br><code>isStunned=false</code><br><br>Searches all GameObjects containing a property <code>isStunned</code> that is false.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>String</strong></td>
+	<td style="text-align:left;"><code>property:string value</code></td>
+	<td style="text-align:left;">
+<code>t:Character trait:indestru</code><br><br>Searches all Prefab with a Character component whose trait property contains the word <code>indestru</code> (ex: indestructible).<br><br><code>t:Character trait=&quot;tough but fair&quot;</code><br><br>Searches all Prefab with a Character component whose trait property is exactly <code>tough but fair</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Enum</strong></td>
+	<td style="text-align:left;"><code>property:&lt;enum value&gt;</code></td>
+	<td style="text-align:left;">
+<code>characterclass:rog</code><br><br>Searches all GameObjects with with a property named <code>characterclass</code> whose value contains the word rog (e.g.: value is rogue).<br><br><code>characterclass=FighterMage</code><br><br>Searches all GameObjects with a property named <code>characterclass</code> with an exact value of <code>FighterMage</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color</strong></td>
+	<td style="text-align:left;"><code>property:&lt;html color value&gt;</code></td>
+	<td style="text-align:left;">
+<code>color:ADA</code><br><br>Searches all GameObjects with a property named <code>color</code> where the color value starts with ADA (like ADADAD00).<br><br><code>color=ADADAD00</code><br><br>Searches all GameObjects with a property named <code>color</code> where the color value is exactly ADADAD00.<br><br><code>color=ADADAD</code>&lt;br/&gt;<br>Searches all GameObjects with a property named color where the color value is exactly ADADAD and alpha value is 1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Vector</strong></td>
+	<td style="text-align:left;"><code>property.[xyzw]:value</code></td>
+	<td style="text-align:left;">
+<code>bounds.x&gt;1</code><br><br>Searches all GameObjects with a property named <code>bounds</code> where the x value is larger than 1.<br><br><code>acceleration.z=2</code><br><br>Searches all GameObjects with a property named acceleration where the z value is equal to 2</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Object</strong></td>
+	<td style="text-align:left;"><code>sprite:&lt;object exact name&gt;</code></td>
+	<td style="text-align:left;">
+<code>sprite:CharacterBody</code><br><br>Searches all Assets with a <code>sprite</code> property (e.g.: Image Component of a Prefab) that references a GameObject named CharacterBody.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="dependencies" aria-hidden="true"></a></p>
+
+<h2>Dependency filters</h2>
+
+<p>If you are using the Dependencies Indexing option (See <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about search-index-manager.html">Index Manager</a>) Unity indexes <span class="tooltip"><strong>direct dependencies</strong><span class="tooltiptext">A <strong>direct</strong> dependency occurs when your project “requests” a specific package version. To create a direct dependency, you add that package and version to the <strong>dependencies</strong> property in your project manifest (expressed in the form <code>package_name@package_version</code>). <a href="upm-dependencies.html" href="search-index-manager.html">Index Manager</a>) Unity indexes <span class="tooltip"><strong>direct dependencies</strong><span class="tooltiptext">A <strong>direct</strong> dependency occurs when your project “requests” a specific package version. To create a direct dependency, you add that package and version to the <strong>dependencies</strong> property in your project manifest (expressed in the form <code>package_name@package_version</code>). <a href="upm-dependencies.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Directdependency" aria-label="Go to glossary anchor for Directdependency">Glossary</a></span></span></span> of all Assets using <a href="../ScriptReference/AssetDatabase.GetDependencies.html">AssetDatabase.GetDependencies</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Filter</th>
+	<th style="text-align:left;">Search <br>token</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Reference Path</strong></td>
+	<td style="text-align:left;"><code>ref:&lt;asset full path&gt;</code></td>
+	<td style="text-align:left;">
+<code>ref:assets/images/particles/p_smoke.png</code><br>Searches all Assets that have direct dependencies on the <strong>exact</strong> Asset path: <code>assets/images/particles/p_smoke.png</code> .</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Reference Name</strong></td>
+	<td style="text-align:left;"><code>ref:&lt;asset name&gt;</code></td>
+	<td style="text-align:left;">
+<code>ref:p_smo</code><br>Searches all Assets that have direct dependencies on an Asset whose name contains the word <code>p_smo</code>. <br><br><code>ref:p_smoke.png</code><br>Searches all Assets that have direct dependencies on an Asset named <code>p_smoke.png</code>.</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="search-saved-queries.html"></a></span><div class="tip">Search saved queries</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="search-expressions.html"></a></span><div class="tip">Search expressions</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

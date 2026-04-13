@@ -1,0 +1,344 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: The Progressive Lightmapper</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/progressive-lightmapper.html">English</a></li>
+<li><a href="/cn/current/Manual/progressive-lightmapper.html">中文</a></li>
+<li><a href="/ja/current/Manual/progressive-lightmapper.html">日本語</a></li>
+<li><a href="/kr/current/Manual/progressive-lightmapper.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/progressive-lightmapper.html">English</a></li>
+<li><a href="/cn/current/Manual/progressive-lightmapper.html">中文</a></li>
+<li><a href="/ja/current/Manual/progressive-lightmapper.html">日本語</a></li>
+<li><a href="/kr/current/Manual/progressive-lightmapper.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Graphics.html">Graphics</a></li>
+<li><a href="LightingOverview.html">Lighting</a></li>
+<li><a href="Lightmappers.html">Lightmapping</a></li>
+<li>The Progressive Lightmapper</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Lightmappers.html"></a></span><div class="tip">Lightmapping</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="GPUProgressiveLightmapper.html"></a></span><div class="tip">The Progressive GPU Lightmapper (preview)</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>The Progressive Lightmapper</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Progressive Lightmapper is a fast path-tracing-based lightmapper system that provides baked <span class="tooltip"><strong>lightmaps</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> and <span class="tooltip"><strong>Light Probes</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html" href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> and <span class="tooltip"><strong>Light Probes</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span> with progressive updates in the Editor. It requires non-overlapping UVs with small area and angle errors, and sufficient padding between the charts.</p>
+
+<p>The Progressive Lightmapper takes a short preparation step to process geometry and instance updates, and generates the G-buffer and chart masks. It then produces the output immediately and progressively refines it over time for a much-improved interactive lighting workflow. Additionally, baking times are much more predictable because the Progressive Lightmapper provides an estimated time while it bakes.</p>
+
+<p>The Progressive Lightmapper also bakes <span class="tooltip"><strong>global illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span> (GI) at the lightmap resolution for each texel individually, without upsampling schemes or relying on any irradiance caches or other global data structures. This makes it robust and allows you to bake selected portions of lightmaps, which makes it faster for you to test and iterate on your <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html" href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span> (GI) at the lightmap resolution for each texel individually, without upsampling schemes or relying on any irradiance caches or other global data structures. This makes it robust and allows you to bake selected portions of lightmaps, which makes it faster for you to test and iterate on your <span class="tooltip"><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<p>For an in-depth video showing the interactive workflow, see Unity’s video walkthrough: <a href="https://youtu.be/foMZJrwRGr0">In Development - Progressive Lightmapper (YouTube)</a>.</p>
+
+<h2>The Progressive CPU Lightmapper and the Progressive GPU Lightmapper (preview)</h2>
+
+<p>You can choose between two backends for the Progressive Lightmapper. The Progressive CPU Lightmapper backend is a backend for the Progressive Lightmapper that uses your computer’s CPU and system RAM. The Progressive GPU Lightmapper is a backend for the Progressive Lightmapper that uses your computer’s GPU and VRAM.</p>
+
+<p>Note that the Progressive GPU Lightmapper is a preview feature in active development, and is subject to change. For information on the Progressive GPU Lightmapper backend, see the <a href="GPUProgressiveLightmapper.html">Progressive GPU Lightmapper (preview)</a>.</p>
+
+<h2>Render pipeline support</h2>
+
+<p>See <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines-feature-comparison.html">render pipeline feature comparison</a> for more information about support for the Progressive Lightmapper across <span class="tooltip"><strong>render pipelines</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html" href="render-pipelines-feature-comparison.html">render pipeline feature comparison</a> for more information about support for the Progressive Lightmapper across <span class="tooltip"><strong>render pipelines</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Renderpipeline" aria-label="Go to glossary anchor for Renderpipeline">Glossary</a></span></span></span>.</p>
+
+<h2>Using the Progressive Lightmapper</h2>
+
+<p>To use the Progressive Lightmapper:</p>
+
+<ol>
+<li>Go to <strong>Window</strong> &gt; <strong>Rendering</strong> &gt; <strong>Lighting</strong>
+</li>
+<li>Navigate to <strong>Lightmapping Settings</strong>
+</li>
+<li>Set <span class="tooltip"><strong>Lightmapper</strong><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmapper" aria-label="Go to glossary anchor for Lightmapper">Glossary</a></span></span></span> to <strong>Progressive CPU</strong> or <strong>Progressive GPU</strong>
+</li>
+</ol>
+
+<p>You can perform many of the functions available in this window via <span class="tooltip"><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingAndUsingScripts.html" href="CreatingAndUsingScripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>, using the <a href="../ScriptReference/LightmapEditorSettings.html">LightmapEditorSettings</a> and <a href="../ScriptReference/Lightmapping.html">Lightmapping</a> APIs.</p>
+
+<h2>Settings</h2>
+
+<p>This page lists settings specific to the Progressive Lightmapper. See <a href="GI-Enlighten.html">Lightmapping using Enlighten</a> for settings specific to Enlighten Baked Global Illumination (deprecated, unlike Enlighten Realtime Global Illumination). For all other lighting settings, see <a href="class-LightingSettings.html">Lighting Settings Asset</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;" colspan="2"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Lightmapper</strong></td>
+	<td style="text-align:left;">Use this to specify which internal lighting calculation software to use to calculate lightmaps in the Scene. The options are:<br><br><a href="progressive-lightmapper.html">Progressive CPU</a><br><a href="GPUProgressiveLightmapper.html">Progressive GPU</a><br><a href="GI-Enlighten.html">Enlighten</a><br><br>The default value is <strong>Progressive CPU</strong>, because Enlighten Baked Global Illumination is deprecated (unlike Enlighten Realtime Global Illumination).</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Progressive Updates</strong></td>
+	<td style="text-align:left;">Enable this to make the Progressive Lightmapper apply changes to the texels that are currently visible in the <span class="tooltip"><strong>Scene View</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>, then apply changes to the out-of-view texels.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Multiple Importance Sampling</strong></td>
+	<td style="text-align:left;">Enable this to use multiple importance sampling for sampling the environment. This generally leads to faster convergence when generating lightmaps, but can lead to noisier results in certain low frequency environments. This is disabled by default.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Direct Samples</strong></td>
+	<td style="text-align:left;">The number of samples (paths) shot from each texel. This setting controls the number of samples Progressive Lightmapper uses for direct lighting calculations. Increasing this value can improve the quality of lightmaps, but increases the baking time.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Indirect Samples</strong></td>
+	<td style="text-align:left;">The number of samples (paths) shot from each texel. This setting controls the number of samples Progressive Lightmapper uses for indirect lighting calculations. For some Scenes, especially outdoor Scenes, 100 samples should be enough. For indoor Scenes with emissive geometry, increase the value until you see the result you want.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Environment Samples</strong></td>
+	<td style="text-align:left;">The Environment Samples property determines the total number of environment rays that Unity fires toward the skybox to gather light directly. Unity fires these rays from the lightmap texel or light probe position depending on the context. The default value is 500. Higher values might yield smoother results, but at the cost of increased bake times.<br><br>In Scenes with HDR skyboxes, more samples are often needed to reduce noise in the final lightmap or probe. Scenes with skyboxes that include bright singularities (such as the sun) or high-frequency details with significant contrast (such as backlit clouds) also benefit from a higher number of samples.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Light Probe Sample Multiplier</strong></td>
+	<td style="text-align:left;">Controls how many samples are used for Light Probes as a multiplier of the sample values above. Higher values improve the quality of Light Probes, but they will take longer to bake. To enable this feature, go to <strong>Project Settings &gt; Editor</strong> and disable <strong>Use legacy Light Probe sample counts.</strong> The default value is 4.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Bounces</strong></td>
+	<td style="text-align:left;">Use this value to specify the number of indirect bounces to do when tracing paths. For most Scenes, two bounces is enough. For some indoor Scenes, more bounces might be necessary.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Min Bounces</strong></td>
+	<td style="text-align:left;">The minimum number of bounces you are willing for the Progressive Lightmapper to include in indirect lighting calculations. <br><br>Lower values reduce bake times, but might increase lightmap noise. To improve performance during bakes, the Lightmapper terminates light paths that contribute little to the appearance of the Scene using a technique called Russian Roulette.<br><br>Default value: 2. Range: 0–100</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Max Bounces</strong></td>
+	<td style="text-align:left;">The maximum number of bounces you want the Progressive Lightmapper to include in indirect lighting calculations. <br><br>Default value: 2. Range: 0–100. <br><br>Values of up to 10 are suitable for most Scenes. Values higher than 10 might lead to significantly longer bake times.<br><br>Each bounce increases the computational resources needed to bake your scene. Use higher bounce values for indoor Scenes, and lower bounce values for outdoor Scenes and those with many bright surfaces.<br><br>As the range between Min Bounces and Max Bounces broadens, the amount of noise visible in your lightmaps increases.</td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"><strong>Filtering</strong></td>
+	<td style="text-align:left;">Configure the way the Progressive Lightmapper applies post-processing to lightmaps to limit noise. For lightmap post-processing, the lightmap is split into <strong>Direct</strong>, <strong>Indirect</strong> and <strong>Ambient Occlusion</strong> targets that Unity applies post-processing to individually, before it composites them together into a single lightmap.<br><br>- <strong>Direct</strong>: Any light that arrives directly from a Light to a sensor (usually the Camera).<br>- <strong>Indirect</strong>: Any light that arrives indirectly from a Light to a sensor. This most commonly applies to light that reflects off other GameObjects.<br>- <strong>Ambient Occlusion</strong>: Any ambient light that the lighting system calculates.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">Select this to use no filter or denoising for the lightmap.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Auto</strong></td>
+	<td style="text-align:left;">Select this to use a platform-dependent preset for post-processing the lightmap. <br><strong>If your development machine fulfils the requirements to run OptiX</strong> (the <a href="https://developer.nvidia.com/optix-denoiser">NVIDIA OptiX AI-Accelerated Denoiser</a>), the Progressive Lightmapper uses the denoiser with a Gaussian filter that has a 1-texel radius for all targets.<br><strong>If your development machine cannot run OptiX</strong>, the Progressive Lightmapper uses a Gaussian filter that has a 1-texel radius for <strong>Direct</strong>, 5-texel radius for <strong>Indirect,</strong> and 2-texel radius for <strong>Ambient Occlusion</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Advanced</strong></td>
+	<td style="text-align:left;">Select <strong>Advanced</strong> to manually configure options for each type of lightmap target. The targets types are <strong>Direct</strong>, <strong>Indirect</strong> and <strong><span class="tooltip"><strong>Ambient Occlusion</strong><span class="tooltiptext">A method to approximate how much ambient light (light not coming from a specific direction) can hit a point on a surface.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Ambientocclusion" aria-label="Go to glossary anchor for Ambientocclusion">Glossary</a></span></span></span></strong>. For more information, see <a href="#AdvancedFilteringSettings">Advanced Filtering settings</a>, below.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="AdvancedFilteringSettings" aria-hidden="true"> </a></p>
+
+<h2>Advanced Filtering settings</h2>
+
+<p>Set <strong>Filtering</strong> to <strong>Advanced</strong> to manually configure options for each type of lightmap target. The target types are:</p>
+
+<ul>
+<li>
+<strong>Direct</strong>: Any light that arrives directly from a Light to a sensor (usually the Camera).</li>
+<li>
+<strong>Indirect</strong>: Any light that arrives indirectly from a Light to a sensor. This most commonly applies to light that reflects off other <span class="tooltip"><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>.</li>
+<li>
+<strong>Ambient Occlusion</strong>: Any <span class="tooltip"><strong>ambient light</strong><span class="tooltiptext">Light that doesn’t come from any specific direction, and contributes equal light in all directions to the Scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about lighting-window.html" href="lighting-window.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Ambientlight" aria-label="Go to glossary anchor for Ambientlight">Glossary</a></span></span></span> that the lighting system calculates.</li>
+</ul>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Denoiser</strong></td>
+	<td style="text-align:left;">Select a denoiser to use for the lightmap target. The options are:<br><br><strong>Optix</strong>: The NVIDIA Optix denoiser is an AI accelerated denoiser that reduces noise in baked lightmaps. It requires an NVIDIA GPU with 4GB+ VRAM and driver version 390+, and is only supported on the Windows platform.<br><strong>RadeonPro</strong>: The RadeonPro denoiser is an AI accelerated denoiser that reduces noise in baked lightmaps. It requires an OpenCL capable GPU with 4GB+ VRAM.<br>- <strong>OpenImageDenoise</strong>: The Intel Open Image denoiser is an AI accelerated denoiser that reduces noise in baked lightmaps.<br>- <strong>None</strong>: Do not use a denoiser.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Filter</strong></td>
+	<td style="text-align:left;">Select a filter to use for the lightmap target:<br>- <strong>Gaussian:</strong> Select this to use a Gaussian filter for the lightmap target. The Gaussian filter applies a bilateral Gaussian filter on the lightmap. This blurs the lightmap and reduces the visible noise.<br>- <strong>A-Trous:</strong> Select this to use an A-Trous filter for the lightmap target. The A-Trous filter minimizes the amount of blur while it removes visible noise in the lightmap.<br>- <strong>None</strong><em>:</em> Select this to disable all filtering for the lightmap target.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Radius</strong></td>
+	<td style="text-align:left;">This option is only available when <strong>Filter</strong> is set to <strong>Gaussian</strong>. Use the <strong>Radius</strong> value to set the radius of the Gaussian filter kernel in texels. A higher <strong>Radius</strong> increases the blur strength and reduces the perceptible noise, but might cause detail to be lost in the lighting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Sigma</strong></td>
+	<td style="text-align:left;">This option is only available when <strong>Filter</strong> is set to <strong>A-Trous</strong>. Use the <strong>Sigma</strong> value to adjust how much to preserve detail or blur the lighting. A higher <strong>Sigma</strong> increases the blur strength and reduces the perceptible noise, but might cause detail to be lost in the lighting.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Statistics</h2>
+
+<p>The panel below the <strong>Auto Generate</strong> and <strong>Generate Lighting</strong> options shows statistics about the lightmapping, including:</p>
+
+<ul>
+<li>The number of lightmaps that Unity has created</li>
+<li>
+<strong>Memory Usage:</strong> The amount of memory required for the current lightmapping.</li>
+<li>
+<strong>Occupied Texels</strong>: The number of texels that are occupied in lightmap UV space.</li>
+<li>
+<strong>Lightmaps in view</strong>: The number of lightmaps in the Scene view.</li>
+<li>
+<strong>Lightmaps not in view</strong>: The number of lightmaps that are out of view.
+
+<ul>
+<li>
+<strong>Converged</strong>: All calculations for these lightmaps are complete.</li>
+<li>
+<strong>Not Converged</strong>: Baking is still in progress for these lightmaps.</li>
+</ul>
+</li>
+<li>
+<strong>Bake Performance</strong>: The number of rays per second. If this is low (that is, less than 2) you should adjust your settings or your hardware to process more light rays at a time.</li>
+</ul>
+
+<h2>During baking</h2>
+
+<p>Progressive Lightmapper provides options to monitor and stop the bake while it is in progress, if you need to.</p>
+
+<h3>ETA</h3>
+
+<p>The progress bar that appears while Unity is baking the lightmap provides an “estimated time of arrival” (displayed as <strong>ETA</strong>). This is the estimated time in seconds for the current bake to complete. This allows for much more predictable baking times, and allows you to quickly learn how much time baking takes with your current lighting settings.</p>
+
+<h3>Force Stop</h3>
+
+<p>During manual baking, click <strong>Force Stop</strong> at any time to halt the baking process. This allows you to stop the process as soon as you see results that look good.</p>
+
+<h2>Disabling the default environment contribution</h2>
+
+<p>Unity automatically generates an <a href="../ScriptReference/RenderSettings-ambientProbe.html">ambient probe</a> and a <a href="../ScriptReference/ReflectionProbe-defaultTexture.html">default Reflection Probe</a> to ensure that environment lighting affects your scene and the GameObjects in it by default.</p>
+
+<p>To disable the environment contribution in the lighting result for a scene or GameObject that does not have manually created light maps and Light Probes, disable the default <span class="tooltip"><strong>Reflection Probe</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ReflectionProbe.html" href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span> and the ambient probe. For more information, see <a href="using-skymanager.html#disableskymanager">Disabling the SkyManager</a>.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Lightmappers.html"></a></span><div class="tip">Lightmapping</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="GPUProgressiveLightmapper.html"></a></span><div class="tip">The Progressive GPU Lightmapper (preview)</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

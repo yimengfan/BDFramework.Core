@@ -1,0 +1,481 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: IMGUI Layout Modes</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20251007"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20251007"></script><script type="text/javascript" src="docdata/toc.js?ts=20251007"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20251007"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20251007">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20251007">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="authoring" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../Manual/index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>2021.3</b><div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/gui-Layout.html">English</a></li>
+<li><a href="/cn/current/Manual/gui-Layout.html">中文</a></li>
+<li><a href="/ja/current/Manual/gui-Layout.html">日本語</a></li>
+<li><a href="/kr/current/Manual/gui-Layout.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: 2021.3</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/gui-Layout.html">English</a></li>
+<li><a href="/cn/current/Manual/gui-Layout.html">中文</a></li>
+<li><a href="/ja/current/Manual/gui-Layout.html">日本語</a></li>
+<li><a href="/kr/current/Manual/gui-Layout.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">User interface (UI)</a></li>
+<li><a href="GUIScriptingGuide.html">Immediate Mode GUI (IMGUI)</a></li>
+<li>IMGUI Layout Modes</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="gui-Customization.html"></a></span><div class="tip">Customize your IMGUI Controls</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="gui-Extending.html"></a></span><div class="tip">Extending IMGUI</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>IMGUI Layout Modes</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>Fixed Layout vs Automatic Layout</h2>
+
+<p>There are two different modes you can use to arrange and organize your <span class="tooltip"><strong>UI</strong><span class="tooltiptext">(User Interface) Allows a user to interact with your application. Unity currently supports three UI systems. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UI-system-compare.html" href="UI-system-compare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UI" aria-label="Go to glossary anchor for UI">Glossary</a></span></span></span> when using the IMGUI system: Fixed and Automatic. Up until now, every IMGUI example provided in this guide has used Fixed Layout. To use Automatic Layout, write <strong>GUILayout</strong> instead of <strong>GUI</strong> when calling control functions. You do not have to use one Layout mode over the other, and you can use both modes at once in the same <strong>OnGUI()</strong> function.</p>
+
+<p>Fixed Layout makes sense to use when you have a pre-designed interface to work from. Automatic Layout makes sense to use when you don’t know how many elements you need up front, or don’t want to worry about hand-positioning each Control. For example, if you are creating a number of different buttons based on Save Game files, you don’t know exactly how many buttons will be drawn. In this case Automatic Layout might make more sense. It is really dependent on the design of your game and how you want to present your interface.</p>
+
+<p>There are two key differences when using Automatic Layout:</p>
+
+<ul>
+<li>
+<strong>GUILayout</strong> is used instead of <strong>GUI</strong>
+</li>
+<li>No <strong>Rect()</strong> function is required for Automatic Layout Controls</li>
+</ul>
+
+<pre><code>/* Two key differences when using Automatic Layout */
+
+
+// JavaScript
+function OnGUI () {
+    // Fixed Layout
+    GUI.Button (Rect (25,25,100,30), &quot;I am a Fixed Layout Button&quot;);
+
+    // Automatic Layout
+    GUILayout.Button (&quot;I am an Automatic Layout Button&quot;);
+}
+
+
+// C#
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour {
+    
+    void OnGUI () {
+        // Fixed Layout
+        GUI.Button (new Rect (25,25,100,30), &quot;I am a Fixed Layout Button&quot;);
+    
+        // Automatic Layout
+        GUILayout.Button (&quot;I am an Automatic Layout Button&quot;);
+    }
+
+}
+
+
+</code></pre>
+
+<h2>Arranging Controls</h2>
+
+<p>Depending on which Layout Mode you’re using, there are different hooks for controlling where your Controls are positioned and how they are grouped together. In Fixed Layout, you can put different Controls into <strong>Groups</strong>. In Automatic Layout, you can put different Controls into <strong>Areas</strong>, <strong>Horizontal Groups</strong>, and <strong>Vertical Groups</strong>
+</p>
+
+<h3>Fixed Layout - Groups</h3>
+
+<p>Groups are a convention available in Fixed Layout Mode. They allow you to define areas of the screen that contain multiple Controls. You define which Controls are inside a Group by using the <strong>GUI.BeginGroup()</strong> and <strong>GUI.EndGroup()</strong> functions. All Controls inside a Group will be positioned based on the Group’s top-left corner instead of the screen’s top-left corner. This way, if you reposition the group at runtime, the relative positions of all Controls in the group will be maintained.</p>
+
+<p>As an example, it’s very easy to center multiple Controls on-screen.</p>
+
+<pre><code>/* Center multiple Controls on the screen using Groups */
+
+
+// JavaScript
+function OnGUI () {
+    // Make a group on the center of the screen
+    GUI.BeginGroup (Rect (Screen.width / 2 - 50, Screen.height / 2 - 50, 100, 100));
+    // All rectangles are now adjusted to the group. (0,0) is the topleft corner of the group.
+    
+    // We'll make a box so you can see where the group is on-screen.
+    GUI.Box (Rect (0,0,100,100), &quot;Group is here&quot;);
+    GUI.Button (Rect (10,40,80,30), &quot;Click me&quot;);
+    
+    // End the group we started above. This is very important to remember!
+    GUI.EndGroup ();
+}
+
+
+// C#
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour {
+    
+    void OnGUI () {
+        // Make a group on the center of the screen
+        GUI.BeginGroup (new Rect (Screen.width / 2 - 50, Screen.height / 2 - 50, 100, 100));
+        // All rectangles are now adjusted to the group. (0,0) is the topleft corner of the group.
+    
+        // We'll make a box so you can see where the group is on-screen.
+        GUI.Box (new Rect (0,0,100,100), &quot;Group is here&quot;);
+        GUI.Button (new Rect (10,40,80,30), &quot;Click me&quot;);
+    
+        // End the group we started above. This is very important to remember!
+        GUI.EndGroup ();
+    }
+
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-GroupCenteredControls.png" alt="The above example centers controls regardless of the screen resolution">
+<figcaption>The above example centers controls regardless of the screen resolution</figcaption>
+</figure>
+
+<p>You can also nest multiple Groups inside each other. When you do this, each group has its contents clipped to its parent’s space.</p>
+
+<pre><code>/* Using multiple Groups to clip the displayed Contents */
+
+
+// JavaScript
+var bgImage : Texture2D; // background image that is 256 x 32
+var fgImage : Texture2D; // foreground image that is 256 x 32
+var playerEnergy = 1.0; // a float between 0.0 and 1.0
+
+function OnGUI () {
+    // Create one Group to contain both images
+    // Adjust the first 2 coordinates to place it somewhere else on-screen
+    GUI.BeginGroup (Rect (0,0,256,32));
+
+    // Draw the background image
+    GUI.Box (Rect (0,0,256,32), bgImage);
+    
+    // Create a second Group which will be clipped
+    // We want to clip the image and not scale it, which is why we need the second Group
+    GUI.BeginGroup (Rect (0,0,playerEnergy * 256, 32));
+
+    // Draw the foreground image
+    GUI.Box (Rect (0,0,256,32), fgImage);
+
+    // End both Groups
+    GUI.EndGroup ();
+    GUI.EndGroup ();
+}
+
+
+// C#
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour {
+    
+    // background image that is 256 x 32
+    public Texture2D bgImage; 
+    
+    // foreground image that is 256 x 32
+    public Texture2D fgImage; 
+    
+    // a float between 0.0 and 1.0
+    public float playerEnergy = 1.0f; 
+    
+    void OnGUI () {
+        // Create one Group to contain both images
+        // Adjust the first 2 coordinates to place it somewhere else on-screen
+        GUI.BeginGroup (new Rect (0,0,256,32));
+    
+        // Draw the background image
+        GUI.Box (new Rect (0,0,256,32), bgImage);
+    
+            // Create a second Group which will be clipped
+            // We want to clip the image and not scale it, which is why we need the second Group
+            GUI.BeginGroup (new Rect (0,0,playerEnergy * 256, 32));
+        
+            // Draw the foreground image
+            GUI.Box (new Rect (0,0,256,32), fgImage);
+        
+            // End both Groups
+            GUI.EndGroup ();
+        
+        GUI.EndGroup ();
+    }
+
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-NestedGroupsClipping.png" alt="You can nest Groups together to create clipping behaviors">
+<figcaption>You can nest Groups together to create clipping behaviors</figcaption>
+</figure>
+
+<h3>Automatic Layout - Areas</h3>
+
+<p>Areas are used in Automatic Layout mode only. They are similar to Fixed Layout Groups in functionality, as they define a finite portion of the screen to contain GUILayout Controls. Because of the nature of Automatic Layout, you will nearly always use Areas.</p>
+
+<p>In Automatic Layout mode, you do not define the area of the screen where the Control will be drawn at the Control level. The Control will automatically be placed at the upper-leftmost point of its containing area. This might be the screen. You can also create manually-positioned Areas. GUILayout Controls inside an area will be placed at the upper-leftmost point of that area.</p>
+
+<pre><code>/* A button placed in no area, and a button placed in an area halfway across the screen. */
+
+
+// JavaScript
+function OnGUI () {
+    GUILayout.Button (&quot;I am not inside an Area&quot;);
+    GUILayout.BeginArea (Rect (Screen.width/2, Screen.height/2, 300, 300));
+    GUILayout.Button (&quot;I am completely inside an Area&quot;);
+    GUILayout.EndArea ();
+}
+
+
+// C#
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour {
+    
+    void OnGUI () {
+        GUILayout.Button (&quot;I am not inside an Area&quot;);
+        GUILayout.BeginArea (new Rect (Screen.width/2, Screen.height/2, 300, 300));
+        GUILayout.Button (&quot;I am completely inside an Area&quot;);
+        GUILayout.EndArea ();
+    }
+
+}
+
+
+</code></pre>
+
+<p>Notice that inside an Area, Controls with visible elements like Buttons and Boxes will stretch their width to the full length of the Area.</p>
+
+<h3>Automatic Layout - Horizontal and Vertical Groups</h3>
+
+<p>When using Automatic Layout, Controls will by default appear one after another from top to bottom. There are plenty of occasions you will want finer level of control over where your Controls are placed and how they are arranged. If you are using the Automatic Layout mode, you have the option of Horizontal and Vertical Groups.</p>
+
+<p>Like the other layout Controls, you call separate functions to start or end these groups. The specific functions are <strong>GUILayout.BeginHorizontal()</strong>, <strong>GUILayout.EndHorizontal()</strong>, <strong>GUILayout.BeginVertical()</strong>, and <strong>GUILayout.EndVertical()</strong>.</p>
+
+<p>Any Controls inside a Horizontal Group will always be laid out horizontally. Any Controls inside a Vertical Group will always be laid out vertically. This sounds plain until you start nesting groups inside each other. This allows you to arrange any number of controls in any imaginable configuration.</p>
+
+<pre><code>/* Using nested Horizontal and Vertical Groups */
+
+
+// JavaScript
+var sliderValue = 1.0;
+var maxSliderValue = 10.0;
+
+function OnGUI()
+{
+    // Wrap everything in the designated GUI Area
+    GUILayout.BeginArea (Rect (0,0,200,60));
+
+    // Begin the singular Horizontal Group
+    GUILayout.BeginHorizontal();
+
+    // Place a Button normally
+    if (GUILayout.RepeatButton (&quot;Increase max\nSlider Value&quot;))
+    {
+        maxSliderValue += 3.0 * Time.deltaTime;
+    }
+
+    // Arrange two more Controls vertically beside the Button
+    GUILayout.BeginVertical();
+    GUILayout.Box(&quot;Slider Value: &quot; + Mathf.Round(sliderValue));
+    sliderValue = GUILayout.HorizontalSlider (sliderValue, 0.0, maxSliderValue);
+
+    // End the Groups and Area
+    GUILayout.EndVertical();
+    GUILayout.EndHorizontal();
+    GUILayout.EndArea();
+}
+
+
+// C#
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour {
+    
+    private float sliderValue = 1.0f;
+    private float maxSliderValue = 10.0f;
+    
+    void OnGUI()
+    {
+        // Wrap everything in the designated GUI Area
+        GUILayout.BeginArea (new Rect (0,0,200,60));
+    
+        // Begin the singular Horizontal Group
+        GUILayout.BeginHorizontal();
+    
+        // Place a Button normally
+        if (GUILayout.RepeatButton (&quot;Increase max\nSlider Value&quot;))
+        {
+            maxSliderValue += 3.0f * Time.deltaTime;
+        }
+    
+        // Arrange two more Controls vertically beside the Button
+        GUILayout.BeginVertical();
+        GUILayout.Box(&quot;Slider Value: &quot; + Mathf.Round(sliderValue));
+        sliderValue = GUILayout.HorizontalSlider (sliderValue, 0.0f, maxSliderValue);
+    
+        // End the Groups and Area
+        GUILayout.EndVertical();
+        GUILayout.EndHorizontal();
+        GUILayout.EndArea();
+    }
+
+}
+
+
+</code></pre>
+
+<figure>
+<img src="../uploads/Main/gsg-NestedGroupsLayout.png" alt="Three Controls arranged with Horizontal &amp; Vertical Groups">
+<figcaption>Three Controls arranged with Horizontal &amp; Vertical Groups</figcaption>
+</figure>
+
+<h2>Using GUILayoutOptions to define some controls</h2>
+
+<p>You can use GUILayoutOptions to override some of the Automatic Layout parameters. You do this by providing the options as the final parameters of the GUILayout Control.</p>
+
+<p>Remember in the Areas example above, where the button stretches its width to 100% of the Area width? We can override that if we want to.</p>
+
+<pre><code>/* Using GUILayoutOptions to override Automatic Layout Control properties */
+
+
+//JavaScript
+function OnGUI () {
+    GUILayout.BeginArea (Rect (100, 50, Screen.width-200, Screen.height-100));
+    GUILayout.Button (&quot;I am a regular Automatic Layout Button&quot;);
+    GUILayout.Button (&quot;My width has been overridden&quot;, GUILayout.Width (95));
+    GUILayout.EndArea ();
+}
+
+
+// C#
+using UnityEngine;
+using System.Collections;
+
+public class GUITest : MonoBehaviour {
+        
+    void OnGUI () {
+        GUILayout.BeginArea (new Rect (100, 50, Screen.width-200, Screen.height-100));
+        GUILayout.Button (&quot;I am a regular Automatic Layout Button&quot;);
+        GUILayout.Button (&quot;My width has been overridden&quot;, GUILayout.Width (95));
+        GUILayout.EndArea ();
+    }
+
+}
+
+
+</code></pre>
+
+<p>For a full list of possible GUILayoutOptions, please read the <a href="../ScriptReference/GUILayoutOption.html">GUILayoutOption Scripting Reference page</a>.</p>
+<!-- area:authoring -->
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="gui-Customization.html"></a></span><div class="tip">Customize your IMGUI Controls</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="gui-Extending.html"></a></span><div class="tip">Extending IMGUI</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright © 2025 Unity Technologies. Publication Date: 2025-10-07.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>
